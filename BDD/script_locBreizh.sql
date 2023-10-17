@@ -161,7 +161,7 @@ CREATE TABLE
 CREATE TABLE
     _logement (
         id_logement CHAR(10) NOT NULL,
-        libelle_logement VARCHAR(15) NOT NULL,
+        libelle_logement VARCHAR(30) NOT NULL,
         tarif_base_HT NUMERIC(5, 2) NOT NULL,
         accroche_logement VARCHAR(255) NOT NULL,
         descriptif_logement VARCHAR(255) NOT NULL,
@@ -174,7 +174,7 @@ CREATE TABLE
         lit_simple NUMERIC(3) NOT NULL,
         lit_double NUMERIC(3) NOT NULL,
         nb_salle_bain NUMERIC(3) NOT NULL,
-        jardin NUMERIC(3) NOT NULL,
+        jardin NUMERIC(5) NOT NULL,
         balcon BOOLEAN NOT NULL,
         terrasse BOOLEAN NOT NULL,
         parking_public BOOLEAN NOT NULL,
@@ -193,8 +193,8 @@ CREATE TABLE
         id_adresse CHAR(10) NOT NULL,
         photo_principale VARCHAR(50) NOT NULL,
         CONSTRAINT logement_pk PRIMARY KEY (id_logement),
-        CONSTRAINT logement_fk_planning FOREIGN KEY (id_logement) REFERENCES _planning (code_planning),
-        CONSTRAINT logement_fk_proprietaire FOREIGN KEY (id_logement) REFERENCES _proprietaire (id_proprietaire),
+        CONSTRAINT logement_fk_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning),
+        CONSTRAINT logement_fk_proprietaire FOREIGN KEY (id_proprietaire) REFERENCES _proprietaire (id_proprietaire),
         CONSTRAINT logement_fk_adresse FOREIGN KEY (id_adresse) REFERENCES _adresse (id_adresse),
         CONSTRAINT logement_fk_photo FOREIGN KEY (photo_principale) REFERENCES _photo (url_photo)
     );
@@ -389,3 +389,15 @@ CREATE TABLE
         CONSTRAINT possede_charges_associee_logement_fk_logement FOREIGN KEY (id_logement) REFERENCES _logement (id_logement),
         CONSTRAINT possede_charges_associee_logement_fk_charges FOREIGN KEY (nom_charges) REFERENCES _charge_additionnelles (nom_charges)
     );
+
+/* Peuplement de la base */
+insert into _photo values('carte/id/dubois');
+insert into _photo values('photos/dubois');
+INSERT into _adresse values('0000000001', 'rue du soleil', 89, '22440', 'ploufragan', 'france');
+INSERT into _compte values('0000000001', 'Monsieur', 'Dubois', 'Jean', 'jeandubois@gmail.com', 'jeandubois22', 'jdubois', '0612457889', '0000000001', 'photos/dubois');
+insert into _proprietaire values('0000000001', '65465654646465', 'carte/id/dubois');
+insert into _langue values('français');
+insert into _parle values('français', '0000000001');
+INSERT INTO _planning VALUES ('0123456788', 500, 2, 24);
+INSERT INTO _logement VALUES ('0123456789', 'Manoir Hanté', 500, 'Manoir à la campagne avec grand terrain et de muliple pièces', 'Manoir', '', 'manoir', 500, true, 10, 14, 3, 7, 4, 300, false, true, false, true, false, false, true, true, true, true, true, true, true, '0123456788', '0000000001', '0000000001', 'photos/dubois');
+INSERT INTO _logement VALUES ('0123456788', 'Maison de campagne', 250, 'Maison à la campagne avec grand terrain et de muliple pièces', 'Maison', '', 'maison', 125, true, 4, 6, 1, 3, 2, 3000, false, true, false, true, false, false, true, true, true, true, true, true, true, '0123456788', '0000000001', '0000000001', 'photos/dubois');
