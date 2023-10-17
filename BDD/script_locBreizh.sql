@@ -85,7 +85,11 @@ CREATE TABLE
 CREATE TABLE
     _conversation (
         id_conversation CHAR(10) NOT NULL,
-        CONSTRAINT conversation_pk PRIMARY KEY (id_conversation)
+        compte1 CHAR(10) NOT NULL,
+        compte2 CHAR(10) NOT NULL,
+        CONSTRAINT conversation_pk PRIMARY KEY (id_conversation),
+        CONSTRAINT message_fk_compte1 FOREIGN KEY (compte1) REFERENCES _compte (id_compte),
+        CONSTRAINT message_fk_compte2 FOREIGN KEY (compte2) REFERENCES _compte (id_compte)
     );
 
 CREATE TABLE
@@ -98,17 +102,6 @@ CREATE TABLE
         CONSTRAINT message_pk PRIMARY KEY (id_message),
         CONSTRAINT message_fk_auteur FOREIGN KEY (auteur) REFERENCES _compte (id_compte),
         CONSTRAINT message_fk_conversation FOREIGN KEY (conversation) REFERENCES _conversation (id_conversation)
-    );
-
-CREATE TABLE
-    _participe_conv (
-        id_conversation CHAR(10) NOT NULL,
-        compte1 CHAR(10) NOT NULL,
-        compte2 CHAR(10) NOT NULL,
-        CONSTRAINT participeConv_pk PRIMARY KEY (id_conversation),
-        CONSTRAINT participeConv_fk_idConv FOREIGN KEY (id_conversation) REFERENCES _conversation (id_conversation),
-        CONSTRAINT message_fk_compte1 FOREIGN KEY (compte1) REFERENCES _compte (id_compte),
-        CONSTRAINT message_fk_compte2 FOREIGN KEY (compte2) REFERENCES _compte (id_compte)
     );
 
 CREATE TABLE
@@ -428,6 +421,27 @@ values (
         'carte/id/dubois'
     );
 
+INSERT into _compte
+values (
+        '0000000002',
+        'Madame',
+        'Lucas',
+        'Martine',
+        'mlucas@gmail.com',
+        'martinelucas22',
+        'lmartine',
+        '0698987845',
+        '0000000001',
+        'photos/dubois'
+    );
+
+insert into _client
+values (
+        '0000000002',
+        '2000-05-15',
+        'true'
+    );
+
 insert into _langue values('français');
 
 insert into _parle values('français', '0000000001');
@@ -504,4 +518,29 @@ VALUES (
         '0000000001',
         '0000000001',
         'photos/dubois'
+    );
+
+INSERT INTO _conversation
+values (
+        '0000000001',
+        '0000000001',
+        '0000000002'
+    );
+
+insert into _message
+VALUES (
+        '0000000001',
+        'un message tres habituel',
+        '2023/10/17',
+        '0000000001',
+        '0000000001'
+    );
+
+insert into _message
+VALUES (
+        '0000000002',
+        'un message tres habituel mais different',
+        '2023/10/17',
+        '0000000002',
+        '0000000001'
     );
