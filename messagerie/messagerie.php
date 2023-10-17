@@ -6,10 +6,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Messagerie</title>
 </head>
 <?php
-    include('../connect_params.php');
+    include('../parametre_connexion.php');
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -18,14 +18,13 @@
         print "Erreur !: " . $e->getMessage() . "<br/>";
         die();
     }
-    $dbh->query("SELECT url_photo from locbreizh._compte 
-    join locbreizh._photo 
-    on locbreizh._photo.url_photo = locbreizh._compte.photo
-    where id_compte = '0000000001'") as $url_photo;
-
-
+    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo ;");
+    $stmt->execute();
+    $row = $stmt->fetch();
+    echo $row['url_photo'];
 ?>
 <body>
+
     <header>
         <nav>
             <div id="logo">
@@ -43,7 +42,7 @@
             </div>
             <div id="parametre">
                 <a href="messagerie.php"><img src="image/messagerie.svg"></a>
-                <a href="compte.php"><img src="image/compte.svg"></a>
+                <a href="compte.php"><img src=<?php echo $row['url_photo']; ?>></a>
                 <div>
         </nav>
     </header>
