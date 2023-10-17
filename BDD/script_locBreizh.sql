@@ -599,7 +599,7 @@ VALUES (
 insert into _message
 VALUES (
         '0000000005',
-        'bonjour pierre !',
+        'bonjour pierre ! vraiment heureux de te parler aujourd hui j espere que ca va mais dis donc ce message est vraiment long ou bien ? On dirait que cest volontaire ..',
         '2023/10/01',
         '22:00',
         '0000000001',

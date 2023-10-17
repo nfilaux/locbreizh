@@ -25,6 +25,11 @@
     $row = $stmt->fetch();
 ?>
 <body>
+    <!--potentiel manière sans js-->
+    <form action="messagerie.php" method="post">
+            <input type="submit" name="divClic" value="Div 3">
+    </form>
+
     <header>
         <nav>
             <div id="logo">
@@ -118,7 +123,7 @@
                         $mois_cut = substr($date_formatee, 3, 4) . ".";
                         echo $date->format('j ') . $mois_cut;
                     ?></p>
-                    <p><?php echo $row['contenu_message']; ?></p>
+                    <p><?php echo substr($row['contenu_message'], 0, 30); ?></p>
                 </div>
                 <?php }?>
             </div>
@@ -127,7 +132,7 @@
         <div>
             <!--infos conv-->
             <div>
-                <img src="image/compte.svg" alt="image de profil">
+                <img src=<?php ?> alt="image de profil">
                 <p>Prenom NOM</p>
             </div>
             <!--contenu conversation-->
