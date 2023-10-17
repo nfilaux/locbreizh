@@ -9,7 +9,7 @@
     <title>Document</title>
 </head>
 <?php
-    include('connect_params.php');
+    include('../connect_params.php');
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -18,7 +18,10 @@
         print "Erreur !: " . $e->getMessage() . "<br/>";
         die();
     }
-    $dbh->query("SELECT url_photo from locbreizh._compte join locbreizh._photo on ");
+    $dbh->query("SELECT url_photo from locbreizh._compte 
+    join locbreizh._photo 
+    on locbreizh._photo.url_photo = locbreizh._compte.photo
+    where id_compte = '0000000001'") as $url_photo;
 
 
 ?>
