@@ -97,6 +97,7 @@ CREATE TABLE
         id_message CHAR(10) NOT NULL,
         contenu_message VARCHAR(255) NOT NULL,
         date_mess DATE NOT NULL,
+        heure_mess time not null,
         auteur CHAR(10) NOT NULL,
         conversation CHAR(10) NOT NULL,
         CONSTRAINT message_pk PRIMARY KEY (id_message),
@@ -532,6 +533,7 @@ VALUES (
         '0000000001',
         'un message tres habituel',
         '2023/10/17',
+        '21:36',
         '0000000001',
         '0000000001'
     );
@@ -541,6 +543,7 @@ VALUES (
         '0000000002',
         'un message tres habituel mais different',
         '2023/10/17',
+        '21:38',
         '0000000002',
         '0000000001'
     );
