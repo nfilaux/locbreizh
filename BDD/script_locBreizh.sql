@@ -424,6 +424,27 @@ values (
 
 INSERT into _compte
 values (
+        '0000000003',
+        'Monsieur',
+        'Martin',
+        'Pierre',
+        'pmartin@gmail.com',
+        'martin22',
+        'mpierre',
+        '0612457823',
+        '0000000001',
+        'photos/dubois'
+    );
+
+insert into _proprietaire
+values (
+        '0000000003',
+        '65465654646445',
+        'carte/id/dubois'
+    );
+
+INSERT into _compte
+values (
         '0000000002',
         'Madame',
         'Lucas',
@@ -546,4 +567,41 @@ VALUES (
         '21:38',
         '0000000002',
         '0000000001'
+    );
+
+insert into _message
+VALUES (
+        '0000000003',
+        'un message très recent !',
+        '2023/10/18',
+        '21:38',
+        '0000000002',
+        '0000000001'
+    );
+
+INSERT INTO _conversation
+values (
+        '0000000002',
+        '0000000001',
+        '0000000003'
+    );
+
+insert into _message
+VALUES (
+        '0000000004',
+        'salut dubois !',
+        '2023/10/01',
+        '14:32',
+        '0000000003',
+        '0000000002'
+    );
+
+insert into _message
+VALUES (
+        '0000000005',
+        'bonjour pierre !',
+        '2023/10/01',
+        '22:00',
+        '0000000001',
+        '0000000002'
     );
