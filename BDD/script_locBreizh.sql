@@ -275,6 +275,7 @@ CREATE TABLE
         date_validite_chiffre VARCHAR(50) NOT NULL,
         cryptoramme_chiffre VARCHAR(50) NOT NULL,
         type_carte VARCHAR(50) NOT NULL,
+        titulaire varchar(30) not null,
         CONSTRAINT carte_pk PRIMARY KEY (num_carte_chiffre)
     );
 
@@ -391,13 +392,116 @@ CREATE TABLE
     );
 
 /* Peuplement de la base */
+
 insert into _photo values('carte/id/dubois');
+
 insert into _photo values('photos/dubois');
-INSERT into _adresse values('0000000001', 'rue du soleil', 89, '22440', 'ploufragan', 'france');
-INSERT into _compte values('0000000001', 'Monsieur', 'Dubois', 'Jean', 'jeandubois@gmail.com', 'jeandubois22', 'jdubois', '0612457889', '0000000001', 'photos/dubois');
-insert into _proprietaire values('0000000001', '65465654646465', 'carte/id/dubois');
+
+INSERT into _adresse
+values (
+        '0000000001',
+        'rue du soleil',
+        89,
+        '22440',
+        'ploufragan',
+        'france'
+    );
+
+INSERT into _compte
+values (
+        '0000000001',
+        'Monsieur',
+        'Dubois',
+        'Jean',
+        'jeandubois@gmail.com',
+        'jeandubois22',
+        'jdubois',
+        '0612457889',
+        '0000000001',
+        'photos/dubois'
+    );
+
+insert into _proprietaire
+values (
+        '0000000001',
+        '65465654646465',
+        'carte/id/dubois'
+    );
+
 insert into _langue values('français');
+
 insert into _parle values('français', '0000000001');
+
 INSERT INTO _planning VALUES ('0123456788', 500, 2, 24);
-INSERT INTO _logement VALUES ('0123456789', 'Manoir Hanté', 500, 'Manoir à la campagne avec grand terrain et de muliple pièces', 'Manoir', '', 'manoir', 500, true, 10, 14, 3, 7, 4, 300, false, true, false, true, false, false, true, true, true, true, true, true, true, '0123456788', '0000000001', '0000000001', 'photos/dubois');
-INSERT INTO _logement VALUES ('0123456788', 'Maison de campagne', 250, 'Maison à la campagne avec grand terrain et de muliple pièces', 'Maison', '', 'maison', 125, true, 4, 6, 1, 3, 2, 3000, false, true, false, true, false, false, true, true, true, true, true, true, true, '0123456788', '0000000001', '0000000001', 'photos/dubois');
+
+INSERT INTO _logement
+VALUES (
+        '0123456789',
+        'Manoir Hanté',
+        500,
+        'Manoir à la campagne avec grand terrain et de muliple pièces',
+        'Manoir',
+        '',
+        'manoir',
+        500,
+        true,
+        10,
+        14,
+        3,
+        7,
+        4,
+        300,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        '0123456788',
+        '0000000001',
+        '0000000001',
+        'photos/dubois'
+    );
+
+INSERT INTO _logement
+VALUES (
+        '0123456788',
+        'Maison de campagne',
+        250,
+        'Maison à la campagne avec grand terrain et de muliple pièces',
+        'Maison',
+        '',
+        'maison',
+        125,
+        true,
+        4,
+        6,
+        1,
+        3,
+        2,
+        3000,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        '0123456788',
+        '0000000001',
+        '0000000001',
+        'photos/dubois'
+    );
