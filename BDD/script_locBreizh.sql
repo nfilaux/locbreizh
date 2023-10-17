@@ -31,10 +31,10 @@ CREATE TABLE
         civilite VARCHAR(11) NOT NULL,
         nom VARCHAR(20) NOT NULL,
         prenom VARCHAR(20) NOT NULL,
-        mail VARCHAR(50) NOT NULL,
+        mail VARCHAR(50) NOT NULL unique,
         mot_de_passe VARCHAR(25) NOT NULL,
-        pseudo VARCHAR(20) NOT NULL,
-        telephone VARCHAR(10) NOT NULL,
+        pseudo VARCHAR(20) NOT NULL unique,
+        telephone VARCHAR(10) NOT NULL unique,
         adresse VARCHAR(30) NOT NULL,
         photo VARCHAR(50) NOT NULL,
         CONSTRAINT compte_pk PRIMARY KEY (id_compte),
@@ -62,7 +62,7 @@ CREATE TABLE
 
 CREATE TABLE
     _admin (
-        login VARCHAR(20) NOT NULL,
+        login VARCHAR(20) NOT NULL UNIQUE,
         mdp_admin VARCHAR(25) NOT NULL,
         CONSTRAINT admin_pk PRIMARY KEY (login)
     );
