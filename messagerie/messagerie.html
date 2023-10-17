@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div id="logo">
+                <img src="image/logo.svg">
+                <p>Loc’Breizh</p>
+            </div>
+            <img src="image/filtre.svg">
+            <form name="formulaire" method="post" action="recherche.php" enctype="multipart/form-data">
+                <input type="search" id="recherche" name="recherche" placeholder="Rechercher"><br>
+                <input type="image" id="loupe" alt="loupe" src="image/loupe.svg" />
+            </form>
+            <div>
+                <img src="image/reserv.svg">
+                <a href="liste_reservations.html">Accéder à mes réservations</a>
+            </div>
+            <div id="parametre">
+                <a href="messagerie.php"><img src="image/messagerie.svg"></a>
+                <a href="compte.php"><img src="image/compte.svg"></a>
+                <div>
+        </nav>
+    </header>
+    <main>
+        <!--partie de gauche-->
+        <div>
+            <!--barre de recherche-->
+            <div>
+                <img src="image/filtre.svg">
+                <form name="formulaire" method="post" action="recherche_conv.php" enctype="multipart/form-data">
+                    <input type="search" id="recherche_conv" name="recherche_conv" placeholder="Rechercher"><br>
+                    <input type="image" id="loupe" alt="loupe" src="image/loupe.svg" />
+                </form>
+            </div>
+            <!--liste conv-->
+            <div>
+                <div>
+                    <img src="image/compte.svg" alt="image de profil">
+                    <p>Esteban Leconte</p>
+                    <p>15 sept.</p>
+                    <p>blablablablabla</p>
+                </div>
+                <div>
+                    <img src="image/compte.svg" alt="image de profil">
+                    <p>Jean pierre</p>
+                    <p>12 sept.</p>
+                    <p>blablablablabla</p>
+                </div>
+            </div>
+        </div>
+        <!--partie de droite-->
+        <div>
+            <!--infos conv-->
+            <div>
+                <img src="image/compte.svg" alt="image de profil">
+                <p>Prenom NOM</p>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
