@@ -18,13 +18,13 @@
         print "Erreur !: " . $e->getMessage() . "<br/>";
         die();
     }
-    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo ;");
+
+    $user = '0000000001';
+    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '$user';");
     $stmt->execute();
     $row = $stmt->fetch();
-    echo $row['url_photo'];
 ?>
 <body>
-
     <header>
         <nav>
             <div id="logo">
@@ -59,18 +59,68 @@
             </div>
             <!--liste conv-->
             <div>
+                <?php
+                    $stmt = $dbh->prepare("
+                    WITH messageOrdre AS (
+                        SELECT
+                            c.id_conversation,
+                            CASE
+                                WHEN c.compte1 = '$user' THEN c.compte2
+                                ELSE c.compte1
+                            END AS id_autre_compte,
+                            cp.nom AS nom_autre_compte,
+                            cp.prenom AS prenom_autre_compte,
+                            cp.photo as photo_autre_compte,
+                            m.id_message,
+                            m.contenu_message,
+                            m.date_mess,
+                            m.heure_mess,
+                            ROW_NUMBER() OVER (PARTITION BY c.id_conversation ORDER BY m.date_mess DESC, m.heure_mess DESC) AS message_rank
+                        FROM
+                            locbreizh._conversation c
+                        INNER JOIN locbreizh._compte cp ON (
+                            cp.id_compte = CASE
+                                WHEN c.compte1 = '$user' THEN c.compte2
+                                ELSE c.compte1
+                            END
+                        )
+                        LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
+                        WHERE
+                            c.compte1 = '$user' OR c.compte2 = '$user'
+                    )
+                    SELECT
+                        id_conversation,
+                        id_autre_compte,
+                        nom_autre_compte,
+                        prenom_autre_compte,
+                        photo_autre_compte,
+                        id_message,
+                        contenu_message,
+                        date_mess,
+                        heure_mess
+                    FROM messageOrdre
+                    WHERE message_rank = 1;");
+
+                    $stmt->execute();
+                    $rows = $stmt->fetchAll();
+
+                    foreach($rows as $row){?>
+
                 <div>
-                    <img src="image/compte.svg" alt="image de profil">
-                    <p>Esteban Leconte</p>
-                    <p>15 sept.</p>
-                    <p>blablablablabla</p>
+                    <img src=<?php echo $row['photo_autre_compte'];?> alt="image de profil">
+                    <p><?php echo $row['prenom_autre_compte'] . " " . $row['nom_autre_compte']; ?></p>
+                    <p><?php
+                        //on cree un objet date pour changer sa forme
+                        $date = new DateTime($row['date_mess']);
+                        // le format jour mois
+                        $date_formatee = $date->format('j F');
+                        // on coupe la fin du mois
+                        $mois_cut = substr($date_formatee, 3, 4) . ".";
+                        echo $date->format('j ') . $mois_cut;
+                    ?></p>
+                    <p><?php echo $row['contenu_message']; ?></p>
                 </div>
-                <div>
-                    <img src="image/compte.svg" alt="image de profil">
-                    <p>Jean pierre</p>
-                    <p>12 sept.</p>
-                    <p>blablablablabla</p>
-                </div>
+                <?php }?>
             </div>
         </div>
         <!--partie de droite-->
@@ -147,5 +197,4 @@
         </div>
     </footer>
 </body>
-
 </html>
