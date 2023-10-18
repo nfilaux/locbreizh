@@ -32,12 +32,26 @@
         <form name="envoie_demande_devis" method="post" action="envoyer_demande.php" enctype="multipart/form-data">
             <div>
                 <label for="dateArrivee">Date d’arrivée :</label>
-                <input type="date" id="dateArrivee" name="dateArrivee" />
-            </div>
-            <div>
+                <input type="date" id="dateArrivee" name="dateArrivee" required/>
 
+                <label for="dateDepart">Date de depart :</label>
+                <input type="date" id="dateDepart" name="dateDepart" required/>
+
+                <label for="nb_pers">Nombre de persones :</label>
+                <input type="number" id="nb_pers" name="nb_pers" min="1" max="50" value="1" required/>
             </div>
-            <input type="button" id="envoie" alt="envoie"/>
+            <h2>Supplements</h2>
+            <div>
+                <label for="nb_animaux">Nombre d'animaux :</label>
+                <input type="number" id="nb_animaux" name="nb_animaux" min="0" max="20" value="0"required/>
+
+                <label for="nb_pers_supp">Nombre de personnes supplementaires :</label>
+                <input type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50" value="0" required/>
+
+                <label for="menage">Menage</label>
+                <input type="checkbox" id="menage" name="menage" value="true" />
+            </div>
+            <input type="submit" value="Soumettre ma demande" />
         </form>
     </main>
     <footer class="mt-4 container-fluid">
