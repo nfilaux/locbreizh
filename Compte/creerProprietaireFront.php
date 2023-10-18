@@ -7,10 +7,17 @@
 </head>
 <body>
     <main>
+        <?php
+            session_start();
+            if(isset($_SESSION["msg"])){
+                ?><p><?php echo $_SESSION["msg"]?></p><?php
+                unset($_SESSION["msg"]);
+            }
+        ?>
         <a href="connexion.html"><img src="./images/flecheRetour.svg"/></a>
         <h1>Créer mon compte propriétaire  !</h1>
 
-        <form action="process.php" method="post" enctype="multipart/form-data">
+        <form action="creerProprietaireBack.php" method="post" enctype="multipart/form-data">
 
             <input type="text" id="prenom" name="prenom" placeholder="Prenom" required />
             <br />
@@ -52,6 +59,18 @@
             <br />
 
             <input type="password" id="motdepasse" name="motdepasse" placeholder="Confirmation Mot de passe" required/>
+            <br />
+
+            <input type="text" id="ville" name="ville" placeholder="Ville" required />
+            <br />
+
+            <input type="text" id="codePostal" name="codePostal" placeholder="Code postal" required />
+            <br />
+
+            <input type="text" id="numRue" name="numRue" placeholder="N° Rue" required />
+            <br />
+
+            <input type="text" id="nomRue" name="nomRue" placeholder="Nom de  la rue" required />
             <br />
 
             <input type="submit" value="Suivant" />
