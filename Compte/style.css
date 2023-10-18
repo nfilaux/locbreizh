@@ -26,7 +26,7 @@ footer{
     color: #5B3F69;
     margin-bottom: 0;
     display: block;
-    position: fixed;
+    position: relative;
     bottom: 0;
     box-sizing: border-box;
     border-top: 1px solid #5B3F69;

@@ -11,20 +11,31 @@
     <main class="container offset-md-2 col-8">
         <?php
             session_start();
-            if(isset($_SESSION["msg"])){
-                ?><p><?php echo $_SESSION["msg"]?></p><?php
-                unset($_SESSION["msg"]);
+
+            print_r($_SESSION["erreurs"]);
+            function erreur($nomErreur)
+            {
+                if(isset($_SESSION["erreurs"][$nomErreur])){
+                    ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+                    unset($_SESSION["erreurs"][$nomErreur]);
+                }
             }
         ?>
         <div class="mb-5 col-12 row h-10"> 
             <a class="col-1" href="connexionFront.php"><img src="svg/flecheRetour.svg"/></a>
             <h1  class="offset-md-0 col-8">Créer mon compte client  !</h1>
         </div>
-        <form class="mt-5" action="creerClientBack.php" method="post">
+        <form class="mt-5" action="creerClientBack.php" method="post" enctype="multipart/form-data">
             
             <div class="col-12">
-                <input type="text" id="Prenom" name="Prenom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Prenom" required />
-                <input type="text" id="Nom" name="Nom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Nom" required />
+                <input type="text" id="prenom" name="prenom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Prenom" />
+                <?php
+                    erreur("prenom");
+                ?>
+                <input type="text" id="nom" name="nom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Nom" />
+                <?php
+                    erreur("nom");
+                ?>
             </div>
             
             <br />
@@ -36,47 +47,82 @@
             <label for="genre2">Femme</label>
             <input type="radio" id="genre3" name="genre" value="Autre" />
             <label for="genre2">Autre</label>
+            <?php
+                erreur("genre");
+            ?>
         
             <br />
 
             <label for="fichier">Carte d’identité</label>
-            <input type="file" id="fichier" name="fichier" value="Importer le document"/>
+            <input type="file" id="carteIdentite" name="carteIdentite" value="Importer le document"/>
+            <?php
+                erreur("carteIdentite");
+            ?>
             
             <br />
 
             <input type="email" id="email" name="email" placeholder="Mail"/>
+            <?php
+                erreur("email");
+            ?>
             <br />
 
-            <input type="tel" id="telephone" name="telephone" placeholder="Téléphone" required/>
+            <input type="tel" id="telephone" name="telephone" placeholder="Téléphone"/>
+            <?php
+                erreur("telephone");
+            ?>
             <br />
 
-            <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo" required />
+            <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo"/>
+            <?php
+                erreur("pseudo");
+            ?>
             <br />
 
             <label for="fichier">Photo de profil</label>
-            <input type="file" id="photoProfil" name="photoProfil" placeholder="Importer le document" required/>
+            <input type="file" id="photoProfil" name="photoProfil" placeholder="Importer le document"/>
+            <?php
+                erreur("photoProfil");
+            ?>
             <br />
 
-            <input type="password" id="motdepasse" name="motdepasse" placeholder="Password" required/>
-        
+            <input type="password" id="motdepasse" name="motdepasse" placeholder="Password"/>
+            <?php
+                erreur("motdepasse");
+            ?>
             <br />
 
-            <input type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation Mot de passe" required/>
+            <input type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation Mot de passe"/>
+            <?php
+                erreur("confirmationMDP");
+            ?>
             <br />
 
-            <input type="text" id="ville" name="ville" placeholder="Ville" required />
+            <input type="text" id="ville" name="ville" placeholder="Ville"/>
+            <?php
+                erreur("ville");
+            ?>
             <br />
 
-            <input type="text" id="codePostal" name="codePostal" placeholder="Code postal" required />
+            <input type="text" id="codePostal" name="codePostal" placeholder="Code postal"/>
+            <?php
+                erreur("codePostal");
+            ?>
             <br />
 
-            <input type="text" id="numRue" name="numRue" placeholder="N° Rue" required />
+            <input type="text" id="numRue" name="numRue" placeholder="N° Rue"/>
+            <?php
+                erreur("numRue");
+            ?>
             <br />
 
-            <input type="text" id="nomRue" name="nomRue" placeholder="Nom de  la rue" required />
+            <input type="text" id="nomRue" name="nomRue" placeholder="Nom de  la rue" />
+            <?php
+                erreur("nomRue");
+            ?>
             <br />
 
-            <input type="submit" value="Se connecter" />
+            <input type="submit" value="Se connecter"/>
 
         </form>
 
