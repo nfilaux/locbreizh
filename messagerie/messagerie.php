@@ -191,6 +191,7 @@
                         foreach($liste_message as $message){
                             if($message['auteur'] === $message['compte1']){
                                 $photo_mess = $message['photo1'];
+                                
                             }
                             else{
                                 $photo_mess = $message['photo2'];
