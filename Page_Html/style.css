@@ -1,0 +1,50 @@
+footer{
+    margin: 0;
+    background-color: #FAE3C6;
+    color: #5B3F69;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    bottom: 0;
+}
+
+a:link  {
+    background-color: transparent;
+    color: #5B3F69;
+}
+
+a:visited  {
+    background-color: transparent;
+    color: #5B3F69;
+}
+  
+
+footer hr {
+    color: #5B3F69;
+}
+
+footer div {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-around;
+}
+
+footer div:last-child p:last-child{
+    font-size: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+footer div a {
+    margin: auto;
+}
+
+footer div p {
+    margin: auto;
+}
+
+footer div p a{
+    margin-top: auto;
+    margin-bottom: 1em;
+}
