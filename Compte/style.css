@@ -1,0 +1,78 @@
+body {
+    height: 100vh;
+    padding-bottom: 0;
+    background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
+    background-origin: content-box;
+}
+
+main{
+    padding-top: 10vw;
+}
+
+main form div{
+    height: 5vw;
+    width: 80%;
+    margin: auto;
+}
+
+span a {
+    margin-right: 0;
+    font-size: 1.5em;
+}
+
+footer{
+    padding-top: 1px;
+    background-color: #FAE3C6;
+    color: #5B3F69;
+    margin-bottom: 0;
+    display: block;
+    position: fixed;
+    bottom: 0;
+    box-sizing: border-box;
+    border-top: 1px solid #5B3F69;
+}
+
+main h1{
+    color: #020202;
+    margin: auto;
+    text-align: center;
+}
+
+footer hr{
+    border-width: 1px;
+    border-color: #5B3F69;
+    width: 87%;
+}
+
+a:link{
+    color: #5B3F69;
+}
+
+a:visited{
+    color: #5B3F69;
+}
+
+.custom-input {
+    width: 100%;
+    color: #5F1900; 
+    border: 1px solid #5F1900;
+    border-radius: 20px;
+}
+
+.btn-compte {
+    background-color: #5B3F69; 
+    color: #CBF1FF; 
+    border: 1px solid #5B3F69; 
+    border-radius: 20px;
+    font-size: 2em;
+}
+
+.btn-compte:hover {
+    background-color: #FAE3C6;
+    color: #5B3F69;
+}
+
+#Login::placeholder, #motdepasse::placeholder{
+    color: #5F1900;
+    opacity: 50%;
+}

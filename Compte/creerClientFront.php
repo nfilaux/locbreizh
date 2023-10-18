@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <main>
+    <main class="container offset-md-2 col-8">
         <?php
             session_start();
             if(isset($_SESSION["msg"])){
@@ -14,15 +16,17 @@
                 unset($_SESSION["msg"]);
             }
         ?>
-        <a href="connexion.html"><img src="./images/flecheRetour.svg"/></a>
-        <h1>Créer mon compte client  !</h1>
-
-        <form action="creerClientBack.php" method="post" enctype="multipart/form-data">
-
-            <input type="text" id="prenom" name="prenom" placeholder="Prenom" required />
-            <br />
-
-            <input type="text" id="nom" name="nom" placeholder="Nom" required />
+        <div class="mb-5 col-12 row h-10"> 
+            <a class="col-1" href="connexionFront.php"><img src="svg/flecheRetour.svg"/></a>
+            <h1  class="offset-md-0 col-8">Créer mon compte client  !</h1>
+        </div>
+        <form class="mt-5" action="creerClientBack.php" method="post">
+            
+            <div class="col-12">
+                <input type="text" id="Prenom" name="Prenom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Prenom" required />
+                <input type="text" id="Nom" name="Nom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Nom" required />
+            </div>
+            
             <br />
 
             <label>Civilité</label>
@@ -32,10 +36,12 @@
             <label for="genre2">Femme</label>
             <input type="radio" id="genre3" name="genre" value="Autre" />
             <label for="genre2">Autre</label>
+        
             <br />
 
             <label for="fichier">Carte d’identité</label>
-            <input type="file" id="carteIdentite" name="carteIdentite" placeholder="Importer le document" required/>
+            <input type="file" id="fichier" name="fichier" value="Importer le document"/>
+            
             <br />
 
             <input type="email" id="email" name="email" placeholder="Mail"/>
@@ -51,7 +57,8 @@
             <input type="file" id="photoProfil" name="photoProfil" placeholder="Importer le document" required/>
             <br />
 
-            <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required/>
+            <input type="password" id="motdepasse" name="motdepasse" placeholder="Password" required/>
+        
             <br />
 
             <input type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation Mot de passe" required/>
@@ -69,25 +76,26 @@
             <input type="text" id="nomRue" name="nomRue" placeholder="Nom de  la rue" required />
             <br />
 
-            <input type="submit" value="Suivant"/>
+            <input type="submit" value="Se connecter" />
 
         </form>
+
     </main>
 
-    <footer>
-        <div>
-            <a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
-            <a href="tel:+33623455689">(+33) 6 23 45 56 89</a>
-            <a href="connexion.html"><img src="./images/instagram.svg">@LocBreizh</a>
-            <a href="connexion.html"><img src="./images/facebook.svg">@LocBreizh</a>
-        </div>
-
-        <hr/>
-
-        <div>
-            <p>©2023 Loc’Breizh</p>
-            <a href="connexion.html">Conditions générales</a>
-            <p>Developpé par <a href="connexion.html">7ème sens</a></p>
+    <footer class="mt-4 container-fluid">
+        <div class="mt-4 column">
+            <div class="col-12 text-center">
+                <a class="col-3" href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
+                <a class="offset-md-2 col-1" href="tel:+33623455689">(+33) 6 23 45 56 89</a>
+                <a class="offset-md-2 col-1" href="connexion.html"><img src="svg/instagram.svg">  @LocBreizh</a>
+                <a class="offset-md-2 col-1" href="connexion.html"><img src="svg/facebook.svg">  @LocBreizh</a>
+            </div>
+            <hr>  
+            <div class="offset-md-1 col-10 mt-4 text-center row">
+                <p class="offset-md-1 col-2">©2023 Loc’Breizh</p>
+                <p class="offset-md-1 col-3" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p class="offset-md-1 col-4" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            </div>
         </div>
     </footer>
 </body>

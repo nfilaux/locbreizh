@@ -14,7 +14,7 @@
                 unset($_SESSION["msg"]);
             }
         ?>
-        <a href="connexion.html"><img src="./images/flecheRetour.svg"/></a>
+        <a href="connexionFront.php"><img src="./images/flecheRetour.svg"/></a>
         <h1>Créer mon compte propriétaire  !</h1>
 
         <form action="creerProprietaireBack.php" method="post" enctype="multipart/form-data">
