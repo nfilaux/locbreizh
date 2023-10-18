@@ -445,6 +445,27 @@ values (
 
 INSERT into _compte
 values (
+        '0000000004',
+        'Madame',
+        'Grand',
+        'Michelle',
+        'mgrand@gmail.com',
+        'michelle22',
+        'mgrand',
+        '0712457823',
+        '0000000001',
+        'photos/dubois'
+    );
+
+insert into _proprietaire
+values (
+        '0000000004',
+        '00465654646445',
+        'carte/id/dubois'
+    );
+
+INSERT into _compte
+values (
         '0000000002',
         'Madame',
         'Lucas',

@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,50 +20,9 @@
     $user = '0000000001';
     $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '$user';");
     $stmt->execute();
-    $row = $stmt->fetch();
-?>
-<body>
-    <!--potentiel manière sans js-->
-    <form action="messagerie.php" method="post">
-            <input type="submit" name="divClic" value="Div 3">
-    </form>
+    $photo_profil = $stmt->fetch();
 
-    <header>
-        <nav>
-            <div id="logo">
-                <img src="image/logo.svg">
-                <p>Loc’Breizh</p>
-            </div>
-            <img src="image/filtre.svg">
-            <form name="formulaire" method="post" action="recherche.php" enctype="multipart/form-data">
-                <input type="search" id="recherche" name="recherche" placeholder="Rechercher"><br>
-                <input type="image" id="loupe" alt="loupe" src="image/loupe.svg" />
-            </form>
-            <div>
-                <img src="image/reserv.svg">
-                <a href="liste_reservations.html">Accéder à mes réservations</a>
-            </div>
-            <div id="parametre">
-                <a href="messagerie.php"><img src="image/messagerie.svg"></a>
-                <a href="compte.php"><img src=<?php echo $row['url_photo']; ?>></a>
-                <div>
-        </nav>
-    </header>
-    <main>
-        <!--partie de gauche-->
-        <div>
-            <!--barre de recherche-->
-            <div>
-                <img src="image/filtre.svg">
-                <form name="formulaire" method="post" action="recherche_conv.php" enctype="multipart/form-data">
-                    <input type="search" id="recherche_conv" name="recherche_conv" placeholder="Rechercher"><br>
-                    <input type="image" id="loupe" alt="loupe" src="image/loupe.svg" />
-                </form>
-            </div>
-            <!--liste conv-->
-            <div>
-                <?php
-                    $stmt = $dbh->prepare("
+    $stmt = $dbh->prepare("
                     WITH messageOrdre AS (
                         SELECT
                             c.id_conversation,
@@ -80,7 +37,7 @@
                             m.contenu_message,
                             m.date_mess,
                             m.heure_mess,
-                            ROW_NUMBER() OVER (PARTITION BY c.id_conversation ORDER BY m.date_mess DESC, m.heure_mess DESC) AS message_rank
+                            conv_NUMBER() OVER (PARTITION BY c.id_conversation ORDER BY m.date_mess DESC, m.heure_mess DESC) AS message_rank
                         FROM
                             locbreizh._conversation c
                         INNER JOIN locbreizh._compte cp ON (
@@ -106,77 +63,155 @@
                     FROM messageOrdre
                     WHERE message_rank = 1;");
 
-                    $stmt->execute();
-                    $rows = $stmt->fetchAll();
+    $stmt->execute();
+    $liste_conv = $stmt->fetchAll();
+    
+    if(!isset($_GET['conv'])){
+        ...
+    }
+    
+    $stmt = $dbh->prepare("
+    SELECT
+        c.id_conversation,
+        CASE
+            WHEN c.compte1 = '$user' THEN c.compte2
+            ELSE c.compte1
+        END AS id_autre_compte,
+        cp.nom AS nom_autre_compte,
+        cp.prenom AS prenom_autre_compte,
+        cp.photo as photo_autre_compte,
+        m.id_message,
+        m.contenu_message,
+        m.date_mess,
+        m.heure_mess
+    FROM
+        locbreizh._conversation c
+    INNER JOIN locbreizh._compte cp ON (
+        cp.id_compte = CASE
+            WHEN c.compte1 = '$user' THEN c.compte2
+            ELSE c.compte1
+        END
+    )
+    LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
+    WHERE
+        (c.compte1 = '$user' OR c.compte2 = '$user') and c.id_conversation = '{$_GET['conv']}'
+    ORDER BY date_mess DESC, heure_mess DESC;");
 
-                    foreach($rows as $row){?>
+    $stmt->execute();
+    $liste_message = $stmt->fetchAll();
+?>
+<body>
+    <!--potentiel manière sans js-->
+    <form action="messagerie.php" method="post">
+            <input type="submit" name="divClic" value="Div 3">
+    </form>
+
+    <header>
+        <nav>
+            <div id="logo">
+                <img src="image/logo.svg">
+                <p>Loc’Breizh</p>
+            </div>
+            <img src="image/filtre.svg">
+            <form name="formulaire" method="post" action="recherche.php" enctype="multipart/form-data">
+                <input type="search" id="recherche" name="recherche" placeholder="Rechercher"><br>
+                <input type="image" id="loupe" alt="loupe" src="image/loupe.svg" />
+            </form>
+            <div>
+                <img src="image/reserv.svg">
+                <a href="liste_reservations.html">Accéder à mes réservations</a>
+            </div>
+            <div id="parametre">
+                <a href="messagerie.php"><img src="image/messagerie.svg"></a>
+                <a href="compte.php"><img src=<?php echo $photo_profil['url_photo']; ?>></a>
+                <div>
+        </nav>
+    </header>
+    <main>
+        <hr>
+        <!--partie de gauche-->
+        <div>
+            <!--barre de recherche-->
+            <div>
+                <img src="image/filtre.svg">
+                <form name="formulaire" method="post" action="recherche_conv.php" enctype="multipart/form-data">
+                    <input type="search" id="recherche_conv" name="recherche_conv" placeholder="Rechercher"><br>
+                    <input type="image" id="loupe" alt="loupe" src="image/loupe.svg" />
+                </form>
+            </div>
+            <!--liste conv-->
+            <div>
+                <?php
+                    $tab_id_conv = [];
+                    foreach($liste_conv as $conv){
+                        // adding an underscore to not transform it into an int so we can compre it after
+                        $tab_id_conv[] = '_' . $conv['id_conversation'];
+
+                        ?>
 
                 <div>
-                    <img src=<?php echo $row['photo_autre_compte'];?> alt="image de profil">
-                    <p><?php echo $row['prenom_autre_compte'] . " " . $row['nom_autre_compte']; ?></p>
-                    <p><?php
-                        //on cree un objet date pour changer sa forme
-                        $date = new DateTime($row['date_mess']);
-                        // le format jour mois
-                        $date_formatee = $date->format('j F');
-                        // on coupe la fin du mois
-                        $mois_cut = substr($date_formatee, 3, 4) . ".";
-                        echo $date->format('j ') . $mois_cut;
-                    ?></p>
-                    <p><?php echo substr($row['contenu_message'], 0, 30); ?></p>
+                    <a href="?conv=<?php $conv['id_conversation']; ?>">
+                        <img src=<?php echo $conv['photo_autre_compte'];?> alt="image de profil">
+                        <p><?php echo $conv['prenom_autre_compte'] . " " . $conv['nom_autre_compte']; ?></p>
+                        <p><?php
+                            //on cree un objet date pour changer sa forme
+                            $date = new DateTime($conv['date_mess']);
+                            // le format jour mois
+                            $date_formatee = $date->format('j F');
+                            // on coupe la fin du mois
+                            $mois_cut = substr($date_formatee, 3, 4) . ".";
+                            echo $date->format('j ') . $mois_cut;
+                        ?></p>
+                        <p><?php echo substr($conv['contenu_message'], 0, 30); ?></p>
+                    </a>
                 </div>
                 <?php }?>
             </div>
         </div>
+        <hr>
         <!--partie de droite-->
         <div>
             <!--infos conv-->
-            <div>
-                <img src=<?php ?> alt="image de profil">
-                <p>Prenom NOM</p>
-            </div>
-            <!--contenu conversation-->
-            <div>
-                <!--un seul message-->
-                <div>
-                    <img src="image/compte.svg" alt="photo de profil">
-                    <!--contenu message + date... -->
+            <?php
+                if(count($tab_id_conv) != 0 ){?>
+                    <!--affichege entete conv-->
                     <div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id auctor lacus. Vivamus
-                            ornare purus sit amet lacinia porta. Nullam feugiat rhoncus convallis. Vivamus turpis
-                            ligula, fringilla a neque</p>
-                        <p>15/09/2023 11:47</p>
+                        <img src=<?php ?> alt="image de profil">
+                        <p>Prenom NOM</p>
                     </div>
-                </div>
-                <div>
-                    <img src="image/compte.svg" alt="photo de profil">
-                    <!--contenu message + date... -->
                     <div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id auctor lacus. Vivamus
-                            ornare purus sit amet lacinia porta. Nullam feugiat rhoncus convallis. Vivamus turpis
-                            ligula, fringilla a neque</p>
-                        <p>15/09/2023 11:47</p>
+                    <?php 
+                    //si une conv a été selectionné
+                    if(isset($_GET['conv'])){
+                        foreach($liste_message as $message){?>
+                            <!--contenu conversation-->
+                            
+                                <!--un seul message-->
+                                <div>
+                                    <img src="image/compte.svg" alt="photo de profil">
+                                    <!--contenu message + date... -->
+                                    <div>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id auctor lacus. Vivamus
+                                                ornare purus sit amet lacinia porta. Nullam feugiat rhoncus convallis. Vivamus turpis
+                                                ligula, fringilla a neque</p>
+                                        <p>15/09/2023 11:47</p>
+                                    </div>
+                                </div>
+                                <!--champ pour ecrire le message-->
+                                <div>
+                                    <form name="envoie_message" method="post" action="envoyer_message.php" enctype="multipart/form-data">
+                                        <input type="text" id="message" name="message" placeholder="Envoyer un message"><br>
+                                        <input type="image" id="envoie" alt="envoie" src="image/envoyer.svg" />
+                                    </form>
+                                </div>
+                            
+                        <?php }
+                    }
+                    else{
+
+                    }?>
                     </div>
-                </div>
-                <div>
-                    <img src="image/compte.svg" alt="photo de profil">
-                    <!--contenu message + date... -->
-                    <div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id auctor lacus. Vivamus
-                            ornare purus sit amet lacinia porta. Nullam feugiat rhoncus convallis. Vivamus turpis
-                            ligula, fringilla a neque</p>
-                        <p>15/09/2023 11:47</p>
-                    </div>
-                </div>
-                <!--champ pour ecrire le message-->
-                <div>
-                    <form name="envoie_message" method="post" action="envoyer_message.php"
-                        enctype="multipart/form-data">
-                        <input type="text" id="message" name="message" placeholder="Envoyer un message"><br>
-                        <input type="image" id="envoie" alt="envoie" src="image/envoyer.svg" />
-                    </form>
-                </div>
-            </div>
+            <?php }?>
         </div>
     </main>
     <footer>
