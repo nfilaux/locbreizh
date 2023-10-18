@@ -18,12 +18,9 @@
         <input id="searchbar" type="text" name="search">
         <img src="/Ressources/Images/loupe.svg">
 
-        <img src="/Ressources/Images/booklet-fill 1.svg">
-        <h4>Accèder à mes logements</h4>
+        <h4>S'sinscrire</h4>
+        <h4>Se connecter</h4>
 
-
-        <img src="/Ressources/Images/message.svg">
-        <img src="/Ressources/Images/compte.svg">
         <hr>
     </header>
     <main>
