@@ -1,12 +1,38 @@
 <?php
     session_start();
     $erreur = false;
+    $url = "?";
     $_SESSION['erreurs'] = [];
     foreach ($_POST as $key => $row){
         if (empty($row)){
             $erreur = true;
             $_SESSION['erreurs'] += [$key => "Veuillez renseigner ce champ."];
         }
+        else{
+            $url .= "$key=$row&";
+        }
+    }
+    $arrayNom1 = explode('.', $_FILES['carteIdentite']['name']);
+    $extension1 = $arrayNom1[sizeof($arrayNom1)-1];
+    if ($extension1 == "png" or $extension1 == "gif" or $extension1 == "jpg" or $extension1 == "jpeg"){
+        $temps1 = time();
+    }
+    else{
+        if (!empty($extension1)){
+            $_SESSION['erreurs'] += ["carteIdentite" => "mauvaise extension de fichiers"];
+        }
+        $erreur = true;
+    }
+    $arrayNom2 = explode('.', $_FILES['photoProfil']['name']);
+    $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
+    if ($extension2 == "png" or $extension2 == "gif" or $extension2 == "jpg" or $extension2 == "jpeg"){
+        $temps2 = time();
+    }
+    else{
+        if (!empty($extension2)){
+            $_SESSION['erreurs'] += ["photoProfil" => "mauvaise extension de fichiers"];
+        }
+        $erreur = true;
     }
     if (!$erreur){
         $prenom = htmlentities($_POST["prenom"]);
@@ -21,6 +47,10 @@
         $codePostal = htmlentities($_POST["codePostal"]);
         $numRue = htmlentities($_POST["numRue"]);
         $nomRue = htmlentities($_POST["nomRue"]);
+
+        if(preg_match("/[a-zA-Z]+/", $nom)){   
+            echo "toto";
+        }
 
         include('connect_params.php');
         try {
@@ -55,32 +85,9 @@
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
-
-
-
-        $arrayNom1 = explode('.', $_FILES['carteIdentite']['name']);
-        $extension1 = $arrayNom1[sizeof($arrayNom1)-1];
-        if ($extension1 == "png" or $extension1 == "gif" or $extension1 == "jpg" or $extension1 == "jpeg"){
-            $temps1 = time();
-        }
-        else{
-            $_SESSION['erreurs'] += ["carteIdentite" => "mauvaise extension de fichiers"];
-            header("Location: ./creerClientFront.php");
-            exit;
-        }
-        $arrayNom2 = explode('.', $_FILES['photoProfil']['name']);
-        $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
-        if ($extension2 == "png" or $extension2 == "gif" or $extension2 == "jpg" or $extension2 == "jpeg"){
-            $temps2 = time();
-        }
-        else{
-            $_SESSION['erreurs'] += ["photoProfil" => "mauvaise extension de fichiers"];
-            header("Location: ./creerClientFront.php");
-            exit;
-        }
-
     }
-    else{
-        header("Location: ./creerClientFront.php");
+    if ($erreur){
+        $url = substr($url, 0, -1);
+        header("Location: ./creerClientFront.php$url");
     }
 ?>

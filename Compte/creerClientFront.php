@@ -12,7 +12,6 @@
         <?php
             session_start();
 
-            print_r($_SESSION["erreurs"]);
             function erreur($nomErreur)
             {
                 if(isset($_SESSION["erreurs"][$nomErreur])){
@@ -28,11 +27,11 @@
         <form class="mt-5" action="creerClientBack.php" method="post" enctype="multipart/form-data">
             
             <div class="col-12">
-                <input type="text" id="prenom" name="prenom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Prenom" />
+                <input type="text" id="prenom" name="prenom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Prenom" value="<?php if(isset($_GET['prenom'])) { echo htmlentities($_GET['prenom']);}?>"/>
                 <?php
                     erreur("prenom");
                 ?>
-                <input type="text" id="nom" name="nom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Nom" />
+                <input type="text" id="nom" name="nom"  style="height: 6vw;font-size: 2em;"  class="custom-input col-5 text-center" placeholder="Nom" value="<?php if(isset($_GET['nom'])) { echo htmlentities($_GET['nom']);}?>"/>
                 <?php
                     erreur("nom");
                 ?>
@@ -41,11 +40,11 @@
             <br />
 
             <label>Civilité</label>
-            <input type="radio" id="genre1" name="genre" value="Homme" />
+            <input type="radio" id="genre1" name="genre" value="Homme" <?php if(isset($_GET['genre'])) {if($_GET['genre'] == 'Homme') { ?> checked <?php }}?>/>
             <label for="genre1">Homme</label>
-            <input type="radio" id="genre2" name="genre" value="Femme" />
+            <input type="radio" id="genre2" name="genre" value="Femme" <?php if(isset($_GET['genre'])) {if($_GET['genre'] == 'Femme') { ?> checked <?php }}?>/>
             <label for="genre2">Femme</label>
-            <input type="radio" id="genre3" name="genre" value="Autre" />
+            <input type="radio" id="genre3" name="genre" value="Autre" <?php if(isset($_GET['genre'])) {if($_GET['genre'] == 'Autre') { ?> checked <?php }}?>/>
             <label for="genre2">Autre</label>
             <?php
                 erreur("genre");
@@ -54,26 +53,26 @@
             <br />
 
             <label for="fichier">Carte d’identité</label>
-            <input type="file" id="carteIdentite" name="carteIdentite" value="Importer le document"/>
+            <input type="file" id="carteIdentite" name="carteIdentite"/>
             <?php
                 erreur("carteIdentite");
             ?>
             
             <br />
 
-            <input type="email" id="email" name="email" placeholder="Mail"/>
+            <input type="email" id="email" name="email" placeholder="Mail" value="<?php if(isset($_GET['email'])) { echo htmlentities($_GET['email']);}?>"/>
             <?php
                 erreur("email");
             ?>
             <br />
 
-            <input type="tel" id="telephone" name="telephone" placeholder="Téléphone"/>
+            <input type="tel" id="telephone" name="telephone" placeholder="Téléphone" value="<?php if(isset($_GET['telephone'])) { echo htmlentities($_GET['telephone']);}?>"/>
             <?php
                 erreur("telephone");
             ?>
             <br />
 
-            <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo"/>
+            <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>"/>
             <?php
                 erreur("pseudo");
             ?>
@@ -98,25 +97,25 @@
             ?>
             <br />
 
-            <input type="text" id="ville" name="ville" placeholder="Ville"/>
+            <input type="text" id="ville" name="ville" placeholder="Ville" value="<?php if(isset($_GET['ville'])) { echo htmlentities($_GET['ville']);}?>"/>
             <?php
                 erreur("ville");
             ?>
             <br />
 
-            <input type="text" id="codePostal" name="codePostal" placeholder="Code postal"/>
+            <input type="text" id="codePostal" name="codePostal" placeholder="Code postal" value="<?php if(isset($_GET['codePostal'])) { echo htmlentities($_GET['codePostal']);}?>"/>
             <?php
                 erreur("codePostal");
             ?>
             <br />
 
-            <input type="text" id="numRue" name="numRue" placeholder="N° Rue"/>
+            <input type="text" id="numRue" name="numRue" placeholder="N° Rue" value="<?php if(isset($_GET['numRue'])) { echo htmlentities($_GET['numRue']);}?>"/>
             <?php
                 erreur("numRue");
             ?>
             <br />
 
-            <input type="text" id="nomRue" name="nomRue" placeholder="Nom de  la rue" />
+            <input type="text" id="nomRue" name="nomRue" placeholder="Nom de  la rue" value="<?php if(isset($_GET['nomRue'])) { echo htmlentities($_GET['nomRue']);}?>"/>
             <?php
                 erreur("nomRue");
             ?>
