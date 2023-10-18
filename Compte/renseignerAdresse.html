@@ -8,22 +8,25 @@
 <body>
     <main>
         <a href="connexion.html"><img src="./images/flecheRetour.svg"/></a>
-        <h1>Bienvenue sur Loc’Breizh !</h1>
+        <h1>Créer mon compte propriétaire  !</h1>
 
-        <form action="connexion.php" method="post">
+        <form action="process.php" method="post">
 
-            <input type="text" id="login" name="login" placeholder="Login" required />
+            <input type="text" id="ville" name="ville" placeholder="Ville" required />
             <br />
 
-            <input type="password" id="motdepasse" name="motdepasse" placeholder="Password" required/>
+            <input type="text" id="codePostal" name="codePostal" placeholder="Code postal" required />
             <br />
 
-            <input type="submit" value="Se connecter" />
+            <input type="text" id="rue" name="rue" placeholder="Rue" required />
+            <br />
+
+            <input type="text" id="numRue" name="numRue" placeholder="Numéro de rue" required />
+            <br />
+
+            <input type="submit" value="Suivant" />
 
         </form>
-
-        <p>Nouveau ici ? <a href="connexion.html">créer un compte</a></p>
-        <p><a href="connexion.html">Mot de passe oublié ?</a></p>
     </main>
 
     <footer>
