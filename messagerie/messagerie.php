@@ -188,7 +188,6 @@
                     </div>
                     <div>
                     <?php 
-                    //si une conv a été selectionné
                         foreach($liste_message as $message){
                             if($message['auteur'] === $message['compte1']){
                                 $photo_mess = $message['photo1'];
@@ -220,26 +219,20 @@
             <?php }?>
         </div>
     </main>
-    <footer>
-        <!--partie haite du footer-->
-        <div>
-            <a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
-            <a href="tel:+33623455689">(+33) 6 23 45 56 89</a>
-            <div>
-                <img src="image/instagram.svg" alt="logo instagram">
-                <a href="https://www.instagram.com/LocBreizh/">@LocBreizh</a>
+    <footer class="mt-4 container-fluid">
+        <div class="mt-4 column">
+            <div class="col-12 text-center">
+                <a class="col-2" href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
+                <a class="offset-md-1 col-2" href="tel:+33623455689">(+33) 6 23 45 56 89</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/instagram.svg">  @LocBreizh</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/facebook.svg">  @LocBreizh</a>
             </div>
-            <div>
-                <img src="image/facebook.svg" alt="logo facebook">
-                <a href="https://fr-fr.facebook.com/LocBreizh/">@LocBreizh</a>
+            <hr>
+            <div class="offset-md-1 col-10 mt-4 text-center row">
+                <p class="offset-md-1 col-2">©2023 Loc’Breizh</p>
+                <p class="offset-md-1 col-3" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p class="offset-md-1 col-4" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
-        </div>
-        
-        <!--partie basse du footer-->
-        <div>
-            <p>©2023 Loc’Breizh</p>
-            <a href="">Conditions générales</a>
-            <p>Developpé par <a href="">7ème sens</a></p>
         </div>
     </footer>
 </body>
