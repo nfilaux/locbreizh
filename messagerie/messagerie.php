@@ -67,10 +67,11 @@
     $liste_conv = $stmt->fetchAll();
     
     if(!isset($_GET['conv'])){
-        $selectione = $liste_conv[0];
+        
+        $selectionne = $liste_conv[0]['id_conversation'];
     }
     else{
-        $selectione = $_GET['conv'];
+        $selectionne = $_GET['conv'];
     }
     $stmt = $dbh->prepare("
     SELECT c.id_conversation,
@@ -91,7 +92,7 @@
     LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
     INNER JOIN locbreizh._compte cp1 ON cp1.id_compte = c.compte1
     INNER JOIN locbreizh._compte cp2 ON cp2.id_compte = c.compte2
-    WHERE c.id_conversation = '0000000001'
+    WHERE c.id_conversation = '$selectionne'
     ORDER BY date_mess DESC,
         heure_mess DESC;");
     
@@ -99,11 +100,6 @@
     $liste_message = $stmt->fetchAll();
 ?>
 <body>
-    <!--potentiel manière sans js-->
-    <form action="messagerie.php" method="post">
-            <input type="submit" name="divClic" value="Div 3">
-    </form>
-
     <header>
         <nav>
             <div id="logo">
@@ -126,7 +122,7 @@
         </nav>
     </header>
     <main>
-        <hr>
+        
         <!--partie de gauche-->
         <div>
             <!--barre de recherche-->
@@ -146,7 +142,7 @@
                         $tab_id_conv[] = '_' . $conv['id_conversation'];
                         ?>
                 <div>
-                    <a href="?conv=<?php $conv['id_conversation']; ?>">
+                    <a href=<?php echo "?conv=" . $conv['id_conversation'];?>>
                         <img src=<?php echo $conv['photo_autre_compte'];?> alt="image de profil">
                         <p><?php echo $conv['prenom_autre_compte'] . " " . $conv['nom_autre_compte']; ?></p>
                         <p><?php
@@ -164,7 +160,7 @@
                 <?php }?>
             </div>
         </div>
-        <hr>
+        
         <!--partie de droite-->
         <div>
             <!--infos conv-->
@@ -188,12 +184,11 @@
                         else{
                             echo $liste_message[0]['prenom1'] . " " . $liste_message[0]['nom1'];  
                         }
-                        ?></p><hr>
+                        ?></p>
                     </div>
                     <div>
                     <?php 
                     //si une conv a été selectionné
-                    if(isset($_GET['conv'])){
                         foreach($liste_message as $message){
                             if($message['auteur'] === $message['compte1']){
                                 $photo_mess = $message['photo1'];
@@ -201,22 +196,18 @@
                             else{
                                 $photo_mess = $message['photo2'];
                             }
-                                ?>                      
-                                <!--un seul message-->
+                            ?>                      
+                            <!--un seul message-->
+                            <div>
+                                <img src=<?php echo $photo_mess; ?> alt="photo de profil">
+                                <!--contenu message + date... -->
                                 <div>
-                                    <img src=<?php echo $photo_mess; ?> alt="photo de profil">
-                                    <!--contenu message + date... -->
-                                    <div>
-                                        <p><?php echo $message['contenu_message']?></p>
-                                        <p><?php echo $message['date_mess'] . ' ' . $message['heure_mess']; ?> </p>
-                                    </div>
+                                    <p><?php echo $message['contenu_message']?></p>
+                                    <p><?php echo $message['date_mess'] . ' ' . $message['heure_mess']; ?> </p>
                                 </div>
-                                <hr>
+                            </div>
+                            
                         <?php
-                        }
-                    }
-                    else{
-
                     }?>
                     <!--champ pour ecrire le message-->
                     <div>
@@ -243,7 +234,7 @@
                 <a href="https://fr-fr.facebook.com/LocBreizh/">@LocBreizh</a>
             </div>
         </div>
-        <hr>
+        
         <!--partie basse du footer-->
         <div>
             <p>©2023 Loc’Breizh</p>
