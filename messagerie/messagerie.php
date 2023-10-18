@@ -37,7 +37,7 @@
                             m.contenu_message,
                             m.date_mess,
                             m.heure_mess,
-                            conv_NUMBER() OVER (PARTITION BY c.id_conversation ORDER BY m.date_mess DESC, m.heure_mess DESC) AS message_rank
+                            (row_number() OVER (PARTITION BY c.id_conversation ORDER BY m.date_mess DESC, m.heure_mess DESC)) AS message_rank
                         FROM
                             locbreizh._conversation c
                         INNER JOIN locbreizh._compte cp ON (
@@ -67,36 +67,34 @@
     $liste_conv = $stmt->fetchAll();
     
     if(!isset($_GET['conv'])){
-        ...
+        $selectione = $liste_conv[0];
     }
-    
+    else{
+        $selectione = $_GET['conv'];
+    }
     $stmt = $dbh->prepare("
-    SELECT
-        c.id_conversation,
-        CASE
-            WHEN c.compte1 = '$user' THEN c.compte2
-            ELSE c.compte1
-        END AS id_autre_compte,
-        cp.nom AS nom_autre_compte,
-        cp.prenom AS prenom_autre_compte,
-        cp.photo as photo_autre_compte,
-        m.id_message,
-        m.contenu_message,
-        m.date_mess,
-        m.heure_mess
-    FROM
-        locbreizh._conversation c
-    INNER JOIN locbreizh._compte cp ON (
-        cp.id_compte = CASE
-            WHEN c.compte1 = '$user' THEN c.compte2
-            ELSE c.compte1
-        END
-    )
+    SELECT c.id_conversation,
+       c.compte1,
+       c.compte2,
+       cp1.nom as nom1,
+       cp1.prenom as prenom1,
+       cp1.photo as photo1,
+       cp2.nom as nom2,
+       cp2.prenom as prenom2,
+       cp2.photo as photo2,
+       m.id_message,
+       m.contenu_message,
+       m.date_mess,
+       m.heure_mess,
+       m.auteur
+    FROM locbreizh._conversation c
     LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
-    WHERE
-        (c.compte1 = '$user' OR c.compte2 = '$user') and c.id_conversation = '{$_GET['conv']}'
-    ORDER BY date_mess DESC, heure_mess DESC;");
-
+    INNER JOIN locbreizh._compte cp1 ON cp1.id_compte = c.compte1
+    INNER JOIN locbreizh._compte cp2 ON cp2.id_compte = c.compte2
+    WHERE c.id_conversation = '0000000001'
+    ORDER BY date_mess DESC,
+        heure_mess DESC;");
+    
     $stmt->execute();
     $liste_message = $stmt->fetchAll();
 ?>
@@ -146,9 +144,7 @@
                     foreach($liste_conv as $conv){
                         // adding an underscore to not transform it into an int so we can compre it after
                         $tab_id_conv[] = '_' . $conv['id_conversation'];
-
                         ?>
-
                 <div>
                     <a href="?conv=<?php $conv['id_conversation']; ?>">
                         <img src=<?php echo $conv['photo_autre_compte'];?> alt="image de profil">
@@ -176,40 +172,59 @@
                 if(count($tab_id_conv) != 0 ){?>
                     <!--affichege entete conv-->
                     <div>
-                        <img src=<?php ?> alt="image de profil">
-                        <p>Prenom NOM</p>
+                        <img src=<?php ?> alt=<?php
+                        if($liste_message[0]['compte1'] === $user){
+                            echo $liste_message[0]['photo2']; 
+                        }
+                        else{
+                            echo $liste_message[0]['photo1']; 
+                        }
+                        
+                        ?>>
+                        <p><?php 
+                        if($liste_message[0]['compte1'] === $user){
+                            echo $liste_message[0]['prenom2'] . " " . $liste_message[0]['nom2']; 
+                        }
+                        else{
+                            echo $liste_message[0]['prenom1'] . " " . $liste_message[0]['nom1'];  
+                        }
+                        ?></p><hr>
                     </div>
                     <div>
                     <?php 
                     //si une conv a été selectionné
                     if(isset($_GET['conv'])){
-                        foreach($liste_message as $message){?>
-                            <!--contenu conversation-->
-                            
+                        foreach($liste_message as $message){
+                            if($message['auteur'] === $message['compte1']){
+                                $photo_mess = $message['photo1'];
+                            }
+                            else{
+                                $photo_mess = $message['photo2'];
+                            }
+                                ?>                      
                                 <!--un seul message-->
                                 <div>
-                                    <img src="image/compte.svg" alt="photo de profil">
+                                    <img src=<?php echo $photo_mess; ?> alt="photo de profil">
                                     <!--contenu message + date... -->
                                     <div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id auctor lacus. Vivamus
-                                                ornare purus sit amet lacinia porta. Nullam feugiat rhoncus convallis. Vivamus turpis
-                                                ligula, fringilla a neque</p>
-                                        <p>15/09/2023 11:47</p>
+                                        <p><?php echo $message['contenu_message']?></p>
+                                        <p><?php echo $message['date_mess'] . ' ' . $message['heure_mess']; ?> </p>
                                     </div>
                                 </div>
-                                <!--champ pour ecrire le message-->
-                                <div>
-                                    <form name="envoie_message" method="post" action="envoyer_message.php" enctype="multipart/form-data">
-                                        <input type="text" id="message" name="message" placeholder="Envoyer un message"><br>
-                                        <input type="image" id="envoie" alt="envoie" src="image/envoyer.svg" />
-                                    </form>
-                                </div>
-                            
-                        <?php }
+                                <hr>
+                        <?php
+                        }
                     }
                     else{
 
                     }?>
+                    <!--champ pour ecrire le message-->
+                    <div>
+                        <form name="envoie_message" method="post" action="envoyer_message.php" enctype="multipart/form-data">
+                            <input type="text" id="message" name="message" placeholder="Envoyer un message"><br>
+                            <input type="image" id="envoie" alt="envoie" src="image/envoyer.svg" />
+                        </form>
+                    </div>
                     </div>
             <?php }?>
         </div>
