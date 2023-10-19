@@ -14,7 +14,7 @@ CREATE TABLE
         code_postal CHAR(5) NOT NULL,
         pays VARCHAR(50) NOT NULL,
         ville VARCHAR(50) NOT NULL,
-        constraint adresse_pk primary key (id_adresse)
+        CONSTRAINT adresse_pk PRIMARY KEY (id_adresse)
     );
 
 CREATE TABLE
@@ -266,7 +266,7 @@ CREATE TABLE
 
 CREATE TABLE
     _charge_additionnelles (
-        nom_charges VARCHAR(20) NOT NULL,
+        nom_charges VARCHAR(50) NOT NULL,
         CONSTRAINT charge_additionnelle_pk PRIMARY KEY (nom_charges)
     );
 
@@ -363,7 +363,8 @@ CREATE TABLE
     _comporte_charges_associee_demande_devis (
         prix_charges NUMERIC(5, 2) NOT NULL,
         num_demande_devis INTEGER NOT NULL,
-        nom_charges VARCHAR(20) NOT NULL,
+        nom_charges VARCHAR(50) NOT NULL,
+        nombre INTEGER,
         CONSTRAINT comporte_charges_associee_demande_devis_pk PRIMARY KEY (
             num_demande_devis,
             nom_charges
@@ -376,7 +377,8 @@ CREATE TABLE
     _comporte_charges_associee_devis (
         prix_charges NUMERIC(5, 2) NOT NULL,
         num_devis INTEGER NOT NULL,
-        nom_charges VARCHAR(20) NOT NULL,
+        nom_charges VARCHAR(50) NOT NULL,
+        nombre INTEGER,
         CONSTRAINT comporte_charges_associee_devis_pk PRIMARY KEY (num_devis, nom_charges),
         CONSTRAINT comporte_charges_associee_devis_fk_devis FOREIGN KEY (num_devis) REFERENCES _devis (num_devis),
         CONSTRAINT comporte_charges_associee_devis_fk_charges FOREIGN KEY (nom_charges) REFERENCES _charge_additionnelles (nom_charges)
@@ -399,7 +401,7 @@ INSERT INTO _photo VALUES ( 'carte/id/dubois' );
 INSERT INTO _photo VALUES ( 'photos/dubois' );
 
 INSERT INTO
-    _adresse(
+    _adresse (
         nom_rue,
         numero_rue,
         code_postal,
@@ -415,7 +417,7 @@ VALUES (
     );
 
 INSERT INTO
-    _compte(
+    _compte (
         civilite,
         nom,
         prenom,
@@ -446,7 +448,7 @@ VALUES (
     );
 
 INSERT INTO
-    _compte(
+    _compte (
         civilite,
         nom,
         prenom,
@@ -477,7 +479,7 @@ VALUES (
     );
 
 INSERT INTO
-    _compte(
+    _compte (
         civilite,
         nom,
         prenom,
@@ -531,14 +533,14 @@ VALUES (
         'photos/dubois'
     );
 
-INSERT INTO _client VALUES (4, '2000-05-15', 'true');
+INSERT INTO _client VALUES ( 4, '2000-05-15', 'true' );
 
 INSERT INTO _langue VALUES ( 'français' );
 
 INSERT INTO _parle VALUES ( 'français', 1 );
 
 INSERT INTO
-    _planning(
+    _planning (
         tarif_journalier_base,
         duree_minimale_sejour,
         delai_minimum_heure
@@ -546,7 +548,7 @@ INSERT INTO
 VALUES (500, 2, 24);
 
 INSERT INTO
-    _logement(
+    _logement (
         libelle_logement,
         tarif_base_HT,
         accroche_logement,
@@ -614,7 +616,7 @@ VALUES (
     );
 
 INSERT INTO
-    _logement(
+    _logement (
         libelle_logement,
         tarif_base_HT,
         accroche_logement,
@@ -681,10 +683,10 @@ VALUES (
         'photos/dubois'
     );
 
-INSERT INTO _conversation(compte1, compte2) VALUES (1, 1, 2);
+INSERT INTO _conversation (compte1, compte2) VALUES (1, 2);
 
 INSERT INTO
-    _message(
+    _message (
         contenu_message,
         date_mess,
         heure_mess,
@@ -700,7 +702,7 @@ VALUES (
     );
 
 INSERT INTO
-    _message(
+    _message (
         contenu_message,
         date_mess,
         heure_mess,
@@ -716,7 +718,7 @@ VALUES (
     );
 
 INSERT INTO
-    _message(
+    _message (
         contenu_message,
         date_mess,
         heure_mess,
@@ -731,10 +733,10 @@ VALUES (
         1
     );
 
-INSERT INTO _conversation(compte1, compte2) VALUES (2, 1, 3);
+INSERT INTO _conversation (compte1, compte2) VALUES (1, 3);
 
 INSERT INTO
-    _message(
+    _message (
         contenu_message,
         date_mess,
         heure_mess,
@@ -750,7 +752,7 @@ VALUES (
     );
 
 INSERT INTO
-    _message(
+    _message (
         contenu_message,
         date_mess,
         heure_mess,
@@ -764,3 +766,9 @@ VALUES (
         1,
         2
     );
+
+INSERT INTO _charge_additionnelles VALUES ('menage');
+
+INSERT INTO
+    _charge_additionnelles
+VALUES ('animaux supplementaires');

@@ -38,18 +38,18 @@
                 <input type="date" id="dateDepart" name="dateDepart" required/>
 
                 <label for="nb_pers">Nombre de persones :</label>
-                <input type="number" id="nb_pers" name="nb_pers" min="1" max="50" value="1" required/>
+                <input type="number" id="nb_pers" name="nb_pers" min="1" max="50" value=<?php if($_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>
             </div>
             <h2>Supplements</h2>
             <div>
-                <label for="nb_animaux">Nombre d'animaux :</label>
-                <input type="number" id="nb_animaux" name="nb_animaux" min="0" max="20" value="0"required/>
-
                 <label for="nb_pers_supp">Nombre de personnes supplementaires :</label>
-                <input type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50" value="0" required/>
+                <input type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50"  value=<?php if($_GET['nb_supp'] > 0){echo $_GET['nb_supp'];} else{echo 0;} ?> required/>
+
+                <label for="animaux">Animaux :</label>
+                <input type="checkbox" id="animaux" name="animaux" <?php if($_GET['animaux'] === 'on'){echo 'checked';}; ?>/>
 
                 <label for="menage">Menage</label>
-                <input type="checkbox" id="menage" name="menage" value="true" />
+                <input type="checkbox" id="menage" name="menage" <?php if($_GET['menage'] === 'on'){echo 'checked';}; ?>/>
             </div>
             <input type="submit" value="Soumettre ma demande" />
         </form>
@@ -70,5 +70,6 @@
             </div>
         </div>
     </footer>
+    <?php echo '<script>alert("Date incorrecte !")</script>';?>
 </body>
 </html>
