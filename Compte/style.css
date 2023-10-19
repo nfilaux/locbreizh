@@ -1,12 +1,21 @@
 body {
-    height: 100vh;
+    height: auto;
     padding-bottom: 0;
     background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
     background-origin: content-box;
 }
 
+header{
+    margin-top: 5em;
+    background-color: #5B3F69;
+    color: #F6E4FF;
+    padding: 1em;
+}
+
+
 main{
-    padding-top: 10vw;
+    padding-top: 5vw;
+    padding-bottom: 15vw;
 }
 
 main form div{
@@ -15,15 +24,24 @@ main form div{
     margin: auto;
 }
 
-span a {
+footer a:link {
     margin-right: 0;
     font-size: 1.5em;
+    color: #F6E4FF;
 }
 
+footer a:visited {
+    margin-right: 0;
+    font-size: 1.5em;
+    color: #F6E4FF;
+}
+
+
 footer{
+    margin-top: 5em;
     padding-top: 1px;
-    background-color: #FAE3C6;
-    color: #5B3F69;
+    background-color: #5B3F69;
+    color: #F6E4FF;
     margin-bottom: 0;
     display: block;
     position: relative;
@@ -40,7 +58,7 @@ main h1{
 
 footer hr{
     border-width: 1px;
-    border-color: #5B3F69;
+    border-color: #F6E4FF;
     width: 87%;
 }
 
@@ -52,17 +70,23 @@ a:visited{
     color: #5B3F69;
 }
 
+a:hover{
+    color: #5B3F69;
+}
+
+
 .custom-input {
     width: 100%;
-    color: #5F1900; 
-    border: 1px solid #5F1900;
+    color: #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 20px;
+    font-size: 2em;
 }
 
 .btn-compte {
-    background-color: #5B3F69; 
-    color: #CBF1FF; 
-    border: 1px solid #5B3F69; 
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
     border-radius: 20px;
     font-size: 2em;
 }
@@ -72,7 +96,17 @@ a:visited{
     color: #5B3F69;
 }
 
-#Login::placeholder, #motdepasse::placeholder{
-    color: #5F1900;
+#Login::placeholder, #motdepasse::placeholder ,#Prenom::placeholder, #Nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
+#pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
+    color: #957BB0;
     opacity: 50%;
+}
+
+.titre{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.compteciv{
+    margin: auto;
 }

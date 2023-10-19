@@ -1,7 +1,7 @@
 <?php
 $server = 'servbdd.iutlan.etu.univ-rennes1.fr';
 $driver = 'pgsql';
-$dbname = 'pg_dmeur';
-$user   = 'dmeur';
-$pass	= 'RaanclPS4#';
+$dbname = 'pg_esleconte';
+$user   = 'esleconte';
+$pass	= 'Lusnar14';
 ?>

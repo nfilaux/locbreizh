@@ -8,42 +8,42 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <main class="container offset-md-2 col-8">
-        <?php
+    <?php
             session_start();
             if(isset($_SESSION["msg"])){
                 ?><p><?php echo $_SESSION["msg"]?></p><?php
                 unset($_SESSION["msg"]);
             }
-        ?>
-        <div class="mb-5 col-12 row h-10"> 
-            <a href="connexionFront.php"><img src="svg/flecheRetour.svg"/></a>
-            <h1>Récupération de compte</h1>
+    ?>
+    <header>
+        
+        <div class="col-12 row text-center"> 
+            <a class="offset-md-2 titre" href="connexionFront.php"><img src="svg/flecheRetour.svg"/></a>
+            <h1  class="col-8 titre">Récupération de compte</h1>
         </div>
-
+    </header>
+    <main class="container offset-md-2 col-8">
 
         <form action="mdpOublierBack.php" method="post">
 
-        <p class="text-center mb-5" style="font-size: 2em;">Renseignez votre adresse mail ou votre numéro de téléphone </p>
+        <h2 class="text-center mb-5">Renseignez votre adresse mail ou votre numéro de téléphone </h2>
 
-        <input type="text" id="mail" name="mail" style="height: 6vw;font-size: 2em;" placeholder="Adresse mail ou numéro" class="text-center custom-input mb-5" required />
-        <br />
+        <input type="text" id="mail" name="mail" placeholder="Adresse mail ou numéro" class="text-center custom-input mb-5" required />
 
-        <input style="height: 80px;" class="btn-compte offset-md-3 col-6 mb-5 mt-5" type="submit" value="Lancer la récupération" />
-
+        <input class="btn-compte offset-md-3 col-6 mb-5" type="submit" value="Lancer la récupération" />
         </form>
-        <article class="text-center mt-4"> 
+        <article class="text-center"> 
             <a href="connexionFront.php" style="font-size: 2em;">Revenir à la page de connexion</a>
         </article>
     </main>
 
     <footer class="mt-4 container-fluid">
-        <div class="mt-4 column">
+        <div class="mt-4 column">   
             <div class="col-12 text-center">
-                <a class="col-3" href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
-                <a class="offset-md-2 col-1" href="tel:+33623455689">(+33) 6 23 45 56 89</a>
-                <a class="offset-md-2 col-1" href="connexion.html"><img src="svg/instagram.svg">  @LocBreizh</a>
-                <a class="offset-md-2 col-1" href="connexion.html"><img src="svg/facebook.svg">  @LocBreizh</a>
+                <a class="col-2" href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
+                <a class="offset-md-1 col-2" href="tel:+33623455689">(+33) 6 23 45 56 89</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/instagram.svg">  @LocBreizh</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/facebook.svg">  @LocBreizh</a>
             </div>
             <hr>  
             <div class="offset-md-1 col-10 mt-4 text-center row">
