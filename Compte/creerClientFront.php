@@ -10,7 +10,6 @@
 <body>
     <?php
         session_start();
-
         function erreur($nomErreur)
         {
             if(isset($_SESSION["erreurs"][$nomErreur])){
@@ -26,7 +25,7 @@
         </div>
     </header>
     <main class="container offset-md-1 col-12">
-        <form action="creerClientBack.php" method="post">
+        <form action="creerClientBack.php" method="post" enctype="multipart/form-data">
             
             <div>
                 <input type="text" id="prenom" name="prenom" class="custom-input col-5 text-center" placeholder="Prenom" value="<?php if(isset($_GET['prenom'])) { echo htmlentities($_GET['prenom']);}?>" />
@@ -54,17 +53,17 @@
                         </div>   
                     </div>    
                     <div class="row col-5">
-                            <label for="fichier">Carte d’identité</label>
-                            <input class="offset-md-1 col-5" type="file" id="fichier" name="fichier" value="Importer le document" />
+                            <label for="carteIdentite">Carte d’identité</label>
+                            <input class="offset-md-1 col-5" type="file" id="carteIdentite" name="carteIdentite" value="Importer le document" />
                             <?php
                                 erreur("carteIdentite");
                             ?>
-                            <label class="text-center" for="fichier">Photo de profil</label>
+                            <label class="text-center" for="photoProfil">Photo de profil</label>
                             <input class="offset-md-1 col-5" type="file" id="photoProfil" name="photoProfil" placeholder="Importer le document"/>
                             <?php
                                 erreur("photoProfil");
                             ?>
-                    </div>  
+                    </div>   
                 </div>
 
                 <div>
@@ -84,7 +83,10 @@
                 <?php
                     erreur("email");
                 ?>
-                <input type="date" id="date" name="date"   class="custom-input col-5 text-center" placeholder="Date"/>
+                <input type="date" id="date" name="date"   class="custom-input col-5 text-center" placeholder="Date" value="<?php if(isset($_GET['date'])) { echo htmlentities($_GET['date']);}?>"/>
+                <?php
+                    erreur("date");
+                ?>
             </div>
             </div>
 
@@ -119,6 +121,14 @@
             <?php
                 erreur("nomRue");
             ?>
+            </div>
+
+            <div>
+                <input type="checkbox" id="conditions" name="conditions" value="accepter" <?php if(isset($_GET['conditions'])) {if($_GET['conditions'] == 'accepter') { ?> checked <?php }}?>/>
+                <label for="conditions">Accepter les conditions générales d'utilisations</label>
+                <?php
+                    erreur("conditions");
+                ?>
             </div>
 
             <input class="btn-compte offset-md-3 col-4 mb-5" type="submit" value="Se connecter" />

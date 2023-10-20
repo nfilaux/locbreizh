@@ -1,8 +1,14 @@
 <?php
     session_start();
+
+
     $erreur = false;
     $url = "?";
     $_SESSION['erreurs'] = [];
+    if (!isset($_POST['conditions'])){
+        $erreur = true;
+        $_SESSION['erreurs'] += ["conditions" => "Veuillez accepter les conditions générales d'utilisation"];
+    }
     foreach ($_POST as $key => $row){
         if (empty($row)){
             $erreur = true;
@@ -26,6 +32,9 @@
                     $mail = $_POST["email"];
                     $erreurTest = verifMail($mail);
                     break;
+                case "date":
+                    $date = $_POST["date"];
+                    $erreurTest = verifDate($date);
                 case "telephone":
                     $tel = $_POST["telephone"];
                     $erreurTest = verifTel($tel);
@@ -40,7 +49,9 @@
                         $confirmMDP = $_POST["confirmationMDP"];
                         $erreurTest = verifMDP($mdp, $confirmMDP);
                     }
-                    $erreurTest = true;
+                    else{
+                        $erreurTest = true;
+                    }
                     break;
                 case "ville":
                     $ville = $_POST["ville"];
@@ -57,6 +68,10 @@
                 case "nomRue":
                     $nomRue = $_POST["nomRue"];
                     $erreurTest = verifNomRue($nomRue);
+                    break;
+                case "conditions":
+                    $conditions = $_POST["conditions"];
+                    $erreurTest = verifCondition($conditions);
                     break;
             }
             if ($erreurTest == true){
@@ -90,8 +105,21 @@
         $erreur = true;
     }
 
-    /*if (!$erreur){
+    if (!$erreur){
         include('connect_params.php');
+        $prenom = htmlentities($prenom);
+        $nom = htmlentities($nom);
+        $genre = htmlentities($genre);
+        $mail = htmlentities($mail);
+        $date = htmlentities($date);
+        $tel = htmlentities($tel);
+        $pseudo = htmlentities($pseudo);
+        $mdp = htmlentities($mdp);
+        $ville = htmlentities($ville);
+        $codePostal = htmlentities($codePostal);
+        $numRue = htmlentities($numRue);
+        $nomRue = htmlentities($nomRue);
+
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -100,31 +128,30 @@
             $res = $verifMail->fetch();
             if ($res['count'] != 0){
                 $_SESSION['erreurs'] += ["email" => "mail déjà existant"];
-                header("Location: ./creerClientFront.php");
-                exit;
             }
             $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '$tel';");
             $verifTel->execute();
             $res = $verifTel->fetch();
             if ($res['count'] != 0){
                 $_SESSION['erreurs'] += ["telephone" => "telephone déjà existant"];
-                header("Location: ./creerClientFront.php");
-                exit;
             }
             $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '$pseudo';");
             $verifPseudo->execute();
             $res = $verifPseudo->fetch();
             if ($res['count'] != 0){
                 $_SESSION['erreurs'] += ["pseudo" => "pseudo déjà existant"];
-                header("Location: ./creerClientFront.php");
-                exit;
             }
             $dbh = null;
         } catch (PDOException $e) {
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
-    }*/
+    }
+
+    if(!$erreur){
+        move_uploaded_file($_FILES['photoProfil']['tmp_name'],'./photoProfil/' . $temps2 . '.' . $extension2);
+        move_uploaded_file($_FILES['carteIdentite']['tmp_name'],'./carteIdentite/' . $temps1 . '.' . $extension1);
+    }
 
     if ($erreur){
         $url = substr($url, 0, -1);
@@ -181,6 +208,21 @@
             if (!preg_match('/^[A-Za-z]{1}[A-Za-z0-9._%+-]*@[A-Za-z]{1}[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $mail)) {
                 $erreur = true;
                 $_SESSION['erreurs'] += ["email" => "Le email doit comporter un @ puis un . entre des (lettres, chiffres, ., _, %, +, -)"];
+            }
+        }
+        return $erreur;
+    }
+
+    function verifDate($date){
+        $erreur = false;
+        if (!preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/', $date)) {
+            $erreur = true;
+            $_SESSION['erreurs'] += ["date" => "La date doit être au format année-mois-jour"];
+        }
+        else{
+            if (strtotime($date) > strtotime(date("Y-m-d"))){
+                $erreur = true;
+                $_SESSION['erreurs'] += ["date" => "La date doit être inférieure à la date d'aujourd'hui"];
             }
         }
         return $erreur;
@@ -269,6 +311,15 @@
                 $erreur = true;
                 $_SESSION['erreurs'] += ["nomRue" => "Le nom de rue doit comporter que des lettres ou des ( , -, ') entre des lettres"];
             }
+        }
+        return $erreur;
+    }
+
+    function verifCondition($conditions){
+        $erreur = false;
+        if (strcmp("accepter", $conditions) !== 0) {
+            $erreur = true;
+            $_SESSION['erreurs'] += ["conditions" => "Veuillez accepter les conditions générales d'utilisation"];
         }
         return $erreur;
     }
