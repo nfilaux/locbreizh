@@ -23,7 +23,7 @@
     $stmt->execute();
     $photo_profil = $stmt->fetch();
 
-    $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers from locbreizh._logement where id_logement = {$_GET['logement']} ;");
+    $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers from locbreizh._logement where id_logement = {$_GET['logement']};");
     $stmt->execute();
     $nb_max = $stmt->fetch();
 ?>
