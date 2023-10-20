@@ -103,20 +103,20 @@
     <header>
         <nav>
             <div id="logo">
-                <img src="image/logo.svg">
+                <img src="../image/logo.svg">
                 <p>Loc’Breizh</p>
             </div>
             <img src="image/filtre.svg">
             <form name="formulaire" method="post" action="recherche.php" enctype="multipart/form-data">
                 <input type="search" id="recherche" name="recherche" placeholder="Rechercher"><br>
-                <input type="image" id="loupe" alt="loupe" src="image/loupe.svg" />
+                <input type="image" id="loupe" alt="loupe" src="../image/loupe.svg" />
             </form>
             <div>
-                <img src="image/reserv.svg">
+                <img src="../image/reserv.svg">
                 <a href="liste_reservations.html">Accéder à mes réservations</a>
             </div>
             <div id="parametre">
-                <a href="messagerie.php"><img src="image/messagerie.svg"></a>
+                <a href="messagerie.php"><img src="../image/messagerie.svg"></a>
                 <a href="compte.php"><img src=<?php echo $photo_profil['url_photo']; ?>></a>
                 <div>
         </nav>
@@ -225,8 +225,8 @@
             <div class="col-12 text-center">
                 <a class="col-2" href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
                 <a class="offset-md-1 col-2" href="tel:+33623455689">(+33) 6 23 45 56 89</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/instagram.svg">  @LocBreizh</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/facebook.svg">  @LocBreizh</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="../image/instagram.svg">  @LocBreizh</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="../image/facebook.svg">  @LocBreizh</a>
             </div>
             <hr>
             <div class="offset-md-1 col-10 mt-4 text-center row">

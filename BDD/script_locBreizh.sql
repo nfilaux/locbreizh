@@ -369,7 +369,7 @@ CREATE TABLE
             num_demande_devis,
             nom_charges
         ),
-        CONSTRAINT comporte_charges_associee_demande_devis_fk_devis FOREIGN KEY (num_demande_devis) REFERENCES _devis (num_devis),
+        CONSTRAINT comporte_charges_associee_demande_devis_fk_devis FOREIGN KEY (num_demande_devis) REFERENCES _demande_devis (num_demande_devis),
         CONSTRAINT comporte_charges_associee_demande_devis_fk_charges FOREIGN KEY (nom_charges) REFERENCES _charge_additionnelles (nom_charges)
     );
 
@@ -388,7 +388,7 @@ CREATE TABLE
     _possede_charges_associee_logement (
         prix_charges NUMERIC(5, 2) NOT NULL,
         id_logement INTEGER NOT NULL,
-        nom_charges VARCHAR(20) NOT NULL,
+        nom_charges VARCHAR(50) NOT NULL,
         CONSTRAINT possede_charges_associee_logement_pk PRIMARY KEY (id_logement, nom_charges),
         CONSTRAINT possede_charges_associee_logement_fk_logement FOREIGN KEY (id_logement) REFERENCES _logement (id_logement),
         CONSTRAINT possede_charges_associee_logement_fk_charges FOREIGN KEY (nom_charges) REFERENCES _charge_additionnelles (nom_charges)
@@ -683,7 +683,9 @@ VALUES (
         'photos/dubois'
     );
 
-INSERT INTO _conversation (compte1, compte2) VALUES (1, 2);
+INSERT INTO
+    _conversation (compte1, compte2)
+VALUES (1, 2);
 
 INSERT INTO
     _message (
@@ -733,7 +735,9 @@ VALUES (
         1
     );
 
-INSERT INTO _conversation (compte1, compte2) VALUES (1, 3);
+INSERT INTO
+    _conversation (compte1, compte2)
+VALUES (1, 3);
 
 INSERT INTO
     _message (
@@ -767,8 +771,26 @@ VALUES (
         2
     );
 
-INSERT INTO _charge_additionnelles VALUES ('menage');
+INSERT INTO _charge_additionnelles VALUES ( 'menage' );
+
+INSERT INTO _charge_additionnelles VALUES ( 'animaux' );
 
 INSERT INTO
     _charge_additionnelles
-VALUES ('animaux supplementaires');
+VALUES ('personnes_supplementaires');
+
+INSERT INTO
+    _possede_charges_associee_logement
+VALUES (20, 1, 'menage');
+
+INSERT INTO
+    _possede_charges_associee_logement
+VALUES (10, 1, 'animaux');
+
+INSERT INTO
+    _possede_charges_associee_logement
+VALUES (
+        5,
+        1,
+        'personnes_supplementaires'
+    );
