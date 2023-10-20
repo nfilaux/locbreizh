@@ -103,6 +103,14 @@ CREATE TABLE
         CONSTRAINT message_fk_conversation FOREIGN KEY (conversation) REFERENCES _conversation (id_conversation)
     );
 
+
+create table _message_devis(
+    id_message_devis integer not null,
+    lien_demande_devis varchar(50)  not null,
+    CONSTRAINT message_devis_pk PRIMARY KEY (id_message_devis),
+    constraint id_message_devis_fk_id FOREIGN KEY(id_message_devis) REFERENCES _message(id_message)
+);
+
 CREATE TABLE
     _planning (
         code_planning SERIAL,
