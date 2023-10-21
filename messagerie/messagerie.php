@@ -1,5 +1,10 @@
+
+<?php
+    // lancement de la session
+    session_start();
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -7,8 +12,10 @@
     <title>Messagerie</title>
 </head>
 <?php
+    // inclusion d'une instance PDO
     include('../parametre_connexion.php');
     try {
+        // prend les parametres de connexion dans le fichiers importés plus haut
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -16,18 +23,20 @@
         print "Erreur !: " . $e->getMessage() . "<br/>";
         die();
     }
-
-    $user = '0000000001';
-    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '$user';");
+    // id fictif pour les test
+    $_SESSION['id'] = 1;
+    // requete pour obtenir la photo de profil pour le header
+    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
     $stmt->execute();
     $photo_profil = $stmt->fetch();
 
+    // requete pour recuperer la liste des conversations
     $stmt = $dbh->prepare("
                     WITH messageOrdre AS (
                         SELECT
                             c.id_conversation,
                             CASE
-                                WHEN c.compte1 = '$user' THEN c.compte2
+                                WHEN c.compte1 = '{$_SESSION['id']}' THEN c.compte2
                                 ELSE c.compte1
                             END AS id_autre_compte,
                             cp.nom AS nom_autre_compte,
@@ -42,13 +51,13 @@
                             locbreizh._conversation c
                         INNER JOIN locbreizh._compte cp ON (
                             cp.id_compte = CASE
-                                WHEN c.compte1 = '$user' THEN c.compte2
+                                WHEN c.compte1 = '{$_SESSION['id']}' THEN c.compte2
                                 ELSE c.compte1
                             END
                         )
                         LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
                         WHERE
-                            c.compte1 = '$user' OR c.compte2 = '$user'
+                            c.compte1 = '{$_SESSION['id']}' OR c.compte2 = '{$_SESSION['id']}'
                     )
                     SELECT
                         id_conversation,
@@ -64,15 +73,19 @@
                     WHERE message_rank = 1;");
 
     $stmt->execute();
+    // recuperation des lignes dans la variable test_conv
     $liste_conv = $stmt->fetchAll();
     
+    //test pour savoir si un conversation est selectionnee (pour changer les messages à afficher)
     if(!isset($_GET['conv'])){
-        
+        // selectionne la première conversation du resultat des requetes
         $selectionne = $liste_conv[0]['id_conversation'];
     }
     else{
+        // selectionne la conv donnée en get
         $selectionne = $_GET['conv'];
     }
+    // requete pour recuperer la liste des messages de la conversation selectionnee
     $stmt = $dbh->prepare("
     SELECT c.id_conversation,
        c.compte1,
@@ -97,6 +110,7 @@
         heure_mess DESC;");
     
     $stmt->execute();
+    // sotck les lignes de la requete dans liste_message
     $liste_message = $stmt->fetchAll();
 ?>
 <body>
@@ -117,15 +131,15 @@
             </div>
             <div id="parametre">
                 <a href="messagerie.php"><img src="../image/messagerie.svg"></a>
+                <!--appel php pour selectionner la photo du user-->
                 <a href="compte.php"><img src=<?php echo $photo_profil['url_photo']; ?>></a>
                 <div>
         </nav>
     </header>
     <main>
-        
-        <!--partie de gauche-->
+        <!--partie de gauche de la page (liste des conversations)-->
         <div>
-            <!--barre de recherche-->
+            <!--barre de recherche (pour le filtre)-->
             <div>
                 <img src="image/filtre.svg">
                 <form name="formulaire" method="post" action="recherche_conv.php" enctype="multipart/form-data">
@@ -133,18 +147,23 @@
                     <input type="image" id="loupe" alt="loupe" src="image/loupe.svg" />
                 </form>
             </div>
-            <!--liste conv-->
+            <!--liste conversations-->
             <div>
                 <?php
+                    // affiche une par une les conversations dans une div
+                    // permet de stocker les id des conversations que l'on ajoute
                     $tab_id_conv = [];
                     foreach($liste_conv as $conv){
-                        // adding an underscore to not transform it into an int so we can compre it after
-                        $tab_id_conv[] = '_' . $conv['id_conversation'];
+                        // ajoute les id
+                        $tab_id_conv[] = $conv['id_conversation'];
                         ?>
                 <div>
                     <a href=<?php echo "?conv=" . $conv['id_conversation'];?>>
+                        <!--image de profil-->
                         <img src=<?php echo $conv['photo_autre_compte'];?> alt="image de profil">
+                        <!--prenom, nom-->
                         <p><?php echo $conv['prenom_autre_compte'] . " " . $conv['nom_autre_compte']; ?></p>
+                        <!--date de la conversation-->
                         <p><?php
                             //on cree un objet date pour changer sa forme
                             $date = new DateTime($conv['date_mess']);
@@ -154,6 +173,7 @@
                             $mois_cut = substr($date_formatee, 3, 4) . ".";
                             echo $date->format('j ') . $mois_cut;
                         ?></p>
+                        <!--on limite la taille du dernier message à afficher-->
                         <p><?php echo substr($conv['contenu_message'], 0, 30); ?></p>
                     </a>
                 </div>
@@ -161,24 +181,25 @@
             </div>
         </div>
         
-        <!--partie de droite-->
+        <!--partie de droite (liste des messages de la conversation selectionnee)-->
         <div>
-            <!--infos conv-->
             <?php
+                // si il y a au moins une conversation
                 if(count($tab_id_conv) != 0 ){?>
-                    <!--affichege entete conv-->
+                    <!--affichage entete conversation (image de profil + prenom, nom)-->
                     <div>
                         <img src=<?php ?> alt=<?php
-                        if($liste_message[0]['compte1'] === $user){
+                        // test pour connaitre quel photo de profil afficher
+                        if($liste_message[0]['compte1'] === $_SESSION['id']){
                             echo $liste_message[0]['photo2']; 
                         }
                         else{
                             echo $liste_message[0]['photo1']; 
-                        }
-                        
-                        ?>>
+                        }?>>
+
                         <p><?php 
-                        if($liste_message[0]['compte1'] === $user){
+                        // affichage du nom, prenom
+                        if($liste_message[0]['compte1'] === $_SESSION['id']){
                             echo $liste_message[0]['prenom2'] . " " . $liste_message[0]['nom2']; 
                         }
                         else{
@@ -188,6 +209,7 @@
                     </div>
                     <div>
                     <?php 
+                        // affichage de la liste des messages avec les infos asscoiées
                         foreach($liste_message as $message){
                             if($message['auteur'] === $message['compte1']){
                                 $photo_mess = $message['photo1'];

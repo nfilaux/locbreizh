@@ -1,13 +1,18 @@
-<?php session_start(); ?>
+<?php
+    // lancement de la session
+    session_start(); 
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
 </head>
 <?php
+    // import parametre de connexion + nouvelle instance de PDO
     include('../parametre_connexion.php');
+    // id fictif pour les tests
     $_SESSION['id'] = 4;
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -17,12 +22,12 @@
         print "Erreur !: " . $e->getMessage() . "<br/>";
         die();
     }
-
-    $user = '0000000001';
-    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '$user';");
+    // recupere photo de profil pour le header
+    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
     $stmt->execute();
     $photo_profil = $stmt->fetch();
 
+    // recupere le nombre maximum de personnes pour le logement
     $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers from locbreizh._logement where id_logement = {$_GET['logement']};");
     $stmt->execute();
     $nb_max = $stmt->fetch();
@@ -51,6 +56,7 @@
     </header>
     <main>
         <h1>Faire ma demande de devis</h1>
+        <!--formulaire avec methode post-->
         <form name="envoie_demande_devis" method="post" action="envoyer_demande.php" enctype="multipart/form-data">
             <div>
                 <label for="dateArrivee">Date d’arrivée :</label>
@@ -60,16 +66,20 @@
                 <input type="date" id="dateDepart" name="dateDepart" required/>
 
                 <label for="nb_pers">Nombre de persones :</label>
+                <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
                 <input type="number" id="nb_pers" name="nb_pers" min="1" max=<?php echo $nb_max['nb_pers']; ?> value=<?php if(isset($_GET['nb_pers']) && $_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>
             </div>
             <h2>Suppléments</h2>
             <div>
+                <!--pre-remplie les iinfos si ils sont dans get-->
                 <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_GET['animaux']) && $_GET['animaux'] === 'on'){echo 'checked';}; ?>/>
                 <label for="animaux">Animaux :</label>
-                
+
+                <!--pre-remplie les iinfos si ils sont dans get-->
                 <input type="checkbox" id="menage" name="menage" <?php if(isset($_GET['menage']) && $_GET['menage'] === 'on'){echo 'checked';}; ?>/>
                 <label for="menage">Menage</label>
 
+                <!--pre-remplie les iinfos si ils sont dans get-->
                 <label for="nb_pers_supp">Nombre de personnes supplementaires :</label>
                 <input type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50"  value=<?php if(isset($_GET['nb_supp']) && $_GET['nb_supp'] > 0){echo $_GET['nb_supp'];} else{echo 0;} ?> required/>
             </div>

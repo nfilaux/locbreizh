@@ -1,11 +1,14 @@
 DROP SCHEMA if exists locbreizh CASCADE;
 
+
 CREATE SCHEMA locbreizh;
 
 SET SCHEMA 'locbreizh';
 
 /*Creation des tables*/
 
+
+/*   table adresse : est utilisée pour le logement et les comptes   */
 CREATE TABLE
     _adresse (
         id_adresse SERIAL,
@@ -17,12 +20,14 @@ CREATE TABLE
         CONSTRAINT adresse_pk PRIMARY KEY (id_adresse)
     );
 
+/*   table photo : est utilisée pour image de profil des compte ainsi que pour les photos des logements   */
 CREATE TABLE
     _photo (
         url_photo VARCHAR(50) NOT NULL,
         CONSTRAINT photo_fk PRIMARY KEY (url_photo)
     );
 
+/*   table compte : est utilisée comme base pour les compte clients et propriétaires   */
 CREATE TABLE
     _compte (
         id_compte SERIAL,
@@ -40,6 +45,7 @@ CREATE TABLE
         CONSTRAINT compte_fk_photo FOREIGN KEY (photo) REFERENCES _photo (url_photo)
     );
 
+/*   table proprietaire : est utilisée pour designer un propriétaire   */
 CREATE TABLE
     _proprietaire (
         id_proprietaire SERIAL,
@@ -49,6 +55,7 @@ CREATE TABLE
         CONSTRAINT proprietaire_fk_id FOREIGN KEY (id_proprietaire) REFERENCES _compte (id_compte)
     );
 
+/*   table client : est utilisée pour designer un client   */
 CREATE TABLE
     _client (
         id_client SERIAL NOT NULL,
@@ -58,6 +65,7 @@ CREATE TABLE
         CONSTRAINT client_fk_id FOREIGN KEY (id_client) REFERENCES _compte (id_compte)
     );
 
+/*   table admin : est utilisée pour se connecter plus tard en tant qu'admin (pour signelements ou autre)   */
 CREATE TABLE
     _admin (
         login VARCHAR(20) NOT NULL UNIQUE,
@@ -65,12 +73,14 @@ CREATE TABLE
         CONSTRAINT admin_pk PRIMARY KEY (login)
     );
 
+/*   table langue : est utilisée pour renseigner les langues parlés par les propriétaires   */
 CREATE TABLE
     _langue (
         nom_langue VARCHAR(20) NOT NULL,
         CONSTRAINT langue_pk PRIMARY KEY (nom_langue)
     );
 
+/*   table parle : fait le lien entre une langue et un propriétaire   */
 CREATE TABLE
     _parle (
         langue VARCHAR(20) NOT NULL,
@@ -80,6 +90,7 @@ CREATE TABLE
         CONSTRAINT parle_fk_proprio FOREIGN KEY (proprietaire) REFERENCES _proprietaire (id_proprietaire)
     );
 
+/*   table conversation : est utilisée pour designer une conversation entre deux comptes différents   */
 CREATE TABLE
     _conversation (
         id_conversation SERIAL NOT NULL,
@@ -90,6 +101,7 @@ CREATE TABLE
         CONSTRAINT message_fk_compte2 FOREIGN KEY (compte2) REFERENCES _compte (id_compte)
     );
 
+/*   table message : est utilisée pour stocker les messages des utilisateurs   */
 CREATE TABLE
     _message (
         id_message SERIAL NOT NULL,
@@ -103,7 +115,7 @@ CREATE TABLE
         CONSTRAINT message_fk_conversation FOREIGN KEY (conversation) REFERENCES _conversation (id_conversation)
     );
 
-
+/*   table message_devis : est utilisée pour un message de type demande de devis   */
 create table _message_devis(
     id_message_devis integer not null,
     lien_demande_devis varchar(50)  not null,
@@ -111,6 +123,7 @@ create table _message_devis(
     constraint id_message_devis_fk_id FOREIGN KEY(id_message_devis) REFERENCES _message(id_message)
 );
 
+/*   table planning : est utilisée pour renseigner les plages de disponibilité d'un logement   */
 CREATE TABLE
     _planning (
         code_planning SERIAL,
@@ -120,6 +133,7 @@ CREATE TABLE
         CONSTRAINT planning_pk PRIMARY KEY (code_planning)
     );
 
+/*   table plage_ponctuelle : est utilisée pour renseigner les plages de disponibilité de manière ponctuelle  */
 CREATE TABLE
     _plage_ponctuelle (
         id_plage_ponctuelle SERIAL,
@@ -130,6 +144,7 @@ CREATE TABLE
         CONSTRAINT plage_ponctuelle_fk FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
     );
 
+/*   table plage_ponctuelle_indisponibilite : est utilisée pour renseigner les plages d'indisponibilité de manière ponctuelle   */
 CREATE TABLE
     _plage_ponctuelle_indisponibilite (
         id_plage_ponctuelle_indisp INTEGER NOT NULL,
@@ -138,6 +153,7 @@ CREATE TABLE
         CONSTRAINT plage_ponctuelle_indisponibilite_fk_id_plage FOREIGN KEY (id_plage_ponctuelle_indisp) REFERENCES _plage_ponctuelle (id_plage_ponctuelle)
     );
 
+/*   table contrainte : est utilisée pour renseigner une contrainte au niveau du planning (ex : pas après 18h)   */
 CREATE TABLE
     _contrainte (
         num_contrainte NUMERIC(2) NOT NULL,
@@ -147,6 +163,7 @@ CREATE TABLE
         CONSTRAINT contrainte_fk_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
     );
 
+/*   table  plage_recurrente : est utilisée pour renseigner des plages récurrente   */
 CREATE TABLE
     _plage_recurrente (
         id_plage_recurrente SERIAL NOT NULL,
@@ -158,6 +175,7 @@ CREATE TABLE
         CONSTRAINT plage_recurrente_fk_code_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
     );
 
+/*   table logement : est utilisée pour stocker les informations lié à un logement   */
 CREATE TABLE
     _logement (
         id_logement SERIAL NOT NULL,
@@ -199,6 +217,7 @@ CREATE TABLE
         CONSTRAINT logement_fk_photo FOREIGN KEY (photo_principale) REFERENCES _photo (url_photo)
     );
 
+/*   table photo_secondaires : est utilisée pour faire le lien entre des images et un logement   */
 CREATE TABLE
     _photos_secondaires (
         logement INTEGER NOT NULL,
@@ -208,6 +227,7 @@ CREATE TABLE
         CONSTRAINT photos_secondaires_fk_photo FOREIGN KEY (photo) REFERENCES _photo (url_photo)
     );
 
+/*   table avis : est utilisée pour stocker les différents avis fait par des clients ayant déja fait une resaervation    */
 CREATE TABLE
     _avis (
         id_avis SERIAL NOT NULL,
@@ -220,6 +240,7 @@ CREATE TABLE
         CONSTRAINT avis_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement)
     );
 
+/*   table reponse : est utilisée pour stocker la réponse d'un propriétaire sur un avis   */
 CREATE TABLE
     _reponse (
         id_reponse SERIAL NOT NULL,
@@ -231,6 +252,7 @@ CREATE TABLE
         CONSTRAINT reponse_fk_auteur FOREIGN KEY (auteur) REFERENCES _proprietaire (id_proprietaire)
     );
 
+/*   table signalement : est utilisée pour servir de base pour les différents types de signalement   */
 CREATE TABLE
     _signalement (
         id_signalement SERIAL NOT NULL,
@@ -239,6 +261,7 @@ CREATE TABLE
         CONSTRAINT signalement_pk PRIMARY KEY (id_signalement)
     );
 
+/*   table signalement_message : est utilisée pour rendre compte d'un signalement de message   */
 CREATE TABLE
     _signalement_message (
         id_signalement INTEGER NOT NULL,
@@ -250,6 +273,7 @@ CREATE TABLE
         CONSTRAINT ecrit_signalement_fk_auteur FOREIGN KEY (auteur) REFERENCES _compte (id_compte)
     );
 
+/*   table signalement_avis : est utilisée pour rendre compte d'un signalement d'un avis   */
 CREATE TABLE
     _signalement_avis (
         id_signalement INTEGER NOT NULL,
@@ -261,6 +285,7 @@ CREATE TABLE
         CONSTRAINT ecrit_signalement_fk_auteur FOREIGN KEY (auteur) REFERENCES _compte (id_compte)
     );
 
+/*   table signalement_compte : est utilisée pour rendre compte d'un signalement d'un compte   */
 CREATE TABLE
     _signalement_compte (
         id_signalement INTEGER NOT NULL,
@@ -272,12 +297,14 @@ CREATE TABLE
         CONSTRAINT ecrit_signalement_fk_auteur FOREIGN KEY (auteur) REFERENCES _compte (id_compte)
     );
 
+/*   table cherges_additionnelles : est utilisée pour renseigner les différents types de charges   */
 CREATE TABLE
     _charge_additionnelles (
         nom_charges VARCHAR(50) NOT NULL,
         CONSTRAINT charge_additionnelle_pk PRIMARY KEY (nom_charges)
     );
 
+/*   table carte : est utilisée pour stocké les informations bancaires d'une carte de manière chiffrée   */
 CREATE TABLE
     _carte (
         num_carte_chiffre VARCHAR(50) NOT NULL,
@@ -288,6 +315,7 @@ CREATE TABLE
         CONSTRAINT carte_pk PRIMARY KEY (num_carte_chiffre)
     );
 
+/*   table paye_avec : est utilisée pour faire le lien entre un client et sa carte bancaire   */
 CREATE TABLE
     _paye_avec (
         num_carte_chiffre VARCHAR(50) NOT NULL,
@@ -297,6 +325,7 @@ CREATE TABLE
         CONSTRAINT paye_avec_fk_carte FOREIGN KEY (num_carte_chiffre) REFERENCES _carte (num_carte_chiffre)
     );
 
+/*   table taxe_sejour : est utilisée pour stocker les possible différentes taxes de séjour   */
 CREATE TABLE
     _taxe_sejour (
         id_taxe SERIAL NOT NULL,
@@ -304,6 +333,7 @@ CREATE TABLE
         CONSTRAINT taxe_sejour_pk PRIMARY KEY (id_taxe)
     );
 
+/*   table demande_devis : est utilisée pour rendre compte d'une demande de devis fait par un client   */
 CREATE TABLE
     _demande_devis (
         num_demande_devis SERIAL,
@@ -317,6 +347,7 @@ CREATE TABLE
         CONSTRAINT demande_devis_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement)
     );
 
+/*   table devis : est utilisée pour rendre compte d'un devis fait par un proprietaire   */
 CREATE TABLE
     _devis (
         num_devis INTEGER NOT NULL,
@@ -336,6 +367,7 @@ CREATE TABLE
         CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_devis) REFERENCES _demande_devis (num_demande_devis)
     );
 
+/*   table reservation : est utilisée pour rendre compte d'une reservation d'un client pour un logement   */
 CREATE TABLE
     _reservation (
         num_reservation SERIAL NOT NULL,
@@ -346,6 +378,7 @@ CREATE TABLE
         CONSTRAINT reservation_fk_client FOREIGN KEY (client) REFERENCES _client (id_client)
     );
 
+/*   table facture : est utilisée pour stocker les informations une facture   */
 CREATE TABLE
     _facture (
         num_facture INTEGER NOT NULL,
@@ -355,6 +388,7 @@ CREATE TABLE
         CONSTRAINT facture_fk_rservation FOREIGN KEY (num_facture) REFERENCES _reservation (num_reservation)
     );
 
+/*   table facure_avoir : est utilisée pour stocker les informations une facture d'avoir en cas d'annulation   */
 CREATE TABLE
     _facture_avoir (
         num_facture SERIAL,
@@ -367,6 +401,7 @@ CREATE TABLE
         CONSTRAINT facture_avoir_fk_reservation FOREIGN KEY (reservation) REFERENCES _reservation (num_reservation)
     );
 
+/*   table comporte_charges_associee_demande_devis : permet de faire le lien entre un demande de devis et les charges additionnelles voulus   */
 CREATE TABLE
     _comporte_charges_associee_demande_devis (
         prix_charges NUMERIC(5, 2) NOT NULL,
@@ -381,6 +416,7 @@ CREATE TABLE
         CONSTRAINT comporte_charges_associee_demande_devis_fk_charges FOREIGN KEY (nom_charges) REFERENCES _charge_additionnelles (nom_charges)
     );
 
+/*   table comporte_charges_associee_devis : permet de faire le lien entre un devis et les charges additionnelles decidées   */
 CREATE TABLE
     _comporte_charges_associee_devis (
         prix_charges NUMERIC(5, 2) NOT NULL,
@@ -392,6 +428,7 @@ CREATE TABLE
         CONSTRAINT comporte_charges_associee_devis_fk_charges FOREIGN KEY (nom_charges) REFERENCES _charge_additionnelles (nom_charges)
     );
 
+/*   table possede_charges_associee_logement : permet de faire le lien entre un logement et les charges additionnelles qu'il possèdent   */
 CREATE TABLE
     _possede_charges_associee_logement (
         prix_charges NUMERIC(5, 2) NOT NULL,
