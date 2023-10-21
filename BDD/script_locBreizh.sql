@@ -14,8 +14,8 @@ CREATE TABLE
         nom_rue VARCHAR(30) NOT NULL,
         numero_rue NUMERIC(3) NOT NULL,
         code_postal CHAR(5) NOT NULL,
-        pays VARCHAR(50) NOT NULL,
         ville VARCHAR(50) NOT NULL,
+        pays VARCHAR(50) NOT NULL,
         CONSTRAINT adresse_fk PRIMARY KEY (id_adresse)
     );
 
@@ -173,7 +173,7 @@ CREATE TABLE
         nb_personnes_logement NUMERIC(3) NOT NULL,
         lit_simple NUMERIC(3) NOT NULL,
         lit_double NUMERIC(3) NOT NULL,
-        nb_salle_bain NUMERIC(3) NOT NULL,
+        nb_salle_bain NUMERIC(3) NOT NULL,  
         jardin NUMERIC(5) NOT NULL,
         balcon BOOLEAN NOT NULL,
         terrasse BOOLEAN NOT NULL,
@@ -390,6 +390,15 @@ CREATE TABLE
         CONSTRAINT possede_charges_associee_logement_fk_charges FOREIGN KEY (nom_charges) REFERENCES _charge_additionnelles (nom_charges)
     );
 
+CREATE TABLE 
+    _photo_complementaire (
+        photo_url       VARCHAR(50) NOT NULL,
+        logement_id     CHAR(10) NOT NULL,
+        CONSTRAINT _photo_complementaire_pk PRIMARY KEY (photo_url, logement_id),
+        CONSTRAINT _photo_complementaire_fk_logement FOREIGN KEY (logement_id) REFERENCES _logement (id_logement),
+        CONSTRAINT _photo_complementaire_fk_photo FOREIGN KEY (photo_url) REFERENCES _photo (url_photo)
+    );
+
 /* Peuplement de la base */
 insert into _photo values('carte/id/dubois');
 insert into _photo values('photos/dubois');
@@ -403,7 +412,9 @@ INSERT INTO _client VALUES ('0000000002', '1998-01-01', true);
 insert into _langue values('français');
 insert into _parle values('français', '0000000001');
 INSERT INTO _planning VALUES ('0123456788', 500, 2, 24);
-INSERT INTO _logement VALUES ('0123456789', 'Manoir Hanté', 500, 'Manoir à la campagne avec grand terrain et de muliple pièces', 'Manoir', '', 'manoir', 500, true, 10, 14, 3, 7, 4, 300, false, true, false, true, false, false, true, true, true, true, true, true, true, '0123456788', '0000000001', '0000000001', 'photos/dupont');
-INSERT INTO _logement VALUES ('0123456788', 'Maison de campagne', 250, 'Maison à la campagne avec grand terrain et de muliple pièces', 'Maison', '', 'maison', 125, true, 4, 6, 1, 3, 2, 3000, false, true, false, true, false, false, true, true, true, true, true, true, true, '0123456788', '0000000001', '0000000001', 'photos/dubois');
+INSERT INTO _logement VALUES ('0123456789', 'Manoir Hanté', 500, 'Manoir à la campagne avec grand terrain et de muliple pièces', 'Description', 'Manoir', 'manoir', 500, true, 10, 14, 3, 7, 4, 300, false, true, false, true, false, false, true, true, true, true, true, true, true, '0123456788', '0000000001', '0000000001', 'photos/dupont');
+INSERT INTO _logement VALUES ('0123456788', 'Maison de campagne', 250, 'Maison à la campagne avec grand terrain et de muliple pièces', 'Description', 'Maison', 'T4', 125, true, 4, 6, 1, 3, 2, 3000, false, true, false, true, false, false, true, true, true, true, true, true, true, '0123456788', '0000000001', '0000000001', 'photos/dubois');
 INSERT INTO _avis VALUES ('002345678', 'Super logement', 5, '0000000002', '0123456789');
 INSERT INTO _plage_ponctuelle VALUES ('0123456789', '2023-10-18', '2023-10-19', '0123456788');
+INSERT INTO _photo_complementaire VALUES ('photos/dupont', '0123456789');
+INSERT INTO _photo_complementaire VALUES ('photos/dubois', '0123456789');
