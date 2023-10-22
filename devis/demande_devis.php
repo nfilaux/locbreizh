@@ -39,7 +39,7 @@
                 <img src="../image/logo.svg">
                 <p>Loc’Breizh</p>
             </div>
-            <img src="image/filtre.svg">
+            <img src="../image/filtre.svg">
             <form name="formulaire" method="post" action="recherche.php" enctype="multipart/form-data">
                 <input type="search" id="recherche" name="recherche" placeholder="Rechercher"><br>
                 <input type="image" id="loupe" alt="loupe" src="../image/loupe.svg" />
@@ -64,6 +64,13 @@
 
                 <label for="dateDepart">Date de depart :</label>
                 <input type="date" id="dateDepart" name="dateDepart" required/>
+                <?php 
+                    if (isset($_GET['erreur']) && $_GET['erreur'] == 1) {
+                        echo '<p class="error-message">La date de départ est ultérieure à la date d\'arrivée !</p>';
+                    } elseif (isset($_GET['erreur']) && $_GET['erreur'] == 2) {
+                        echo '<p class="error-message">La date d\'arrivée ou la date de départ est ultérieure à la date d\'aujourd\'hui !</p>';
+                    }
+                ?>
 
                 <label for="nb_pers">Nombre de persones :</label>
                 <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
@@ -103,5 +110,7 @@
             </div>
         </div>
     </footer>
+
 </body>
 </html>
+

@@ -112,6 +112,10 @@
     $stmt->execute();
     // sotck les lignes de la requete dans liste_message
     $liste_message = $stmt->fetchAll();
+
+    $stmt = $dbh->prepare("SELECT * from locbreizh._message_devis;");
+    $stmt->execute();
+    $liste_message_devis = $stmt->fetchAll();
 ?>
 <body>
     <header>
@@ -120,7 +124,7 @@
                 <img src="../image/logo.svg">
                 <p>Loc’Breizh</p>
             </div>
-            <img src="image/filtre.svg">
+            <img src="../image/filtre.svg">
             <form name="formulaire" method="post" action="recherche.php" enctype="multipart/form-data">
                 <input type="search" id="recherche" name="recherche" placeholder="Rechercher"><br>
                 <input type="image" id="loupe" alt="loupe" src="../image/loupe.svg" />
@@ -131,9 +135,8 @@
             </div>
             <div id="parametre">
                 <a href="messagerie.php"><img src="../image/messagerie.svg"></a>
-                <!--appel php pour selectionner la photo du user-->
-                <a href="compte.php"><img src=<?php echo $photo_profil['url_photo']; ?>></a>
-                <div>
+                <a href="compte.php"><img src=<?php echo "../" . $photo_profil['url_photo']; ?>></a>
+            <div>
         </nav>
     </header>
     <main>
@@ -211,6 +214,7 @@
                     <?php 
                         // affichage de la liste des messages avec les infos asscoiées
                         foreach($liste_message as $message){
+                            echo in_array($message['id_message'], $liste_message_devis);
                             if($message['auteur'] === $message['compte1']){
                                 $photo_mess = $message['photo1'];
                                 
@@ -224,7 +228,28 @@
                                 <img src=<?php echo $photo_mess; ?> alt="photo de profil">
                                 <!--contenu message + date... -->
                                 <div>
-                                    <p><?php echo $message['contenu_message']?></p>
+                                    <div>
+                                        <p><?php
+                                            echo $message['contenu_message'];
+                                            // on regarde si est le message est un message de demande de devis ou un devis
+                                            $est_devis = false;
+                                            foreach ($liste_message_devis as $message_devis) {
+                                                if ($message_devis['id_message_devis'] === $message['id_message']) {
+                                                    $est_devis = true;
+                                                    echo " : <a href='../devis/pdf_demande/{$message_devis['lien_demande_devis']}'>voir la demande de devis</a>";
+                                                }
+                                            }
+                                        ?></p>
+                                        <?php 
+                                            if($est_devis){?>
+                                                <form method="post" action="accepter_demande.php">
+                                                    <button type="submit">Accepter</button>
+                                                </form>
+                                                <form method="post" action="refuser_demande.php">
+                                                    <button type="submit">Refuser</button>
+                                                </form>
+                                        <?php } ?>
+                                    </div>
                                     <p><?php echo $message['date_mess'] . ' ' . $message['heure_mess']; ?> </p>
                                 </div>
                             </div>
