@@ -392,7 +392,7 @@ CREATE TABLE
         date_validite numeric(3) not null,
         condition_annulation VARCHAR(255) NOT NULL,
         num_demande_devis INTEGER NOT NULL,
-        taxe_sejour integer,
+        taxe_sejour integer not null,
         CONSTRAINT devis_pk PRIMARY KEY (num_devis),
         CONSTRAINT devis_fk_taxe_sejour FOREIGN KEY (taxe_sejour) REFERENCES _taxe_sejour (id_taxe),
         CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_demande_devis) REFERENCES _demande_devis (num_demande_devis)
