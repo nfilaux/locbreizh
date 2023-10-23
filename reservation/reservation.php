@@ -1,14 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="utf-8">
-    <title>Accueil</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserver</title>
+    <!--paypal-->
+    
 </head>
-
 <body>
     <header class="row col-12">
         <div class="row col-3">
@@ -28,68 +26,10 @@
         </div>
     </header>
     <main>
-
-        <div class="offset-2 col-8">
-            <?php
-                try {
-                    include('connect_params.php');
-
-                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $password);
-                    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-                    $stmt = $dbh->prepare(
-                        'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, note_avis, debut_plage_ponctuelle, fin_plage_ponctuelle
-                        from locbreizh._logement 
-                            INNER JOIN locbreizh._avis ON logement = id_logement
-                            INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
-                            INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning;'
-                    );
-                } catch (PDOException $e) {
-                    print "Erreur !:" . $e->getMessage() . "<br/>";
-                    die();
-                }
-
-                function formatDate($start, $end)
-                {
-                    $startDate = date('j', strtotime($start));
-                    $endDate = date('j', strtotime($end));
-                    $month = date('M', strtotime($end));
-
-                    return "$startDate-$endDate $month";
-                }
-                $stmt->execute();
-                $lst_card = $stmt->fetchAll();
-
-                
-                foreach ($lst_card as $card) {
-                    $stmt = $dbh->prepare("select nom, prenom, photo from locbreizh._reservation r 
-                    join locbreizh._logement l on l.id_logement = r.logement
-                    join locbreizh._compte c on c.id_proprietaire = l.id_proprietaire;");
-                    $stmt->execute();
-                    $info_proprio = $stmt->fetch();
-                    ?>
-                    <div class="card">        
-                        <img src="<?php $card['../photos/photo_principale'] ?>">
-                        <h3> <?php $card['???'] ?> </h3>
-                        <div>
-                            <p>Par <?php echo $info_proprio['prenom'] . ' ' . $info_proprio['nom'];?></p>
-                            <img src=<?php echo 'photos/' . $info_proprio['photo']; ?> alt="photo de profil">
-                            <button>Contacter le proprietaire</button>
-                        </div>
-                        <button class="btn-accueil">CONSULTER DEVIS</button>
-                        <button class="btn-accueilins">CONSULTER LOGEMENT</button>
-                        <button disabled>ANNULER</button>
-                        <p>DISCLAIMER - L’annulation est définitve et irréversible.</p>
-                    </div>
-                <?php } ?>
-            
-        </div>
-        <div class='voir_plus'>
-            <hr>
-            <h4>Voir plus</h4>
-            <hr>
-        </div>
+        <h1>Paiement de la reservation</h1>
+        <div id="paypal-button-container"></div>
+        <script src="https://www.paypal.com/sdk/js?client-id=AZ9f4oyPDCMS1YixHmqPR4wPGz2OM5CC59wpo0KTCHc2jaOMYZivqTjz-Wj52tAprCRF5PkLZD1dnn9s&currency=EUR"></script>
+        <script src="paypal.js"></script>
     </main>
     <footer class="container-fluid" >
         <div class="column">   
@@ -108,5 +48,4 @@
         </div>
     </footer>
 </body>
-
 </html>
