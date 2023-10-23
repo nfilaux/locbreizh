@@ -55,20 +55,7 @@
         </nav>
     </header>
     <main>
-        <h1>Faire ma demande de devis</h1>
-        <!--formulaire avec methode post-->
-        <form name="envoie_demande_devis" method="post" action="envoyer_demande.php" enctype="multipart/form-data">
-            <div>
-                <label for="dateArrivee">Date d’arrivée :</label>
-                <input type="date" id="dateArrivee" name="dateArrivee" required/>
-
-                <label for="dateDepart">Date de depart :</label>
-                <input type="date" id="dateDepart" name="dateDepart" required/>
-                <?php 
-                    if (isset($_GET['erreur']) && $_GET['erreur'] == 1) {
-                        echo '<p class="error-message">La date de départ est ultérieure à la date d\'arrivée !</p>';
-                    } elseif (isset($_GET['erreur']) && $_GET['erreur'] == 2) {
-                        echo '<p class="error-message">La date d\'arrivée ou la date de départ est ultérieure à la date d\'aujourd\'hui !</p>';
+        <h1>Faire print_r($_POST);       echo '<p class="error-message">La date d\'arrivée ou la date de départ est ultérieure à la date d\'aujourd\'hui !</p>';
                     }
                 ?>
 

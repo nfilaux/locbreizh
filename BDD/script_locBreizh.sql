@@ -398,32 +398,30 @@ CREATE TABLE
         CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_demande_devis) REFERENCES _demande_devis (num_demande_devis)
     );
 
+/*   table facture : est utilisée pour stocker les informations une facture   */
+
+CREATE TABLE
+    _facture (
+        num_facture serial,
+        num_devis INTEGER NOT NULL,
+        url_facture varchar(50) not null,
+        CONSTRAINT facture_pk PRIMARY KEY (num_facture),
+        CONSTRAINT facture_fk_devis FOREIGN KEY (num_devis) REFERENCES _devis (num_devis)
+    );
+
 /*   table reservation : est utilisée pour rendre compte d'une reservation d'un client pour un logement   */
 
 CREATE TABLE
     _reservation (
         num_reservation SERIAL NOT NULL,
-        date_reservation DATE NOT NULL,
         reservation_annulee BOOLEAN NOT NULL,
         client INTEGER NOT NULL,
         logement integer not null,
+        facture INTEGER not null,
         CONSTRAINT reservation_pk PRIMARY KEY (num_reservation),
         CONSTRAINT reservation_fk_client FOREIGN KEY (client) REFERENCES _client (id_client),
-        CONSTRAINT reservation_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement)
-    );
-
-/*   table facture : est utilisée pour stocker les informations une facture   */
-
-CREATE TABLE
-    _facture (
-        num_facture INTEGER NOT NULL,
-        num_devis INTEGER NOT NULL,
-        carte VARCHAR(50) not null,
-        reservation integer not null,
-        CONSTRAINT facture_pk PRIMARY KEY (num_facture),
-        CONSTRAINT facture_fk_devis FOREIGN KEY (num_devis) REFERENCES _devis (num_devis),
-        CONSTRAINT facture_fk_reservation FOREIGN KEY (reservation) REFERENCES _reservation (num_reservation),
-        constraint facture_fk_carte FOREIGN KEY(carte) REFERENCES _carte(num_carte_chiffre)
+        CONSTRAINT reservation_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement),
+        CONSTRAINT reservation_fk_facture FOREIGN KEY (facture) REFERENCES _facture (num_facture)
     );
 
 /*   table facure_avoir : est utilisée pour stocker les informations une facture d'avoir en cas d'annulation   */
