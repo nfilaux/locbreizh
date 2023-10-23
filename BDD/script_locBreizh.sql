@@ -389,7 +389,7 @@ CREATE TABLE
         frais_service_platforme_HT_devis NUMERIC(5, 2) NOT NULL,
         fras_service_platforme_TTC_devis NUMERIC(5, 2) NOT NULL,
         date_devis DATE NOT NULL,
-        date_validite INTEGER NOT NULL,
+        date_validité DATE NOT NULL,
         condition_annulation VARCHAR(255) NOT NULL,
         num_demande_devis INTEGER NOT NULL,
         CONSTRAINT devis_pk PRIMARY KEY (num_devis),
