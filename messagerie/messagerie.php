@@ -24,7 +24,7 @@
         die();
     }
     // id fictif pour les test
-    $_SESSION['id'] = 1;
+    $_SESSION['id'] = 4;
     // requete pour obtenir la photo de profil pour le header
     $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
     $stmt->execute();
@@ -242,20 +242,36 @@
                                         ?></p>
                                         <?php 
                                             if($est_demande){
+                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_demande m where m.id_message_demande = {$message['id_message']};");
+                                                $stmt->execute();
+                                                $statut = $stmt->fetch();
+
+                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
+                                                $stmt->execute();
+                                                $est_client = $stmt->fetch();
+
+                                                if(isset($est_client['id_compte'])){
+                                                    $est_client = True;
+                                                }
+                                                else{
+                                                    $est_client = False;
+                                                }
                                                 
                                                 ?>
                                                 <form method="post" action="accepter_demande.php?demande=<?php echo $message['id_message']; ?>">
-                                                    <button type="submit">Accepter</button>
+                                                    <button type="submit" <?php if(isset($statut['accepte']) || $est_client){ echo 'disabled';} ?>>Accepter</button>
                                                 </form>
                                                 <form method="post" action="refuser_demande.php?demande=<?php echo $message['id_message']; ?>">
-                                                    <button type="submit">Refuser</button>
+                                                    <button type="submit" <?php if(isset($statut['accepte']) || $est_client){ echo 'disabled';} ?>>Refuser</button>
                                                 </form>
                                         <?php } ?>
                                     </div>
-                                    <p><?php echo $message['date_mess'] . ' ' . $message['heure_mess']; ?> </p>
+                                    <p><?php 
+                                        $date = explode('-', $message['date_mess']);
+                                        echo $date[2] .'/' . $date[1] .'/' . $date[0] . ' ' . substr($message['heure_mess'], 0, 5); 
+                                    ?> </p>
                                 </div>
                             </div>
-                            
                         <?php
                     }?>
                     <!--champ pour ecrire le message-->

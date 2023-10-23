@@ -406,8 +406,10 @@ CREATE TABLE
         date_reservation DATE NOT NULL,
         reservation_annulee BOOLEAN NOT NULL,
         client INTEGER NOT NULL,
+        logement integer not null,
         CONSTRAINT reservation_pk PRIMARY KEY (num_reservation),
-        CONSTRAINT reservation_fk_client FOREIGN KEY (client) REFERENCES _client (id_client)
+        CONSTRAINT reservation_fk_client FOREIGN KEY (client) REFERENCES _client (id_client),
+        CONSTRAINT reservation_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement)
     );
 
 /*   table facture : est utilisée pour stocker les informations une facture   */
@@ -416,9 +418,12 @@ CREATE TABLE
     _facture (
         num_facture INTEGER NOT NULL,
         num_devis INTEGER NOT NULL,
+        carte VARCHAR(50) not null,
+        reservation integer not null,
         CONSTRAINT facture_pk PRIMARY KEY (num_facture),
-        CONSTRAINT facture_fk_devis FOREIGN KEY (num_facture) REFERENCES _devis (num_devis),
-        CONSTRAINT facture_fk_rservation FOREIGN KEY (num_facture) REFERENCES _reservation (num_reservation)
+        CONSTRAINT facture_fk_devis FOREIGN KEY (num_devis) REFERENCES _devis (num_devis),
+        CONSTRAINT facture_fk_reservation FOREIGN KEY (reservation) REFERENCES _reservation (num_reservation),
+        constraint facture_fk_carte FOREIGN KEY(carte) REFERENCES _carte(num_carte_chiffre)
     );
 
 /*   table facure_avoir : est utilisée pour stocker les informations une facture d'avoir en cas d'annulation   */
