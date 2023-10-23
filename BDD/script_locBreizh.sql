@@ -356,7 +356,7 @@ CREATE TABLE
 
 CREATE TABLE
     _taxe_sejour (
-        id_taxe SERIAL NOT NULL,
+        id_taxe SERIAL,
         prix_journalier_adulte NUMERIC(5, 2) NOT NULL,
         CONSTRAINT taxe_sejour_pk PRIMARY KEY (id_taxe)
     );
@@ -389,11 +389,12 @@ CREATE TABLE
         frais_service_platforme_HT_devis NUMERIC(5, 2) NOT NULL,
         fras_service_platforme_TTC_devis NUMERIC(5, 2) NOT NULL,
         date_devis DATE NOT NULL,
-        date_validité DATE NOT NULL,
+        date_validite numeric(3) not null,
         condition_annulation VARCHAR(255) NOT NULL,
         num_demande_devis INTEGER NOT NULL,
+        taxe_sejour integer,
         CONSTRAINT devis_pk PRIMARY KEY (num_devis),
-        CONSTRAINT devis_fk_taxe_sejour FOREIGN KEY (num_devis) REFERENCES _taxe_sejour (id_taxe),
+        CONSTRAINT devis_fk_taxe_sejour FOREIGN KEY (taxe_sejour) REFERENCES _taxe_sejour (id_taxe),
         CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_demande_devis) REFERENCES _demande_devis (num_demande_devis)
     );
 
