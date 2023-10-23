@@ -122,39 +122,43 @@
 
     if (!$erreur){
         include('connect_params.php');
-        $prenom = htmlentities($prenom);
-        $nom = htmlentities($nom);
-        $genre = htmlentities($genre);
-        $mail = htmlentities($mail);
-        $date = htmlentities($date);
-        $tel = htmlentities($tel);
-        $pseudo = htmlentities($pseudo);
-        $mdp = htmlentities($mdp);
-        $ville = htmlentities($ville);
-        $codePostal = htmlentities($codePostal);
-        $numRue = htmlentities($numRue);
-        $nomRue = htmlentities($nomRue);
+        $prenom = $prenom;
+        $nom = $nom;
+        $genre = $genre;
+        $mail = $mail;
+        $date = $date;
+        $tel = $tel;
+        $pseudo = $pseudo;
+        $mdp = $mdp;
+        $ville = $ville;
+        $codePostal = $codePostal;
+        $numRue = $numRue;
+        $nomRue = $nomRue;
+        $langue = $_POST['langue'];
 
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '$mail';");
+            $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '{$mail}';");
             $verifMail->execute();
-            $res = $verifMail->fetch();
-            if ($res['count'] != 0){
+            $res = $verifMail->fetchColumn();
+            if ($res != 0){
                 $_SESSION['erreurs'] += ["email" => "mail déjà existant"];
+                $erreur = true;
             }
-            $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '$tel';");
+            $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '{$tel}';");
             $verifTel->execute();
-            $res = $verifTel->fetch();
-            if ($res['count'] != 0){
+            $res = $verifTel->fetchColumn();
+            if ($res != 0){
                 $_SESSION['erreurs'] += ["telephone" => "telephone déjà existant"];
+                $erreur = true;
             }
-            $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '$pseudo';");
+            $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '{$pseudo}';");
             $verifPseudo->execute();
-            $res = $verifPseudo->fetch();
-            if ($res['count'] != 0){
+            $res = $verifPseudo->fetchColumn();
+            if ($res != 0){
                 $_SESSION['erreurs'] += ["pseudo" => "pseudo déjà existant"];
+                $erreur = true;
             }
             $dbh = null;
         } catch (PDOException $e) {
@@ -164,9 +168,58 @@
     }
 
     if(!$erreur){
-        move_uploaded_file($_FILES['photoProfil']['tmp_name'],'./photoProfil/' . $temps2 . '.' . $extension2);
-        move_uploaded_file($_FILES['carteIdentite']['tmp_name'],'./carteIdentite/' . $temps1 . '.' . $extension1);
-        move_uploaded_file($_FILES['rib']['tmp_name'],'./RIB/' . $temps3 . '.' . $extension3);
+        try {
+            $urlProfil = './photoProfil/' . $temps2 . '.' . $extension2;
+            $urlIdentite = './carteIdentite/' . $temps1 . '.' . $extension1;
+            $urlRIB = './RIB/' . $temps3 . '.' . $extension3;
+            move_uploaded_file($_FILES['photoProfil']['tmp_name'], $urlProfil);
+            move_uploaded_file($_FILES['carteIdentite']['tmp_name'], $urlIdentite);
+            move_uploaded_file($_FILES['rib']['tmp_name'], $urlRIB);
+
+            $mdp = password_hash($mdp, PASSWORD_DEFAULT);
+
+            include('connect_params.php');
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$urlProfil}'), ('{$urlIdentite}'), ('{$urlRIB}');");
+            $requetePhotos->execute();
+
+            $requeteAdresse = $dbh->prepare("INSERT INTO locbreizh._adresse(nom_rue, numero_rue, code_postal, pays, ville) VALUES ('{$nomRue}', {$numRue}, '{$codePostal}', 'France', '{$ville}');");
+            $requeteAdresse->execute();
+
+            $requeteIDAdresse = $dbh->prepare("SELECT id_adresse FROM locbreizh._adresse WHERE nom_rue = '{$nomRue}';");
+            $requeteIDAdresse->execute();
+            $idAdresse = $requeteIDAdresse->fetchColumn();
+
+            $requeteCompte = $dbh->prepare("INSERT INTO locbreizh._compte(civilite, nom, prenom, mail, mot_de_passe, pseudo, telephone, adresse, photo) VALUES ('{$genre}', '{$nom}','{$prenom}', '{$mail}', '{$mdp}', '{$pseudo}', '{$tel}', {$idAdresse}, '{$urlProfil}');");
+            $requeteCompte->execute();
+
+            $requeteIDCompte = $dbh->prepare("SELECT id_compte FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
+            $requeteIDCompte->execute();
+            $idCompte = $requeteIDCompte->fetchColumn();
+            echo $idCompte;
+
+            $requeteProprio = $dbh->prepare("INSERT INTO locbreizh._proprietaire VALUES ('{$idCompte}' ,'{$urlRIB}', '{$urlIdentite}');");
+            $requeteProprio->execute();
+
+            $requeteLangueExiste = $dbh->prepare("SELECT COUNT(*) FROM locbreizh._langue WHERE nom_langue = '{$langue}';");
+            $requeteLangueExiste->execute();
+            $nbLangue = $requeteLangueExiste->fetchColumn();
+
+            if ($nbLangue == 0){
+                $requeteLangue = $dbh->prepare("INSERT INTO locbreizh._langue VALUES ('{$langue}');");
+                $requeteLangue->execute();
+            }
+            $requeteParle = $dbh->prepare("INSERT INTO locbreizh._parle VALUES ('{$langue}', '{$idCompte}');");
+            $requeteParle->execute();
+
+            $dbh = null;
+        } catch (PDOException $e) {
+            print "Erreur !: " . $e->getMessage() . "<br/>";
+            die();
+        }
+
     }
 
     if ($erreur){
@@ -333,7 +386,7 @@
 
     function verifLangue($langue){
         $erreur = false;
-        if (!preg_match('/^(fr|en|es|de|it|ja|cn|pt)$/', $langue)) {
+        if (!preg_match('/^(Français|Anglais|Espagnol|Allemand|Italien|Japonais|Chinois|Portugais)$/', $langue)) {
             $erreur = true;
             $_SESSION['erreurs'] += ["langue" => "Veuillez choisir une langue de la liste"];
         }

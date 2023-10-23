@@ -107,39 +107,42 @@
 
     if (!$erreur){
         include('connect_params.php');
-        $prenom = htmlentities($prenom);
-        $nom = htmlentities($nom);
-        $genre = htmlentities($genre);
-        $mail = htmlentities($mail);
-        $date = htmlentities($date);
-        $tel = htmlentities($tel);
-        $pseudo = htmlentities($pseudo);
-        $mdp = htmlentities($mdp);
-        $ville = htmlentities($ville);
-        $codePostal = htmlentities($codePostal);
-        $numRue = htmlentities($numRue);
-        $nomRue = htmlentities($nomRue);
+        $prenom = $prenom;
+        $nom = $nom;
+        $genre = $genre;
+        $mail = $mail;
+        $date = $date;
+        $tel = $tel;
+        $pseudo = $pseudo;
+        $mdp = $mdp;
+        $ville = $ville;
+        $codePostal = $codePostal;
+        $numRue = $numRue;
+        $nomRue = $nomRue;
 
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '$mail';");
+            $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '{$mail}';");
             $verifMail->execute();
-            $res = $verifMail->fetch();
-            if ($res['count'] != 0){
+            $res = $verifMail->fetchColumn();
+            if ($res != 0){
                 $_SESSION['erreurs'] += ["email" => "mail déjà existant"];
+                $erreur = true;
             }
-            $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '$tel';");
+            $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '{$tel}';");
             $verifTel->execute();
-            $res = $verifTel->fetch();
-            if ($res['count'] != 0){
+            $res = $verifTel->fetchColumn();
+            if ($res != 0){
                 $_SESSION['erreurs'] += ["telephone" => "telephone déjà existant"];
+                $erreur = true;
             }
-            $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '$pseudo';");
+            $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '{$pseudo}';");
             $verifPseudo->execute();
-            $res = $verifPseudo->fetch();
-            if ($res['count'] != 0){
+            $res = $verifPseudo->fetchColumn();
+            if ($res != 0){
                 $_SESSION['erreurs'] += ["pseudo" => "pseudo déjà existant"];
+                $erreur = true;
             }
             $dbh = null;
         } catch (PDOException $e) {
@@ -147,10 +150,47 @@
             die();
         }
     }
-
+    
     if(!$erreur){
-        move_uploaded_file($_FILES['photoProfil']['tmp_name'],'./photoProfil/' . $temps2 . '.' . $extension2);
-        move_uploaded_file($_FILES['carteIdentite']['tmp_name'],'./carteIdentite/' . $temps1 . '.' . $extension1);
+        try {
+            $urlProfil = './photoProfil/' . $temps2 . '.' . $extension2;
+            $urlIdentite = './carteIdentite/' . $temps1 . '.' . $extension1;
+            move_uploaded_file($_FILES['photoProfil']['tmp_name'], $urlProfil);
+            move_uploaded_file($_FILES['carteIdentite']['tmp_name'], $urlIdentite);
+
+            $mdp = password_hash($mdp, PASSWORD_DEFAULT);
+
+            include('connect_params.php');
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$urlProfil}'), ('{$urlIdentite}');");
+            $requetePhotos->execute();
+
+            $requeteAdresse = $dbh->prepare("INSERT INTO locbreizh._adresse(nom_rue, numero_rue, code_postal, pays, ville) VALUES ('{$nomRue}', {$numRue}, '{$codePostal}', 'France', '{$ville}');");
+            $requeteAdresse->execute();
+
+            $requeteIDAdresse = $dbh->prepare("SELECT id_adresse FROM locbreizh._adresse WHERE nom_rue = '$nomRue';");
+            $requeteIDAdresse->execute();
+            $idAdresse = $requeteIDAdresse->fetchColumn();
+
+            $requeteCompte = $dbh->prepare("INSERT INTO locbreizh._compte(civilite, nom, prenom, mail, mot_de_passe, pseudo, telephone, adresse, photo) VALUES ('{$genre}', '{$nom}','{$prenom}', '{$mail}', '{$mdp}', '{$pseudo}', '{$tel}', {$idAdresse}, '{$urlProfil}');");
+            $requeteCompte->execute();
+
+            $requeteIDCompte = $dbh->prepare("SELECT id_compte FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
+            $requeteIDCompte->execute();
+            $idCompte = $requeteIDCompte->fetchColumn();
+
+            $ageLegal = ageLegal($date);
+            $requeteClient = $dbh->prepare("INSERT INTO locbreizh._client VALUES ('{$idCompte}' ,'{$date}', '{$ageLegal}');");
+            $requeteClient->execute();
+
+            $dbh = null;
+        } catch (PDOException $e) {
+            print "Erreur !: " . $e->getMessage() . "<br/>";
+            die();
+        }
+
     }
 
     if ($erreur){
@@ -322,5 +362,17 @@
             $_SESSION['erreurs'] += ["conditions" => "Veuillez accepter les conditions générales d'utilisation"];
         }
         return $erreur;
+    }
+
+    function ageLegal($date){
+        $res = false;
+        $date1 = date_create($date);
+        $date2 = new DateTime("now");
+        $interval = date_diff($date1, $date2);
+        $diff = $interval->format('%y');
+        if ($diff >= 18){
+            $res = true;
+        }
+        return $res;
     }
 ?>

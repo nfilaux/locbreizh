@@ -120,14 +120,14 @@
             <div>
                 <select id="langue" name="langue" class="custom-input col-5 text-center">
                     <option value="none" hidden>Langue</option>
-                    <option value="fr" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'fr') { ?> selected <?php }}?>>Français</option>
-                    <option value="en" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'en') { ?> selected <?php }}?>>Anglais</option>
-                    <option value="es" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'es') { ?> selected <?php }}?>>Espagnol</option>
-                    <option value="de" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'de') { ?> selected <?php }}?>>Allemand</option>
-                    <option value="it" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'it') { ?> selected <?php }}?>>Italien</option>
-                    <option value="ja" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'ja') { ?> selected <?php }}?>>Japonais</option>
-                    <option value="cn" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'cn') { ?> selected <?php }}?>>Chinois</option>
-                    <option value="pt" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'pt') { ?> selected <?php }}?>>Portugais</option>
+                    <option value="Français" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'Français') { ?> selected <?php }}?>>Français</option>
+                    <option value="Anglais" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'Anglais') { ?> selected <?php }}?>>Anglais</option>
+                    <option value="Espagnol" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'Espagnol') { ?> selected <?php }}?>>Espagnol</option>
+                    <option value="Allemand" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'Allemand') { ?> selected <?php }}?>>Allemand</option>
+                    <option value="Italien" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'Italien') { ?> selected <?php }}?>>Italien</option>
+                    <option value="Japonais" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'Japonais') { ?> selected <?php }}?>>Japonais</option>
+                    <option value="Chinois" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'Chinois') { ?> selected <?php }}?>>Chinois</option>
+                    <option value="Portugais" <?php if(isset($_GET['langue'])) {if($_GET['langue'] == 'Portugais') { ?> selected <?php }}?>>Portugais</option>
                     <!-- Ajoutez plus d'options ici -->
                 </select>
                 <?php
