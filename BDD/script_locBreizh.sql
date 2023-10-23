@@ -380,7 +380,7 @@ CREATE TABLE
 
 CREATE TABLE
     _devis (
-        num_devis INTEGER NOT NULL,
+        num_devis serial,
         pseudo_client_devis VARCHAR(20) NOT NULL,
         prix_total_devis NUMERIC(5, 2) NOT NULL,
         tarif_HT_location_nuitee_devis NUMERIC(5, 2) NOT NULL,
