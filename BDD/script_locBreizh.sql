@@ -1,14 +1,13 @@
 DROP SCHEMA if exists locbreizh CASCADE;
 
-
 CREATE SCHEMA locbreizh;
 
 SET SCHEMA 'locbreizh';
 
 /*Creation des tables*/
 
-
 /*   table adresse : est utilisée pour le logement et les comptes   */
+
 CREATE TABLE
     _adresse (
         id_adresse SERIAL,
@@ -21,6 +20,7 @@ CREATE TABLE
     );
 
 /*   table photo : est utilisée pour image de profil des compte ainsi que pour les photos des logements   */
+
 CREATE TABLE
     _photo (
         url_photo VARCHAR(50) NOT NULL,
@@ -28,6 +28,7 @@ CREATE TABLE
     );
 
 /*   table compte : est utilisée comme base pour les compte clients et propriétaires   */
+
 CREATE TABLE
     _compte (
         id_compte SERIAL,
@@ -46,6 +47,7 @@ CREATE TABLE
     );
 
 /*   table proprietaire : est utilisée pour designer un propriétaire   */
+
 CREATE TABLE
     _proprietaire (
         id_proprietaire SERIAL,
@@ -56,6 +58,7 @@ CREATE TABLE
     );
 
 /*   table client : est utilisée pour designer un client   */
+
 CREATE TABLE
     _client (
         id_client SERIAL NOT NULL,
@@ -66,6 +69,7 @@ CREATE TABLE
     );
 
 /*   table admin : est utilisée pour se connecter plus tard en tant qu'admin (pour signelements ou autre)   */
+
 CREATE TABLE
     _admin (
         login VARCHAR(20) NOT NULL UNIQUE,
@@ -74,6 +78,7 @@ CREATE TABLE
     );
 
 /*   table langue : est utilisée pour renseigner les langues parlés par les propriétaires   */
+
 CREATE TABLE
     _langue (
         nom_langue VARCHAR(20) NOT NULL,
@@ -81,6 +86,7 @@ CREATE TABLE
     );
 
 /*   table parle : fait le lien entre une langue et un propriétaire   */
+
 CREATE TABLE
     _parle (
         langue VARCHAR(20) NOT NULL,
@@ -91,6 +97,7 @@ CREATE TABLE
     );
 
 /*   table conversation : est utilisée pour designer une conversation entre deux comptes différents   */
+
 CREATE TABLE
     _conversation (
         id_conversation SERIAL NOT NULL,
@@ -102,6 +109,7 @@ CREATE TABLE
     );
 
 /*   table message : est utilisée pour stocker les messages des utilisateurs   */
+
 CREATE TABLE
     _message (
         id_message SERIAL NOT NULL,
@@ -116,14 +124,18 @@ CREATE TABLE
     );
 
 /*   table message_devis : est utilisée pour un message de type demande de devis   */
-create table _message_devis(
-    id_message_devis integer not null,
-    lien_demande_devis varchar(50)  not null,
-    CONSTRAINT message_devis_pk PRIMARY KEY (id_message_devis),
-    constraint id_message_devis_fk_id FOREIGN KEY(id_message_devis) REFERENCES _message(id_message)
-);
+
+create table
+    _message_demande(
+        id_message_demande integer not null,
+        lien_demande varchar(50) not null,
+        accepte boolean,
+        CONSTRAINT message_devis_pk PRIMARY KEY (id_message_demande),
+        constraint id_message_demande_fk_id FOREIGN KEY(id_message_demande) REFERENCES _message(id_message)
+    );
 
 /*   table planning : est utilisée pour renseigner les plages de disponibilité d'un logement   */
+
 CREATE TABLE
     _planning (
         code_planning SERIAL,
@@ -134,6 +146,7 @@ CREATE TABLE
     );
 
 /*   table plage_ponctuelle : est utilisée pour renseigner les plages de disponibilité de manière ponctuelle  */
+
 CREATE TABLE
     _plage_ponctuelle (
         id_plage_ponctuelle SERIAL,
@@ -145,6 +158,7 @@ CREATE TABLE
     );
 
 /*   table plage_ponctuelle_indisponibilite : est utilisée pour renseigner les plages d'indisponibilité de manière ponctuelle   */
+
 CREATE TABLE
     _plage_ponctuelle_indisponibilite (
         id_plage_ponctuelle_indisp INTEGER NOT NULL,
@@ -154,6 +168,7 @@ CREATE TABLE
     );
 
 /*   table contrainte : est utilisée pour renseigner une contrainte au niveau du planning (ex : pas après 18h)   */
+
 CREATE TABLE
     _contrainte (
         num_contrainte NUMERIC(2) NOT NULL,
@@ -164,6 +179,7 @@ CREATE TABLE
     );
 
 /*   table  plage_recurrente : est utilisée pour renseigner des plages récurrente   */
+
 CREATE TABLE
     _plage_recurrente (
         id_plage_recurrente SERIAL NOT NULL,
@@ -176,6 +192,7 @@ CREATE TABLE
     );
 
 /*   table logement : est utilisée pour stocker les informations lié à un logement   */
+
 CREATE TABLE
     _logement (
         id_logement SERIAL NOT NULL,
@@ -218,6 +235,7 @@ CREATE TABLE
     );
 
 /*   table photo_secondaires : est utilisée pour faire le lien entre des images et un logement   */
+
 CREATE TABLE
     _photos_secondaires (
         logement INTEGER NOT NULL,
@@ -228,6 +246,7 @@ CREATE TABLE
     );
 
 /*   table avis : est utilisée pour stocker les différents avis fait par des clients ayant déja fait une resaervation    */
+
 CREATE TABLE
     _avis (
         id_avis SERIAL NOT NULL,
@@ -241,6 +260,7 @@ CREATE TABLE
     );
 
 /*   table reponse : est utilisée pour stocker la réponse d'un propriétaire sur un avis   */
+
 CREATE TABLE
     _reponse (
         id_reponse SERIAL NOT NULL,
@@ -253,6 +273,7 @@ CREATE TABLE
     );
 
 /*   table signalement : est utilisée pour servir de base pour les différents types de signalement   */
+
 CREATE TABLE
     _signalement (
         id_signalement SERIAL NOT NULL,
@@ -262,6 +283,7 @@ CREATE TABLE
     );
 
 /*   table signalement_message : est utilisée pour rendre compte d'un signalement de message   */
+
 CREATE TABLE
     _signalement_message (
         id_signalement INTEGER NOT NULL,
@@ -274,6 +296,7 @@ CREATE TABLE
     );
 
 /*   table signalement_avis : est utilisée pour rendre compte d'un signalement d'un avis   */
+
 CREATE TABLE
     _signalement_avis (
         id_signalement INTEGER NOT NULL,
@@ -286,6 +309,7 @@ CREATE TABLE
     );
 
 /*   table signalement_compte : est utilisée pour rendre compte d'un signalement d'un compte   */
+
 CREATE TABLE
     _signalement_compte (
         id_signalement INTEGER NOT NULL,
@@ -298,6 +322,7 @@ CREATE TABLE
     );
 
 /*   table cherges_additionnelles : est utilisée pour renseigner les différents types de charges   */
+
 CREATE TABLE
     _charge_additionnelles (
         nom_charges VARCHAR(50) NOT NULL,
@@ -305,6 +330,7 @@ CREATE TABLE
     );
 
 /*   table carte : est utilisée pour stocké les informations bancaires d'une carte de manière chiffrée   */
+
 CREATE TABLE
     _carte (
         num_carte_chiffre VARCHAR(50) NOT NULL,
@@ -316,6 +342,7 @@ CREATE TABLE
     );
 
 /*   table paye_avec : est utilisée pour faire le lien entre un client et sa carte bancaire   */
+
 CREATE TABLE
     _paye_avec (
         num_carte_chiffre VARCHAR(50) NOT NULL,
@@ -326,6 +353,7 @@ CREATE TABLE
     );
 
 /*   table taxe_sejour : est utilisée pour stocker les possible différentes taxes de séjour   */
+
 CREATE TABLE
     _taxe_sejour (
         id_taxe SERIAL NOT NULL,
@@ -334,6 +362,7 @@ CREATE TABLE
     );
 
 /*   table demande_devis : est utilisée pour rendre compte d'une demande de devis fait par un client   */
+
 CREATE TABLE
     _demande_devis (
         num_demande_devis SERIAL,
@@ -348,6 +377,7 @@ CREATE TABLE
     );
 
 /*   table devis : est utilisée pour rendre compte d'un devis fait par un proprietaire   */
+
 CREATE TABLE
     _devis (
         num_devis INTEGER NOT NULL,
@@ -364,10 +394,11 @@ CREATE TABLE
         num_demande_devis INTEGER NOT NULL,
         CONSTRAINT devis_pk PRIMARY KEY (num_devis),
         CONSTRAINT devis_fk_taxe_sejour FOREIGN KEY (num_devis) REFERENCES _taxe_sejour (id_taxe),
-        CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_devis) REFERENCES _demande_devis (num_demande_devis)
+        CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_demande_devis) REFERENCES _demande_devis (num_demande_devis)
     );
 
 /*   table reservation : est utilisée pour rendre compte d'une reservation d'un client pour un logement   */
+
 CREATE TABLE
     _reservation (
         num_reservation SERIAL NOT NULL,
@@ -379,6 +410,7 @@ CREATE TABLE
     );
 
 /*   table facture : est utilisée pour stocker les informations une facture   */
+
 CREATE TABLE
     _facture (
         num_facture INTEGER NOT NULL,
@@ -389,6 +421,7 @@ CREATE TABLE
     );
 
 /*   table facure_avoir : est utilisée pour stocker les informations une facture d'avoir en cas d'annulation   */
+
 CREATE TABLE
     _facture_avoir (
         num_facture SERIAL,
@@ -402,6 +435,7 @@ CREATE TABLE
     );
 
 /*   table comporte_charges_associee_demande_devis : permet de faire le lien entre un demande de devis et les charges additionnelles voulus   */
+
 CREATE TABLE
     _comporte_charges_associee_demande_devis (
         prix_charges NUMERIC(5, 2) NOT NULL,
@@ -417,6 +451,7 @@ CREATE TABLE
     );
 
 /*   table comporte_charges_associee_devis : permet de faire le lien entre un devis et les charges additionnelles decidées   */
+
 CREATE TABLE
     _comporte_charges_associee_devis (
         prix_charges NUMERIC(5, 2) NOT NULL,
@@ -429,6 +464,7 @@ CREATE TABLE
     );
 
 /*   table possede_charges_associee_logement : permet de faire le lien entre un logement et les charges additionnelles qu'il possèdent   */
+
 CREATE TABLE
     _possede_charges_associee_logement (
         prix_charges NUMERIC(5, 2) NOT NULL,
@@ -728,9 +764,7 @@ VALUES (
         'photos/dubois'
     );
 
-INSERT INTO
-    _conversation (compte1, compte2)
-VALUES (1, 2);
+INSERT INTO _conversation (compte1, compte2) VALUES (1, 2);
 
 INSERT INTO
     _message (
@@ -780,9 +814,7 @@ VALUES (
         1
     );
 
-INSERT INTO
-    _conversation (compte1, compte2)
-VALUES (1, 3);
+INSERT INTO _conversation (compte1, compte2) VALUES (1, 3);
 
 INSERT INTO
     _message (
