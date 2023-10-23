@@ -113,9 +113,9 @@
     // sotck les lignes de la requete dans liste_message
     $liste_message = $stmt->fetchAll();
 
-    $stmt = $dbh->prepare("SELECT * from locbreizh._message_devis;");
+    $stmt = $dbh->prepare("SELECT * from locbreizh._message_demande;");
     $stmt->execute();
-    $liste_message_devis = $stmt->fetchAll();
+    $liste_message_demande = $stmt->fetchAll();
 ?>
 <body>
     <header>
@@ -214,7 +214,7 @@
                     <?php 
                         // affichage de la liste des messages avec les infos asscoiées
                         foreach($liste_message as $message){
-                            echo in_array($message['id_message'], $liste_message_devis);
+                            echo in_array($message['id_message'], $liste_message_demande);
                             if($message['auteur'] === $message['compte1']){
                                 $photo_mess = $message['photo1'];
                                 
@@ -232,20 +232,22 @@
                                         <p><?php
                                             echo $message['contenu_message'];
                                             // on regarde si est le message est un message de demande de devis ou un devis
-                                            $est_devis = false;
-                                            foreach ($liste_message_devis as $message_devis) {
-                                                if ($message_devis['id_message_devis'] === $message['id_message']) {
-                                                    $est_devis = true;
-                                                    echo " : <a href='../devis/pdf_demande/{$message_devis['lien_demande_devis']}'>voir la demande de devis</a>";
+                                            $est_demande = false;
+                                            foreach ($liste_message_demande as $message_demande) {
+                                                if ($message_demande['id_message_demande'] === $message['id_message']) {
+                                                    $est_demande = true;
+                                                    echo " : <a href='../devis/pdf_demande/{$message_demande['lien_demande']}' target=\"_blank\">voir la demande de devis</a>";
                                                 }
                                             }
                                         ?></p>
                                         <?php 
-                                            if($est_devis){?>
-                                                <form method="post" action="accepter_demande.php">
+                                            if($est_demande){
+                                                
+                                                ?>
+                                                <form method="post" action="accepter_demande.php?demande=<?php echo $message['id_message']; ?>">
                                                     <button type="submit">Accepter</button>
                                                 </form>
-                                                <form method="post" action="refuser_demande.php">
+                                                <form method="post" action="refuser_demande.php?demande=<?php echo $message['id_message']; ?>">
                                                     <button type="submit">Refuser</button>
                                                 </form>
                                         <?php } ?>

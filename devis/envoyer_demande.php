@@ -81,8 +81,8 @@
         $stmt->execute();
         $id_mess = $dbh->lastInsertId();
 
-        $stmt = $dbh->prepare("INSERT INTO locbreizh._message_devis(id_message_devis, lien_demande_devis)
-        VALUES ($id_mess, 'devis$id_demande.pdf');");
+        $stmt = $dbh->prepare("INSERT INTO locbreizh._message_demande(id_message_demande, lien_demande)
+        VALUES ($id_mess, 'demande_devis$id_demande.pdf');");
         $stmt->execute();
 
         // ajout de la charge menage si demandee
@@ -170,7 +170,7 @@
 
         // enregistre le PDF dans un dossier
         $chemin_dossier = 'pdf_demande/';
-        $nom_fichier = "devis$id_demande.pdf";
+        $nom_fichier = "demande_devis$id_demande.pdf";
         $chemin_complet = $chemin_dossier . $nom_fichier;
         file_put_contents($chemin_complet, $contenu_pdf);
 
