@@ -191,6 +191,15 @@ CREATE TABLE
         CONSTRAINT plage_recurrente_fk_code_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
     );
 
+/*   table taxe_sejour : est utilisée pour stocker les possible différentes taxes de séjour   */
+
+CREATE TABLE
+    _taxe_sejour (
+        id_taxe SERIAL,
+        prix_journalier_adulte NUMERIC(5, 2) NOT NULL,
+        CONSTRAINT taxe_sejour_pk PRIMARY KEY (id_taxe)
+    );
+
 /*   table logement : est utilisée pour stocker les informations lié à un logement   */
 
 CREATE TABLE
@@ -227,11 +236,13 @@ CREATE TABLE
         id_proprietaire INTEGER NOT NULL,
         id_adresse INTEGER NOT NULL,
         photo_principale VARCHAR(50) NOT NULL,
+        taxe_sejour integer not null,
         CONSTRAINT logement_pk PRIMARY KEY (id_logement),
         CONSTRAINT logement_fk_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning),
         CONSTRAINT logement_fk_proprietaire FOREIGN KEY (id_proprietaire) REFERENCES _proprietaire (id_proprietaire),
         CONSTRAINT logement_fk_adresse FOREIGN KEY (id_adresse) REFERENCES _adresse (id_adresse),
-        CONSTRAINT logement_fk_photo FOREIGN KEY (photo_principale) REFERENCES _photo (url_photo)
+        CONSTRAINT logement_fk_photo FOREIGN KEY (photo_principale) REFERENCES _photo (url_photo),
+        CONSTRAINT logement_fk_taxe foreign key(taxe_sejour) REFERENCES _taxe_sejour(id_taxe)
     );
 
 /*   table photo_secondaires : est utilisée pour faire le lien entre des images et un logement   */
@@ -350,15 +361,6 @@ CREATE TABLE
         CONSTRAINT paye_avec_pk PRIMARY KEY (num_carte_chiffre, id_client),
         CONSTRAINT paye_avec_fk_client FOREIGN KEY (id_client) REFERENCES _client (id_client),
         CONSTRAINT paye_avec_fk_carte FOREIGN KEY (num_carte_chiffre) REFERENCES _carte (num_carte_chiffre)
-    );
-
-/*   table taxe_sejour : est utilisée pour stocker les possible différentes taxes de séjour   */
-
-CREATE TABLE
-    _taxe_sejour (
-        id_taxe SERIAL,
-        prix_journalier_adulte NUMERIC(5, 2) NOT NULL,
-        CONSTRAINT taxe_sejour_pk PRIMARY KEY (id_taxe)
     );
 
 /*   table demande_devis : est utilisée pour rendre compte d'une demande de devis fait par un client   */
@@ -632,6 +634,8 @@ INSERT INTO
     )
 VALUES (500, 2, 24);
 
+insert into _taxe_sejour(prix_journalier_adulte) values( 5 );
+
 INSERT INTO
     _logement (
         libelle_logement,
@@ -664,7 +668,8 @@ INSERT INTO
         code_planning,
         id_proprietaire,
         id_adresse,
-        photo_principale
+        photo_principale,
+        taxe_sejour
     )
 VALUES (
         'Manoir Hanté',
@@ -697,7 +702,8 @@ VALUES (
         1,
         1,
         1,
-        'photos/dubois'
+        'photos/dubois',
+        1
     );
 
 INSERT INTO
@@ -732,7 +738,8 @@ INSERT INTO
         code_planning,
         id_proprietaire,
         id_adresse,
-        photo_principale
+        photo_principale,
+        taxe_sejour
     )
 VALUES (
         'Maison de campagne',
@@ -765,7 +772,8 @@ VALUES (
         1,
         1,
         1,
-        'photos/dubois'
+        'photos/dubois',
+        1
     );
 
 INSERT INTO _conversation (compte1, compte2) VALUES (1, 2);
