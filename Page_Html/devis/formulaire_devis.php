@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if(isset($SESSION['erreurs'])){
+    if(isset($_SESSION['erreurs'])){
         $erreurs = $_SESSION['erreurs'];
     }
 ?>
@@ -9,7 +9,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Formulaire devis</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <header class="row col-12">
@@ -54,6 +56,13 @@
             $reqNomClient = $dbh->prepare("SELECT nom, prenom FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = {$_GET['demande']}");
             $reqNomClient->execute();
             $infos_user = $reqNomClient->fetch(); 
+
+            // recupere le nombre maximum de personnes pour le logement
+            $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers from locbreizh._logement l
+            join locbreizh._demande_devis d on d.logement = l.id_logement
+            where d.num_demande_devis = {$_GET['demande']};");
+            $stmt->execute();
+            $nb_max = $stmt->fetch();
             
         ?>
         <style>#erreur {color : red;}</style>
@@ -69,13 +78,13 @@
             <br/>
 
             <?php
-            if (isset($erreurs['cond_annul'])){
-                echo '<p id="erreur">' . $erreurs['valide_dates'] . 'aaaaaaaaaaaa' . '</p>';
+            if (isset($erreurs['valide_dates'])){
+                echo '<p id="erreur">' . $erreurs['valide_dates'] . '</p>';
             }
             ?>
 
             <label for="nb_pers">nombre de personnes:</label>
-            <input type="number" id="nb_pers" name="nb_pers" placeholder="nombre de personnes" value="<?php if(isset($_SESSION['valeurs_complete']['nb_pers'])){echo $_SESSION['valeurs_complete']['nb_pers'];} ?>" required />
+            <input type="number" id="nb_pers" name="nb_pers" placeholder="nombre de personnes" min="1" max=<?php echo $nb_max['nb_pers']; ?> value="<?php if(isset($_SESSION['valeurs_complete']['nb_pers'])){echo $_SESSION['valeurs_complete']['nb_pers'];} ?>" required />
             <br/>
 
             
@@ -88,7 +97,7 @@
             <br />
 
             <label for="annulation">Condition annulation</label>
-            <input type="text" id="annulation" name="annulation" value="<?php if(isset($_SESSION['valeurs_complete']['cond_annulation'])){echo $_SESSION['valeurs_complete']['cond_annulation'];} ?>" required/>
+            <input type="text" id="annulation" name="annulation" value="<?php if(isset($_SESSION['valeurs_complete']['annulation'])){echo $_SESSION['valeurs_complete']['annulation'];} ?>" required/>
 
             <?php
             if (isset($erreurs['cond_annul'])){
@@ -100,13 +109,13 @@
 
             <h1>Charges aditionnelles</h1>
 
-            <input type="checkbox" id="animaux">
+            <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo 'checked';} ?>>
             <label for="animaux"> Animaux </label>
 
-            <input type="checkbox" id="menage">
+            <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['menage'])){echo 'checked';} ?>>
             <label for="menage"> Menage </label>
 
-            <input type="text" id="vacanciers_sup" name="vacanciers_sup" placeholder="vacanciers supplémentaires" />
+            <input type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="vacanciers supplémentaires" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}; ?>"/>
 
             <h1>Details pour le paiement</h1>
 
@@ -124,10 +133,10 @@
             <div id="resultat">
                     <p> Total HT (en € ) </p>
                     <p> Total TTC (en € ) </p>
-                    <p> taxe de séjour (en € ) </p>
-                    <p> montant total du devis (en € ) </p>
-                    <p> frais de plateforme HT (en € ) </p>
-                    <p> frais de plateforme TTC (en € ) </p>
+                    <p> Taxe de séjour (en € ) </p>
+                    <p> Montant total du devis (en € ) </p>
+                    <p> Frais de plateforme HT (en € ) </p>
+                    <p> Frais de plateforme TTC (en € ) </p>
                 <?php
                 //}
                 ?>
@@ -152,9 +161,10 @@
                     total_plateforme_TTC = roundDecimal(total_plateforme_HT * 1.2,2)
                     html += `<p> Total HT : ${total_HT}€</p>`;
                     html += `<p> Total TTC : ${total_TTC}€</p>`;
-                    html += `<p> montant total du devis : ${total_montant_devis}€</p>`;
-                    html += `<p> frais de plateforme HT : ${total_plateforme_HT}€</p>`;
-                    html += `<p> frais de plateforme TTC: ${total_plateforme_TTC}€</p>`;
+                    html += `<p> Taxe séjour : ${taxe_sejour}€</p>`;
+                    html += `<p> Montant total du devis : ${total_montant_devis}€</p>`;
+                    html += `<p> Frais de plateforme HT : ${total_plateforme_HT}€</p>`;
+                    html += `<p> Frais de plateforme TTC: ${total_plateforme_TTC}€</p>`;
                     document.getElementById("resultat").innerHTML = html;
                     document.getElementById("envoyerDevisBtn").removeAttribute("disabled");
                 }

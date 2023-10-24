@@ -7,7 +7,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Demande devis</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <?php
     // import parametre de connexion + nouvelle instance de PDO
@@ -35,24 +37,24 @@
 <body>
 <header class="row col-12">
             <div class="row col-3">
-                <img src="svg//logo.svg">
+                <img src="../svg//logo.svg">
                 <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
             </div>
 
             <div class="row col-3">
-                <img class="col-2" src="svg//filtre.svg">
+                <img class="col-2" src="../svg/filtre.svg">
                 <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
-                <img class="col-2" src="svg//loupe.svg">
+                <img class="col-2" src="../svg/loupe.svg">
             </div>
                 <div class="row col-3 offset-md-1">
-                    <img src="svg//booklet-fill 1.svg">
+                    <img src="../svg//booklet-fill 1.svg">
                     <a href="logement.php" style="margin: auto;margin-left: 10px;"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
                 </div>
                 
 
             <div class="col-2 row">
-                <a class="offset-md-6 row"><img src="svg/message.svg"></a>
-                <a class="offset-md-2 row"><img src="svg/compte.svg"></a> 
+                <a class="offset-md-6 row"><img src="../svg/message.svg"></a>
+                <a class="offset-md-2 row"><img src="../svg/compte.svg"></a> 
             </div>
     </header>
     <main>
@@ -64,6 +66,15 @@
 
                 <label for="dateDepart">Date de depart :</label>
                 <input type="date" id="dateDepart" name="dateDepart" required/>
+
+                <?php 
+                    if($_GET['erreur'] == 2){
+                        echo '<p>La date ne peut pas être utlérieure à celle d\'aujourd\'hui !</p>';
+                    }
+                    if($_GET['erreur'] == 1){
+                        echo '<p>La date de départ ne doit pas être utlérieure à la date d\'arrivee !</p>';
+                    }
+                ?>
                 <label for="nb_pers">Nombre de persones :</label>
                 <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
                 <input type="number" id="nb_pers" name="nb_pers" min="1" max=<?php echo $nb_max['nb_pers']; ?> value=<?php if(isset($_GET['nb_pers']) && $_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>

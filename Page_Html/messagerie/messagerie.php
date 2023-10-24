@@ -9,6 +9,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <?php
     // inclusion d'une instance PDO
@@ -23,7 +25,7 @@
         die();
     }
     // id fictif pour les test
-    $_SESSION['id'] = 4;
+    $_SESSION['id'] = 1;
     // requete pour obtenir la photo de profil pour le header
     $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
     $stmt->execute();
@@ -141,7 +143,7 @@
             <img class="col-2" src="../svg//loupe.svg">
         </div>
         <div class="row col-3 offset-md-1">
-            <img src="../svg//booklet-fill 1.svg">
+            <img src="../svg/booklet-fill 1.svg">
             <a href="logement.php" style="margin: auto;margin-left: 10px;">
                 <h4 style="color:#000;">Accèder à mes réservations</h4>
             </a>
@@ -158,10 +160,10 @@
         <div>
             <!--barre de recherche (pour le filtre)-->
             <div>
-                <img src="image/filtre.svg">
+                <img src="../svg/filtre.svg">
                 <form name="formulaire" method="post" action="recherche_conv.php" enctype="multipart/form-data">
                     <input type="search" id="recherche_conv" name="recherche_conv" placeholder="Rechercher"><br>
-                    <input type="image" id="loupe" alt="loupe" src="image/loupe.svg" />
+                    <input type="image" id="loupe" alt="loupe" src="../svg/loupe.svg" />
                 </form>
             </div>
             <!--liste conversations-->
@@ -177,7 +179,7 @@
                 <div>
                     <a href=<?php echo "?conv=" . $conv['id_conversation'];?>>
                         <!--image de profil-->
-                        <img src=<?php echo $conv['photo_autre_compte'];?> alt="image de profil">
+                        <img src=<?php echo '../Ressources/Images/' . $conv['photo_autre_compte'];?> alt="image de profil">
                         <!--prenom, nom-->
                         <p><?php echo $conv['prenom_autre_compte'] . " " . $conv['nom_autre_compte']; ?></p>
                         <!--date de la conversation-->
@@ -197,7 +199,7 @@
                 <?php }?>
             </div>
         </div>
-        
+        <hr>
         <!--partie de droite (liste des messages de la conversation selectionnee)-->
         <div>
             <?php
@@ -208,10 +210,10 @@
                         <img src=<?php
                         // test pour connaitre quel photo de profil afficher
                         if($liste_message[0]['compte1'] === $_SESSION['id']){
-                            echo $liste_message[0]['photo2']; 
+                            echo '../Ressources/Images/' . $liste_message[0]['photo2']; 
                         }
                         else{
-                            echo $liste_message[0]['photo1']; 
+                            echo '../Ressources/Images/' . $liste_message[0]['photo1']; 
                         }?> alt='image de profil'>
 
                         <p><?php 
@@ -239,7 +241,7 @@
                             ?>                      
                             <!--un seul message-->
                             <div>
-                                <img src=<?php echo $photo_mess; ?> alt="photo de profil">
+                                <img src=<?php echo '../Ressources/Images/' . $photo_mess; ?> alt="photo de profil">
                                 <!--contenu message + date... -->
                                 <div>
                                     <div>
@@ -319,11 +321,12 @@
                             </div>
                         <?php
                     }?>
+                    <hr>
                     <!--champ pour ecrire le message-->
                     <div>
                         <form name="envoie_message" method="post" action="envoyer_message.php" enctype="multipart/form-data">
                             <input type="text" id="message" name="message" placeholder="Envoyer un message"><br>
-                            <input type="image" id="envoie" alt="envoie" src="image/envoyer.svg" />
+                            <input type="image" id="envoie" alt="envoie" src="../svg/envoyer.svg" />
                         </form>
                     </div>
                     </div>

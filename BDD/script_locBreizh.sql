@@ -499,9 +499,9 @@ CREATE TABLE
 
 /* Peuplement de la base */
 
-INSERT INTO _photo VALUES ( 'carte/id/dubois' );
+INSERT INTO _photo VALUES ( 'dubois.png' );
 
-INSERT INTO _photo VALUES ( 'photos/dubois' );
+INSERT INTO _photo VALUES ( 'martin.png' );
 
 INSERT INTO
     _adresse (
@@ -540,14 +540,14 @@ VALUES (
         'jdubois',
         '0612457889',
         1,
-        'photos/dubois'
+        'dubois.png'
     );
 
 INSERT INTO _proprietaire
 VALUES (
         1,
         '65465654646465',
-        'carte/id/dubois'
+        'dubois.png'
     );
 
 INSERT INTO
@@ -571,14 +571,14 @@ VALUES (
         'mpierre',
         '0612457823',
         1,
-        'photos/dubois'
+        'martin.png'
     );
 
 INSERT INTO _proprietaire
 VALUES (
         2,
         '65465654646445',
-        'carte/id/dubois'
+        'dubois.png'
     );
 
 INSERT INTO
@@ -602,14 +602,14 @@ VALUES (
         'mgrand',
         '0712457823',
         1,
-        'photos/dubois'
+        'dubois.png'
     );
 
 INSERT INTO _proprietaire
 VALUES (
         3,
         '00465654646445',
-        'carte/id/dubois'
+        'dubois.png'
     );
 
 INSERT INTO
@@ -633,7 +633,7 @@ VALUES (
         'lmartine',
         '0698987845',
         1,
-        'photos/dubois'
+        'dubois.png'
     );
 
 INSERT INTO _client VALUES ( 4, '2000-05-15', 'true' );
@@ -718,7 +718,7 @@ VALUES (
         1,
         1,
         1,
-        'photos/dubois',
+        'dubois.png',
         1
     );
 
@@ -788,7 +788,7 @@ VALUES (
         1,
         1,
         1,
-        'photos/dubois',
+        'dubois.png',
         1
     );
 

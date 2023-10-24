@@ -7,29 +7,37 @@
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $d_d = new DateTime($_POST["date_depart"]);
-    $d_a = new DateTime($_POST["date_arrivee"]);
-
     $_SESSION['valeurs_complete']['nb_pers'] = $_POST['nb_pers'];
     $_SESSION['valeurs_complete']['delais_accept'] = $_POST['delais_accept'];
     $_SESSION['valeurs_complete']['date_val'] = $_POST['date_val'];
-    $_SESSION['valeurs_complete']['annulation'] = $_POST['annulation'];
     $_SESSION['valeurs_complete']['tarif_loc'] = $_POST['tarif_loc'];
     $_SESSION['valeurs_complete']['charges'] = $_POST['charges'];
-
+    if(isset($_POST['menage'])){
+        $_SESSION['valeurs_complete']['menage'] = $_POST['menage'];
+    }
+    if(isset($_POST['animaux'])){
+        $_SESSION['valeurs_complete']['animaux'] = $_POST['animaux'];
+    }
+    $_SESSION['valeurs_complete']['vacanciers_sup'] = $_POST['vacanciers_sup'];
+    
     // test pour vérifier que les données soit bien entrée au format attendu
 
-    if ($d_d < $d_a){
+    if ($_POST["date_depart"] < $_POST["date_arrivee"]){
         //echo "y a une erreur de date";
         $_SESSION['erreurs']['valide_dates'] = "La date d'arrivee se trouve après la date de départ !";
-    } else {
+    }
+    else if($_POST["date_depart"] < date('Y-m-d') or $_POST["date_arrivee"] < date('Y-m-d')) {
+        //echo "y a une erreur de date";
+        $_SESSION['erreurs']['valide_dates'] = "Les dates données sont ulterieures à aujourd'hui !";
+    }
+    else {
         $_SESSION['valeurs_complete']['date_depart'] = $_POST["date_depart"];
         $_SESSION['valeurs_complete']['date_arrivee'] = $_POST["date_arrivee"];
     }
     if (preg_match('/[});]+/', $_POST["annulation"])){
         $_SESSION['erreurs']['cond_annul'] = "Erreur, pour des mesures de sécurité vous ne pouvez pas mettre les caractères suivant dans vos conditions d'annulation.";
     } else {
-        $_SESSION['valeurs_complete']['annulation'] = $_POST["date_arrivee"];
+        $_SESSION['valeurs_complete']['annulation'] = $_POST["annulation"];
     }
     if ($_SESSION['erreurs'] != []){
         header("Location: formulaire_devis.php?demande={$_POST['id_demande']}");
