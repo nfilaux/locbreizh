@@ -66,7 +66,7 @@
             echo '<p>' . $info['descriptif_logement'] . '</p>';
             echo '<p>' . 'Arrivée' . $info['debut_plage_ponctuelle'] . 'Départ' . $info['fin_plage_ponctuelle'] . '</p>';
             ?>
-            <button type='button'>Demander un devis</button>
+            <button id='dud' type='button' href='../devis/demande_devis.php ? logement = id_logement' >Demander un devis</button>
         </div>
         <div class='voir_plus'>
             <hr>
