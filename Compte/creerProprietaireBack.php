@@ -1,10 +1,11 @@
 <?php
     session_start();
 
-
-    $erreur = false;
-    $url = "?";
-    $_SESSION['erreurs'] = [];
+    $erreur = false; // variable qui permet de savoir si il y a une erreur ou non dans le remplissage du formulaire
+    $url = "?"; // variable qui permet de créer un url de redirection vers le formulaire avec tous les champs reremplis
+    $_SESSION['erreurs'] = []; // la session récupère toutes les erreurs pour les affichées dans le formulaire
+    
+    // tests déterminant si les données sont renseignées ou non
     if (!isset($_POST['conditions'])){
         $erreur = true;
         $_SESSION['erreurs'] += ["conditions" => "Veuillez accepter les conditions générales d'utilisation"];
@@ -18,6 +19,7 @@
             $erreur = true;
             $_SESSION['erreurs'] += [$key => "Veuillez renseigner ce champ."];
         }
+        // tests permettant de savoir si les données respectent les formats demandés
         else{
             switch ($key) {       
                 case "prenom":
@@ -81,11 +83,14 @@
             if ($erreurTest == true){
                 $erreur = true;
             }
+            // ajout des données dans l'url de redirection
             if (strcmp($key, "motdepasse") !== 0 && strcmp($key, "confirmationMDP") !== 0){
                 $url .= "$key=$row&";
             }
         }
     }
+    
+    // tests permettant de savoir si les images envoyées utilisent les bonnes extensions
     $arrayNom1 = explode('.', $_FILES['carteIdentite']['name']);
     $extension1 = $arrayNom1[sizeof($arrayNom1)-1];
     if ($extension1 == "png" or $extension1 == "gif" or $extension1 == "jpg" or $extension1 == "jpeg"){
@@ -120,20 +125,9 @@
         $erreur = true;
     }
 
+    // si il y a aucune érreur on vérifie que les contraintes d'unicité sont respectées
     if (!$erreur){
         include('connect_params.php');
-        $prenom = $prenom;
-        $nom = $nom;
-        $genre = $genre;
-        $mail = $mail;
-        $date = $date;
-        $tel = $tel;
-        $pseudo = $pseudo;
-        $mdp = $mdp;
-        $ville = $ville;
-        $codePostal = $codePostal;
-        $numRue = $numRue;
-        $nomRue = $nomRue;
         $langue = $_POST['langue'];
 
         try {
@@ -167,6 +161,7 @@
         }
     }
 
+    // si il y a toujours pas d'érreur on peuple la base avec les données
     if(!$erreur){
         try {
             $urlProfil = './photoProfil/' . $temps2 . '.' . $extension2;
@@ -219,15 +214,16 @@
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
-
     }
 
+    // si il y a eu une érreur durant les test on renvoie l'utilisateur sur le formulaire
     if ($erreur){
         $url = substr($url, 0, -1);
         header("Location: ./creerProprietaireFront.php$url");
         exit;
     }
 
+    // définition des fonctions permettant de faire les tests de conformité sur les données
     function verifPrenom($prenom){
         $erreur = false;
         if (strlen($prenom)>20){

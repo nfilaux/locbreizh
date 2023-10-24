@@ -1,18 +1,23 @@
 <?php
     session_start();
-    $url = "?";
-    $_SESSION['erreurs'] = [];
-    $erreur = false;
+
+    $erreur = false; // variable qui permet de savoir si il y a une erreur ou non dans le remplissage du formulaire
+    $url = "?"; // variable qui permet de créer un url de redirection vers le formulaire avec tous les champs reremplis
+    $_SESSION['erreurs'] = []; // la session récupère toutes les erreurs pour les affichées dans le formulaire
+    
+    // tests déterminant si les données sont renseignées ou non
     foreach ($_POST as $key => $row){
         if (empty($row)){
             $erreur = true;
             $_SESSION['erreurs'] += [$key => "Veuillez renseigner ce champ."];
         }
+        // ajout des données dans l'url de redirection
         else if (strcmp($key, "motdepasse") !== 0){
             $url .= "$key=$row&";
         }
     }
 
+    // si il n'y as pas d'érreur on vérifie que le pseudo et le mot de passe correspondent
     if (!$erreur){
         $pseudo = $_POST["pseudo"];
         $mdp = $_POST["motdepasse"];
@@ -47,6 +52,7 @@
             die();
         }
     }
+    // si il y a eu une érreur durant les test on renvoie l'utilisateur sur le formulaire
     else{
         $url = substr($url, 0, -1);
         header("Location: ./connexionFront.php$url");
