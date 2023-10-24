@@ -11,10 +11,10 @@ SET SCHEMA 'locbreizh';
 CREATE TABLE
     _adresse (
         id_adresse SERIAL,
-        nom_rue VARCHAR(30) NOT NULL,
-        numero_rue NUMERIC(3) NOT NULL,
+        nom_rue VARCHAR(30),
+        numero_rue NUMERIC(3),
         code_postal CHAR(5) NOT NULL,
-        pays VARCHAR(50) NOT NULL,
+        pays VARCHAR(50),
         ville VARCHAR(50) NOT NULL,
         CONSTRAINT adresse_pk PRIMARY KEY (id_adresse)
     );
@@ -36,7 +36,7 @@ CREATE TABLE
         nom VARCHAR(20) NOT NULL,
         prenom VARCHAR(20) NOT NULL,
         mail VARCHAR(50) NOT NULL UNIQUE,
-        mot_de_passe VARCHAR(25) NOT NULL,
+        mot_de_passe VARCHAR(100) NOT NULL,
         pseudo VARCHAR(20) NOT NULL UNIQUE,
         telephone VARCHAR(10) NOT NULL UNIQUE,
         adresse INTEGER NOT NULL,
@@ -232,7 +232,8 @@ CREATE TABLE
         wifi BOOLEAN NOT NULL,
         lave_linge BOOLEAN NOT NULL,
         lave_vaiselle BOOLEAN NOT NULL,
-        code_planning INTEGER NOT NULL,
+        code_planning INTEGER,
+        -- peut être null si pas de planning
         id_proprietaire INTEGER NOT NULL,
         id_adresse INTEGER NOT NULL,
         photo_principale VARCHAR(50) NOT NULL,

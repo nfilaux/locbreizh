@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!doctype html>
 <html lang="fr">
 
@@ -31,53 +32,40 @@
 
         <div class="offset-2 col-8">
             <?php
+            include('../parametre_connexion.php');
                 try {
-                    include('connect_params.php');
+                    
 
-                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $password);
+                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-                    $stmt = $dbh->prepare(
-                        'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, note_avis, debut_plage_ponctuelle, fin_plage_ponctuelle
-                        from locbreizh._logement 
-                            INNER JOIN locbreizh._avis ON logement = id_logement
-                            INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
-                            INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning;'
-                    );
                 } catch (PDOException $e) {
                     print "Erreur !:" . $e->getMessage() . "<br/>";
                     die();
-                }
-
-                function formatDate($start, $end)
-                {
-                    $startDate = date('j', strtotime($start));
-                    $endDate = date('j', strtotime($end));
-                    $month = date('M', strtotime($end));
-
-                    return "$startDate-$endDate $month";
-                }
-                $stmt->execute();
-                $lst_card = $stmt->fetchAll();
+                } 
 
                 
-                foreach ($lst_card as $card) {
-                    $stmt = $dbh->prepare("select nom, prenom, photo from locbreizh._reservation r 
-                    join locbreizh._logement l on l.id_logement = r.logement
-                    join locbreizh._compte c on c.id_proprietaire = l.id_proprietaire;");
-                    $stmt->execute();
-                    $info_proprio = $stmt->fetch();
+                $stmt = $dbh->prepare("SELECT l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
+                from locbreizh._reservation r
+                join locbreizh._logement l on l.id_logement = r.logement
+                join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
+                join locbreizh._compte c on c.id_compte = p.id_proprietaire
+                join locbreizh._adresse a on l.id_adresse = a.id_adresse
+                join locbreizh._facture f on f.num_facture = r.facture");
+                $stmt->execute();
+                $reservations = $stmt->fetchAll();
+
+                foreach ($reservations as $reservation) {
                     ?>
                     <div class="card">        
-                        <img src="<?php $card['../photos/photo_principale'] ?>">
-                        <h3> <?php $card['???'] ?> </h3>
+                        <img src="<?php echo $reservation['photo_principale']; ?>">
+                        <h3> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
                         <div>
-                            <p>Par <?php echo $info_proprio['prenom'] . ' ' . $info_proprio['nom'];?></p>
-                            <img src=<?php echo 'photos/' . $info_proprio['photo']; ?> alt="photo de profil">
-                            <button>Contacter le proprietaire</button>
+                            <p>Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
+                            <img src=<?php echo 'Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil">
+                            <button disabled>Contacter le proprietaire</button>
                         </div>
-                        <button class="btn-accueil">CONSULTER DEVIS</button>
+                        <button class="btn-accueil" disabled>CONSULTER DEVIS</button>
                         <button class="btn-accueilins">CONSULTER LOGEMENT</button>
                         <button disabled>ANNULER</button>
                         <p>DISCLAIMER - L’annulation est définitve et irréversible.</p>
