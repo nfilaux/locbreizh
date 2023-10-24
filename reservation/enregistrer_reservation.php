@@ -1,6 +1,7 @@
 <?php
     // lancement de la session
     session_start(); 
+    print_r($_GET);
 
     // import parametre de connexion + nouvelle instance de PDO
     include('../parametre_connexion.php');
@@ -15,19 +16,21 @@
         die();
     }
     //ajout facture
-    $stmt = $dbh->prepare("INSERT into locbreizh._facture(num_devis, url_facture) values({$_GET['devis']}, 'facure{$_POST['devis']}.pdf');");
+    $stmt = $dbh->prepare("INSERT into locbreizh._facture(num_devis, url_facture) values({$_GET['devis']}, 'facture{$_GET['devis']}.pdf');");
     $stmt->execute();
     $id_facture = $dbh->lastInsertId();
+    print_r($id_facture);
 
     // cherche le logement associé au devis
     $stmt = $dbh->prepare("SELECT id_logement from locbreizh._devis d
     join locbreizh._demande_devis dd on dd.num_demande_devis = d.num_demande_devis
     join locbreizh._logement l on l.id_logement = dd.logement
-    where dd.id_devis = {$_GET['devis']};");
+    where d.num_devis = {$_GET['devis']};");
     $stmt->execute();
     $logement = $stmt->fetch();
+    print_r($logement);
 
     // ajout reservation
-    $stmt = $dbh->prepare("INSERT into locbreizh._reservation(reservation_annulee, client, logement, facture) values(False, {$_SESSION['id']}, {$logement['id_logement']}, {$num_facture['num_facture']});");
+    $stmt = $dbh->prepare("INSERT into locbreizh._reservation(reservation_annulee, client, logement, facture) values(False, {$_SESSION['id']}, {$logement['id_logement']}, {$id_facture});");
     $stmt->execute();
 ?>

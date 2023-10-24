@@ -55,10 +55,14 @@
         </nav>
     </header>
     <main>
-        <h1>Faire print_r($_POST);       echo '<p class="error-message">La date d\'arrivée ou la date de départ est ultérieure à la date d\'aujourd\'hui !</p>';
-                    }
-                ?>
+    <h1>Faire ma demande de devis</h1>
+        <form name="envoie_demande_devis" method="post" action="envoyer_demande.php" enctype="multipart/form-data">
+            <div>
+                <label for="dateArrivee">Date d’arrivée :</label>
+                <input type="date" id="dateArrivee" name="dateArrivee" required/>
 
+                <label for="dateDepart">Date de depart :</label>
+                <input type="date" id="dateDepart" name="dateDepart" required/>
                 <label for="nb_pers">Nombre de persones :</label>
                 <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
                 <input type="number" id="nb_pers" name="nb_pers" min="1" max=<?php echo $nb_max['nb_pers']; ?> value=<?php if(isset($_GET['nb_pers']) && $_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>
