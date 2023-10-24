@@ -39,11 +39,15 @@
                 $res = $verifMDP->fetchColumn();
                 if (!password_verify($mdp, $res)){
                     $_SESSION['erreurs'] += ["motdepasse" => "Mot de passe incorrect"];
-                    header("Location: ./connexionFront.php");
-                    exit;
+                    $erreur = true;
                 }
+
+                // la session garde l'id de la personne qui se connecte
                 else{
-                    echo "connexion réussie";
+                    $recupID = $dbh->prepare("SELECT id_compte FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
+                    $recupID->execute();
+                    $id = $recupID->fetchColumn();
+                    $_SESSION['id'] = $id;
                 }
             }
             $dbh = null;
@@ -52,8 +56,9 @@
             die();
         }
     }
+
     // si il y a eu une érreur durant les test on renvoie l'utilisateur sur le formulaire
-    else{
+    if ($erreur){
         $url = substr($url, 0, -1);
         header("Location: ./connexionFront.php$url");
         exit;
