@@ -153,6 +153,15 @@ session_start();
                 <label for='taxe_sejour'>Taxe de séjour</label>
                 <input id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' value='0' required>
 
+                <label for='charges1'>Charges additionnelles</label>
+                <input id='charges1' type='number' name='chargesP' min='0' max='1000' step='10' value='0' required>
+
+                <label for='charges2'>Charges additionnelles</label>
+                <input id='charges2' type='number' name='charges2P' min='0' max='1000' step='10' value='0' required>
+
+                <label for='charges3'>Charges additionnelles</label>
+                <input id='charges3' type='number' name='charges3P' min='0' max='1000' step='10' value='0' required>
+
                 <button name='previsualiser' type='submit'>Prévisualiser</button>
             </fieldset>
         </form>

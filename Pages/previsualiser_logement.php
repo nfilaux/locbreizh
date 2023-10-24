@@ -36,6 +36,9 @@ $_SESSION['id_proprietaire'] = 1; ?>
     $id_proprietaire = $_SESSION['id_proprietaire'];
     //$laPhoto = $_FILES["image1P"];
     $nom_image_principale = $_FILES["image1P"]["name"];
+    $charges1 = $_POST['charges1P'];
+    $charges2 = $_POST['charges2P'];
+    $charges3 = $_POST['charges3P'];
 
     if (isset($_POST['balcon'])) {
         $balcon = $_POST['balcon'];
@@ -147,6 +150,9 @@ $_SESSION['id_proprietaire'] = 1; ?>
         'lave_vaiselle' => $lave_vaiselle,
         'lave_linge' => $lave_linge,
         'image1' => $nom_image_principale,
+        'charges1' => $charges1,
+        'charges2' => $charges2,
+        'charges3' => $charges3
     ];
 
     if (isset($_GET['enregistrer']) && '1' == $_GET['enregistrer']) {
@@ -264,6 +270,9 @@ $_SESSION['id_proprietaire'] = 1; ?>
         echo 'Lave vaisselle : ' . $logement_data['lave_vaiselle'] . '<br>';
         echo 'Lave linge : ' . $logement_data['lave_linge'] . '<br>';
         echo 'Image 1 : ' . $logement_data['image1'] . '<br>';
+        echo 'Charges 1 : ' . $logement_data['charges1'] . '<br>';
+        echo 'Charges 2 : ' . $logement_data['charges2'] . '<br>';
+        echo 'Charges 3 : ' . $logement_data['charges3'] . '<br>';
     } else {
         echo 'Aucune donnée de logement à prévisualiser.';
     }
