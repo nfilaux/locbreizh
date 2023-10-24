@@ -1,6 +1,7 @@
 <?php 
     // lancement de la session
     session_start();
+    $_SESSION['id'] = 4;
 
     require_once('../tcpdf/tcpdf.php');
     //test si date d'arrivée est avant date de depart
@@ -81,9 +82,10 @@
         $stmt->execute();
         $id_mess = $dbh->lastInsertId();
 
-        $stmt = $dbh->prepare("INSERT INTO locbreizh._message_demande(id_message_demande, lien_demande)
-        VALUES ($id_mess, 'demande_devis$id_demande.pdf');");
+        $stmt = $dbh->prepare("INSERT INTO locbreizh._message_demande(id_message_demande, lien_demande, id_demande)
+        VALUES ($id_mess, 'demande_devis$id_demande.pdf', $id_demande);");
         $stmt->execute();
+
 
         // ajout de la charge menage si demandee
         if(isset($_POST['menage'])){
@@ -175,6 +177,6 @@
         file_put_contents($chemin_complet, $contenu_pdf);
 
         // renvoie l'utilisateur sur une page de reussite
-        header("Location: demande_devis_envoye.php");
+        header("Location: demande_devis_envoye.html");
     }
 ?>

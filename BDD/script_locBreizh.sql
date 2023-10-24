@@ -123,17 +123,6 @@ CREATE TABLE
         CONSTRAINT message_fk_conversation FOREIGN KEY (conversation) REFERENCES _conversation (id_conversation)
     );
 
-/*   table message_devis : est utilisée pour un message de type demande de devis   */
-
-create table
-    _message_demande(
-        id_message_demande integer not null,
-        lien_demande varchar(50) not null,
-        accepte boolean,
-        CONSTRAINT message_devis_pk PRIMARY KEY (id_message_demande),
-        constraint id_message_demande_fk_id FOREIGN KEY(id_message_demande) REFERENCES _message(id_message)
-    );
-
 /*   table planning : est utilisée pour renseigner les plages de disponibilité d'un logement   */
 
 CREATE TABLE
@@ -384,7 +373,7 @@ CREATE TABLE
 CREATE TABLE
     _devis (
         num_devis serial,
-        pseudo_client_devis VARCHAR(20) NOT NULL,
+        client integer NOT NULL,
         prix_total_devis NUMERIC(5, 2) NOT NULL,
         tarif_HT_location_nuitee_devis NUMERIC(5, 2) NOT NULL,
         sous_total_HT_devis NUMERIC(5, 2) NOT NULL,
@@ -399,6 +388,32 @@ CREATE TABLE
         CONSTRAINT devis_pk PRIMARY KEY (num_devis),
         CONSTRAINT devis_fk_taxe_sejour FOREIGN KEY (taxe_sejour) REFERENCES _taxe_sejour (id_taxe),
         CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_demande_devis) REFERENCES _demande_devis (num_demande_devis)
+    );
+
+/*   table message_demande : est utilisée pour un message de type demande de devis   */
+
+create table
+    _message_demande(
+        id_message_demande integer not null,
+        lien_demande varchar(50) not null,
+        accepte boolean,
+        id_demande integer not null,
+        CONSTRAINT message_demande_pk PRIMARY KEY (id_message_demande),
+        constraint message_demande_fk_id FOREIGN KEY(id_message_demande) REFERENCES _message(id_message),
+        constraint message_demande_fk_id_demande FOREIGN KEY(id_demande) REFERENCES _demande_devis(num_demande_devis)
+    );
+
+/*   table message_devis : est utilisée pour un message de type devis   */
+
+create table
+    _message_devis(
+        id_message_devis integer not null,
+        lien_devis varchar(50) not null,
+        accepte boolean,
+        id_devis integer not null,
+        CONSTRAINT message_devis_pk PRIMARY KEY (id_message_devis),
+        constraint id_message_devis_fk_id FOREIGN KEY(id_message_devis) REFERENCES _message(id_message),
+        constraint message_devis_fk_id_devis FOREIGN KEY(id_devis) REFERENCES _devis(num_devis)
     );
 
 /*   table facture : est utilisée pour stocker les informations une facture   */

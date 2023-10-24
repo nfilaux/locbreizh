@@ -10,19 +10,27 @@
 <body>
     <header class="row col-12">
         <div class="row col-3">
-            <img src="svg//logo.svg">
+            <img src="../svg//logo.svg">
             <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
         </div>
 
         <div class="row col-3">
-            <img class="col-2" src="svg//filtre.svg">
-            <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
-            <img class="col-2" src="svg//loupe.svg">
+            <img class="col-2" src="../svg//filtre.svg">
+            <input class="col-7" id="searchbar" type="text" name="search"
+                style="height: 50px; margin-top: auto; margin-bottom: auto;">
+            <img class="col-2" src="../svg//loupe.svg">
+        </div>
+        <div class="row col-3 offset-md-1">
+            <img src="../svg//booklet-fill 1.svg">
+            <a href="logement.php" style="margin: auto;margin-left: 10px;">
+                <h4 style="color:#000;">Accèder à mes réservations</h4>
+            </a>
         </div>
 
-        <div class="row col-5 offset-md-1">
-            <a class="col-4 offset-md-3 row btn-accueilins"><h5 style="margin-top: auto; margin-bottom: auto;">S'inscrire</h5></a>
-            <a class="col-4 offset-md-1 row btn-accueil"><h5 style="margin-top: auto; margin-bottom: auto;">Se connecter</h5></a>
+
+        <div class="col-2 row">
+            <a class="offset-md-6 row"><img src="../svg/message.svg"></a>
+            <a class="offset-md-2 row"><img src="../svg/compte.svg"></a>
         </div>
     </header>
     <main>
@@ -36,8 +44,8 @@
             <div class="text-center row">
                 <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
                 <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="svg/instagram.svg">  @LocBreizh</a></p>
-                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="svg/facebook.svg">  @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
             <hr>  
             <div class="text-center row">

@@ -1,4 +1,3 @@
-
 <?php
     // lancement de la session
     session_start();
@@ -77,7 +76,10 @@
     $liste_conv = $stmt->fetchAll();
     
     //test pour savoir si un conversation est selectionnee (pour changer les messages à afficher)
-    if(!isset($_GET['conv'])){
+    if(!isset($liste_conv[0])){
+        $selectionne = NULL;
+    }
+    else if(!isset($_GET['conv'])){
         // selectionne la première conversation du resultat des requetes
         $selectionne = $liste_conv[0]['id_conversation'];
     }
@@ -86,58 +88,70 @@
         $selectionne = $_GET['conv'];
     }
     // requete pour recuperer la liste des messages de la conversation selectionnee
-    $stmt = $dbh->prepare("
-    SELECT c.id_conversation,
-       c.compte1,
-       c.compte2,
-       cp1.nom as nom1,
-       cp1.prenom as prenom1,
-       cp1.photo as photo1,
-       cp2.nom as nom2,
-       cp2.prenom as prenom2,
-       cp2.photo as photo2,
-       m.id_message,
-       m.contenu_message,
-       m.date_mess,
-       m.heure_mess,
-       m.auteur
-    FROM locbreizh._conversation c
-    LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
-    INNER JOIN locbreizh._compte cp1 ON cp1.id_compte = c.compte1
-    INNER JOIN locbreizh._compte cp2 ON cp2.id_compte = c.compte2
-    WHERE c.id_conversation = '$selectionne'
-    ORDER BY date_mess DESC,
-        heure_mess DESC;");
-    
-    $stmt->execute();
-    // sotck les lignes de la requete dans liste_message
-    $liste_message = $stmt->fetchAll();
 
-    $stmt = $dbh->prepare("SELECT * from locbreizh._message_demande;");
-    $stmt->execute();
-    $liste_message_demande = $stmt->fetchAll();
+    if($selectionne != NULL){
+        $stmt = $dbh->prepare("
+        SELECT c.id_conversation,
+        c.compte1,
+        c.compte2,
+        cp1.nom as nom1,
+        cp1.prenom as prenom1,
+        cp1.photo as photo1,
+        cp2.nom as nom2,
+        cp2.prenom as prenom2,
+        cp2.photo as photo2,
+        m.id_message,
+        m.contenu_message,
+        m.date_mess,
+        m.heure_mess,
+        m.auteur
+        FROM locbreizh._conversation c
+        LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
+        INNER JOIN locbreizh._compte cp1 ON cp1.id_compte = c.compte1
+        INNER JOIN locbreizh._compte cp2 ON cp2.id_compte = c.compte2
+        WHERE c.id_conversation = '$selectionne'
+        ORDER BY date_mess DESC,
+            heure_mess DESC;");
+        
+        $stmt->execute();
+        // sotck les lignes de la requete dans liste_message
+        $liste_message = $stmt->fetchAll();
+
+        $stmt = $dbh->prepare("SELECT * from locbreizh._message_demande;");
+        $stmt->execute();
+        $liste_message_demande = $stmt->fetchAll();
+
+        $stmt = $dbh->prepare("SELECT * from locbreizh._message_devis;");
+        $stmt->execute();
+        $liste_message_devis= $stmt->fetchAll();
+    }
+    
 ?>
 <body>
-    <header>
-        <nav>
-            <div id="logo">
-                <img src="../image/logo.svg">
-                <p>Loc’Breizh</p>
-            </div>
-            <img src="../image/filtre.svg">
-            <form name="formulaire" method="post" action="recherche.php" enctype="multipart/form-data">
-                <input type="search" id="recherche" name="recherche" placeholder="Rechercher"><br>
-                <input type="image" id="loupe" alt="loupe" src="../image/loupe.svg" />
-            </form>
-            <div>
-                <img src="../image/reserv.svg">
-                <a href="liste_reservations.html">Accéder à mes réservations</a>
-            </div>
-            <div id="parametre">
-                <a href="messagerie.php"><img src="../image/messagerie.svg"></a>
-                <a href="compte.php"><img src=<?php echo "../" . $photo_profil['url_photo']; ?>></a>
-            <div>
-        </nav>
+    <header class="row col-12">
+        <div class="row col-3">
+            <img src="../svg//logo.svg">
+            <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
+        </div>
+
+        <div class="row col-3">
+            <img class="col-2" src="../svg//filtre.svg">
+            <input class="col-7" id="searchbar" type="text" name="search"
+                style="height: 50px; margin-top: auto; margin-bottom: auto;">
+            <img class="col-2" src="../svg//loupe.svg">
+        </div>
+        <div class="row col-3 offset-md-1">
+            <img src="../svg//booklet-fill 1.svg">
+            <a href="logement.php" style="margin: auto;margin-left: 10px;">
+                <h4 style="color:#000;">Accèder à mes réservations</h4>
+            </a>
+        </div>
+
+
+        <div class="col-2 row">
+            <a class="offset-md-6 row"><img src="../svg/message.svg"></a>
+            <a class="offset-md-2 row"><img src="../svg/compte.svg"></a>
+        </div>
     </header>
     <main>
         <!--partie de gauche de la page (liste des conversations)-->
@@ -191,14 +205,14 @@
                 if(count($tab_id_conv) != 0 ){?>
                     <!--affichage entete conversation (image de profil + prenom, nom)-->
                     <div>
-                        <img src=<?php ?> alt=<?php
+                        <img src=<?php
                         // test pour connaitre quel photo de profil afficher
                         if($liste_message[0]['compte1'] === $_SESSION['id']){
                             echo $liste_message[0]['photo2']; 
                         }
                         else{
                             echo $liste_message[0]['photo1']; 
-                        }?>>
+                        }?> alt='image de profil'>
 
                         <p><?php 
                         // affichage du nom, prenom
@@ -233,10 +247,17 @@
                                             echo $message['contenu_message'];
                                             // on regarde si est le message est un message de demande de devis ou un devis
                                             $est_demande = false;
+                                            $est_devis = false;
                                             foreach ($liste_message_demande as $message_demande) {
                                                 if ($message_demande['id_message_demande'] === $message['id_message']) {
                                                     $est_demande = true;
-                                                    echo " : <a href='../devis/pdf_demande/{$message_demande['lien_demande']}' target=\"_blank\">voir la demande de devis</a>";
+                                                    echo " : <a href='../demande_devis/pdf_demande/{$message_demande['lien_demande']}' target=\"_blank\">voir la demande de devis</a>";
+                                                }
+                                            }
+                                            foreach ($liste_message_devis as $message_devis) {
+                                                if ($message_devis['id_message_devis'] === $message['id_message']) {
+                                                    $est_devis = true;
+                                                    echo " : <a href='../devis/pdf_devis/{$message_devis['lien_devis']}' target=\"_blank\">voir le devis</a>";
                                                 }
                                             }
                                         ?></p>
@@ -258,11 +279,35 @@
                                                 }
                                                 
                                                 ?>
-                                                <form method="post" action="accepter_demande.php?demande=<?php echo $message['id_message']; ?>">
+                                                <form method="post" action="accepter_demande.php?message=<?php echo $message['id_message']; ?>">
                                                     <button type="submit" <?php if(isset($statut['accepte']) || $est_client){ echo 'disabled';} ?>>Accepter</button>
                                                 </form>
-                                                <form method="post" action="refuser_demande.php?demande=<?php echo $message['id_message']; ?>">
+                                                <form method="post" action="refuser_demande.php?message=<?php echo $message['id_message']; ?>">
                                                     <button type="submit" <?php if(isset($statut['accepte']) || $est_client){ echo 'disabled';} ?>>Refuser</button>
+                                                </form>   
+                                        <?php } ?>
+                                        <?php 
+                                            if($est_devis){
+                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_devis m where m.id_message_devis = {$message['id_message']};");
+                                                $stmt->execute();
+                                                $statut = $stmt->fetch();
+
+                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
+                                                $stmt->execute();
+                                                $est_client = $stmt->fetch();
+
+                                                if(isset($est_client['id_compte'])){
+                                                    $est_client = True;
+                                                }
+                                                else{
+                                                    $est_client = False;
+                                                }
+                                                ?>
+                                                <form method="post" action="accepter_devis.php?message=<?php echo $message['id_message']; ?>">
+                                                    <button type="submit" <?php if(isset($statut['accepte']) || !$est_client){ echo 'disabled';} ?>>Accepter</button>
+                                                </form>
+                                                <form method="post" action="refuser_devis.php?message=<?php echo $message['id_message']; ?>">
+                                                    <button type="submit" <?php if(isset($statut['accepte']) || !$est_client){ echo 'disabled';} ?>>Refuser</button>
                                                 </form>
                                         <?php } ?>
                                     </div>
@@ -285,19 +330,19 @@
             <?php }?>
         </div>
     </main>
-    <footer class="mt-4 container-fluid">
-        <div class="mt-4 column">
-            <div class="col-12 text-center">
-                <a class="col-2" href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
-                <a class="offset-md-1 col-2" href="tel:+33623455689">(+33) 6 23 45 56 89</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="../image/instagram.svg">  @LocBreizh</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="../image/facebook.svg">  @LocBreizh</a>
+    <footer class="container-fluid" >
+        <div class="column">   
+            <div class="text-center row">
+                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
-            <hr>
-            <div class="offset-md-1 col-10 mt-4 text-center row">
-                <p class="offset-md-1 col-2">©2023 Loc’Breizh</p>
-                <p class="offset-md-1 col-3" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p class="offset-md-1 col-4" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            <hr>  
+            <div class="text-center row">
+                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
+                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
         </div>
     </footer>
