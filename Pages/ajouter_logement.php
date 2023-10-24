@@ -23,6 +23,8 @@ $id_proprietaire = $_SESSION['id_proprietaire'];
 //$laPhoto = $_FILES["image1P"];
 $nom_image_principale = $_SESSION['post_logement']['image1P'];
 
+move_uploaded_file($nom_image_principale, "../Ressources/Images/" . $nom_image_principale);
+
 if (isset($_SESSION['post_logement']['balcon'])) {
     $balcon = $_SESSION['post_logement']['balcon'];
 } else {

@@ -13,6 +13,7 @@ $_SESSION['id_proprietaire'] = 1; ?>
 <body>
     <?php
     $_SESSION['post_logement'] = $_POST;
+    $_SESSION['post_logement']['image1P'] = $_FILES["image1P"]["name"];
     print_r($_POST);
 
     $nom = $_POST['nomP'];
@@ -35,9 +36,6 @@ $_SESSION['id_proprietaire'] = 1; ?>
     $id_proprietaire = $_SESSION['id_proprietaire'];
     //$laPhoto = $_FILES["image1P"];
     $nom_image_principale = $_FILES["image1P"]["name"];
-
-    move_uploaded_file($_FILES["image1P"]["tmp_name"], "../Ressources/Images/" . $nom_image_principale);
-    $_SESSION['post_logement']['image1P'] = $nom_image_principale;
 
     if (isset($_POST['balcon'])) {
         $balcon = $_POST['balcon'];
