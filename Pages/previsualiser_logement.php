@@ -14,22 +14,22 @@ $_SESSION['id_proprietaire'] = 1; ?>
     <?php
     $_SESSION['post_logement'] = $_POST;
     if (isset($_FILES["image1P"]["name"])) {
-        $_SESSION['post_logement']['image1P'] = $_FILES["image1P"]["name"];
+        $_SESSION['post_logement']['image1P'] = $_FILES["image1P"]["tmp_name"];
     }
     if (isset($_FILES["image2P"]["name"])) {
-        $_SESSION['post_logement']['image2P'] = $_FILES["image2P"]["name"];
+        $_SESSION['post_logement']['image2P'] = $_FILES["image2P"]["tmp_name"];
     }
     if (isset($_FILES["image3P"]["name"])) {
-        $_SESSION['post_logement']['image3P'] = $_FILES["image3P"]["name"];
+        $_SESSION['post_logement']['image3P'] = $_FILES["image3P"]["tmp_name"];
     }
     if (isset($_FILES["image4P"]["name"])) {
-        $_SESSION['post_logement']['image4P'] = $_FILES["image4P"]["name"];
+        $_SESSION['post_logement']['image4P'] = $_FILES["image4P"]["tmp_name"];
     }
     if (isset($_FILES["image5P"]["name"])) {
-        $_SESSION['post_logement']['image5P'] = $_FILES["image5P"]["name"];
+        $_SESSION['post_logement']['image5P'] = $_FILES["image5P"]["tmp_name"];
     }
     if (isset($_FILES["image6P"]["name"])) {
-        $_SESSION['post_logement']['image6P'] = $_FILES["image6P"]["name"];
+        $_SESSION['post_logement']['image6P'] = $_FILES["image6P"]["tmp_name"];
     }
 
 
@@ -51,6 +51,9 @@ $_SESSION['id_proprietaire'] = 1; ?>
     $nb_personne_max = $_POST['nb_personne_maxP'];
     $surface_jardin = $_POST['surface_jardinP'];
     $taxe_sejour = $_POST['taxe_sejourP'];
+    $menage = $_POST['menageP'];
+    $navette = $_POST['navetteP'];
+    $linge = $_POST['lingeP'];
     $en_ligne = true;
     $id_proprietaire = $_SESSION['id_proprietaire'];
     //$laPhoto = $_FILES["image1P"];
@@ -155,6 +158,28 @@ $_SESSION['id_proprietaire'] = 1; ?>
         $lave_linge = 0;
     }
 
+    if (isset($_POST['menageP'])){
+        $menage = 1;
+        $_SESSION['post_logement']['menageP'] = 1;
+
+    } else {
+        $menage = 0;
+    }
+
+    if (isset($_POST['navetteP'])) {
+        $navette = 1;
+        $_SESSION['post_logement']['navetteP'] = 1;
+    } else {
+        $navette = 0;
+    }
+
+    if (isset($_POST['lingeP'])) {
+        $linge = 1;
+        $_SESSION['post_logement']['lingeP'] = 1;
+    } else {
+        $linge = 0;
+    }
+
     $_SESSION['logement_data'] = [
         'nom' => $nom,
         'ville' => $ville,
@@ -186,6 +211,9 @@ $_SESSION['id_proprietaire'] = 1; ?>
         'wifi' => $wifi,
         'lave_vaiselle' => $lave_vaiselle,
         'lave_linge' => $lave_linge,
+        'menage'=> $menage,
+        'navette'=> $navette,
+        'linge'=> $linge,
         'charges1' => $charges1,
         'charges2' => $charges2,
         'charges3' => $charges3,
@@ -230,6 +258,9 @@ $_SESSION['id_proprietaire'] = 1; ?>
         echo 'Wifi : ' . $logement_data['wifi'] . '<br>';
         echo 'Lave vaisselle : ' . $logement_data['lave_vaiselle'] . '<br>';
         echo 'Lave linge : ' . $logement_data['lave_linge'] . '<br>';
+        echo 'Ménage : ' . $logement_data['menage'] . '<br>';
+        echo 'Navette : ' . $logement_data['navette'] . '<br>';
+        echo 'Linge : ' . $logement_data['linge'] . '<br>';
         echo 'Charges 1 : ' . $logement_data['charges1'] . '<br>';
         echo 'Charges 2 : ' . $logement_data['charges2'] . '<br>';
         echo 'Charges 3 : ' . $logement_data['charges3'] . '<br>';

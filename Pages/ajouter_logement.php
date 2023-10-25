@@ -2,6 +2,7 @@
 session_start();
 print_r($_SESSION['post_logement']);
 $_SESSION['id_proprietaire'] = 1;
+
 $nom = $_SESSION['post_logement']['nomP'];
 $ville = $_SESSION['post_logement']['villeP'];
 $code_postal = $_SESSION['post_logement']['code_postalP'];
@@ -30,18 +31,20 @@ $nom_image6 = $_SESSION['post_logement']['image6P'];
 
 $id_photo = 0;
 
-function id_photo($id_photo, $nom_image)
+function id_photo($id_photo)
 {
-    return time() . $id_photo . $nom_image;
+    return time() . $id_photo;
 }
 
-$nouveau_nom_image1 = id_photo($id_photo, $nom_image_principale);
+$nouveau_nom_image1 = id_photo($id_photo);
 $id_photo++;
-
-move_uploaded_file($nom_image_principale, "../Ressources/Images/" . $nouveau_nom_image1);
+print_r($nouveau_nom_image1);
+print_r('            ');
 print_r($nom_image_principale);
+move_uploaded_file($nom_image_principale, "../Ressources/Images/" . $nouveau_nom_image1);
 
-$nouveau_nom_image2 = id_photo($id_photo, $nom_image2);
+
+$nouveau_nom_image2 = id_photo($id_photo);
 $id_photo++;
 if (isset($_SESSION['post_logement']['image2P'])) {
     move_uploaded_file($nom_image2, "../Ressources/Images/" . $nouveau_nom_image2);
@@ -49,7 +52,7 @@ if (isset($_SESSION['post_logement']['image2P'])) {
     $nom_image2 = null;
 }
 
-$nouveau_nom_image3 = id_photo($id_photo, $nom_image3);
+$nouveau_nom_image3 = id_photo($id_photo);
 $id_photo++;
 if ($_SESSION['post_logement']['image3P'] != "") {
     move_uploaded_file($nom_image3, "../Ressources/Images/" . $nouveau_nom_image3);
@@ -57,7 +60,7 @@ if ($_SESSION['post_logement']['image3P'] != "") {
     $nom_image3 = null;
 }
 
-$nouveau_nom_image4 = id_photo($id_photo, $nom_image4);
+$nouveau_nom_image4 = id_photo($id_photo);
 $id_photo++;
 if (isset($_SESSION['post_logement']['image4P'])) {
     move_uploaded_file($nom_image4, "../Ressources/Images/" . $nouveau_nom_image4);
@@ -65,7 +68,7 @@ if (isset($_SESSION['post_logement']['image4P'])) {
     $nom_image4 = null;
 }
 
-$nouveau_nom_image5 = id_photo($id_photo, $nom_image5);
+$nouveau_nom_image5 = id_photo($id_photo);
 $id_photo++;
 if (isset($_SESSION['post_logement']['image5P'])) {
     move_uploaded_file($nom_image5, "../Ressources/Images/" . $nouveau_nom_image5);
@@ -73,7 +76,7 @@ if (isset($_SESSION['post_logement']['image5P'])) {
     $nom_image5 = null;
 }
 
-$nouveau_nom_image6 = id_photo($id_photo, $nom_image6);
+$nouveau_nom_image6 = id_photo($id_photo);
 $id_photo++;
 if (isset($_SESSION['post_logement']['image6P'])) {
     move_uploaded_file($nom_image6, "../Ressources/Images/" . $nouveau_nom_image6);
@@ -157,6 +160,24 @@ if (isset($_SESSION['post_logement']['lave_linge'])) {
     $lave_linge = $_SESSION['post_logement']['lave_linge'];
 } else {
     $lave_linge = 0;
+}
+
+if (isset($_SESSION['post_logement']['menage'])) {
+    $menage = $_SESSION['post_logement']['menage'];
+} else {
+    $menage = 0;
+}
+
+if (isset($_SESSION['post_logement']['navette'])) {
+    $navette = $_SESSION['post_logement']['navette'];
+} else {
+    $navette = 0;
+}
+
+if (isset($_SESSION['post_logement']['linge'])) {
+    $linge = $_SESSION['post_logement']['linge'];
+} else {
+    $linge = 0;
 }
 
 try {
