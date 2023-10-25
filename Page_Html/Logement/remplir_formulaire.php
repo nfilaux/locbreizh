@@ -45,72 +45,75 @@ session_start();
     </div>
 
     <main>
-        <form method='POST' action='previsualiser_logement.php' enctype="multipart/form-data">
-            <fieldset>
-
-                <label for='nom'>Libellé logement</label>
-                <input id='nom' type='text' name='nomP' placeholder='Nom du logement' required>
-
-                <label for='ville'>Ville</label>
-                <input id='ville' type='text' name='villeP' placeholder='Ville' required>
-
-                <label for='code_postal'>Code postal</label>
-                <input id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
-
-                <label for='tarif_de_base'>Tarif de base (en €)</label>
-                <input id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='100' value='0' required>
-
-                <label for='phrase_daccroche'>Phrase d'accroche</label>
-                <input id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" required>
-
-                <label for='description'>Description</label>
-                <textarea id='description' name='descriptionP' placeholder='Description' required></textarea>
-
-                <label for='nature'>Nature</label>
-                <select id='nature' name='natureP' placeholder='Nature' required>
-                    <option value='1'>Maison</option>
-                    <option value='2'>Appartement</option>
-                    <option value='3'>Manoir</option>
-                    <option value='4'>Château</option>
-                </select>
-
-                <label for='type'>Type</label>
-                <select id='type' name='typeP' aria-placeholder="Type" required>
-                    <option value='1'>T1</option>
-                    <option value='2'>T2</option>
-                    <option value='3'>T3</option>
-                    <option value='4'>T4</option>
-                    <option value='5'>T5</option>
-                    <option value='6'>T6</option>
-                    <option value='7'>T7</option>
-                    <option value='8'>T8</option>
-                    <option value='9'>T9</option>
-                    <option value='10'>T10</option>
-
-                </select>
-
-                <label for='nb_chamnbres'>Nombre de chambres</label>
-                <input id='nb_chambres' type='number' name='nb_chambresP' min='0' max='15' step='1' value='0' required>
-
-                <label for='nb_lit_simple'>Nombre de lits simples</label>
-                <input id='nb_lit_simple' type='number' name='nb_lit_simpleP' min='0' max='15' step='1' value='0' required>
-
-                <label for='nb_lit_double'>Nombre de lits doubles</label>
-                <input id='nb_lit_double' type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value='0' required>
-
-                <label for='nb_sdb'>Nombre de salles de bain</label>
-                <input id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' value='0' required>
-
-                <label for='surface_maison'>Surface (en m²)</label>
-                <input id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='10' value='0' required>
-
-                <label for='nb_personne_max'>Nombre de personnes maximum</label>
-                <input id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='15' step='1' value='0' required>
-
-                <label for='surface_jardin'>Surface du jardin (en m2)</label>
-                <input id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='100' value='0' required>
-
+        <div class="column">
+            <form method='POST' action='previsualiser_logement.php' enctype="multipart/form-data">
                 <fieldset>
+                    
+                    <label for='nom'>Libellé logement</label>
+                    <input id='nom' type='text' name='nomP' placeholder='Nom du logement' required>
+
+                    <label for='ville'>Ville</label>
+                    <input id='ville' type='text' name='villeP' placeholder='Ville' required>
+
+                    <label for='code_postal'>Code postal</label>
+                    <input id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
+
+                    <label for='tarif_de_base'>Tarif de base (en €)</label>
+                    <input id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='100' value='0' required>
+
+                    <label for='phrase_daccroche'>Phrase d'accroche</label>
+                    <input id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" required>
+
+                    <label for='description'>Description</label>
+                    <textarea id='description' name='descriptionP' placeholder='Description' required></textarea>
+
+                    <label for='nature'>Nature</label>
+                    <select id='nature' name='natureP' placeholder='Nature' required>
+                        <option value='1'>Maison</option>
+                        <option value='2'>Appartement</option>
+                        <option value='3'>Manoir</option>
+                        <option value='4'>Château</option>
+                    </select>
+
+                    <label for='type'>Type</label>
+                    <select id='type' name='typeP' aria-placeholder="Type" required>
+                        <option value='1'>T1</option>
+                        <option value='2'>T2</option>
+                        <option value='3'>T3</option>
+                        <option value='4'>T4</option>
+                        <option value='5'>T5</option>
+                        <option value='6'>T6</option>
+                        <option value='7'>T7</option>
+                        <option value='8'>T8</option>
+                        <option value='9'>T9</option>
+                        <option value='10'>T10</option>
+
+                    </select>
+
+                    <label for='nb_chamnbres'>Nombre de chambres</label>
+                    <input id='nb_chambres' type='number' name='nb_chambresP' min='0' max='15' step='1' value='0' required>
+
+                    <label for='nb_lit_simple'>Nombre de lits simples</label>
+                    <input id='nb_lit_simple' type='number' name='nb_lit_simpleP' min='0' max='15' step='1' value='0' required>
+
+                    <label for='nb_lit_double'>Nombre de lits doubles</label>
+                    <input id='nb_lit_double' type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value='0' required>
+
+                    <label for='nb_sdb'>Nombre de salles de bain</label>
+                    <input id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' value='0' required>
+
+                    <label for='surface_maison'>Surface (en m²)</label>
+                    <input id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='10' value='0' required>
+
+                    <label for='nb_personne_max'>Nombre de personnes maximum</label>
+                    <input id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='15' step='1' value='0' required>
+
+                    <label for='surface_jardin'>Surface du jardin (en m2)</label>
+                    <input id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='100' value='0' required>
+
+                </fieldset>
+                <fieldset>
+                    <h4>Equipements et services</h4>
                     <label for='equipement'>Equipements</label>
                     <input id='equipement' type='checkbox' name='balconP'>Balcon
                     <input id='equipement' type='checkbox' name='terrasseP'>Terrasse
@@ -143,31 +146,31 @@ session_start();
                     <input id='charges_pers_sup' type='number' name='charges3P' min='0' max='1000' step='10' required>
 
                 </fieldset>
+                <fieldset>
+                    <h4>Images logement</h4>
+                    <label for='image1'>Image 1</label>
+                    <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
 
-                <h1>Images logement</h1>
-                <label for='image1'>Image 1</label>
-                <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
+                    <label for='image2'>Image 2</label>
+                    <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
 
-                <label for='image2'>Image 2</label>
-                <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
+                    <label for='image3'>Image 3</label>
+                    <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
 
-                <label for='image3'>Image 3</label>
-                <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
+                    <label for='image4'>Image 4</label>
+                    <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
 
-                <label for='image4'>Image 4</label>
-                <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
+                    <label for='image5'>Image 5</label>
+                    <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
 
-                <label for='image5'>Image 5</label>
-                <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
+                    <label for='image6'>Image 6</label>
+                    <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
+                                
+                    <button name='previsualiser' type='submit'>Prévisualiser</button>
+                </fieldset>
+            </form>
+        </div>
 
-                <label for='image6'>Image 6</label>
-                <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
-                
-                <button name='previsualiser' type='submit'>Prévisualiser</button>
-            </fieldset>
-        </form>
-
-        
     </main>
 
     <footer class="container-fluid">
