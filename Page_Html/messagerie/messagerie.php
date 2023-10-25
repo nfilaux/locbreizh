@@ -25,7 +25,7 @@
         die();
     }
     // id fictif pour les test
-    $_SESSION['id'] = 1;
+    $_SESSION['id'] = 4;
     // requete pour obtenir la photo de profil pour le header
     $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
     $stmt->execute();
