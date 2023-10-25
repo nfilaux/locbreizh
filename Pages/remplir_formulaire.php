@@ -112,23 +112,36 @@ session_start();
 
                 <fieldset>
                     <label for='equipement'>Equipements</label>
-                    <input id='equipement' type='checkbox' name='balcon' value='1'>Balcon
-                    <input id='equipement' type='checkbox' name='terrasseP' value='2'>Terrasse
-                    <input id='equipement' type='checkbox' name='piscineP' value='3'>Piscine
-                    <input id='equipement' type='checkbox' name='jacuzziP' value='4'>Jacuzzi
-                    <input id='equipement' type='checkbox' name='saunaP' value='5'>Sauna
-                    <input id='equipement' type='checkbox' name='hammamP' value='6'>Hammam
-                    <input id='equipement' type='checkbox' name='parking_publicP' value='7'>Parking public
-                    <input id='equipement' type='checkbox' name='parking_priveP' value='8'>Parking privé
-                    <input id='equipement' type='checkbox' name='televisionP' value='9'>Télévision
-                    <input id='equipement' type='checkbox' name='wifiP' value='10'>Wifi
-                    <input id='equipement' type='checkbox' name='lave_vaisselleP' value='11'>Lave vaisselle
-                    <input id='equipement' type='checkbox' name='lave_lingeP' value='12'>Lave linge
+                    <input id='equipement' type='checkbox' name='balconP'>Balcon
+                    <input id='equipement' type='checkbox' name='terrasseP'>Terrasse
+                    <input id='equipement' type='checkbox' name='piscineP'>Piscine
+                    <input id='equipement' type='checkbox' name='jacuzziP'>Jacuzzi
+                    <input id='equipement' type='checkbox' name='saunaP'>Sauna
+                    <input id='equipement' type='checkbox' name='hammamP'>Hammam
+                    <input id='equipement' type='checkbox' name='parking_publicP'>Parking public
+                    <input id='equipement' type='checkbox' name='parking_priveP'>Parking privé
+                    <input id='equipement' type='checkbox' name='televisionP'>Télévision
+                    <input id='equipement' type='checkbox' name='wifiP'>Wifi
+                    <input id='equipement' type='checkbox' name='lave_vaisselleP'>Lave vaisselle
+                    <input id='equipement' type='checkbox' name='lave_lingeP'>Lave linge
 
                     <label for='service'>Service</label>
                     <input id='service' type='checkbox' name='menageP' placeholder='Service'>Ménage
                     <input id='service' type='checkbox' name='navetteP' placeholder='Service'>Navette/Taxi
                     <input id='service' type='checkbox' name='lingeP' placeholder='Service'>Linge
+
+                    <label for='taxe_sejour'>Taxe de séjour</label>
+                    <input id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' required>
+
+                    <label for='charges_menage'>Charges additionnelles ménages</label>
+                    <input id='charges_menage' type='number' name='charges1P' min='0' max='1000' step='10' required>
+
+                    <label for='charges_animaux'>Charges additionnelles animaux</label>
+                    <input id='charges_animaux' type='number' name='charges2P' min='0' max='1000' step='10' required>
+
+                    <label for='charges_pers_sup'>Charges additionnelles personnes supplémentaire</label>
+                    <input id='charges_pers_sup' type='number' name='charges3P' min='0' max='1000' step='10' required>
+
                 </fieldset>
 
                 <h1>Images logement</h1>
@@ -136,32 +149,20 @@ session_start();
                 <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
 
                 <label for='image2'>Image 2</label>
-                <input id='image2' type='file' name='image2' accept='image/png, image/jpeg'>
+                <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
 
                 <label for='image3'>Image 3</label>
-                <input id='image3' type='file' name='image3' accept='image/png, image/jpeg'>
+                <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
 
                 <label for='image4'>Image 4</label>
-                <input id='image4' type='file' name='image4' accept='image/png, image/jpeg'>
+                <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
 
                 <label for='image5'>Image 5</label>
-                <input id='image5' type='file' name='image5' accept='image/png, image/jpeg'>
+                <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
 
                 <label for='image6'>Image 6</label>
-                <input id='image6' type='file' name='image6' accept='image/png, image/jpeg'>
-
-                <label for='taxe_sejour'>Taxe de séjour</label>
-                <input id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' value='0' required>
-
-                <label for='charges1'>Charges additionnelles</label>
-                <input id='charges1' type='number' name='chargesP' min='0' max='1000' step='10' value='0' required>
-
-                <label for='charges2'>Charges additionnelles</label>
-                <input id='charges2' type='number' name='charges2P' min='0' max='1000' step='10' value='0' required>
-
-                <label for='charges3'>Charges additionnelles</label>
-                <input id='charges3' type='number' name='charges3P' min='0' max='1000' step='10' value='0' required>
-
+                <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
+                
                 <button name='previsualiser' type='submit'>Prévisualiser</button>
             </fieldset>
         </form>

@@ -39,12 +39,13 @@
                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
                 $stmt = $dbh->prepare(
-                    'SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, note_avis, photo_principale, photo_url, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
+                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, note_avis, photo_principale, photo_url, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
                     from locbreizh._logement 
                         INNER JOIN locbreizh._avis ON logement = id_logement
                         INNER JOIN locbreizh._photo_complementaire ON logement = id_logement
                         INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
-                        INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning;'
+                        INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning
+                        WHERE id_logement = {$_GET['logement']})"
                 );
             } catch (PDOException $e) {
                 print "Erreur !:" . $e->getMessage() . "<br/>";

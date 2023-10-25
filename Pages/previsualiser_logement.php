@@ -13,8 +13,27 @@ $_SESSION['id_proprietaire'] = 1; ?>
 <body>
     <?php
     $_SESSION['post_logement'] = $_POST;
-    $_SESSION['post_logement']['image1P'] = $_FILES["image1P"]["name"];
-    print_r($_POST);
+    if (isset($_FILES["image1P"]["name"])) {
+        $_SESSION['post_logement']['image1P'] = $_FILES["image1P"]["name"];
+    }
+    if (isset($_FILES["image2P"]["name"])) {
+        $_SESSION['post_logement']['image2P'] = $_FILES["image2P"]["name"];
+    }
+    if (isset($_FILES["image3P"]["name"])) {
+        $_SESSION['post_logement']['image3P'] = $_FILES["image3P"]["name"];
+    }
+    if (isset($_FILES["image4P"]["name"])) {
+        $_SESSION['post_logement']['image4P'] = $_FILES["image4P"]["name"];
+    }
+    if (isset($_FILES["image5P"]["name"])) {
+        $_SESSION['post_logement']['image5P'] = $_FILES["image5P"]["name"];
+    }
+    if (isset($_FILES["image6P"]["name"])) {
+        $_SESSION['post_logement']['image6P'] = $_FILES["image6P"]["name"];
+    }
+
+
+    print_r($_SESSION);
 
     $nom = $_POST['nomP'];
     $ville = $_POST['villeP'];
@@ -35,85 +54,103 @@ $_SESSION['id_proprietaire'] = 1; ?>
     $en_ligne = true;
     $id_proprietaire = $_SESSION['id_proprietaire'];
     //$laPhoto = $_FILES["image1P"];
-    $nom_image_principale = $_FILES["image1P"]["name"];
     $charges1 = $_POST['charges1P'];
     $charges2 = $_POST['charges2P'];
     $charges3 = $_POST['charges3P'];
+    $nom_image_principale = $_FILES["image1P"]["name"];
+    $nom_image2 = $_FILES["image2P"]["name"];
+    $nom_image3 = $_FILES["image3P"]["name"];
+    $nom_image4 = $_FILES["image4P"]["name"];
+    $nom_image5 = $_FILES["image5P"]["name"];
+    $nom_image6 = $_FILES["image6P"]["name"];
 
-    if (isset($_POST['balcon'])) {
-        $balcon = $_POST['balcon'];
+    if (isset($_POST['balconP'])) {
+        $balcon = 1;
+        $_SESSION['post_logement']['balconP'] = 1;
     } else {
         $balcon = 0;
     }
 
-    if (isset($_POST['terrasse'])) {
-        $terrasse = $_POST['terrasse'];
+    if (isset($_POST['terrasseP'])) {
+        $terrasse = 1;
+        $_SESSION['post_logement']['terrasseP'] = 1;
     } else {
         $terrasse = 0;
     }
 
-    if (isset($_POST['parking_public'])) {
-        $parking_public = $_POST['parking_public'];
+    if (isset($_POST['parking_publicP'])) {
+        $parking_public = 1;
+        $_SESSION['post_logement']['parking_publicP'] = 1;
     } else {
         $parking_public = 0;
     }
 
-    if (isset($_POST['parking_privee'])) {
-        $parking_privee = $_POST['parking_privee'];
+    if (isset($_POST['parking_priveeP'])) {
+        $parking_privee = 1;
+        $_SESSION['post_logement']['parking_priveeP'] = 1;
     } else {
         $parking_privee = 0;
     }
 
-    if (isset($_POST['sauna'])) {
-        $sauna = $_POST['sauna'];
+    if (isset($_POST['saunaP'])) {
+        $sauna = 1;
+        $_SESSION['post_logement']['saunaP'] = 1;
     } else {
         $sauna = 0;
     }
 
-    if (isset($_POST['hammam'])) {
-        $hammam = $_POST['hammam'];
+    if (isset($_POST['hammamP'])) {
+        $hammam = 1;
+        $_SESSION['post_logement']['hammamP'] = 1;
     } else {
         $hammam = 0;
     }
 
-    if (isset($_POST['piscine'])) {
-        $piscine = $_POST['piscine'];
+    if (isset($_POST['piscineP'])) {
+        $piscine = 1;
+        $_SESSION['post_logement']['piscineP'] = 1;
     } else {
         $piscine = 0;
     }
 
-    if (isset($_POST['climatisation'])) {
-        $climatisation = $_POST['climatisation'];
+    if (isset($_POST['climatisationP'])) {
+        $climatisation = 1;
+        $_SESSION['post_logement']['climatisationP'] = 1;
     } else {
         $climatisation = 0;
     }
 
-    if (isset($_POST['jacuzzi'])) {
-        $jacuzzi = $_POST['jacuzzi'];
+    if (isset($_POST['jacuzziP'])) {
+        $jacuzzi = 1;
+        $_SESSION['post_logement']['jacuzziP'] = 1;
     } else {
         $jacuzzi = 0;
     }
 
-    if (isset($_POST['television'])) {
-        $television = $_POST['television'];
+    if (isset($_POST['televisionP'])) {
+        $television = 1;
+        $_SESSION['post_logement']['televisionP'] = 1;
     } else {
         $television = 0;
     }
 
-    if (isset($_POST['wifi'])) {
-        $wifi = $_POST['wifi'];
+    if (isset($_POST['wifiP'])) {
+        $wifi = 1;
+        $_SESSION['post_logement']['wifiP'] = 1;
     } else {
         $wifi = 0;
     }
 
-    if (isset($_POST['lave_vaiselle'])) {
-        $lave_vaiselle = $_POST['lave_vaiselle'];
+    if (isset($_POST['lave_vaiselleP'])) {
+        $lave_vaiselle = 1;
+        $_SESSION['post_logement']['lave_vaiselleP'] = 1;
     } else {
         $lave_vaiselle = 0;
     }
 
-    if (isset($_POST['lave_linge'])) {
-        $lave_linge = $_POST['lave_linge'];
+    if (isset($_POST['lave_lingeP'])) {
+        $lave_linge = 1;
+        $_SESSION['post_logement']['lave_lingeP'] = 1;
     } else {
         $lave_linge = 0;
     }
@@ -149,92 +186,16 @@ $_SESSION['id_proprietaire'] = 1; ?>
         'wifi' => $wifi,
         'lave_vaiselle' => $lave_vaiselle,
         'lave_linge' => $lave_linge,
-        'image1' => $nom_image_principale,
         'charges1' => $charges1,
         'charges2' => $charges2,
-        'charges3' => $charges3
+        'charges3' => $charges3,
+        'image1' => $nom_image_principale,
+        'image2' => $nom_image2,
+        'image3' => $nom_image3,
+        'image4' => $nom_image4,
+        'image5' => $nom_image5,
+        'image6' => $nom_image6
     ];
-
-    if (isset($_GET['enregistrer']) && '1' == $_GET['enregistrer']) {
-        /*try {
-            include('../Connexion/page_connexion.php');
-    
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $password);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            print "Erreur !:" . $e->getMessage() . "<br/>";
-            die();
-        }
-    
-        $stmt = $dbh->prepare(
-            "INSERT INTO locbreizh._taxe_sejour (prix_journalier_adulte)
-            VALUES (:prix_journalier_adulte)"
-        );
-    
-        $stmt->bindParam(':prix_journalier_adulte', $taxe_sejour);
-        $stmt->execute();
-    
-        $id_taxe_sejour = $dbh->lastInsertId();
-    
-        $stmt = $dbh->prepare(
-            "INSERT INTO locbreizh._adresse ( ville, code_postal)
-            VALUES (:ville, :code_postal)"
-        );
-    
-        $stmt->bindParam(':ville', $ville);
-        $stmt->bindParam(':code_postal', $code_postal);
-        $stmt->execute();
-    
-        $id_adresse = $dbh->lastInsertId();
-    
-        $stmt = $dbh->prepare(
-            "INSERT INTO locbreizh._photo (url_photo)
-            VALUES (:image1)"
-        );
-    
-        $stmt->bindParam(':image1', $nom_image_principale);
-        $stmt->execute();
-    
-        $stmt = $dbh->prepare(
-            "INSERT INTO locbreizh._logement (libelle_logement, tarif_base_HT, accroche_logement, descriptif_logement, nature_logement, type_logement, nb_chambre, lit_simple, lit_double, nb_salle_bain, surface_logement, nb_personnes_logement, jardin, balcon, terrasse, parking_public, parking_privee, sauna, hammam, piscine, climatisation, jacuzzi, television, wifi, lave_vaiselle, lave_linge, photo_principale, taxe_sejour, en_ligne, id_proprietaire, id_adresse)
-            VALUES (:libelle_logement, :tarif_de_base, :accroche, :description, :nature, :type, :nb_chambres, :nb_lit_simple, :nb_lit_double, :nb_sdb, :surface_maison, :nb_personne_max, :surface_jardin, :balcon, :terrasse, :parking_public, :parking_privee, :sauna, :hammam, :piscine, :climatisation, :jacuzzi, :television, :wifi, :lave_vaiselle, :lave_linge, :image1, :id_taxe_sejour, :en_ligne, :id_proprietaire, :id_adresse)"
-        );
-    
-        $stmt->bindParam(':id_taxe_sejour', $id_taxe_sejour);
-        $stmt->bindParam(':libelle_logement', $nom);
-        $stmt->bindParam(':tarif_de_base', $tarif_de_base);
-        $stmt->bindParam(':accroche', $accroche);
-        $stmt->bindParam(':description', $description);
-        $stmt->bindParam(':nature', $nature);
-        $stmt->bindParam(':type', $type);
-        $stmt->bindParam(':nb_chambres', $nb_chambres);
-        $stmt->bindParam(':nb_lit_simple', $nb_lit_simple);
-        $stmt->bindParam(':nb_lit_double', $nb_lit_double);
-        $stmt->bindParam(':nb_sdb', $nb_sdb);
-        $stmt->bindParam(':surface_maison', $surface_maison);
-        $stmt->bindParam(':nb_personne_max', $nb_personne_max);
-        $stmt->bindParam(':surface_jardin', $surface_jardin);
-        $stmt->bindParam(':balcon', $balcon);
-        $stmt->bindParam(':terrasse', $terrasse);
-        $stmt->bindParam(':parking_public', $parking_public);
-        $stmt->bindParam(':parking_privee', $parking_privee);
-        $stmt->bindParam(':sauna', $sauna);
-        $stmt->bindParam(':hammam', $hammam);
-        $stmt->bindParam(':piscine', $piscine);
-        $stmt->bindParam(':climatisation', $climatisation);
-        $stmt->bindParam(':jacuzzi', $jacuzzi);
-        $stmt->bindParam(':television', $television);
-        $stmt->bindParam(':wifi', $wifi);
-        $stmt->bindParam(':lave_vaiselle', $lave_vaiselle);
-        $stmt->bindParam(':lave_linge', $lave_linge);
-        $stmt->bindParam(':image1', $nom_image_principale);
-        $stmt->bindParam(':en_ligne', $en_ligne);
-        $stmt->bindParam(':id_proprietaire', $id_proprietaire);
-        $stmt->bindParam(':id_adresse', $id_adresse);
-    
-        $stmt->execute();  */
-    }
 
     if (isset($_SESSION['logement_data'])) {
         $logement_data = $_SESSION['logement_data'];
@@ -269,10 +230,15 @@ $_SESSION['id_proprietaire'] = 1; ?>
         echo 'Wifi : ' . $logement_data['wifi'] . '<br>';
         echo 'Lave vaisselle : ' . $logement_data['lave_vaiselle'] . '<br>';
         echo 'Lave linge : ' . $logement_data['lave_linge'] . '<br>';
-        echo 'Image 1 : ' . $logement_data['image1'] . '<br>';
         echo 'Charges 1 : ' . $logement_data['charges1'] . '<br>';
         echo 'Charges 2 : ' . $logement_data['charges2'] . '<br>';
         echo 'Charges 3 : ' . $logement_data['charges3'] . '<br>';
+        echo 'Image 1 : ' . $logement_data['image1'] . '<br>';
+        echo 'Image 2 : ' . $logement_data['image2'] . '<br>';
+        echo 'Image 3 : ' . $logement_data['image3'] . '<br>';
+        echo 'Image 4 : ' . $logement_data['image4'] . '<br>';
+        echo 'Image 5 : ' . $logement_data['image5'] . '<br>';
+        echo 'Image 6 : ' . $logement_data['image6'] . '<br>';
     } else {
         echo 'Aucune donnée de logement à prévisualiser.';
     }
