@@ -193,7 +193,6 @@
             $requeteIDCompte = $dbh->prepare("SELECT id_compte FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
             $requeteIDCompte->execute();
             $idCompte = $requeteIDCompte->fetchColumn();
-            echo $idCompte;
 
             $requeteProprio = $dbh->prepare("INSERT INTO locbreizh._proprietaire VALUES ('{$idCompte}' ,'{$urlRIB}', '{$urlIdentite}');");
             $requeteProprio->execute();
@@ -398,4 +397,6 @@
         }
         return $erreur;
     }
+
+    header("Location: ../Accueil/Tableau_de_bord.php");
 ?>

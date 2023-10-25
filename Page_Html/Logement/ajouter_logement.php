@@ -361,4 +361,5 @@ if (($_SESSION['post_logement']['image6P']) != '') {
     $stmt->bindParam(':logement', $id_logement);
 
     $stmt->execute();
+    header("Location: ../Accueil/Tableau_de_bord.php");
 }
