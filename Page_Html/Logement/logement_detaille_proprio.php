@@ -1,5 +1,5 @@
 <?php 
-sesson_start();
+session_start();
 include('../parametre_connexion.php');
 try {
 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -26,24 +26,13 @@ $photo = $stmt->fetch();
 
 </head>
 
-<?php
-    include('../parametre_connexion.php');
-    try {
-
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        print "Erreur !:" . $e->getMessage() . "<br/>";
-        die();
-    }
-?>
 <body>
 <header class="row col-12">
+<a href="../Accueil/Tableau_de_bord.php">
     <div class="row col-3">
         <img src="../svg//logo.svg">
         <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
-    </div>
+    </div></a>
 
     <div class="row col-3">
         <img class="col-2" src="../svg//filtre.svg">
@@ -52,7 +41,9 @@ $photo = $stmt->fetch();
     </div>
         <div class="row col-3 offset-md-1">
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../Reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
+            <a href="../Accueil/Tableau_de_bord.php" style="margin: auto;margin-left: 10px;">
+                <h4 style="color:#000;">Accèder à mon tableau de bord</h4>
+            </a>
         </div>
         
 
@@ -307,28 +298,26 @@ $photo = $stmt->fetch();
             </div>
 
             <div class='profil'>
-                <img src=''>
-                
-                <?php   
-
-            
-                            $stmt = $dbh->prepare(
-                                'SELECT prenom, nom
+            <?php   
+                        $stmt = $dbh->prepare(
+                                'SELECT prenom, nom, photo
                                     from locbreizh._logement
                                         INNER JOIN locbreizh._compte ON _logement.id_proprietaire = _compte.id_compte'
                             );
 
-            
                         $stmt->execute();
                         $info = $stmt->fetch();
-                        echo '<h4>' . $info['prenom'] . ' ' . $info['nom'] . '</h4>';
                 ?>
+                <img src='<?php echo '../Ressources/Images/'.$info['photo'];?>'>
+                <h4><?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
+                
+
                 <button type='button' disabled>Contacter le propriétaire</button>
             </div>
 
     </main>
     
-<footer class="container-fluid" >
+    <footer class="container-fluid" >
         <div class="column">   
             <div class="text-center row">
                 <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
@@ -344,10 +333,10 @@ $photo = $stmt->fetch();
             </div>
         </div>
     </footer>
-
 </body>
 
 </html>
+
 
 <style>
     .popup {

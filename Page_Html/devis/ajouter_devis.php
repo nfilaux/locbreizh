@@ -95,13 +95,13 @@
         }
         else{
             // retrouve l'id du proprio
-            $stmt = $dbh->prepare("select id_client from locbreizh._demande_devis where client = {$_POST['id_demande']};");
+            $stmt = $dbh->prepare("select client from locbreizh._demande_devis where num_demande_devis = {$_POST['id_demande']};");
             $stmt->execute();
-            $proprio = $stmt->fetch();
+            $client = $stmt->fetch();
 
             // on cree une conversation entre le client et le proprio
             $stmt = $dbh->prepare("INSERT INTO locbreizh._conversation(compte1, compte2) 
-            VALUES ({$_SESSION['id']}, {$info_user['id_compte']});");
+            VALUES ({$_SESSION['id']}, {$client['client']});");
             $stmt->execute();
             // on recupere l'id de la conv cree
             $id_conv = $dbh->lastInsertId();

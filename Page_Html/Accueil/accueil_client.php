@@ -1,6 +1,3 @@
-<!doctype html>
-<html lang="fr">
-
 <?php 
 session_start();
 include('../parametre_connexion.php');
@@ -16,6 +13,8 @@ $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_
 $stmt->execute();
 $photo = $stmt->fetch();
 ?>
+<!doctype html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <title>Accueil</title>
@@ -25,10 +24,11 @@ $photo = $stmt->fetch();
 </head>
 <body>
 <header class="row col-12">
+	<a href="../Accueil/accueil_client.php">
     <div class="row col-3">
         <img src="../svg//logo.svg">
         <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
-    </div>
+    </div></a>
 
     <div class="row col-3">
         <img class="col-2" src="../svg//filtre.svg">
@@ -37,7 +37,9 @@ $photo = $stmt->fetch();
     </div>
         <div class="row col-3 offset-md-1">
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../Reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
+            <a href="../reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;">
+                <h4 style="color:#000;">Accèder à mes reservations</h4>
+            </a>
         </div>
         
 
@@ -52,6 +54,7 @@ $photo = $stmt->fetch();
         <a onclick="closePopup()">Fermer la fenêtre</a>
     </div>
 </header>
+
     <main>
         <?php
         try {
@@ -106,6 +109,7 @@ $photo = $stmt->fetch();
             <hr>
         </div>
     </main>
+    
     <footer class="container-fluid" >
         <div class="column">   
             <div class="text-center row">
@@ -125,6 +129,7 @@ $photo = $stmt->fetch();
 </body>
 
 </html>
+
 
 <style>
     .popup {

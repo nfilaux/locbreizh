@@ -30,6 +30,19 @@
     $stmt->execute();
     $photo_profil = $stmt->fetch();
 
+    $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
+    $stmt->execute();
+    $est_client = $stmt->fetch();
+
+    if(isset($est_client['id_compte'])){
+        $est_client = True;
+    }
+    else{
+        $est_client = False;
+    }
+
+
+
     $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $photo = $stmt->fetch();
@@ -134,10 +147,22 @@
 ?>
 <body>
 <header class="row col-12">
-    <div class="row col-3">
-        <img src="../svg//logo.svg">
-        <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
-    </div>
+        <?php if($est_client){ ?>
+            <a href="../Accueil/accueil_client.php">
+            <div class="row col-3">
+            <img src="../svg//logo.svg">
+            <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
+            </div></a>
+
+        <?PHP }
+        else{?>
+            <a href="../Accueil/Tableau_de_bord.php">
+            <div class="row col-3">
+            <img src="../svg//logo.svg">
+            <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
+            </div></a>
+        <?php }?>
+
 
     <div class="row col-3">
         <img class="col-2" src="../svg//filtre.svg">
@@ -146,7 +171,17 @@
     </div>
         <div class="row col-3 offset-md-1">
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../Reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
+            <?php 
+                if($est_client){?>
+                    <a href="../Reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;">
+                    <h4 style="color:#000;">Acceder à mes réservations</h4>
+                    </a>
+                <?PHP }
+                else{?>
+                    <a href="../Accueil/Tableau_de_bord.php" style="margin: auto;margin-left: 10px;">
+                    <h4 style="color:#000;">Acceder à mon tableau de bord</h4>
+                    </a>
+                <?php }?>
         </div>
         
 
@@ -206,7 +241,8 @@
                 <?php }?>
             </div>
         </div>
-        <hr>
+
+        <hr><hr><hr>
         <!--partie de droite (liste des messages de la conversation selectionnee)-->
         <div>
             <?php
@@ -357,7 +393,9 @@
         </div>
     </footer>
 </body>
+
 </html>
+
 
 <style>
     .popup {

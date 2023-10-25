@@ -40,16 +40,17 @@ $photo = $stmt->fetch();
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Modifier logement</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
     
     <body>
     <header class="row col-12">
+<a href="../Accueil/Tableau_de_bord.php">
     <div class="row col-3">
         <img src="../svg//logo.svg">
         <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
-    </div>
+    </div></a>
 
     <div class="row col-3">
         <img class="col-2" src="../svg//filtre.svg">
@@ -58,7 +59,9 @@ $photo = $stmt->fetch();
     </div>
         <div class="row col-3 offset-md-1">
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../Reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
+            <a href="../Accueil/Tableau_de_bord.php" style="margin: auto;margin-left: 10px;">
+                <h4 style="color:#000;">Accèder à mon tableau de bord</h4>
+            </a>
         </div>
         
 
@@ -234,46 +237,48 @@ $photo = $stmt->fetch();
             </div>
         </div>
     </footer>
+</body>
 
-    </body>
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-    </style>
-    <script>
-   // Ouvrir la popup
+</html>
+
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 15%;
+        left: 91%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+</style>
+<script>
+// Ouvrir la popup
 function openPopup() {
-    var popup = document.getElementById('popup');
-    popup.style.display = 'block';
+var popup = document.getElementById('popup');
+popup.style.display = 'block';
 }
 
 // Fermer la popup
 function closePopup() {
-    var popup = document.getElementById('popup');
-    popup.style.display = 'none';
+var popup = document.getElementById('popup');
+popup.style.display = 'none';
 }
 
 // Ajouter des gestionnaires d'événements aux boutons
 var profilButton = document.getElementById('profilButton');
 profilButton.addEventListener('click', function() {
-    alert('Accéder au profil');
-    closePopup();
+alert('Accéder au profil');
+closePopup();
 });
 
 var deconnexionButton = document.getElementById('deconnexionButton');
 deconnexionButton.addEventListener('click', function() {
-    alert('Se déconnecter');
-    closePopup();
+alert('Se déconnecter');
+closePopup();
 });
 </Script>
-    </html>

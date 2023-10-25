@@ -21,16 +21,17 @@ include('../parametre_connexion.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un logement</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
 <header class="row col-12">
+<a href="../Accueil/Tableau_de_bord.php">
     <div class="row col-3">
         <img src="../svg//logo.svg">
         <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
-    </div>
+    </div></a>
 
     <div class="row col-3">
         <img class="col-2" src="../svg//filtre.svg">
@@ -39,7 +40,9 @@ include('../parametre_connexion.php');
     </div>
         <div class="row col-3 offset-md-1">
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../Reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
+            <a href="../Accueil/Tableau_de_bord.php" style="margin: auto;margin-left: 10px;">
+                <h4 style="color:#000;">Accèder à mon tableau de bord</h4>
+            </a>
         </div>
         
 
@@ -210,6 +213,7 @@ include('../parametre_connexion.php');
 </body>
 
 </html>
+
 
 <style>
     .popup {
