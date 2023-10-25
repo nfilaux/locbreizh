@@ -13,6 +13,11 @@ header {
     border-bottom: 1px solid #745086;
 }
 
+#pp {
+    height: 60px;
+    width: 60px;
+}
+
 
 header a:link {
     margin-right: 0;

@@ -147,18 +147,21 @@
     // si il y a toujours pas d'érreur on peuple la base avec les données
     if(!$erreur){
         try {
-            $urlProfil = './photoProfil/' . $temps2 . '.' . $extension2;
-            $urlIdentite = './carteIdentite/' . $temps1 . '.' . $extension1;
-            move_uploaded_file($_FILES['photoProfil']['tmp_name'], $urlProfil);
-            move_uploaded_file($_FILES['carteIdentite']['tmp_name'], $urlIdentite);
+            $nom_profil = $temps1 . '.' . $extension2;
+            $cheminProfil = '../Ressources/Images/' ;
+            $nom_identite =  $temps1 . '1' . '.' . $extension1;
+            $cheminIdentite = '../Ressources/carte_identite/';
+
+            move_uploaded_file($_FILES['photoProfil']['tmp_name'], $cheminProfil . $nom_profil);
+            move_uploaded_file($_FILES['carteIdentite']['tmp_name'], $cheminIdentite . $nom_identite);
 
             $mdp = password_hash($mdp, PASSWORD_DEFAULT);
 
-            include('connect_params.php');
+            include('../parametre_connexion.php');
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$urlProfil}'), ('{$urlIdentite}');");
+            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$nom_profil}'), ('{$nom_identite}');");
             $requetePhotos->execute();
 
             $requeteAdresse = $dbh->prepare("INSERT INTO locbreizh._adresse(nom_rue, numero_rue, code_postal, pays, ville) VALUES ('{$nomRue}', {$numRue}, '{$codePostal}', 'France', '{$ville}');");
@@ -168,7 +171,7 @@
             $requeteIDAdresse->execute();
             $idAdresse = $requeteIDAdresse->fetchColumn();
 
-            $requeteCompte = $dbh->prepare("INSERT INTO locbreizh._compte(civilite, nom, prenom, mail, mot_de_passe, pseudo, telephone, adresse, photo) VALUES ('{$genre}', '{$nom}','{$prenom}', '{$mail}', '{$mdp}', '{$pseudo}', '{$tel}', {$idAdresse}, '{$urlProfil}');");
+            $requeteCompte = $dbh->prepare("INSERT INTO locbreizh._compte(civilite, nom, prenom, mail, mot_de_passe, pseudo, telephone, adresse, photo) VALUES ('{$genre}', '{$nom}','{$prenom}', '{$mail}', '{$mdp}', '{$pseudo}', '{$tel}', {$idAdresse}, '{$nom_profil}');");
             $requeteCompte->execute();
 
             $requeteIDCompte = $dbh->prepare("SELECT id_compte FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
@@ -181,6 +184,8 @@
             }
             $requeteClient = $dbh->prepare("INSERT INTO locbreizh._client VALUES ('{$idCompte}' ,'{$date}', '{$ageLegal}');");
             $requeteClient->execute();
+
+            header("Location: ./connexionFront.php");
 
             $dbh = null;
         } catch (PDOException $e) {

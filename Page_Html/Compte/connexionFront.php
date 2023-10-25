@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Page de connexion</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -19,8 +19,8 @@
             }
         ?>
     <header>
-        <div class="col-12 row text-center"> 
-            <a class="offset-md-2 titre" href="../Accueil/accueil_visiteur.php"><img src="svg/flecheRetour.svg"></a>
+        <div class="col-12 row text-center headconn"> 
+            <a class="offset-md-2 titre" href="../Accueil/accueil_visiteur.php"><img src="../svg/flecheRetour.svg"></a>
 
             <h1 class="col-8 text-center titre">Bienvenue sur Loc’Breizh !</h1>
         </div>

@@ -1,5 +1,17 @@
 <?php
 session_start();
+include('../parametre_connexion.php');
+    try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !:" . $e->getMessage() . "<br/>";
+        die();
+    }
+    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+    $stmt->execute();
+    $photo = $stmt->fetch();
 ?>
 
 <!DOCTYPE html>
@@ -14,60 +26,66 @@ session_start();
 </head>
 
 <body>
-    <header class="row col-12">
-        <div class="row col-3">
-            <img src="/Ressources/Images/logo.svg">
-            <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
-        </div>
-
-        <div class="row col-3">
-            <img class="col-2" src="/Ressources/Images/filtre.svg">
-            <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
-            <img class="col-2" src="/Ressources/Images/loupe.svg">
-        </div>
-        <div class="row col-4">
-            <img src="/Ressources/Images/booklet-fill 1.svg">
-            <a href="logement.php" style="margin: auto;margin-left: 10px;">
-                <h4 style="color:#000;">Accèder à mes réservations</h4>
-            </a>
-        </div>
-
-
-        <div class="col-2 row">
-            <a class="offset-md-6 row"><img src="/Ressources/Images/message.svg"></a>
-            <a class="offset-md-2 row"><img src="/Ressources/Images/compte.svg"></a>
-        </div>
-    </header>
-
-    <div class='banniere'>
-        <img src='/Ressources/Images/arrow-left-s-line 1.svg'>
-        <h1>Remplir la fiche logement</h1>
+<header class="row col-12">
+    <div class="row col-3">
+        <img src="../svg//logo.svg">
+        <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
     </div>
 
+    <div class="row col-3">
+        <img class="col-2" src="../svg//filtre.svg">
+        <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
+        <img class="col-2" src="../svg//loupe.svg">
+    </div>
+        <div class="row col-3 offset-md-1">
+            <img src="../svg//booklet-fill 1.svg">
+            <a href="../Reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
+        </div>
+        
+
+    <div class="col-2 row">
+        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
+        <a onclick="openPopup()" class="offset-md-2 row"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
+    </div>
+    <div id="popup" class="popup">
+        <a href="">Accéder au profil</a>
+        <br>
+        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
+        <a onclick="closePopup()">Fermer la fenêtre</a>
+    </div>
+</header>
+
+
+    
+
     <main>
+        <div class='banniere'>
+            <img src='../svg/arrow-left-s-line 1.svg'>
+            <h1>Remplir la fiche logement</h1>
+        </div>
         <div class="column">
             <form method='POST' action='previsualiser_logement.php' enctype="multipart/form-data">
                 <fieldset>
                     
-                    <label for='nom'>Libellé logement</label>
+                    <label for='nom'>Libellé logement :</label>
                     <input id='nom' type='text' name='nomP' placeholder='Nom du logement' required>
 
-                    <label for='ville'>Ville</label>
+                    <label for='ville'>Ville : </label>
                     <input id='ville' type='text' name='villeP' placeholder='Ville' required>
 
-                    <label for='code_postal'>Code postal</label>
+                    <label for='code_postal'>Code postal : </label>
                     <input id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
 
-                    <label for='tarif_de_base'>Tarif de base (en €)</label>
-                    <input id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='100' value='0' required>
+                    <label for='tarif_de_base'>Tarif de base (en €) : </label>
+                    <input id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' value='0' required>
 
-                    <label for='phrase_daccroche'>Phrase d'accroche</label>
+                    <label for='phrase_daccroche'>Phrase d'accroche : </label>
                     <input id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" required>
 
-                    <label for='description'>Description</label>
+                    <label for='description'>Description : </label>
                     <textarea id='description' name='descriptionP' placeholder='Description' required></textarea>
 
-                    <label for='nature'>Nature</label>
+                    <label for='nature'>Nature : </label>
                     <select id='nature' name='natureP' placeholder='Nature' required>
                         <option value='1'>Maison</option>
                         <option value='2'>Appartement</option>
@@ -75,7 +93,7 @@ session_start();
                         <option value='4'>Château</option>
                     </select>
 
-                    <label for='type'>Type</label>
+                    <label for='type'>Type : </label>
                     <select id='type' name='typeP' aria-placeholder="Type" required>
                         <option value='1'>T1</option>
                         <option value='2'>T2</option>
@@ -90,34 +108,36 @@ session_start();
 
                     </select>
 
-                    <label for='nb_chamnbres'>Nombre de chambres</label>
+                    <label for='nb_chamnbres'>Nombre de chambres : </label>
                     <input id='nb_chambres' type='number' name='nb_chambresP' min='0' max='15' step='1' value='0' required>
 
-                    <label for='nb_lit_simple'>Nombre de lits simples</label>
+                    <label for='nb_lit_simple'>Nombre de lits simples : </label>
                     <input id='nb_lit_simple' type='number' name='nb_lit_simpleP' min='0' max='15' step='1' value='0' required>
 
-                    <label for='nb_lit_double'>Nombre de lits doubles</label>
+                    <label for='nb_lit_double'>Nombre de lits doubles : </label>
                     <input id='nb_lit_double' type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value='0' required>
 
-                    <label for='nb_sdb'>Nombre de salles de bain</label>
+                    <label for='nb_sdb'>Nombre de salles de bain : </label>
                     <input id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' value='0' required>
 
-                    <label for='surface_maison'>Surface (en m²)</label>
-                    <input id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='10' value='0' required>
+                    <label for='surface_maison'>Surface (en m²) : </label>
+                    <input id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='1' value='0' required>
 
-                    <label for='nb_personne_max'>Nombre de personnes maximum</label>
+                    <label for='nb_personne_max'>Nombre de personnes maximum : </label>
                     <input id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='15' step='1' value='0' required>
 
-                    <label for='surface_jardin'>Surface du jardin (en m2)</label>
-                    <input id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='100' value='0' required>
+                    <label for='surface_jardin'>Surface du jardin (en m2): : </label>
+                    <input id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='1' value='0' required>
 
                 </fieldset>
                 <fieldset>
+                <br>
                     <h4>Equipements et services</h4>
-                    <label for='equipement'>Equipements</label>
+                    <label for='equipement'>Equipements :</label><br>
                     <input id='equipement' type='checkbox' name='balconP'>Balcon
                     <input id='equipement' type='checkbox' name='terrasseP'>Terrasse
                     <input id='equipement' type='checkbox' name='piscineP'>Piscine
+                    <input id='equipement' type='checkbox' name='climatisationP'>Piscine
                     <input id='equipement' type='checkbox' name='jacuzziP'>Jacuzzi
                     <input id='equipement' type='checkbox' name='saunaP'>Sauna
                     <input id='equipement' type='checkbox' name='hammamP'>Hammam
@@ -127,23 +147,21 @@ session_start();
                     <input id='equipement' type='checkbox' name='wifiP'>Wifi
                     <input id='equipement' type='checkbox' name='lave_vaisselleP'>Lave vaisselle
                     <input id='equipement' type='checkbox' name='lave_lingeP'>Lave linge
+                    <br>
 
-                    <label for='service'>Service</label>
-                    <input id='service' type='checkbox' name='menageP' placeholder='Service'>Ménage
-                    <input id='service' type='checkbox' name='navetteP' placeholder='Service'>Navette/Taxi
-                    <input id='service' type='checkbox' name='lingeP' placeholder='Service'>Linge
 
-                    <label for='taxe_sejour'>Taxe de séjour</label>
+                    <h4>Prix des charges</h4>
+                    <label for='taxe_sejour'>Taxe de séjour pour une personne : </label>
                     <input id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' required>
-
-                    <label for='charges_menage'>Charges additionnelles ménages</label>
-                    <input id='charges_menage' type='number' name='charges1P' min='0' max='1000' step='10' required>
-
-                    <label for='charges_animaux'>Charges additionnelles animaux</label>
-                    <input id='charges_animaux' type='number' name='charges2P' min='0' max='1000' step='10' required>
-
-                    <label for='charges_pers_sup'>Charges additionnelles personnes supplémentaire</label>
-                    <input id='charges_pers_sup' type='number' name='charges3P' min='0' max='1000' step='10' required>
+                    <br>
+                    <label for='charges_menage'>Prix charge additionnelle "ménage" : </label>
+                    <input id='charges_menage' type='number' name='charges1P' min='0' max='1000' step='1' required>
+                    <br>
+                    <label for='charges_animaux'>Prix charge additionnelles "animaux" : </label>
+                    <input id='charges_animaux' type='number' name='charges2P' min='0' max='1000' step='1' required>
+                    <br>
+                    <label for='charges_pers_sup'>Prix charge additionnelle "personnes supplémentaire" : </label>
+                    <input id='charges_pers_sup' type='number' name='charges3P' min='0' max='1000' step='1' required>
 
                 </fieldset>
                 <fieldset>
@@ -173,22 +191,63 @@ session_start();
 
     </main>
 
-    <footer class="container-fluid">
-        <div class="column">
+    <footer class="container-fluid" >
+        <div class="column">   
             <div class="text-center row">
                 <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
                 <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="/Ressources/Images/instagram-fill 1.svg"> @LocBreizh</a></p>
-                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="/Ressources/Images/facebook-circle-fill 1.svg"> @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
-            <hr>
+            <hr>  
             <div class="text-center row">
                 <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
                 <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p class="offset-md-1 col-4 testfooter">Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
         </div>
     </footer>
 </body>
 
 </html>
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 15%;
+        left: 91%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+</style>
+<script>
+// Ouvrir la popup
+function openPopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'block';
+}
+
+// Fermer la popup
+function closePopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'none';
+}
+
+// Ajouter des gestionnaires d'événements aux boutons
+var profilButton = document.getElementById('profilButton');
+profilButton.addEventListener('click', function() {
+alert('Accéder au profil');
+closePopup();
+});
+
+var deconnexionButton = document.getElementById('deconnexionButton');
+deconnexionButton.addEventListener('click', function() {
+alert('Se déconnecter');
+closePopup();
+});
+</Script>

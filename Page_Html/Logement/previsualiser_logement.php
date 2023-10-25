@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['id_proprietaire'] = 1; ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,8 +33,6 @@ $_SESSION['id_proprietaire'] = 1; ?>
     }
 
 
-    print_r($_SESSION);
-
     $nom = $_POST['nomP'];
     $ville = $_POST['villeP'];
     $code_postal = $_POST['code_postalP'];
@@ -51,12 +49,9 @@ $_SESSION['id_proprietaire'] = 1; ?>
     $nb_personne_max = $_POST['nb_personne_maxP'];
     $surface_jardin = $_POST['surface_jardinP'];
     $taxe_sejour = $_POST['taxe_sejourP'];
-    $menage = $_POST['menageP'];
-    $navette = $_POST['navetteP'];
-    $linge = $_POST['lingeP'];
+    
     $en_ligne = true;
-    $id_proprietaire = $_SESSION['id_proprietaire'];
-    //$laPhoto = $_FILES["image1P"];
+    $id_proprietaire = $_SESSION['id'];
     $charges1 = $_POST['charges1P'];
     $charges2 = $_POST['charges2P'];
     $charges3 = $_POST['charges3P'];
@@ -66,6 +61,8 @@ $_SESSION['id_proprietaire'] = 1; ?>
     $nom_image4 = $_FILES["image4P"]["name"];
     $nom_image5 = $_FILES["image5P"]["name"];
     $nom_image6 = $_FILES["image6P"]["name"];
+
+
 
     if (isset($_POST['balconP'])) {
         $balcon = 1;
@@ -88,9 +85,9 @@ $_SESSION['id_proprietaire'] = 1; ?>
         $parking_public = 0;
     }
 
-    if (isset($_POST['parking_priveeP'])) {
+    if (isset($_POST['parking_priveP'])) {
         $parking_privee = 1;
-        $_SESSION['post_logement']['parking_priveeP'] = 1;
+        $_SESSION['post_logement']['parking_priveP'] = 1;
     } else {
         $parking_privee = 0;
     }
@@ -144,9 +141,9 @@ $_SESSION['id_proprietaire'] = 1; ?>
         $wifi = 0;
     }
 
-    if (isset($_POST['lave_vaiselleP'])) {
+    if (isset($_POST['lave_vaisselleP'])) {
         $lave_vaiselle = 1;
-        $_SESSION['post_logement']['lave_vaiselleP'] = 1;
+        $_SESSION['post_logement']['lave_vaisselleP'] = 1;
     } else {
         $lave_vaiselle = 0;
     }

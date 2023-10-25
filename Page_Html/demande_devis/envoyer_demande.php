@@ -1,7 +1,6 @@
 <?php 
     // lancement de la session
     session_start();
-    $_SESSION['id'] = 4;
 
     require_once('../tcpdf/tcpdf.php');
     //test si date d'arrivée est avant date de depart
@@ -26,7 +25,6 @@
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
-        
         // insert la demande dans _demande_devis
         $stmt = $dbh->prepare("INSERT INTO locbreizh._demande_devis(nb_personnes, date_arrivee, date_depart, client, logement) 
         VALUES ({$_POST['nb_pers']}, '{$_POST['dateArrivee']}', '{$_POST['dateDepart']}', {$_SESSION['id']}, {$_POST['logement']});");

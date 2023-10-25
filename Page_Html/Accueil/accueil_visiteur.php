@@ -36,12 +36,17 @@
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
             $stmt = $dbh->prepare(
+                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
+                from locbreizh._logement;'
+            );
+            /*
+            $stmt = $dbh->prepare(
                 'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, note_avis, debut_plage_ponctuelle, fin_plage_ponctuelle
                 from locbreizh._logement 
                     INNER JOIN locbreizh._avis ON logement = id_logement
                     INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
                     INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning;'
-            );
+            );*/
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
@@ -58,13 +63,14 @@
 
         $stmt->execute();
         foreach ($stmt->fetchAll() as $card) {
-            echo '<div class="card">';
-            echo '<img src="' . $card['photo_principale'] . '">';
+            echo "<a href=\"../Logement/logement_detaille_visiteur.php?logement={$card['id_logement']}\"><div class=\"card\">";
+            echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
             echo '<h3>' . $card['libelle_logement'] . '</h3>';
             echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
-            echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';
-            echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';
-            echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
+            /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
+            /*
+            echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
+            echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4></div></a>';
         }
         ?>
 

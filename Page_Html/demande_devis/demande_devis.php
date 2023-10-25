@@ -15,7 +15,6 @@
     // import parametre de connexion + nouvelle instance de PDO
     include('../parametre_connexion.php');
     // id fictif pour les tests
-    $_SESSION['id'] = 4;
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -67,13 +66,16 @@
                 <label for="dateDepart">Date de depart :</label>
                 <input type="date" id="dateDepart" name="dateDepart" required/>
 
-                <?php 
+                <?php
+                if(isset($_GET['erreur'])){
                     if($_GET['erreur'] == 2){
                         echo '<p>La date ne peut pas être utlérieure à celle d\'aujourd\'hui !</p>';
                     }
                     if($_GET['erreur'] == 1){
                         echo '<p>La date de départ ne doit pas être utlérieure à la date d\'arrivee !</p>';
                     }
+                }
+                    
                 ?>
                 <label for="nb_pers">Nombre de persones :</label>
                 <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
