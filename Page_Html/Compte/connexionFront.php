@@ -20,7 +20,7 @@
         ?>
     <header>
         <div class="col-12 row text-center"> 
-            <a class="offset-md-2 titre" href="connexionFront.php"><img src="svg/flecheRetour.svg"></a>
+            <a class="offset-md-2 titre" href="../Accueil/accueil_visiteur.php"><img src="svg/flecheRetour.svg"></a>
 
             <h1 class="col-8 text-center titre">Bienvenue sur Loc’Breizh !</h1>
         </div>
@@ -42,7 +42,7 @@
             <button type="submit" class="btn-compte offset-md-3 col-6 mb-5 mt-5">Se connecter</button>
         </form>
         <article class="text-center mt-2"> 
-            <span>Nouveau ici ? <a class="col-2" href="creerCompte.html">Créer un compte</a> <a class="offset-md-1 col-2" href="mdpOublierFront.php">Mot de passe oublié ?</a></span>
+            <span>Nouveau ici ? <a class="col-2" href="CreerCompte.html">Créer un compte</a> <a class="offset-md-1 col-2" href="mdpOublierFront.php">Mot de passe oublié ?</a></span>
         </article>
        
     </main>
@@ -53,8 +53,8 @@
             <div class="col-12 text-center">
                 <a class="col-2" href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
                 <a class="offset-md-1 col-2" href="tel:+33623455689">(+33) 6 23 45 56 89</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/instagram.svg">  @LocBreizh</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/facebook.svg">  @LocBreizh</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a>
             </div>
             <hr>  
             <div class="offset-md-1 col-10 mt-4 text-center row">

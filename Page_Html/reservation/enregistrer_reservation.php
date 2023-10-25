@@ -6,7 +6,6 @@
     // import parametre de connexion + nouvelle instance de PDO
     include('../parametre_connexion.php');
     // id fictif pour les tests
-    $_SESSION['id'] = 4;
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -48,7 +47,6 @@
     // ajout reservation
     $stmt = $dbh->prepare("INSERT into locbreizh._reservation(reservation_annulee, client, logement, facture) values(False, {$_SESSION['id']}, {$logement['id_logement']}, {$id_facture});");
     $stmt->execute();
-
-
+    
     header("Location: reussite_payement.html");
 ?>

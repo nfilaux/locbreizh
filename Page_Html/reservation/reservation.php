@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserver</title>
-    <!--paypal-->
-    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <header class="row col-12">
@@ -21,7 +21,7 @@
             <img class="col-2" src="../svg//loupe.svg">
         </div>
         <div class="row col-3 offset-md-1">
-            <img src="../svg//booklet-fill 1.svg">
+            <img src="../svg/booklet-fill 1.svg">
             <a href="logement.php" style="margin: auto;margin-left: 10px;">
                 <h4 style="color:#000;">Accèder à mes réservations</h4>
             </a>

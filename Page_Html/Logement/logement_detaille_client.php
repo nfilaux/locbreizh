@@ -5,48 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page détaillé d'un logement</title>
-    <link rel="stylesheet" href="style_logement_detaille.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 
 
 <body>
-    <header>
-        <img src="/Ressources/Images/logo.svg">
-        <h2>Loc'Breizh</h2>
+    <header class="row col-12">
+            <div class="row col-3">
+                <img src="../svg//logo.svg">
+                <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
+            </div>
 
-        <img src="/Ressources/Images/filtre.svg">
+            <div class="row col-3">
+                <img class="col-2" src="../svg//filtre.svg">
+                <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
+                <img class="col-2" src="../svg//loupe.svg">
+            </div>
+                <div class="row col-3 offset-md-1">
+                    <img src="../svg//booklet-fill 1.svg">
+                    <a href="../reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
+                </div>
+                
 
-        <input id="searchbar" type="text" name="search">
-        <img src="/Ressources/Images/loupe.svg">
-
-        <img src="/Ressources/Images/booklet-fill 1.svg">
-        <h4>Accèder à mes réservation</h4>
-
-
-        <img src="/Ressources/Images/message.svg">
-        <img src="/Ressources/Images/compte.svg">
-        <hr>
+            <div class="col-2 row">
+                <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
+                <a href="../Compte/compte-client.php" class="offset-md-2 row"><img src="../svg/compte.svg"></a> 
+            </div>
     </header>
     <main>
         <div class='infos'>
         <?php
             try {
-                include('../Connexion/page_connexion.php');
+                include('../parametre_connexion.php');
 
-                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $password);
+                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
                 $stmt = $dbh->prepare(
-                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, note_avis, photo_principale, photo_url, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
+                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, photo_principale, accroche_logement, descriptif_logement
+                    from locbreizh._logement 
+                    WHERE id_logement = {$_GET['logement']};"
+                );
+
+                /*$stmt = $dbh->prepare(
+                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, note_avis, photo_principale, photo, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
                     from locbreizh._logement 
                         INNER JOIN locbreizh._avis ON logement = id_logement
-                        INNER JOIN locbreizh._photo_complementaire ON logement = id_logement
+                        INNER JOIN locbreizh._photos_secondaires p ON p.logement = id_logement
                         INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
                         INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning
-                        WHERE id_logement = {$_GET['logement']})"
-                );
+                        WHERE id_logement = {$_GET['logement']};"
+                );*/
             } catch (PDOException $e) {
                 print "Erreur !:" . $e->getMessage() . "<br/>";
                 die();
@@ -59,15 +71,15 @@
             echo '<p>' . $info['nb_personnes_logement'] . ' personnes</p>';
             echo '<p>' . $info['nature_logement'] . '</p>';
             echo '<p>' . $info['tarif_base_ht'] . '€/nuit</p>';
-            echo '<img src="/Ressources/Images/star-fill 1.svg">' . '<h4>' .  $info['note_avis'] . ',0</p>';
-            echo '<img src="' . $info['photo_principale'] . '">';
+            /*echo '<img src="/Ressources/Images/star-fill 1.svg">' . '<h4>' .  $info['note_avis'] . ',0</p>';
+            */echo '<img src="../Ressources/Images/' . $info['photo_principale'] . '">';/*
             echo '<img src="' . $info['photo_url'] . '">';
-            echo '<img src="' . $info['photo_url'] . '">';
+            echo '<img src="' . $info['photo_url'] . '">';*/
             echo '<h3>' . 'Description' . '</h3>' . '<p>' . $info['accroche_logement'] . '<p>';
-            echo '<p>' . $info['descriptif_logement'] . '</p>';
-            echo '<p>' . 'Arrivée' . $info['debut_plage_ponctuelle'] . 'Départ' . $info['fin_plage_ponctuelle'] . '</p>';
+            echo '<p>' . $info['descriptif_logement'] . '</p>';/*
+            echo '<p>' . 'Arrivée' . $info['debut_plage_ponctuelle'] . 'Départ' . $info['fin_plage_ponctuelle'] . '</p>';*/
             ?>
-            <button id='dud' type='button' href='../devis/demande_devis.php ? logement = id_logement' >Demander un devis</button>
+            <a href='../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>'><button>Demander un devis</button></a>
         </div>
         <div class='voir_plus'>
             <hr>
@@ -80,9 +92,9 @@
             <h3>Services et équipements du logement</h3>
             <?php
             try {
-                include('../Connexion/page_connexion.php');
+                include('../parametre_connexion.php');
 
-                $dbh1 = new PDO("$driver:host=$server;dbname=$dbname", $user, $password);
+                $dbh1 = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 $dbh1->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $dbh1->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
@@ -157,10 +169,10 @@
             <hr>
             <h3>Avis</h3>
             <?php
-            try {
-                include('../Connexion/page_connexion.php');
+            /*try {
+                include('../parametre_connexion.php');
 
-                $dbh2 = new PDO("$driver:host=$server;dbname=$dbname", $user, $password);
+                $dbh2 = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 $dbh2->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $dbh2->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
@@ -184,15 +196,15 @@
             foreach ($tab_avis as $boucle => $nb_avis) {
                 $boucle++;
             }
-            echo '<p>' . '. ' . $boucle . ' commentaires' . '</p>';
+            echo '<p>' . '. ' . $boucle . ' commentaires' . '</p>';*/
             ?>
         </div>
         <div class='avis_card'>
             <?php
             try {
-                include('../Connexion/page_connexion.php');
+                include('../parametre_connexion.php');
 
-                $dbh3 = new PDO("$driver:host=$server;dbname=$dbname", $user, $password);
+                $dbh3 = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 $dbh3->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $dbh3->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
@@ -215,7 +227,7 @@
                 echo '<p>' . $info['contenu_avis'] . '</p>';
             }
 
-            ?>
+            ?>Dubois
             <a href=''>Répondre au commentaire</a>
             <a href=''>Signaler</a>
 
@@ -234,9 +246,9 @@
 
             <?php
             try {
-                include('../Connexion/page_connexion.php');
+                include('../parametre_connexion.php');
 
-                $dbh4 = new PDO("$driver:host=$server;dbname=$dbname", $user, $password);
+                $dbh4 = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 $dbh4->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $dbh4->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
@@ -299,16 +311,16 @@
                 
                 <?php   
                         try {
-                            include('../Connexion/page_connexion.php');
+                            include('../parametre_connexion.php');
             
-                            $dbh5 = new PDO("$driver:host=$server;dbname=$dbname", $user, $password);
+                            $dbh5 = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                             $dbh5->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             $dbh5->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             
                             $stmt = $dbh5->prepare(
                                 'SELECT prenom, nom
                                     from locbreizh._logement
-                                        INNER JOIN locbreizh._compte ON _logement.id_proprietaire = _compte.id_proprietaire'
+                                        INNER JOIN locbreizh._compte ON _logement.id_proprietaire = _compte.id_compte'
                             );
                         } catch (PDOException $e) {
                             print "Erreur !:" . $e->getMessage() . "<br/>";
@@ -320,26 +332,23 @@
                         echo '<h4>' . $info['prenom'] . ' ' . $info['nom'] . '</h4>';
                 ?>
 
-                <button type='button'>Contacter le propriétaire</button>
+                <button type='button' disabled>Contacter le propriétaire</button>
             </div>
 
     </main>
     <footer class="mt-4 container-fluid">
-        <div class="mt-4 column">
+        <div class="mt-4 column">   
             <div class="col-12 text-center">
                 <a class="col-2" href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
                 <a class="offset-md-1 col-2" href="tel:+33623455689">(+33) 6 23 45 56 89</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/instagram.svg"> @LocBreizh</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/facebook.svg"> @LocBreizh</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a>
+                <a class="offset-md-1 col-1" href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a>
             </div>
-            <hr>
-            <div class="logo">
-                <img src="/Ressources/Images/logo2.svg">
-            </div>
-            <div class="offs3et-md-1 col-10 mt-4 text-center row">
+            <hr>  
+            <div class="offset-md-1 col-10 mt-4 text-center row">
                 <p class="offset-md-1 col-2">©2023 Loc’Breizh</p>
                 <p class="offset-md-1 col-3" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p class="offset-md-1 col-4">Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+                <p class="offset-md-1 col-4" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
         </div>
     </footer>

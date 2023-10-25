@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -19,8 +19,8 @@
         }
     ?>
     <header>
-        <div class="col-12 row text-center"> 
-            <a class="offset-md-2 titre" href="creerCompte.html"><img src="svg/flecheRetour.svg"/></a>
+        <div class="col-12 row text-center headconn"> 
+            <a class="offset-md-2 titre" href="CreerCompte.html"><img src="../svg/flecheRetour.svg"/></a>
             <h1  class="col-8 titre">Créer mon compte client  !</h1>
         </div>
     </header>
@@ -137,19 +137,19 @@
 
     </main>
 
-    <footer class="mt-4 container-fluid">
-        <div class="mt-4 column">   
-            <div class="col-12 text-center">
-                <a class="col-2" href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a>
-                <a class="offset-md-1 col-2" href="tel:+33623455689">(+33) 6 23 45 56 89</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/instagram.svg">  @LocBreizh</a>
-                <a class="offset-md-1 col-1" href="connexion.html"><img src="svg/facebook.svg">  @LocBreizh</a>
+    <footer class="container-fluid" >
+        <div class="column">   
+            <div class="text-center row">
+                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
             <hr>  
-            <div class="offset-md-1 col-10 mt-4 text-center row">
-                <p class="offset-md-1 col-2">©2023 Loc’Breizh</p>
-                <p class="offset-md-1 col-3" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p class="offset-md-1 col-4" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            <div class="text-center row">
+                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
+                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
         </div>
     </footer>

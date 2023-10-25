@@ -21,7 +21,7 @@
     if (!$erreur){
         $pseudo = $_POST["pseudo"];
         $mdp = $_POST["motdepasse"];
-        include('connect_params.php');
+        include('../parametre_connexion.php');
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -48,6 +48,17 @@
                     $recupID->execute();
                     $id = $recupID->fetchColumn();
                     $_SESSION['id'] = $id;
+
+                    $stmt = $dbh->prepare("SELECT id_proprietaire FROM locbreizh._proprietaire WHERE id_proprietaire = {$_SESSION['id']};");
+                    $stmt->execute();
+                    $proprio = $stmt->fetch();
+
+                    if(isset($proprio['id_proprietaire'])){
+                        header("Location: ../Accueil/Tableau_de_bord.php");
+                    }
+                    else{
+                        header("Location: ../Accueil/accueil_client.php");
+                    }
                 }
             }
             $dbh = null;

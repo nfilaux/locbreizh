@@ -112,7 +112,7 @@
 
     // si il y a aucune érreur on vérifie que les contraintes d'unicité sont respectées
     if (!$erreur){
-        include('connect_params.php');
+        include('../parametre_connexion.php');
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -176,6 +176,9 @@
             $idCompte = $requeteIDCompte->fetchColumn();
 
             $ageLegal = ageLegal($date);
+            if($ageLegal == ""){
+                $ageLegal = 0;
+            }
             $requeteClient = $dbh->prepare("INSERT INTO locbreizh._client VALUES ('{$idCompte}' ,'{$date}', '{$ageLegal}');");
             $requeteClient->execute();
 
@@ -289,7 +292,7 @@
             $_SESSION['erreurs'] += ["motdepasse" => "Le mot de passe doit faire entre 12 et 25 caractères"];  
         }
         else{
-            if (!preg_match('/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~@#_-^*%+:;=\/]).{12,25}$/', $mdp)) {
+            if (!preg_match('/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,25}$/', $mdp)) {
                 $erreur = true;
                 $_SESSION['erreurs'] += ["motdepasse" => "Le mot de passe doit comporter 4 caractères de types différents (majuscule, minuscule, chiffre, caractère spécial)"];
             }

@@ -127,7 +127,7 @@
 
     // si il y a aucune érreur on vérifie que les contraintes d'unicité sont respectées
     if (!$erreur){
-        include('connect_params.php');
+        include('../parametre_connexion.php');
         $langue = $_POST['langue'];
 
         try {
@@ -173,7 +173,7 @@
 
             $mdp = password_hash($mdp, PASSWORD_DEFAULT);
 
-            include('connect_params.php');
+            include('../parametre_connexion.php');
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 

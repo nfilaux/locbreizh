@@ -177,6 +177,6 @@
         file_put_contents($chemin_complet, $contenu_pdf);
 
         // renvoie l'utilisateur sur une page de reussite
-        header("Location: demande_devis_envoye.html");
+        header("Location: ../messagerie/messagerie.php?conv=$id_conv");
     }
 ?>

@@ -24,8 +24,7 @@
         print "Erreur !: " . $e->getMessage() . "<br/>";
         die();
     }
-    // id fictif pour les test
-    $_SESSION['id'] = 4;
+
     // requete pour obtenir la photo de profil pour le header
     $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
     $stmt->execute();
@@ -144,12 +143,10 @@
         </div>
         <div class="row col-3 offset-md-1">
             <img src="../svg/booklet-fill 1.svg">
-            <a href="logement.php" style="margin: auto;margin-left: 10px;">
+            <a href="../reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;">
                 <h4 style="color:#000;">Accèder à mes réservations</h4>
             </a>
         </div>
-
-
         <div class="col-2 row">
             <a class="offset-md-6 row"><img src="../svg/message.svg"></a>
             <a class="offset-md-2 row"><img src="../svg/compte.svg"></a>
