@@ -158,9 +158,7 @@
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES (':urlProfil'), (':urlIdentite');");
-            $query->bindParam(':urlProfil', $urlProfil, PDO::PARAM_STR);
-            $query->bindParam(':urlIdentite', $urlIdentite, PDO::PARAM_STR);
+            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$urlProfil}'), ('{$urlIdentite}');");
             $requetePhotos->execute();
 
             $requeteAdresse = $dbh->prepare("INSERT INTO locbreizh._adresse(nom_rue, numero_rue, code_postal, pays, ville) VALUES ('{$nomRue}', {$numRue}, '{$codePostal}', 'France', '{$ville}');");
