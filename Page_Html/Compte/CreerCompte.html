@@ -8,54 +8,51 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 
-<body>
-    <header>
-        <div>
+<body class="pagecompte">
+    <header class="headconn">
             <a href="connexionFront.php"><img src="../svg/flecheRetour.svg"></a>
 
             <h1>Créer mon compte !</h1>
-        </div>
-    </header>
-    <main>
 
+    </header>
+    <main class="Maincompte">
         <section>
             <article>
-                <a href="creerClientFront.php"><button>Client</button></a>
+                <a href="creerClientFront.php"><button class="btn-compte">Client</button></a>
+            <div class="rowcompte">
                 <p>pour louer un logement</p>
+            </div>
             </article>
 
             <article>
-                <p>OU</p>
+                <p class="OU">OU</p>
             </article>
 
             <article>
-                <a href="creerProprietaireFront.php"><button
-                        >Propriétaire</button></a>
-                <p>pour proposer un logement</p>
+                    <a href="creerProprietaireFront.php">
+                    <button class="btn-compte">Propriétaire</button></a>
+                <div class="rowcompte">
+                    <p>pour proposer un logement</p>
+                </div>
+                
             </article>
         </section>
     </main>
 
     <footer>
-        <div>
-            <div>
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">
-                        @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">
-                        @LocBreizh</a></p>
-            </div>
-            <hr>
-            <div>
-                <p>©2023 Loc’Breizh</p>
-                <p><a
-                        href="connexion.html">Conditions générales</a></p>
-                <p >Développé par <a href="connexion.html"
-                        >7ème sens</a></p>
-            </div>
+        <div class="tfooter">
+            <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+            <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+            <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
+            <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
         </div>
-    </footer>
+        <hr>  
+        <div class="bfooter">
+            <p>©2023 Loc’Breizh</p>
+            <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+            <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+        </div>
+</footer>
 </body>
 
 </html>

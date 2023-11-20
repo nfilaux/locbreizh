@@ -83,12 +83,22 @@ header a:last-child {
     position: relative;
     background-color: #745086;
     color: #fff;
-    padding: 1em;
     margin-bottom: 2em;
+    display: flex;
+    justify-content: center;
+    margin-top: 5vw;
+}
+
+.headconn img{
+    position: absolute;
+    left: 5em;
+    top: 1em;
 }
 
 .headconn h1 {
     color: #fff;
+    font-size: 4em;
+    margin: 3px;
 }
 
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
@@ -194,6 +204,28 @@ main h1{
     width: 15%;
 }
 
+.Maincompte {
+    display: flex;
+    justify-content: center;
+}
+
+.Maincompte section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Maincompte section article{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+}
+
+.Maincompte section article div span{
+    margin-top: 2em;
+    font-size: 1.5em;
+}
 
 /*----------------------------------------------------------------footer----------------------------------------------------------------*/
 
@@ -296,7 +328,9 @@ footer a:visited {
     color: #F6E4FF;
     border: 1px solid #957BB0; 
     border-radius: 20px;
+    width: 20em;
     font-size: 2em;
+    height: 2em;
 }
 
 .btn-accueil {
@@ -366,6 +400,7 @@ footer a:visited {
 #pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
     color: #957BB0;
     opacity: 50%;
+    text-align: center;
 }
 
 .compteciv{
@@ -385,7 +420,8 @@ footer a:visited {
     color: #957BB0; 
     border: 1px solid #957BB0;
     border-radius: 5px;
-    font-size: 2em;
+    font-size: 3em;
+    margin-bottom: 1em;
 }
 
 .popup {
@@ -408,4 +444,15 @@ footer a:visited {
     margin: auto;
     overflow-y: auto;
     background-color: #fff;
+}
+
+.rowcompte {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.OU {
+    font-weight: 900;
+    font-size: 2em;
 }
