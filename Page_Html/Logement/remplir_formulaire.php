@@ -67,100 +67,242 @@ include('../parametre_connexion.php');
                 <fieldset>
                     
                     <label for='nom'>Libellé logement :</label>
-                    <input id='nom' type='text' name='nomP' placeholder='Nom du logement' maxlength="30" required>
+                    <input id='nom' type='text' name='nomP' placeholder='Nom du logement' maxlength="30" 
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['nomP'])){
+                            echo $_SESSION['post_logement']['nomP'];
+                        }
+                        else{
+                            echo '\'\'';
+                        }
+                    ?> 
+                    required>
 
                     <label for='ville'>Ville : </label>
-                    <input id='ville' type='text' name='villeP' placeholder='Ville' maxlength="50" required>
+                    <input id='ville' type='text' name='villeP' placeholder='Ville' maxlength="50" 
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['villeP'])){
+                            echo $_SESSION['post_logement']['villeP'];
+                        }
+                        else{
+                            echo '\'\'';
+                        }
+                    ?> 
+                    required>
 
                     <label for='code_postal'>Code postal : </label>
-                    <input id='code_postal' type='text' name='code_postalP' placeholder='Code postal' maxlength="5" required>
+                    <input id='code_postal' type='text' name='code_postalP' placeholder='Code postal' maxlength="5" 
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['code_postalP'])){
+                            echo $_SESSION['post_logement']['code_postalP'];
+                        }
+                        else{
+                            echo '\'\'';
+                        }
+                    ?> 
+                    required>
 
                     <label for='tarif_de_base'>Tarif de base (en €) : </label>
-                    <input id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' value='0' required>
+                    <input id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' 
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['tarif_de_baseP'])){
+                            echo $_SESSION['post_logement']['tarif_de_baseP'];
+                        }
+                        else{
+                            echo 1;
+                        }
+                    ?>
+                    required>
 
                     <label for='phrase_daccroche'>Phrase d'accroche : </label>
-                    <input id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255" required>
-
+                    <input id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255"
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['accrocheP'])){
+                            echo $_SESSION['post_logement']['accrocheP'];
+                        }
+                        else{
+                            echo '\'\'';
+                        }
+                    ?>
+                    required>
+                    <?php print_r("{$_SESSION['post_logement']['descriptionP']}");?>
                     <label for='description'>Description : </label>
-                    <textarea id='description' name='descriptionP' placeholder='Description' maxlength="255" required></textarea>
+                    <textarea id='description' name='descriptionP' placeholder='Description' maxlength="255"><?php
+                     if(isset($_SESSION['post_logement']['descriptionP'])){
+                        echo "{$_SESSION['post_logement']['descriptionP']}";
+                    }?></textarea>
 
                     <label for='nature'>Nature : </label>
                     <select id='nature' name='natureP' placeholder='Nature' required>
-                        <option value='1'>Maison</option>
-                        <option value='2'>Appartement</option>
-                        <option value='3'>Manoir</option>
-                        <option value='4'>Château</option>
+                        <option value='Maison' <?php if(isset($_SESSION['post_logement']['natureP']) && $_SESSION['post_logement']['natureP'] === 'Maison'){ echo 'selected';} ?>>Maison</option>
+                        <option value='Appartement' <?php if(isset($_SESSION['post_logement']['natureP']) && $_SESSION['post_logement']['natureP'] === 'Appartement'){ echo 'selected';} ?>>Appartement</option>
+                        <option value='Manoir' <?php if(isset($_SESSION['post_logement']['natureP']) && $_SESSION['post_logement']['natureP'] === 'Manoir'){ echo 'selected';} ?>>Manoir</option>
+                        <option value='Château' <?php if(isset($_SESSION['post_logement']['natureP']) && $_SESSION['post_logement']['natureP'] === 'Château'){ echo 'selected';} ?>>Château</option>
                     </select>
 
                     <label for='type'>Type : </label>
                     <select id='type' name='typeP' aria-placeholder="Type" required>
-                        <option value='1'>T1</option>
-                        <option value='2'>T2</option>
-                        <option value='3'>T3</option>
-                        <option value='4'>T4</option>
-                        <option value='5'>T5</option>
-                        <option value='6'>T6</option>
-                        <option value='7'>T7</option>
-                        <option value='8'>T8</option>
-                        <option value='9'>T9</option>
-                        <option value='10'>T10</option>
-
+                        <option value='T1' <?php if(isset($_SESSION['post_logement']['typeP']) && $_SESSION['post_logement']['typeP'] === 'T1'){ echo 'selected';} ?>>T1</option>
+                        <option value='T2' <?php if(isset($_SESSION['post_logement']['typeP']) && $_SESSION['post_logement']['typeP'] === 'T2'){ echo 'selected';} ?>>T2</option>
+                        <option value='T3' <?php if(isset($_SESSION['post_logement']['typeP']) && $_SESSION['post_logement']['typeP'] === 'T3'){ echo 'selected';} ?>>T3</option>
+                        <option value='T4' <?php if(isset($_SESSION['post_logement']['typeP']) && $_SESSION['post_logement']['typeP'] === 'T4'){ echo 'selected';} ?>>T4</option>
+                        <option value='T5' <?php if(isset($_SESSION['post_logement']['typeP']) && $_SESSION['post_logement']['typeP'] === 'T5'){ echo 'selected';} ?>>T5</option>
+                        <option value='T6' <?php if(isset($_SESSION['post_logement']['typeP']) && $_SESSION['post_logement']['typeP'] === 'T6'){ echo 'selected';} ?>>T6</option>
+                        <option value='T7' <?php if(isset($_SESSION['post_logement']['typeP']) && $_SESSION['post_logement']['typeP'] === 'T7'){ echo 'selected';} ?>>T7</option>
                     </select>
 
                     <label for='nb_chamnbres'>Nombre de chambres : </label>
-                    <input id='nb_chambres' type='number' name='nb_chambresP' min='0' max='15' step='1' value='0' required>
+                    <input id='nb_chambres' type='number' name='nb_chambresP' min='0' max='15' step='1'
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['nb_chambresP'])){
+                            echo $_SESSION['post_logement']['nb_chambresP'];
+                        }
+                        else{
+                            echo 0;
+                        }
+                    ?>
+                    required>
 
                     <label for='nb_lit_simple'>Nombre de lits simples : </label>
-                    <input id='nb_lit_simple' type='number' name='nb_lit_simpleP' min='0' max='15' step='1' value='0' required>
+                    <input id='nb_lit_simple' type='number' name='nb_lit_simpleP' min='0' max='15' step='1'
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['nb_lit_simpleP'])){
+                            echo $_SESSION['post_logement']['nb_lit_simpleP'];
+                        }
+                        else{
+                            echo 0;
+                        }
+                    ?>
+                    required>
 
                     <label for='nb_lit_double'>Nombre de lits doubles : </label>
-                    <input id='nb_lit_double' type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value='0' required>
+                    <input id='nb_lit_double' type='number' name='nb_lit_doubleP' min='0' max='15' step='1' 
+                    value =<?php if(isset($_SESSION['post_logement']['nb_lit_doubleP'])){
+                            echo $_SESSION['post_logement']['nb_lit_doubleP'];
+                        }
+                        else{
+                            echo 0;
+                        }
+                    ?>
+                    required>
 
                     <label for='nb_sdb'>Nombre de salles de bain : </label>
-                    <input id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' value='0' required>
+                    <input id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' 
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['nb_sdbP'])){
+                            echo $_SESSION['post_logement']['nb_sdbP'];
+                        }
+                        else{
+                            echo 0;
+                        }
+                    ?>
+                    required>
 
                     <label for='surface_maison'>Surface (en m²) : </label>
-                    <input id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='1' value='0' required>
+                    <input id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='1' 
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['surface_maisonP'])){
+                            echo $_SESSION['post_logement']['surface_maisonP'];
+                        }
+                        else{
+                            echo 0;
+                        }
+                    ?>
+                    required>
 
                     <label for='nb_personne_max'>Nombre de personnes maximum : </label>
-                    <input id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='15' step='1' value='0' required>
+                    <input id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='15' step='1' 
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['nb_personne_maxP'])){
+                            echo $_SESSION['post_logement']['nb_personne_maxP'];
+                        }
+                        else{
+                            echo 0;
+                        }
+                    ?>
+                    required>
 
                     <label for='surface_jardin'>Surface du jardin (en m2): : </label>
-                    <input id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='1' value='0' required>
+                    <input id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='1' 
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['surface_jardinP'])){
+                            echo $_SESSION['post_logement']['surface_jardinP'];
+                        }
+                        else{
+                            echo 0;
+                        }
+                    ?>
+                    required>
 
                 </fieldset>
                 <fieldset>
                 <br>
                     <h4>Equipements et services</h4>
                     <label for='equipement'>Equipements :</label><br>
-                    <input id='equipement' type='checkbox' name='balconP'>Balcon
-                    <input id='equipement' type='checkbox' name='terrasseP'>Terrasse
-                    <input id='equipement' type='checkbox' name='piscineP'>Piscine
-                    <input id='equipement' type='checkbox' name='climatisationP'>Piscine
-                    <input id='equipement' type='checkbox' name='jacuzziP'>Jacuzzi
-                    <input id='equipement' type='checkbox' name='saunaP'>Sauna
-                    <input id='equipement' type='checkbox' name='hammamP'>Hammam
-                    <input id='equipement' type='checkbox' name='parking_publicP'>Parking public
-                    <input id='equipement' type='checkbox' name='parking_priveP'>Parking privé
-                    <input id='equipement' type='checkbox' name='televisionP'>Télévision
-                    <input id='equipement' type='checkbox' name='wifiP'>Wifi
-                    <input id='equipement' type='checkbox' name='lave_vaisselleP'>Lave vaisselle
-                    <input id='equipement' type='checkbox' name='lave_lingeP'>Lave linge
+                    <input id='equipement' type='checkbox' name='balconP' <?php if(isset($_SESSION['post_logement']['balconP'])){ echo 'checked';} ?>>Balcon
+                    <input id='equipement' type='checkbox' name='terrasseP' <?php if(isset($_SESSION['post_logement']['terrasseP'])){ echo 'checked';} ?>>Terrasse
+                    <input id='equipement' type='checkbox' name='piscineP' <?php if(isset($_SESSION['post_logement']['piscineP'])){ echo 'checked';} ?>>Piscine
+                    <input id='equipement' type='checkbox' name='climatisationP' <?php if(isset($_SESSION['post_logement']['climatisationP'])){ echo 'checked';} ?>>Piscine
+                    <input id='equipement' type='checkbox' name='jacuzziP' <?php if(isset($_SESSION['post_logement']['jacuzziP'])){ echo 'checked';} ?>>Jacuzzi
+                    <input id='equipement' type='checkbox' name='saunaP' <?php if(isset($_SESSION['post_logement']['saunaP'])){ echo 'checked';} ?>>Sauna
+                    <input id='equipement' type='checkbox' name='hammamP' <?php if(isset($_SESSION['post_logement']['hammamP'])){ echo 'checked';} ?>>Hammam
+                    <input id='equipement' type='checkbox' name='parking_publicP' <?php if(isset($_SESSION['post_logement']['parking_publicP'])){ echo 'checked';} ?>>Parking public
+                    <input id='equipement' type='checkbox' name='parking_priveP' <?php if(isset($_SESSION['post_logement']['parking_priveP'])){ echo 'checked';} ?>>Parking privé
+                    <input id='equipement' type='checkbox' name='televisionP' <?php if(isset($_SESSION['post_logement']['televisionP'])){ echo 'checked';} ?>>Télévision
+                    <input id='equipement' type='checkbox' name='wifiP' <?php if(isset($_SESSION['post_logement']['wifiP'])){ echo 'checked';} ?>>Wifi
+                    <input id='equipement' type='checkbox' name='lave_vaisselleP' <?php if(isset($_SESSION['post_logement']['lave_vaisselleP'])){ echo 'checked';} ?>>Lave vaisselle
+                    <input id='equipement' type='checkbox' name='lave_lingeP' <?php if(isset($_SESSION['post_logement']['lave_lingeP'])){ echo 'checked';} ?>>Lave linge
                     <br>
 
 
                     <h4>Prix des charges</h4>
                     <label for='taxe_sejour'>Taxe de séjour pour une personne : </label>
-                    <input id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' required>
+                    <input id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='1000' 
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['taxe_sejourP'])){
+                            echo $_SESSION['post_logement']['taxe_sejourP'];
+                        }
+                        else{
+                            echo 10;
+                        }
+                    ?>
+                    required>
                     <br>
                     <label for='charges_menage'>Prix charge additionnelle "ménage" : </label>
-                    <input id='charges_menage' type='number' name='charges1P' min='0' max='1000' step='1' required>
+                    <input id='charges_menage' type='number' name='charges1P' min='0' max='1000'
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['charges1P'])){
+                            echo $_SESSION['post_logement']['charges1P'];
+                        }
+                        else{
+                            echo 20.01;
+                        }
+                    ?>
+                    required>
                     <br>
                     <label for='charges_animaux'>Prix charge additionnelles "animaux" : </label>
-                    <input id='charges_animaux' type='number' name='charges2P' min='0' max='1000' step='1' required>
+                    <input id='charges_animaux' type='number' name='charges2P' min='0' max='1000'
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['charges2P'])){
+                            echo $_SESSION['post_logement']['charges2P'];
+                        }
+                        else{
+                            echo 5;
+                        }
+                    ?>
+                    required>
                     <br>
                     <label for='charges_pers_sup'>Prix charge additionnelle "personnes supplémentaire" : </label>
-                    <input id='charges_pers_sup' type='number' name='charges3P' min='0' max='1000' step='1' required>
+                    <input id='charges_pers_sup' type='number' name='charges3P' min='0' max='1000'
+                    value =<?php 
+                        if(isset($_SESSION['post_logement']['charges3P'])){
+                            echo $_SESSION['post_logement']['charges3P'];
+                        }
+                        else{
+                            echo 5;
+                        }
+                    ?>
+                    required>
 
                 </fieldset>
                 <fieldset>
