@@ -53,7 +53,7 @@
                     </div>    
                     <div>
                             <label for="carteIdentite">Carte d’identité</label>
-                            <inputtype="file" id="carteIdentite" name="carteIdentite" value="Importer le document" />
+                            <input type="file" id="carteIdentite" name="carteIdentite" value="Importer le document" />
                             <?php
                                 erreur("carteIdentite");
                             ?>
