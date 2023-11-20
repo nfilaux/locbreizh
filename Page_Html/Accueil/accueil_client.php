@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include('../parametre_connexion.php');
 try {
@@ -9,7 +9,8 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id_compte;");
+$stmt->bindParam(':id_compte', $_SESSION['id']);
 $stmt->execute();
 $photo = $stmt->fetch();
 ?>

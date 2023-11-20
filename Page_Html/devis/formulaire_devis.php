@@ -12,7 +12,8 @@
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
-    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id;");
+    $stmt->bindParam(':id', $_SESSION['id']);
     $stmt->execute();
     $photo = $stmt->fetch();
 ?>
@@ -70,14 +71,16 @@
             $date_val = "13.2";
             $delai_accept = "3";
 
-            $reqNomClient = $dbh->prepare("SELECT nom, prenom FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = {$_GET['demande']}");
+            $reqNomClient = $dbh->prepare("SELECT nom, prenom FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = :demande");
+            $stmt->bindParam(':demande', $_GET['demande']);
             $reqNomClient->execute();
             $infos_user = $reqNomClient->fetch(); 
 
             // recupere le nombre maximum de personnes pour le logement
             $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers from locbreizh._logement l
             join locbreizh._demande_devis d on d.logement = l.id_logement
-            where d.num_demande_devis = {$_GET['demande']};");
+            where d.num_demande_devis = :demande;");
+            $stmt->bindParam(':demande', $_GET['demande']);
             $stmt->execute();
             $nb_max = $stmt->fetch();
             

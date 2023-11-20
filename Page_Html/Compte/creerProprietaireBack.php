@@ -133,21 +133,24 @@
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '{$mail}';");
+            $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = :mail;");
+            $verifMail->bindParam(':mail', $mail);
             $verifMail->execute();
             $res = $verifMail->fetchColumn();
             if ($res != 0){
                 $_SESSION['erreurs'] += ["email" => "mail déjà existant"];
                 $erreur = true;
             }
-            $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '{$tel}';");
+            $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = :telephone;");
+            $verifTel->bindParam(':telephone', $tel);
             $verifTel->execute();
             $res = $verifTel->fetchColumn();
             if ($res != 0){
                 $_SESSION['erreurs'] += ["telephone" => "telephone déjà existant"];
                 $erreur = true;
             }
-            $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '{$pseudo}';");
+            $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = :pseudo;");
+            $verifPseudo->bindParam(':pseudo', $pseudo);
             $verifPseudo->execute();
             $res = $verifPseudo->fetchColumn();
             if ($res != 0){
@@ -183,35 +186,60 @@
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$nom_profil}'), ('{$nom_identite}'), ('{$nom_rib}');");
+            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES (:photo_profil), (:photo_identite), (:photo_rib);");
+            $requetePhotos->bindParam(':photo_profil', $nom_profil);
+            $requetePhotos->bindParam(':photo_identite', $nom_identite);
+            $requetePhotos->bindParam(':photo_rib', $nom_rib);
             $requetePhotos->execute();
 
-            $requeteAdresse = $dbh->prepare("INSERT INTO locbreizh._adresse(nom_rue, numero_rue, code_postal, pays, ville) VALUES ('{$nomRue}', {$numRue}, '{$codePostal}', 'France', '{$ville}');");
+            $requeteAdresse = $dbh->prepare("INSERT INTO locbreizh._adresse(nom_rue, numero_rue, code_postal, pays, ville) VALUES (:nom_rue, :numero_rue, :code_postal, 'France', :ville);");
+            $requeteAdresse->bindParam(':nom_rue', $nomRue);
+            $requeteAdresse->bindParam(':numero_rue', $numRue);
+            $requeteAdresse->bindParam(':code_postal', $codePostal);
+            $requeteAdresse->bindParam(':ville', $ville);
             $requeteAdresse->execute();
 
-            $requeteIDAdresse = $dbh->prepare("SELECT id_adresse FROM locbreizh._adresse WHERE nom_rue = '{$nomRue}';");
+            $requeteIDAdresse = $dbh->prepare("SELECT id_adresse FROM locbreizh._adresse WHERE nom_rue = :nom_rue;");
+            $requeteAdresse->bindParam(':nom_rue', $nomRue);
             $requeteIDAdresse->execute();
             $idAdresse = $requeteIDAdresse->fetchColumn();
 
-            $requeteCompte = $dbh->prepare("INSERT INTO locbreizh._compte(civilite, nom, prenom, mail, mot_de_passe, pseudo, telephone, adresse, photo) VALUES ('{$genre}', '{$nom}','{$prenom}', '{$mail}', '{$mdp}', '{$pseudo}', '{$tel}', {$idAdresse}, '{$nom_profil}');");
+            $requeteCompte = $dbh->prepare("INSERT INTO locbreizh._compte(civilite, nom, prenom, mail, mot_de_passe, pseudo, telephone, adresse, photo) VALUES (:civilite, :nom, :prenom, :mail, :mot_de_passe, :pseudo, :telephone, :adresse, :photo);");
+            $requeteCompte->bindParam(':civilite', $genre);
+            $requeteCompte->bindParam(':nom', $nom);
+            $requeteCompte->bindParam(':prenom', $prenom);
+            $requeteCompte->bindParam(':mail', $mail);
+            $requeteCompte->bindParam(':mot_de_passe', $mdp);
+            $requeteCompte->bindParam(':pseudo', $pseudo);
+            $requeteCompte->bindParam(':telephone', $tel);
+            $requeteCompte->bindParam(':adresse', $idAdresse);
+            $requeteCompte->bindParam(':photo', $nom_profil);
             $requeteCompte->execute();
 
-            $requeteIDCompte = $dbh->prepare("SELECT id_compte FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
+            $requeteIDCompte = $dbh->prepare("SELECT id_compte FROM locbreizh._compte WHERE pseudo = :pseudo;");
+            $requeteIDCompte->bindParam(':pseudo', $pseudo);
             $requeteIDCompte->execute();
             $idCompte = $requeteIDCompte->fetchColumn();
 
-            $requeteProprio = $dbh->prepare("INSERT INTO locbreizh._proprietaire VALUES ('{$idCompte}' ,'{$nom_rib}', '{$nom_identite}');");
+            $requeteProprio = $dbh->prepare("INSERT INTO locbreizh._proprietaire VALUES (':idCompte' ,':nom_rib', ':nom_identite');");
+            $requeteProprio->bindParam(':idCompte', $idCompte);
+            $requeteProprio->bindParam(':nom_rib', $nom_rib);
+            $requeteProprio->bindParam(':nom_identite', $nom_identite);
             $requeteProprio->execute();
 
-            $requeteLangueExiste = $dbh->prepare("SELECT COUNT(*) FROM locbreizh._langue WHERE nom_langue = '{$langue}';");
+            $requeteLangueExiste = $dbh->prepare("SELECT COUNT(*) FROM locbreizh._langue WHERE nom_langue = :langue;");
+            $requeteProprio->bindParam(':langue', $langue);
             $requeteLangueExiste->execute();
             $nbLangue = $requeteLangueExiste->fetchColumn();
 
             if ($nbLangue == 0){
-                $requeteLangue = $dbh->prepare("INSERT INTO locbreizh._langue VALUES ('{$langue}');");
+                $requeteLangue = $dbh->prepare("INSERT INTO locbreizh._langue VALUES (:langue);");
+                $requeteLangue->bindParam(':langue', $langue);
                 $requeteLangue->execute();
             }
-            $requeteParle = $dbh->prepare("INSERT INTO locbreizh._parle VALUES ('{$langue}', '{$idCompte}');");
+            $requeteParle = $dbh->prepare("INSERT INTO locbreizh._parle VALUES (:langue, :idCompte);");
+            $requeteParle->bindParam(':langue', $langue);
+            $requeteParle->bindParam(':idCompte', $idCompte);
             $requeteParle->execute();
             $dbh = null;
 
