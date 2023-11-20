@@ -1,38 +1,79 @@
 body {
     height: auto;
     padding-bottom: 0;
-    background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
+    margin: 0;
     background-origin: content-box;
+    width: 100%;
 }
 
-header {
+.pagecompte {
+    background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
+}
+
+/*----------------------------------------------------------------Header----------------------------------------------------------------*/
+
+header{
+    display: flex;
+    flex-direction: row;
     position: relative;
     color: #745086;
+    box-sizing: border-box;
+    border-bottom: 1px solid #745086; 
+    flex-wrap: nowrap;
+}
+
+.logot {
+    height: 5em;
+    width: 5em;
+}
+
+header h2 {
+    margin:auto 5em auto 1em;
+}
+
+header h4{
+    color:#000;
+    margin-right: 4em;
+}
+
+header a {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+header input{
+    margin-left: 1em;
+    width: 25em;
+}
+
+.brecherche {
+    display: flex;
+    flex-wrap: nowrap;
+    margin:auto 10em auto 10em;
+}
+
+.imghead{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 1em;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+header a:last-child {
+    margin-left: 3em;
+}
+
+.imgprofil {
     display: block;
     box-sizing: border-box;
-    border-bottom: 1px solid #745086;
+    border: 1px solid #5B3F69;
+    border-radius: 50%;
+    padding: none;
 }
 
-#pp {
-    height: 60px;
-    width: 60px;
-}
-
-
-header a:link {
-    margin-right: 0;
-    font-size: 1.5em;
-    color: #F6E4FF;
-}
-
-header a:visited {
-    margin-right: 0;
-    font-size: 1.5em;
-    color: #F6E4FF;
-}
-
-
-.headconn {
+.headconn{
     margin-top: 5em;
     position: relative;
     background-color: #745086;
@@ -40,35 +81,32 @@ header a:visited {
     padding: 1em;
 }
 
-main {
+/*----------------------------------------------------------------Main----------------------------------------------------------------*/
+
+main{
     padding-top: 5vw;
     padding-bottom: 5vw;
 }
 
-main form div {
+main form div{
     height: 5vw;
     width: 80%;
     margin: auto;
 }
-
-main label {
+main label{
     color: #745086;
 }
 
-footer a:link {
-    margin-right: 0;
-    font-size: 1.5em;
-    color: #F6E4FF;
-}
-
-footer a:visited {
-    margin-right: 0;
-    font-size: 1.5em;
-    color: #F6E4FF;
+main h1{
+    color: #020202;
+    margin: auto;
+    text-align: center;
 }
 
 
-footer {
+/*----------------------------------------------------------------footer----------------------------------------------------------------*/
+
+footer{
     padding-top: 1px;
     background-color: #745086;
     color: #F6E4FF;
@@ -77,46 +115,95 @@ footer {
     position: relative;
     bottom: 0;
     box-sizing: border-box;
-    border-top: 1px solid #F6E4FF;
+    border-top: 1px solid #F6E4FF   ;
+    width: 100%;
 }
 
-main h1 {
-    color: #020202;
-    margin: auto;
-    text-align: center;
+.tfooter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
 }
 
-footer hr {
+.bfooter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+footer hr{
     border-width: 1px;
     border-color: #F6E4FF;
     width: 87%;
 }
 
-a:link {
+footer div p {
+    padding: 0%;
+}
+
+.linkreseau{
+    margin: auto;
+}
+
+
+/*----------------------------------------------------------------Link----------------------------------------------------------------*/
+
+a:link{
     color: #745086;
 }
 
-a:visited {
+a:visited{
     color: #745086;
 }
 
-a:hover {
+a:hover{
     color: #745086;
 }
 
-
-.custom-input {
-    width: 100%;
-    color: #957BB0;
-    border: 1px solid #957BB0;
-    border-radius: 5px;
-    font-size: 2em;
+header a:link {
+    margin-right: 0;
+    font-size: 1.5em;
+    color: #F6E4FF;
+    text-decoration: none;
 }
+
+header a:visited {
+    margin-right: 0;
+    font-size: 1.5em;
+    color: #F6E4FF;
+    text-decoration: none;
+}
+
+footer a:link {
+    margin-right: 0;
+    font-size: 1.5em;
+    color: #F6E4FF;
+    text-decoration: none;
+}
+
+footer a:visited {
+    margin-right: 0;
+    font-size: 1.5em;
+    color: #F6E4FF;
+    text-decoration: none;
+}
+
+.margintb{
+    margin-top: auto;   
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+/*----------------------------------------------------------------Bouton----------------------------------------------------------------*/
 
 .btn-compte {
-    background-color: #957BB0;
+    background-color: #957BB0; 
     color: #F6E4FF;
-    border: 1px solid #957BB0;
+    border: 1px solid #957BB0; 
     border-radius: 20px;
     font-size: 2em;
 }
@@ -124,28 +211,36 @@ a:hover {
 .btn-accueil {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #957BB0;
+    background-color: #957BB0; 
     color: #F6E4FF;
-    border: 1px solid #957BB0;
+    border: 1px solid #957BB0; 
     border-radius: 20px;
     font-size: 1em;
 }
 
 .btn-accueilins {
     margin-top: auto;
-    margin-bottom: auto;
+    margin-bottom: auto; 
+    margin-left: 5em;
     color: #745086;
-    border: 1px solid #745086;
+    border: 1px solid #745086; 
     border-radius: 20px;
     font-size: 1em;
 }
 
-.btn-accueilins h5 {
+.btn_visi {
+    padding: 0.5em 1em 0.5em 1em;
+}
+
+.btn-accueilins:visited{
+    color: #745086;
+}
+
+.btn-accueilins h5{
     margin: auto;
 }
 
-
-.btn-accueil h5 {
+.btn-accueil h5{
     margin: auto;
 }
 
@@ -156,62 +251,40 @@ a:hover {
 
 .btn-accueilins:hover {
     background-color: #745086;
-    color: #FFF;
+    color: #FAE3C6;
 }
-
 
 .btn-compte:hover {
     background-color: #FAE3C6;
     color: #745086;
 }
 
-#Login::placeholder,
-#motdepasse::placeholder,
-#Prenom::placeholder,
-#Nom::placeholder,
-#Pseudo::placeholder,
-#mail::placeholder,
-#langue::placeholder,
-#email::placeholder,
-#pseudo::placeholder,
-#ville::placeholder,
-#confirmationMDP::placeholder,
-#codePostal::placeholder,
-#numRue::placeholder,
-#nomRue::placeholder,
-#telephone::placeholder {
+
+
+
+#Login::placeholder, #motdepasse::placeholder ,#Prenom::placeholder, #Nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
+#pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
     color: #957BB0;
     opacity: 50%;
 }
 
-.titre {
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-.compteciv {
+.compteciv{
     margin: auto;
 }
 
-.testfooter {
-    font-size: 0.8em;
-}
-
-.testfoot {
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-    font-size: 0.8em;
-}
-
-.rib {
+.rib{
     margin: auto;
 }
 
-.tewt {
+.tewt{
     padding: auto;
 }
 
-main img {
-    width: 50px;
-    height: 50px;
+.custom-input {
+    width: 100%;
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px;
+    font-size: 2em;
 }
+
