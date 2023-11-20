@@ -1,7 +1,6 @@
 body {
     height: auto;
     padding-bottom: 0;
-    background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
     background-origin: content-box;
 }
 

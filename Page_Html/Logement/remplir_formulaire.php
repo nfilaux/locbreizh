@@ -57,10 +57,6 @@ include('../parametre_connexion.php');
         <a onclick="closePopup()">Fermer la fenêtre</a>
     </div>
 </header>
-
-
-    
-
     <main>
         <div class='banniere'>
             <img src='../svg/arrow-left-s-line 1.svg'>
@@ -71,22 +67,22 @@ include('../parametre_connexion.php');
                 <fieldset>
                     
                     <label for='nom'>Libellé logement :</label>
-                    <input id='nom' type='text' name='nomP' placeholder='Nom du logement' required>
+                    <input id='nom' type='text' name='nomP' placeholder='Nom du logement' maxlength="30" required>
 
                     <label for='ville'>Ville : </label>
-                    <input id='ville' type='text' name='villeP' placeholder='Ville' required>
+                    <input id='ville' type='text' name='villeP' placeholder='Ville' maxlength="50" required>
 
                     <label for='code_postal'>Code postal : </label>
-                    <input id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
+                    <input id='code_postal' type='text' name='code_postalP' placeholder='Code postal' maxlength="5" required>
 
                     <label for='tarif_de_base'>Tarif de base (en €) : </label>
                     <input id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' value='0' required>
 
                     <label for='phrase_daccroche'>Phrase d'accroche : </label>
-                    <input id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" required>
+                    <input id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255" required>
 
                     <label for='description'>Description : </label>
-                    <textarea id='description' name='descriptionP' placeholder='Description' required></textarea>
+                    <textarea id='description' name='descriptionP' placeholder='Description' maxlength="255" required></textarea>
 
                     <label for='nature'>Nature : </label>
                     <select id='nature' name='natureP' placeholder='Nature' required>
