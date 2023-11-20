@@ -67,7 +67,7 @@ include('../parametre_connexion.php');
                 <fieldset>
                     
                     <label for='nom'>Libellé logement :</label>
-                    <input id='nom' type='text' name='nomP' placeholder='Nom du logement' maxlength="30" 
+                    <input id='nom' type='text' name='nomP' placeholder='Nom du logement' maxlength="50" 
                     value =<?php 
                         if(isset($_SESSION['post_logement']['nomP'])){
                             echo $_SESSION['post_logement']['nomP'];
