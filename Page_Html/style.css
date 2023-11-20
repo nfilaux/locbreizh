@@ -129,6 +129,9 @@ main h1{
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;
+    background-color: #745086;
+    border-radius: 15px;
+    padding-top: 0.5em;
 }
 
 .card section article{
@@ -149,7 +152,7 @@ main h1{
 .card section article img{
     margin: 0;
     border-radius: 15px;
-    width: 99%;
+    width: 96%;
 }
 
 .Tablobord{
@@ -158,10 +161,15 @@ main h1{
     justify-content: space-around;
 }
 
+.Tablobord h2{
+    color: #745086;
+}
+
 .Tablobord article{
     display: flex;
     flex-direction: column;
     text-align: center;
+    width: 45em;
 }
 
 
@@ -185,21 +193,6 @@ main h1{
     border-color: #F6E4FF;
     width: 15%;
 }
-
-/*----------------------------------------------------------------logement----------------------------------------------------------------*/
-
-.acclog{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    border: 2px solid #745086;
-    background-color: #745086;
-    padding: 0.5em;
-    border-radius: 15px;
-    width: 20em;
-}
-
-
 
 
 /*----------------------------------------------------------------footer----------------------------------------------------------------*/
@@ -406,4 +399,13 @@ footer a:visited {
     border: 1px solid #ccc;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+}
+
+.box {
+    width: 30em;
+    height: 100px;
+    border: 1px solid #cccccc;
+    margin: auto;
+    overflow-y: auto;
+    background-color: #fff;
 }

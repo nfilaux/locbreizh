@@ -92,6 +92,12 @@
             <article>
                 <h2>Notifications</h2>
 
+                <div class="box">
+                    <?php foreach ($notifications as $notification) {?>
+
+                    <?php } ?>
+                </div>
+
 
                 <h2>Mes Réservation</h2>
                 <p>Aucune réservation en cours </p>
