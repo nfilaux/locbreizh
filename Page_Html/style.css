@@ -15,6 +15,7 @@ body {
 header{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     position: relative;
     color: #745086;
     box-sizing: border-box;
@@ -28,12 +29,13 @@ header{
 }
 
 header h2 {
-    margin:auto 5em auto 1em;
+    margin:auto 1em auto 1em;
+    color: #745086;
 }
 
 header h4{
     color:#000;
-    margin-right: 4em;
+    margin-right: 2em;
 }
 
 header a {
@@ -41,28 +43,32 @@ header a {
     margin-bottom: auto;
 }
 
+header a:first-child {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
 header input{
-    margin-left: 1em;
     width: 25em;
 }
 
 .brecherche {
     display: flex;
     flex-wrap: nowrap;
-    margin:auto 10em auto 10em;
+    margin:auto 3em auto 3em;
 }
 
 .imghead{
     margin-top: auto;
     margin-bottom: auto;
-    margin-right: 1em;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
 }
 
 header a:last-child {
-    margin-left: 3em;
+    margin-left: 2em;
 }
 
 .imgprofil {
@@ -74,14 +80,22 @@ header a:last-child {
 }
 
 .headconn{
-    margin-top: 5em;
     position: relative;
     background-color: #745086;
-    color: #F6E4FF;
+    color: #fff;
     padding: 1em;
+    margin-bottom: 2em;
+}
+
+.headconn h1 {
+    color: #fff;
 }
 
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
+
+.MainTablo{
+    padding-top: 0vw;
+}
 
 main{
     padding-top: 5vw;
@@ -102,6 +116,90 @@ main h1{
     margin: auto;
     text-align: center;
 }
+
+.card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.card section{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.card section article{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.card section article h3{
+    color: #fff;
+}
+
+.card section article h4{
+    color: #fff;
+}
+
+.card section article img{
+    margin: 0;
+    border-radius: 15px;
+    width: 99%;
+}
+
+.Tablobord{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.Tablobord article{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+.Tablobord hr{
+    height: auto;
+    border: none;
+    border: 2px solid #745086; 
+    margin: 0;
+}
+
+.voir_plus {
+    display: flex;
+    align-items: center;
+    position: relative;
+    bottom: 20;
+    text-decoration: none;
+}
+
+.voir_plus hr{
+    border-width: 1px;
+    border-color: #F6E4FF;
+    width: 15%;
+}
+
+/*----------------------------------------------------------------logement----------------------------------------------------------------*/
+
+.acclog{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 2px solid #745086;
+    background-color: #745086;
+    padding: 0.5em;
+    border-radius: 15px;
+    width: 20em;
+}
+
+
 
 
 /*----------------------------------------------------------------footer----------------------------------------------------------------*/
@@ -259,7 +357,16 @@ footer a:visited {
     color: #745086;
 }
 
-
+.btn-ajoutlog {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+}
 
 
 #Login::placeholder, #motdepasse::placeholder ,#Prenom::placeholder, #Nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
@@ -288,3 +395,15 @@ footer a:visited {
     font-size: 2em;
 }
 
+.popup {
+    display: none;
+    position: fixed;
+    top: 15%;
+    left: 91%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}

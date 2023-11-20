@@ -38,13 +38,12 @@ $photo = $stmt->fetch();
 
         <div class="imghead">
             <a href="../messagerie/messagerie.php" ><img src="../svg/message.svg"></a>
-            <a><img class="imgprofil" src="../svg/compte.svg"></a> 
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
+            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
         </div>
         <div id="popup" class="popup">
             <a href="">Accéder au profil</a>
             <br>
-            <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
+            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
             <a onclick="closePopup()">Fermer la fenêtre</a>
         </div>
     </header>
@@ -86,23 +85,26 @@ $photo = $stmt->fetch();
         }
 
         $stmt->execute();
+        ?> <div class="card"> <?php
         foreach ($stmt->fetchAll() as $card) {
-            echo "<a href=\"../Logement/logement_detaille_client.php?logement={$card['id_logement']}\"><div class=\"card\">";
-            echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
-            echo '<h3>' . $card['libelle_logement'] . '</h3>';
-            echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
-            /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
-            /*
-            echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
-            echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4></div></a>';
+            ?><section> <?php
+                ?><a class="acclog" href="../Logement/logement_detaille_visiteur.php?logement={<?php echo $card['id_logement'] ?>}"> <?php
+                ?><article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
+                ?><article><h3> <?php echo $card['libelle_logement'] ?> </h3></article><?php
+                /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
+                ?><article><h4> <?php echo $card['tarif_base_ht'] ?> €</h4><?php
+                /*?><h4><?php formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle'])?></h4><?php*/
+                ?><h4><?php echo $card['nb_personnes_logement']?> personnes</h4></article></a><?php
+            ?></section><?php
         }
         ?>
 
-        <div class='voir_plus'>
+    </div>
+        <a href="" class='voir_plus'>
+            <hr> 
+            <h4>Voir plus</h4> 
             <hr>
-            <h4>Voir plus</h4>
-            <hr>
-        </div>
+        </a>
     </main>
     
     <footer>
@@ -123,21 +125,6 @@ $photo = $stmt->fetch();
 
 </html>
 
-
-<style>
-    .popup {
-        display: none;
-        position: fixed;
-        top: 15%;
-        left: 91%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-</style>
 <script>
 // Ouvrir la popup
 function openPopup() {
