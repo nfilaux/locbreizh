@@ -270,48 +270,52 @@ $photo = $stmt->fetch();
     if (isset($_SESSION['logement_data'])) {
         $logement_data = $_SESSION['logement_data'];
 
-        echo '<h1>Prévisualisation des données du logement</h1>';
-        echo 'Nom du logement : ' . $logement_data['nom'] . '<br>';
-        echo 'Ville : ' . $logement_data['ville'] . '<br>';
-        echo 'Code postal : ' . $logement_data['code_postal'] . '<br>';
-        echo 'Tarif de base : ' . $logement_data['tarif_de_base'] . '<br>';
-        echo 'Phrase d\'accroche : ' . $logement_data['accroche'] . '<br>';
-        echo 'Description : ' . $logement_data['description'] . '<br>';
-        echo 'Nature : ' . $logement_data['nature'] . '<br>';
-        echo 'Type : ' . $logement_data['type'] . '<br>';
-        echo 'Nombre de chambres : ' . $logement_data['nb_chambres'] . '<br>';
-        echo 'Nombre de lits simples : ' . $logement_data['nb_lit_simple'] . '<br>';
-        echo 'Nombre de lits doubles : ' . $logement_data['nb_lit_double'] . '<br>';
-        echo 'Nombre de salles de bain : ' . $logement_data['nb_sdb'] . '<br>';
-        echo 'Surface du logement : ' . $logement_data['surface_maison'] . '<br>';
-        echo 'Nombre de personnes maximum : ' . $logement_data['nb_personne_max'] . '<br>';
-        echo 'Surface du jardin : ' . $logement_data['surface_jardin'] . '<br>';
-        echo 'Taxe de séjour : ' . $logement_data['taxe_sejour'] . '<br>';
-        echo 'Balcon : ' . $logement_data['balcon'] . '<br>';
-        echo 'Terrasse : ' . $logement_data['terrasse'] . '<br>';
-        echo 'Parking public : ' . $logement_data['parking_public'] . '<br>';
-        echo 'Parking privée : ' . $logement_data['parking_privee'] . '<br>';
-        echo 'Sauna : ' . $logement_data['sauna'] . '<br>';
-        echo 'Hammam : ' . $logement_data['hammam'] . '<br>';
-        echo 'Piscine : ' . $logement_data['piscine'] . '<br>';
-        echo 'Climatisation : ' . $logement_data['climatisation'] . '<br>';
-        echo 'Jacuzzi : ' . $logement_data['jacuzzi'] . '<br>';
-        echo 'Télévision : ' . $logement_data['television'] . '<br>';
-        echo 'Wifi : ' . $logement_data['wifi'] . '<br>';
-        echo 'Lave vaisselle : ' . $logement_data['lave_vaiselle'] . '<br>';
-        echo 'Lave linge : ' . $logement_data['lave_linge'] . '<br>';
-        echo 'Ménage : ' . $logement_data['menage'] . '<br>';
-        echo 'Navette : ' . $logement_data['navette'] . '<br>';
-        echo 'Linge : ' . $logement_data['linge'] . '<br>';
-        echo 'Charges 1 : ' . $logement_data['charges1'] . '<br>';
-        echo 'Charges 2 : ' . $logement_data['charges2'] . '<br>';
-        echo 'Charges 3 : ' . $logement_data['charges3'] . '<br>';
-        echo 'Image 1 : ' . $logement_data['image1'] . '<br>';
-        echo 'Image 2 : ' . $logement_data['image2'] . '<br>';
-        echo 'Image 3 : ' . $logement_data['image3'] . '<br>';
-        echo 'Image 4 : ' . $logement_data['image4'] . '<br>';
-        echo 'Image 5 : ' . $logement_data['image5'] . '<br>';
-        echo 'Image 6 : ' . $logement_data['image6'] . '<br>';
+        ?>
+
+        <h1> <?php echo 'Prévisualisation des données du logement'; ?> </h1>
+        <p> <?php echo 'Nom du logement : ' . $logement_data['nom']; ?> </p>
+        <p> <?php echo 'Ville : ' . $logement_data['ville']; ?> </p>
+        <p> <?php echo 'Code postal : ' . $logement_data['code_postal']; ?> </p>   
+        <p> <?php echo 'Tarif de base : ' . $logement_data['tarif_de_base']; ?> </p>
+        <p> <?php echo 'Phrase d\'accroche : ' . $logement_data['accroche']; ?> </p>
+        <p> <?php echo 'Description : ' . $logement_data['description']; ?> </p>
+        <p> <?php echo 'Nature : ' . $logement_data['nature']; ?> </p>
+        <p> <?php echo 'Type : ' . $logement_data['type']; ?> </p>
+        <p> <?php echo 'Nombre de chambres : ' . $logement_data['nb_chambres']; ?> </p>
+        <p> <?php echo 'Nombre de lits simples : ' . $logement_data['nb_lit_simple']; ?> </p>
+        <p> <?php echo 'Nombre de lits doubles : ' . $logement_data['nb_lit_double']; ?> </p>
+        <p> <?php echo 'Nombre de salles de bain : ' . $logement_data['nb_sdb']; ?> </p>
+        <p> <?php echo 'Surface du logement : ' . $logement_data['surface_maison']; ?> </p>
+        <p> <?php echo 'Nombre de personnes maximum : ' . $logement_data['nb_personne_max']; ?> </p>
+        <p> <?php echo 'Surface du jardin : ' . $logement_data['surface_jardin']; ?> </p>
+        <p> <?php echo 'Taxe de séjour : ' . $logement_data['taxe_sejour']; ?> </p>
+        <p> <?php echo 'Balcon : ' . $logement_data['balcon']; ?> </p>
+        <p> <?php echo 'Terrasse : ' . $logement_data['terrasse']; ?> </p>
+        <p> <?php echo 'Parking public : ' . $logement_data['parking_public']; ?> </p>
+        <p> <?php echo 'Parking privée : ' . $logement_data['parking_privee']; ?> </p>
+        <p> <?php echo 'Sauna : ' . $logement_data['sauna']; ?> </p>
+        <p> <?php echo 'Hammam : ' . $logement_data['hammam']; ?> </p>
+        <p> <?php echo 'Piscine : ' . $logement_data['piscine']; ?> </p>
+        <p> <?php echo 'Climatisation : ' . $logement_data['climatisation']; ?> </p>
+        <p> <?php echo 'Jacuzzi : ' . $logement_data['jacuzzi']; ?> </p>
+        <p> <?php echo 'Télévision : ' . $logement_data['television']; ?> </p>
+        <p> <?php echo 'Wifi : ' . $logement_data['wifi']; ?> </p>
+        <p> <?php echo 'Lave vaisselle : ' . $logement_data['lave_vaiselle']; ?> </p>
+        <p> <?php echo 'Lave linge : ' . $logement_data['lave_linge']; ?> </p>
+        <p> <?php echo 'Ménage : ' . $logement_data['menage']; ?> </p>
+        <p> <?php echo 'Navette : ' . $logement_data['navette']; ?> </p>
+        <p> <?php echo 'Linge : ' . $logement_data['linge']; ?> </p>
+        <p> <?php echo 'Charges 1 : ' . $logement_data['charges1']; ?> </p>
+        <p> <?php echo 'Charges 2 : ' . $logement_data['charges2']; ?> </p>
+        <p> <?php echo 'Charges 3 : ' . $logement_data['charges3']; ?> </p>
+        <img src = "<?php echo "../Ressources/Images/$nom_image_principale" ?>">
+        <img src = "<?php echo "../Ressources/Images/$nom_image2" ?>">
+        <img src = "<?php echo "../Ressources/Images/$nom_image3" ?>">
+        <img src = "<?php echo "../Ressources/Images/$nom_image4" ?>">
+        <img src = "<?php echo "../Ressources/Images/$nom_image5" ?>">
+        <img src = "<?php echo "../Ressources/Images/$nom_image6" ?>">
+
+        <?php
     } else {
         echo 'Aucune donnée de logement à prévisualiser.';
     }

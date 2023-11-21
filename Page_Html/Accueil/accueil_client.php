@@ -1,17 +1,17 @@
 <?php 
-session_start();
-include('../parametre_connexion.php');
-try {
-$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    print "Erreur !:" . $e->getMessage() . "<br/>";
-    die();
-}
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
-$stmt->execute();
-$photo = $stmt->fetch();
+    session_start();
+    include('../parametre_connexion.php');
+    try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !:" . $e->getMessage() . "<br/>";
+        die();
+    }
+    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+    $stmt->execute();
+    $photo = $stmt->fetch();
 ?>
 <!doctype html>
 <html lang="fr">
@@ -19,41 +19,35 @@ $photo = $stmt->fetch();
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 </head>
 <body>
-<header class="row col-12">
-	<a href="../Accueil/accueil_client.php">
-    <div class="row col-3">
-        <img src="../svg//logo.svg">
-        <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
-    </div></a>
-
-    <div class="row col-3">
-        <img class="col-2" src="../svg//filtre.svg">
-        <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
-        <img class="col-2" src="../svg//loupe.svg">
-    </div>
-        <div class="row col-3 offset-md-1">
-            <img src="../svg//booklet-fill 1.svg">
-            <a href="../reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;">
-                <h4 style="color:#000;">Accèder à mes reservations</h4>
-            </a>
+    <header>
+        <a href="../Accueil/accueil_client.php">
+            <img class="logot" src="../svg/logo.svg">
+            <h2>Loc'Breizh</h2>
+        </a>
+        <div class="brecherche">
+            <img src="../svg/filtre.svg">
+            <input id="searchbar" type="text" name="search">
+            <img src="../svg/loupe.svg">
         </div>
-        
 
-    <div class="col-2 row">
-        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()" class="offset-md-2 row"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
-    </div>
-    <div id="popup" class="popup">
-        <a href="">Accéder au profil</a>
-        <br>
-        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
-        <a onclick="closePopup()">Fermer la fenêtre</a>
-    </div>
-</header>
+        <img src="../svg/booklet-fill 1.svg">
+        <a href="../reservation/liste_reservations.php"><h4>Accèder à mes réservations</h4></a>
+
+        <div class="imghead">
+            <a href="../messagerie/messagerie.php" ><img src="../svg/message.svg"></a>
+            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+        </div>
+        <div id="popup" class="popup">
+            <a href="">Accéder au profil</a>
+            <br>
+            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+            <a onclick="closePopup()">Fermer la fenêtre</a>
+        </div>
+    </header>
+
 
     <main>
         <?php
@@ -91,60 +85,46 @@ $photo = $stmt->fetch();
         }
 
         $stmt->execute();
+        ?> <div class="card"> <?php
         foreach ($stmt->fetchAll() as $card) {
-            echo "<a href=\"../Logement/logement_detaille_client.php?logement={$card['id_logement']}\"><div class=\"card\">";
-            echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
-            echo '<h3>' . $card['libelle_logement'] . '</h3>';
-            echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
-            /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
-            /*
-            echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
-            echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4></div></a>';
+            ?><section> <?php
+                ?><a class="acclog" href="../Logement/logement_detaille_client.php?logement={<?php echo $card['id_logement'] ?>}"> <?php
+                ?><article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
+                ?><article><h3> <?php echo $card['libelle_logement'] ?> </h3></article><?php
+                /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
+                ?><article><h4> <?php echo $card['tarif_base_ht'] ?> €</h4><?php
+                /*?><h4><?php formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle'])?></h4><?php*/
+                ?><h4><?php echo $card['nb_personnes_logement']?> personnes</h4></article></a><?php
+            ?></section><?php
         }
         ?>
 
-        <div class='voir_plus'>
+    </div>
+        <a href="" class='voir_plus'>
+            <hr> 
+            <h4>Voir plus</h4> 
             <hr>
-            <h4>Voir plus</h4>
-            <hr>
-        </div>
+        </a>
     </main>
     
-    <footer class="container-fluid" >
-        <div class="column">   
-            <div class="text-center row">
-                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+    <footer>
+            <div class="tfooter">
+                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
+                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
             </div>
             <hr>  
-            <div class="text-center row">
-                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
-                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            <div class="bfooter">
+                <p>©2023 Loc’Breizh</p>
+                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
-        </div>
     </footer>
 </body>
 
 </html>
 
-
-<style>
-    .popup {
-        display: none;
-        position: fixed;
-        top: 15%;
-        left: 91%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-</style>
 <script>
 // Ouvrir la popup
 function openPopup() {
