@@ -24,6 +24,8 @@
     </header>
     <main>
         <?php
+
+        // récupération des données de logement dans la base de donnée
         try {
             include('../parametre_connexion.php');
 
@@ -35,21 +37,14 @@
                 'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
                 from locbreizh._logement;'
             );
-            /*
-            $stmt = $dbh->prepare(
-                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, note_avis, debut_plage_ponctuelle, fin_plage_ponctuelle
-                from locbreizh._logement 
-                    INNER JOIN locbreizh._avis ON logement = id_logement
-                    INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
-                    INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning;'
-            );*/
+            
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
         }
 
-        function formatDate($start, $end)
-        {
+        // fonction qui permet d'afficher la date de début et de fin d'une réservation
+        function formatDate($start, $end) {
             $startDate = date('j', strtotime($start));
             $endDate = date('j', strtotime($end));
             $month = date('M', strtotime($end));
@@ -58,7 +53,10 @@
         }
 
         $stmt->execute();
+
         ?> <div class="card"> <?php
+
+        // affichage des données de logement
         foreach ($stmt->fetchAll() as $card) {
             ?><section> <?php
                 ?><a class="acclog" href="../Logement/logement_detaille_visiteur.php?logement={<?php echo $card['id_logement'] ?>}"> <?php
@@ -98,28 +96,28 @@
 </html>
 
 <script>
-// Ouvrir la popup
-function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-}
+    // Ouvrir la popup
+    function openPopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'block';
+    }
 
-// Fermer la popup
-function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
-}
+    // Fermer la popup
+    function closePopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'none';
+    }
 
-// Ajouter des gestionnaires d'événements aux boutons
-var profilButton = document.getElementById('profilButton');
-profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
-});
+    // Ajouter des gestionnaires d'événements aux boutons
+    var profilButton = document.getElementById('profilButton');
+    profilButton.addEventListener('click', function() {
+        alert('Accéder au profil');
+        closePopup();
+    });
 
-var deconnexionButton = document.getElementById('deconnexionButton');
-deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
-});
+    var deconnexionButton = document.getElementById('deconnexionButton');
+    deconnexionButton.addEventListener('click', function() {
+        alert('Se déconnecter');
+        closePopup();
+    });
 </Script>
