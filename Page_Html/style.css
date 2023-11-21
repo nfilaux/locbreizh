@@ -15,7 +15,7 @@ body {
 header{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     position: relative;
     color: #745086;
     box-sizing: border-box;
@@ -113,11 +113,11 @@ main{
 }
 
 main form div{
-    height: 5vw;
+
     width: 80%;
     margin: auto;
 }
-main label{
+main label, .Tablobord h2{
     color: #745086;
 }
 
@@ -151,11 +151,7 @@ main h1{
     justify-content: space-evenly;
 }
 
-.card section article h3{
-    color: #fff;
-}
-
-.card section article h4{
+.card section article h3,.card section article h4{
     color: #fff;
 }
 
@@ -169,10 +165,6 @@ main h1{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-}
-
-.Tablobord h2{
-    color: #745086;
 }
 
 .Tablobord article{
@@ -242,14 +234,7 @@ footer{
     width: 100%;
 }
 
-.tfooter {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-}
-
-.bfooter {
+.tfooter, .bfooter{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -273,40 +258,11 @@ footer div p {
 
 /*----------------------------------------------------------------Link----------------------------------------------------------------*/
 
-a:link{
+a:link , a:visited , a:hover{
     color: #745086;
 }
 
-a:visited{
-    color: #745086;
-}
-
-a:hover{
-    color: #745086;
-}
-
-header a:link {
-    margin-right: 0;
-    font-size: 1.5em;
-    color: #F6E4FF;
-    text-decoration: none;
-}
-
-header a:visited {
-    margin-right: 0;
-    font-size: 1.5em;
-    color: #F6E4FF;
-    text-decoration: none;
-}
-
-footer a:link {
-    margin-right: 0;
-    font-size: 1.5em;
-    color: #F6E4FF;
-    text-decoration: none;
-}
-
-footer a:visited {
+header a:link ,header a:visited, footer a:link, footer a:visited {
     margin-right: 0;
     font-size: 1.5em;
     color: #F6E4FF;
@@ -361,11 +317,7 @@ footer a:visited {
     color: #745086;
 }
 
-.btn-accueilins h5{
-    margin: auto;
-}
-
-.btn-accueil h5{
+.btn-accueilins h5, .btn-accueil h5{
     margin: auto;
 }
 
@@ -396,18 +348,14 @@ footer a:visited {
 }
 
 
-#Login::placeholder, #motdepasse::placeholder ,#Prenom::placeholder, #Nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
+#Login::placeholder, #motdepasse::placeholder ,#prenom::placeholder, #nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
 #pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
     color: #957BB0;
     opacity: 50%;
     text-align: center;
 }
 
-.compteciv{
-    margin: auto;
-}
-
-.rib{
+.compteciv , .rib {
     margin: auto;
 }
 
@@ -449,10 +397,42 @@ footer a:visited {
 .rowcompte {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.rowcompte a{
+    margin: auto 2em auto 2em;
+}
+
+.rowcompt {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
 }
 
 .OU {
     font-weight: 900;
     font-size: 2em;
+}
+
+.cp {
+    display: flex;
+    flex-direction: column;
+}
+
+.cprow {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.condition {
+    width: auto;
+    padding-left: 35%;
+    padding-right: 35%;
 }

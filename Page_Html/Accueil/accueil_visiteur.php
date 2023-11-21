@@ -9,9 +9,10 @@
 
 <body>
     <header>
+        <div style="display:flex; flex-direction:row;">
             <img class="logot" src="../svg/logo.svg">
             <h2>Loc'Breizh</h2>
-
+        </div>
 
         <div class="brecherche">
             <img src="../svg/filtre.svg">

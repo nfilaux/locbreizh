@@ -45,7 +45,9 @@
 
         <article> 
             <div class="rowcompte">
-                <span>Nouveau ici ? <a href="CreerCompte.html">Créer un compte</a> <a href="mdpOublierFront.php">Mot de passe oublié ?</a></span>
+                <p>Nouveau ici ?</p>
+                <a href="CreerCompte.html">Créer un compte</a> 
+                <a href="mdpOublierFront.php">Mot de passe oublié ?</a>
             </div>
         </article>
         </section>
