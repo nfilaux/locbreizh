@@ -29,60 +29,6 @@
     $charges2 = $_SESSION['post_logement']['charges2P'];
     $charges3 = $_SESSION['post_logement']['charges3P'];
 
-    $id_photo = 0;
-
-    function id_photo($id_photo)
-    {
-        return time() . $id_photo;
-    }
-
-    $nouveau_nom_image1 = id_photo($id_photo);
-    $id_photo++;
-    move_uploaded_file($nom_image_principale, "../Ressources/Images/" . $nouveau_nom_image1);
-
-
-    $nouveau_nom_image2 = id_photo($id_photo);
-    $id_photo++;
-    if (isset($_SESSION['post_logement']['image2P'])) {
-        move_uploaded_file($nom_image2, "../Ressources/Images/" . $nouveau_nom_image2);
-    } else {
-        $nom_image2 = null;
-    }
-
-    $nouveau_nom_image3 = id_photo($id_photo);
-    $id_photo++;
-    if ($_SESSION['post_logement']['image3P'] != "") {
-        move_uploaded_file($nom_image3, "../Ressources/Images/" . $nouveau_nom_image3);
-    } else {
-        $nom_image3 = null;
-    }
-
-    $nouveau_nom_image4 = id_photo($id_photo);
-    $id_photo++;
-    if (isset($_SESSION['post_logement']['image4P'])) {
-        move_uploaded_file($nom_image4, "../Ressources/Images/" . $nouveau_nom_image4);
-    } else {
-        $nom_image4 = null;
-    }
-
-    $nouveau_nom_image5 = id_photo($id_photo);
-    $id_photo++;
-    if (isset($_SESSION['post_logement']['image5P'])) {
-        move_uploaded_file($nom_image5, "../Ressources/Images/" . $nouveau_nom_image5);
-    } else {
-        $nom_image5 = null;
-    }
-
-    $nouveau_nom_image6 = id_photo($id_photo);
-    $id_photo++;
-    if (isset($_SESSION['post_logement']['image6P'])) {
-        move_uploaded_file($nom_image6, "../Ressources/Images/" . $nouveau_nom_image6);
-    } else {
-        $nom_image6 = null;
-    }
-
-
-
     if (isset($_SESSION['post_logement']['balconP'])) {
         $balcon = $_SESSION['post_logement']['balconP'];
     } else {
@@ -216,7 +162,7 @@
             VALUES (:image1)"
     );
 
-    $stmt->bindParam(':image1', $nouveau_nom_image1);
+    $stmt->bindParam(':image1', $nom_image_principale);
     $stmt->execute();
 
 
@@ -255,7 +201,7 @@
     $stmt->bindParam(':wifi', $wifi);
     $stmt->bindParam(':lave_vaisselle', $lave_vaiselle);
     $stmt->bindParam(':lave_linge', $lave_linge);
-    $stmt->bindParam(':image1', $nouveau_nom_image1);
+    $stmt->bindParam(':image1', $nom_image_principale);
     $stmt->bindParam(':en_ligne', $en_ligne);
     $stmt->bindParam(':id_proprietaire', $id_proprietaire);
     $stmt->bindParam(':id_adresse', $id_adresse);
@@ -280,7 +226,7 @@
             'INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image2)'
         );
-        $stmt->bindParam(':image2', $nouveau_nom_image2);
+        $stmt->bindParam(':image2', $nom_image2);
         $stmt->execute();
     }
 
@@ -289,7 +235,7 @@
             "INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image3)"
         );
-        $stmt->bindParam(':image3', $nouveau_nom_image3);
+        $stmt->bindParam(':image3', $nom_image3);
         $stmt->execute();
     }
 
@@ -298,7 +244,7 @@
             "INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image4)"
         );
-        $stmt->bindParam(':image4', $nouveau_nom_image4);
+        $stmt->bindParam(':image4', $nom_image4);
         $stmt->execute();
     }
 
@@ -307,7 +253,7 @@
             "INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image5)"
         );
-        $stmt->bindParam(':image5', $nouveau_nom_image5);
+        $stmt->bindParam(':image5', $nom_image5);
         $stmt->execute();
     }
 
@@ -316,7 +262,7 @@
             "INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image6)"
         );
-        $stmt->bindParam(':image6', $nouveau_nom_image6);
+        $stmt->bindParam(':image6', $nom_image6);
         $stmt->execute();
     }
 
@@ -325,7 +271,7 @@
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image2)'
         );
-        $stmt->bindParam(':image2', $nouveau_nom_image2);
+        $stmt->bindParam(':image2', $nom_image2);
         $stmt->bindParam(':logement', $id_logement);
         $stmt->execute();
     }
@@ -335,7 +281,7 @@
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image3)'
         );
-        $stmt->bindParam(':image3', $nouveau_nom_image3);
+        $stmt->bindParam(':image3', $nom_image3);
         $stmt->bindParam(':logement', $id_logement);
         $stmt->execute();
     }
@@ -346,7 +292,7 @@
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image4)'
         );
-        $stmt->bindParam(':image4', $nouveau_nom_image4);
+        $stmt->bindParam(':image4', $nom_image4);
         $stmt->bindParam(':logement', $id_logement);
         $stmt->execute();
     }
@@ -356,7 +302,7 @@
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image5)'
         );
-        $stmt->bindParam(':image5', $nouveau_nom_image5);
+        $stmt->bindParam(':image5', $nom_image5);
         $stmt->bindParam(':logement', $id_logement);
         $stmt->execute();
     }
@@ -368,10 +314,11 @@
                 VALUES (:logement, :image6)'
             
         );
-        $stmt->bindParam(':image6', $nouveau_nom_image6);
+        $stmt->bindParam(':image6', $nom_image6);
         $stmt->bindParam(':logement', $id_logement);
         $stmt->execute();
     }
+    unset($_SESSION['post_logement']);
 
     header("Location: ../Accueil/Tableau_de_bord.php");
 ?>

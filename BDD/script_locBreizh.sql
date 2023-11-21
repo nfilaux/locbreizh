@@ -194,8 +194,8 @@ CREATE TABLE
 CREATE TABLE
     _logement (
         id_logement SERIAL NOT NULL,
-        libelle_logement VARCHAR(30) NOT NULL,
-        tarif_base_HT NUMERIC(5, 2) NOT NULL,
+        libelle_logement VARCHAR(50) NOT NULL,
+        tarif_base_HT NUMERIC(6, 2) NOT NULL,
         accroche_logement VARCHAR(255) NOT NULL,
         descriptif_logement VARCHAR(255) NOT NULL,
         nature_logement VARCHAR(15) NOT NULL,
