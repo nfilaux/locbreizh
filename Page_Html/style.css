@@ -112,11 +112,6 @@ main{
     padding-bottom: 5vw;
 }
 
-main form div{
-
-    width: 80%;
-    margin: auto;
-}
 main label, .Tablobord h2{
     color: #745086;
 }
@@ -211,7 +206,7 @@ main h1{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: auto;
+    margin: auto auto 1em auto;
 }
 
 .Maincompte section article div span{
@@ -364,12 +359,11 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .custom-input {
-    width: 100%;
     color: #957BB0; 
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
-    margin-bottom: 1em;
+    text-align: center;
 }
 
 .popup {
@@ -418,12 +412,23 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .cp {
     display: flex;
     flex-direction: column;
+    margin: 1em auto auto auto;
+    font-size: 1.5em;
 }
 
 .cprow {
     display: flex;
     flex-direction: row;
     width: 100%;
+}
+
+.messerr {
+    display: flex;
+    flex-direction: column;
+}
+
+.err {
+    color: red;
 }
 
 .center {
@@ -435,4 +440,61 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: auto;
     padding-left: 35%;
     padding-right: 35%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    font-size: 1em;
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+.testinput {
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px;
+    font-size: 3em;
+    text-align: center;
+    width: 100%;
+    margin: 1em auto auto auto;
+}
+
+.nbrueinput {
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px;
+    font-size: 3em;
+    text-align: center;
+    width: 100%;
+    margin: 1em auto auto auto;
+}
+
+.nomrueinput {
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px;
+    font-size: 3em;
+    text-align: center;
+    width: 96%;
+    margin: 1em 0 auto auto;
+}
+
+.btn-input {
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 20px;
+    width: 20em;
+    font-size: 2em;
+    height: 2em;
+    margin: auto 20% auto 20%;
+}
+
+.spbt{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.margl{
+    margin-left: 1em;
 }

@@ -35,7 +35,7 @@
         </div>
 
         <img src="../svg/booklet-fill 1.svg">
-        <a href="../Accueil/Tableau_de_bord.php"><h4>Accèder à mes logements</h4></a>
+        <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
 
         <div class="imghead">
             <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
