@@ -628,7 +628,7 @@ fieldset label{
     text-align: center;
 }
 
-.MainTablo button{
+.MainTablo .logpc button{
     width: 25%;
     height: 2em;
     margin: 2em auto 0 auto;
