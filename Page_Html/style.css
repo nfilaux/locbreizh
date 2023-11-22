@@ -630,6 +630,7 @@ fieldset label{
 
 .MainTablo button{
     width: 25%;
+    height: 2em;
     margin: 2em auto 0 auto;
 }
 
