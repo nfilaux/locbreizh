@@ -9,7 +9,8 @@
         die();
     }
 
-    $stmt = $dbh->prepare("SELECT id_demande from locbreizh._message_demande m where m.id_message_demande = {$_GET['message']};");
+    $stmt = $dbh->prepare("SELECT id_demande from locbreizh._message_demande m where m.id_message_demande = :message;");
+    $stmt->bindParam(':message', $_GET['message']);
     $stmt->execute();
     $id_demande = $stmt->fetch();
 

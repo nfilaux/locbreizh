@@ -9,7 +9,8 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :idCompte;");
+$stmt->bindParam(':idCompte', $_SESSION['id']);
 $stmt->execute();
 $photo = $stmt->fetch();
 ?>
@@ -34,12 +35,14 @@ $photo = $stmt->fetch();
         die();
     }
     // recupere photo de profil pour le header
-    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
+    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = :idCompte;");
+    $stmt->bindParam(':idCompte', $_SESSION['id']);
     $stmt->execute();
     $photo_profil = $stmt->fetch();
 
     // recupere le nombre maximum de personnes pour le logement
-    $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers from locbreizh._logement where id_logement = {$_GET['logement']};");
+    $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers from locbreizh._logement where id_logement = logement;");
+    $stmt->bindParam(':logement', $_GET['logement']);
     $stmt->execute();
     $nb_max = $stmt->fetch();
 ?>

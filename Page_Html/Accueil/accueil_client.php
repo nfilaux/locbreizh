@@ -1,22 +1,18 @@
-<?php 
-    // début de la session pour récupérer l'id du compte connecté
-    session_start();
-
-    include('../parametre_connexion.php');
-
-    try {
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        print "Erreur !:" . $e->getMessage() . "<br/>";
-        die();
-    }
-
-    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
-    $stmt->execute();
-    $photo = $stmt->fetch();
-
+<?php
+session_start();
+include('../parametre_connexion.php');
+try {
+$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    print "Erreur !:" . $e->getMessage() . "<br/>";
+    die();
+}
+$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id_compte;");
+$stmt->bindParam(':id_compte', $_SESSION['id']);
+$stmt->execute();
+$photo = $stmt->fetch();
 ?>
 <!doctype html>
 <html lang="fr">
