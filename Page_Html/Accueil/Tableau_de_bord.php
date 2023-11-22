@@ -100,8 +100,10 @@
                 <h2>Notifications</h2>
 
                 <div class="box">
-                    <?php foreach ($notifications as $notification) {?>
+                    <!--<?php foreach ($notifications as $notification) {?>
+                        
                     <?php } ?>
+                    !-->
                 </div>
 
 
@@ -166,7 +168,7 @@
     function openPopup() {
         var popup = document.getElementById('popup');
         popup.style.display = 'block';
-    }
+    }   
 
     // Fermer la popup
     function closePopup() {

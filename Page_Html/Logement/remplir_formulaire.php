@@ -125,7 +125,6 @@ include('../parametre_connexion.php');
                         }
                     ?>
                     required>
-                    <?php print_r("{$_SESSION['post_logement']['descriptionP']}");?>
                     <label for='description'>Description : </label>
                     <textarea id='description' name='descriptionP' placeholder='Description' maxlength="255"><?php
                      if(isset($_SESSION['post_logement']['descriptionP'])){
