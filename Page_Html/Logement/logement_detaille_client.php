@@ -21,37 +21,35 @@ $photo = $stmt->fetch();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page détaillé d'un logement</title>
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 </head>
 
 
 
 
 <body>
-<header class="row col-12">
-	<a href="../Accueil/accueil_client.php">
-    <div class="row col-3">
+<header>
+	<a>
+    <div>
         <img src="../svg//logo.svg">
-        <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
+        <h2>Loc'Breizh</h2>
     </div></a>
 
-    <div class="row col-3">
-        <img class="col-2" src="../svg//filtre.svg">
-        <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
-        <img class="col-2" src="../svg//loupe.svg">
+    <div>
+        <img rc="../svg//filtre.svg">
+        <input id="searchbar" type="text" name="search">
+        <img src="../svg//loupe.svg">
     </div>
-        <div class="row col-3 offset-md-1">
+        <div>
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;">
-                <h4 style="color:#000;">Accèder à mes reservations</h4>
+            <a href="../reservation/liste_reservations.php">
+                <h4>Accèder à mes reservations</h4>
             </a>
         </div>
         
 
-    <div class="col-2 row">
-        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()" class="offset-md-2 row"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
+    <div>
+        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
     </div>
     <div id="popup" class="popup">
         <a href="">Accéder au profil</a>
@@ -62,7 +60,7 @@ $photo = $stmt->fetch();
 </header>
 
     <main>
-        <div class='infos'>
+        <div>
         <?php
 
 
@@ -104,14 +102,14 @@ $photo = $stmt->fetch();
             ?>
             <a href='../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>'><button>Demander un devis</button></a>
         </div>
-        <div class='voir_plus'>
+        <div>
             <hr>
             <h4>Voir plus</h4>
             <img src='../svg/arrow-down-s-line (1) 1.svg'>
             <hr>
         </div>
 
-        <div class="service_equipement">
+        <div>
             <h3>Services et équipements du logement</h3>
             <?php
 
@@ -216,7 +214,7 @@ $photo = $stmt->fetch();
             echo '<p>' . '. ' . $boucle . ' commentaires' . '</p>';*/
             ?>
         </div>
-        <div class='avis_card'>
+        <div>
             <?php
 
 
@@ -247,7 +245,7 @@ $photo = $stmt->fetch();
             <a href=''>Répondre au commentaire</a>
             <a href=''>Signaler</a>
 
-            <div class='voir_plus'>
+            <div >
                 <hr>
                 <h4>Voir plus</h4>
                 <img src='../svg/arrow-down-s-line (1) 1.svg'>
@@ -256,7 +254,7 @@ $photo = $stmt->fetch();
             <hr>
         </div>
 
-        <div class='localisation'>
+        <div>
             <h3>Localisation</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83998.77845041982!2d2.2644625084947463!3d48.85893831264307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e1f06e2b70f%3A0x40b82c3688c9460!2sParis!5e0!3m2!1sfr!2sfr!4v1697885937861!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
@@ -279,30 +277,30 @@ $photo = $stmt->fetch();
             ?>
             <hr>
         </div>
-            <div class='condition'>
+            <div>
                 <h3>Conditions du logement</h3>
-                <div class='annulation_card'>
+                <div>
                     <h4>Conditions d'annulation</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
                     <a href=''>Voir plus</a>
                 </div>
 
-                <div class='paiement_card'>
+                <div>
                     <h4>Conditions de paiement</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
                     <a href=''>Voir plus</a>
                 </div>
 
-                <div class='arrived_card'>
+                <div>
                     <h4>Informations d'arrivée</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
                     <a href=''>Voir plus</a>
                 </div>
 
-                <div class='coming_card'>
+                <div>
                     <h4>Informations de départ</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
@@ -314,7 +312,7 @@ $photo = $stmt->fetch();
                 <hr>
             </div>
 
-            <div class='profil'>
+            <div>
             <?php   
                         $stmt = $dbh->prepare(
                                 'SELECT prenom, nom, photo
@@ -334,19 +332,19 @@ $photo = $stmt->fetch();
 
     </main>
     
-    <footer class="container-fluid" >
-        <div class="column">   
-            <div class="text-center row">
-                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+    <footer>
+        <div>   
+            <div>
+                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
             <hr>  
-            <div class="text-center row">
-                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
-                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            <div>
+                <p>©2023 Loc’Breizh</p>
+                <p><a href="connexion.html">Conditions générales</a></p>
+                <p>Développé par <a href="connexion.html">7ème sens</a></p>
             </div>
         </div>
     </footer>

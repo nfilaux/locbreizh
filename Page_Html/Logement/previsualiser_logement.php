@@ -82,7 +82,6 @@ if (isset($_SESSION['post_logement']['image6P'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prévisualisez un logement</title>
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <header class="row col-12">
     <a href="../Accueil/Tableau_de_bord.php">
@@ -92,10 +91,10 @@ if (isset($_SESSION['post_logement']['image6P'])) {
         </div>
     </a>
 
-    <div class="row col-3">
-        <img class="col-2" src="../svg//filtre.svg">
-        <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
-        <img class="col-2" src="../svg//loupe.svg">
+    <div>
+        <img src="../svg//filtre.svg">
+        <input id="searchbar" type="text" name="search">
+        <img src="../svg//loupe.svg">
     </div>
     <div class="row col-3 offset-md-1">
         <img src="../svg//booklet-fill 1.svg">

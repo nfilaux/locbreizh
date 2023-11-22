@@ -20,34 +20,32 @@ $photo = $stmt->fetch();
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 </head>
 
 <body>
-<header class="row col-12">
+<header>
 	<a href="../Accueil/accueil_client.php">
-    <div class="row col-3">
+    <div>
         <img src="../svg//logo.svg">
-        <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
+        <h2>Loc'Breizh</h2>
     </div></a>
 
-    <div class="row col-3">
-        <img class="col-2" src="../svg//filtre.svg">
-        <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
-        <img class="col-2" src="../svg//loupe.svg">
+    <div>
+        <img src="../svg//filtre.svg">
+        <input id="searchbar" type="text" name="search">
+        <img src="../svg//loupe.svg">
     </div>
-        <div class="row col-3 offset-md-1">
+        <div>
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;">
-                <h4 style="color:#000;">Accèder à mes reservations</h4>
+            <a href="../reservation/liste_reservations.php">
+                <h4>Accèder à mes reservations</h4>
             </a>
         </div>
         
 
-    <div class="col-2 row">
-        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()" class="offset-md-2 row"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
+    <div>
+        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+        <a onclick="openPopup()><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
     </div>
     <div id="popup" class="popup">
         <a href="">Accéder au profil</a>
@@ -59,7 +57,7 @@ $photo = $stmt->fetch();
 
     <main>
 
-        <div class="offset-2 col-8">
+        <div>
             <?php
             include('../parametre_connexion.php');
                 try {
@@ -111,19 +109,19 @@ $photo = $stmt->fetch();
             <hr>
         </div>
     </main>
-    <footer class="container-fluid" >
-        <div class="column">   
-            <div class="text-center row">
-                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+    <footer>
+        <div>   
+            <div>
+                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
             <hr>  
-            <div class="text-center row">
-                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
-                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            <div>
+                <p>©2023 Loc’Breizh</p>
+                <p><a href="connexion.html">Conditions générales</a></p>
+                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
         </div>
     </footer>
