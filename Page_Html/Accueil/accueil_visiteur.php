@@ -9,8 +9,8 @@
 
 <body>
     <header>
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
+        <img class="logot" src="../svg/logo.svg">
+        <h2>Loc'Breizh</h2>
 
 
         <div class="brecherche">
@@ -18,9 +18,13 @@
             <input id="searchbar" type="text" name="search">
             <img src="../svg/loupe.svg">
         </div>
-        
-        <a href="../Compte/CreerCompte.html" class="btn-accueilins btn_visi"><h5>S'inscrire</h5></a>
-        <a href="../Compte/connexionFront.php" class="btn-accueil btn_visi"><h5>Se connecter</h5></a>
+
+        <a href="../Compte/CreerCompte.html" class="btn-accueilins btn_visi">
+            <h5>S'inscrire</h5>
+        </a>
+        <a href="../Compte/connexionFront.php" class="btn-accueil btn_visi">
+            <h5>Se connecter</h5>
+        </a>
     </header>
     <main>
         <?php
@@ -37,14 +41,14 @@
                 'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
                 from locbreizh._logement;'
             );
-            
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
         }
 
         // fonction qui permet d'afficher la date de début et de fin d'une réservation
-        function formatDate($start, $end) {
+        function formatDate($start, $end)
+        {
             $startDate = date('j', strtotime($start));
             $endDate = date('j', strtotime($end));
             $month = date('M', strtotime($end));
@@ -56,45 +60,53 @@
 
         ?> <div class="card"> <?php
 
-        // affichage des données de logement
-        foreach ($stmt->fetchAll() as $card) {
-            if ($card['en_ligne'] == true) {
-            ?><section> <?php
-                ?><a class="acclog" href="../Logement/logement_detaille_visiteur.php?logement={<?php echo $card['id_logement'] ?>}"> <?php
-                ?><article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
-                ?><article><h3> <?php echo $card['libelle_logement'] ?> </h3></article><?php
-                /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
-                ?><article><h4> <?php echo $card['tarif_base_ht'] ?> €</h4><?php
-                /*?><h4><?php formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle'])?></h4><?php*/
-                ?><h4><?php echo $card['nb_personnes_logement']?> personnes</h4></article></a><?php
-            ?></section><?php
+                                // affichage des données de logement
+                                foreach ($stmt->fetchAll() as $card) {
+                                    if ($card['en_ligne'] == true) {
+                                ?><section> <?php
+                        ?><a class="acclog" href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>"> <?php
+                                                                                                                                    ?><article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
+                                                                                                                                        ?><article>
+                                <h3> <?php echo $card['libelle_logement'] ?> </h3>
+                            </article><?php
+                                        /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
+                                        ?><article>
+                                <h4> <?php echo $card['tarif_base_ht'] ?> €</h4><?php
+                                                                                /*?><h4><?php formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle'])?></h4><?php*/
+                                                                                ?><h4><?php echo $card['nb_personnes_logement'] ?> personnes</h4>
+                            </article></a><?php
+                                            ?></section><?php
 
-            } else if ($card['en_ligne'] == false) {
-                print_r("Ce logement est temporairement indisponible !");
-            }
-        }
-        ?>
+                                    } else if ($card['en_ligne'] == false) {
+                                        print_r("Ce logement est temporairement indisponible !");
+                                    }
+                                }
+                        ?>
 
-    </div>
+        </div>
         <a href="" class='voir_plus'>
-            <hr> 
-            <h4>Voir plus</h4> 
+            <hr>
+            <h4>Voir plus</h4>
             <hr>
         </a>
     </main>
     <footer>
-            <div class="tfooter">
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-            </div>
-            <hr>  
-            <div class="bfooter">
-                <p>©2023 Loc’Breizh</p>
-                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-            </div>
+        <div class="tfooter">
+            <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+            <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+            <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">
+                <p>@LocBreizh</p>
+            </a>
+            <a class="margintb" href="connexion.html"><img src="../svg/facebook.svg">
+                <p>@LocBreizh</p>
+            </a>
+        </div>
+        <hr>
+        <div class="bfooter">
+            <p>©2023 Loc’Breizh</p>
+            <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+            <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+        </div>
     </footer>
 </body>
 
