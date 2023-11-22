@@ -44,6 +44,7 @@
 </body>
 </html>
 
+<!-- Partie stylisé des popup-->
 <style>
     .popup {
         display: none;
@@ -58,29 +59,31 @@
         z-index: 1000;
     }
 </style>
+
+<!-- Partie animé du profil d'une personne connecter -->
 <script>
-// Ouvrir la popup
-function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-}
+    // Ouvrir la popup
+    function openPopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'block';
+    }
 
-// Fermer la popup
-function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
-}
+    // Fermer la popup
+    function closePopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'none';
+    }
 
-// Ajouter des gestionnaires d'événements aux boutons
-var profilButton = document.getElementById('profilButton');
-profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
-});
+    // Ajouter des gestionnaires d'événements aux boutons
+    var profilButton = document.getElementById('profilButton');
+    profilButton.addEventListener('click', function() {
+        alert('Accéder au profil');
+        closePopup();
+    });
 
-var deconnexionButton = document.getElementById('deconnexionButton');
-deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
-});
+    var deconnexionButton = document.getElementById('deconnexionButton');
+    deconnexionButton.addEventListener('click', function() {
+        alert('Se déconnecter');
+        closePopup();
+    });
 </Script>

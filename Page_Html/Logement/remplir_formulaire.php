@@ -351,7 +351,7 @@ include('../parametre_connexion.php');
 
 </html>
 
-
+<!-- Partie stylisé des popup-->
 <style>
     .popup {
         display: none;
@@ -366,29 +366,31 @@ include('../parametre_connexion.php');
         z-index: 1000;
     }
 </style>
+
+<!-- Partie animé du profil d'une personne connecter -->
 <script>
 // Ouvrir la popup
 function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
+    var popup = document.getElementById('popup');
+    popup.style.display = 'block';
 }
 
 // Fermer la popup
 function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
+    var popup = document.getElementById('popup');
+    popup.style.display = 'none';
 }
 
 // Ajouter des gestionnaires d'événements aux boutons
 var profilButton = document.getElementById('profilButton');
 profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
+    alert('Accéder au profil');
+    closePopup();
 });
 
 var deconnexionButton = document.getElementById('deconnexionButton');
 deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
+    alert('Se déconnecter');
+    closePopup();
 });
 </Script>
