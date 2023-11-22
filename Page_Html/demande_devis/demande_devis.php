@@ -43,97 +43,106 @@ $photo = $stmt->fetch();
     $stmt->execute();
     $nb_max = $stmt->fetch();
 ?>
-<body>
-<header>
-	<a href="../Accueil/accueil_client.php">
-    <div>
-        <img src="../svg//logo.svg">
-        <h2>Loc'Breizh</h2>
-    </div></a>
-
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
-            <a href="../reservation/liste_reservations.php">
-                <h4>Accèder à mes reservations</h4>
-            </a>
+<body class="pagecompte">
+    <header>
+        <a href="../Accueil/accueil_client.php">
+            <img class="logot" src="../svg/logo.svg">
+            <h2>Loc'Breizh</h2>
+        </a>
+        <div class="brecherche">
+            <img src="../svg/filtre.svg">
+            <input id="searchbar" type="text" name="search">
+            <img src="../svg/loupe.svg">
         </div>
-        
 
-    <div>
-        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
-    </div>
-    <div id="popup" class="popup">
-        <a href="">Accéder au profil</a>
-        <br>
-        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
-        <a onclick="closePopup()">Fermer la fenêtre</a>
-    </div>
-</header>
+        <img src="../svg/booklet-fill 1.svg">
+        <a href="../reservation/liste_reservations.php"><h4>Accèder à mes réservations</h4></a>
 
-    <main>
-    <h1>Faire ma demande de devis</h1>
+        <div class="imghead">
+            <a href="../messagerie/messagerie.php" ><img src="../svg/message.svg"></a>
+            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+        </div>
+        <div id="popup" class="popup">
+            <a href="">Accéder au profil</a>
+            <br>
+            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+            <a onclick="closePopup()">Fermer la fenêtre</a>
+        </div>
+    </header>
+
+    <main class="MainTablo">
+    <div class="headtablo">
+            <img src="../svg/flecheRetour.svg">
+            <h1>Faire ma demande de devis</h1>
+    </div>
+ 
         <form name="envoie_demande_devis" method="post" action="envoyer_demande.php" enctype="multipart/form-data">
-            <div>
-                <label for="dateArrivee">Date d’arrivée :</label>
-                <input type="date" id="dateArrivee" name="dateArrivee" required/>
-
-                <label for="dateDepart">Date de depart :</label>
-                <input type="date" id="dateDepart" name="dateDepart" required/>
-
+            <div class="logrow">
+                <div class="log5vct">  
+                    <label for="dateArrivee">Date d’arrivée :</label>
+                    <input class="logvct" type="date" id="dateArrivee" name="dateArrivee" required/>
+                </div>
+                <div class="log5vct">  
+                    <label for="dateDepart">Date de depart :</label>
+                    <input class="logvct" type="date" id="dateDepart" name="dateDepart" required/>
+                </div>
+                
+                <div class="log5vct">  
+                    <label for="nb_pers">Nombre de persones :</label>
+                    <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
+                    <input class="logvct" type="number" id="nb_pers" name="nb_pers" min="1" max=<?php echo $nb_max['nb_pers']; ?> value=<?php if(isset($_GET['nb_pers']) && $_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>
+                </div>
+            
+            <div class="cardSupplements">
+            <h2>Suppléments</h2>
+                <div class="logcheckbox">
+                <!--pre-remplie les iinfos si ils sont dans get-->
+                <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_GET['animaux']) && $_GET['animaux'] === 'on'){echo 'checked';}; ?>/>
+                <label for="animaux">Animaux</label>
+                </div>
+                <div class="logcheckbox">
+                <!--pre-remplie les iinfos si ils sont dans get-->
+                <input type="checkbox" id="menage" name="menage" <?php if(isset($_GET['menage']) && $_GET['menage'] === 'on'){echo 'checked';}; ?>/>
+                <label for="menage">Menage</label>
+                </div>
+                <!--pre-remplie les iinfos si ils sont dans get-->
+                <div class="logpc">
+                <label for="nb_pers_supp">Vacanciers supplémentaires</label>
+                <input class="lognb" type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50"  value=<?php if(isset($_GET['nb_supp']) && $_GET['nb_supp'] > 0){echo $_GET['nb_supp'];} else{echo 0;} ?> required/>
+                </div>
+            </div>
+            <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
+            </div>
+            <div class="devis">
                 <?php
                 if(isset($_GET['erreur'])){
                     if($_GET['erreur'] == 2){
-                        echo '<p>La date ne peut pas être utlérieure à celle d\'aujourd\'hui !</p>';
+                        echo '<p class="err">La date ne peut pas être utlérieure à celle d\'aujourd\'hui !</p>';
                     }
                     if($_GET['erreur'] == 1){
-                        echo '<p>La date de départ ne doit pas être utlérieure à la date d\'arrivee !</p>';
+                        echo '<p class="err">La date de départ ne doit pas être utlérieure à la date d\'arrivee !</p>';
                     }
                 }
                     
                 ?>
-                <label for="nb_pers">Nombre de persones :</label>
-                <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
-                <input type="number" id="nb_pers" name="nb_pers" min="1" max=<?php echo $nb_max['nb_pers']; ?> value=<?php if(isset($_GET['nb_pers']) && $_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>
+                <input class="btn-accueil" type="submit" value="Soumettre ma demande" />
             </div>
-            <h2>Suppléments</h2>
-            <div>
-                <!--pre-remplie les iinfos si ils sont dans get-->
-                <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_GET['animaux']) && $_GET['animaux'] === 'on'){echo 'checked';}; ?>/>
-                <label for="animaux">Animaux :</label>
-
-                <!--pre-remplie les iinfos si ils sont dans get-->
-                <input type="checkbox" id="menage" name="menage" <?php if(isset($_GET['menage']) && $_GET['menage'] === 'on'){echo 'checked';}; ?>/>
-                <label for="menage">Menage</label>
-
-                <!--pre-remplie les iinfos si ils sont dans get-->
-                <label for="nb_pers_supp">Nombre de personnes supplementaires :</label>
-                <input type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50"  value=<?php if(isset($_GET['nb_supp']) && $_GET['nb_supp'] > 0){echo $_GET['nb_supp'];} else{echo 0;} ?> required/>
-            </div>
-            <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
-            <input type="submit" value="Soumettre ma demande" />
+            
         </form>
     </main>
     <footer>
-        <div>   
-            <div>
+            <div class="tfooter">
                 <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
                 <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
+                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
             </div>
             <hr>  
-            <div>
+            <div class="bfooter">
                 <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
+                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
                 <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
-        </div>
     </footer>
 </body>
 
