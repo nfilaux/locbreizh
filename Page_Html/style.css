@@ -133,40 +133,6 @@ main h1{
     text-align: center;
 }
 
-.card{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-}
-
-.card section{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    background-color: #745086;
-    border-radius: 15px;
-    padding-top: 0.5em;
-}
-
-.card section article{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-}
-
-.card section article h3,.card section article h4{
-    color: #fff;
-}
-
-.card section article img{
-    margin: 0;
-    border-radius: 15px;
-    width: 96%;
-}
-
 .Tablobord{
     display: flex;
     flex-direction: row;
@@ -257,10 +223,6 @@ footer div p {
     padding: 0%;
 }
 
-.linkreseau{
-    margin: auto;
-}
-
 
 /*----------------------------------------------------------------Link----------------------------------------------------------------*/
 
@@ -281,6 +243,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+}
+
+.linkreseau{
+    margin: auto;
 }
 
 /*----------------------------------------------------------------Bouton----------------------------------------------------------------*/
@@ -353,6 +319,18 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding: 0.5em;
 }
 
+.btn-input {
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 20px;
+    width: 20em;
+    font-size: 2em;
+    height: 2em;
+    margin: auto 20% auto 20%;
+}
+
+
 
 #Login::placeholder, #motdepasse::placeholder ,#prenom::placeholder, #nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
 #pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
@@ -361,13 +339,48 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     text-align: center;
 }
 
-.compteciv , .rib {
-    margin: auto;
+#charges_animaux, #charges_pers_sup, #charges_menage ,#taxe_sejour{
+    color: #957BB0;
+    text-align: center;
 }
 
-.tewt{
-    padding: auto;
+/*----------------------------------------------------------------Accueil----------------------------------------------------------------*/
+
+.card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
 }
+
+.card section{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background-color: #745086;
+    border-radius: 15px;
+    padding-top: 0.5em;
+}
+
+.card section article{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.card section article h3,.card section article h4{
+    color: #fff;
+}
+
+.card section article img{
+    margin: 0;
+    border-radius: 15px;
+    width: 96%;
+}
+
+/*----------------------------------------------------------------Compte----------------------------------------------------------------*/
 
 .custom-input {
     color: #957BB0; 
@@ -433,20 +446,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: 100%;
 }
 
-.messerr {
-    display: flex;
-    flex-direction: column;
-}
-
-.err {
-    color: red;
-}
-
-.center {
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .condition {
     width: auto;
     padding-left: 35%;
@@ -457,8 +456,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: row;
 }
-
-
 
 .testinput {
     color: #957BB0; 
@@ -490,16 +487,153 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     margin: 1em 0 auto auto;
 }
 
-.btn-input {
-    background-color: #957BB0; 
-    color: #F6E4FF;
-    border: 1px solid #957BB0; 
-    border-radius: 20px;
-    width: 20em;
-    font-size: 2em;
-    height: 2em;
-    margin: auto 20% auto 20%;
+
+/*----------------------------------------------------------------Message erreur----------------------------------------------------------------*/
+
+.messerr {
+    display: flex;
+    flex-direction: column;
 }
+
+.err {
+    color: red;
+}
+
+
+/*----------------------------------------------------------------Logement----------------------------------------------------------------*/
+
+.logcolumn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 48%;
+}
+
+.logpc{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.log2vct{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 48%;
+}
+
+.log3vct{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 25%;
+}
+
+
+.log4vct{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 23%;
+}
+
+.logrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.logrowb {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.cardprixcharge {
+    width: 100%;
+    font-size: 2em;
+    color: #745086;
+}
+
+.titreAL {
+    margin: auto;
+    color: #745086;
+    font-size: 2em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.logcheckbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0.2em auto 0.2em auto;
+    width: 8em;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 85%;
+    margin: auto;
+}
+
+.description textarea {
+    height: 10em;
+}
+
+fieldset {
+    width: 80%;
+    margin: 1em auto;
+}
+
+fieldset label{
+    text-align: center;
+}
+
+.logPA{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 100%;
+    height: 5em;
+}
+
+.lognom{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 100%;
+    height: 2em;
+    text-align: center;
+}
+
+.logvct{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 100%;
+    height: 2em;
+    text-align: center;
+}
+
+.logselect{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 100%;
+    height: 2em;
+    text-align: center;
+}
+
+.MainTablo button{
+    width: 25%;
+    margin: 2em auto 0 auto;
+}
+
+/*----------------------------------------------------------------Autre----------------------------------------------------------------*/
 
 .spbt{
     display: flex;
@@ -508,4 +642,17 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .margl{
     margin-left: 1em;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.compteciv , .rib {
+    margin: auto;
+}
+
+.tewt{
+    padding: auto;
 }

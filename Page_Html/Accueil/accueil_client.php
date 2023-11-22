@@ -88,7 +88,7 @@ $photo = $stmt->fetch();
         ?> <div class="card"> <?php
         foreach ($stmt->fetchAll() as $card) {
             ?><section> <?php
-                ?><a class="acclog" href="../Logement/logement_detaille_client.php?logement={<?php echo $card['id_logement'] ?>}"> <?php
+                ?><a class="acclog" href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>"> <?php
                 ?><article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
                 ?><article><h3> <?php echo $card['libelle_logement'] ?> </h3></article><?php
                 /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
