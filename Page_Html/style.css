@@ -1,15 +1,3 @@
-body {
-    height: auto;
-    padding-bottom: 0;
-    margin: 0;
-    background-origin: content-box;
-    width: 100%;
-}
-
-.pagecompte {
-    background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
-}
-
 /*----------------------------------------------------------------Polices---------------------------------------------------------------*/
 
 @font-face {
@@ -28,6 +16,17 @@ body {
          url(‘Ressources/Polices/quicksand/Quicksand-VariableFont_wght.woff2’) format(‘woff2’)
 }
 
+body {
+    height: auto;
+    padding-bottom: 0;
+    margin: 0;
+    background-origin: content-box;
+    width: 100%;
+}
+
+.pagecompte {
+    background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
+}
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
