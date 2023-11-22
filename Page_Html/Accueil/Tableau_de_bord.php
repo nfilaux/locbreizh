@@ -49,7 +49,7 @@
     </div>
     </header>
     <main class="MainTablo">
-        <div class="headconn"> 
+        <div class="headtablo"> 
             <h1>Mon tableau de bord</h1>
         </div>
         <section class="Tablobord">

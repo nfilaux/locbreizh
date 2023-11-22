@@ -89,13 +89,24 @@ header a:last-child {
     margin-top: 5vw;
 }
 
-.headconn img{
+.headtablo{
+    position: relative;
+    background-color: #745086;
+    color: #fff;
+    margin-bottom: 2em;
+    display: flex;
+    justify-content: center;
+    margin-top: 0vw;
+}
+
+
+.headconn img , .headtablo img{
     position: absolute;
     left: 5em;
     top: 1em;
 }
 
-.headconn h1 {
+.headconn h1 , .headtablo h1 {
     color: #fff;
     font-size: 4em;
     margin: 3px;
