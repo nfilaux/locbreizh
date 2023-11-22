@@ -213,7 +213,7 @@ CREATE TABLE
         parking_public BOOLEAN NOT NULL,
         parking_privee BOOLEAN NOT NULL,
         sauna BOOLEAN NOT NULL,
-        hammam BOOLEAN NOT NULL,
+        hammam BOOLEAN NOT NULL, 
         piscine BOOLEAN NOT NULL,
         climatisation BOOLEAN NOT NULL,
         jacuzzi BOOLEAN NOT NULL,

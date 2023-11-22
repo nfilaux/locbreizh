@@ -18,9 +18,16 @@
         join locbreizh._adresse on _adresse.id_adresse = _compte.adresse
         where id_compte = {$_SESSION['id']};"
     );
-// p sdmfjhH54##!54JJ
+// nfi mlkjJMLJ465##!!
     $stmt->execute();
     $infos = $stmt->fetch();
+
+    function erreur($nomErreur){
+        if(isset($_SESSION["erreurs"][$nomErreur])){
+            ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+            unset($_SESSION["erreurs"][$nomErreur]);
+        }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,23 +47,28 @@
         <form action="modifier_client.php" method="post" enctype="multipart/form-data">
             <div class="rowcompte">
                 <p>Prénom</p>
-                <input type="text" id="prenom" name="prenom" value=<?php echo $infos['prenom'];?> required>
+                <input type="text" id="prenom" name="prenom" maxlength="20" value="<?php echo $infos['prenom'];?>" required>
+                <?php erreur("prenom");?>
             </div>
             <div class="rowcompte">
                 <p>Nom</p>
-                <input type="text" id="nom" name="nom" value=<?php echo $infos['nom'];?> required>       
+                <input type="text" id="nom" name="nom" maxlength="20" value="<?php echo $infos['nom'];?>" required>
+                <?php erreur("nom");?>
             </div>
             <div class="rowcompte">
                 <p>Pseudo</p>
-                <input type="text"  id="pseudo" name="pseudo" value=<?php echo $infos['pseudo'];?> required>
+                <input type="text"  id="pseudo" name="pseudo" maxlength="20" value="<?php echo $infos['pseudo'];?>" required>
+                <?php erreur("pseudo");?>
             </div>
             <div class="rowcompte">
                 <p>E-mail</p>
-                <input type="email" id="mail" name="mail" value=<?php echo $infos['mail'];?> required>
+                <input type="email" id="mail" maxlength="50" name="mail" value="<?php echo $infos['mail'];?>" required>
+                <?php erreur("email");?>
             </div>
             <div class="rowcompte">
                 <p>Téléphone</p>
-                <input type="tel" id="telephone" name="telephone" value=<?php echo substr($infos['telephone'], 0,2) . ' ' . substr($infos['telephone'], 2,2) . ' ' . substr($infos['telephone'], 4,2) . ' ' . substr($infos['telephone'], 6,2) . ' ' . substr($infos['telephone'], 8,2);?> required>
+                <input type="tel" id="telephone" name="telephone" value="<?php echo substr($infos['telephone'], 0,2) . ' ' . substr($infos['telephone'], 2,2) . ' ' . substr($infos['telephone'], 4,2) . ' ' . substr($infos['telephone'], 6,2) . ' ' . substr($infos['telephone'], 8,2);?>" required>
+                <?php erreur("telephone");?>
             </div>
             <div class="rowcompte">
                 <p>Mot de passe</p>
@@ -66,21 +78,27 @@
                 <p>Date de naissance</p>
                 <input type="date" id="date" name="date" value=<?php 
                     //on cree un objet date pour changer sa forme
-                    $date = new DateTime($infos['dateNaissance']);
+                    $date = new DateTime($infos['datenaissance']);
                     // le format jour mois
                     $date_formatee = $date->format('Y-m-d');
+                
                     echo $date_formatee;
                 ?> required>
+                <?php erreur("date");?>
             </div>
             <div class="rowcompte">
                 <p>Adresse</p>
                 <div>
-                <p>N° :</p><input type="text" id="no_rue" name="no_rue" value=<?php echo $infos['numero_rue'];?> required>
-                <p>Rue :</p><input id="nom_rue" name="nom_rue" value=<?Php echo $infos['nom_rue'];?> required>
+                <p>N° :</p><input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
+                <?php erreur("numRue");?>
+                <p>Rue :</p><input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
+                <?php erreur("nomRue");?>
                 </div>
                 <div>
-                <p>Ville :</p><input type="text" id="ville" name="ville" value=<?php echo $infos['ville'];?> required>
-                <p>Pays :</p><input type="text" id="pays" name="pays" value=<?php echo $infos['pays'];?> required>
+                <p>Code postal :</p><input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
+                <?php erreur("codePostal");?>
+                <p>Ville :</p><input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
+                <?php erreur("ville");?>
                 </div>
 
             </div>
