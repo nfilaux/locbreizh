@@ -69,7 +69,7 @@ $photo = $stmt->fetch();
                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
                 $stmt = $dbh->prepare(
-                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, photo_principale, accroche_logement, descriptif_logement
+                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, photo_principale, accroche_logement, descriptif_logement, id_logement
                     from locbreizh._logement 
                     WHERE id_logement = {$_GET['logement']};"
                 );

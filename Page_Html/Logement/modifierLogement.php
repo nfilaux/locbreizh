@@ -84,7 +84,7 @@ $photo = $stmt->fetch();
             <form method='POST' action='modifier.php?id_logement=<?php echo $id_logement ?>' enctype="multipart/form-data">
                 <fieldset>
                     <label for='nom'>Libellé logement</label>
-                    <input id='nom' type='text' name='nomP' value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
+                    <input id='nom' type='text' name='nomP' maxlength="50" value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
                     <?php
                     if (isset($erreur['libelle'])){
                         echo '<p id="erreur">' . $erreur['libelle'] .  '</p>';
@@ -92,7 +92,7 @@ $photo = $stmt->fetch();
                     ?>
                     <br>
                     <label for='ville'>Ville</label>
-                    <input id='ville' type='text' name='villeP' value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
+                    <input id='ville' type='text' name='villeP' maxlength="50"  value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
                     <?php
                     if (isset($erreur['ville'])){
                         echo '<p id="erreur">' . $erreur['ville'] .  '</p>';
@@ -100,7 +100,7 @@ $photo = $stmt->fetch();
                     ?>
                     <br>
                     <label for='code_postal'>Code postal</label>
-                    <input id='code_postal' type='text' name='code_postalP' placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
+                    <input id='code_postal' type='text' name='code_postalP' maxlength="5" placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
                     <?php
                     if (isset($erreur['code_postal'])){
                         echo '<p id="erreur">' . $erreur['code_postal'] .  '</p>';
@@ -116,10 +116,10 @@ $photo = $stmt->fetch();
                     ?>
                     <br>
                     <label for='phrase_daccroche' >Phrase d'accroche</label>
-                    <input disabled id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" value="<?php echo $res["accroche_logement"]; ?>"required>
+                    <input disabled id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255" value="<?php echo $res["accroche_logement"]; ?>"required>
                     <br>
                     <label for='description'>Description</label>
-                    <textarea id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
+                    <textarea id='description' name='descriptionP' placeholder='Description' maxlength="255" required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
                     <?php
                     if (isset($erreur['descriptif_logement'])){
                         echo '<p id="erreur">' . $erreur['descriptif_logement'] .  '</p>';

@@ -6,9 +6,12 @@
     <title>Page de connexion</title>
     <link rel="stylesheet" href="../style.css">
 </head>
-<body>
+<body class="pagecompte">
         <?php
+        // On démarre la session
             session_start();
+
+            // On vérifie si les variables de session et les cookies existent
             function erreur($nomErreur)
             {
                 if(isset($_SESSION["erreurs"][$nomErreur])){
@@ -17,57 +20,60 @@
                 }
             }
         ?>
-    <header>
-        <div> 
+    <header class="headconn">
             <a href="../Accueil/accueil_visiteur.php"><img src="../svg/flecheRetour.svg"></a>
 
             <h1>Bienvenue sur Loc’Breizh !</h1>
-        </div>
+
     </header>
-    <main>
+    <main class="Maincompte">
+        <section>
         <form action="connexionBack.php" method="post">
-            <div>
-                <input type="text" id="pseudo" name="pseudo" placeholder="Identifiant" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>" />
+            <article>
+                <input type="text" id="pseudo" name="pseudo" placeholder="Identifiant" class="custom-input" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>" />
                 <?php
                     erreur("pseudo");
                 ?>
-            </div>
-            <div>
-                <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe"/>
+            </article>
+            <br>
+            <article>
+                <input type="password" id="motdepasse" name="motdepasse" class="custom-input" placeholder="Mot de passe"/>
                 <?php
                     erreur("motdepasse");
                 ?>
-            </div>
-            <button type="submit">Se connecter</button>
+            </article>
+            <br>
+            <button class="btn-compte" type="submit">Se connecter</button>
         </form>
+
         <article> 
-            <span>Nouveau ici ? <a href="CreerCompte.html">Créer un compte</a> <a href="mdpOublierFront.php">Mot de passe oublié ?</a></span>
+            <div class="rowcompte">
+                <p>Nouveau ici ?</p>
+                <a href="CreerCompte.html">Créer un compte</a> 
+                <a href="mdpOublierFront.php">Mot de passe oublié ?</a>
+            </div>
         </article>
-       
+        </section>
     </main>
-
-
     <footer>
-        <div>   
-            <div>
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
-            </div>
-            <hr>  
-            <div>
-                <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html">7ème sens</a></p>
-            </div>
+        <div class="tfooter">
+            <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+            <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+            <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
+            <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
+        </div>
+        <hr>  
+        <div class="bfooter">
+            <p>©2023 Loc’Breizh</p>
+            <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+            <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
         </div>
     </footer>
 </body>
 
 </html>
 
-
+<!-- Partie stylisé des popup-->
 <style>
     .popup {
         display: none;
@@ -82,29 +88,31 @@
         z-index: 1000;
     }
 </style>
+
+<!-- Partie animé du profil d'une personne connecter -->
 <script>
-// Ouvrir la popup
-function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-}
+    // Ouvrir la popup
+    function openPopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'block';
+    }
 
-// Fermer la popup
-function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
-}
+    // Fermer la popup
+    function closePopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'none';
+    }
 
-// Ajouter des gestionnaires d'événements aux boutons
-var profilButton = document.getElementById('profilButton');
-profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
-});
+    // Ajouter des gestionnaires d'événements aux boutons
+    var profilButton = document.getElementById('profilButton');
+    profilButton.addEventListener('click', function() {
+        alert('Accéder au profil');
+        closePopup();
+    });
 
-var deconnexionButton = document.getElementById('deconnexionButton');
-deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
-});
+    var deconnexionButton = document.getElementById('deconnexionButton');
+    deconnexionButton.addEventListener('click', function() {
+        alert('Se déconnecter');
+        closePopup();
+    });
 </Script>
