@@ -40,34 +40,32 @@ $photo = $stmt->fetch();
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Modifier logement</title>
-        <link rel="stylesheet" href="../style.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
     
     <body>
-    <header class="row col-12">
+    <header>
 <a href="../Accueil/Tableau_de_bord.php">
-    <div class="row col-3">
+    <div>
         <img src="../svg//logo.svg">
-        <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
+        <h2>Loc'Breizh</h2>
     </div></a>
 
-    <div class="row col-3">
-        <img class="col-2" src="../svg//filtre.svg">
-        <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
-        <img class="col-2" src="../svg//loupe.svg">
+    <div>
+        <img src="../svg//filtre.svg">
+        <input id="searchbar" type="text" name="search">
+        <img src="../svg//loupe.svg">
     </div>
-        <div class="row col-3 offset-md-1">
+        <div>
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../Accueil/Tableau_de_bord.php" style="margin: auto;margin-left: 10px;">
-                <h4 style="color:#000;">Accèder à mon tableau de bord</h4>
+            <a href="../Accueil/Tableau_de_bord.php">
+                <h4>Accèder à mon tableau de bord</h4>
             </a>
         </div>
         
 
-    <div class="col-2 row">
-        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()" class="offset-md-2 row"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
+    <div>
+        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
     </div>
     <div id="popup" class="popup">
         <a href="">Accéder au profil</a>
@@ -86,7 +84,7 @@ $photo = $stmt->fetch();
             <form method='POST' action='modifier.php?id_logement=<?php echo $id_logement ?>' enctype="multipart/form-data">
                 <fieldset>
                     <label for='nom'>Libellé logement</label>
-                    <input id='nom' type='text' name='nomP' value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
+                    <input id='nom' type='text' name='nomP' maxlength="50" value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
                     <?php
                     if (isset($erreur['libelle'])){
                         echo '<p id="erreur">' . $erreur['libelle'] .  '</p>';
@@ -94,7 +92,7 @@ $photo = $stmt->fetch();
                     ?>
                     <br>
                     <label for='ville'>Ville</label>
-                    <input id='ville' type='text' name='villeP' value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
+                    <input id='ville' type='text' name='villeP' maxlength="50"  value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
                     <?php
                     if (isset($erreur['ville'])){
                         echo '<p id="erreur">' . $erreur['ville'] .  '</p>';
@@ -102,7 +100,7 @@ $photo = $stmt->fetch();
                     ?>
                     <br>
                     <label for='code_postal'>Code postal</label>
-                    <input id='code_postal' type='text' name='code_postalP' placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
+                    <input id='code_postal' type='text' name='code_postalP' maxlength="5" placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
                     <?php
                     if (isset($erreur['code_postal'])){
                         echo '<p id="erreur">' . $erreur['code_postal'] .  '</p>';
@@ -118,10 +116,10 @@ $photo = $stmt->fetch();
                     ?>
                     <br>
                     <label for='phrase_daccroche' >Phrase d'accroche</label>
-                    <input disabled id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" value="<?php echo $res["accroche_logement"]; ?>"required>
+                    <input disabled id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255" value="<?php echo $res["accroche_logement"]; ?>"required>
                     <br>
                     <label for='description'>Description</label>
-                    <textarea id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
+                    <textarea id='description' name='descriptionP' placeholder='Description' maxlength="255" required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
                     <?php
                     if (isset($erreur['descriptif_logement'])){
                         echo '<p id="erreur">' . $erreur['descriptif_logement'] .  '</p>';
@@ -221,19 +219,19 @@ $photo = $stmt->fetch();
             
         </main>
     
-        <footer class="container-fluid" >
-        <div class="column">   
-            <div class="text-center row">
-                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+        <footer>
+        <div>   
+            <div>
+                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
             <hr>  
-            <div class="text-center row">
-                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
-                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            <div>
+                <p>©2023 Loc’Breizh</p>
+                <p><a href="connexion.html">Conditions générales</a></p>
+                <p>Développé par <a href="connexion.html">7ème sens</a></p>
             </div>
         </div>
     </footer>

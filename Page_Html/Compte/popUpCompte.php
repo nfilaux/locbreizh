@@ -4,30 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compte</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <title>Page Title</title>
-<header class="row col-12">
-    <div class="row col-3">
+<header>
+    <div>
         <img src="../svg//logo.svg">
-        <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
+        <h2>Loc'Breizh</h2>
     </div>
 
-    <div class="row col-3">
-        <img class="col-2" src="../svg//filtre.svg">
-        <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
-        <img class="col-2" src="../svg//loupe.svg">
+    <div>
+        <img src="../svg//filtre.svg">
+        <input id="searchbar" type="text" name="search">
+        <img src="../svg//loupe.svg">
     </div>
-        <div class="row col-3 offset-md-1">
+        <div>
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../Reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
+            <a href="../Reservation/liste_reservations.php"><h4 style="color:#000;">Accèder à mes réservations</h4></a>
         </div>
         
 
-    <div class="col-2 row">
-        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()" class="offset-md-2 row"><img src="../svg/compte.svg"></a> 
+    <div>
+        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+        <a onclick="openPopup()"><img src="../svg/compte.svg"></a> 
     </div>
     <div id="popup" class="popup">
         <a href="">Accéder au profil</a>
@@ -44,6 +43,7 @@
 </body>
 </html>
 
+<!-- Partie stylisé des popup-->
 <style>
     .popup {
         display: none;
@@ -58,29 +58,31 @@
         z-index: 1000;
     }
 </style>
+
+<!-- Partie animé du profil d'une personne connecter -->
 <script>
-// Ouvrir la popup
-function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-}
+    // Ouvrir la popup
+    function openPopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'block';
+    }
 
-// Fermer la popup
-function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
-}
+    // Fermer la popup
+    function closePopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'none';
+    }
 
-// Ajouter des gestionnaires d'événements aux boutons
-var profilButton = document.getElementById('profilButton');
-profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
-});
+    // Ajouter des gestionnaires d'événements aux boutons
+    var profilButton = document.getElementById('profilButton');
+    profilButton.addEventListener('click', function() {
+        alert('Accéder au profil');
+        closePopup();
+    });
 
-var deconnexionButton = document.getElementById('deconnexionButton');
-deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
-});
+    var deconnexionButton = document.getElementById('deconnexionButton');
+    deconnexionButton.addEventListener('click', function() {
+        alert('Se déconnecter');
+        closePopup();
+    });
 </Script>
