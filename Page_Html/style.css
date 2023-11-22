@@ -10,6 +10,25 @@ body {
     background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
 }
 
+/*----------------------------------------------------------------Polices---------------------------------------------------------------*/
+
+@font-face {
+	font-family: 'PatuaOne';
+	src: url(‘Ressources/Polices/patua_one/PatuaOne-Regular.woff2’) format(‘woff2’),
+		url(‘Ressources/Polices/patua_one/PatuaOne-Regular.ttf’) format(‘truetype’)
+}
+
+@font-face {
+	font-family: 'Quicksand';
+	src: url(‘Ressources/Polices/quicksand/Quicksand-Bold.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-Light.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-Medium.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-Regular.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-SemiBold.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-VariableFont_wght.woff2’) format(‘woff2’)
+}
+
+
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
 header{
