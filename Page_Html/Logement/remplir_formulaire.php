@@ -350,22 +350,6 @@ include('../parametre_connexion.php');
 
 </html>
 
-<!-- Partie stylisé des popup-->
-<style>
-    .popup {
-        display: none;
-        position: fixed;
-        top: 15%;
-        left: 91%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-</style>
-
 <!-- Partie animé du profil d'une personne connecter -->
 <script>
 // Ouvrir la popup

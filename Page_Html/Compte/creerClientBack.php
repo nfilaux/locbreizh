@@ -177,7 +177,7 @@
             $requeteAdresse->execute();
 
             $requeteIDAdresse = $dbh->prepare("SELECT id_adresse FROM locbreizh._adresse WHERE nom_rue = :nom_rue;");
-            $requeteAdresse->bindParam(':nom_rue', $nomRue);
+            $requeteIDAdresse->bindParam(':nom_rue', $nomRue);
             $requeteIDAdresse->execute();
             $idAdresse = $requeteIDAdresse->fetchColumn();
 
