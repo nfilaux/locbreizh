@@ -100,8 +100,9 @@
 
         $stmt = $dbh->prepare("INSERT INTO locbreizh._message_demande(id_message_demande, lien_demande, id_demande)
         VALUES (:id_mess, :lien_demande, :id_demande);");
+        $tempmessage = "demande_devis$id_demande.pdf";
         $stmt->bindParam(':id_mess', $id_mess);
-        $stmt->bindParam(':lien_demande', "demande_devis$id_demande.pdf");
+        $stmt->bindParam(':lien_demande', $tempmessage);
         $stmt->bindParam(':id_demande', $id_demande);
         $stmt->execute();
 
