@@ -56,9 +56,10 @@
                     if(isset($proprio['id_proprietaire'])){
                         header("Location: ../Accueil/Tableau_de_bord.php");
                     }
-                    else{
+                    else if (isset($_SESSION['lien_page'])){
                         header("Location: {$_SESSION['lien_page']}");
-                        //header("Location: ../Accueil/accueil_client.php");
+                    } else {
+                        header("Location: ../Accueil/accueil_client.php");
                     }
                     unset($_SESSION['lien_page']);
                 }
