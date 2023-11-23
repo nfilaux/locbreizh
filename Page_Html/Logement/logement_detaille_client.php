@@ -26,38 +26,32 @@ $photo = $stmt->fetch();
 
 
 
-<body>
-<header>
-	<a>
-    <div>
-        <img src="../svg//logo.svg">
-        <h2>Loc'Breizh</h2>
-    </div></a>
-
-    <div>
-        <img rc="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
-            <a href="../reservation/liste_reservations.php">
-                <h4>Accèder à mes reservations</h4>
-            </a>
+<body>      
+    <header>
+        <a href="../Accueil/accueil_client.php">
+            <img class="logot" src="../svg/logo.svg">
+            <h2>Loc'Breizh</h2>
+        </a>
+        <div class="brecherche">
+            <img src="../svg/filtre.svg">
+            <input id="searchbar" type="text" name="search">
+            <img src="../svg/loupe.svg">
         </div>
-        
 
-    <div>
-        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
-    </div>
-    <div id="popup" class="popup">
-        <a href="">Accéder au profil</a>
-        <br>
-        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
-        <a onclick="closePopup()">Fermer la fenêtre</a>
-    </div>
-</header>
+        <img src="../svg/booklet-fill 1.svg">
+        <a href="../reservation/liste_reservations.php"><h4>Accèder à mes réservations</h4></a>
+
+        <div class="imghead">
+            <a href="../messagerie/messagerie.php" ><img src="../svg/message.svg"></a>
+            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+        </div>
+        <div id="popup" class="popup">
+            <a href="">Accéder au profil</a>
+            <br>
+            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+            <a onclick="closePopup()">Fermer la fenêtre</a>
+        </div>
+    </header>
 
     <main>
         <div>
@@ -102,12 +96,11 @@ $photo = $stmt->fetch();
             ?>
             <a href='../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>'><button>Demander un devis</button></a>
         </div>
-        <div>
+        <a href="" class='voir_plus'>
+            <hr> 
+            <h4>Voir plus</h4> 
             <hr>
-            <h4>Voir plus</h4>
-            <img src='../svg/arrow-down-s-line (1) 1.svg'>
-            <hr>
-        </div>
+        </a>
 
         <div>
             <h3>Services et équipements du logement</h3>
@@ -245,12 +238,11 @@ $photo = $stmt->fetch();
             <a href=''>Répondre au commentaire</a>
             <a href=''>Signaler</a>
 
-            <div >
+            <a href="" class='voir_plus'>
+                <hr> 
+                <h4>Voir plus</h4> 
                 <hr>
-                <h4>Voir plus</h4>
-                <img src='../svg/arrow-down-s-line (1) 1.svg'>
-                <hr>
-            </div>
+            </a>
             <hr>
         </div>
 
@@ -283,28 +275,44 @@ $photo = $stmt->fetch();
                     <h4>Conditions d'annulation</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
-                    <a href=''>Voir plus</a>
+                    <a href="" class='voir_plus'>
+                        <hr> 
+                        <h4>Voir plus</h4> 
+                        <hr>
+                    </a>
                 </div>
 
                 <div>
                     <h4>Conditions de paiement</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
-                    <a href=''>Voir plus</a>
+                    <a href="" class='voir_plus'>
+                        <hr> 
+                        <h4>Voir plus</h4> 
+                        <hr>
+                    </a>
                 </div>
 
                 <div>
                     <h4>Informations d'arrivée</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
-                    <a href=''>Voir plus</a>
+                    <a href="" class='voir_plus'>
+                        <hr> 
+                        <h4>Voir plus</h4> 
+                        <hr>
+                    </a>
                 </div>
 
                 <div>
                     <h4>Informations de départ</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
-                    <a href=''>Voir plus</a>
+                    <a href="" class='voir_plus'>
+                        <hr> 
+                        <h4>Voir plus</h4> 
+                        <hr>
+                    </a>
                 </div>
 
                 <h4>Veuillez consultez</h4>
@@ -331,22 +339,19 @@ $photo = $stmt->fetch();
             </div>
 
     </main>
-    
     <footer>
-        <div>   
-            <div>
+            <div class="tfooter">
                 <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
                 <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
+                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
             </div>
             <hr>  
-            <div>
+            <div class="bfooter">
                 <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html">7ème sens</a></p>
+                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
-        </div>
     </footer>
 </body>
 

@@ -9,9 +9,6 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
-$stmt->execute();
-$photo = $stmt->fetch();
 
 ?>
 <!DOCTYPE html>

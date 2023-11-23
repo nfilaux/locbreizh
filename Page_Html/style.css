@@ -22,6 +22,7 @@ body {
     margin: 0;
     background-origin: content-box;
     width: 100%;
+    font-family: 'Quicksand';
 }
 
 .pagecompte {
@@ -128,6 +129,7 @@ header a:last-child {
     color: #fff;
     font-size: 4em;
     margin: 3px;
+    font-family: 'PatuaOne';
 }
 
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
@@ -163,7 +165,6 @@ main h1{
     text-align: center;
     width: 45em;
 }
-
 
 .Tablobord hr{
     height: auto;
@@ -277,6 +278,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: 20em;
     font-size: 2em;
     height: 2em;
+    font-family: 'Quicksand';
 }
 
 .btn-accueil {
@@ -287,6 +289,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border: 1px solid #957BB0; 
     border-radius: 20px;
     font-size: 1em;
+    font-family: 'Quicksand';
 }
 
 .btn-accueilins {
@@ -297,6 +300,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border: 1px solid #745086; 
     border-radius: 20px;
     font-size: 1em;
+    font-family: 'Quicksand';
 }
 
 .btn_visi {
@@ -324,6 +328,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-compte:hover {
     background-color: #FAE3C6;
     color: #745086;
+    font-family: 'Quicksand';
 }
 
 .btn-ajoutlog {
@@ -335,6 +340,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
+    font-family: 'Quicksand';
 }
 
 .btn-input {
@@ -346,6 +352,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-size: 2em;
     height: 2em;
     margin: auto 20% auto 20%;
+    font-family: 'Quicksand';
 }
 
 
@@ -406,6 +413,8 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border-radius: 5px;
     font-size: 3em;
     text-align: center;
+    font-family: 'Quicksand';
+    padding-top: 0.2em;
 }
 
 .popup {
@@ -483,6 +492,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     text-align: center;
     width: 100%;
     margin: 1em auto auto auto;
+    font-family: 'Quicksand';
 }
 
 .nbrueinput {
@@ -493,6 +503,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     text-align: center;
     width: 100%;
     margin: 1em auto auto auto;
+    font-family: 'Quicksand';
 }
 
 .nomrueinput {
@@ -503,6 +514,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     text-align: center;
     width: 96%;
     margin: 1em 0 auto auto;
+    font-family: 'Quicksand';
 }
 
 
@@ -664,10 +676,10 @@ fieldset label{
     color: #957BB0; 
     border: 1px solid #957BB0;
     border-radius: 5px; 
-    width: 100%;
+    width: 80%;
     height: 2em;
     text-align: center;
-    margin-bottom: 0.5em;
+    margin:auto auto 0.5em auto;
 }
 
 .logselect{

@@ -72,7 +72,7 @@ $photo = $stmt->fetch();
 
     <main class="MainTablo">
     <div class="headtablo">
-            <img src="../svg/flecheRetour.svg">
+        <a href="logement_detaille_client"><img src="../svg/flecheRetour.svg"/></a>
             <h1>Faire ma demande de devis</h1>
     </div>
  
@@ -94,7 +94,7 @@ $photo = $stmt->fetch();
                 </div>
             
             <div class="cardSupplements">
-            <h2>Suppléments</h2>
+            <h2 style="text-align:center;  font-family: 'Quicksand';">Suppléments</h2>
                 <div class="logcheckbox">
                 <!--pre-remplie les iinfos si ils sont dans get-->
                 <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_GET['animaux']) && $_GET['animaux'] === 'on'){echo 'checked';}; ?>/>
@@ -107,7 +107,7 @@ $photo = $stmt->fetch();
                 </div>
                 <!--pre-remplie les iinfos si ils sont dans get-->
                 <div class="logpc">
-                <label for="nb_pers_supp">Vacanciers supplémentaires</label>
+                <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
                 <input class="lognb" type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50"  value=<?php if(isset($_GET['nb_supp']) && $_GET['nb_supp'] > 0){echo $_GET['nb_supp'];} else{echo 0;} ?> required/>
                 </div>
             </div>
