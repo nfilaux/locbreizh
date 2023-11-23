@@ -26,7 +26,7 @@ $photo = $stmt->fetch();
 
 
 
-<body>      
+<body>
     <header>
         <a href="../Accueil/accueil_client.php">
             <img class="logot" src="../svg/logo.svg">
@@ -47,7 +47,7 @@ $photo = $stmt->fetch();
         </div>
         <div id="popup" class="popup">
             <a href="">Accéder au profil</a>
-            <br>
+            <br><div>
             <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
             <a onclick="closePopup()">Fermer la fenêtre</a>
         </div>
@@ -56,20 +56,18 @@ $photo = $stmt->fetch();
     <main>
         <div>
         <?php
-
-
                 $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
                 $stmt = $dbh->prepare(
-                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, photo_principale, accroche_logement, descriptif_logement
+                    "SELECT libelle_logement, nb_personnes_logement, surface_logement, tarif_base_ht, photo_principale, accroche_logement, descriptif_logement
                     from locbreizh._logement 
                     WHERE id_logement = {$_GET['logement']};"
                 );
 
                 /*$stmt = $dbh->prepare(
-                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, note_avis, photo_principale, photo, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
+                    "SELECT libelle_logement, nb_personnes_logement, surface_logement, tarif_base_ht, note_avis, photo_principale, photo, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
                     from locbreizh._logement 
                         INNER JOIN locbreizh._avis ON logement = id_logement
                         INNER JOIN locbreizh._photos_secondaires p ON p.logement = id_logement
@@ -80,27 +78,41 @@ $photo = $stmt->fetch();
 
 
             $stmt->execute();
-            $info = $stmt->fetch();
-            echo '<div class="card">';
-            echo '<h3>' . $info['libelle_logement'] . '</h3>';
-            echo '<p>' . $info['nb_personnes_logement'] . ' personnes</p>';
-            echo '<p>' . $info['nature_logement'] . '</p>';
-            echo '<p>' . $info['tarif_base_ht'] . '€/nuit</p>';
-            /*echo '<img src="/Ressources/Images/star-fill 1.svg">' . '<h4>' .  $info['note_avis'] . ',0</p>';
-            */echo '<img src="../Ressources/Images/' . $info['photo_principale'] . '">';/*
-            echo '<img src="' . $info['photo_url'] . '">';
-            echo '<img src="' . $info['photo_url'] . '">';*/
-            echo '<h3>' . 'Description' . '</h3>' . '<p>' . $info['accroche_logement'] . '<p>';
-            echo '<p>' . $info['descriptif_logement'] . '</p>';/*
-            echo '<p>' . 'Arrivée' . $info['debut_plage_ponctuelle'] . 'Départ' . $info['fin_plage_ponctuelle'] . '</p>';*/
-            ?>
-            <a href='../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>'><button>Demander un devis</button></a>
-        </div>
-        <a href="" class='voir_plus'>
-            <hr> 
-            <h4>Voir plus</h4> 
-            <hr>
-        </a>
+            $info = $stmt->fetch();?>
+            <div class="logpc">
+                <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
+                <div class="logrowt">
+                    <p class="policetitre"><?php echo $info['libelle_logement']; ?><p>
+                    <p>pour <?php echo $info['nb_personnes_logement'];?>  personnes</p>
+                    <p>logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> </p>
+                    <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
+                    <!--
+                    <img src="/Ressources/Images/star-fill 1.svg"><h4> echo $info['note_avis'];,0</p>
+                    -->
+                </div>
+                <img src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
+
+                <!-- 
+                <img src="<?php// echo $info['photo_url'];?> ">
+                <img src="<?php// echo $info['photo_url'];?> ">
+                -->
+                <div class="logrowt">  
+                    <div class="logpc">
+                        <h3 class="policetitre">Description</h3>
+                        <p><?php echo $info['descriptif_logement']; ?></p>
+                        <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
+                        <a href="" class='voir_plus'>
+                            <hr> 
+                            <h4>Voir plus</h4> 
+                            <hr>
+                        </a>
+                    </div>
+                    <div class="logpc">
+                        <a href='../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>'><button class="btn-ajoutlog">Demander un devis</button></a>
+                    </div>
+                </div>
+            </div>
+        
 
         <div>
             <h3>Services et équipements du logement</h3>
@@ -175,6 +187,7 @@ $photo = $stmt->fetch();
             <hr>
             <h3>Calendrier</h3>
             <hr>
+            <!--
             <h3>Avis</h3>
             <?php
             /*try {
@@ -207,6 +220,7 @@ $photo = $stmt->fetch();
             echo '<p>' . '. ' . $boucle . ' commentaires' . '</p>';*/
             ?>
         </div>
+        -->
         <div>
             <?php
 
@@ -238,11 +252,12 @@ $photo = $stmt->fetch();
             <a href=''>Répondre au commentaire</a>
             <a href=''>Signaler</a>
 
-            <a href="" class='voir_plus'>
-                <hr> 
-                <h4>Voir plus</h4> 
+            <div >
                 <hr>
-            </a>
+                <h4>Voir plus</h4>
+                <img src='../svg/arrow-down-s-line (1) 1.svg'>
+                <hr>
+            </div>
             <hr>
         </div>
 
@@ -322,11 +337,7 @@ $photo = $stmt->fetch();
 
             <div>
             <?php   
-                        $stmt = $dbh->prepare(
-                                'SELECT prenom, nom, photo
-                                    from locbreizh._logement
-                                        INNER JOIN locbreizh._compte ON _logement.id_proprietaire = _compte.id_compte'
-                            );
+                        $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
 
                         $stmt->execute();
                         $info = $stmt->fetch();
@@ -339,19 +350,22 @@ $photo = $stmt->fetch();
             </div>
 
     </main>
+    
     <footer>
-            <div class="tfooter">
+        <div>   
+            <div>
                 <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
                 <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
+                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
             <hr>  
-            <div class="bfooter">
+            <div>
                 <p>©2023 Loc’Breizh</p>
-                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+                <p><a href="connexion.html">Conditions générales</a></p>
+                <p>Développé par <a href="connexion.html">7ème sens</a></p>
             </div>
+        </div>
     </footer>
 </body>
 

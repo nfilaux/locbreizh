@@ -141,6 +141,8 @@ header a:last-child {
 main{
     padding-top: 5vw;
     padding-bottom: 5vw;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 main label, .Tablobord h2{
@@ -579,11 +581,15 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: 15%;
 }
 
-
 .logrow {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+
+.logrowt {
+    display: flex;
+    flex-direction: row;
 }
 
 .logrowb {
@@ -701,6 +707,28 @@ fieldset label{
     margin: 2em auto 0 auto;
 }
 
+.logtitre{
+    font-family: 'PatuaOne';
+    color: #745086;
+    font-size: 2em;
+}
+
+
+.logrowt p {
+    margin: auto 0 1em 1em;
+}
+
+.logrowt p:last-child {
+    margin: auto 0 1em 15em;
+}
+
+.nuit {
+    background-color: #FAE3C6;
+    border-radius: 10px;
+    color: #745086;
+    padding: 5px;
+}
+
 /*----------------------------------------------------------------Autre----------------------------------------------------------------*/
 
 .spbt{
@@ -723,4 +751,9 @@ fieldset label{
 
 .tewt{
     padding: auto;
+}
+
+.policetitre {
+    font-family: 'PatuaOne';
+    font-weight: 600;
 }
