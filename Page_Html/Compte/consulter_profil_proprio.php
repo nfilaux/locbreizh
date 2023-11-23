@@ -75,30 +75,26 @@
                 <p>XXXXXXXXXXXX</p>
             </div>
             <div class="rowcompte">
-            <label for="date">Date de naissance</label>
-                <input type="date" id="date" name="date" value=<?php 
-                    //on cree un objet date pour changer sa forme
-                    $date = new DateTime($infos['datenaissance']);
-                    // le format jour mois
-                    $date_formatee = $date->format('Y-m-d');
-                
-                    echo $date_formatee;
-                ?> required>
-                <?php erreur("date");?>
-            </div>
-            <div class="rowcompte">
             <p>Adresse</p>
                 <div>
-                <label for="no_rue">N° :</label><input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
-                <?php erreur("numRue");?>
-                <label for="nom_rue">Rue :</label><input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
-                <?php erreur("nomRue");?>
+                    <label for="no_rue">N° :</label><input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
+                    <?php erreur("numRue");?>
+                    <label for="nom_rue">Rue :</label><input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
+                    <?php erreur("nomRue");?>
                 </div>
                 <div>
-                <label for="codePostal">Code postal :</label><input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
-                <?php erreur("codePostal");?>
-                <label for="ville">Ville :</label><input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
-                <?php erreur("ville");?>
+                    <label for="codePostal">Code postal :</label><input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
+                    <?php erreur("codePostal");?>
+                        <label for="ville">Ville :</label><input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
+                    <?php erreur("ville");?>
+                </div>
+                <div>
+                    <label for="carteIdentite">Carte d'identite</label>
+                    <input type="file" id="carteIdentite" name="carteIdentite"/>
+                </div>
+                <div>
+                    <label for="rib">RIB :</label>
+                    <input type="file" id="rib" name="rib"/>
                 </div>
 
             </div>

@@ -42,11 +42,9 @@
                         $erreurTest = verifMail($mail);
                     }
                     break;
-                case "date":
-                    $date = $_POST["date"];
-                    $erreurTest = verifDate($date);
                 case "telephone":
                     $tel = str_replace(' ', '', $_POST['telephone']);
+                    echo "iiiiiiiiiiiiiiiiii";
                     $erreurTest = verifTel($tel);
                     break;
                 case "pseudo":
@@ -114,6 +112,15 @@
         $erreur = true;
     }
 
+    $arrayNom2 = explode('.', $_FILES['rib']['name']);
+    $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
+    if(!($extension2 == "png" or $extension2 == "gif" or $extension2 == "jpg" or $extension2 == "jpeg" or $extension2 == "pdf")){
+        if (!empty($extension2)){
+            $_SESSION['erreurs'] += ["rib" => "Mauvaise extension de fichiers"];
+        }
+        $erreur = true;
+    }
+
     if (!$erreur){
         $stmt = $dbh->prepare("Select photo from locbreizh._compte 
         where id_compte = {$_SESSION['id']}");
@@ -121,20 +128,6 @@
         $photo = $stmt->fetch();
 
         move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $photo['photo']);
-
-        $ageLegal = ageLegal($date);
-        if($ageLegal == ""){
-            $ageLegal = 0;
-        }
-        $stmt = $dbh->prepare(
-            "UPDATE locbreizh._client SET 
-            age_legal = :age_legal,
-            dateNaissance = :dateNaissance
-            WHERE id_client = {$_SESSION['id']}"
-        );
-        $stmt->bindParam(':age_legal', $ageLegal);
-        $stmt->bindParam(':dateNaissance', $_POST['date']);
-        $stmt->execute();
 
         $stmt = $dbh->prepare(
             "UPDATE locbreizh._compte SET 
@@ -219,21 +212,6 @@
             if (!preg_match('/^[A-Za-z]{1}[A-Za-z0-9._%+-]*@[A-Za-z]{1}[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $mail)) {
                 $erreur = true;
                 $_SESSION['erreurs'] += ["email" => "Le email doit comporter un @ puis un . entre des (lettres, chiffres, ., _, %, +, -)"];
-            }
-        }
-        return $erreur;
-    }
-
-    function verifDate($date){
-        $erreur = false;
-        if (!preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/', $date)) {
-            $erreur = true;
-            $_SESSION['erreurs'] += ["date" => "La date doit être au format année-mois-jour"];
-        }
-        else{
-            if (strtotime($date) > strtotime(date("Y-m-d"))){
-                $erreur = true;
-                $_SESSION['erreurs'] += ["date" => "La date doit être inférieure à la date d'aujourd'hui"];
             }
         }
         return $erreur;
@@ -324,17 +302,5 @@
             }
         }
         return $erreur;
-    }
-
-    function ageLegal($date){
-        $res = false;
-        $date1 = date_create($date);
-        $date2 = new DateTime("now");
-        $interval = date_diff($date1, $date2);
-        $diff = $interval->format('%y');
-        if ($diff >= 18){
-            $res = true;
-        }
-        return $res;
     }
 ?>
