@@ -27,7 +27,7 @@
         }
         // insert la demande dans _demande_devis
         $stmt = $dbh->prepare("INSERT INTO locbreizh._demande_devis(nb_personnes, date_arrivee, date_depart, client, logement) 
-        VALUES (:nb_personnes, :date_arrivee, :date_depart, :idCompte, :logement;");
+        VALUES (:nb_personnes, :date_arrivee, :date_depart, :idCompte, :logement);");
         $stmt->bindParam(':nb_personnes', $_POST['nb_pers']);
         $stmt->bindParam(':date_arrivee', $_POST['dateArrivee']);
         $stmt->bindParam(':date_depart', $_POST['dateDepart']);
@@ -89,7 +89,8 @@
         // ajoute le message type pour une demande de devis
         $stmt = $dbh->prepare("INSERT INTO locbreizh._message(contenu_message, date_mess, heure_mess, auteur, conversation) 
         VALUES (:contenu_message, :date, :temps, :id, :id_conv);");
-        $stmt->bindParam(':contenu_message',"Voici une demande de DEVIS de {$libelle_log['pseudo']} pour le logement {$libelle_log['libelle_logement']}");
+        $tempMessage = "Voici une demande de DEVIS de {$info_user['pseudo']} pour le logement {$libelle_log['libelle_logement']}";
+        $stmt->bindParam(':contenu_message', $tempMessage);
         $stmt->bindParam(':date', $date);
         $stmt->bindParam(':temps', $time);
         $stmt->bindParam(':id', $_SESSION['id']);
@@ -100,7 +101,8 @@
         $stmt = $dbh->prepare("INSERT INTO locbreizh._message_demande(id_message_demande, lien_demande, id_demande)
         VALUES (:id_mess, :lien_demande, :id_demande);");
         $stmt->bindParam(':id_mess', $id_mess);
-        $stmt->bindParam(':lien_demande', "demande_devis$id_demande.pdf");
+        $tempDemande =  "demande_devis$id_demande.pdf";
+        $stmt->bindParam(':lien_demande', $tempDemande);
         $stmt->bindParam(':id_demande', $id_demande);
         $stmt->execute();
 
