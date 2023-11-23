@@ -12,9 +12,9 @@
     }
 
     $stmt = $dbh->prepare(
-        "SELECT  nom, prenom, pseudo, mail, telephone, photo, dateNaissance, nom_rue, numero_rue, code_postal, pays, ville
+        "SELECT  nom, prenom, pseudo, mail, telephone, photo, nom_rue, numero_rue, code_postal, pays, ville, rib, carte_identite
         from locbreizh._compte
-        join locbreizh._client on _client.id_client = _compte.id_compte
+        join locbreizh._proprietaire on id_proprietaire = id_compte
         join locbreizh._adresse on _adresse.id_adresse = _compte.adresse
         where id_compte = {$_SESSION['id']};"
     );
@@ -44,7 +44,7 @@
     </header>
     
     <main>
-        <form action="modifier_client.php" method="post" enctype="multipart/form-data">
+        <form action="modifier_proprio.php" method="post" enctype="multipart/form-data">
             <div class="rowcompte">
                 <label for="prenom">Prénom</label>
                 <input type="text" id="prenom" name="prenom" maxlength="20" value="<?php echo $infos['prenom'];?>" required>
@@ -75,7 +75,7 @@
                 <p>XXXXXXXXXXXX</p>
             </div>
             <div class="rowcompte">
-            <p>Adresse</p>
+                <p>Adresse</p>
                 <div>
                     <label for="no_rue">N° :</label><input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
                     <?php erreur("numRue");?>
@@ -85,18 +85,21 @@
                 <div>
                     <label for="codePostal">Code postal :</label><input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
                     <?php erreur("codePostal");?>
-                        <label for="ville">Ville :</label><input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
+                    <label for="ville">Ville :</label><input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
                     <?php erreur("ville");?>
                 </div>
-                <div>
-                    <label for="carteIdentite">Carte d'identite</label>
-                    <input type="file" id="carteIdentite" name="carteIdentite"/>
-                </div>
-                <div>
-                    <label for="rib">RIB :</label>
-                    <input type="file" id="rib" name="rib"/>
-                </div>
-
+            </div>
+            <div>
+                <img src="../Ressources/carte_identite/<?php echo $infos['carte_identite']; ?>" title="rib" alt="rib">
+                <label for="carteIdentite">Carte d'identite</label>
+                <input type="file" id="carteIdentite" name="carteIdentite"/>
+                <?php erreur("carteIdentite"); ?>
+            </div>
+            <div>
+                <img src="../Ressources/rib/<?php echo $infos['rib']; ?>" title="rib" alt="rib">
+                <label for="rib">RIB :</label>
+                <input type="file" id="rib" name="rib"/>
+                <?php erreur("rib"); ?>
             </div>
             <div>
                 <img src="../Ressources/Images/<?php echo $infos['photo']; ?>" title="photo" alt="photo de profil">

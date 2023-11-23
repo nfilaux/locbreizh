@@ -168,13 +168,13 @@
             $nom_profil =   $temps1 . '1' . '.' . $extension2;
 
             $cheminIdentite = '../Ressources/carte_identite/' ;
-            $nom_identite =  $temps1 . '2'. '.' . $extension1;
+            $nom_identite =  $temps2 . '2'. '.' . $extension1;
 
             $cheminRIB = '../Ressources/rib/';
-            $nom_rib = $temps1 . '3' . '.' . $extension3;
+            $nom_rib = $temps3 . '3' . '.' . $extension3;
 
             move_uploaded_file($_FILES['photoProfil']['tmp_name'], $cheminProfil . $nom_profil);
-            move_uploaded_file($_FILES['carteIdentite']['tmp_name'], $cheminIdentite . $urlIdentite);
+            move_uploaded_file($_FILES['carteIdentite']['tmp_name'], $cheminIdentite . $nom_identite);
             move_uploaded_file($_FILES['rib']['tmp_name'], $cheminRIB . $nom_rib);
 
             $mdp = password_hash($mdp, PASSWORD_DEFAULT);

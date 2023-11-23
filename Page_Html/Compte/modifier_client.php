@@ -38,9 +38,7 @@
                     break;
                 case "mail":
                     $mail = $_POST["mail"];
-                    if($anciens_infos['mail'] != $_POST['mail']){
-                        $erreurTest = verifMail($mail);
-                    }
+                    $erreurTest = verifMail($mail);
                     break;
                 case "date":
                     $date = $_POST["date"];
@@ -85,7 +83,7 @@
         }
     }
 
-    if($anciens_infos['telephone'] != $_POST['telephone']){
+    if($anciens_infos['telephone'] != $tel){
         $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '{$tel}';");
         $verifTel->execute();
         $res = $verifTel->fetchColumn();

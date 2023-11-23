@@ -1,6 +1,5 @@
 <?php 
     session_start();
-
     try {
         include('../parametre_connexion.php');
 
@@ -17,9 +16,9 @@
     where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $anciens_infos = $stmt->fetch();
+
     $erreur = false; // variable qui permet de savoir si il y a une erreur ou non dans le remplissage du formulaire
     $_SESSION["erreurs"] = []; // la session récupère toutes les erreurs pour les affichées dans le formulaire
-    print_r($_SESSION['erreurs']);
     foreach ($_POST as $key => $row){
         if (empty($row)){
             $erreur = true;
@@ -38,13 +37,10 @@
                     break;
                 case "mail":
                     $mail = $_POST["mail"];
-                    if($anciens_infos['mail'] != $_POST['mail']){
-                        $erreurTest = verifMail($mail);
-                    }
+                    $erreurTest = verifMail($mail);
                     break;
                 case "telephone":
                     $tel = str_replace(' ', '', $_POST['telephone']);
-                    echo "iiiiiiiiiiiiiiiiii";
                     $erreurTest = verifTel($tel);
                     break;
                 case "pseudo":
@@ -83,8 +79,8 @@
         }
     }
 
-    if($anciens_infos['telephone'] != $_POST['telephone']){
-        $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '{$tel}';");
+    if($anciens_infos['telephone'] != $tel){
+        $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '$tel';");
         $verifTel->execute();
         $res = $verifTel->fetchColumn();
         if ($res != 0){
@@ -102,7 +98,7 @@
             $erreur = true;
         }
     }
-
+    print_r($_FILES);
     $arrayNom = explode('.', $_FILES['photo']['name']);
     $extension = $arrayNom[sizeof($arrayNom)-1];
     if(!($extension == "png" or $extension == "gif" or $extension == "jpg" or $extension == "jpeg")){
@@ -113,6 +109,7 @@
     }
 
     $arrayNom2 = explode('.', $_FILES['rib']['name']);
+
     $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
     if(!($extension2 == "png" or $extension2 == "gif" or $extension2 == "jpg" or $extension2 == "jpeg" or $extension2 == "pdf")){
         if (!empty($extension2)){
@@ -121,13 +118,32 @@
         $erreur = true;
     }
 
+    $arrayNom3 = explode('.', $_FILES['carteIdentite']['name']);
+    $extension3 = $arrayNom3[sizeof($arrayNom3)-1];
+    if(!($extension3 == "png" or $extension3 == "gif" or $extension3 == "jpg" or $extension3 == "jpeg" or $extension3 == "pdf")){
+        if (!empty($extension3)){
+            $_SESSION['erreurs'] += ["carteIdentite" => "Mauvaise extension de fichiers"];
+        }
+        $erreur = true;
+
+    }
+
     if (!$erreur){
         $stmt = $dbh->prepare("Select photo from locbreizh._compte 
         where id_compte = {$_SESSION['id']}");
         $stmt->execute();
         $photo = $stmt->fetch();
 
+        $stmt = $dbh->prepare("SELECT rib, carte_identite  
+        from locbreizh._proprietaire
+        where id_proprietaire = {$_SESSION['id']} ");
+        $stmt->execute();
+        $doc = $stmt->fetch();
+
         move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $photo['photo']);
+        move_uploaded_file($_FILES['rib']['tmp_name'], '../Ressources/rib/' . $doc['rib']);
+        move_uploaded_file($_FILES['carteIdentite']['tmp_name'], '../Ressources/carte_identite/' . $doc['carte_identite']);
+
 
         $stmt = $dbh->prepare(
             "UPDATE locbreizh._compte SET 
@@ -169,7 +185,7 @@
     
         
     }
-    header("Location: consulter_profil_client.php");
+    //header("Location: consulter_profil_proprio.php");
 
     // définition des fonctions permettant de faire les tests de conformité sur les données
     function verifPrenom($prenom){
