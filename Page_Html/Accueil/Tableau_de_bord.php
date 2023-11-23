@@ -87,7 +87,7 @@
             <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
             </article>
 
-            <hr>
+            <hr class="hr">
 
             <article>
                 <h2>Notifications</h2>

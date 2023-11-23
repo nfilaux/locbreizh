@@ -168,7 +168,7 @@ main h1{
     width: 45em;
 }
 
-.Tablobord hr{
+.hr{
     height: auto;
     border: none;
     border: 2px solid #745086; 
@@ -180,6 +180,13 @@ main h1{
     align-items: center;
     position: relative;
     bottom: 20;
+    text-decoration: none;
+}
+
+.voir_plusR {
+    display: flex;
+    align-self: flex-end;
+    position: relative;
     text-decoration: none;
 }
 
@@ -344,6 +351,18 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding: 0.5em;
     font-family: 'Quicksand';
 }
+
+.btn-demlog {
+    margin: auto;
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+}
+
 
 .btn-input {
     background-color: #957BB0; 
@@ -547,12 +566,24 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     justify-content: space-around;
 }
 
+.logc{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 48%;
+}
+
+.logcarte{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .devis{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
-
 
 .log2vct{
     display: flex;
@@ -590,6 +621,13 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .logrowt {
     display: flex;
     flex-direction: row;
+}
+
+.logrowc {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
 }
 
 .logrowb {
@@ -711,6 +749,7 @@ fieldset label{
     font-family: 'PatuaOne';
     color: #745086;
     font-size: 2em;
+    margin-bottom: 0.2em;
 }
 
 
@@ -718,15 +757,38 @@ fieldset label{
     margin: auto 0 1em 1em;
 }
 
-.logrowt p:last-child {
-    margin: auto 0 1em 15em;
-}
 
 .nuit {
     background-color: #FAE3C6;
     border-radius: 10px;
     color: #745086;
     padding: 5px;
+    display: flex;
+    align-self: flex-end;
+}
+
+.potitre {
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    margin: auto;
+}
+
+iframe {
+    width: 80%;
+    margin: auto;
+}
+
+.cardcondition {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    border-radius: 15px;
+    padding-top: 0.5em;
+    border: 1px solid #745086; 
+    width: 45%;
+    padding: 1em;
+    margin: 0.5em auto;
 }
 
 /*----------------------------------------------------------------Autre----------------------------------------------------------------*/
@@ -745,7 +807,7 @@ fieldset label{
     margin-right: auto;
 }
 
-.compteciv , .rib {
+.compteciv , .rib{
     margin: auto;
 }
 
