@@ -43,16 +43,25 @@ $photo = $stmt->fetch();
         </div>
         
 
-    <div>
-        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
-    </div>
-    <div id="popup" class="popup">
-        <a href="">Accéder au profil</a>
-        <br>
-        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
-        <a onclick="closePopup()">Fermer la fenêtre</a>
-    </div>
+        <div class="imghead">
+            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
+        </div>
+        <div id="overlay" onclick="closePopup()"></div>
+        <div id="popup" class="popup">
+            <table id="tableProfil">
+                <tr>
+                    <td>
+                        <a id="monprofil" href="">Accéder au profil</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 
+                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+                    </td>  
+                </tr>
+            </table>
+        </div>
 </header>
 
     <main>
@@ -81,29 +90,4 @@ $photo = $stmt->fetch();
 
 </html>
 
-<script>
-// Ouvrir la popup
-function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-}
-
-// Fermer la popup
-function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
-}
-
-// Ajouter des gestionnaires d'événements aux boutons
-var profilButton = document.getElementById('profilButton');
-profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
-});
-
-var deconnexionButton = document.getElementById('deconnexionButton');
-deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
-});
-</Script>
+<script src="../scriptPopup.js"></script>
