@@ -89,8 +89,13 @@
         // ajoute le message type pour une demande de devis
         $stmt = $dbh->prepare("INSERT INTO locbreizh._message(contenu_message, date_mess, heure_mess, auteur, conversation) 
         VALUES (:contenu_message, :date, :temps, :id, :id_conv);");
+<<<<<<< HEAD
+        $tempMessage = "Voici une demande de DEVIS de {$info_user['pseudo']} pour le logement {$libelle_log['libelle_logement']}";
+        $stmt->bindParam(':contenu_message', $tempMessage);
+=======
         $tempmessage = "Voici une demande de DEVIS de {$info_user['pseudo']} pour le logement {$libelle_log['libelle_logement']}";
         $stmt->bindParam(':contenu_message', $tempmessage);
+>>>>>>> 9364f17a90c80a56455381988de79fa473ad37bb
         $stmt->bindParam(':date', $date);
         $stmt->bindParam(':temps', $time);
         $stmt->bindParam(':id', $_SESSION['id']);
@@ -102,7 +107,12 @@
         VALUES (:id_mess, :lien_demande, :id_demande);");
         $tempmessage = "demande_devis$id_demande.pdf";
         $stmt->bindParam(':id_mess', $id_mess);
+<<<<<<< HEAD
+        $tempDemande =  "demande_devis$id_demande.pdf";
+        $stmt->bindParam(':lien_demande', $tempDemande);
+=======
         $stmt->bindParam(':lien_demande', $tempmessage);
+>>>>>>> 1d9c50e84f7ee071a0bbc057548fb50a6a4a7e6d
         $stmt->bindParam(':id_demande', $id_demande);
         $stmt->execute();
 
