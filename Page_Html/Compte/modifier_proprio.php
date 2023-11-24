@@ -98,35 +98,55 @@
             $erreur = true;
         }
     }
-    print_r($_FILES);
+
     $arrayNom = explode('.', $_FILES['photo']['name']);
-    $extension = $arrayNom[sizeof($arrayNom)-1];
-    if(!($extension == "png" or $extension == "gif" or $extension == "jpg" or $extension == "jpeg")){
-        if (!empty($extension)){
-            $_SESSION['erreurs'] += ["photo" => "Mauvaise extension de fichiers"];
+    if($arrayNom[0] != ''){
+        $extension = $arrayNom[sizeof($arrayNom)-1];
+        if(!($extension == "png" or $extension == "gif" or $extension == "jpg" or $extension == "jpeg")){
+            if (!empty($extension)){
+                $_SESSION['erreurs'] += ["photo" => "Mauvaise extension de fichiers"];
+            }
+            $erreur = true;
         }
-        $erreur = true;
+        $i1_present = true;
+    }
+    else{
+        $i1_present = false;
     }
 
-    $arrayNom2 = explode('.', $_FILES['rib']['name']);
 
-    $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
-    if(!($extension2 == "png" or $extension2 == "gif" or $extension2 == "jpg" or $extension2 == "jpeg" or $extension2 == "pdf")){
-        if (!empty($extension2)){
-            $_SESSION['erreurs'] += ["rib" => "Mauvaise extension de fichiers"];
+    $arrayNom2 = explode('.', $_FILES['rib']['name']);
+    if($arrayNom2[0] != ''){
+        $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
+        if(!($extension2 == "png" or $extension2 == "gif" or $extension2 == "jpg" or $extension2 == "jpeg" or $extension2 == "pdf")){
+            if (!empty($extension2)){
+                $_SESSION['erreurs'] += ["rib" => "Mauvaise extension de fichiers"];
+            }
+            $erreur = true;
         }
-        $erreur = true;
+        $i2_present = true;
+    }
+    else{
+        $i2_present = false;
     }
 
     $arrayNom3 = explode('.', $_FILES['carteIdentite']['name']);
-    $extension3 = $arrayNom3[sizeof($arrayNom3)-1];
-    if(!($extension3 == "png" or $extension3 == "gif" or $extension3 == "jpg" or $extension3 == "jpeg" or $extension3 == "pdf")){
-        if (!empty($extension3)){
-            $_SESSION['erreurs'] += ["carteIdentite" => "Mauvaise extension de fichiers"];
-        }
-        $erreur = true;
+    if($arrayNom3[0] != ''){
+        print_r($arrayNom3);
+        $extension3 = $arrayNom3[sizeof($arrayNom3)-1];
+        if(!($extension3 == "png" or $extension3 == "gif" or $extension3 == "jpg" or $extension3 == "jpeg" or $extension3 == "pdf")){
+            if (!empty($extension3)){
+                $_SESSION['erreurs'] += ["carteIdentite" => "Mauvaise extension de fichiers"];
+            }
+            $erreur = true;
 
+        }
+        $i3_present = true;
     }
+    else{
+        $i3_present = false;
+    }
+    
 
     if (!$erreur){
         $stmt = $dbh->prepare("Select photo from locbreizh._compte 
@@ -140,10 +160,54 @@
         $stmt->execute();
         $doc = $stmt->fetch();
 
-        move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $photo['photo']);
-        move_uploaded_file($_FILES['rib']['tmp_name'], '../Ressources/rib/' . $doc['rib']);
-        move_uploaded_file($_FILES['carteIdentite']['tmp_name'], '../Ressources/carte_identite/' . $doc['carte_identite']);
 
+        if($i1_present){
+            $nom_bdd = explode('.', $photo['photo']);
+            $nom_et_ext = $nom_bdd[0] .'.' . $extension;
+            move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $nom_et_ext);
+
+
+            if($nom_bdd != $extension){
+                $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
+                $stmt->execute();
+
+                $stmt = $dbh->prepare("UPDATE locbreizh._compte 
+                SET photo = '$nom_et_ext'
+                where id_compte = {$_SESSION['id']};");
+                $stmt->execute();
+            }
+        }
+        if($i2_present){
+            $nom_bdd = explode('.', $doc['rib']);
+            $nom_et_ext = $nom_bdd[0] .'.' . $extension2;
+
+            move_uploaded_file($_FILES['rib']['tmp_name'], '../Ressources/rib/' . $nom_et_ext);
+            
+            if($nom_bdd != $extension2){
+                $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
+                $stmt->execute();
+
+                $stmt = $dbh->prepare("UPDATE locbreizh._proprietaire 
+                SET rib = '$nom_et_ext'
+                where id_proprietaire = {$_SESSION['id']};");
+                $stmt->execute();
+            }
+        }
+        if($i3_present){
+            $nom_bdd = explode('.', $doc['carte_identite']);
+            $nom_et_ext = $nom_bdd[0] .'.' . $extension3;
+            move_uploaded_file($_FILES['carteIdentite']['tmp_name'], '../Ressources/carte_identite/' . $nom_et_ext);
+            
+            if($nom_bdd != $extension3){
+                $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
+                $stmt->execute();
+
+                $stmt = $dbh->prepare("UPDATE locbreizh._proprietaire 
+                SET carte_identite = '$nom_et_ext'
+                where id_proprietaire = {$_SESSION['id']};");
+                $stmt->execute();
+            }
+        }
 
         $stmt = $dbh->prepare(
             "UPDATE locbreizh._compte SET 
@@ -185,7 +249,7 @@
     
         
     }
-    //header("Location: consulter_profil_proprio.php");
+    header("Location: consulter_profil_proprio.php");
 
     // définition des fonctions permettant de faire les tests de conformité sur les données
     function verifPrenom($prenom){

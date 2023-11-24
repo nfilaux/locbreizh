@@ -90,14 +90,14 @@
                 </div>
             </div>
             <div>
-                <img src="../Ressources/carte_identite/<?php echo $infos['carte_identite']; ?>" title="rib" alt="rib">
                 <label for="carteIdentite">Carte d'identite</label>
+                <a href="../Ressources/carte_identite/<?php echo $infos['carte_identite']; ?>">Voir ma carte d'identité</a>
                 <input type="file" id="carteIdentite" name="carteIdentite"/>
                 <?php erreur("carteIdentite"); ?>
             </div>
             <div>
-                <img src="../Ressources/rib/<?php echo $infos['rib']; ?>" title="rib" alt="rib">
                 <label for="rib">RIB :</label>
+                <a href="../Ressources/rib/<?php echo $infos['rib']; ?>">Voir le RIB</a>
                 <input type="file" id="rib" name="rib"/>
                 <?php erreur("rib"); ?>
             </div>

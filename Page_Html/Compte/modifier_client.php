@@ -104,12 +104,18 @@
     }
 
     $arrayNom = explode('.', $_FILES['photo']['name']);
-    $extension = $arrayNom[sizeof($arrayNom)-1];
-    if(!($extension == "png" or $extension == "gif" or $extension == "jpg" or $extension == "jpeg")){
-        if (!empty($extension)){
-            $_SESSION['erreurs'] += ["photo" => "Mauvaise extension de fichiers"];
+    if($arrayNom[0] != ''){
+        $extension = $arrayNom[sizeof($arrayNom)-1];
+        if(!($extension == "png" or $extension == "gif" or $extension == "jpg" or $extension == "jpeg")){
+            if (!empty($extension)){
+                $_SESSION['erreurs'] += ["photo" => "Mauvaise extension de fichiers"];
+            }
+            $erreur = true;
         }
-        $erreur = true;
+        $i1_present = true;
+    }
+    else{
+        $i1_present = false;
     }
 
     if (!$erreur){
@@ -118,8 +124,24 @@
         $stmt->execute();
         $photo = $stmt->fetch();
 
-        move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $photo['photo']);
+        if($i1_present){
+            $nom_bdd = explode('.', $photo['photo']);
+            $nom_et_ext = $nom_bdd[0] .'.' . $extension;
+            move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $nom_et_ext);
 
+
+            if($nom_bdd != $extension){
+                $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
+                $stmt->execute();
+
+                $stmt = $dbh->prepare("UPDATE locbreizh._compte 
+                SET photo = '$nom_et_ext'
+                where id_compte = {$_SESSION['id']};");
+                $stmt->execute();
+            }
+        }
+
+        
         $ageLegal = ageLegal($date);
         if($ageLegal == ""){
             $ageLegal = 0;
