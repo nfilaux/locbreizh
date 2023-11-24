@@ -23,9 +23,6 @@ $photo = $stmt->fetch();
     <link rel="stylesheet" href="../style.css">
 </head>
 
-
-
-
 <body>
     <header>
         <a href="../Accueil/accueil_client.php">
@@ -337,7 +334,7 @@ $photo = $stmt->fetch();
             </div>    
             </div>
             <hr>
-            <div>
+            <div class="logrowc">
             <?php   
                         $stmt = $dbh->prepare("SELECT nom,prenom,photo from locbreizh._compte JOIN locbreizh._logement ON id_compte=id_proprietaire WHERE id_logement= {$_GET['logement']} ;");
 
@@ -345,28 +342,27 @@ $photo = $stmt->fetch();
                         $info = $stmt->fetch();
                 ?>
                 <img class="imgprofil" src="../Ressources/Images/<?php echo $info['photo']; ?>" width="100" height="100">
-                <h4><?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
-
-                <button type='button' disabled>Contacter le propriétaire</button>
+                <div class="logcp">
+                    <h4 class="policetitre">Par <?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
+                    <button class="btn-accueil" type='button' disabled>Contacter le propriétaire</button>
+                </div>
             </div>
 
     </main>
     
     <footer>
-        <div>   
-            <div>
+            <div class="tfooter">
                 <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
                 <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
+                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
             </div>
             <hr>  
-            <div>
+            <div class="bfooter">
                 <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html">7ème sens</a></p>
+                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
-        </div>
     </footer>
 </body>
 

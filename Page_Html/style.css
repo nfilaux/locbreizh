@@ -299,6 +299,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border-radius: 20px;
     font-size: 1em;
     font-family: 'Quicksand';
+    padding: 0.5em;
 }
 
 .btn-accueilins {
@@ -310,6 +311,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border-radius: 20px;
     font-size: 1em;
     font-family: 'Quicksand';
+    padding: 0.5em;
 }
 
 .btn_visi {
