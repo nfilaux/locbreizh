@@ -365,6 +365,16 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-family: 'Quicksand';
 }
 
+.btn-demlogno {
+    margin: auto;
+    background-color: #cccccc; 
+    color: #745086;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+}
 
 .btn-input {
     background-color: #957BB0; 

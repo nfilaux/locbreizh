@@ -96,7 +96,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                         </a>
                     </div>
                     <div class="logc">
-                        <a class="center" href='../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>'><button class="btn-demlog">Demander un devis</button></a>
+                        <a class="center"><button class="btn-demlogno">Demander un devis</button></a>
                     </div>
                 </div>
             </div>
