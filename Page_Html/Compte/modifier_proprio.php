@@ -132,7 +132,6 @@
 
     $arrayNom3 = explode('.', $_FILES['carteIdentite']['name']);
     if($arrayNom3[0] != ''){
-        print_r($arrayNom3);
         $extension3 = $arrayNom3[sizeof($arrayNom3)-1];
         if(!($extension3 == "png" or $extension3 == "gif" or $extension3 == "jpg" or $extension3 == "jpeg" or $extension3 == "pdf")){
             if (!empty($extension3)){
@@ -162,12 +161,12 @@
 
 
         if($i1_present){
-            $nom_bdd = explode('.', $photo['photo']);
+            $nom_bdd = explode('.', trim($photo['photo'], ' '));
             $nom_et_ext = $nom_bdd[0] .'.' . $extension;
             move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $nom_et_ext);
 
 
-            if($nom_bdd != $extension){
+            if($nom_bdd[1] != $extension){
                 $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
                 $stmt->execute();
 
@@ -178,12 +177,14 @@
             }
         }
         if($i2_present){
-            $nom_bdd = explode('.', $doc['rib']);
+            $nom_bdd = explode('.', trim($doc['rib'], ' '));
             $nom_et_ext = $nom_bdd[0] .'.' . $extension2;
 
             move_uploaded_file($_FILES['rib']['tmp_name'], '../Ressources/rib/' . $nom_et_ext);
             
-            if($nom_bdd != $extension2){
+            if($nom_bdd[1] != $extension2){
+                echo $nom_bdd[1] .'<br>';
+                echo $extension2 .'<br>';
                 $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
                 $stmt->execute();
 
@@ -194,11 +195,11 @@
             }
         }
         if($i3_present){
-            $nom_bdd = explode('.', $doc['carte_identite']);
+            $nom_bdd = explode('.', trim($doc['carte_identite'], ' '));
             $nom_et_ext = $nom_bdd[0] .'.' . $extension3;
             move_uploaded_file($_FILES['carteIdentite']['tmp_name'], '../Ressources/carte_identite/' . $nom_et_ext);
             
-            if($nom_bdd != $extension3){
+            if($nom_bdd[1] != $extension3){
                 $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
                 $stmt->execute();
 

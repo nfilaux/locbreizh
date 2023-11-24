@@ -125,12 +125,12 @@
         $photo = $stmt->fetch();
 
         if($i1_present){
-            $nom_bdd = explode('.', $photo['photo']);
+            $nom_bdd = explode('.', trim($photo['photo'], ' '));
             $nom_et_ext = $nom_bdd[0] .'.' . $extension;
             move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $nom_et_ext);
 
 
-            if($nom_bdd != $extension){
+            if($nom_bdd[1] != $extension){
                 $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
                 $stmt->execute();
 
