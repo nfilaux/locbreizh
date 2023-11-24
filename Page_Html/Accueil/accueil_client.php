@@ -1,10 +1,9 @@
 <?php
-
 // début de la session pour récupérer l'id du compte connecté
 session_start();
 
 include('../parametre_connexion.php');
-
+  
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -14,11 +13,14 @@ try {
     die();
 }
 
+$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+$stmt->execute();
+$photo = $stmt->fetch();
+
 $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id_compte;");
 $stmt->bindParam(':id_compte', $_SESSION['id']);
 $stmt->execute();
 $photo = $stmt->fetch();
-
 ?>
 <!doctype html>
 <html lang="fr">
@@ -51,11 +53,20 @@ $photo = $stmt->fetch();
             <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
             <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
         </div>
+        <div id="overlay" onclick="closePopup()"></div>
         <div id="popup" class="popup">
-            <a href="">Accéder au profil</a>
-            <br>
-            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-            <a onclick="closePopup()">Fermer la fenêtre</a>
+            <table id="tableProfil">
+                <tr>
+                    <td>
+                        <a id="monprofil" href="">Accéder au profil</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 
+                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+                    </td>  
+                </tr>
+            </table>
         </div>
     </header>
 
@@ -153,25 +164,24 @@ $photo = $stmt->fetch();
     // Ouvrir la popup
     function openPopup() {
         var popup = document.getElementById('popup');
+        var overlay = document.getElementById('overlay');
         popup.style.display = 'block';
+        overlay.style.display = 'block';
     }
 
     // Fermer la popup
     function closePopup() {
         var popup = document.getElementById('popup');
+        var overlay = document.getElementById('overlay');
         popup.style.display = 'none';
+        overlay.style.display = 'none';
     }
 
-    // Ajouter des gestionnaires d'événements aux boutons
-    var profilButton = document.getElementById('profilButton');
-    profilButton.addEventListener('click', function() {
-        alert('Accéder au profil');
-        closePopup();
+    // Ajouter un gestionnaire d'événements pour fermer la pop-up en cliquant à l'extérieur
+    var overlay = document.getElementById('overlay');
+    overlay.addEventListener('click', function (event) {
+        if (event.target === overlay) {
+            closePopup();
+        }
     });
-
-    var deconnexionButton = document.getElementById('deconnexionButton');
-    deconnexionButton.addEventListener('click', function() {
-        alert('Se déconnecter');
-        closePopup();
-    });
-</Script>
+</script>

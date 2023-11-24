@@ -291,6 +291,7 @@
 
 </html>
 
+<<<<<<< HEAD
 
 <style>
     .popup {
@@ -307,6 +308,8 @@
     }
 </style>
 
+=======
+>>>>>>> 9364f17a90c80a56455381988de79fa473ad37bb
 <!-- Partie animé du profil d'une personne connecter -->
 <script>
     // Ouvrir la popup

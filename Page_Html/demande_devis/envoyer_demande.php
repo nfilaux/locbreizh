@@ -89,8 +89,13 @@
         // ajoute le message type pour une demande de devis
         $stmt = $dbh->prepare("INSERT INTO locbreizh._message(contenu_message, date_mess, heure_mess, auteur, conversation) 
         VALUES (:contenu_message, :date, :temps, :id, :id_conv);");
+<<<<<<< HEAD
         $tempMessage = "Voici une demande de DEVIS de {$info_user['pseudo']} pour le logement {$libelle_log['libelle_logement']}";
         $stmt->bindParam(':contenu_message', $tempMessage);
+=======
+        $tempmessage = "Voici une demande de DEVIS de {$info_user['pseudo']} pour le logement {$libelle_log['libelle_logement']}";
+        $stmt->bindParam(':contenu_message', $tempmessage);
+>>>>>>> 9364f17a90c80a56455381988de79fa473ad37bb
         $stmt->bindParam(':date', $date);
         $stmt->bindParam(':temps', $time);
         $stmt->bindParam(':id', $_SESSION['id']);

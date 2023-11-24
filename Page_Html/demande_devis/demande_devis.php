@@ -162,6 +162,7 @@
 
 </html>
 
+<<<<<<< HEAD
 <!-- Partie stylisé des popup-->
 <style>
     .popup {
@@ -179,6 +180,8 @@
 </style>
 
 <!-- Partie animé du profil d'une personne connecter -->
+=======
+>>>>>>> 9364f17a90c80a56455381988de79fa473ad37bb
 <script>
     // Ouvrir la popup
     function openPopup() {
