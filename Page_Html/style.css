@@ -510,7 +510,7 @@ footer a:visited {
 
 /*----------------------------------------------------------------MDP POP UP-------------------------------------------------------------*/
 
-.password-popup {
+.mdp-popup {
     display: none;
     position: fixed;
     top: 50%;
@@ -523,7 +523,7 @@ footer a:visited {
     z-index: 1000;
 }
 
-.password-popup label {
+.mdp-popup label {
     display: block;
     margin-bottom: 10px;
 }

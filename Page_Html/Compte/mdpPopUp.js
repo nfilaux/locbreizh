@@ -1,14 +1,14 @@
 // Ouvrir la popup
-function openPasswordPopup() {
-    var popup = document.getElementById('passwordPopup');
+function openMdpPopup() {
+    var popup = document.getElementById('mdpPopup');
     var overlay = document.getElementById('overlay');
     popup.style.display = 'block';
     overlay.style.display = 'block';
 }
 
 // Fermer la popup
-function closePasswordPopup() {
-    var popup = document.getElementById('passwordPopup');
+function closeMdpPopup() {
+    var popup = document.getElementById('mdpPopup');
     var overlay = document.getElementById('overlay');
     popup.style.display = 'none';
     overlay.style.display = 'none';
@@ -18,6 +18,6 @@ function closePasswordPopup() {
 var overlay = document.getElementById('overlay');
 overlay.addEventListener('click', function (event) {
     if (event.target === overlay) {
-        closePasswordPopup();
+        closeMdpPopup();
     }
 });

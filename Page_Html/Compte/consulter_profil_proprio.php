@@ -1,5 +1,8 @@
 <?php 
+    // ouverure de la session
     session_start();
+
+    // mise ne place du PDO pour l'accès à la BDD
     try {
         include('../parametre_connexion.php');
 
@@ -10,7 +13,7 @@
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
-
+    // recupération des infos du compte pour les afficher
     $stmt = $dbh->prepare(
         "SELECT  nom, prenom, pseudo, mail, telephone, photo, nom_rue, numero_rue, code_postal, pays, ville, rib, carte_identite
         from locbreizh._compte
@@ -18,10 +21,10 @@
         join locbreizh._adresse on _adresse.id_adresse = _compte.adresse
         where id_compte = {$_SESSION['id']};"
     );
-// nfi mlkjJMLJ465##!!
     $stmt->execute();
     $infos = $stmt->fetch();
 
+    // fontion pour afficher les erreurs de modification
     function erreur($nomErreur){
         if(isset($_SESSION["erreurs"][$nomErreur])){
             ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
@@ -42,13 +45,16 @@
     <header>
         <h1>Mon compte</h1>
     </header>
-    <div id="overlay" onclick="closePasswordPopup()"></div>
-    <div id="passwordPopup" class="password-popup">
-        <div class="mdpCroix" onclick="closePasswordPopup()"><img src="../svg/croix.svg" alt="croix"></div>
+    <!-- overlay utiliser pour fermer la popup -->
+    <div id="overlay" onclick="closeMdpPopup()"></div>
+    <!--contenu de la popup pour le changement de mdp-->
+    <div id="mdpPopup" class="mdp-popup">
+        <!-- croix pour la fermeture de la popup -->
+        <div class="mdpCroix" onclick="closeMdpPopup()"><img src="../svg/croix.svg" alt="croix"></div>
         <h2>Changer le mot de passe</h2>
         <form action="changer_mdp_back.php" method="post" enctype="multipart/form-data">
             
-            <label for="currentPassword">Mot de passe actuel:</label>
+            <label for="mdp">Mot de passe actuel:</label>
             <input type="password" id="mdp" name="mdp" required>
             <?php if(isset($_GET['mdp'])){ erreur('ancien_motdepasse');} ?>
 
@@ -66,10 +72,13 @@
 
     
     <main>
+        <!-- debut du formulaire pour afficher/modifier les informations "simples" du compte -->
         <form action="modifier_proprio.php" method="post" enctype="multipart/form-data">
             <div class="rowcompte">
                 <label for="prenom">Prénom</label>
+                <!-- input pour pouvoir modifier l'information + pré-replissage -->
                 <input type="text" id="prenom" name="prenom" maxlength="20" value="<?php echo $infos['prenom'];?>" required>
+                <!-- affichage des possibles erreurs (même chose pour les prochains appels de la fonction) -->
                 <?php erreur("prenom");?>
             </div>
             <div class="rowcompte">
@@ -92,6 +101,7 @@
                 <input type="tel" id="telephone" name="telephone" value="<?php echo substr($infos['telephone'], 0,2) . ' ' . substr($infos['telephone'], 2,2) . ' ' . substr($infos['telephone'], 4,2) . ' ' . substr($infos['telephone'], 6,2) . ' ' . substr($infos['telephone'], 8,2);?>" required>
                 <?php erreur("telephone");?>
             </div>
+            <!-- section pour les informations de l'adresse -->
             <div class="rowcompte">
                 <p>Adresse</p>
                 <div>
@@ -107,18 +117,21 @@
                     <?php erreur("ville");?>
                 </div>
             </div>
+            <!-- lien cliquable vers la carte d'iendité + input pour la modifier -->
             <div>
                 <label for="carteIdentite">Carte d'identite</label>
                 <a href="../Ressources/carte_identite/<?php echo $infos['carte_identite']; ?>">Voir ma carte d'identité</a>
                 <input type="file" id="carteIdentite" name="carteIdentite"/>
                 <?php erreur("carteIdentite"); ?>
             </div>
+            <!-- lien cliquable vers le RIB + input pour le modifier -->
             <div>
                 <label for="rib">RIB :</label>
                 <a href="../Ressources/rib/<?php echo $infos['rib']; ?>">Voir le RIB</a>
                 <input type="file" id="rib" name="rib"/>
                 <?php erreur("rib"); ?>
             </div>
+            <!-- affichage de la photo de profil + input pour la modifier -->
             <div>
                 <img src="../Ressources/Images/<?php echo $infos['photo']; ?>" title="photo" alt="photo de profil">
                 <label for="photo">Photo de profil</label>
@@ -128,11 +141,13 @@
             </div>
             <input type="submit" value="Enregistrer les modifications">
         </form>
+        <!-- section pour modifier le mot de passe -->
         <div class="rowcompte">
             <p>Mot de passe</p>
-            <!-- Button to trigger the password change popup -->
-            <button type="button" onclick="openPasswordPopup()">Changer le mot de passe</button>
+            <!-- boutton pour ouvrir la popup -->
+            <button type="button" onclick="openMdpPopup()">Changer le mot de passe</button>
         </div>
+        <!-- section suppression du compte -->
         <div>
             <div>
                 <h2>Suppression du compte</h2>
@@ -144,7 +159,8 @@
         </main>
 </body>
 <?php
-if(isset($_GET['mdp'])){?>
-    <script>openPasswordPopup();</script>
-<?php } ?>
+    // ouverture automatique de la popup du changement de mdp si une erreur a été trouvée
+    if(isset($_GET['mdp'])){?>
+        <script>openMdpPopup();</script>
+    <?php } ?>
 </html>

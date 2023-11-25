@@ -1,6 +1,8 @@
 <?php 
+    // ouverture de la session
     session_start();
 
+    // mise ne place du PDO pour l'accès à la BDD
     try {
         include('../parametre_connexion.php');
 
@@ -12,15 +14,18 @@
         die();
     }
 
+    // récupération des anciennes infos du compte
     $stmt = $dbh->prepare("SELECT nom, prenom, mail, pseudo, telephone
     from locbreizh._compte 
     where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $anciens_infos = $stmt->fetch();
+
     $erreur = false; // variable qui permet de savoir si il y a une erreur ou non dans le remplissage du formulaire
     $_SESSION["erreurs"] = []; // la session récupère toutes les erreurs pour les affichées dans le formulaire
-    print_r($_SESSION['erreurs']);
+
     foreach ($_POST as $key => $row){
+        // si vide
         if (empty($row)){
             $erreur = true;
             $_SESSION['erreurs'] += [$key => "Veuillez renseigner ce champ."];
@@ -73,6 +78,8 @@
             }
         }
     }
+
+    // test unicité du mail (si différent)
     if($anciens_infos['mail'] != $_POST['mail']){
         $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '{$mail}';");
         $verifMail->execute();
@@ -83,6 +90,7 @@
         }
     }
 
+    // test unicité du telephone (si différent)
     if($anciens_infos['telephone'] != $tel){
         $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '{$tel}';");
         $verifTel->execute();
@@ -93,6 +101,7 @@
         }
     }
 
+    // test unicité du pseudo (si différent)
     if($anciens_infos['pseudo'] != $_POST['pseudo']){
         $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '{$pseudo}';");
         $verifPseudo->execute();
@@ -103,6 +112,7 @@
         }
     }
 
+    // test extension du fichier + si un nouveau a été donné
     $arrayNom = explode('.', $_FILES['photo']['name']);
     if($arrayNom[0] != ''){
         $extension = $arrayNom[sizeof($arrayNom)-1];
@@ -118,34 +128,50 @@
         $i1_present = false;
     }
 
+    // si aucune erreur n'a été trouvé ont fait les modifications
     if (!$erreur){
+        // recupere le nom de l'ancienne photo
         $stmt = $dbh->prepare("Select photo from locbreizh._compte 
         where id_compte = {$_SESSION['id']}");
         $stmt->execute();
         $photo = $stmt->fetch();
 
         if($i1_present){
+            // explode l'ancien nom pour separer l'extension
             $nom_bdd = explode('.', trim($photo['photo'], ' '));
+
+            // nouveau nom avec bonne extension
             $nom_et_ext = $nom_bdd[0] .'.' . $extension;
+
+            // move le fichier dans les ressources
             move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $nom_et_ext);
 
-
+            // si le nom a changé à cause de l'ext on update la BDD :
             if($nom_bdd[1] != $extension){
+                // créé une nouvelle instance de photo
                 $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
                 $stmt->execute();
 
+                // update le nom
                 $stmt = $dbh->prepare("UPDATE locbreizh._compte 
                 SET photo = '$nom_et_ext'
                 where id_compte = {$_SESSION['id']};");
                 $stmt->execute();
+
+                // suppression de l'ancienne photo
+                $stmt = $dbh->prepare("DELETE FROM locbreizh._photo
+                WHERE url_photo = {$photo['photo']};");
+                $stmt->execute();
             }
         }
 
-        
+        // test de l'age légal
         $ageLegal = ageLegal($date);
-        if($ageLegal == ""){
+        if(!$ageLegal){
             $ageLegal = 0;
         }
+
+        // update l'info du client
         $stmt = $dbh->prepare(
             "UPDATE locbreizh._client SET 
             age_legal = :age_legal,
@@ -156,6 +182,7 @@
         $stmt->bindParam(':dateNaissance', $_POST['date']);
         $stmt->execute();
 
+        // update des infos du compte
         $stmt = $dbh->prepare(
             "UPDATE locbreizh._compte SET 
             nom = :nom, 
@@ -170,15 +197,15 @@
         $stmt->bindParam(':mail', $mail);
         $stmt->bindParam(':pseudo', $pseudo);
         $stmt->bindParam(':telephone', $tel);
-    
         $stmt->execute();
         
+        // recupére l'id de l'adresse à modifier
         $stmt = $dbh->prepare("Select adresse from locbreizh._compte 
         where id_compte = {$_SESSION['id']}");
         $stmt->execute();
         $id_adresse = $stmt->fetch();
     
-    
+        // modification de l'adresse
         $stmt = $dbh->prepare(
             "UPDATE locbreizh._adresse SET 
             nom_rue = :nom_rue,
@@ -191,11 +218,9 @@
         $stmt->bindParam(':numero_rue', $numRue);
         $stmt->bindParam(':code_postal', $codePostal);
         $stmt->bindParam(':ville', $ville);
-    
         $stmt->execute();
-    
-        
     }
+    // redirection
     header("Location: consulter_profil_client.php");
 
     // définition des fonctions permettant de faire les tests de conformité sur les données

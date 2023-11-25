@@ -1,5 +1,8 @@
 <?php 
+    // ouverture de la session
     session_start();
+
+    // mise ne place du PDO pour l'accès à la BDD
     try {
         include('../parametre_connexion.php');
 
@@ -11,6 +14,7 @@
         die();
     }
 
+    // récupération des anciennes infos du compte
     $stmt = $dbh->prepare("SELECT nom, prenom, mail, pseudo, telephone
     from locbreizh._compte 
     where id_compte = {$_SESSION['id']};");
@@ -19,7 +23,9 @@
 
     $erreur = false; // variable qui permet de savoir si il y a une erreur ou non dans le remplissage du formulaire
     $_SESSION["erreurs"] = []; // la session récupère toutes les erreurs pour les affichées dans le formulaire
+
     foreach ($_POST as $key => $row){
+        // si vide
         if (empty($row)){
             $erreur = true;
             $_SESSION['erreurs'] += [$key => "Veuillez renseigner ce champ."];
@@ -69,6 +75,8 @@
             }
         }
     }
+
+    // test unicité du mail (si différent)
     if($anciens_infos['mail'] != $_POST['mail']){
         $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '{$mail}';");
         $verifMail->execute();
@@ -79,6 +87,7 @@
         }
     }
 
+    // test unicité du telephone (si différent)
     if($anciens_infos['telephone'] != $tel){
         $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '$tel';");
         $verifTel->execute();
@@ -89,6 +98,7 @@
         }
     }
 
+    // test unicité du pseudo (si différent)
     if($anciens_infos['pseudo'] != $_POST['pseudo']){
         $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '{$pseudo}';");
         $verifPseudo->execute();
@@ -98,7 +108,7 @@
             $erreur = true;
         }
     }
-
+    // test extension de la photo + si un nouveau a été donné
     $arrayNom = explode('.', $_FILES['photo']['name']);
     if($arrayNom[0] != ''){
         $extension = $arrayNom[sizeof($arrayNom)-1];
@@ -114,7 +124,7 @@
         $i1_present = false;
     }
 
-
+    // test extension du rib + si un nouveau a été donné
     $arrayNom2 = explode('.', $_FILES['rib']['name']);
     if($arrayNom2[0] != ''){
         $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
@@ -130,6 +140,7 @@
         $i2_present = false;
     }
 
+    // test extension de la carte d'identié + si une nouvelle a été donné
     $arrayNom3 = explode('.', $_FILES['carteIdentite']['name']);
     if($arrayNom3[0] != ''){
         $extension3 = $arrayNom3[sizeof($arrayNom3)-1];
@@ -146,70 +157,106 @@
         $i3_present = false;
     }
     
-
+    // si aucune erreur n'a été trouvé ont fait les modifications
     if (!$erreur){
+        // recupere le nom de l'ancienne photo
         $stmt = $dbh->prepare("Select photo from locbreizh._compte 
         where id_compte = {$_SESSION['id']}");
         $stmt->execute();
         $photo = $stmt->fetch();
 
+        // recupere le nom de l'ancien rib et carte d'identite
         $stmt = $dbh->prepare("SELECT rib, carte_identite  
         from locbreizh._proprietaire
         where id_proprietaire = {$_SESSION['id']} ");
         $stmt->execute();
         $doc = $stmt->fetch();
 
-
         if($i1_present){
+            // explode l'ancien nom pour separer l'extension
             $nom_bdd = explode('.', trim($photo['photo'], ' '));
+            // nouveau nom avec bonne extension
             $nom_et_ext = $nom_bdd[0] .'.' . $extension;
+            // move le fichier dans les ressources
             move_uploaded_file($_FILES['photo']['tmp_name'], '../Ressources/Images/' . $nom_et_ext);
 
-
+            // si le nom a changé à cause de l'ext on update la BDD :
             if($nom_bdd[1] != $extension){
+                // créé une nouvelle insantce de photo
                 $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
                 $stmt->execute();
 
+                // update le nom
                 $stmt = $dbh->prepare("UPDATE locbreizh._compte 
                 SET photo = '$nom_et_ext'
                 where id_compte = {$_SESSION['id']};");
                 $stmt->execute();
+
+                // suppression de l'ancienne photo
+                $stmt = $dbh->prepare("DELETE FROM locbreizh._photo
+                WHERE url_photo = {$photo['photo']};");
+                $stmt->execute();
+
             }
         }
         if($i2_present){
+            // explode l'ancien nom du rib pour separer l'extension
             $nom_bdd = explode('.', trim($doc['rib'], ' '));
+
+            // nouveau nom avec bonne extension
             $nom_et_ext = $nom_bdd[0] .'.' . $extension2;
 
+             // move le fichier dans les ressources
             move_uploaded_file($_FILES['rib']['tmp_name'], '../Ressources/rib/' . $nom_et_ext);
             
+            // si le nom a changé à cause de l'ext on update la BDD :
             if($nom_bdd[1] != $extension2){
-                echo $nom_bdd[1] .'<br>';
-                echo $extension2 .'<br>';
+                // créé une nouvelle instance de photo
                 $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
                 $stmt->execute();
 
+                // update le nom du fichier
                 $stmt = $dbh->prepare("UPDATE locbreizh._proprietaire 
                 SET rib = '$nom_et_ext'
                 where id_proprietaire = {$_SESSION['id']};");
                 $stmt->execute();
+
+                // suppression de l'ancienne photo
+                $stmt = $dbh->prepare("DELETE FROM locbreizh._photo
+                WHERE url_photo = {$doc['rib']};");
+                $stmt->execute();
             }
         }
         if($i3_present){
+            // explode l'ancien nom pour separer l'extension
             $nom_bdd = explode('.', trim($doc['carte_identite'], ' '));
+
+            // nouveau nom avec bonne extension
             $nom_et_ext = $nom_bdd[0] .'.' . $extension3;
+
+            // move le fichier dans les ressources
             move_uploaded_file($_FILES['carteIdentite']['tmp_name'], '../Ressources/carte_identite/' . $nom_et_ext);
             
+            // si le nom a changé à cause de l'ext on update la BDD :
             if($nom_bdd[1] != $extension3){
+                // créé une nouvelle instance de photo
                 $stmt = $dbh->prepare("INSERT into locbreizh._photo values('$nom_et_ext');");
                 $stmt->execute();
 
+                // update le nom
                 $stmt = $dbh->prepare("UPDATE locbreizh._proprietaire 
                 SET carte_identite = '$nom_et_ext'
                 where id_proprietaire = {$_SESSION['id']};");
                 $stmt->execute();
+
+                // suppression de l'ancienne photo
+                $stmt = $dbh->prepare("DELETE FROM locbreizh._photo
+                WHERE url_photo = {$doc['carte_identite']};");
+                $stmt->execute();
             }
         }
 
+        // update des infos du compte
         $stmt = $dbh->prepare(
             "UPDATE locbreizh._compte SET 
             nom = :nom, 
@@ -224,15 +271,15 @@
         $stmt->bindParam(':mail', $mail);
         $stmt->bindParam(':pseudo', $pseudo);
         $stmt->bindParam(':telephone', $tel);
-    
         $stmt->execute();
         
+        // recupére l'id de l'adresse à modifier
         $stmt = $dbh->prepare("Select adresse from locbreizh._compte 
         where id_compte = {$_SESSION['id']}");
         $stmt->execute();
         $id_adresse = $stmt->fetch();
     
-    
+        // modification de l'adresse
         $stmt = $dbh->prepare(
             "UPDATE locbreizh._adresse SET 
             nom_rue = :nom_rue,
@@ -245,11 +292,9 @@
         $stmt->bindParam(':numero_rue', $numRue);
         $stmt->bindParam(':code_postal', $codePostal);
         $stmt->bindParam(':ville', $ville);
-    
         $stmt->execute();
-    
-        
     }
+    // redirection
     header("Location: consulter_profil_proprio.php");
 
     // définition des fonctions permettant de faire les tests de conformité sur les données
