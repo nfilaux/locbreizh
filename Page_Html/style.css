@@ -12,14 +12,14 @@ body {
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
-header{
+header {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     position: relative;
     color: #745086;
     box-sizing: border-box;
-    border-bottom: 1px solid #745086; 
+    border-bottom: 1px solid #745086;
     flex-wrap: nowrap;
 }
 
@@ -29,12 +29,12 @@ header{
 }
 
 header h2 {
-    margin:auto 1em auto 1em;
+    margin: auto 1em auto 1em;
     color: #745086;
 }
 
-header h4{
-    color:#000;
+header h4 {
+    color: #000;
     margin-right: 2em;
 }
 
@@ -49,17 +49,17 @@ header a:first-child {
     flex-wrap: nowrap;
 }
 
-header input{
+header input {
     width: 25em;
 }
 
 .brecherche {
     display: flex;
     flex-wrap: nowrap;
-    margin:auto 3em auto 3em;
+    margin: auto 3em auto 3em;
 }
 
-.imghead{
+.imghead {
     margin-top: auto;
     margin-bottom: auto;
     display: flex;
@@ -79,7 +79,7 @@ header a:last-child {
     padding: none;
 }
 
-.headconn{
+.headconn {
     position: relative;
     background-color: #745086;
     color: #fff;
@@ -89,7 +89,7 @@ header a:last-child {
     margin-top: 5vw;
 }
 
-.headconn img{
+.headconn img {
     position: absolute;
     left: 5em;
     top: 1em;
@@ -103,33 +103,34 @@ header a:last-child {
 
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
 
-.MainTablo{
+.MainTablo {
     padding-top: 0vw;
 }
 
-main{
+main {
     padding-top: 5vw;
     padding-bottom: 5vw;
 }
 
-main label, .Tablobord h2{
+main label,
+.Tablobord h2 {
     color: #745086;
 }
 
-main h1{
+main h1 {
     color: #020202;
     margin: auto;
     text-align: center;
 }
 
-.card{
+.card {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-evenly;
 }
 
-.card section{
+.card section {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -139,30 +140,31 @@ main h1{
     padding-top: 0.5em;
 }
 
-.card section article{
+.card section article {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-evenly;
 }
 
-.card section article h3,.card section article h4{
+.card section article h3,
+.card section article h4 {
     color: #fff;
 }
 
-.card section article img{
+.card section article img {
     margin: 0;
     border-radius: 15px;
     width: 96%;
 }
 
-.Tablobord{
+.Tablobord {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.Tablobord article{
+.Tablobord article {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -170,10 +172,10 @@ main h1{
 }
 
 
-.Tablobord hr{
+.Tablobord hr {
     height: auto;
     border: none;
-    border: 2px solid #745086; 
+    border: 2px solid #745086;
     margin: 0;
 }
 
@@ -185,7 +187,7 @@ main h1{
     text-decoration: none;
 }
 
-.voir_plus hr{
+.voir_plus hr {
     border-width: 1px;
     border-color: #F6E4FF;
     width: 15%;
@@ -196,27 +198,27 @@ main h1{
     justify-content: center;
 }
 
-.Maincompte section{
+.Maincompte section {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.Maincompte section article{
+.Maincompte section article {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: auto auto 1em auto;
 }
 
-.Maincompte section article div span{
+.Maincompte section article div span {
     margin-top: 2em;
     font-size: 1.5em;
 }
 
 /*----------------------------------------------------------------footer----------------------------------------------------------------*/
 
-footer{
+footer {
     padding-top: 1px;
     background-color: #745086;
     color: #F6E4FF;
@@ -225,18 +227,19 @@ footer{
     position: relative;
     bottom: 0;
     box-sizing: border-box;
-    border-top: 1px solid #F6E4FF   ;
+    border-top: 1px solid #F6E4FF;
     width: 100%;
 }
 
-.tfooter, .bfooter{
+.tfooter,
+.bfooter {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
 }
 
-footer hr{
+footer hr {
     border-width: 1px;
     border-color: #F6E4FF;
     width: 87%;
@@ -246,26 +249,31 @@ footer div p {
     padding: 0%;
 }
 
-.linkreseau{
+.linkreseau {
     margin: auto;
 }
 
 
 /*----------------------------------------------------------------Link----------------------------------------------------------------*/
 
-a:link , a:visited , a:hover{
+a:link,
+a:visited,
+a:hover {
     color: #745086;
 }
 
-header a:link ,header a:visited, footer a:link, footer a:visited {
+header a:link,
+header a:visited,
+footer a:link,
+footer a:visited {
     margin-right: 0;
     font-size: 1.5em;
     color: #F6E4FF;
     text-decoration: none;
 }
 
-.margintb{
-    margin-top: auto;   
+.margintb {
+    margin-top: auto;
     margin-bottom: auto;
     display: flex;
     flex-direction: row;
@@ -275,9 +283,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 /*----------------------------------------------------------------Bouton----------------------------------------------------------------*/
 
 .btn-compte {
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 20px;
     width: 20em;
     font-size: 2em;
@@ -287,19 +295,19 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-accueil {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 20px;
     font-size: 1em;
 }
 
 .btn-accueilins {
     margin-top: auto;
-    margin-bottom: auto; 
+    margin-bottom: auto;
     margin-left: 5em;
     color: #745086;
-    border: 1px solid #745086; 
+    border: 1px solid #745086;
     border-radius: 20px;
     font-size: 1em;
 }
@@ -308,11 +316,12 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding: 0.5em 1em 0.5em 1em;
 }
 
-.btn-accueilins:visited{
+.btn-accueilins:visited {
     color: #745086;
 }
 
-.btn-accueilins h5, .btn-accueil h5{
+.btn-accueilins h5,
+.btn-accueil h5 {
     margin: auto;
 }
 
@@ -334,32 +343,46 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-ajoutlog {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
 }
 
 
-#Login::placeholder, #motdepasse::placeholder ,#prenom::placeholder, #nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
-#pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
+#Login::placeholder,
+#motdepasse::placeholder,
+#prenom::placeholder,
+#nom::placeholder,
+#Pseudo::placeholder,
+#mail::placeholder,
+#langue::placeholder,
+#email::placeholder,
+#pseudo::placeholder,
+#ville::placeholder,
+#confirmationMDP::placeholder,
+#codePostal::placeholder,
+#numRue::placeholder,
+#nomRue::placeholder,
+#telephone::placeholder {
     color: #957BB0;
     opacity: 50%;
     text-align: center;
 }
 
-.compteciv , .rib {
+.compteciv,
+.rib {
     margin: auto;
 }
 
-.tewt{
+.tewt {
     padding: auto;
 }
 
 .custom-input {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -394,7 +417,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     justify-content: space-between;
 }
 
-.rowcompte a{
+.rowcompte a {
     margin: auto 2em auto 2em;
 }
 
@@ -437,7 +460,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 
 .testinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -447,7 +470,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .conmdpinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -457,7 +480,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .nbrueinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -467,7 +490,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .nomrueinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -476,11 +499,46 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     margin: 1em auto auto auto;
 }
 
-.spbt{
+.spbt {
     display: flex;
     justify-content: space-evenly;
 }
 
-.margl{
+.margl {
     margin-left: 1em;
+}
+
+/*----------------------------------------------------------------MDP POP UP-------------------------------------------------------------*/
+
+.password-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.password-popup label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.mdpCroix {
+    display: inline-block;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }

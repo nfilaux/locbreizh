@@ -27,13 +27,13 @@
             ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
             unset($_SESSION["erreurs"][$nomErreur]);
         }
-}
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="../style.css">
-
+    <link rel="stylesheet" href="../style.css">
+    <script src="mdpPopUp.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon profil</title>
@@ -42,6 +42,28 @@
     <header>
         <h1>Mon compte</h1>
     </header>
+    <div id="overlay" onclick="closePasswordPopup()"></div>
+    <div id="passwordPopup" class="password-popup">
+        <div class="mdpCroix" onclick="closePasswordPopup()"><img src="../svg/croix.svg" alt="croix"></div>
+        <h2>Changer le mot de passe</h2>
+        <form action="changer_mdp_back.php" method="post" enctype="multipart/form-data">
+            
+            <label for="currentPassword">Mot de passe actuel:</label>
+            <input type="password" id="mdp" name="mdp" required>
+            <?php if(isset($_GET['mdp'])){ erreur('ancien_motdepasse');} ?>
+
+            <label for="newMdp">Nouveau mot de passe:</label>
+            <input type="password" id="newMdp" name="newMdp" required>
+            <?php if(isset($_GET['mdp'])){ erreur('motdepasse');} ?>
+
+            <label for="confirmMdp">Confirmer le nouveau mot de passe:</label>
+            <input type="password" id="confirmMdp" name="confirmMdp" required>
+            <?php if(isset($_GET['mdp'])){ erreur('confirmationMDP');} ?>
+
+            <input type="submit" value="Changer le mot de passe">
+        </form>
+    </div>
+
     
     <main>
         <form action="modifier_proprio.php" method="post" enctype="multipart/form-data">
@@ -69,10 +91,6 @@
                 <label for="telephone">Téléphone</label>
                 <input type="tel" id="telephone" name="telephone" value="<?php echo substr($infos['telephone'], 0,2) . ' ' . substr($infos['telephone'], 2,2) . ' ' . substr($infos['telephone'], 4,2) . ' ' . substr($infos['telephone'], 6,2) . ' ' . substr($infos['telephone'], 8,2);?>" required>
                 <?php erreur("telephone");?>
-            </div>
-            <div class="rowcompte">
-                <p>Mot de passe</p>
-                <p>XXXXXXXXXXXX</p>
             </div>
             <div class="rowcompte">
                 <p>Adresse</p>
@@ -110,6 +128,11 @@
             </div>
             <input type="submit" value="Enregistrer les modifications">
         </form>
+        <div class="rowcompte">
+            <p>Mot de passe</p>
+            <!-- Button to trigger the password change popup -->
+            <button type="button" onclick="openPasswordPopup()">Changer le mot de passe</button>
+        </div>
         <div>
             <div>
                 <h2>Suppression du compte</h2>
@@ -118,7 +141,10 @@
             </div>
             <button disabled>Supprimer le compte</button>
         </div>
-    </main>
-    
+        </main>
 </body>
+<?php
+if(isset($_GET['mdp'])){?>
+    <script>openPasswordPopup();</script>
+<?php } ?>
 </html>
