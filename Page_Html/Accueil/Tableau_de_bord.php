@@ -85,7 +85,8 @@
 
                 $stmt->execute();
                 foreach ($stmt->fetchAll() as $key => $card) { 
-                    $nomPlage = 'plage' . $key;?>
+                    $nomPlage = 'plage' . $key; 
+                    $overlayPlage = 'overlay' . $key?>
                     <div class="tdblog"> 
                         <?php
                         echo "<a href=\"../Logement/logement_detaille_proprio.php?logement={$card['id_logement']}\"><div class=\"card\">";
@@ -98,11 +99,11 @@
                         echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
                         echo "<a href=\"../Logement/modifierLogement.php?id_logement={$card['id_logement']}\"><button>Modifier ce logement</button></a></div></a>";?>
                     
-                        <a onclick="openPopup(<?php echo $nomPlage; ?>, 'overlay_plages')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>
+                        <a onclick="openPopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>
                         
-                        <div id="overlay_plages" onclick="closePopup(<?php echo $nomPlage; ?>, 'overlay_plages')"></div>
+                        <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
                         
-                        <div id=<?php echo $nomPlage; ?> class='plages'> 
+                        <div id="<?php echo $nomPlage; ?>" class='plages'> 
                             <h1>Ajouter une plage ponctuelle</h1><br>
                             <form action="plagesBack.php" method="post">
                                 

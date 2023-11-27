@@ -2,6 +2,7 @@
     border: 1px solid #745086;
     margin: 15px;
     padding: 20px;
+    background-color: #FAE3C6;
 }
 
 /*----------------------------------------------------------------Polices---------------------------------------------------------------*/
@@ -144,9 +145,9 @@ header a:last-child {
 #popup {
     font-size: 0.7em;
     display: none;
-    position: absolute;
-    top:130%;
-    left: 93%;
+    position: fixed;
+    top:93%;
+    left: 85%;
     transform: translate(-50%, -50%);
     background-color: transparent;
     border: transparent;
