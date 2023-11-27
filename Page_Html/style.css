@@ -1,9 +1,28 @@
+/*----------------------------------------------------------------Polices---------------------------------------------------------------*/
+
+@font-face {
+	font-family: 'PatuaOne';
+	src: url(‘Ressources/Polices/patua_one/PatuaOne-Regular.woff2’) format(‘woff2’),
+		url(‘Ressources/Polices/patua_one/PatuaOne-Regular.ttf’) format(‘truetype’)
+}
+
+@font-face {
+	font-family: 'Quicksand';
+	src: url(‘Ressources/Polices/quicksand/Quicksand-Bold.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-Light.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-Medium.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-Regular.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-SemiBold.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-VariableFont_wght.woff2’) format(‘woff2’)
+}
+
 body {
     height: auto;
     padding-bottom: 0;
     margin: 0;
     background-origin: content-box;
     width: 100%;
+    font-family: 'Quicksand';
 }
 
 .pagecompte {
@@ -12,14 +31,14 @@ body {
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
-header {
+header{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     position: relative;
     color: #745086;
     box-sizing: border-box;
-    border-bottom: 1px solid #745086;
+    border-bottom: 1px solid #745086; 
     flex-wrap: nowrap;
 }
 
@@ -29,12 +48,12 @@ header {
 }
 
 header h2 {
-    margin: auto 1em auto 1em;
+    margin:auto 1em auto 1em;
     color: #745086;
 }
 
-header h4 {
-    color: #000;
+header h4{
+    color:#000;
     margin-right: 2em;
 }
 
@@ -49,17 +68,17 @@ header a:first-child {
     flex-wrap: nowrap;
 }
 
-header input {
+header input{
     width: 25em;
 }
 
 .brecherche {
     display: flex;
     flex-wrap: nowrap;
-    margin: auto 3em auto 3em;
+    margin:auto 3em auto 3em;
 }
 
-.imghead {
+.imghead{
     margin-top: auto;
     margin-bottom: auto;
     display: flex;
@@ -79,7 +98,7 @@ header a:last-child {
     padding: none;
 }
 
-.headconn {
+.headconn{
     position: relative;
     background-color: #745086;
     color: #fff;
@@ -89,93 +108,70 @@ header a:last-child {
     margin-top: 5vw;
 }
 
-.headconn img {
+.headtablo{
+    position: relative;
+    background-color: #745086;
+    color: #fff;
+    margin-bottom: 2em;
+    display: flex;
+    justify-content: center;
+    margin-top: 0vw;
+}
+
+
+.headconn img , .headtablo img{
     position: absolute;
     left: 5em;
     top: 1em;
 }
 
-.headconn h1 {
+.headconn h1 , .headtablo h1 {
     color: #fff;
     font-size: 4em;
     margin: 3px;
+    font-family: 'PatuaOne';
 }
 
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
 
-.MainTablo {
+.MainTablo{
     padding-top: 0vw;
 }
 
-main {
+main{
     padding-top: 5vw;
     padding-bottom: 5vw;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
-main label,
-.Tablobord h2 {
+main label, .Tablobord h2{
     color: #745086;
 }
 
-main h1 {
+main h1{
     color: #020202;
     margin: auto;
     text-align: center;
 }
 
-.card {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-}
-
-.card section {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    background-color: #745086;
-    border-radius: 15px;
-    padding-top: 0.5em;
-}
-
-.card section article {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-}
-
-.card section article h3,
-.card section article h4 {
-    color: #fff;
-}
-
-.card section article img {
-    margin: 0;
-    border-radius: 15px;
-    width: 96%;
-}
-
-.Tablobord {
+.Tablobord{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.Tablobord article {
+.Tablobord article{
     display: flex;
     flex-direction: column;
     text-align: center;
     width: 45em;
 }
 
-
-.Tablobord hr {
+.hr{
     height: auto;
     border: none;
-    border: 2px solid #745086;
+    border: 2px solid #745086; 
     margin: 0;
 }
 
@@ -187,7 +183,14 @@ main h1 {
     text-decoration: none;
 }
 
-.voir_plus hr {
+.voir_plusR {
+    display: flex;
+    align-self: flex-end;
+    position: relative;
+    text-decoration: none;
+}
+
+.voir_plus hr{
     border-width: 1px;
     border-color: #F6E4FF;
     width: 15%;
@@ -198,27 +201,27 @@ main h1 {
     justify-content: center;
 }
 
-.Maincompte section {
+.Maincompte section{
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.Maincompte section article {
+.Maincompte section article{
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: auto auto 1em auto;
 }
 
-.Maincompte section article div span {
+.Maincompte section article div span{
     margin-top: 2em;
     font-size: 1.5em;
 }
 
 /*----------------------------------------------------------------footer----------------------------------------------------------------*/
 
-footer {
+footer{
     padding-top: 1px;
     background-color: #745086;
     color: #F6E4FF;
@@ -227,19 +230,18 @@ footer {
     position: relative;
     bottom: 0;
     box-sizing: border-box;
-    border-top: 1px solid #F6E4FF;
+    border-top: 1px solid #F6E4FF   ;
     width: 100%;
 }
 
-.tfooter,
-.bfooter {
+.tfooter, .bfooter{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
 }
 
-footer hr {
+footer hr{
     border-width: 1px;
     border-color: #F6E4FF;
     width: 87%;
@@ -249,79 +251,78 @@ footer div p {
     padding: 0%;
 }
 
-.linkreseau {
-    margin: auto;
-}
-
 
 /*----------------------------------------------------------------Link----------------------------------------------------------------*/
 
-a:link,
-a:visited,
-a:hover {
+a:link , a:visited , a:hover{
     color: #745086;
 }
 
-header a:link,
-header a:visited,
-footer a:link,
-footer a:visited {
+header a:link ,header a:visited, footer a:link, footer a:visited {
     margin-right: 0;
     font-size: 1.5em;
     color: #F6E4FF;
     text-decoration: none;
 }
 
-.margintb {
-    margin-top: auto;
+.margintb{
+    margin-top: auto;   
     margin-bottom: auto;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 }
 
+.linkreseau{
+    margin: auto;
+}
+
 /*----------------------------------------------------------------Bouton----------------------------------------------------------------*/
 
 .btn-compte {
-    background-color: #957BB0;
+    background-color: #957BB0; 
     color: #F6E4FF;
-    border: 1px solid #957BB0;
+    border: 1px solid #957BB0; 
     border-radius: 20px;
     width: 20em;
     font-size: 2em;
     height: 2em;
+    font-family: 'Quicksand';
 }
 
 .btn-accueil {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #957BB0;
+    background-color: #957BB0; 
     color: #F6E4FF;
-    border: 1px solid #957BB0;
+    border: 1px solid #957BB0; 
     border-radius: 20px;
     font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
 }
 
 .btn-accueilins {
     margin-top: auto;
-    margin-bottom: auto;
+    margin-bottom: auto; 
     margin-left: 5em;
     color: #745086;
-    border: 1px solid #745086;
+    border: 1px solid #745086; 
     border-radius: 20px;
     font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
 }
 
 .btn_visi {
     padding: 0.5em 1em 0.5em 1em;
 }
 
-.btn-accueilins:visited {
+.btn-accueilins:visited{
     color: #745086;
 }
 
-.btn-accueilins h5,
-.btn-accueil h5 {
+.btn-accueilins h5, .btn-accueil h5{
     margin: auto;
 }
 
@@ -338,55 +339,115 @@ footer a:visited {
 .btn-compte:hover {
     background-color: #FAE3C6;
     color: #745086;
+    font-family: 'Quicksand';
 }
 
 .btn-ajoutlog {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #957BB0;
+    background-color: #957BB0; 
     color: #F6E4FF;
-    border: 1px solid #957BB0;
+    border: 1px solid #957BB0; 
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
+    font-family: 'Quicksand';
+}
+
+.btn-demlog {
+    margin: auto;
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+}
+
+.btn-demlogno {
+    margin: auto;
+    background-color: #cccccc; 
+    color: #745086;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+}
+
+.btn-input {
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 20px;
+    width: 20em;
+    font-size: 2em;
+    height: 2em;
+    margin: auto 20% auto 20%;
+    font-family: 'Quicksand';
 }
 
 
-#Login::placeholder,
-#motdepasse::placeholder,
-#prenom::placeholder,
-#nom::placeholder,
-#Pseudo::placeholder,
-#mail::placeholder,
-#langue::placeholder,
-#email::placeholder,
-#pseudo::placeholder,
-#ville::placeholder,
-#confirmationMDP::placeholder,
-#codePostal::placeholder,
-#numRue::placeholder,
-#nomRue::placeholder,
-#telephone::placeholder {
+
+#Login::placeholder, #motdepasse::placeholder ,#prenom::placeholder, #nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
+#pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
     color: #957BB0;
     opacity: 50%;
     text-align: center;
 }
 
-.compteciv,
-.rib {
-    margin: auto;
+#charges_animaux, #charges_pers_sup, #charges_menage ,#taxe_sejour{
+    color: #957BB0;
+    text-align: center;
 }
 
-.tewt {
-    padding: auto;
+/*----------------------------------------------------------------Accueil----------------------------------------------------------------*/
+
+.card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
 }
+
+.card section{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background-color: #745086;
+    border-radius: 15px;
+    padding-top: 0.5em;
+}
+
+.card section article{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.card section article h3,.card section article h4{
+    color: #fff;
+}
+
+.card section article img{
+    margin: 0;
+    border-radius: 15px;
+    width: 96%;
+}
+
+/*----------------------------------------------------------------Compte----------------------------------------------------------------*/
 
 .custom-input {
-    color: #957BB0;
+    color: #957BB0; 
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
     text-align: center;
+    font-family: 'Quicksand';
+    padding-top: 0.2em;
 }
 
 .popup {
@@ -417,7 +478,7 @@ footer a:visited {
     justify-content: space-between;
 }
 
-.rowcompte a {
+.rowcompte a{
     margin: auto 2em auto 2em;
 }
 
@@ -445,67 +506,330 @@ footer a:visited {
     width: 100%;
 }
 
+.condition {
+    width: auto;
+    padding-left: 35%;
+    padding-right: 35%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    font-size: 1em;
+    display: flex;
+    flex-direction: row;
+}
+
+.testinput {
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px;
+    font-size: 3em;
+    text-align: center;
+    width: 100%;
+    margin: 1em auto auto auto;
+    font-family: 'Quicksand';
+}
+
+.nbrueinput {
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px;
+    font-size: 3em;
+    text-align: center;
+    width: 100%;
+    margin: 1em auto auto auto;
+    font-family: 'Quicksand';
+}
+
+.nomrueinput {
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px;
+    font-size: 3em;
+    text-align: center;
+    width: 96%;
+    margin: 1em 0 auto auto;
+    font-family: 'Quicksand';
+}
+
+
+/*----------------------------------------------------------------Message erreur----------------------------------------------------------------*/
+
+.messerr {
+    display: flex;
+    flex-direction: column;
+}
+
+.err {
+    color: red;
+}
+
+
+/*----------------------------------------------------------------Logement----------------------------------------------------------------*/
+
+.logcolumn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 48%;
+}
+
+.logpc{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.logc{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 48%;
+}
+
+.logcarte{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.devis{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.log2vct{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 48%;
+}
+
+.log3vct{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 25%;
+}
+
+.log4vct{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 23%;
+}
+.log5vct{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 15%;
+}
+
+.logrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.logrowt {
+    display: flex;
+    flex-direction: row;
+}
+
+.logrowc {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+}
+
+.logrowb {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cardSupplements {
+    border: 1px solid #957BB0;
+    width: 15%;
+    color: #745086;
+    background-color: #FCF0E2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cardprixcharge {
+    width: 100%;
+    font-size: 2em;
+    color: #745086;
+}
+
+.titreAL {
+    margin: auto;
+    color: #745086;
+    font-size: 2em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.logcheckbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0.2em auto 0.2em auto;
+    width: 8em;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 85%;
+    margin: auto;
+}
+
+.description textarea {
+    height: 10em;
+}
+
+fieldset {
+    width: 80%;
+    margin: 1em auto;
+}
+
+fieldset label{
+    text-align: center;
+}
+
+.logPA{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 100%;
+    height: 5em;
+}
+
+.lognom{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 100%;
+    height: 2em;
+    text-align: center;
+}
+
+.logvct{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 100%;
+    height: 2em;
+    text-align: center;
+}
+
+.lognb{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 80%;
+    height: 2em;
+    text-align: center;
+    margin:auto auto 0.5em auto;
+}
+
+.logselect{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 100%;
+    height: 2em;
+    text-align: center;
+}
+.devis{
+    display: flex;
+    align-items: center;
+}
+
+.MainTablo .logpc button, .MainTablo .devis input{
+    width: 25%;
+    height: 2em;
+    margin: 2em auto 0 auto;
+}
+
+.logtitre{
+    font-family: 'PatuaOne';
+    color: #745086;
+    font-size: 2em;
+    margin-bottom: 0.2em;
+}
+
+
+.logrowt p {
+    margin: auto 0 1em 1em;
+}
+
+
+.nuit {
+    background-color: #FAE3C6;
+    border-radius: 10px;
+    color: #745086;
+    padding: 5px;
+    display: flex;
+    align-self: flex-end;
+}
+
+.potitre {
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    margin: auto;
+}
+
+iframe {
+    width: 80%;
+    margin: auto;
+}
+
+.cardcondition {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    border-radius: 15px;
+    padding-top: 0.5em;
+    border: 1px solid #745086; 
+    width: 45%;
+    padding: 1em;
+    margin: 0.5em auto;
+}
+
+/*----------------------------------------------------------------Autre----------------------------------------------------------------*/
+
+.spbt{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.margl{
+    margin-left: 1em;
+}
+
 .center {
     margin-left: auto;
     margin-right: auto;
 }
 
-.condition {
-    width: auto;
-    padding-left: 35%;
-    padding-right: 35%;
-    margin-top: 1em;
-    margin-bottom: 1em;
+.compteciv , .rib{
+    margin: auto;
 }
 
-
-.testinput {
-    color: #957BB0;
-    border: 1px solid #957BB0;
-    border-radius: 5px;
-    font-size: 3em;
-    text-align: center;
-    width: 48%;
-    margin: 1em auto auto auto;
+.tewt{
+    padding: auto;
 }
 
-.conmdpinput {
-    color: #957BB0;
-    border: 1px solid #957BB0;
-    border-radius: 5px;
-    font-size: 3em;
-    text-align: center;
-    width: 48%;
-    margin: 1em auto auto auto;
-}
-
-.nbrueinput {
-    color: #957BB0;
-    border: 1px solid #957BB0;
-    border-radius: 5px;
-    font-size: 3em;
-    text-align: center;
-    width: 20%;
-    margin: 1em auto auto auto;
-}
-
-.nomrueinput {
-    color: #957BB0;
-    border: 1px solid #957BB0;
-    border-radius: 5px;
-    font-size: 3em;
-    text-align: center;
-    width: 76%;
-    margin: 1em auto auto auto;
-}
-
-.spbt {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.margl {
-    margin-left: 1em;
+.policetitre {
+    font-family: 'PatuaOne';
+    font-weight: 600;
 }
 
 /*----------------------------------------------------------------MDP POP UP-------------------------------------------------------------*/
