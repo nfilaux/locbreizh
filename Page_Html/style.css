@@ -22,6 +22,7 @@ body {
     margin: 0;
     background-origin: content-box;
     width: 100%;
+    font-family: 'Quicksand';
 }
 
 .pagecompte {
@@ -128,11 +129,13 @@ header a:last-child {
     color: #fff;
     font-size: 4em;
     margin: 3px;
+    font-family: 'PatuaOne';
 }
 
 /*----------------------------------------------------------------popup----------------------------------------------------------------*/
 
 #popup {
+    padding: 0px;
     font-size: 0.7em;
     display: none;
     position: fixed;
@@ -140,6 +143,8 @@ header a:last-child {
     left: 91%;
     transform: translate(-50%, -50%);
     background-color: transparent;
+    border: transparent;
+    box-shadow: none;
     z-index: 1000;
 }
 
@@ -185,6 +190,8 @@ header a:last-child {
 main{
     padding-top: 5vw;
     padding-bottom: 5vw;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 main label, .Tablobord h2{
@@ -210,8 +217,7 @@ main h1{
     width: 45em;
 }
 
-
-.Tablobord hr{
+.hr{
     height: auto;
     border: none;
     border: 2px solid #745086; 
@@ -223,6 +229,13 @@ main h1{
     align-items: center;
     position: relative;
     bottom: 20;
+    text-decoration: none;
+}
+
+.voir_plusR {
+    display: flex;
+    align-self: flex-end;
+    position: relative;
     text-decoration: none;
 }
 
@@ -323,6 +336,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: 20em;
     font-size: 2em;
     height: 2em;
+    font-family: 'Quicksand';
 }
 
 .btn-accueil {
@@ -333,6 +347,8 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border: 1px solid #957BB0; 
     border-radius: 20px;
     font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
 }
 
 .btn-accueilins {
@@ -343,6 +359,8 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border: 1px solid #745086; 
     border-radius: 20px;
     font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
 }
 
 .btn_visi {
@@ -370,6 +388,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-compte:hover {
     background-color: #FAE3C6;
     color: #745086;
+    font-family: 'Quicksand';
 }
 
 .btn-ajoutlog {
@@ -381,6 +400,29 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
+    font-family: 'Quicksand';
+}
+
+.btn-demlog {
+    margin: auto;
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+}
+
+.btn-demlogno {
+    margin: auto;
+    background-color: #cccccc; 
+    color: #745086;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
 }
 
 .btn-input {
@@ -392,6 +434,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-size: 2em;
     height: 2em;
     margin: auto 20% auto 20%;
+    font-family: 'Quicksand';
 }
 
 
@@ -452,6 +495,21 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border-radius: 5px;
     font-size: 3em;
     text-align: center;
+    font-family: 'Quicksand';
+    padding-top: 0.2em;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 15%;
+    left: 91%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 
 .box {
@@ -516,6 +574,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     text-align: center;
     width: 100%;
     margin: 1em auto auto auto;
+    font-family: 'Quicksand';
 }
 
 .nbrueinput {
@@ -526,6 +585,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     text-align: center;
     width: 100%;
     margin: 1em auto auto auto;
+    font-family: 'Quicksand';
 }
 
 .nomrueinput {
@@ -536,6 +596,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     text-align: center;
     width: 96%;
     margin: 1em 0 auto auto;
+    font-family: 'Quicksand';
 }
 
 
@@ -566,12 +627,24 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     justify-content: space-around;
 }
 
+.logc{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 48%;
+}
+
+.logcarte{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .devis{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
-
 
 .log2vct{
     display: flex;
@@ -600,11 +673,22 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: 15%;
 }
 
-
 .logrow {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+
+.logrowt {
+    display: flex;
+    flex-direction: row;
+}
+
+.logrowc {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
 }
 
 .logrowb {
@@ -697,10 +781,10 @@ fieldset label{
     color: #957BB0; 
     border: 1px solid #957BB0;
     border-radius: 5px; 
-    width: 100%;
+    width: 80%;
     height: 2em;
     text-align: center;
-    margin-bottom: 0.5em;
+    margin:auto auto 0.5em auto;
 }
 
 .logselect{
@@ -722,6 +806,52 @@ fieldset label{
     margin: 2em auto 0 auto;
 }
 
+.logtitre{
+    font-family: 'PatuaOne';
+    color: #745086;
+    font-size: 2em;
+    margin-bottom: 0.2em;
+}
+
+
+.logrowt p {
+    margin: auto 0 1em 1em;
+}
+
+
+.nuit {
+    background-color: #FAE3C6;
+    border-radius: 10px;
+    color: #745086;
+    padding: 5px;
+    display: flex;
+    align-self: flex-end;
+}
+
+.potitre {
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    margin: auto;
+}
+
+iframe {
+    width: 80%;
+    margin: auto;
+}
+
+.cardcondition {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    border-radius: 15px;
+    padding-top: 0.5em;
+    border: 1px solid #745086; 
+    width: 45%;
+    padding: 1em;
+    margin: 0.5em auto;
+}
+
 /*----------------------------------------------------------------Autre----------------------------------------------------------------*/
 
 .spbt{
@@ -731,7 +861,6 @@ fieldset label{
 
 .margl{
     margin-left: 1em;
-
 }
 
 .center {
@@ -739,10 +868,15 @@ fieldset label{
     margin-right: auto;
 }
 
-.compteciv , .rib {
+.compteciv , .rib{
     margin: auto;
 }
 
 .tewt{
     padding: auto;
+}
+
+.policetitre {
+    font-family: 'PatuaOne';
+    font-weight: 600;
 }
