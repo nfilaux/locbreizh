@@ -160,7 +160,7 @@
 
                 // suppression de l'ancienne photo
                 $stmt = $dbh->prepare("DELETE FROM locbreizh._photo
-                WHERE url_photo = {$photo['photo']};");
+                WHERE url_photo = '{$photo['photo']}';");
                 $stmt->execute();
             }
         }

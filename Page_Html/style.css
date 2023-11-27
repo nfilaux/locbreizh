@@ -832,6 +832,133 @@ iframe {
     font-weight: 600;
 }
 
+/*----------------------------------------------------------------CONSULTER SON PROFIL-------------------------------------------------------------*/
+
+.main-profil{
+    padding: 1vw;
+}
+
+.compte-infos label, p{
+    color: #000;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.row-profil{
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 0;
+}
+
+.row-profil > div{
+    width: 60%;
+}
+
+.header-profil{
+    text-transform:uppercase;
+    background-color: #745086;
+    color: #fff;
+    text-align: center;
+    padding: 2vh;
+}
+
+.compte-infos{
+    background-color: #FCF0E2;
+    display: flex;
+    flex-direction: column;
+    padding: 1vw;
+
+}
+
+.row-adresse{
+    display: flex;
+    justify-content: space-between;
+    padding: 1vh 0;
+}
+
+.div-adresse{
+    padding: 0;
+    margin: 0;
+}
+
+.row-adresse label{
+    font-weight: normal;
+}
+
+.row-adresse > div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45%;
+    min-width: 300px;
+}
+
+.doc-profil{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.voir-doc{
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    
+}
+
+.voir-doc p{
+    text-transform: none;
+    color: #745086;
+    font-weight: normal;
+}
+
+.voir-doc > p{
+    margin-right: 1em;
+}
+
+.voir-doc img{
+    padding: 3px;
+    width: fit-content;
+    height: fit-content;
+    border: solid 1px #745086;
+    border-radius: 20%;
+
+}
+
+.profil-form{
+    display: flex;
+    background-color: #FAE3C6;
+    border: solid 1px #957BB0;
+}
+
+.profil-form > div:last-of-type{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    
+}
+
+.profil-form > div:last-of-type img{
+    aspect-ratio : 1 / 1;
+    width: 75%;
+    border: 1px solid #5B3F69;
+    border-radius: 50%;
+}
+
+.profil-form >div:last-of-type>label{
+    color: #000;
+    font-weight: bold;
+    font-size: large;
+}
+
+.profil-form > div:first-of-type{
+    width: 75%;
+    border-right: solid 1px #957BB0;
+}
+
+
 /*----------------------------------------------------------------MDP POP UP-------------------------------------------------------------*/
 
 .mdp-popup {

@@ -194,7 +194,7 @@
 
                 // suppression de l'ancienne photo
                 $stmt = $dbh->prepare("DELETE FROM locbreizh._photo
-                WHERE url_photo = {$photo['photo']};");
+                WHERE url_photo = '{$photo['photo']}';");
                 $stmt->execute();
 
             }
@@ -223,7 +223,7 @@
 
                 // suppression de l'ancienne photo
                 $stmt = $dbh->prepare("DELETE FROM locbreizh._photo
-                WHERE url_photo = {$doc['rib']};");
+                WHERE url_photo = '{$doc['rib']}';");
                 $stmt->execute();
             }
         }
@@ -251,7 +251,7 @@
 
                 // suppression de l'ancienne photo
                 $stmt = $dbh->prepare("DELETE FROM locbreizh._photo
-                WHERE url_photo = {$doc['carte_identite']};");
+                WHERE url_photo = '{$doc['carte_identite']}';");
                 $stmt->execute();
             }
         }

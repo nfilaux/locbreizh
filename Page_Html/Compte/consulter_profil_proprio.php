@@ -42,9 +42,6 @@
     <title>Mon profil</title>
 </head>
 <body>
-    <header>
-        <h1>Mon compte</h1>
-    </header>
     <!-- overlay utiliser pour fermer la popup -->
     <div id="overlay" onclick="closeMdpPopup()"></div>
     <!--contenu de la popup pour le changement de mdp-->
@@ -71,78 +68,102 @@
     </div>
 
     
-    <main>
+    <main class="main-profil">
+        <h1 class="header-profil">Mon compte</h1>
         <!-- debut du formulaire pour afficher/modifier les informations "simples" du compte -->
-        <form action="modifier_proprio.php" method="post" enctype="multipart/form-data">
-            <div class="rowcompte">
-                <label for="prenom">Prénom</label>
-                <!-- input pour pouvoir modifier l'information + pré-replissage -->
-                <input type="text" id="prenom" name="prenom" maxlength="20" value="<?php echo $infos['prenom'];?>" required>
-                <!-- affichage des possibles erreurs (même chose pour les prochains appels de la fonction) -->
-                <?php erreur("prenom");?>
-            </div>
-            <div class="rowcompte">
-                <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" maxlength="20" value="<?php echo $infos['nom'];?>" required>
-                <?php erreur("nom");?>
-            </div>
-            <div class="rowcompte">
-                <label for="pseudo">Pseudo</label>
-                <input type="text"  id="pseudo" name="pseudo" maxlength="20" value="<?php echo $infos['pseudo'];?>" required>
-                <?php erreur("pseudo");?>
-            </div>
-            <div class="rowcompte">
-                <label for="mail">E-mail</label>
-                <input type="email" id="mail" maxlength="50" name="mail" value="<?php echo $infos['mail'];?>" required>
-                <?php erreur("email");?>
-            </div>
-            <div class="rowcompte">
-                <label for="telephone">Téléphone</label>
-                <input type="tel" id="telephone" name="telephone" value="<?php echo substr($infos['telephone'], 0,2) . ' ' . substr($infos['telephone'], 2,2) . ' ' . substr($infos['telephone'], 4,2) . ' ' . substr($infos['telephone'], 6,2) . ' ' . substr($infos['telephone'], 8,2);?>" required>
-                <?php erreur("telephone");?>
-            </div>
-            <!-- section pour les informations de l'adresse -->
-            <div class="rowcompte">
-                <p>Adresse</p>
-                <div>
-                    <label for="no_rue">N° :</label><input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
-                    <?php erreur("numRue");?>
-                    <label for="nom_rue">Rue :</label><input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
-                    <?php erreur("nomRue");?>
+        <form action="modifier_proprio.php" method="post" enctype="multipart/form-data" >
+            <div class="profil-form">
+                <div class="compte-infos">
+                    <div class="row-profil">
+                        <label for="prenom">Prénom</label>
+                        <!-- input pour pouvoir modifier l'information + pré-replissage -->
+                        <input type="text" id="prenom" name="prenom" maxlength="20" value="<?php echo $infos['prenom'];?>" required>
+                        <!-- affichage des possibles erreurs (même chose pour les prochains appels de la fonction) -->
+                        <?php erreur("prenom");?>
+                    </div>
+                    <div class="row-profil">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" maxlength="20" value="<?php echo $infos['nom'];?>" required>
+                        <?php erreur("nom");?>
+                    </div>
+                    <div class="row-profil">
+                        <label for="pseudo">Pseudo</label>
+                        <input type="text"  id="pseudo" name="pseudo" maxlength="20" value="<?php echo $infos['pseudo'];?>" required>
+                        <?php erreur("pseudo");?>
+                    </div>
+                    <div class="row-profil">
+                        <label for="mail">E-mail</label>
+                        <input type="email" id="mail" maxlength="50" name="mail" value="<?php echo $infos['mail'];?>" required>
+                        <?php erreur("email");?>
+                    </div>
+                    <div class="row-profil">
+                        <label for="telephone">Téléphone</label>
+                        <input type="tel" id="telephone" name="telephone" value="<?php echo substr($infos['telephone'], 0,2) . ' ' . substr($infos['telephone'], 2,2) . ' ' . substr($infos['telephone'], 4,2) . ' ' . substr($infos['telephone'], 6,2) . ' ' . substr($infos['telephone'], 8,2);?>" required>
+                        <?php erreur("telephone");?>
+                    </div>
+                    <!-- section pour les informations de l'adresse -->
+                    <div class="row-profil div-adresse">
+                        <p>Adresse</p>
+                        <div>
+                            <div class="row-adresse">
+                                <div>
+                                    <label for="no_rue">N° :</label><input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
+                                    <?php erreur("numRue");?>
+                                </div>
+                                <div>
+                                    <label for="nom_rue">Rue :</label><input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
+                                    <?php erreur("nomRue");?>
+                                </div>
+                            </div>
+                            <div class="row-adresse">
+                                <div>
+                                    <label for="codePostal">Code postal :</label><input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
+                                    <?php erreur("codePostal");?>
+                                </div>
+                                <div>
+                                    <label for="ville">Ville :</label><input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
+                                    <?php erreur("ville");?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- lien cliquable vers la carte d'iendité + input pour la modifier -->
+                    <div class="row-profil">
+                        <label for="carteIdentite">Carte d'identite</label>
+                        <div class="doc-profil">
+                            <a class="voir-doc" href="../Ressources/carte_identite/<?php echo $infos['carte_identite']; ?>" target="_blank">
+                            <p>Voir ma carte d'identité</p>
+                            <img src="../svg/eye.svg" amt="voir"></a>
+                            <input type="file" id="carteIdentite" name="carteIdentite"/>
+                            <?php erreur("carteIdentite"); ?>
+                        </div>
+                    </div>
+                    <!-- lien cliquable vers le RIB + input pour le modifier -->
+                    <div class="row-profil">
+                        <label for="rib">RIB</label>
+                        <div class="doc-profil">
+                            <a class="voir-doc" href="../Ressources/rib/<?php echo $infos['rib']; ?>" target="_blank">
+                            <p>Voir le RIB</p>
+                            <img src="../svg/eye.svg" alt="voir"></a>
+                            <input type="file" id="rib" name="rib"/>
+                            <?php erreur("rib"); ?>
+                        </div>
+                    </div>
                 </div>
+                <!-- affichage de la photo de profil + input pour la modifier -->
                 <div>
-                    <label for="codePostal">Code postal :</label><input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
-                    <?php erreur("codePostal");?>
-                    <label for="ville">Ville :</label><input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
-                    <?php erreur("ville");?>
+                    <img src="../Ressources/Images/<?php echo $infos['photo']; ?>" title="photo" alt="photo de profil">
+                    <label for="photo">Photo de profil</label>
+                    <input type="file" id="photo" name="photo"/>
+                    <?php 
+                    erreur("photo"); ?>
                 </div>
-            </div>
-            <!-- lien cliquable vers la carte d'iendité + input pour la modifier -->
-            <div>
-                <label for="carteIdentite">Carte d'identite</label>
-                <a href="../Ressources/carte_identite/<?php echo $infos['carte_identite']; ?>">Voir ma carte d'identité</a>
-                <input type="file" id="carteIdentite" name="carteIdentite"/>
-                <?php erreur("carteIdentite"); ?>
-            </div>
-            <!-- lien cliquable vers le RIB + input pour le modifier -->
-            <div>
-                <label for="rib">RIB :</label>
-                <a href="../Ressources/rib/<?php echo $infos['rib']; ?>">Voir le RIB</a>
-                <input type="file" id="rib" name="rib"/>
-                <?php erreur("rib"); ?>
-            </div>
-            <!-- affichage de la photo de profil + input pour la modifier -->
-            <div>
-                <img src="../Ressources/Images/<?php echo $infos['photo']; ?>" title="photo" alt="photo de profil">
-                <label for="photo">Photo de profil</label>
-                <input type="file" id="photo" name="photo"/>
-                <?php 
-                erreur("photo"); ?>
             </div>
             <input type="submit" value="Enregistrer les modifications">
         </form>
         <!-- section pour modifier le mot de passe -->
-        <div class="rowcompte">
+        <div class="">
             <p>Mot de passe</p>
             <!-- boutton pour ouvrir la popup -->
             <button type="button" onclick="openMdpPopup()">Changer le mot de passe</button>
