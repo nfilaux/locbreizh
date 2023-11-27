@@ -81,7 +81,8 @@
 
     // test unicité du mail (si différent)
     if($anciens_infos['mail'] != $_POST['mail']){
-        $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '{$mail}';");
+        $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = :mail;");
+        $verifMail->bindParam(':mail', $mail);
         $verifMail->execute();
         $res = $verifMail->fetchColumn();
         if ($res != 0){
@@ -92,7 +93,8 @@
 
     // test unicité du telephone (si différent)
     if($anciens_infos['telephone'] != $tel){
-        $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '{$tel}';");
+        $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = :tel;");
+        $verifTel->bindParam(':tel', $tel);
         $verifTel->execute();
         $res = $verifTel->fetchColumn();
         if ($res != 0){
@@ -103,7 +105,8 @@
 
     // test unicité du pseudo (si différent)
     if($anciens_infos['pseudo'] != $_POST['pseudo']){
-        $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '{$pseudo}';");
+        $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = :pseudo;");
+        $verifPseudo->bindParam(":pseudo", $pseudo);
         $verifPseudo->execute();
         $res = $verifPseudo->fetchColumn();
         if ($res != 0){

@@ -1,19 +1,19 @@
 /*----------------------------------------------------------------Polices---------------------------------------------------------------*/
 
 @font-face {
-	font-family: 'PatuaOne';
-	src: url(‘Ressources/Polices/patua_one/PatuaOne-Regular.woff2’) format(‘woff2’),
-		url(‘Ressources/Polices/patua_one/PatuaOne-Regular.ttf’) format(‘truetype’)
+    font-family: 'PatuaOne';
+    src: url(‘Ressources/Polices/patua_one/PatuaOne-Regular.woff2’) format(‘woff2’),
+        url(‘Ressources/Polices/patua_one/PatuaOne-Regular.ttf’) format(‘truetype’)
 }
 
 @font-face {
-	font-family: 'Quicksand';
-	src: url(‘Ressources/Polices/quicksand/Quicksand-Bold.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-Light.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-Medium.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-Regular.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-SemiBold.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-VariableFont_wght.woff2’) format(‘woff2’)
+    font-family: 'Quicksand';
+    src: url(‘Ressources/Polices/quicksand/Quicksand-Bold.woff2’) format(‘woff2’),
+        url(‘Ressources/Polices/quicksand/Quicksand-Light.woff2’) format(‘woff2’),
+        url(‘Ressources/Polices/quicksand/Quicksand-Medium.woff2’) format(‘woff2’),
+        url(‘Ressources/Polices/quicksand/Quicksand-Regular.woff2’) format(‘woff2’),
+        url(‘Ressources/Polices/quicksand/Quicksand-SemiBold.woff2’) format(‘woff2’),
+        url(‘Ressources/Polices/quicksand/Quicksand-VariableFont_wght.woff2’) format(‘woff2’)
 }
 
 body {
@@ -31,14 +31,14 @@ body {
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
-header{
+header {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     position: relative;
     color: #745086;
     box-sizing: border-box;
-    border-bottom: 1px solid #745086; 
+    border-bottom: 1px solid #745086;
     flex-wrap: nowrap;
 }
 
@@ -48,12 +48,12 @@ header{
 }
 
 header h2 {
-    margin:auto 1em auto 1em;
+    margin: auto 1em auto 1em;
     color: #745086;
 }
 
-header h4{
-    color:#000;
+header h4 {
+    color: #000;
     margin-right: 2em;
 }
 
@@ -68,17 +68,17 @@ header a:first-child {
     flex-wrap: nowrap;
 }
 
-header input{
+header input {
     width: 25em;
 }
 
 .brecherche {
     display: flex;
     flex-wrap: nowrap;
-    margin:auto 3em auto 3em;
+    margin: auto 3em auto 3em;
 }
 
-.imghead{
+.imghead {
     margin-top: auto;
     margin-bottom: auto;
     display: flex;
@@ -98,7 +98,7 @@ header a:last-child {
     padding: none;
 }
 
-.headconn{
+.headconn {
     position: relative;
     background-color: #745086;
     color: #fff;
@@ -108,7 +108,7 @@ header a:last-child {
     margin-top: 5vw;
 }
 
-.headtablo{
+.headtablo {
     position: relative;
     background-color: #745086;
     color: #fff;
@@ -119,13 +119,15 @@ header a:last-child {
 }
 
 
-.headconn img , .headtablo img{
+.headconn img,
+.headtablo img {
     position: absolute;
     left: 5em;
     top: 1em;
 }
 
-.headconn h1 , .headtablo h1 {
+.headconn h1,
+.headtablo h1 {
     color: #fff;
     font-size: 4em;
     margin: 3px;
@@ -134,44 +136,45 @@ header a:last-child {
 
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
 
-.MainTablo{
+.MainTablo {
     padding-top: 0vw;
 }
 
-main{
+main {
     padding-top: 5vw;
     padding-bottom: 5vw;
     padding-left: 2em;
     padding-right: 2em;
 }
 
-main label, .Tablobord h2{
+main label,
+.Tablobord h2 {
     color: #745086;
 }
 
-main h1{
+main h1 {
     color: #020202;
     margin: auto;
     text-align: center;
 }
 
-.Tablobord{
+.Tablobord {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.Tablobord article{
+.Tablobord article {
     display: flex;
     flex-direction: column;
     text-align: center;
     width: 45em;
 }
 
-.hr{
+.hr {
     height: auto;
     border: none;
-    border: 2px solid #745086; 
+    border: 2px solid #745086;
     margin: 0;
 }
 
@@ -190,7 +193,7 @@ main h1{
     text-decoration: none;
 }
 
-.voir_plus hr{
+.voir_plus hr {
     border-width: 1px;
     border-color: #F6E4FF;
     width: 15%;
@@ -201,27 +204,27 @@ main h1{
     justify-content: center;
 }
 
-.Maincompte section{
+.Maincompte section {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.Maincompte section article{
+.Maincompte section article {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: auto auto 1em auto;
 }
 
-.Maincompte section article div span{
+.Maincompte section article div span {
     margin-top: 2em;
     font-size: 1.5em;
 }
 
 /*----------------------------------------------------------------footer----------------------------------------------------------------*/
 
-footer{
+footer {
     padding-top: 1px;
     background-color: #745086;
     color: #F6E4FF;
@@ -230,18 +233,19 @@ footer{
     position: relative;
     bottom: 0;
     box-sizing: border-box;
-    border-top: 1px solid #F6E4FF   ;
+    border-top: 1px solid #F6E4FF;
     width: 100%;
 }
 
-.tfooter, .bfooter{
+.tfooter,
+.bfooter {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
 }
 
-footer hr{
+footer hr {
     border-width: 1px;
     border-color: #F6E4FF;
     width: 87%;
@@ -254,35 +258,40 @@ footer div p {
 
 /*----------------------------------------------------------------Link----------------------------------------------------------------*/
 
-a:link , a:visited , a:hover{
+a:link,
+a:visited,
+a:hover {
     color: #745086;
 }
 
-header a:link ,header a:visited, footer a:link, footer a:visited {
+header a:link,
+header a:visited,
+footer a:link,
+footer a:visited {
     margin-right: 0;
     font-size: 1.5em;
     color: #F6E4FF;
     text-decoration: none;
 }
 
-.margintb{
-    margin-top: auto;   
+.margintb {
+    margin-top: auto;
     margin-bottom: auto;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 }
 
-.linkreseau{
+.linkreseau {
     margin: auto;
 }
 
 /*----------------------------------------------------------------Bouton----------------------------------------------------------------*/
 
 .btn-compte {
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 20px;
     width: 20em;
     font-size: 2em;
@@ -293,9 +302,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-accueil {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 20px;
     font-size: 1em;
     font-family: 'Quicksand';
@@ -304,10 +313,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .btn-accueilins {
     margin-top: auto;
-    margin-bottom: auto; 
+    margin-bottom: auto;
     margin-left: 5em;
     color: #745086;
-    border: 1px solid #745086; 
+    border: 1px solid #745086;
     border-radius: 20px;
     font-size: 1em;
     font-family: 'Quicksand';
@@ -318,11 +327,12 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding: 0.5em 1em 0.5em 1em;
 }
 
-.btn-accueilins:visited{
+.btn-accueilins:visited {
     color: #745086;
 }
 
-.btn-accueilins h5, .btn-accueil h5{
+.btn-accueilins h5,
+.btn-accueil h5 {
     margin: auto;
 }
 
@@ -345,9 +355,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-ajoutlog {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -356,9 +366,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .btn-demlog {
     margin: auto;
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -367,9 +377,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .btn-demlogno {
     margin: auto;
-    background-color: #cccccc; 
+    background-color: #cccccc;
     color: #745086;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -377,9 +387,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-input {
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 20px;
     width: 20em;
     font-size: 2em;
@@ -390,28 +400,44 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 
 
-#Login::placeholder, #motdepasse::placeholder ,#prenom::placeholder, #nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
-#pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
+#Login::placeholder,
+#motdepasse::placeholder,
+#prenom::placeholder,
+#nom::placeholder,
+#Pseudo::placeholder,
+#mail::placeholder,
+#langue::placeholder,
+#email::placeholder,
+#pseudo::placeholder,
+#ville::placeholder,
+#confirmationMDP::placeholder,
+#codePostal::placeholder,
+#numRue::placeholder,
+#nomRue::placeholder,
+#telephone::placeholder {
     color: #957BB0;
     opacity: 50%;
     text-align: center;
 }
 
-#charges_animaux, #charges_pers_sup, #charges_menage ,#taxe_sejour{
+#charges_animaux,
+#charges_pers_sup,
+#charges_menage,
+#taxe_sejour {
     color: #957BB0;
     text-align: center;
 }
 
 /*----------------------------------------------------------------Accueil----------------------------------------------------------------*/
 
-.card{
+.card {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-evenly;
 }
 
-.card section{
+.card section {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -421,18 +447,19 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding-top: 0.5em;
 }
 
-.card section article{
+.card section article {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-evenly;
 }
 
-.card section article h3,.card section article h4{
+.card section article h3,
+.card section article h4 {
     color: #fff;
 }
 
-.card section article img{
+.card section article img {
     margin: 0;
     border-radius: 15px;
     width: 96%;
@@ -441,7 +468,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 /*----------------------------------------------------------------Compte----------------------------------------------------------------*/
 
 .custom-input {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -478,7 +505,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     justify-content: space-between;
 }
 
-.rowcompte a{
+.rowcompte a {
     margin: auto 2em auto 2em;
 }
 
@@ -518,7 +545,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .testinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -529,7 +556,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .nbrueinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -540,7 +567,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .nomrueinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -565,59 +592,60 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 /*----------------------------------------------------------------Logement----------------------------------------------------------------*/
 
-.logcolumn{
+.logcolumn {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 48%;
 }
 
-.logpc{
+.logpc {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 
-.logc{
+.logc {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 48%;
 }
 
-.logcarte{
+.logcarte {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.devis{
+.devis {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 
-.log2vct{
+.log2vct {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 48%;
 }
 
-.log3vct{
+.log3vct {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 25%;
 }
 
-.log4vct{
+.log4vct {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 23%;
 }
-.log5vct{
+
+.log5vct {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -698,66 +726,68 @@ fieldset {
     margin: 1em auto;
 }
 
-fieldset label{
+fieldset label {
     text-align: center;
 }
 
-.logPA{
-    color: #957BB0; 
+.logPA {
+    color: #957BB0;
     border: 1px solid #957BB0;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 100%;
     height: 5em;
 }
 
-.lognom{
-    color: #957BB0; 
+.lognom {
+    color: #957BB0;
     border: 1px solid #957BB0;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 100%;
     height: 2em;
     text-align: center;
 }
 
-.logvct{
-    color: #957BB0; 
+.logvct {
+    color: #957BB0;
     border: 1px solid #957BB0;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 100%;
     height: 2em;
     text-align: center;
 }
 
-.lognb{
-    color: #957BB0; 
+.lognb {
+    color: #957BB0;
     border: 1px solid #957BB0;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 80%;
     height: 2em;
     text-align: center;
-    margin:auto auto 0.5em auto;
+    margin: auto auto 0.5em auto;
 }
 
-.logselect{
-    color: #957BB0; 
+.logselect {
+    color: #957BB0;
     border: 1px solid #957BB0;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 100%;
     height: 2em;
     text-align: center;
 }
-.devis{
+
+.devis {
     display: flex;
     align-items: center;
 }
 
-.MainTablo .logpc button, .MainTablo .devis input{
+.MainTablo .logpc button,
+.MainTablo .devis input {
     width: 25%;
     height: 2em;
     margin: 2em auto 0 auto;
 }
 
-.logtitre{
+.logtitre {
     font-family: 'PatuaOne';
     color: #745086;
     font-size: 2em;
@@ -797,7 +827,7 @@ iframe {
     justify-content: space-between;
     border-radius: 15px;
     padding-top: 0.5em;
-    border: 1px solid #745086; 
+    border: 1px solid #745086;
     width: 45%;
     padding: 1em;
     margin: 0.5em auto;
@@ -805,12 +835,12 @@ iframe {
 
 /*----------------------------------------------------------------Autre----------------------------------------------------------------*/
 
-.spbt{
+.spbt {
     display: flex;
     justify-content: space-evenly;
 }
 
-.margl{
+.margl {
     margin-left: 1em;
 }
 
@@ -819,11 +849,12 @@ iframe {
     margin-right: auto;
 }
 
-.compteciv , .rib{
+.compteciv,
+.rib {
     margin: auto;
 }
 
-.tewt{
+.tewt {
     padding: auto;
 }
 
@@ -833,140 +864,158 @@ iframe {
 }
 
 /*----------------------------------------------------------------CONSULTER SON PROFIL-------------------------------------------------------------*/
-
-.main-profil{
-    padding: 4vw;
-    font-size: larger;
+.row-profil {
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 0;
+    align-items: center;
 }
 
+.row-profil label {
+    width: 50%;
+    font-weight: normal;
+    color: #745086;
+    text-transform: inherit;
+}
 
-.compte-infos label, p{
+.row-profil input {
+    width: 50%;
+    height: 2.5vw;
+    border-radius: 5px;
+    padding-left: 1vw;
+}
+
+.main-profil {
+    padding: 4vw;
+    font-size: 1.5em;
+}
+
+.compte-infos label,
+.div-adresse>p {
     color: #000;
     text-transform: uppercase;
     font-weight: bold;
 }
 
-.row-profil{
-    display: flex;
-    justify-content: space-between;
-    margin: 1vh 0;
-}
-
-.row-profil > div{
+.row-profil>div {
     width: 60%;
 }
 
-.header-profil{
-    text-transform:uppercase;
+.header-profil {
+    text-transform: uppercase;
     background-color: #745086;
     color: #fff;
     text-align: center;
     padding: 2vh;
 }
 
-.compte-infos{
+.compte-infos {
     background-color: #FCF0E2;
     display: flex;
     flex-direction: column;
     padding: 3vh 7vw;
-
 }
 
-.row-adresse{
+.row-adresse {
+    min-width: 210px;
     display: flex;
     justify-content: space-between;
     padding: 1vh 0;
 }
 
-.div-adresse{
-    padding: 0;
-    margin: 0;
-}
-
-.row-adresse label{
+.row-adresse label {
     font-weight: normal;
+    color: #745086;
+    text-transform: inherit;
+    font-size: medium;
 }
 
-.petite-adresse{
+.petite-adresse {
     width: 3vw;
 }
 
-.row-adresse > div{
+.row-adresse>div {
     display: flex;
     justify-content: space-between;
-    flex-wrap: nowrap;
     align-items: center;
-    width: 40%;
     width: 45%;
     min-width: 200px;
 }
 
-.doc-profil{
+.row-adresse>div:first-of-type>input {
+    width: 25%;
+}
+
+.row-adresse>div:last-of-type>input {
+    width: 10vw;
+}
+
+
+.doc-profil {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.voir-doc{
+.doc-profil input {
+    height: auto;
+    color: #745086;
+}
+
+.voir-doc {
     display: flex;
     text-decoration: none;
     align-items: center;
-    
 }
 
-.voir-doc p{
+.voir-doc p {
     text-transform: none;
     color: #745086;
     font-weight: normal;
-}
-
-.voir-doc > p{
+    font-size: medium;
     margin: 0 1em 0 0;
 }
 
-.voir-doc img{
+.voir-doc img {
     padding: 3px;
     width: fit-content;
     height: fit-content;
     border: solid 1px #745086;
     border-radius: 20%;
-
 }
 
-.profil-form{
+.profil-form {
     display: flex;
     background-color: #FAE3C6;
     border: solid 1px #957BB0;
 }
 
-.profil-form > div:last-of-type{
+.profil-form>div:last-of-type {
     width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    
 }
 
-.profil-form > div:last-of-type img{
-    aspect-ratio : 1 / 1;
+.profil-form>div:last-of-type img {
+    aspect-ratio: 1 / 1;
     width: 70%;
     border: 1px solid #5B3F69;
     border-radius: 50%;
 }
 
-.profil-form >div:last-of-type>label{
+.profil-form>div:last-of-type>label {
     color: #000;
     font-weight: bold;
-    font-size: large;
 }
 
-.profil-form > div:first-of-type{
+.profil-form>div:first-of-type {
     width: 75%;
     border-right: solid 1px #957BB0;
 }
 
-.submit-profil{
+.submit-profil {
     position: relative;
     left: 37%;
     width: 25%;
@@ -977,15 +1026,72 @@ iframe {
     border: none;
     border-radius: 10px;
     padding: 0;
+    font-size: large;
+    font-weight: bold;
 }
 
-.main-profil input[type=text], input[type=number], input[type=date], input[type=tel], input[type=password], input[type=email]{
-    border:solid 1px #957BB0;
+.main-profil input[type=text],
+input[type=number],
+input[type=date],
+input[type=tel],
+input[type=password],
+input[type=email] {
+    border: solid 1px #957BB0;
     border-radius: 5px;
+    font-size: 0.7em;
 }
 
-.profil-mdp{
+.profil-mdp {
     display: flex;
+    align-items: center;
+    font-weight: bold;
+    margin-top: 3vw;
+    margin-bottom: 3vw;
+}
+
+.btn-mdp {
+    margin-left: 10vw;
+    background-color: #957BB0;
+    color: #F6E4FF;
+    border: none;
+    border-radius: 10px;
+    height: 3vw;
+    width: 20vw;
+    font-size: large;
+    font-weight: bold;
+}
+
+.suppr-compte {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    width: 80%;
+}
+
+.suppr-compte button {
+    background-color: rgb(207, 119, 119);
+    color: white;
+    width: 20vw;
+    height: 5vw;
+    border: none;
+    border-radius: 10px;
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 2em;
+}
+
+.condition-profil {
+    color: red;
+}
+
+.profil-erreurs {
+    font-size: medium;
+    color: #FF0000;
+    text-align: end;
+}
+
+.mdp-popup .profil-erreurs {
+    text-align: center;
 }
 
 /*----------------------------------------------------------------MDP POP UP-------------------------------------------------------------*/
@@ -1001,15 +1107,39 @@ iframe {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     z-index: 1000;
+    text-align: center;
 }
 
-.mdp-popup label {
-    display: block;
+.mdp-popup>form {
+    display: flex;
+    flex-direction: column;
+
+    padding: 2vw;
+    width: 20vw;
+}
+
+.mdp-popup>.mdpCroix {
+    text-align: end;
+}
+
+.mdp-popup label,
+.mdp-popup input {
     margin-bottom: 10px;
+    font-size: larger;
 }
 
-.mdpCroix {
-    display: inline-block;
+.mdp-popup input {
+    height: 1.5vw;
+    padding-left: 1vw;
+}
+
+.mdp-popup input:last-of-type {
+    margin-top: 10%;
+    background-color: #957BB0;
+    color: #F6E4FF;
+    border: none;
+    border-radius: 5px;
+    height: 2vw;
 }
 
 #overlay {
