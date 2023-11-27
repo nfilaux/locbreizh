@@ -168,7 +168,7 @@
         </form>
         <!-- section pour modifier le mot de passe -->
         <div class="profil-mdp">
-            <h2>Mot de passe</h2>
+            <h2>Mot de passe :</h2>
             <!-- boutton pour ouvrir la popup -->
             <button class="btn-mdp" type="button" onclick="openMdpPopup()">Changer le mot de passe</button>
         </div>
