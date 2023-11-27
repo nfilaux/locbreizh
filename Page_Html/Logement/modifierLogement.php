@@ -39,50 +39,44 @@ $photo = $stmt->fetch();
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Modifier logement</title>
+        <title>Ajouter un logement</title>
+        <link rel="stylesheet" href="../style.css">
     </head>
-    
+
     <body>
-    <header>
-<a href="../Accueil/Tableau_de_bord.php">
-    <div>
-        <img src="../svg//logo.svg">
-        <h2>Loc'Breizh</h2>
-    </div></a>
-
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
+        <header>
             <a href="../Accueil/Tableau_de_bord.php">
-                <h4>Accèder à mon tableau de bord</h4>
+                <img class="logot" src="../svg/logo.svg">
+                <h2>Loc'Breizh</h2>
             </a>
-        </div>
-        
+                <div class="brecherche">
+                    <img src="../svg/filtre.svg">
+                    <input id="searchbar" type="text" name="search">
+                    <img src="../svg/loupe.svg">
+                </div>
 
-    <div>
-        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
-    </div>
-    <div id="popup" class="popup">
-        <a href="">Accéder au profil</a>
-        <br>
-        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
-        <a onclick="closePopup()">Fermer la fenêtre</a>
-    </div>
-</header>
-    
-        <div class='banniere'>
-            <img src='/Ressources/Images/arrow-left-s-line 1.svg'>
+                <img src="../svg/booklet-fill 1.svg">
+                <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
+
+                <div class="imghead">
+                    <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+                    <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+                </div>
+                <div id="popup" class="popup">
+                <a href="">Accéder au profil</a>
+                <br>
+                <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+                <a onclick="closePopup()">Fermer la fenêtre</a>
+            </div>
+        </header>
+        <main>
+
+        <div class="headtablo">
+            <a><img src="../svg/flecheRetour.svg"></a>
             <h1>La fiche de votre logement</h1>
         </div>
-    
-        <main>
+
             <form method='POST' action='modifier.php?id_logement=<?php echo $id_logement ?>' enctype="multipart/form-data">
-                <fieldset>
                     <label for='nom'>Libellé logement</label>
                     <input id='nom' type='text' name='nomP' value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
                     <?php
@@ -189,52 +183,56 @@ $photo = $stmt->fetch();
                         <input disabled id='service' type='checkbox' name='navetteP' placeholder='Service'>Navette/Taxi
                         <input disabled id='service' type='checkbox' name='lingeP' placeholder='Service'>Linge
                     </fieldset>
-    
-                    <h1>Images logement</h1>
-                    <label for='image1'>Image 1</label>
-                    <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
-    
-                    <label for='image2'>Image 2</label>
-                    <input id='image2' type='file' name='image2' accept='image/png, image/jpeg'>
-    
-                    <label for='image3'>Image 3</label>
-                    <input id='image3' type='file' name='image3' accept='image/png, image/jpeg'>
-    
-                    <label for='image4'>Image 4</label>
-                    <input id='image4' type='file' name='image4' accept='image/png, image/jpeg'>
-    
-                    <label for='image5'>Image 5</label>
-                    <input id='image5' type='file' name='image5' accept='image/png, image/jpeg'>
-    
-                    <label for='image6'>Image 6</label>
-                    <input id='image6' type='file' name='image6' accept='image/png, image/jpeg'>
+                    
+                    <div class="logpc">
+                        <h4 class="titreAL">Images logement</h4>
+                        <div class="logrow">
+                            <div class="logpc">
+                                <label for='image1'>Image 1</label>
+                                <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
+
+                                <label for='image2'>Image 2</label>
+                                <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
+
+                                <label for='image3'>Image 3</label>
+                                <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
+                            </div>
+                            <div class="logpc">
+                                <label for='image4'>Image 4</label>
+                                <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
+
+                                <label for='image5'>Image 5</label>
+                                <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
+
+                                <label for='image6'>Image 6</label>
+                                <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
+                            </div>
+                        </div>
+                    </div>
     
                     <label for='taxe_sejour'>Taxe de séjour</label>
                     <input disabled id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' value=<?php echo $taxe; ?> required>
     
                     <button name='previsualiser' type='submit'>Modifier</button>
-                </fieldset>
             </form>
     
             
         </main>
     
         <footer>
-        <div>   
-            <div>
+            <div class="tfooter">
                 <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
                 <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
+                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
             </div>
             <hr>  
-            <div>
+            <div class="bfooter">
                 <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html">7ème sens</a></p>
+                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
-        </div>
-    </footer>
+        </footer>
 </body>
 
 </html>

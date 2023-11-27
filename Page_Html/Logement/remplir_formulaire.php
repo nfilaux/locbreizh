@@ -56,7 +56,7 @@ include('../parametre_connexion.php');
 
     <main class="MainTablo">
         <div class="headtablo">
-            <img src="../svg/flecheRetour.svg">
+            <a><img src="../svg/flecheRetour.svg"></a>
             <h1>Remplir la fiche logement</h1>
         </div>
 

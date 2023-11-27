@@ -148,57 +148,52 @@
 <header>
         <?php if($est_client){ ?>
             <a href="../Accueil/accueil_client.php">
-            <div>
-            <img src="../svg//logo.svg">
+            <img class="logot" src="../svg/logo.svg">
             <h2>Loc'Breizh</h2>
-            </div></a>
-
-        <?PHP }
+        </a>
+        <?php }
         else{?>
             <a href="../Accueil/Tableau_de_bord.php">
-            <div>
-            <img src="../svg//logo.svg">
-            <h2>Loc'Breizh</h2>
-            </div></a>
+                <img class="logot" src="../svg/logo.svg">
+                <h2>Loc'Breizh</h2>
+            </a>
         <?php }?>
 
 
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
+        <div class="brecherche">
+            <img src="../svg/filtre.svg">
+            <input id="searchbar" type="text" name="search">
+            <img src="../svg/loupe.svg">
+        </div>
+
             <?php 
                 if($est_client){?>
-                    <a href="../Reservation/liste_reservations.php">
-                    <h4>Acceder à mes réservations</h4>
-                    </a>
+                    <img src="../svg/booklet-fill 1.svg">
+                    <a href="../reservation/liste_reservations.php"><h4>Accèder à mes réservations</h4></a>
+
                 <?PHP }
                 else{?>
-                    <a href="../Accueil/Tableau_de_bord.php">
-                    <h4 >Acceder à mon tableau de bord</h4>
-                    </a>
+                   <img src="../svg/booklet-fill 1.svg">
+                    <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
                 <?php }?>
-        </div>
+
         
 
-    <div>
-        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
-    </div>
-    <div id="popup" class="popup">
-        <a href="">Accéder au profil</a>
-        <br>
-        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
-        <a onclick="closePopup()">Fermer la fenêtre</a>
-    </div>
+        <div class="imghead">
+            <a href="../messagerie/messagerie.php" ><img src="../svg/message.svg"></a>
+            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+        </div>
+        <div id="popup" class="popup">
+            <a href="">Accéder au profil</a>
+            <br>
+            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+            <a onclick="closePopup()">Fermer la fenêtre</a>
+        </div>
 </header>
 
-    <main>
+    <main class="messrowb">
         <!--partie de gauche de la page (liste des conversations)-->
-        <div>
+        <div class="messcolumnconv">
             <!--barre de recherche (pour le filtre)-->
             <div>
                 <img src="../svg/filtre.svg">
@@ -243,7 +238,7 @@
 
         <hr><hr><hr>
         <!--partie de droite (liste des messages de la conversation selectionnee)-->
-        <div>
+        <div class="messcolumn">
             <?php
                 // si il y a au moins une conversation
                 if(count($tab_id_conv) != 0 ){?>
@@ -376,20 +371,18 @@
         </div>
     </main>
     <footer>
-        <div>   
-            <div>
+            <div class="tfooter">
                 <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
                 <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
+                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
             </div>
             <hr>  
-            <div>
+            <div class="bfooter">
                 <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
+                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
                 <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
-        </div>
     </footer>
 </body>
 

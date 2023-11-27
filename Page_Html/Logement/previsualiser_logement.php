@@ -448,7 +448,7 @@ if (isset($_SESSION['post_logement']['image6P'])) {
                         <h3 class="potitre">Calendrier</h3>
                     </div>
                 </div>
-        <div class="logrow" style="margin-top:2em;">
+        <div class="logrow" style="margin-top:2em   ;">
             <form method='POST' action='annuler_logement.php' enctype="multipart/form-data">
                 <button class="btn-demlog" type='submit'>Annuler</button>
             </form>

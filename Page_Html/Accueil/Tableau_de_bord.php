@@ -53,7 +53,7 @@
             <h1>Mon tableau de bord</h1>
         </div>
         <section class="Tablobord">
-            <article>
+            <article class="width">
                 <h2>Mes logements</h2>
                 <?php
                     
@@ -73,15 +73,29 @@
 
                 $stmt->execute();
                 foreach ($stmt->fetchAll() as $card) {
-                    echo "<a href=\"../Logement/logement_detaille_proprio.php?logement={$card['id_logement']}\"><div class=\"card\">";
-                    echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
-                    echo '<h3>' . $card['libelle_logement'] . '</h3>';
-                    echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
-                    /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
-                    /*
-                    echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
-                    echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
-                    echo "<a href=\"../Logement/modifierLogement.php?id_logement={$card['id_logement']}\"><button>Modifier ce logement</button></a></div></a>";
+                    ?>
+                        <div class="cardlogmain">
+                            <img src="../Ressources/Images/<?php echo $card['photo_principale']?>">
+                            <section class="logcp">
+                                <div class="logrowb">
+                                    <div>
+                                        <h3 class="titrecard"><?php echo $card['libelle_logement'] ?></h3>
+                                        <hr class="hrcard">
+                                    </div>
+                                    <a class="btn-modiftst" href="../Logement/modifierLogement.php?id_logement=<?php echo $card['id_logement'] ?>"><button class="btn-modif">Modifier</button></a>
+                                </div>
+                                
+                                <div class="logrowb">
+                                    <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $card['id_logement'] ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
+                                    <a><button class="btn-desactive">DESACTIVER</button></a>
+                                    <a><button class="btn-suppr">SUPPRIMER</button></a>
+                                </div>
+                                
+                                <p>DISCLAIMER - La suppression du compte est définitve.</p>
+                                <p class="err">Condition requise : Aucune réservation prévue.</p>
+                            </section>
+                        </div>
+                    <?php
                 }
                 ?>
             <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
