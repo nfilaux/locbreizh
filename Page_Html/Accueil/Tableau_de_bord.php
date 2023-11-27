@@ -1,3 +1,4 @@
+<script src="../scriptPopup.js"></script>
 <?php 
     session_start();
     include('../parametre_connexion.php');
@@ -13,6 +14,7 @@
     $stmt->execute();
     $photo = $stmt->fetch();
 ?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -39,14 +41,24 @@
 
         <div class="imghead">
             <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+            <a onclick="openPopup('popup', 'overlay_profil-deconnexion')"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
         </div>
+        <div id="overlay_profil-deconnexion" onclick="closePopup('popup', 'overlay_profil-deconnexion')"></div>
         <div id="popup" class="popup">
-        <a href="">Accéder au profil</a>
-        <br>
-        <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-        <a onclick="closePopup()">Fermer la fenêtre</a>
-    </div>
+            <table id="tableProfil">
+                <tr>
+                    <td>
+                        <a id="monprofil" href="">Accéder au profil</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 
+                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+                    </td>  
+                </tr>
+            </table>
+        </div>
+
     </header>
     <main class="MainTablo">
         <div class="headtablo"> 
@@ -72,16 +84,45 @@
                 }
 
                 $stmt->execute();
-                foreach ($stmt->fetchAll() as $card) {
-                    echo "<a href=\"../Logement/logement_detaille_proprio.php?logement={$card['id_logement']}\"><div class=\"card\">";
-                    echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
-                    echo '<h3>' . $card['libelle_logement'] . '</h3>';
-                    echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
-                    /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
-                    /*
-                    echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
-                    echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
-                    echo "<a href=\"../Logement/modifierLogement.php?id_logement={$card['id_logement']}\"><button>Modifier ce logement</button></a></div></a>";
+                foreach ($stmt->fetchAll() as $card) { ?>
+                    <div class="tdblog"> 
+                        <?php
+                        echo "<a href=\"../Logement/logement_detaille_proprio.php?logement={$card['id_logement']}\"><div class=\"card\">";
+                        echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
+                        echo '<h3>' . $card['libelle_logement'] . '</h3>';
+                        echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
+                        /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
+                        /*
+                        echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
+                        echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
+                        echo "<a href=\"../Logement/modifierLogement.php?id_logement={$card['id_logement']}\"><button>Modifier ce logement</button></a></div></a>";?>
+                    
+                        <a onclick="openPopup('plages', 'overlay_plages')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>
+                        
+                        <div id="overlay_plages" onclick="closePopup('plages', 'overlay_plages')"></div>
+                        <div id='plages' class='plages'> 
+                            <h1>Plages ponctuelles<h1><br>
+                            <form action="plagesBack.php" method="post">
+                                
+                                <label for="dateDeb"> date de début de la plage : </label>
+                                <input type="date" id="dateDeb" name="dateDeb"/>
+                                <br><br>
+                                
+                                <label for="dateFin"> date de fin de la plage : </label>
+                                <input type="date" id="dateFin" name="dateFin"/>
+                                <br><br>
+
+                                <label for="prix"> Prix : </label>
+                                <input type="text" id="prix" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>"/>
+                                <br><br>
+            
+                                <button type="submit">Sauvegarder</button>
+                            </form>    
+                        </div>
+
+                    </div>
+                    
+                <?php
                 }
                 ?>
             <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
@@ -154,29 +195,3 @@
 
 </html>
 
-<script>
-// Ouvrir la popup
-function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-}
-
-// Fermer la popup
-function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
-}
-
-// Ajouter des gestionnaires d'événements aux boutons
-var profilButton = document.getElementById('profilButton');
-profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
-});
-
-var deconnexionButton = document.getElementById('deconnexionButton');
-deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
-});
-</Script>
