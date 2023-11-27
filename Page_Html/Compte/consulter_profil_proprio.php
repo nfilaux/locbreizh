@@ -33,7 +33,7 @@
     }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <link rel="stylesheet" href="../style.css">
     <script src="mdpPopUp.js"></script>
@@ -107,12 +107,14 @@
                         <div>
                             <div class="row-adresse">
                                 <div>
-                                    <label  for="no_rue">N° :</label><input class="petite-adresse" type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
+                                    <label for="no_rue">N° :</label>
+                                    <input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
                                     
                                 </div>
                                 
                                 <div>
-                                    <label for="nom_rue">Rue :</label><input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
+                                    <label for="nom_rue">Rue :</label>
+                                    <input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
                                     
                                 </div>
                                 
@@ -121,12 +123,14 @@
                             <?php erreur("nomRue");?>
                             <div class="row-adresse">
                                 <div>
-                                    <label for="codePostal">Code postal :</label><input type="text" maxlength="5" id="codePostal" name="codePostal"  class="petite-adresse" value="<?php echo $infos['code_postal'];?>" required> 
+                                    <label for="codePostal">Code postal :</label>
+                                    <input type="text" maxlength="5" id="codePostal" name="codePostal"  class="petite-adresse" value="<?php echo $infos['code_postal'];?>" required> 
                                     
                                 </div>
                                 
                                 <div>
-                                    <label for="ville">Ville :</label><input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
+                                    <label for="ville">Ville :</label>
+                                    <input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
                                 </div>
                                 
                             </div>
@@ -144,8 +148,7 @@
                             <img src="../svg/eye.svg" amt="voir"></a>
                             <input type="file" id="carteIdentite" name="carteIdentite"/>
                             
-                        </div>
-                        
+                        </div> 
                     </div>
                     <?php erreur("carteIdentite"); ?>
                     <!-- lien cliquable vers le RIB + input pour le modifier -->
@@ -171,7 +174,7 @@
                 </div>
                 
             </div>
-            
+            <!-- boutton pour valider les changements -->
             <input class="submit-profil" type="submit" value="Enregistrer les modifications">
         </form>
         <!-- section pour modifier le mot de passe -->
@@ -189,7 +192,7 @@
             </div>
             <button disabled>Supprimer le compte</button>
         </div>
-        </main>
+    </main>
 </body>
 <?php
     // ouverture automatique de la popup du changement de mdp si une erreur a été trouvée

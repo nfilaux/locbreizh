@@ -930,10 +930,6 @@ iframe {
     font-size: medium;
 }
 
-.petite-adresse {
-    width: 3vw;
-}
-
 .row-adresse>div {
     display: flex;
     justify-content: space-between;
@@ -1020,7 +1016,7 @@ iframe {
     left: 37%;
     width: 25%;
     background-color: #957BB0;
-    color: #F6E4FF;
+    color: #fff;
     height: 5vh;
     margin: 2vh;
     border: none;
@@ -1052,7 +1048,7 @@ input[type=email] {
 .btn-mdp {
     margin-left: 10vw;
     background-color: #957BB0;
-    color: #F6E4FF;
+    color: #fff;
     border: none;
     border-radius: 10px;
     height: 3vw;
