@@ -137,6 +137,8 @@ header a:last-child {
 
 .MainTablo{
     padding-top: 0vw;
+    padding-left: 0%;
+    padding-right: 0%;
 }
 
 main{
@@ -228,7 +230,7 @@ footer{
     color: #F6E4FF;
     margin-bottom: 0;
     display: block;
-    position: relative;
+    position: static;
     bottom: 0;
     box-sizing: border-box;
     border-top: 1px solid #F6E4FF   ;
@@ -824,7 +826,8 @@ fieldset label{
 .logtitre{
     font-family: 'PatuaOne';
     color: #745086;
-    font-size: 2em;
+    font-size: 4em;
+    margin-top: auto;
     margin-bottom: 0.2em;
 }
 
@@ -879,7 +882,6 @@ iframe {
 .messcolumnconv{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     width: 30%;
 }
 
@@ -889,9 +891,22 @@ iframe {
     justify-content: space-between;
 }
 
+.messrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
+.messcard a{
+    background-color: #cccccc;
+    display: flex;
+    flex-direction: row;
+}
 
-
+.messcard img{
+    width: 50%;
+    height: 2%;
+}
 
 
 
@@ -922,6 +937,9 @@ iframe {
 .policetitre {
     font-family: 'PatuaOne';
     font-weight: 600;
+    font-size: 2.5em;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .width {

@@ -12,7 +12,8 @@
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
-    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id;");
+    $stmt->bindParam(':id', $_SESSION['id']);
     $stmt->execute();
     $photo = $stmt->fetch();
 ?>
@@ -26,35 +27,30 @@
 </head>
 <body>
 <header>
-    <div>
-        <img src="../svg//logo.svg">
+    <a href="../Accueil/Tableau_de_bord.php">
+        <img class="logot" src="../svg/logo.svg">
         <h2>Loc'Breizh</h2>
-    </div>
-
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
-            <a href="../Accueil/Tableau_de_bord.php">
-            <h4>Accèder au tableau de bord</h4>
-        </a>
+    </a>
+        <div class="brecherche">
+            <img src="../svg/filtre.svg">
+            <input id="searchbar" type="text" name="search">
+            <img src="../svg/loupe.svg">
         </div>
-        
 
-    <div>
-        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
-    </div>
-    <div id="popup" class="popup">
+        <img src="../svg/booklet-fill 1.svg">
+        <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
+
+        <div class="imghead">
+            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+        </div>
+        <div id="popup" class="popup">
         <a href="">Accéder au profil</a>
         <br>
-        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
+        <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
         <a onclick="closePopup()">Fermer la fenêtre</a>
     </div>
-</header>
+    </header>
 
     <main>
         <?php
@@ -69,14 +65,16 @@
             $date_val = "13.2";
             $delai_accept = "3";
 
-            $reqNomClient = $dbh->prepare("SELECT nom, prenom FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = {$_GET['demande']}");
+            $reqNomClient = $dbh->prepare("SELECT nom, prenom FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = :demande");
+            $stmt->bindParam(':demande', $_GET['demande']);
             $reqNomClient->execute();
             $infos_user = $reqNomClient->fetch(); 
 
             // recupere le nombre maximum de personnes pour le logement
             $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers from locbreizh._logement l
             join locbreizh._demande_devis d on d.logement = l.id_logement
-            where d.num_demande_devis = {$_GET['demande']};");
+            where d.num_demande_devis = :demande;");
+            $stmt->bindParam(':demande', $_GET['demande']);
             $stmt->execute();
             $nb_max = $stmt->fetch();
             
@@ -192,62 +190,21 @@
         </form>
     </main>
     
-<footer>
-        <div>   
-            <div>
+    <footer>
+            <div class="tfooter">
                 <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
                 <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
+                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
             </div>
             <hr>  
-            <div>
+            <div class="bfooter">
                 <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html">7ème sens</a></p>
+                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
-        </div>
     </footer>
 
 </body>
 </html>
-<style>
-    .popup {
-        display: none;
-        position: fixed;
-        top: 15%;
-        left: 91%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-</style>
-<script>
-// Ouvrir la popup
-function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-}
-
-// Fermer la popup
-function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
-}
-
-// Ajouter des gestionnaires d'événements aux boutons
-var profilButton = document.getElementById('profilButton');
-profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
-});
-
-var deconnexionButton = document.getElementById('deconnexionButton');
-deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
-});
-</Script>
+<script src="../scriptPopup.js"></script>

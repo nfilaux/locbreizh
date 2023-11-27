@@ -102,11 +102,6 @@ $photo = $stmt->fetch();
                         <h3 class="policetitre">Description</h3>
                         <p><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
-                        <a href="" class='voir_plus'>
-                            <hr> 
-                            <h4>Voir plus</h4> 
-                            <hr>
-                        </a>
                     </div>
                     <div class="logc">
                         <a class="center" href='../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>'><button class="btn-demlog">Demander un devis</button></a>
