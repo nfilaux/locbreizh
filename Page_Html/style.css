@@ -142,12 +142,11 @@ header a:last-child {
 
 /*-- Pop-up (accéder profil & déconnexion) --*/
 #popup {
-    padding: 0px;
     font-size: 0.7em;
     display: none;
-    position: fixed;
-    top: 15%;
-    left: 91%;
+    position: absolute;
+    top:130%;
+    left: 93%;
     transform: translate(-50%, -50%);
     background-color: transparent;
     border: transparent;
@@ -158,22 +157,19 @@ header a:last-child {
 #tableProfil, #tableProfil td{
     border-collapse: collapse;
     text-align: center;
-    padding: 0px;
     background-color: #fff;
     border: 1px solid #745086;
 }
 
 #deconnexion{
-    width: 127px;
+    width: 100%;
     padding: 10px 40px;
-    margin: 0px;
     color: red;
 }
 
 #monprofil{
-    width: 127px;
+    width: 100%;
     padding: 10px 40px;
-    margin: 0px;
     color: #000;
 }
 
@@ -191,7 +187,7 @@ header a:last-child {
 
 /*-- Pop-up (Calendrier) --*/
 
-#plages {
+.plages {
     padding: 10px;
     font-size: 1em;
     display: none;
@@ -205,7 +201,7 @@ header a:last-child {
     z-index: 1000;
 }
 
-#overlay_plages{
+.overlay_plages{
     display: none;
     position: fixed;
     top: 0;

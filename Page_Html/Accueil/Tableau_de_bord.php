@@ -84,7 +84,8 @@
                 }
 
                 $stmt->execute();
-                foreach ($stmt->fetchAll() as $card) { ?>
+                foreach ($stmt->fetchAll() as $key => $card) { 
+                    $nomPlage = 'plage' . $key;?>
                     <div class="tdblog"> 
                         <?php
                         echo "<a href=\"../Logement/logement_detaille_proprio.php?logement={$card['id_logement']}\"><div class=\"card\">";
@@ -97,11 +98,12 @@
                         echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
                         echo "<a href=\"../Logement/modifierLogement.php?id_logement={$card['id_logement']}\"><button>Modifier ce logement</button></a></div></a>";?>
                     
-                        <a onclick="openPopup('plages', 'overlay_plages')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>
+                        <a onclick="openPopup(<?php echo $nomPlage; ?>, 'overlay_plages')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>
                         
-                        <div id="overlay_plages" onclick="closePopup('plages', 'overlay_plages')"></div>
-                        <div id='plages' class='plages'> 
-                            <h1>Plages ponctuelles<h1><br>
+                        <div id="overlay_plages" onclick="closePopup(<?php echo $nomPlage; ?>, 'overlay_plages')"></div>
+                        
+                        <div id=<?php echo $nomPlage; ?> class='plages'> 
+                            <h1>Ajouter une plage ponctuelle</h1><br>
                             <form action="plagesBack.php" method="post">
                                 
                                 <label for="dateDeb"> date de début de la plage : </label>
@@ -116,8 +118,11 @@
                                 <input type="text" id="prix" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>"/>
                                 <br><br>
             
-                                <button type="submit">Sauvegarder</button>
-                            </form>    
+                                <button type="submit">ajouter</button>
+                            </form>
+                            
+                            <hr><h1>Les plages ponctuelles</h1><br>
+                            <p> Aucune plage définie </p>
                         </div>
 
                     </div>
