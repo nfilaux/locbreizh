@@ -158,7 +158,7 @@
         <div>
             <div>
                 <h2>Suppression du compte</h2>
-                <p>DICLAIMER : La suppression du compte est définitive.</p>
+                <p>DISCLAIMER : La suppression du compte est définitive.</p>
                 <p>Condition requise : aucun logement en ligne et aucune réservation prévue.</p>
             </div>
             <button disabled>Supprimer le compte</button>

@@ -835,9 +835,10 @@ iframe {
 /*----------------------------------------------------------------CONSULTER SON PROFIL-------------------------------------------------------------*/
 
 .main-profil{
-    padding: 1vw;
+    padding: 4vw;
     font-size: larger;
 }
+
 
 .compte-infos label, p{
     color: #000;
@@ -867,7 +868,7 @@ iframe {
     background-color: #FCF0E2;
     display: flex;
     flex-direction: column;
-    padding: 1vw;
+    padding: 3vh 7vw;
 
 }
 
@@ -886,12 +887,18 @@ iframe {
     font-weight: normal;
 }
 
+.petite-adresse{
+    width: 3vw;
+}
+
 .row-adresse > div{
     display: flex;
     justify-content: space-between;
+    flex-wrap: nowrap;
     align-items: center;
+    width: 40%;
     width: 45%;
-    min-width: 300px;
+    min-width: 200px;
 }
 
 .doc-profil{
@@ -914,7 +921,7 @@ iframe {
 }
 
 .voir-doc > p{
-    margin-right: 1em;
+    margin: 0 1em 0 0;
 }
 
 .voir-doc img{
@@ -933,7 +940,7 @@ iframe {
 }
 
 .profil-form > div:last-of-type{
-    width: 25%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -943,7 +950,7 @@ iframe {
 
 .profil-form > div:last-of-type img{
     aspect-ratio : 1 / 1;
-    width: 75%;
+    width: 70%;
     border: 1px solid #5B3F69;
     border-radius: 50%;
 }
@@ -959,6 +966,27 @@ iframe {
     border-right: solid 1px #957BB0;
 }
 
+.submit-profil{
+    position: relative;
+    left: 37%;
+    width: 25%;
+    background-color: #957BB0;
+    color: #F6E4FF;
+    height: 5vh;
+    margin: 2vh;
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+}
+
+.main-profil input[type=text], input[type=number], input[type=date], input[type=tel], input[type=password], input[type=email]{
+    border:solid 1px #957BB0;
+    border-radius: 5px;
+}
+
+.profil-mdp{
+    display: flex;
+}
 
 /*----------------------------------------------------------------MDP POP UP-------------------------------------------------------------*/
 
