@@ -24,47 +24,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire devis</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
 </head>
 <body>
-<header>
-    <div>
-        <img src="../svg//logo.svg">
-        <h2>Loc'Breizh</h2>
-    </div>
-
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
-            <a href="../Accueil/Tableau_de_bord.php">
-            <h4>Accèder au tableau de bord</h4>
-        </a>
-        </div>
-        
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-</header>
+    <?php 
+        include('../header-footer/choose_header.php');
+    ?>
 
     <main>
         <?php
@@ -204,23 +169,9 @@
         </form>
     </main>
     
-<footer>
-        <div>   
-            <div>
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
-            </div>
-            <hr>  
-            <div>
-                <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html">7ème sens</a></p>
-            </div>
-        </div>
-    </footer>
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+    ?>
 
 </body>
 </html>
-<script src="../scriptPopup.js"></script>

@@ -28,31 +28,10 @@
 </head>
 
 <body>
-    <header>
-        <a href="../Accueil/Tableau_de_bord.php">
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
-        </a>
-            <div class="brecherche">
-                <img src="../svg/filtre.svg">
-                <input id="searchbar" type="text" name="search">
-                <img src="../svg/loupe.svg">
-            </div>
+<?php 
+        include('../header-footer/choose_header.php');
+    ?>
 
-            <img src="../svg/booklet-fill 1.svg">
-            <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
-
-            <div class="imghead">
-                <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-                <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
-            </div>
-            <div id="popup" class="popup">
-            <a href="">Accéder au profil</a>
-            <br>
-            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-            <a onclick="closePopup()">Fermer la fenêtre</a>
-        </div>
-    </header>
     <main>
         <div class='banniere'>
             <img src='../svg/arrow-left-s-line 1.svg'>
@@ -271,71 +250,9 @@
 
     </main>
 
-    <footer>
-        <div class="tfooter">
-            <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-            <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-            <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-            <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-        </div>
-        <hr>  
-        <div class="bfooter">
-            <p>©2023 Loc’Breizh</p>
-            <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-            <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-        </div>
-    </footer>
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+    ?>
 </body>
 
 </html>
-
-<<<<<<< HEAD
-<script src="../scriptPopup.js"></script>
-=======
-<<<<<<< HEAD
-
-<style>
-    .popup {
-        display: none;
-        position: fixed;
-        top: 15%;
-        left: 91%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-</style>
-
-=======
->>>>>>> 9364f17a90c80a56455381988de79fa473ad37bb
-<!-- Partie animé du profil d'une personne connecter -->
-<script>
-    // Ouvrir la popup
-    function openPopup() {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'block';
-    }
-
-    // Fermer la popup
-    function closePopup() {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'none';
-    }
-
-    // Ajouter des gestionnaires d'événements aux boutons
-    var profilButton = document.getElementById('profilButton');
-    profilButton.addEventListener('click', function() {
-        alert('Accéder au profil');
-        closePopup();
-    });
-
-    var deconnexionButton = document.getElementById('deconnexionButton');
-    deconnexionButton.addEventListener('click', function() {
-        alert('Se déconnecter');
-        closePopup();
-    });
-</Script>
-

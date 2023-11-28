@@ -36,6 +36,7 @@
 <html lang="fr">
 <head>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
     <script src="mdpPopUp.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,7 +71,9 @@
             <input type="submit" value="Changer le mot de passe">
         </form>
     </div>
-
+    <?php 
+        include('../header-footer/choose_header.php');
+    ?>
     <main class="main-profil">
         <h1 class="header-profil">Mon compte</h1>
         <!-- debut du formulaire pour afficher/modifier les informations "simples" du compte -->
@@ -182,6 +185,9 @@
             <button disabled>Supprimer le compte</button>
         </div>
     </main>
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+    ?>
 </body>
 
 <?php

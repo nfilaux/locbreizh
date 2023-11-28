@@ -25,6 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demande devis</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
 </head>
 <?php
     // import parametre de connexion + nouvelle instance de PDO
@@ -53,63 +54,10 @@
    
 ?>
 <body>
-<header>
-	<a href="../Accueil/accueil_client.php">
-    <div>
-        <img src="../svg//logo.svg">
-        <h2>Loc'Breizh</h2>
-    </div></a>
 
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
-            <a href="../reservation/liste_reservations.php">
-                <h4>Accèder à mes reservations</h4>
-            </a>
-        </div>
-
-<<<<<<< HEAD
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-</header>
-=======
-        <img src="../svg/booklet-fill 1.svg">
-        <a href="../reservation/liste_reservations.php"><h4>Accèder à mes réservations</h4></a>
->>>>>>> 12f720d3f530ccbb0ad87582d473241b48ef8ce5
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php" ><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
-        </div>
-        <div id="popup" class="popup">
-            <a href="">Accéder au profil</a>
-            <br>
-            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-            <a onclick="closePopup()">Fermer la fenêtre</a>
-        </div>
-    </header>
-
+    <?php 
+        include('../header-footer/choose_header.php');
+    ?>
     <main class="MainTablo">
     <div class="headtablo">
         <a href="logement_detaille_client"><img src="../svg/flecheRetour.svg"/></a>
@@ -151,7 +99,9 @@
                 <input class="lognb" type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50"  value=<?php if(isset($_GET['nb_supp']) && $_GET['nb_supp'] > 0){echo $_GET['nb_supp'];} else{echo 0;} ?> required/>
                 </div>
             </div>
-            <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
+            <?php 
+        include('../header-footer/choose_header.php');
+    ?>  <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
             </div>
             <div class="devis">
                 <?php
@@ -175,71 +125,9 @@
             
         </form>
     </main>
-    <footer>
-            <div class="tfooter">
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-            </div>
-            <hr>  
-            <div class="bfooter">
-                <p>©2023 Loc’Breizh</p>
-                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-            </div>
-    </footer>
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+    ?>
 </body>
 
 </html>
-
-<<<<<<< HEAD
-<script src="../scriptPopup.js"></script>
-=======
-<<<<<<< HEAD
-<!-- Partie stylisé des popup-->
-<style>
-    .popup {
-        display: none;
-        position: fixed;
-        top: 15%;
-        left: 91%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-</style>
-
-<!-- Partie animé du profil d'une personne connecter -->
-=======
->>>>>>> 9364f17a90c80a56455381988de79fa473ad37bb
-<script>
-    // Ouvrir la popup
-    function openPopup() {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'block';
-    }
-
-    // Fermer la popup
-    function closePopup() {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'none';
-    }
-
-    // Ajouter des gestionnaires d'événements aux boutons
-    var profilButton = document.getElementById('profilButton');
-    profilButton.addEventListener('click', function() {
-        alert('Accéder au profil');
-        closePopup();
-    });
-
-    var deconnexionButton = document.getElementById('deconnexionButton');
-    deconnexionButton.addEventListener('click', function() {
-        alert('Se déconnecter');
-        closePopup();
-    });
-</Script>
->>>>>>> 12f720d3f530ccbb0ad87582d473241b48ef8ce5

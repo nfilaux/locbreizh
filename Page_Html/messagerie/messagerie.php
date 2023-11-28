@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
 </head>
 <?php
     // inclusion d'une instance PDO
@@ -148,65 +149,10 @@
     
 ?>
 <body>
-<header>
-        <?php if($est_client){ ?>
-            <a href="../Accueil/accueil_client.php">
-            <div>
-            <img src="../svg//logo.svg">
-            <h2>Loc'Breizh</h2>
-            </div></a>
+<?php 
+        include('../header-footer/choose_header.php');
+    ?>
 
-        <?PHP }
-        else{?>
-            <a href="../Accueil/Tableau_de_bord.php">
-            <div>
-            <img src="../svg//logo.svg">
-            <h2>Loc'Breizh</h2>
-            </div></a>
-        <?php }?>
-
-
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
-            <?php 
-                if($est_client){?>
-                    <a href="../Reservation/liste_reservations.php">
-                    <h4>Acceder à mes réservations</h4>
-                    </a>
-                <?PHP }
-                else{?>
-                    <a href="../Accueil/Tableau_de_bord.php">
-                    <h4 >Acceder à mon tableau de bord</h4>
-                    </a>
-                <?php }?>
-        </div>
-        
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-</header>
 
     <main>
         <!--partie de gauche de la page (liste des conversations)-->
@@ -391,23 +337,9 @@
             <?php }?>
         </div>
     </main>
-    <footer>
-        <div>   
-            <div>
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
-            </div>
-            <hr>  
-            <div>
-                <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-            </div>
-        </div>
-    </footer>
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+    ?>
 </body>
 
 </html>
-<script src="../scriptPopup.js"></script>

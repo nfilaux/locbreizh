@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
 </head>
 
 <body>
@@ -69,57 +70,15 @@
         ?>
 
     </div>
-        <a href="" class='voir_plus'>
-            <hr> 
-            <h4>Voir plus</h4> 
-            <hr>
-        </a>
-    </main>
-    <footer>
-        <div class="tfooter">
-            <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-            <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-            <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">
-                <p>@LocBreizh</p>
-            </a>
-            <a class="margintb" href="connexion.html"><img src="../svg/facebook.svg">
-                <p>@LocBreizh</p>
-            </a>
-        </div>
+    <a href="" class='voir_plus'>
+        <hr> 
+        <h4>Voir plus</h4> 
         <hr>
-        <div class="bfooter">
-            <p>©2023 Loc’Breizh</p>
-            <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-            <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-        </div>
-    </footer>
+    </a>
+    </main>
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+    ?>
 </body>
 
 </html>
-
-<script>
-    // Ouvrir la popup
-    function openPopup() {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'block';
-    }
-
-    // Fermer la popup
-    function closePopup() {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'none';
-    }
-
-    // Ajouter des gestionnaires d'événements aux boutons
-    var profilButton = document.getElementById('profilButton');
-    profilButton.addEventListener('click', function() {
-        alert('Accéder au profil');
-        closePopup();
-    });
-
-    var deconnexionButton = document.getElementById('deconnexionButton');
-    deconnexionButton.addEventListener('click', function() {
-        alert('Se déconnecter');
-        closePopup();
-    });
-</Script>
