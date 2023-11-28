@@ -21,57 +21,68 @@ $nom_image4 = $_FILES["image2P"]["tmp_name"];
 $nom_image5 = $_FILES["image5P"]["tmp_name"];
 $nom_image6 = $_FILES["image6P"]["tmp_name"];
 
-
-$id_photo = 0;
+$id_photo = 1;
 
 function id_photo($id_photo)
 {
     return time() . $id_photo;
 }
-
-$nouveau_nom_image1 = id_photo($id_photo);
+$extension_img_1 = explode('/',$_FILES['image1P']['type'])[1];
+$nouveau_nom_image1 = id_photo($id_photo) . '.' . $extension_img_1;
 $id_photo++;
 move_uploaded_file($nom_image_principale, "../Ressources/Images/" . $nouveau_nom_image1);
+//echo '<p> avant l image 2 ! <p>';
+echo '<p>tableau session logement<p>';
 
-
-$nouveau_nom_image2 = id_photo($id_photo);
-$id_photo++;
-if (isset($_SESSION['post_logement']['image2P'])) {
+if ($_FILES['image2P']['name']!= '') {
+    echo '<p>il y a une image 2 !<p>';
+    $extension_img_2 = explode('/',$_FILES['image2P']['type'])[1];
+    $nouveau_nom_image2 = id_photo($id_photo) . '.' . $extension_img_2;
+    $id_photo++;
     move_uploaded_file($nom_image2, "../Ressources/Images/" . $nouveau_nom_image2);
 } else {
     $nom_image2 = null;
+    $nouveau_nom_image2 = null;
 }
 
-$nouveau_nom_image3 = id_photo($id_photo);
-$id_photo++;
-if (isset($_SESSION['post_logement']['image3P'])) {
+if ($_FILES['image3P']['name']!= '') {
+    $extension_img_3 = explode('/',$_FILES['image3P']['type'])[1];
+    $nouveau_nom_image3 = id_photo($id_photo) . '.' . $extension_img_3;
+    $id_photo++;
     move_uploaded_file($nom_image3, "../Ressources/Images/" . $nouveau_nom_image3);
 } else {
     $nom_image3 = null;
+    $nouveau_nom_image3 = null;
 }
 
-$nouveau_nom_image4 = id_photo($id_photo);
-$id_photo++;
-if (isset($_SESSION['post_logement']['image4P'])) {
+if ($_FILES['image4P']['name']!= '') {
+    $extension_img_4 = explode('/',$_FILES['image4P']['type'])[1];
+    $nouveau_nom_image4 = id_photo($id_photo) . '.' . $extension_img_4 ;
+    $id_photo++;
     move_uploaded_file($nom_image4, "../Ressources/Images/" . $nouveau_nom_image4);
 } else {
     $nom_image4 = null;
+    $nouveau_nom_image4 = null;
 }
 
-$nouveau_nom_image5 = id_photo($id_photo);
-$id_photo++;
-if (isset($_SESSION['post_logement']['image5P'])) {
+if ($_FILES['image5P']['name']!= '') {
+    $extension_img_5 = explode('/',$_FILES['image5P']['type'])[1];
+    $nouveau_nom_image5 = id_photo($id_photo) . '.' . $extension_img_5 ;
+    $id_photo++;
     move_uploaded_file($nom_image5, "../Ressources/Images/" . $nouveau_nom_image5);
 } else {
     $nom_image5 = null;
+    $nouveau_nom_image5 = null;
 }
 
-$nouveau_nom_image6 = id_photo($id_photo);
-$id_photo++;
-if (isset($_SESSION['post_logement']['image6P'])) {
+if ($_FILES['image6P']['name']!= '') {
+    $extension_img_6 = explode('/',$_FILES['image6P']['type'])[1];
+    $nouveau_nom_image6 = id_photo($id_photo) . '.' . $extension_img_6;
+    $id_photo++;
     move_uploaded_file($nom_image6, "../Ressources/Images/" . $nouveau_nom_image6);
 } else {
     $nom_image6 = null;
+    $nouveau_nom_image6 = null;
 }
 ?>
 <!DOCTYPE html>
@@ -83,11 +94,11 @@ if (isset($_SESSION['post_logement']['image6P'])) {
     <title>Prévisualisez un logement</title>
     <link rel="stylesheet" href="../style.css">
 </head>
-<header>
+<header class="row col-12">
     <a href="../Accueil/Tableau_de_bord.php">
-        <div>
+        <div class="row col-3">
             <img src="../svg//logo.svg">
-            <h2>Loc'Breizh</h2>
+            <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
         </div>
     </a>
 
@@ -96,46 +107,24 @@ if (isset($_SESSION['post_logement']['image6P'])) {
         <input id="searchbar" type="text" name="search">
         <img src="../svg//loupe.svg">
     </div>
-    <div>
+    <div class="row col-3 offset-md-1">
         <img src="../svg//booklet-fill 1.svg">
-        <a href="../Accueil/Tableau_de_bord.php">
-            <h4>Accèder à mon tableau de bord</h4>
+        <a href="../Accueil/Tableau_de_bord.php" style="margin: auto;margin-left: 10px;">
+            <h4 style="color:#000;">Accèder à mon tableau de bord</h4>
         </a>
     </div>
 
 
-    <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
+    <div class="col-2 row">
+        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
+        <a onclick="openPopup()" class="offset-md-2 row"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a>
+    </div>
+    <div id="popup" class="popup">
+        <a href="">Accéder au profil</a>
+        <br>
+        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
+        <a onclick="closePopup()">Fermer la fenêtre</a>
+    </div>
 </header>
 
 <body>
@@ -147,6 +136,11 @@ if (isset($_SESSION['post_logement']['image6P'])) {
 
         $_SESSION['post_logement']['image1P'] = $nouveau_nom_image1;
 
+        echo '<p> apres reset <p>';
+        print_r($_FILES);
+        echo '<p> image 2 : ' . $nouveau_nom_image2 .'<p>';
+
+        
         if ($_FILES["image2P"]["name"] != "") {
             $_SESSION['post_logement']['image2P'] = $nouveau_nom_image2;
         }
@@ -191,6 +185,8 @@ if (isset($_SESSION['post_logement']['image6P'])) {
         $nom_image4 = $_FILES["image4P"]["name"];
         $nom_image5 = $_FILES["image5P"]["name"];
         $nom_image6 = $_FILES["image6P"]["name"];
+
+        print_r($_FILES['image1P']);
 
         if (isset($_POST['balconP'])) {
             $balcon = 1;
@@ -390,7 +386,7 @@ if (isset($_SESSION['post_logement']['image6P'])) {
             <p> <?php echo 'Charges 1 : ' . $logement_data['charges1']; ?> </p>
             <p> <?php echo 'Charges 2 : ' . $logement_data['charges2']; ?> </p>
             <p> <?php echo 'Charges 3 : ' . $logement_data['charges3']; ?> </p>
-            <img src="<?php echo "../Ressources/Images/$nouveau_nom_image1" ?>">
+            <img src="<?php echo "../Ressources/Images/$nouveau_nom_image1" ?>" width ="300%" height="400">
 
             <?php if (isset($_SESSION['post_logement']['image2P'])) {
             ?> <img src="<?php echo "../Ressources/Images/$nouveau_nom_image2" ?>"> <?php
@@ -416,6 +412,8 @@ if (isset($_SESSION['post_logement']['image6P'])) {
                 echo 'Aucune donnée de logement à prévisualiser.';
             }
 
+            print_r($_SESSION['post_logement']);
+
             ?>
         <form method='POST' action='ajouter_logement.php' enctype="multipart/form-data">
             <button type='submit'>Créer le logement</button>
@@ -425,19 +423,19 @@ if (isset($_SESSION['post_logement']['image6P'])) {
         </form>
     </main>
 
-    <footer>
-        <div>
-            <div>
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg"> @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg"> @LocBreizh</a></p>
+    <footer class="container-fluid">
+        <div class="column">
+            <div class="text-center row">
+                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg"> @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg"> @LocBreizh</a></p>
             </div>
             <hr>
-            <div>
-                <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            <div class="text-center row">
+                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
+                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p class="offset-md-1 col-4 testfooter">Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
         </div>
     </footer>
@@ -445,4 +443,44 @@ if (isset($_SESSION['post_logement']['image6P'])) {
 
 </html>
 
-<script src="../scriptPopup.js"></script>
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 15%;
+        left: 91%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+</style>
+<script>
+    // Ouvrir la popup
+    function openPopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'block';
+    }
+
+    // Fermer la popup
+    function closePopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'none';
+    }
+
+    // Ajouter des gestionnaires d'événements aux boutons
+    var profilButton = document.getElementById('profilButton');
+    profilButton.addEventListener('click', function() {
+        alert('Accéder au profil');
+        closePopup();
+    });
+
+    var deconnexionButton = document.getElementById('deconnexionButton');
+    deconnexionButton.addEventListener('click', function() {
+        alert('Se déconnecter');
+        closePopup();
+    });
+</Script>
