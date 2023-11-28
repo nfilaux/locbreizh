@@ -8,19 +8,20 @@
 /*----------------------------------------------------------------Polices---------------------------------------------------------------*/
 
 @font-face {
-	font-family: 'PatuaOne';
-	src: url(‘Ressources/Polices/patua_one/PatuaOne-Regular.woff2’) format(‘woff2’),
-		url(‘Ressources/Polices/patua_one/PatuaOne-Regular.ttf’) format(‘truetype’)
+    font-family: 'PatuaOne';
+    src: url('Ressources/polices/patuaone-regular-webfont.woff2') format('woff2'),
+         url('Ressources/polices/patuaone-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-	font-family: 'Quicksand';
-	src: url(‘Ressources/Polices/quicksand/Quicksand-Bold.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-Light.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-Medium.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-Regular.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-SemiBold.woff2’) format(‘woff2’),
-         url(‘Ressources/Polices/quicksand/Quicksand-VariableFont_wght.woff2’) format(‘woff2’)
+    font-family: 'quicksandregular';
+    src: url('Ressources/polices/quicksand-regular-webfont.woff2') format('woff2'),
+         url('Ressources/polices/quicksand-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
 }
 
 body {
@@ -73,6 +74,7 @@ header a:first-child {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+
 }
 
 header input {
@@ -93,9 +95,6 @@ header input {
     justify-content: space-between;
 }
 
-header a:last-child {
-    margin-left: 2em;
-}
 
 .imgprofil {
     display: block;
@@ -139,39 +138,24 @@ header a:last-child {
     font-family: 'PatuaOne';
 }
 
+.margleft{
+    margin-left: 2em;
+}
 /*----------------------------------------------------------------popup----------------------------------------------------------------*/
 
 /*-- Pop-up (accéder profil & déconnexion) --*/
 #popup {
+    padding: 0px;
     font-size: 0.7em;
     display: none;
-    position: fixed;
-    top:93%;
-    left: 85%;
+    position: absolute;
+    top: 110%;
+    left: 88%;
     transform: translate(-50%, -50%);
     background-color: transparent;
     border: transparent;
     box-shadow: none;
     z-index: 1000;
-}
-
-#tableProfil, #tableProfil td{
-    border-collapse: collapse;
-    text-align: center;
-    background-color: #fff;
-    border: 1px solid #745086;
-}
-
-#deconnexion{
-    width: 100%;
-    padding: 10px 40px;
-    color: red;
-}
-
-#monprofil{
-    width: 100%;
-    padding: 10px 40px;
-    color: #000;
 }
 
 #overlay_profil-deconnexion {
@@ -181,10 +165,26 @@ header a:last-child {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0);
     z-index: 999;
 }
 
+#tableProfil, #tableProfil td{
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #745086;
+}
+
+#deconnexion{
+    width: 8.5em;
+    padding: 10px 40px;
+    color: red;
+}
+
+#monprofil{
+    width: 8.5em;
+    padding: 10px 40px;
+    color: #000;
+}
 
 
 /*-- Pop-up (Calendrier) --*/

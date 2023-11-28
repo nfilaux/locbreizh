@@ -8,21 +8,9 @@
 </head>
 
 <body>
-    <header>
-        <div style="display:flex; flex-direction:row;">
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
-        </div>
-
-        <div class="brecherche">
-            <img src="../svg/filtre.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
-        </div>
-        
-        <a href="../Compte/CreerCompte.html" class="btn-accueilins btn_visi"><h5>S'inscrire</h5></a>
-        <a href="../Compte/connexionFront.php" class="btn-accueil btn_visi"><h5>Se connecter</h5></a>
-    </header>
+    <?php 
+        include('../header-footer/choose_header.php');
+    ?>
     <main>
         <?php
 

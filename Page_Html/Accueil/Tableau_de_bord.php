@@ -9,9 +9,6 @@
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
-    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
-    $stmt->execute();
-    $photo = $stmt->fetch();
 ?>
 
 <!doctype html>
@@ -25,41 +22,9 @@
 </head>
 
 <body class="pagecompte">
-    <header>
-    <a href="../Accueil/Tableau_de_bord.php">
-        <img class="logot" src="../svg/logo.svg">
-        <h2>Loc'Breizh</h2>
-    </a>
-        <div class="brecherche">
-            <img src="../svg/filtre.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
-        </div>
-
-        <img src="../svg/booklet-fill 1.svg">
-        <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup('popup', 'overlay_profil-deconnexion')"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay_profil-deconnexion" onclick="closePopup('popup', 'overlay_profil-deconnexion')"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="../Compte/consulter_profil_proprio.php">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-
-    </header>
+    <?php 
+        include('../header-footer/choose_header.php');
+    ?>
     <main class="MainTablo">
         <div class="headtablo"> 
             <h1>Mon tableau de bord</h1>
@@ -119,9 +84,10 @@
                 <h2>Notifications</h2>
 
                 <div class="box">
-                    <?php foreach ($notifications as $notification) {?>
+                    <p>Aucune notifications</p>
+                    <?php //foreach ($notifications as $notification) {?>
 
-                    <?php } ?>
+                    <?php //} ?>
                 </div>
 
 
@@ -162,20 +128,9 @@
         </section>    
     </main>
     
-    <footer>
-            <div class="tfooter">
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-            </div>
-            <hr>  
-            <div class="bfooter">
-                <p>©2023 Loc’Breizh</p>
-                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-            </div>
-    </footer>
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+    ?>
 </body>
 
 </html>
