@@ -80,27 +80,29 @@ $photo = $stmt->fetch();
                 foreach ($reservations as $reservation) {
 
                     ?>
-                    <div class="cardlogmain"> 
-                        <img src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>"> 
-                        <section class="logcp">      
+                    <div class="cardresmain"> 
+                        <img class="cardresmainimg" src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>"> 
+                        <section class="rescol">      
                             <div class="logrowb">
-                            <h3> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
-                            <img src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil" width="50" height="50">
+                            <div>
+                            <h3 class="titrecardres"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
+                            <hr class="hrcard">
+                            </div>
+                            <div class="resrow">
                             <div>
                                 <p>Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
                                 <button class="btn-accueil">Contacter le proprietaire</button>
                             </div>
+                            <img class="imgprofil" src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil"  width="75" height="75">
+                            </div>
                             </div>
                             
 
-                            <div class="logrowb">
+                            <div class="rescrow">
                                 <a href="../devis/pdf_devis/"><button class="btn-ajoutlog" disabled>CONSULTER DEVIS</button></a>
                                 <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
                                 <a><button class="btn-suppr" disabled>ANNULER</button></a>
                             </div>
-
-
-
                             
                             
                             <div class="logrowb">

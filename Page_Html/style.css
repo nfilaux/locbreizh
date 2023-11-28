@@ -1032,6 +1032,52 @@ iframe {
     width: 50%;
 }
 
+.cardresmain {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    border: 2px solid #745086;
+    width: 80%;
+    margin: auto;
+    background-color: #FCF0E2;
+    padding: 0.2em;
+}
+
+.cardresmainimg {
+    width: 30%;
+    height: 100%;
+    margin: auto 0.5em auto 0em;
+    border: 2px solid #745086;
+    border-radius: 10px;
+}
+
+.titrecardres {
+    font-family: 'PatuaOne';
+    font-size: 3em;
+    margin-bottom: 0;
+}
+
+.rescol {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 70%;
+}
+
+.resrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.rescrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 2em;
+}
+
 /*----------------------------------------------------------------Autre----------------------------------------------------------------*/
 
 .spbt{
