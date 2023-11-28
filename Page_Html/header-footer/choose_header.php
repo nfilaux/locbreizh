@@ -1,6 +1,6 @@
 <?php 
     if(!isset($_SESSION['id'])){
-        echo file_get_contents('header_visiteur.html');
+        echo file_get_contents('../header-footer/header_visiteur.html');
     }
     else{
         include('../parametre_connexion.php');
