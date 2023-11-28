@@ -99,7 +99,7 @@
         ?>
         <style>#erreur {color : red;}</style>
     <fieldset>
-        <h1>La demande de devis de <?php echo $infos_user['prenom'] . ' '. $infos_user['nom']; ?> !</h1>
+        <h1 class="policetitre colorviolet">La demande de devis de <?php echo $infos_user['prenom'] . ' '. $infos_user['nom']; ?> !</h1>
         <form name="formulaire" action="ajouter_devis.php" method="post">
     
         <div class="logrow">
@@ -174,7 +174,7 @@
         </fieldset>
 
         <fieldset>
-            <h1>Details pour le paiement</h1>
+            <h1 class="policetitre colorviolet">Details pour le paiement</h1>
             <div class="devisrow">
                 <p class="ren">A RENSEIGNER</p>
                 <div class="deviscol">
@@ -208,15 +208,15 @@
                         </div>
                     </div>
                     <div class="devisrow">
-                    <div class="deviscolinput">
+                    <div class="devisvct">
                             <p> Montant total du devis (en € ) </p>
                             <input class="logvct" id="totalht" name="totalht" value=""  disabled>
                         </div>
-                    <div class="deviscolinput">
+                    <div class="devisvct">
                             <p> Frais de plateforme HT (en € ) </p>
                             <input class="logvct" id="totalht" name="totalht" value="" disabled>
                         </div>
-                    <div class="deviscolinput">
+                    <div class="devisvct">
                         <p> Frais de plateforme TTC (en € ) </p>
                             <input class="logvct" id="totalht" name="totalht" value="" disabled>
                         </div>
@@ -243,14 +243,14 @@
                     html += `<div class="deviscol">`;
                     html += `<div class="devisrow">`;
                     html += `<p class="ren">Calculer automatiquement</p>`;
-                    html += `<p> Total HT : ${total_HT}€</p>`;
-                    html += `<p> Total TTC : ${total_TTC}€</p>`;
-                    html += `<p> Taxe séjour : ${taxe_sejour}€</p>`;
+                    html += `<div class="deviscolinput"><p> Total HT (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_HT}€" disabled></div>`;
+                    html += `<div class="deviscolinput"><p> Total TTC (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_TTC}€" disabled></div>`;
+                    html += `<div class="deviscolinput"><p> Taxe de séjour (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${taxe_sejour}€" disabled></div>`;
                     html += '</div>';
                     html += `<div class="devisrow">`;
-                    html += `<p> Montant total du devis : ${total_montant_devis}€</p>`;
-                    html += `<p> Frais de plateforme HT : ${total_plateforme_HT}€</p>`;
-                    html += `<div class="deviscolinput"><p> Frais de plateforme TTC (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_TTC} €" disabled></div>`;
+                    html += `<div class="devisvct"><p> Montant total du devis</p><input class="logvct" id="totalht" name="totalht" value="${total_montant_devis}€"  disabled></div>`;
+                    html += `<div class="devisvct"><p> Frais de plateforme HT</p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_HT}€" disabled></div>`;
+                    html += `<div class="devisvct"><p> Frais de plateforme TT</p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_TTC} €" disabled></div>`;
                     html += '</div>';
                     html += '</div>';
                     document.getElementById("resultat").innerHTML = html;
@@ -260,7 +260,7 @@
             <br/>
             <input type="hidden" id="id_demande" name ="id_demande" value=<?php echo $_GET['demande'];?>>
             </fieldset>
-            <input class="btn-ajoutlog center" type="submit" id="envoyerDevisBtn" value="Envoyer le devis" disabled />
+            <input class="btn-envoidevis" type="submit" id="envoyerDevisBtn" value="Envoyer le devis" disabled />
         </form>
     </main>
     

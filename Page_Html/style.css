@@ -29,6 +29,36 @@ body {
     background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
 }
 
+/*----------------------------------------------------------------popup----------------------------------------------------------------*/
+
+/*-- Pop-up (Calendrier) --*/
+
+.plages {
+    padding: 10px;
+    font-size: 1em;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #745086;
+    box-shadow: none;
+    z-index: 1000;
+}
+
+.overlay_plages{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
 header{
@@ -430,7 +460,17 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-family: 'Quicksand';
 }
 
-
+.btn-envoidevis {
+    margin: auto;
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+}
 
 #Login::placeholder, #motdepasse::placeholder ,#prenom::placeholder, #nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
 #pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
@@ -763,6 +803,8 @@ fieldset {
     width: 80%;
     margin: 1em auto;
     padding: 1em;
+    border: 1px solid #ccc;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 fieldset label{
@@ -871,6 +913,12 @@ iframe {
     margin: 0.5em auto;
 }
 
+.calend {
+    width: 30%;
+    height: auto;
+    margin: auto;
+}
+
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
 
 .messcolumn{
@@ -930,6 +978,7 @@ iframe {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    width: 15%;
     margin: 1em;
 }
 
@@ -944,6 +993,14 @@ iframe {
     font-size: 2em;
 
 }
+
+.devisvct{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 25%;
+}
+
 
 /*----------------------------------------------------------------Autre----------------------------------------------------------------*/
 
@@ -984,4 +1041,8 @@ iframe {
 .hrcard{
     width: 100%;
     margin-left: 0;
+}
+
+.colorviolet{
+    color: #745086;
 }
