@@ -1,7 +1,7 @@
 <?php
     // On démarre la session
     session_start();
-    include('../parametre_connexion.php');
+    include('parametre_connexion.php');
         try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -11,8 +11,10 @@
             die();
         }
 
+        $id = $_GET['id'];
+
         // On récupère l'id du compte
-        $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+        $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$id};");
         $stmt->execute();
         $photo = $stmt->fetch();
 ?>
@@ -55,7 +57,6 @@
     </header>
 
 
-<<<<<<< HEAD
         <div class="imghead">
             <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
             <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
@@ -79,16 +80,11 @@
     <main>
         <div class='banniere'>
             <img src='../svg/arrow-left-s-line 1.svg'>
-=======
-    <main class="MainTablo">
-        <div class="headtablo">
-            <img src="../svg/flecheRetour.svg">
->>>>>>> 12f720d3f530ccbb0ad87582d473241b48ef8ce5
             <h1>Remplir la fiche logement</h1>
         </div>
 
         <div class="column">
-            <form method='POST' action='previsualiser_logement.php' enctype="multipart/form-data">
+            <form method='POST' action='previsualiser_logement.php?id=2' enctype="multipart/form-data">
                 <div class="logrow">  
                     <div class="logcolumn">  
                     
@@ -248,13 +244,13 @@
                                 <div class="logcolumn">
                                 <label for='service'>Service :</label><br>
                                     <div class="logcheckbox">
-                                    <input id='' type='checkbox' name=''>Ménage
+                                    <input id='service' type='checkbox' name='menageP'>Ménage
                                     </div>
                                     <div class="logcheckbox">
-                                    <input id='' type='checkbox' name=''>Navette/taxi 
+                                    <input id='service' type='checkbox' name='navetteP'>Navette/taxi 
                                     </div>
                                     <div class="logcheckbox">
-                                    <input id='' type='checkbox' name=''>Linge
+                                    <input id='service' type='checkbox' name='lingeP'>Linge
                                     </div>
                                 </div>
                             </div>
