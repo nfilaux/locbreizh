@@ -51,7 +51,7 @@ CREATE TABLE
 CREATE TABLE
     _proprietaire (
         id_proprietaire SERIAL,
-        rib CHAR(34) NOT NULL,
+        rib VARCHAR(50) NOT NULL,
         carte_identite VARCHAR(50) NOT NULL,
         CONSTRAINT proprietaire_pk PRIMARY KEY (id_proprietaire),
         CONSTRAINT proprietaire_fk_id FOREIGN KEY (id_proprietaire) REFERENCES _compte (id_compte)
@@ -213,7 +213,7 @@ CREATE TABLE
         parking_public BOOLEAN NOT NULL,
         parking_privee BOOLEAN NOT NULL,
         sauna BOOLEAN NOT NULL,
-        hammam BOOLEAN NOT NULL,
+        hammam BOOLEAN NOT NULL, 
         piscine BOOLEAN NOT NULL,
         climatisation BOOLEAN NOT NULL,
         jacuzzi BOOLEAN NOT NULL,

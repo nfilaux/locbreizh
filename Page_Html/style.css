@@ -38,14 +38,14 @@ body {
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
-header{
+header {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     position: relative;
     color: #745086;
     box-sizing: border-box;
-    border-bottom: 1px solid #745086; 
+    border-bottom: 1px solid #745086;
     flex-wrap: nowrap;
 }
 
@@ -55,12 +55,12 @@ header{
 }
 
 header h2 {
-    margin:auto 1em auto 1em;
+    margin: auto 1em auto 1em;
     color: #745086;
 }
 
-header h4{
-    color:#000;
+header h4 {
+    color: #000;
     margin-right: 2em;
 }
 
@@ -75,17 +75,17 @@ header a:first-child {
     flex-wrap: nowrap;
 }
 
-header input{
+header input {
     width: 25em;
 }
 
 .brecherche {
     display: flex;
     flex-wrap: nowrap;
-    margin:auto 3em auto 3em;
+    margin: auto 3em auto 3em;
 }
 
-.imghead{
+.imghead {
     margin-top: auto;
     margin-bottom: auto;
     display: flex;
@@ -105,7 +105,7 @@ header a:last-child {
     padding: none;
 }
 
-.headconn{
+.headconn {
     position: relative;
     background-color: #745086;
     color: #fff;
@@ -115,7 +115,7 @@ header a:last-child {
     margin-top: 5vw;
 }
 
-.headtablo{
+.headtablo {
     position: relative;
     background-color: #745086;
     color: #fff;
@@ -895,4 +895,290 @@ iframe {
 .policetitre {
     font-family: 'PatuaOne';
     font-weight: 600;
+}
+
+/*----------------------------------------------------------------CONSULTER SON PROFIL-------------------------------------------------------------*/
+.row-profil {
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 0;
+    align-items: center;
+}
+
+.row-profil label {
+    width: 50%;
+    font-weight: normal;
+    color: #745086;
+    text-transform: inherit;
+}
+
+.row-profil input {
+    width: 50%;
+    height: 2.5vw;
+    border-radius: 5px;
+    padding-left: 1vw;
+}
+
+.main-profil {
+    padding: 4vw;
+    font-size: 1.5em;
+}
+
+.compte-infos label,
+.div-adresse>p {
+    color: #000;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.row-profil>div {
+    width: 60%;
+}
+
+.header-profil {
+    text-transform: uppercase;
+    background-color: #745086;
+    color: #fff;
+    text-align: center;
+    padding: 2vh;
+}
+
+.compte-infos {
+    background-color: #FCF0E2;
+    display: flex;
+    flex-direction: column;
+    padding: 3vh 7vw;
+}
+
+.row-adresse {
+    min-width: 210px;
+    display: flex;
+    justify-content: space-between;
+    padding: 1vh 0;
+}
+
+.row-adresse label {
+    font-weight: normal;
+    color: #745086;
+    text-transform: inherit;
+    font-size: medium;
+}
+
+.row-adresse>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45%;
+    min-width: 200px;
+}
+
+.row-adresse>div:first-of-type>input {
+    width: 25%;
+}
+
+.row-adresse>div:last-of-type>input {
+    width: 10vw;
+}
+
+
+.doc-profil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.doc-profil input {
+    height: auto;
+    color: #745086;
+}
+
+.voir-doc {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+}
+
+.voir-doc p {
+    text-transform: none;
+    color: #745086;
+    font-weight: normal;
+    font-size: medium;
+    margin: 0 1em 0 0;
+}
+
+.voir-doc img {
+    padding: 3px;
+    width: fit-content;
+    height: fit-content;
+    border: solid 1px #745086;
+    border-radius: 20%;
+}
+
+.profil-form {
+    display: flex;
+    background-color: #FAE3C6;
+    border: solid 1px #957BB0;
+}
+
+.profil-form>div:last-of-type {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.profil-form>div:last-of-type img {
+    aspect-ratio: 1 / 1;
+    width: 70%;
+    border: 1px solid #5B3F69;
+    border-radius: 50%;
+}
+
+.profil-form>div:last-of-type>label {
+    color: #000;
+    font-weight: bold;
+}
+
+.profil-form>div:first-of-type {
+    width: 75%;
+    border-right: solid 1px #957BB0;
+}
+
+.submit-profil {
+    position: relative;
+    left: 37%;
+    width: 25%;
+    background-color: #957BB0;
+    color: #fff;
+    height: 5vh;
+    margin: 2vh;
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+    font-size: large;
+    font-weight: bold;
+}
+
+.main-profil input[type=text],
+input[type=number],
+input[type=date],
+input[type=tel],
+input[type=password],
+input[type=email] {
+    border: solid 1px #957BB0;
+    border-radius: 5px;
+    font-size: 0.7em;
+}
+
+.profil-mdp {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    margin-top: 3vw;
+    margin-bottom: 3vw;
+}
+
+.btn-mdp {
+    margin-left: 10vw;
+    background-color: #957BB0;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    height: 3vw;
+    width: 20vw;
+    font-size: large;
+    font-weight: bold;
+}
+
+.suppr-compte {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    width: 80%;
+}
+
+.suppr-compte button {
+    background-color: rgb(207, 119, 119);
+    color: white;
+    width: 20vw;
+    height: 5vw;
+    border: none;
+    border-radius: 10px;
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 2em;
+}
+
+.condition-profil {
+    color: red;
+}
+
+.profil-erreurs {
+    font-size: medium;
+    color: #FF0000;
+    text-align: end;
+}
+
+.mdp-popup .profil-erreurs {
+    text-align: center;
+}
+
+/*----------------------------------------------------------------MDP POP UP-------------------------------------------------------------*/
+
+.mdp-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+}
+
+.mdp-popup>form {
+    display: flex;
+    flex-direction: column;
+
+    padding: 2vw;
+    width: 20vw;
+}
+
+.mdp-popup>.mdpCroix {
+    text-align: end;
+}
+
+.mdp-popup label,
+.mdp-popup input {
+    margin-bottom: 10px;
+    font-size: larger;
+}
+
+.mdp-popup input {
+    height: 1.5vw;
+    padding-left: 1vw;
+}
+
+.mdp-popup input:last-of-type {
+    margin-top: 10%;
+    background-color: #957BB0;
+    color: #F6E4FF;
+    border: none;
+    border-radius: 5px;
+    height: 2vw;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }
