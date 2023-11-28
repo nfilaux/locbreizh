@@ -762,6 +762,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 fieldset {
     width: 80%;
     margin: 1em auto;
+    padding: 1em;
 }
 
 fieldset label{
@@ -918,6 +919,31 @@ iframe {
     width: 70%;
 }
 
+.deviscol{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 1em;
+}
+
+.deviscolinput{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 1em;
+}
+
+.devisrow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.ren {
+    color: #745086;
+    font-size: 2em;
+
+}
 
 /*----------------------------------------------------------------Autre----------------------------------------------------------------*/
 

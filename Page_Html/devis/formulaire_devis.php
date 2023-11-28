@@ -98,9 +98,10 @@
             
         ?>
         <style>#erreur {color : red;}</style>
+    <fieldset>
         <h1>La demande de devis de <?php echo $infos_user['prenom'] . ' '. $infos_user['nom']; ?> !</h1>
         <form name="formulaire" action="ajouter_devis.php" method="post">
-    <fileset>
+    
         <div class="logrow">
             <div class="devispc">
                 <div class="logrow">
@@ -122,15 +123,14 @@
                 <div class="logrow">
                     <div class="log2vct">  
                         <label for="delais_accept">délais d'acceptation ( de 1 à 4 jours ) :</label>
-                        <input type="number" min="1" max="4" id="delais_accept" name="delais_accept" value="<?php if(isset($_SESSION['valeurs_complete']['delais_accept'])){echo $_SESSION['valeurs_complete']['delais_accept'];} ?>" required />
+                        <input class="logvct" type="number" min="1" max="4" id="delais_accept" name="delais_accept" value="<?php if(isset($_SESSION['valeurs_complete']['delais_accept'])){echo $_SESSION['valeurs_complete']['delais_accept'];} ?>" required />
                     </div>
                     <div class="log2vct"> 
                         <label for="date_val">date validité du devis ( en mois) :</label>
-                        <input type="number" id="date_val" name="date_val" value="<?php if(isset($_SESSION['valeurs_complete']['date_val'])){echo $_SESSION['valeurs_complete']['date_val'];} ?>" required /> 
+                        <input class="logvct" type="number" id="date_val" name="date_val" value="<?php if(isset($_SESSION['valeurs_complete']['date_val'])){echo $_SESSION['valeurs_complete']['date_val'];} ?>" required /> 
                     </div>
                 </div>
             </div>
-    </fileset>
 
             <div class="cardSupplements">
             <h2 style="text-align:center;  font-family: 'Quicksand';">Charges aditionnelles</h2>
@@ -170,32 +170,57 @@
             <input type="hidden" id="id_demande" name="id_demande" value=<?PHP echo $_GET['demande']; ?>>
 
             <label for="annulation">Condition annulation</label>
-            <input type="text" id="annulation" name="annulation" value="<?php if(isset($_SESSION['valeurs_complete']['annulation'])){echo $_SESSION['valeurs_complete']['annulation'];} ?>" required/>
+            <input class="logvct" type="text" id="annulation" name="annulation" value="<?php if(isset($_SESSION['valeurs_complete']['annulation'])){echo $_SESSION['valeurs_complete']['annulation'];} ?>" required/>
+        </fieldset>
 
-
+        <fieldset>
             <h1>Details pour le paiement</h1>
+            <div class="devisrow">
+                <p class="ren">A RENSEIGNER</p>
+                <div class="deviscol">
+                <label for="tarif_loc">Tarif HT de la location du logement (en €) :</label>
+                <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required /> 
+                </div>
+                <div class="deviscol">
+                <label for="charges additionnelles">Charges additionnelles HT (en €) :</label>
+                <input class="logvct" type="number" id="charges" name="charges" value="<?php if(isset($_SESSION['valeurs_complete']['charges'])){echo $_SESSION['valeurs_complete']['charges'];} ?>" required />
+                </div>
+                <input class="btn-ajoutlog" type="button" value="Calculer" onclick="calcul()"/>
+            </div>
+            
+            <hr class="hr">
 
-            <p>à renseigner</p>
-
-            <label for="tarif_loc">Tarif HT de la location du logement (en €) :</label>
-            <input type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required /> 
-            <br/>
-
-            <label for="charges additionnelles">Charges additionnelles HT (en €) :</label>
-            <input type="number" id="charges" name="charges" value="<?php if(isset($_SESSION['valeurs_complete']['charges'])){echo $_SESSION['valeurs_complete']['charges'];} ?>" required />
-            <hr>
-
-            <p>Calculer automatiquement</p>
-            <div id="resultat">
-                    <p> Total HT (en € ) </p>
-                    <p> Total TTC (en € ) </p>
-                    <p> Taxe de séjour (en € ) </p>
-                    <p> Montant total du devis (en € ) </p>
-                    <p> Frais de plateforme HT (en € ) </p>
-                    <p> Frais de plateforme TTC (en € ) </p>
-                <?php
-                //}
-                ?>
+            
+            <div id="resultat" class="deviscol">
+                    <div class="devisrow">
+                    <p class="ren">Calculer automatiquement</p>
+                        <div class="deviscolinput">
+                            <p> Total HT (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                        <div class="deviscolinput">
+                            <p> Total TTC (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                        <div class="deviscolinput">
+                            <p> Taxe de séjour (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="devisrow">
+                    <div class="deviscolinput">
+                            <p> Montant total du devis (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value=""  disabled>
+                        </div>
+                    <div class="deviscolinput">
+                            <p> Frais de plateforme HT (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                    <div class="deviscolinput">
+                        <p> Frais de plateforme TTC (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                    </div>
             </div>
             <script>
                 function roundDecimal(nombre, precision){
@@ -209,26 +234,33 @@
                     let baliseprixcharges = document.getElementById("charges")
                     let prix_charges = baliseprixcharges.value
                     let html = "";
-                    total_HT = prix_loc + prix_charges;
+                    total_HT = parseInt(prix_loc) + parseInt(prix_charges);
                     total_TTC = roundDecimal(total_HT * 1.1,2)
                     taxe_sejour = 120;
                     total_montant_devis = roundDecimal(total_TTC + taxe_sejour,2)
                     total_plateforme_HT = roundDecimal(total_montant_devis*1.01,2)
                     total_plateforme_TTC = roundDecimal(total_plateforme_HT * 1.2,2)
+                    html += `<div class="deviscol">`;
+                    html += `<div class="devisrow">`;
+                    html += `<p class="ren">Calculer automatiquement</p>`;
                     html += `<p> Total HT : ${total_HT}€</p>`;
                     html += `<p> Total TTC : ${total_TTC}€</p>`;
                     html += `<p> Taxe séjour : ${taxe_sejour}€</p>`;
+                    html += '</div>';
+                    html += `<div class="devisrow">`;
                     html += `<p> Montant total du devis : ${total_montant_devis}€</p>`;
                     html += `<p> Frais de plateforme HT : ${total_plateforme_HT}€</p>`;
-                    html += `<p> Frais de plateforme TTC: ${total_plateforme_TTC}€</p>`;
+                    html += `<div class="deviscolinput"><p> Frais de plateforme TTC (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_TTC} €" disabled></div>`;
+                    html += '</div>';
+                    html += '</div>';
                     document.getElementById("resultat").innerHTML = html;
                     document.getElementById("envoyerDevisBtn").removeAttribute("disabled");
                 }
             </script>
-            <input type="button" value="Calculer" onclick="calcul()"/>
             <br/>
             <input type="hidden" id="id_demande" name ="id_demande" value=<?php echo $_GET['demande'];?>>
-            <input type="submit" id="envoyerDevisBtn" value="Envoyer le devis" disabled />
+            </fieldset>
+            <input class="btn-ajoutlog center" type="submit" id="envoyerDevisBtn" value="Envoyer le devis" disabled />
         </form>
     </main>
     
