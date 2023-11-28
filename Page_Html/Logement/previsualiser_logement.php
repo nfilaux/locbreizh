@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../parametre_connexion.php');
+include('parametre_connexion.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -9,7 +9,8 @@ try {
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+$id_pro = $_GET['id'];
+$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$id_pro};");
 $stmt->execute();
 $photo = $stmt->fetch();
 
@@ -22,6 +23,8 @@ $nom_image5 = $_FILES["image5P"]["tmp_name"];
 $nom_image6 = $_FILES["image6P"]["tmp_name"];
 
 $id_photo = 1;
+
+print_r($_POST);
 
 function id_photo($id_photo)
 {
