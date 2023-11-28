@@ -1,20 +1,15 @@
-<script src="../scriptPopup.js"></script>
 <?php 
-    // début de la session pour récupérer l'id du compte connecté
     session_start();
-
     include('../parametre_connexion.php');
-
     try {
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
-    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id_compte;");
-    $stmt->bindParam(':id_compte', $_SESSION['id']);
+    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $photo = $stmt->fetch();
 ?>
@@ -26,6 +21,7 @@
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
 </head>
 
 <body class="pagecompte">
@@ -52,7 +48,7 @@
             <table id="tableProfil">
                 <tr>
                     <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
+                        <a id="monprofil" href="../Compte/consulter_profil_proprio.php">Accéder au profil</a>
                     </td>
                 </tr>
                 <tr>
@@ -69,7 +65,7 @@
             <h1>Mon tableau de bord</h1>
         </div>
         <section class="Tablobord">
-            <article>
+            <article class="width">
                 <h2>Mes logements</h2>
                 <?php
                     
@@ -78,67 +74,46 @@
                         from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
                     );
 
-                    // fonction pour afficher la date de début et de fin d'une plage 
-                    function formatDate($start, $end) {
-                        $startDate = date('j', strtotime($start));
-                        $endDate = date('j', strtotime($end));
-                        $month = date('M', strtotime($end));
+                    function formatDate($start, $end)
+                {
+                    $startDate = date('j', strtotime($start));
+                    $endDate = date('j', strtotime($end));
+                    $month = date('M', strtotime($end));
 
                     return "$startDate-$endDate $month";
                 }
 
                 $stmt->execute();
-                foreach ($stmt->fetchAll() as $key => $card) { 
-                    $nomPlage = 'plage' . $key; 
-                    $overlayPlage = 'overlay' . $key?>
-                    <div class="tdblog"> 
-                        <?php
-                        echo "<a href=\"../Logement/logement_detaille_proprio.php?logement={$card['id_logement']}\"><div class=\"card\">";
-                        echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
-                        echo '<h3>' . $card['libelle_logement'] . '</h3>';
-                        echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
-                        /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
-                        /*
-                        echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
-                        echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
-                        echo "<a href=\"../Logement/modifierLogement.php?id_logement={$card['id_logement']}\"><button>Modifier ce logement</button></a></div></a>";?>
-                    
-                        <a onclick="openPopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>
-                        
-                        <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
-                        
-                        <div id="<?php echo $nomPlage; ?>" class='plages'> 
-                            <h1>Ajouter une plage ponctuelle</h1><br>
-                            <form action="plagesBack.php" method="post">
+                foreach ($stmt->fetchAll() as $card) {
+                    ?>
+                        <div class="cardlogmain">
+                            <img src="../Ressources/Images/<?php echo $card['photo_principale']?>">
+                            <section class="logcp">
+                                <div class="logrowb">
+                                    <div>
+                                        <h3 class="titrecard"><?php echo $card['libelle_logement'] ?></h3>
+                                        <hr class="hrcard">
+                                    </div>
+                                    <a class="btn-modiftst" href="../Logement/modifierLogement.php?id_logement=<?php echo $card['id_logement'] ?>"><button class="btn-modif">Modifier</button></a>
+                                </div>
                                 
-                                <label for="dateDeb"> date de début de la plage : </label>
-                                <input type="date" id="dateDeb" name="dateDeb"/>
-                                <br><br>
+                                <div class="logrowb">
+                                    <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $card['id_logement'] ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
+                                    <a><button class="btn-desactive">DESACTIVER</button></a>
+                                    <a><button class="btn-suppr">SUPPRIMER</button></a>
+                                </div>
                                 
-                                <label for="dateFin"> date de fin de la plage : </label>
-                                <input type="date" id="dateFin" name="dateFin"/>
-                                <br><br>
-
-                                <label for="prix"> Prix : </label>
-                                <input type="text" id="prix" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>"/>
-                                <br><br>
-            
-                                <button type="submit">ajouter</button>
-                            </form>
-                            
-                            <hr><h1>Les plages ponctuelles</h1><br>
-                            <p> Aucune plage définie </p>
+                                <p>DISCLAIMER - La suppression du compte est définitve.</p>
+                                <p class="err">Condition requise : Aucune réservation prévue.</p>
+                            </section>
                         </div>
-
-                    </div>
-                    
-                <?php
+                    <?php
                 }
                 ?>
             <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
             </article>
 
-            <hr>
+            <hr class="hr">
 
             <article>
                 <h2>Notifications</h2>
@@ -153,7 +128,7 @@
                 <h2>Mes Réservation</h2>
                 <p>Aucune réservation en cours </p>
                 <?php
-                // récupération des données d'un logement dans la base de donnée  
+            
                 $stmt = $dbh->prepare("SELECT l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
                 from locbreizh._reservation r
                 join locbreizh._logement l on l.id_logement = r.logement
@@ -162,12 +137,11 @@
                 join locbreizh._adresse a on l.id_adresse = a.id_adresse
                 join locbreizh._facture f on f.num_facture = r.facture
                 join locbreizh._devis d on d.num_devis = f.num_devis");
-
                 $stmt->execute();
                 $reservations = $stmt->fetchAll();
 
-                // affichage des données d'un logement
                 foreach ($reservations as $reservation) {
+
                     ?>
                     <div class="card">        
                         <img src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>">
@@ -205,5 +179,6 @@
 </body>
 
 </html>
+
 
 <script src="../scriptPopup.js"></script>

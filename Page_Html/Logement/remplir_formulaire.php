@@ -53,37 +53,9 @@
             <a onclick="closePopup()">Fermer la fenêtre</a>
         </div>
     </header>
-
-
-<<<<<<< HEAD
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-</header>
     <main>
         <div class='banniere'>
             <img src='../svg/arrow-left-s-line 1.svg'>
-=======
-    <main class="MainTablo">
-        <div class="headtablo">
-            <img src="../svg/flecheRetour.svg">
->>>>>>> 12f720d3f530ccbb0ad87582d473241b48ef8ce5
             <h1>Remplir la fiche logement</h1>
         </div>
 

@@ -141,18 +141,37 @@ header a:last-child {
 
 /*----------------------------------------------------------------popup----------------------------------------------------------------*/
 
+/*-- Pop-up (accéder profil & déconnexion) --*/
 #popup {
-    padding: 0px;
     font-size: 0.7em;
     display: none;
     position: fixed;
-    top: 15%;
-    left: 91%;
+    top:93%;
+    left: 85%;
     transform: translate(-50%, -50%);
     background-color: transparent;
     border: transparent;
     box-shadow: none;
     z-index: 1000;
+}
+
+#tableProfil, #tableProfil td{
+    border-collapse: collapse;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #745086;
+}
+
+#deconnexion{
+    width: 100%;
+    padding: 10px 40px;
+    color: red;
+}
+
+#monprofil{
+    width: 100%;
+    padding: 10px 40px;
+    color: #000;
 }
 
 #overlay_profil-deconnexion {
@@ -165,6 +184,7 @@ header a:last-child {
     background: rgba(0, 0, 0, 0);
     z-index: 999;
 }
+
 
 
 /*-- Pop-up (Calendrier) --*/
@@ -782,7 +802,7 @@ fieldset label{
     height: 2em;
     text-align: center;
 }
-<script src="../scriptPopup.js"></s
+
 
 .logvct{
     color: #957BB0; 
@@ -1061,11 +1081,11 @@ iframe {
 }
 
 .main-profil input[type=text],
-input[type=number],
-input[type=date],
-input[type=tel],
-input[type=password],
-input[type=email] {
+.main-profil input[type=number],
+.main-profil input[type=date],
+.main-profil input[type=tel],
+.main-profil input[type=password],
+.main-profil input[type=email] {
     border: solid 1px #957BB0;
     border-radius: 5px;
     font-size: 0.7em;
