@@ -9,9 +9,6 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
-$stmt->execute();
-$photo = $stmt->fetch();
 
 ?>
 <!DOCTYPE html>
@@ -26,21 +23,15 @@ $photo = $stmt->fetch();
 
 <body>
 <header>
-    <div>
-        <img src="../svg//logo.svg">
-        <h2>Loc'Breizh</h2>
-    </div>
+        <div style="display:flex; flex-direction:row;">
+            <img class="logot" src="../svg/logo.svg">
+            <h2>Loc'Breizh</h2>
+        </div>
 
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
-            <a href="../reservation/liste_reservations.php">
-                <h4>Accèder à mes reservations</h4>
-            </a>
+        <div class="brecherche">
+            <img src="../svg/filtre.svg">
+            <input id="searchbar" type="text" name="search">
+            <img src="../svg/loupe.svg">
         </div>
         
 
@@ -90,6 +81,10 @@ $photo = $stmt->fetch();
             echo '<p>' . $info['descriptif_logement'] . '</p>';/*
             echo '<p>' . 'Arrivée' . $info['debut_plage_ponctuelle'] . 'Départ' . $info['fin_plage_ponctuelle'] . '</p>';*/
             ?>
+            <form action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                <button type="submit">Demander un devis</button>
+            </form>
+            
         </div>
         <div class='voir_plus'>
             <hr>
@@ -169,6 +164,7 @@ $photo = $stmt->fetch();
             <hr>
             <h3>Calendrier</h3>
             <hr>
+            <!--
             <h3>Avis</h3>
             <?php
             /*try {
@@ -201,8 +197,9 @@ $photo = $stmt->fetch();
             echo '<p>' . '. ' . $boucle . ' commentaires' . '</p>';*/
             ?>
         </div>
+
         <div class='avis_card'>
-            <?php
+            <?php /*
 
 
                 $stmt = $dbh->prepare(
@@ -221,7 +218,7 @@ $photo = $stmt->fetch();
                 echo '<p>' . $info['contenu_avis'] . '</p>';
             }
 
-            ?>Dubois
+            */?>Dubois
             <a href=''>Répondre au commentaire</a>
             <a href=''>Signaler</a>
 
@@ -232,7 +229,9 @@ $photo = $stmt->fetch();
                 <hr>
             </div>
             <hr>
-        </div>
+        </div> 
+        -->
+
 
         <div class='localisation'>
             <h3>Localisation</h3>
@@ -306,9 +305,10 @@ $photo = $stmt->fetch();
                 <img src='<?php echo '../Ressources/Images/'.$info['photo'];?>'>
                 <h4><?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
                 
-
-                <button type='button' disabled>Contacter le propriétaire</button>
-            </div>
+                
+            <form action="../Redirection/redirection_visiteur_messagerie.php" method="post">
+                <button type="submit" disabled>Contacter le propriétaire</button>
+            </form>
 
     </main>
     <footer>

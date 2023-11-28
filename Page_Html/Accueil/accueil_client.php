@@ -111,17 +111,17 @@ $photo = $stmt->fetch();
                 ?><a class="acclog" href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>"> <?php
                 ?><article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
                 ?><article>
-                <h3> <?php echo $card['libelle_logement'] ?> </h3>
+                <h3> <?php echo $card['libelle_logement']; ?> </h3>
                 </article><?php
                 /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
                 ?><article>
-                <h4> <?php echo $card['tarif_base_ht'] ?> €</h4><?php
+                <h4> <?php echo $card['tarif_base_ht']; ?> €</h4><?php
                 /*?><h4><?php formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle'])?></h4><?php*/
-                ?><h4><?php echo $card['nb_personnes_logement'] ?> personnes</h4>
+                ?><h4><?php echo $card['nb_personnes_logement']; ?> personnes</h4>
                 </article></a><?php
                 ?></section><?php
             } else if ($card['en_ligne'] == false) {
-                    print_r("Ce logement est temporairement indisponible !");
+                    echo "Ce logement est temporairement indisponible !";
                 }
         }
         if (!isset($card)) {
@@ -135,6 +135,7 @@ $photo = $stmt->fetch();
             <hr>
             <h4>Voir plus</h4>
             <hr>
+        </a>
         </a>
     </main>
 

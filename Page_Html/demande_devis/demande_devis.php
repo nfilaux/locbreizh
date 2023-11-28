@@ -52,16 +52,24 @@
 
    
 ?>
-<body class="pagecompte">
-    <header>
-        <a href="../Accueil/accueil_client.php">
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
-        </a>
-        <div class="brecherche">
-            <img src="../svg/filtre.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
+<body>
+<header>
+	<a href="../Accueil/accueil_client.php">
+    <div>
+        <img src="../svg//logo.svg">
+        <h2>Loc'Breizh</h2>
+    </div></a>
+
+    <div>
+        <img src="../svg//filtre.svg">
+        <input id="searchbar" type="text" name="search">
+        <img src="../svg//loupe.svg">
+    </div>
+        <div>
+            <img src="../svg//booklet-fill 1.svg">
+            <a href="../reservation/liste_reservations.php">
+                <h4>Accèder à mes reservations</h4>
+            </a>
         </div>
 
 <<<<<<< HEAD

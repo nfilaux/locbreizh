@@ -1,3 +1,4 @@
+<script src="../scriptPopup.js"></script>
 <?php 
     // début de la session pour récupérer l'id du compte connecté
     session_start();
@@ -17,6 +18,7 @@
     $stmt->execute();
     $photo = $stmt->fetch();
 ?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -39,13 +41,13 @@
         </div>
 
         <img src="../svg/booklet-fill 1.svg">
-        <a href="../Accueil/Tableau_de_bord.php"><h4>Accèder à mes logements</h4></a>
+        <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
 
         <div class="imghead">
             <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
+            <a onclick="openPopup('popup', 'overlay_profil-deconnexion')"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
         </div>
-        <div id="overlay" onclick="closePopup()"></div>
+        <div id="overlay_profil-deconnexion" onclick="closePopup('popup', 'overlay_profil-deconnexion')"></div>
         <div id="popup" class="popup">
             <table id="tableProfil">
                 <tr>
@@ -60,16 +62,17 @@
                 </tr>
             </table>
         </div>
+
     </header>
     <main class="MainTablo">
-        <div class="headconn"> 
+        <div class="headtablo"> 
             <h1>Mon tableau de bord</h1>
         </div>
         <section class="Tablobord">
             <article>
                 <h2>Mes logements</h2>
                 <?php
-                    // récupération des données de logement dans la base de donnée
+                    
                     $stmt = $dbh->prepare(
                         "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
                         from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
@@ -81,24 +84,56 @@
                         $endDate = date('j', strtotime($end));
                         $month = date('M', strtotime($end));
 
-                        return "$startDate-$endDate $month";
-                    }
-
-                $stmt->execute();
-
-                // affichage des données de logement
-                foreach ($stmt->fetchAll() as $card) {
-                    echo "<a href=\"../Logement/logement_detaille_proprio.php?logement={$card['id_logement']}\"><div class=\"card\">";
-                    echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
-                    echo '<h3>' . $card['libelle_logement'] . '</h3>';
-                    echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
-                    /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
-                    /*
-                    echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
-                    echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
-                    echo "<a href=\"../Logement/modifierLogement.php?id_logement={$card['id_logement']}\"><button>Modifier ce logement</button></a></div></a>";
+                    return "$startDate-$endDate $month";
                 }
 
+                $stmt->execute();
+                foreach ($stmt->fetchAll() as $key => $card) { 
+                    $nomPlage = 'plage' . $key; 
+                    $overlayPlage = 'overlay' . $key?>
+                    <div class="tdblog"> 
+                        <?php
+                        echo "<a href=\"../Logement/logement_detaille_proprio.php?logement={$card['id_logement']}\"><div class=\"card\">";
+                        echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
+                        echo '<h3>' . $card['libelle_logement'] . '</h3>';
+                        echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
+                        /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
+                        /*
+                        echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
+                        echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
+                        echo "<a href=\"../Logement/modifierLogement.php?id_logement={$card['id_logement']}\"><button>Modifier ce logement</button></a></div></a>";?>
+                    
+                        <a onclick="openPopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>
+                        
+                        <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
+                        
+                        <div id="<?php echo $nomPlage; ?>" class='plages'> 
+                            <h1>Ajouter une plage ponctuelle</h1><br>
+                            <form action="plagesBack.php" method="post">
+                                
+                                <label for="dateDeb"> date de début de la plage : </label>
+                                <input type="date" id="dateDeb" name="dateDeb"/>
+                                <br><br>
+                                
+                                <label for="dateFin"> date de fin de la plage : </label>
+                                <input type="date" id="dateFin" name="dateFin"/>
+                                <br><br>
+
+                                <label for="prix"> Prix : </label>
+                                <input type="text" id="prix" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>"/>
+                                <br><br>
+            
+                                <button type="submit">ajouter</button>
+                            </form>
+                            
+                            <hr><h1>Les plages ponctuelles</h1><br>
+                            <p> Aucune plage définie </p>
+                        </div>
+
+                    </div>
+                    
+                <?php
+                }
                 ?>
             <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
             </article>
@@ -109,10 +144,9 @@
                 <h2>Notifications</h2>
 
                 <div class="box">
-                    <!--<?php foreach ($notifications as $notification) {?>
-                        
+                    <?php foreach ($notifications as $notification) {?>
+
                     <?php } ?>
-                    !-->
                 </div>
 
 

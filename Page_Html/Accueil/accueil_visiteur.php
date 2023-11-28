@@ -9,22 +9,19 @@
 
 <body>
     <header>
-        <img class="logot" src="../svg/logo.svg">
-        <h2>Loc'Breizh</h2>
-
+        <div style="display:flex; flex-direction:row;">
+            <img class="logot" src="../svg/logo.svg">
+            <h2>Loc'Breizh</h2>
+        </div>
 
         <div class="brecherche">
             <img src="../svg/filtre.svg">
             <input id="searchbar" type="text" name="search">
             <img src="../svg/loupe.svg">
         </div>
-
-        <a href="../Compte/CreerCompte.html" class="btn-accueilins btn_visi">
-            <h5>S'inscrire</h5>
-        </a>
-        <a href="../Compte/connexionFront.php" class="btn-accueil btn_visi">
-            <h5>Se connecter</h5>
-        </a>
+        
+        <a href="../Compte/CreerCompte.html" class="btn-accueilins btn_visi"><h5>S'inscrire</h5></a>
+        <a href="../Compte/connexionFront.php" class="btn-accueil btn_visi"><h5>Se connecter</h5></a>
     </header>
     <main>
         <?php
@@ -60,33 +57,33 @@
 
         ?> <div class="card"> <?php
 
-                                // affichage des données de logement
-                                foreach ($stmt->fetchAll() as $card) {
-                                    if ($card['en_ligne'] == true) {
-                                ?><section> <?php
-                        ?><a class="acclog" href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>"> <?php
-                                                                                                                                    ?><article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
-                                                                                                                                        ?><article>
-                                <h3> <?php echo $card['libelle_logement'] ?> </h3>
-                            </article><?php
-                                        /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
-                                        ?><article>
-                                <h4> <?php echo $card['tarif_base_ht'] ?> €</h4><?php
-                                                                                /*?><h4><?php formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle'])?></h4><?php*/
-                                                                                ?><h4><?php echo $card['nb_personnes_logement'] ?> personnes</h4>
-                            </article></a><?php
-                                            ?></section><?php
+        // affichage des données de logement
+        foreach ($stmt->fetchAll() as $card) {
+            if ($card['en_ligne'] == true) {
+            ?><section> <?php
+            ?><a class="acclog" href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>"> <?php
+                                                                                                                    ?><article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
+                                                                                                                        ?><article>
+            <h3> <?php echo $card['libelle_logement']; ?> </h3>
+            </article><?php
+            /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
+            ?><article>
+            <h4> <?php echo $card['tarif_base_ht']; ?> €</h4><?php
+            /*?><h4><?php formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle'])?></h4><?php*/
+            ?><h4><?php echo $card['nb_personnes_logement'] ?> personnes</h4>
+            </article></a><?php
+            ?></section><?php
 
-                                    } else if ($card['en_ligne'] == false) {
-                                        print_r("Ce logement est temporairement indisponible !");
-                                    }
-                                }
-                        ?>
+            } else if ($card['en_ligne'] == false) {
+                print_r("Ce logement est temporairement indisponible !");
+            }
+        }
+        ?>
 
-        </div>
+    </div>
         <a href="" class='voir_plus'>
-            <hr>
-            <h4>Voir plus</h4>
+            <hr> 
+            <h4>Voir plus</h4> 
             <hr>
         </a>
     </main>
