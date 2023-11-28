@@ -51,7 +51,10 @@
     </div>
     </header>       
 
-    <main>
+    <main class="MainTablo">
+        <div class="headtablo"> 
+            <h1>Faire mon devis</h1>
+        </div>
         <?php
             // id fictif
             include('../parametre_connexion.php');
@@ -260,7 +263,7 @@
             <br/>
             <input type="hidden" id="id_demande" name ="id_demande" value=<?php echo $_GET['demande'];?>>
             </fieldset>
-            <input class="btn-envoidevis" type="submit" id="envoyerDevisBtn" value="Envoyer le devis" disabled />
+            <input class="btn-envoidevis" type="submit" id="envoyerDevisBtn" value="Envoyer le devis" />
         </form>
     </main>
     

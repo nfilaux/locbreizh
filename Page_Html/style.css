@@ -461,15 +461,18 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-envoidevis {
-    margin: auto;
+    
     background-color: #957BB0; 
     color: #F6E4FF;
     border: 1px solid #957BB0; 
     border-radius: 5px;
-    font-size: 1em;
+    font-size: 2em;
     padding: 0.5em;
     font-family: 'Quicksand';
     font-weight: 900;
+    display: flex;
+    align-self: center;
+    margin: 1em auto;
 }
 
 #Login::placeholder, #motdepasse::placeholder ,#prenom::placeholder, #nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
