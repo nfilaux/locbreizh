@@ -20,11 +20,21 @@
     $en_ligne = true;
     $id_proprietaire = $_SESSION['id'];
     $nom_image_principale = $_SESSION['post_logement']['image1P'];
-    $nom_image2 = $_SESSION['post_logement']['image2P'];
-    $nom_image3 = $_SESSION['post_logement']['image3P'];
-    $nom_image4 = $_SESSION['post_logement']['image4P'];
-    $nom_image5 = $_SESSION['post_logement']['image5P'];
-    $nom_image6 = $_SESSION['post_logement']['image6P'];
+    if (isset($_SESSION['post_logement']['image2P'])){
+        $nom_image2 = $_SESSION['post_logement']['image2P'];
+    }
+    if (isset($_SESSION['post_logement']['image3P'])){
+        $nom_image3 = $_SESSION['post_logement']['image3P'];
+    }
+    if (isset($_SESSION['post_logement']['image4P'])){
+        $nom_image4 = $_SESSION['post_logement']['image4P'];
+    }
+    if (isset($_SESSION['post_logement']['image5P'])){
+        $nom_image5 = $_SESSION['post_logement']['image5P'];
+    }
+    if (isset($_SESSION['post_logement']['image6P'])){
+        $nom_image6 = $_SESSION['post_logement']['image6P'];
+    }
     $charges1 = $_SESSION['post_logement']['charges1P'];
     $charges2 = $_SESSION['post_logement']['charges2P'];
     $charges3 = $_SESSION['post_logement']['charges3P'];

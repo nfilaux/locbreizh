@@ -199,4 +199,3 @@ $photo = $stmt->fetch();
 </body>
 
 </html>
-<script src="../scriptPopup.js"></script>

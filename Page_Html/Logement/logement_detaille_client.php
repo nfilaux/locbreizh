@@ -34,7 +34,7 @@ $photo = $stmt->fetch();
 
 
     <main>
-        <div>
+        <div class='infos'>
         <?php
 
 
@@ -43,10 +43,20 @@ $photo = $stmt->fetch();
                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
                 $stmt = $dbh->prepare(
-                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, photo_principale, accroche_logement, descriptif_logement, id_logement
+                    "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, photo_principale, accroche_logement, descriptif_logement
                     from locbreizh._logement 
                     WHERE id_logement = {$_GET['logement']};"
                 );
+                $stmt->execute();
+                $info = $stmt->fetch();
+
+                $stmt = $dbh->prepare(
+                    "SELECT photo
+                    from locbreizh._photos_secondaires 
+                    WHERE logement = {$_GET['logement']};"
+                );
+                $stmt->execute();
+                $photos_secondaires = $stmt->fetchAll();
 
                 /*$stmt = $dbh->prepare(
                     "SELECT libelle_logement, nb_personnes_logement, nature_logement, tarif_base_ht, note_avis, photo_principale, photo, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
@@ -57,18 +67,21 @@ $photo = $stmt->fetch();
                         INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning
                         WHERE id_logement = {$_GET['logement']};"
                 );*/
-
-
-            $stmt->execute();
-            $info = $stmt->fetch();
             echo '<div class="card">';
             echo '<h3>' . $info['libelle_logement'] . '</h3>';
             echo '<p>' . $info['nb_personnes_logement'] . ' personnes</p>';
             echo '<p>' . $info['nature_logement'] . '</p>';
             echo '<p>' . $info['tarif_base_ht'] . '€/nuit</p>';
             /*echo '<img src="/Ressources/Images/star-fill 1.svg">' . '<h4>' .  $info['note_avis'] . ',0</p>';
-            */echo '<img src="../Ressources/Images/' . $info['photo_principale'] . '">';/*
-            echo '<img src="' . $info['photo_url'] . '">';
+            */echo '<img src="../Ressources/Images/' . $info['photo_principale'] . '">';
+            //print_r($photos_secondaires);
+            for ($i = 0 ; $i < 6 ; $i++){
+                if (isset($photos_secondaires[$i]['photo'])){
+                    echo '<img src="../Ressources/Images/' . $photos_secondaires[$i]['photo'] . '">';
+                }
+            }
+            //echo '<img src="../Ressources/Images/' . $info['photo_principale'] . '">';
+            /*echo '<img src="' . $info['photo_url'] . '">';
             echo '<img src="' . $info['photo_url'] . '">';*/
             echo '<h3>' . 'Description' . '</h3>' . '<p>' . $info['accroche_logement'] . '<p>';
             echo '<p>' . $info['descriptif_logement'] . '</p>';/*
@@ -76,14 +89,14 @@ $photo = $stmt->fetch();
             ?>
             <a href='../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>'><button>Demander un devis</button></a>
         </div>
-        <div>
+        <div class='voir_plus'>
             <hr>
             <h4>Voir plus</h4>
             <img src='../svg/arrow-down-s-line (1) 1.svg'>
             <hr>
         </div>
 
-        <div>
+        <div class="service_equipement">
             <h3>Services et équipements du logement</h3>
             <?php
 
@@ -188,10 +201,10 @@ $photo = $stmt->fetch();
             foreach ($tab_avis as $boucle => $nb_avis) {
                 $boucle++;
             }
-            echo '<p>' . '. ' . $boucle . ' commentaires' . '</p>';*/
+            echo '<p>' . '. ' . $boucle . ' commentaires' . '</p>';
             ?>
         </div>
-        <div>
+        <div class='avis_card'>
             <?php
 
 
@@ -222,21 +235,19 @@ $photo = $stmt->fetch();
             <a href=''>Répondre au commentaire</a>
             <a href=''>Signaler</a>
 
-            <div >
+            <div class='voir_plus'>
                 <hr>
                 <h4>Voir plus</h4>
                 <img src='../svg/arrow-down-s-line (1) 1.svg'>
                 <hr>
             </div>
-            <hr>
-        </div>
+            <hr>*/ ?>
+        </div>!-->
 
-        <div>
-            <h3>Localisation</h3    } else if ($card['en_ligne'] == false) {
-                print_r("Ce logement est temporairement indisponible !");
-            }>
+        <div class='localisation'>
+            <h3>Localisation</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83998.77845041982!2d2.2644625084947463!3d48.85893831264307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e1f06e2b70f%3A0x40b82c3688c9460!2sParis!5e0!3m2!1sfr!2sfr!4v1697885937861!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                !-->
+                
             <?php
 
 
@@ -256,30 +267,30 @@ $photo = $stmt->fetch();
             ?>
             <hr>
         </div>
-            <div>
+            <div class='condition'>
                 <h3>Conditions du logement</h3>
-                <div>
+                <div class='annulation_card'>
                     <h4>Conditions d'annulation</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
                     <a href=''>Voir plus</a>
                 </div>
 
-                <div>
+                <div class='paiement_card'>
                     <h4>Conditions de paiement</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
                     <a href=''>Voir plus</a>
                 </div>
 
-                <div>
+                <div class='arrived_card'>
                     <h4>Informations d'arrivée</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
                     <a href=''>Voir plus</a>
                 </div>
 
-                <div>
+                <div class='coming_card'>
                     <h4>Informations de départ</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>

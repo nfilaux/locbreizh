@@ -18,34 +18,15 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page détaillé d'un logement</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
+
 </head>
 
 
 <body>
-<header>
-        <div style="display:flex; flex-direction:row;">
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
-        </div>
-
-        <div class="brecherche">
-            <img src="../svg/filtre.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
-        </div>
-        
-
-    <div>
-        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
-    </div>
-    <div id="popup" class="popup">
-        <a href="">Accéder au profil</a>
-        <br>
-        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
-        <a onclick="closePopup()">Fermer la fenêtre</a>
-    </div>
-</header>
+<?php 
+        include('../header-footer/choose_header.php');
+    ?>
     <main>
         <div class='infos'>
         <?php
