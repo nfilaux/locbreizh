@@ -1,13 +1,3 @@
-<?php
-        session_start();
-        function erreur($nomErreur)
-        {
-            if(isset($_SESSION["erreurs"][$nomErreur])){
-                ?><p class="err"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
-                unset($_SESSION["erreurs"][$nomErreur]);
-            }
-        }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +7,16 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body class="pagecompte">
+    <?php
+        session_start();
+        function erreur($nomErreur)
+        {
+            if(isset($_SESSION["erreurs"][$nomErreur])){
+                ?><p class="err"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+                unset($_SESSION["erreurs"][$nomErreur]);
+            }
+        }
+    ?>
     <header class="headconn">
             <a href="CreerCompte.html"><img src="../svg/flecheRetour.svg"/></a>
             <h1>Créer mon compte client  !</h1>

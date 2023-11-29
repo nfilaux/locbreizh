@@ -9,8 +9,7 @@ try {
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-$id_pro = $_GET['id'];
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$id_pro};");
+$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
 $stmt->execute();
 $photo = $stmt->fetch();
 
@@ -22,66 +21,57 @@ $nom_image4 = $_FILES["image2P"]["tmp_name"];
 $nom_image5 = $_FILES["image5P"]["tmp_name"];
 $nom_image6 = $_FILES["image6P"]["tmp_name"];
 
-$id_photo = 1;
+
+$id_photo = 0;
 
 function id_photo($id_photo)
 {
     return time() . $id_photo;
 }
-$extension_img_1 = explode('/',$_FILES['image1P']['type'])[1];
-$nouveau_nom_image1 = id_photo($id_photo) . '.' . $extension_img_1;
+
+$nouveau_nom_image1 = id_photo($id_photo);
 $id_photo++;
 move_uploaded_file($nom_image_principale, "../Ressources/Images/" . $nouveau_nom_image1);
 
-if ($_FILES['image2P']['name']!= '') {
-    echo '<p>il y a une image 2 !<p>';
-    $extension_img_2 = explode('/',$_FILES['image2P']['type'])[1];
-    $nouveau_nom_image2 = id_photo($id_photo) . '.' . $extension_img_2;
-    $id_photo++;
+
+$nouveau_nom_image2 = id_photo($id_photo);
+$id_photo++;
+if (isset($_SESSION['post_logement']['image2P'])) {
     move_uploaded_file($nom_image2, "../Ressources/Images/" . $nouveau_nom_image2);
 } else {
     $nom_image2 = null;
-    $nouveau_nom_image2 = null;
 }
 
-if ($_FILES['image3P']['name']!= '') {
-    $extension_img_3 = explode('/',$_FILES['image3P']['type'])[1];
-    $nouveau_nom_image3 = id_photo($id_photo) . '.' . $extension_img_3;
-    $id_photo++;
+$nouveau_nom_image3 = id_photo($id_photo);
+$id_photo++;
+if (isset($_SESSION['post_logement']['image3P'])) {
     move_uploaded_file($nom_image3, "../Ressources/Images/" . $nouveau_nom_image3);
 } else {
     $nom_image3 = null;
-    $nouveau_nom_image3 = null;
 }
 
-if ($_FILES['image4P']['name']!= '') {
-    $extension_img_4 = explode('/',$_FILES['image4P']['type'])[1];
-    $nouveau_nom_image4 = id_photo($id_photo) . '.' . $extension_img_4 ;
-    $id_photo++;
+$nouveau_nom_image4 = id_photo($id_photo);
+$id_photo++;
+if (isset($_SESSION['post_logement']['image4P'])) {
     move_uploaded_file($nom_image4, "../Ressources/Images/" . $nouveau_nom_image4);
 } else {
     $nom_image4 = null;
-    $nouveau_nom_image4 = null;
 }
 
-if ($_FILES['image5P']['name']!= '') {
-    $extension_img_5 = explode('/',$_FILES['image5P']['type'])[1];
-    $nouveau_nom_image5 = id_photo($id_photo) . '.' . $extension_img_5 ;
-    $id_photo++;
+$nouveau_nom_image5 = id_photo($id_photo);
+$id_photo++;
+if (isset($_SESSION['post_logement']['image5P'])) {
     move_uploaded_file($nom_image5, "../Ressources/Images/" . $nouveau_nom_image5);
 } else {
     $nom_image5 = null;
-    $nouveau_nom_image5 = null;
 }
 
-if ($_FILES['image6P']['name']!= '') {
-    $extension_img_6 = explode('/',$_FILES['image6P']['type'])[1];
-    $nouveau_nom_image6 = id_photo($id_photo) . '.' . $extension_img_6;
-    $id_photo++;
+$nouveau_nom_image6 = id_photo($id_photo);
+$id_photo++;
+if (isset($_SESSION['post_logement']['image6P'])) {
     move_uploaded_file($nom_image6, "../Ressources/Images/" . $nouveau_nom_image6);
 } else {
     $nom_image6 = null;
-    $nouveau_nom_image6 = null;
 }
 ?>
 <!DOCTYPE html>
@@ -353,7 +343,7 @@ if ($_FILES['image6P']['name']!= '') {
             <p> <?php echo 'Charges 1 : ' . $logement_data['charges1']; ?> </p>
             <p> <?php echo 'Charges 2 : ' . $logement_data['charges2']; ?> </p>
             <p> <?php echo 'Charges 3 : ' . $logement_data['charges3']; ?> </p>
-            <img src="<?php echo "../Ressources/Images/$nouveau_nom_image1" ?>" width ="300%" height="400">
+            <img src="<?php echo "../Ressources/Images/$nouveau_nom_image1" ?>">
 
             <?php if (isset($_SESSION['post_logement']['image2P'])) {
             ?> <img src="<?php echo "../Ressources/Images/$nouveau_nom_image2" ?>"> <?php
@@ -378,8 +368,6 @@ if ($_FILES['image6P']['name']!= '') {
             } else {
                 echo 'Aucune donnée de logement à prévisualiser.';
             }
-
-            print_r($_SESSION['post_logement']);
 
             ?>
         <form method='POST' action='ajouter_logement.php' enctype="multipart/form-data">
