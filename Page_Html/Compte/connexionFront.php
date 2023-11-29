@@ -1,4 +1,13 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Page de connexion</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="pagecompte">
+        <?php
         // On démarre la session
             session_start();
 
@@ -10,16 +19,7 @@
                     unset($_SESSION["erreurs"][$nomErreur]);
                 }
             }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Page de connexion</title>
-    <link rel="stylesheet" href="../style.css">
-</head>
-<body class="pagecompte">
+        ?>
     <header class="headconn">
             <a href="../Accueil/accueil_visiteur.php"><img src="../svg/flecheRetour.svg"></a>
 
