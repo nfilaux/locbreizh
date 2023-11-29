@@ -51,7 +51,7 @@ CREATE TABLE
 CREATE TABLE
     _proprietaire (
         id_proprietaire SERIAL,
-        rib VARCHAR(50) NOT NULL,
+        rib CHAR(34) NOT NULL,
         carte_identite VARCHAR(50) NOT NULL,
         CONSTRAINT proprietaire_pk PRIMARY KEY (id_proprietaire),
         CONSTRAINT proprietaire_fk_id FOREIGN KEY (id_proprietaire) REFERENCES _compte (id_compte)
@@ -128,10 +128,15 @@ CREATE TABLE
 CREATE TABLE
     _planning (
         code_planning SERIAL,
-        tarif_journalier_base NUMERIC(5, 2) NOT NULL,
+        tarif_journee NUMERIC(5, 2) NOT NULL, -- d'une journée
         duree_minimale_sejour NUMERIC(2) NOT NULL,
-        delai_minimum_heure NUMERIC(2) NOT NULL,
+        delai_depart_arrivee NUMERIC(2) NOT NULL,
+        disponible          BOOLEAN NOT NULL,
+        libelle_indisponibilite  VARCHAR(255),
         CONSTRAINT planning_pk PRIMARY KEY (code_planning)
+        -- disponible ?
+        -- si indisponible pourquoi ?
+        -- différence de temps entre les départs et les arrivées
     );
 
 /*   table plage_ponctuelle : est utilisée pour renseigner les plages de disponibilité de manière ponctuelle  */
@@ -141,6 +146,8 @@ CREATE TABLE
         id_plage_ponctuelle SERIAL,
         debut_plage_ponctuelle DATE NOT NULL,
         fin_plage_ponctuelle DATE NOT NULL,
+        prix_plage_ponctuelle FLOAT NOT NULL,
+        disponible BOOLEAN NOT NULL,
         code_planning INTEGER NOT NULL,
         CONSTRAINT plage_ponctuelle_pk PRIMARY KEY (id_plage_ponctuelle),
         CONSTRAINT plage_ponctuelle_fk FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
@@ -194,8 +201,8 @@ CREATE TABLE
 CREATE TABLE
     _logement (
         id_logement SERIAL NOT NULL,
-        libelle_logement VARCHAR(50) NOT NULL,
-        tarif_base_HT NUMERIC(6, 2) NOT NULL,
+        libelle_logement VARCHAR(30) NOT NULL,
+        tarif_base_HT NUMERIC(5, 2) NOT NULL,
         accroche_logement VARCHAR(255) NOT NULL,
         descriptif_logement VARCHAR(255) NOT NULL,
         nature_logement VARCHAR(15) NOT NULL,
@@ -213,7 +220,7 @@ CREATE TABLE
         parking_public BOOLEAN NOT NULL,
         parking_privee BOOLEAN NOT NULL,
         sauna BOOLEAN NOT NULL,
-        hammam BOOLEAN NOT NULL, 
+        hammam BOOLEAN NOT NULL,
         piscine BOOLEAN NOT NULL,
         climatisation BOOLEAN NOT NULL,
         jacuzzi BOOLEAN NOT NULL,
@@ -499,9 +506,13 @@ CREATE TABLE
 
 /* Peuplement de la base */
 
-INSERT INTO _photo VALUES ( 'dubois.png' );
+INSERT INTO _photo VALUES ( 'log1.png' );
 
-INSERT INTO _photo VALUES ( 'martin.png' );
+INSERT INTO _photo VALUES ( 'log2.png' );
+
+INSERT INTO _photo VALUES ('dupont.png');
+
+INSERT INTO _photo VALUES ('martin.png');
 
 INSERT INTO
     _adresse (
@@ -533,21 +544,21 @@ INSERT INTO
     )
 VALUES (
         'Monsieur',
-        'Dubois',
+        'Dupont',
         'Jean',
-        'jeandubois@gmail.com',
-        'jeandubois22',
-        'jdubois',
+        'jeandupont@gmail.com',
+        '$2y$10$V.uF.IEqPI.TBXrGaVAQGuTXeM471D494ithi26ngz8VnV/LzuyqG',
+        'jdupont',
         '0612457889',
         1,
-        'dubois.png'
+        'dupont.png'
     );
 
 INSERT INTO _proprietaire
 VALUES (
         1,
         '65465654646465',
-        'dubois.png'
+        'dupont.png'
     );
 
 INSERT INTO
@@ -567,7 +578,7 @@ VALUES (
         'Martin',
         'Pierre',
         'pmartin@gmail.com',
-        'martin22',
+        '$2y$10$V.uF.IEqPI.TBXrGaVAQGuTXeM471D494ithi26ngz8VnV/LzuyqG',
         'mpierre',
         '0612457823',
         1,
@@ -578,7 +589,7 @@ INSERT INTO _proprietaire
 VALUES (
         2,
         '65465654646445',
-        'dubois.png'
+        'dupont.png'
     );
 
 INSERT INTO
@@ -598,18 +609,18 @@ VALUES (
         'Grand',
         'Michelle',
         'mgrand@gmail.com',
-        'michelle22',
+        '$2y$10$V.uF.IEqPI.TBXrGaVAQGuTXeM471D494ithi26ngz8VnV/LzuyqG',
         'mgrand',
         '0712457823',
         1,
-        'dubois.png'
+        'dupont.png'
     );
 
 INSERT INTO _proprietaire
 VALUES (
         3,
         '00465654646445',
-        'dubois.png'
+        'dupont.png'
     );
 
 INSERT INTO
@@ -629,26 +640,37 @@ VALUES (
         'Lucas',
         'Martine',
         'mlucas@gmail.com',
-        'martinelucas22',
+        '$2y$10$V.uF.IEqPI.TBXrGaVAQGuTXeM471D494ithi26ngz8VnV/LzuyqG',
         'lmartine',
         '0698987845',
         1,
-        'dubois.png'
+        'dupont.png'
     );
-
+/*
 INSERT INTO _client VALUES ( 4, '2000-05-15', 'true' );
 
 INSERT INTO _langue VALUES ( 'français' );
 
 INSERT INTO _parle VALUES ( 'français', 1 );
-
+*/
 INSERT INTO
     _planning (
-        tarif_journalier_base,
+        tarif_journee,
         duree_minimale_sejour,
-        delai_minimum_heure
+        delai_depart_arrivee,
+        disponible
     )
-VALUES (500, 2, 24);
+VALUES (500, 2, 12, true);
+
+INSERT INTO 
+     _plage_ponctuelle (
+        debut_plage_ponctuelle,
+        fin_plage_ponctuelle,
+        prix_plage_ponctuelle,
+        disponible,
+        code_planning
+     )
+VALUES ('2023-11-27','2023-11-30',300,true, 1); 
 
 insert into _taxe_sejour(prix_journalier_adulte) values( 5 );
 
@@ -691,9 +713,9 @@ VALUES (
         'Manoir Hanté',
         500,
         'Manoir à la campagne avec grand terrain et de muliple pièces',
+        'Manoir au calme et proche dune forêt',
         'Manoir',
-        '',
-        'manoir',
+        'T9',
         500,
         TRUE,
         10,
@@ -718,7 +740,7 @@ VALUES (
         1,
         1,
         1,
-        'dubois.png',
+        'log1.png',
         1
     );
 
@@ -761,9 +783,9 @@ VALUES (
         'Maison de campagne',
         250,
         'Maison à la campagne avec grand terrain et de muliple pièces',
+        'Maison paisible à côté dune petite rivière',
         'Maison',
-        '',
-        'maison',
+        'T6',
         125,
         TRUE,
         4,
@@ -788,7 +810,7 @@ VALUES (
         1,
         1,
         1,
-        'dubois.png',
+        'log2.png',
         1
     );
 
@@ -899,3 +921,4 @@ VALUES (
         1,
         'personnes_supplementaires'
     );
+    

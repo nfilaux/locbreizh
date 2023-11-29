@@ -70,6 +70,42 @@
                                 
                                 <p>DISCLAIMER - La suppression du compte est définitve.</p>
                                 <p class="err">Condition requise : Aucune réservation prévue.</p>
+
+                                <?php $nomPlage = 'plage' . $key; 
+                                $overlayPlage = 'overlay' . $key;?>
+
+                                <a class="calend" onclick="openPopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>    
+
+                                <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
+                                    <div id="<?php echo $nomPlage; ?>" class='plages'> 
+                                        <h1>Ajouter une plage ponctuelle</h1><br>
+                                        <form action="../Planning/plageBack.php" method="post">
+                                            
+                                            <label for="debut_plage_ponctuelle"> date de début de la plage : </label>
+                                            <input type="date" id="debut_plage_ponctuelle" name="dateDeb"/>
+                                            <br><br>
+                                            
+                                            <label for="fin_plage_ponctuelle"> date de fin de la plage : </label>
+                                            <input type="date" id="fin_plage_ponctuelle" name="dateFin"/>
+                                            <br><br>
+
+                                            <label for="prix_plage_ponctuelle"> Prix : </label>
+                                            <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>"/>
+                                            <br><br>
+
+                                            <label for="disponible"> Disponible : </label>
+                                            <input type="checkbox" id="disponible" name="disponible" value="true"/>
+                                            <br><br>
+
+                                            <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
+                                            <button type="submit">ajouter</button>
+                                            
+                                        </form>
+                                        
+                                        <hr><h1>Les plages ponctuelles</h1><br>
+                                        <p> Aucune plage définie </p>
+                                    </div>
+
                             </section>
                         </div>
                     <?php
