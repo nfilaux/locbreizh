@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../style.css">
     <title>Creer compte proprio</title>
 </head>
-<body>
+<body  class="pagecompte">
     <?php
         session_start();
         function erreur($nomErreur)

@@ -23,6 +23,7 @@ body {
     background-origin: content-box;
     width: 100%;
     font-family: 'Quicksand';
+    background-color: #F5F4F4;
 }
 
 .pagecompte {
@@ -70,6 +71,7 @@ header{
     box-sizing: border-box;
     border-bottom: 1px solid #745086; 
     flex-wrap: nowrap;
+    background-color: #fff;
 }
 
 .logot {
@@ -176,7 +178,6 @@ main{
     padding-bottom: 5vw;
     padding-left: 2em;
     padding-right: 2em;
-    background-color: #F5F4F4;
 }
 
 main label, .Tablobord h2{
@@ -209,26 +210,6 @@ main h1{
     margin: 0;
 }
 
-.voir_plus {
-    display: flex;
-    align-items: center;
-    position: relative;
-    bottom: 20;
-    text-decoration: none;
-}
-
-.voir_plusR {
-    display: flex;
-    align-self: flex-end;
-    position: relative;
-    text-decoration: none;
-}
-
-.voir_plus hr{
-    border-width: 1px;
-    border-color: #F6E4FF;
-    width: 15%;
-}
 
 .Maincompte {
     display: flex;
@@ -251,6 +232,18 @@ main h1{
 .Maincompte section article div span{
     margin-top: 2em;
     font-size: 1.5em;
+}
+
+
+.mdp{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mdp input {
+    margin: 1em auto;
 }
 
 /*----------------------------------------------------------------footer----------------------------------------------------------------*/
