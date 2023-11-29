@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <?php
     // inclusion d'une instance PDO
@@ -25,13 +26,11 @@
     }
 
     // requete pour obtenir la photo de profil pour le header
-    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = :id;");
-    $stmt->bindParam(':id', $_SESSION['id']);
+    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
     $stmt->execute();
     $photo_profil = $stmt->fetch();
 
-    $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = :id ;");
-    $stmt->bindParam(':id', $_SESSION['id']);
+    $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
     $stmt->execute();
     $est_client = $stmt->fetch();
 
@@ -44,8 +43,7 @@
 
 
 
-    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id;");
-    $stmt->bindParam(':id', $_SESSION['id']);
+    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $photo = $stmt->fetch();
 
@@ -55,7 +53,7 @@
                         SELECT
                             c.id_conversation,
                             CASE
-                                WHEN c.compte1 = :id THEN c.compte2
+                                WHEN c.compte1 = '{$_SESSION['id']}' THEN c.compte2
                                 ELSE c.compte1
                             END AS id_autre_compte,
                             cp.nom AS nom_autre_compte,
@@ -70,13 +68,13 @@
                             locbreizh._conversation c
                         INNER JOIN locbreizh._compte cp ON (
                             cp.id_compte = CASE
-                                WHEN c.compte1 = :id THEN c.compte2
+                                WHEN c.compte1 = '{$_SESSION['id']}' THEN c.compte2
                                 ELSE c.compte1
                             END
                         )
                         LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
                         WHERE
-                            c.compte1 = :id OR c.compte2 = :id
+                            c.compte1 = '{$_SESSION['id']}' OR c.compte2 = '{$_SESSION['id']}'
                     )
                     SELECT
                         id_conversation,
@@ -90,7 +88,7 @@
                         heure_mess
                     FROM messageOrdre
                     WHERE message_rank = 1;");
-    $stmt->bindParam(':id', $_SESSION['id']);
+
     $stmt->execute();
     // recuperation des lignes dans la variable test_conv
     $liste_conv = $stmt->fetchAll();
@@ -129,10 +127,10 @@
         LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
         INNER JOIN locbreizh._compte cp1 ON cp1.id_compte = c.compte1
         INNER JOIN locbreizh._compte cp2 ON cp2.id_compte = c.compte2
-        WHERE c.id_conversation = :selectionne
+        WHERE c.id_conversation = '$selectionne'
         ORDER BY date_mess DESC,
             heure_mess DESC;");
-        $stmt->bindParam(':selectionne', $selectionne);
+        
         $stmt->execute();
         // sotck les lignes de la requete dans liste_message
         $liste_message = $stmt->fetchAll();
@@ -148,64 +146,55 @@
     
 ?>
 <body>
-<header>
+<header class="row col-12">
         <?php if($est_client){ ?>
             <a href="../Accueil/accueil_client.php">
-            <div>
+            <div class="row col-3">
             <img src="../svg//logo.svg">
-            <h2>Loc'Breizh</h2>
+            <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
             </div></a>
 
         <?PHP }
         else{?>
             <a href="../Accueil/Tableau_de_bord.php">
-            <div>
+            <div class="row col-3">
             <img src="../svg//logo.svg">
-            <h2>Loc'Breizh</h2>
+            <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
             </div></a>
         <?php }?>
 
 
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
+    <div class="row col-3">
+        <img class="col-2" src="../svg//filtre.svg">
+        <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
+        <img class="col-2" src="../svg//loupe.svg">
     </div>
-        <div>
+        <div class="row col-3 offset-md-1">
             <img src="../svg//booklet-fill 1.svg">
             <?php 
                 if($est_client){?>
-                    <a href="../Reservation/liste_reservations.php">
-                    <h4>Acceder à mes réservations</h4>
+                    <a href="../reservation/liste_reservations.php" style="margin: auto;margin-left: 10px;">
+                    <h4 style="color:#000;">Acceder à mes réservations</h4>
                     </a>
                 <?PHP }
                 else{?>
-                    <a href="../Accueil/Tableau_de_bord.php">
-                    <h4 >Acceder à mon tableau de bord</h4>
+                    <a href="../Accueil/Tableau_de_bord.php" style="margin: auto;margin-left: 10px;">
+                    <h4 style="color:#000;">Acceder à mon tableau de bord</h4>
                     </a>
                 <?php }?>
         </div>
         
 
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
+    <div class="col-2 row">
+        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
+        <a onclick="openPopup()" class="offset-md-2 row"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
+    </div>
+    <div id="popup" class="popup">
+        <a href="">Accéder au profil</a>
+        <br>
+        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
+        <a onclick="closePopup()">Fermer la fenêtre</a>
+    </div>
 </header>
 
     <main>
@@ -319,13 +308,11 @@
                                         ?></p>
                                         <?php 
                                             if($est_demande){
-                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_demande m where m.id_message_demande = :id_message;");
-                                                $stmt->bindParam(':id_message', $message['id_message']);
+                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_demande m where m.id_message_demande = {$message['id_message']};");
                                                 $stmt->execute();
                                                 $statut = $stmt->fetch();
 
-                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = :id;");
-                                                $stmt->bindParam(':id', $_SESSION['id']);
+                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
                                                 $stmt->execute();
                                                 $est_client = $stmt->fetch();
 
@@ -346,13 +333,11 @@
                                         <?php } ?>
                                         <?php 
                                             if($est_devis){
-                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_devis m where m.id_message_devis = :id_message;");
-                                                $stmt->bindParam(':id_message', $message['id_message']);
+                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_devis m where m.id_message_devis = {$message['id_message']};");
                                                 $stmt->execute();
                                                 $statut = $stmt->fetch();
 
-                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = :id;");
-                                                $stmt->bindParam(':id', $_SESSION['id']);
+                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
                                                 $stmt->execute();
                                                 $est_client = $stmt->fetch();
 
@@ -391,23 +376,64 @@
             <?php }?>
         </div>
     </main>
-    <footer>
-        <div>   
-            <div>
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+    <footer class="container-fluid" >
+        <div class="column">   
+            <div class="text-center row">
+                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
             <hr>  
-            <div>
-                <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            <div class="text-center row">
+                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
+                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
         </div>
     </footer>
 </body>
 
 </html>
-<script src="../scriptPopup.js"></script>
+
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 15%;
+        left: 91%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+</style>
+<script>
+// Ouvrir la popup
+function openPopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'block';
+}
+
+// Fermer la popup
+function closePopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'none';
+}
+
+// Ajouter des gestionnaires d'événements aux boutons
+var profilButton = document.getElementById('profilButton');
+profilButton.addEventListener('click', function() {
+alert('Accéder au profil');
+closePopup();
+});
+
+var deconnexionButton = document.getElementById('deconnexionButton');
+deconnexionButton.addEventListener('click', function() {
+alert('Se déconnecter');
+closePopup();
+});
+</Script>

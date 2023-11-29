@@ -25,8 +25,7 @@
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE pseudo = :pseudo;");
-            $verifPseudo->bindParam(':pseudo', $pseudo);
+            $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
             $verifPseudo->execute();
             $res = $verifPseudo->fetchColumn();
             if ($res !== 1){
@@ -35,8 +34,7 @@
                 exit;
             }
             else{
-                $verifMDP = $dbh->prepare("SELECT mot_de_passe FROM locbreizh._compte WHERE pseudo = :pseudo;");
-                $verifMDP->bindParam(':pseudo', $pseudo);
+                $verifMDP = $dbh->prepare("SELECT mot_de_passe FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
                 $verifMDP->execute();
                 $res = $verifMDP->fetchColumn();
                 if (!password_verify($mdp, $res)){
@@ -46,14 +44,12 @@
 
                 // la session garde l'id de la personne qui se connecte
                 else{
-                    $recupID = $dbh->prepare("SELECT id_compte FROM locbreizh._compte WHERE pseudo = :pseudo;");
-                    $recupID->bindParam(':pseudo', $pseudo);
+                    $recupID = $dbh->prepare("SELECT id_compte FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
                     $recupID->execute();
                     $id = $recupID->fetchColumn();
                     $_SESSION['id'] = $id;
 
-                    $stmt = $dbh->prepare("SELECT id_proprietaire FROM locbreizh._proprietaire WHERE id_proprietaire = :id_compte;");
-                    $stmt->bindParam(':id_compte', $id);
+                    $stmt = $dbh->prepare("SELECT id_proprietaire FROM locbreizh._proprietaire WHERE id_proprietaire = {$_SESSION['id']};");
                     $stmt->execute();
                     $proprio = $stmt->fetch();
 

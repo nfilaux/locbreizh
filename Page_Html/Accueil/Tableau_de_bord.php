@@ -1,22 +1,25 @@
 <?php 
-    // début de la session pour récupérer l'id du compte connecté
     session_start();
-
     include('../parametre_connexion.php');
-
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
-    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id_compte;");
-    $stmt->bindParam(':id_compte', $_SESSION['id']);
-    $stmt->execute();
-    $photo = $stmt->fetch();
+
+    function disable($id){
+        global $dbh;
+        $stmt = $dbh->prepare(
+            "UPDATE locbreizh._logement SET en_ligne = false where id_logement = $id;"
+        );
+        $stmt->execute();
+        //echo "celà marche";
+    }
 ?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -24,102 +27,110 @@
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
 </head>
 
 <body class="pagecompte">
-    <header>
-    <a href="../Accueil/Tableau_de_bord.php">
-        <img class="logot" src="../svg/logo.svg">
-        <h2>Loc'Breizh</h2>
-    </a>
-        <div class="brecherche">
-            <img src="../svg/filtre.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
-        </div>
-
-        <img src="../svg/booklet-fill 1.svg">
-        <a href="../Accueil/Tableau_de_bord.php"><h4>Accèder à mes logements</h4></a>
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-    </header>
+    <?php 
+        include('../header-footer/choose_header.php');
+    ?>
     <main class="MainTablo">
-        <div class="headconn"> 
+        <div class="headtablo"> 
             <h1>Mon tableau de bord</h1>
         </div>
         <section class="Tablobord">
-            <article>
+            <article class="width">
                 <h2>Mes logements</h2>
                 <?php
-                    // récupération des données de logement dans la base de donnée
+                    print_r($_SESSION);
+                    $pid = $_SESSION['id'];
                     $stmt = $dbh->prepare(
                         "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
-                        from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
+                        from locbreizh._logement where id_proprietaire = {$pid};"
                     );
 
-                    // fonction pour afficher la date de début et de fin d'une plage 
-                    function formatDate($start, $end) {
-                        $startDate = date('j', strtotime($start));
-                        $endDate = date('j', strtotime($end));
-                        $month = date('M', strtotime($end));
 
-                        return "$startDate-$endDate $month";
-                    }
+                    function formatDate($start, $end)
+                {
+                    $startDate = date('j', strtotime($start));
+                    $endDate = date('j', strtotime($end));
+                    $month = date('M', strtotime($end));
 
-                $stmt->execute();
-
-                // affichage des données de logement
-                foreach ($stmt->fetchAll() as $card) {
-                    echo "<a href=\"../Logement/logement_detaille_proprio.php?logement={$card['id_logement']}\"><div class=\"card\">";
-                    echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
-                    echo '<h3>' . $card['libelle_logement'] . '</h3>';
-                    echo '<h4>' . $card['tarif_base_ht'] . '€</h4>';
-                    /*echo '<img src="/Ressources/Images/star.svg"> . <h4>' . $card['note_avis'] . '</h4>';*/
-                    /*
-                    echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
-                    echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4>';
-                    echo "<a href=\"../Logement/modifierLogement.php?id_logement={$card['id_logement']}\"><button>Modifier ce logement</button></a></div></a>";
+                    return "$startDate-$endDate $month";
                 }
 
+                $stmt->execute();
+                foreach ($stmt->fetchAll() as $card) {
+                    $id_log = $card['id_logement'];
+                    $stmt = $dbh->prepare(
+                        "SELECT en_ligne
+                        from locbreizh._logement 
+                        where id_logement = $id_log;"
+                    );
+                    $stmt->execute();
+                    $etat = $stmt->fetchColumn();
+
+                    echo "etat" . print_r($etat);
+                    if ($etat == 0){
+                        $bouton_desactiver = "DESACTIVER";  
+                    } else {
+                        $bouton_desactiver = "ACTIVER";
+                    }
+                    
+                    ?>
+                        <div class="cardlogmain">
+                            <img src="../Ressources/Images/<?php echo $card['photo_principale']?>">
+                            <section class="logcp">
+                                <div class="logrowb">
+                                    <div>
+                                        <h3 class="titrecard"><?php echo $card['libelle_logement'] ?></h3>
+                                        <hr class="hrcard">
+                                    </div>
+                                    <a class="btn-modiftst" href="../Logement/modifierLogement.php?id_logement=<?php echo $card['id_logement'] ?>"><button class="btn-modif">Modifier</button></a>
+                                </div>
+                                
+                                <div class="logrowb">
+                                    <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $card['id_logement'] ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
+                                    <?php print_r($card); $id_disable = $card['id_logement']; ?>
+                                    <form method="post">
+                                    <input type="submit" name="desactiver" class="button" value=<?php echo $bouton_desactiver; ?> />
+                                        <a><button class="btn-desactive" onclik="desactiver(<?php echo $id_disable ?>)">DESACTIVER</button></a>
+                                    </form>
+                                    <?php 
+                                    if(array_key_exists('desactiver', $_POST)) {
+                                        disable($id_disable);
+                                    }
+                                    ?>
+                                    <a><button class="btn-suppr">SUPPRIMER</button></a>
+                                </div>
+                                
+                                <p>DISCLAIMER - La suppression du compte est définitve.</p>
+                                <p class="err">Condition requise : Aucune réservation prévue.</p>
+                            </section>
+                        </div>
+                    <?php
+                }
                 ?>
             <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
             </article>
 
-            <hr>
+            <hr class="hr">
 
             <article>
                 <h2>Notifications</h2>
 
                 <div class="box">
-                    <!--<?php foreach ($notifications as $notification) {?>
-                        
-                    <?php } ?>
-                    !-->
+                    <p>Aucune notifications</p>
+                    <?php //foreach ($notifications as $notification) {?>
+
+                    <?php //} ?>
                 </div>
 
 
                 <h2>Mes Réservation</h2>
                 <p>Aucune réservation en cours </p>
                 <?php
-                // récupération des données d'un logement dans la base de donnée  
+            
                 $stmt = $dbh->prepare("SELECT l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
                 from locbreizh._reservation r
                 join locbreizh._logement l on l.id_logement = r.logement
@@ -128,12 +139,11 @@
                 join locbreizh._adresse a on l.id_adresse = a.id_adresse
                 join locbreizh._facture f on f.num_facture = r.facture
                 join locbreizh._devis d on d.num_devis = f.num_devis");
-
                 $stmt->execute();
                 $reservations = $stmt->fetchAll();
 
-                // affichage des données d'un logement
                 foreach ($reservations as $reservation) {
+
                     ?>
                     <div class="card">        
                         <img src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>">
@@ -154,22 +164,12 @@
         </section>    
     </main>
     
-    <footer>
-            <div class="tfooter">
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-            </div>
-            <hr>  
-            <div class="bfooter">
-                <p>©2023 Loc’Breizh</p>
-                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-            </div>
-    </footer>
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+    ?>
 </body>
 
 </html>
+
 
 <script src="../scriptPopup.js"></script>

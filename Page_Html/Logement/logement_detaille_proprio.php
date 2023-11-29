@@ -22,48 +22,41 @@ $photo = $stmt->fetch();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page détaillé d'un logement</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 
 <body>
-<header>
+<header class="row col-12">
 <a href="../Accueil/Tableau_de_bord.php">
-    <div>
+    <div class="row col-3">
         <img src="../svg//logo.svg">
-        <h2>Loc'Breizh</h2>
+        <h2 style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Loc'Breizh</h2>
     </div></a>
 
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
+    <div class="row col-3">
+        <img class="col-2" src="../svg//filtre.svg">
+        <input class="col-7" id="searchbar" type="text" name="search" style="height: 50px; margin-top: auto; margin-bottom: auto;">
+        <img class="col-2" src="../svg//loupe.svg">
     </div>
-        <div>
+        <div class="row col-3 offset-md-1">
             <img src="../svg//booklet-fill 1.svg">
-            <a href="../Accueil/Tableau_de_bord.php">
-                <h4>Accèder à mon tableau de bord</h4>
+            <a href="../Accueil/Tableau_de_bord.php" style="margin: auto;margin-left: 10px;">
+                <h4 style="color:#000;">Accèder à mon tableau de bord</h4>
             </a>
         </div>
         
 
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
+    <div class="col-2 row">
+        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
+        <a onclick="openPopup()" class="offset-md-2 row"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
+    </div>
+    <div id="popup" class="popup">
+        <a href="">Accéder au profil</a>
+        <br>
+        <a href="../Compte/seDeconnecter.php">Se déconnecter</a>
+        <a onclick="closePopup()">Fermer la fenêtre</a>
+    </div>
 </header>
     <main>
         <div class='infos'>
@@ -324,23 +317,64 @@ $photo = $stmt->fetch();
 
     </main>
     
-    <footer>
-        <div>   
-            <div>
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <p><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
-                <p><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+    <footer class="container-fluid" >
+        <div class="column">   
+            <div class="text-center row">
+                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
             </div>
             <hr>  
-            <div>
-                <p>©2023 Loc’Breizh</p>
-                <p><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html">7ème sens</a></p>
+            <div class="text-center row">
+                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
+                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
             </div>
         </div>
     </footer>
 </body>
 
 </html>
-<script src="../scriptPopup.js"></script>
+
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 15%;
+        left: 91%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+</style>
+<script>
+// Ouvrir la popup
+function openPopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'block';
+}
+
+// Fermer la popup
+function closePopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'none';
+}
+
+// Ajouter des gestionnaires d'événements aux boutons
+var profilButton = document.getElementById('profilButton');
+profilButton.addEventListener('click', function() {
+alert('Accéder au profil');
+closePopup();
+});
+
+var deconnexionButton = document.getElementById('deconnexionButton');
+deconnexionButton.addEventListener('click', function() {
+alert('Se déconnecter');
+closePopup();
+});
+</Script>

@@ -1,15 +1,12 @@
 <?php
-        // On démarre la session
-            session_start();
-
-            // On vérifie si les variables de session et les cookies existent
-            function erreur($nomErreur)
-            {
-                if(isset($_SESSION["erreurs"][$nomErreur])){
-                    ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
-                    unset($_SESSION["erreurs"][$nomErreur]);
-                }
-            }
+    session_start();
+    function erreur($nomErreur)
+    {
+        if(isset($_SESSION["erreurs"][$nomErreur])){
+            ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+            unset($_SESSION["erreurs"][$nomErreur]);
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,62 +15,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Page de connexion</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body class="pagecompte">
-    <header class="headconn">
-            <a href="../Accueil/accueil_visiteur.php"><img src="../svg/flecheRetour.svg"></a>
+<body>
+    <header>
+        <div class="col-12 row text-center headconn"> 
+            <a class="offset-md-2 titre" href="../Accueil/accueil_visiteur.php"><img src="../svg/flecheRetour.svg"></a>
 
-            <h1>Bienvenue sur Loc’Breizh !</h1>
-
+            <h1 class="col-8 text-center titre">Bienvenue sur Loc’Breizh !</h1>
+        </div>
     </header>
-    <main class="Maincompte">
-        <section>
+    <main class="container offset-md-2 col-8">
         <form action="connexionBack.php" method="post">
-            <article>
-                <input type="text" id="pseudo" name="pseudo" placeholder="Identifiant" class="custom-input" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>" />
+            <div class="form-group mt-2">
+                <input type="text" id="pseudo" style="font-size: 2em;" name="pseudo" class=" offset-md-2 col-8 text-center custom-input mb-5" placeholder="Identifiant" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>" />
                 <?php
                     erreur("pseudo");
                 ?>
-            </article>
-            <br>
-            <article>
-                <input type="password" id="motdepasse" name="motdepasse" class="custom-input" placeholder="Mot de passe"/>
+            </div>
+            <div class="form-group mt-2">
+                <input type="password" id="motdepasse" style="font-size: 2em;" name="motdepasse" class=" offset-md-2 col-8  text-center custom-input mb-5" placeholder="Mot de passe"/>
                 <?php
                     erreur("motdepasse");
                 ?>
-            </article>
-            <br>
-            <button class="btn-compte" type="submit">Se connecter</button>
-        </form>
-
-        <article> 
-            <div class="rowcompte">
-                <p>Nouveau ici ?</p>
-                <a href="CreerCompte.html">Créer un compte</a> 
-                <a href="mdpOublierFront.php">Mot de passe oublié ?</a>
             </div>
+            <button type="submit" class="btn-compte offset-md-3 col-6 mb-5 mt-5">Se connecter</button>
+        </form>
+        <article class="text-center mt-2"> 
+            <span>Nouveau ici ? <a class="col-2" href="CreerCompte.html">Créer un compte</a> <a class="offset-md-1 col-2" href="mdpOublierFront.php">Mot de passe oublié ?</a></span>
         </article>
-        </section>
+       
     </main>
-    <footer>
-        <div class="tfooter">
-            <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-            <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-            <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-            <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-        </div>
-        <hr>  
-        <div class="bfooter">
-            <p>©2023 Loc’Breizh</p>
-            <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-            <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+
+
+    <footer class="container-fluid" >
+        <div class="column">   
+            <div class="text-center row">
+                <p class="testfoot col-2"><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
+                <p class="testfoot offset-md-2 col-2"><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
+                <p class="testfoot offset-md-1 col-2"><a href="connexion.html"><img src="../svg/instagram.svg">  @LocBreizh</a></p>
+                <p class="testfoot offset-md-1 col-2  "><a href="connexion.html"><img src="../svg/facebook.svg">  @LocBreizh</a></p>
+            </div>
+            <hr>  
+            <div class="text-center row">
+                <p class="offset-md-1 col-2 testfooter">©2023 Loc’Breizh</p>
+                <p class="offset-md-1 col-3 testfooter" style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
+                <p class="offset-md-1 col-4 testfooter" >Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
+            </div>
         </div>
     </footer>
 </body>
 
 </html>
 
-<!-- Partie stylisé des popup-->
+
 <style>
     .popup {
         display: none;
@@ -88,31 +83,29 @@
         z-index: 1000;
     }
 </style>
-
-<!-- Partie animé du profil d'une personne connecter -->
 <script>
-    // Ouvrir la popup
-    function openPopup() {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'block';
-    }
+// Ouvrir la popup
+function openPopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'block';
+}
 
-    // Fermer la popup
-    function closePopup() {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'none';
-    }
+// Fermer la popup
+function closePopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'none';
+}
 
-    // Ajouter des gestionnaires d'événements aux boutons
-    var profilButton = document.getElementById('profilButton');
-    profilButton.addEventListener('click', function() {
-        alert('Accéder au profil');
-        closePopup();
-    });
+// Ajouter des gestionnaires d'événements aux boutons
+var profilButton = document.getElementById('profilButton');
+profilButton.addEventListener('click', function() {
+alert('Accéder au profil');
+closePopup();
+});
 
-    var deconnexionButton = document.getElementById('deconnexionButton');
-    deconnexionButton.addEventListener('click', function() {
-        alert('Se déconnecter');
-        closePopup();
-    });
+var deconnexionButton = document.getElementById('deconnexionButton');
+deconnexionButton.addEventListener('click', function() {
+alert('Se déconnecter');
+closePopup();
+});
 </Script>

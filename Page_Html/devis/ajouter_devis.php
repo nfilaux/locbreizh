@@ -54,13 +54,11 @@
         $total_plateforme_TTC = $total_plateforme_HT * 1.2;
         $date_devis = date("Y-m-d");
 
-        $stmt = $dbh->prepare("SELECT libelle_logement FROM locbreizh._demande_devis d JOIN locbreizh._logement l ON  d.logement = l.id_logement WHERE num_demande_devis = :id_demande;");
-        $stmt->bindParam(':id_demande', $_POST['id_demande']);
+        $stmt = $dbh->prepare("SELECT libelle_logement FROM locbreizh._demande_devis d JOIN locbreizh._logement l ON  d.logement = l.id_logement WHERE num_demande_devis = {$_POST['id_demande']};");
         $stmt->execute();
         $libelle_log = $stmt->fetch();  
 
-        $reqNomClient = $dbh->prepare("SELECT nom, prenom, id_compte, pseudo FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = :id_demande");
-        $stmt->bindParam(':id_demande', $_POST['id_demande']);
+        $reqNomClient = $dbh->prepare("SELECT nom, prenom, id_compte, pseudo FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = {$_POST['id_demande']}");
         $reqNomClient->execute();
         $infos_user = $reqNomClient->fetch();  
         
@@ -70,20 +68,9 @@
         fras_service_platforme_ttc_devis, date_devis, date_validite, condition_annulation,
         num_demande_devis, taxe_sejour) 
         values (
-        {:id_compte, :total_montant_devis, :prix_loc,
-        :total_HT, :total_TTC, :total_plateforme_HT, 
-        :total_plateforme_TTC, :date_devis, :date_val, :annulation, :id_demande, 1);");
-        $stmt->bindParam(':id_compte', $infos_user['id_compte']);
-        $stmt->bindParam(':total_montant_devis', $total_montant_devis);
-        $stmt->bindParam(':prix_loc', $prix_loc);
-        $stmt->bindParam(':total_HT', $total_HT);
-        $stmt->bindParam(':total_TTC', $total_TTC);
-        $stmt->bindParam(':total_plateforme_HT', $total_plateforme_HT);
-        $stmt->bindParam(':total_plateforme_TTC', $total_plateforme_TTC);
-        $stmt->bindParam(':date_devis', $date_devis);
-        $stmt->bindParam(':date_val', $_POST['date_val']);
-        $stmt->bindParam(':annulation', $_POST['annulation']);
-        $stmt->bindParam(':id_demande', $_POST['id_demande']);
+        {$infos_user['id_compte']}, $total_montant_devis, $prix_loc,
+         $total_HT, $total_TTC, $total_plateforme_HT, 
+        $total_plateforme_TTC, '$date_devis', {$_POST['date_val']}, '{$_POST['annulation']}', {$_POST['id_demande']}, 1);");
         $reg_devis->execute();
         $id_devis = $dbh->lastInsertId();
         
@@ -95,9 +82,7 @@
         $stmt = $dbh->prepare("SELECT c.id_conversation
         FROM locbreizh._conversation c
         INNER JOIN locbreizh._demande_devis d ON (d.client = compte1 or d.client = compte2)
-        WHERE num_demande_devis = :id_demande and ((compte1 = :id and compte2 = client) or (compte2 = :id and compte1 = client));");
-        $stmt->bindParam(':id_demande', $_POST['id_demande']);
-        $stmt->bindParam(':id', $_SESSION['id']);
+        WHERE num_demande_devis = {$_POST['id_demande']} and ((compte1 = {$_SESSION['id']} and compte2 = client) or (compte2 = {$_SESSION['id']} and compte1 = client));");
         $stmt->execute();
 
         // stock dans conv_request
@@ -110,46 +95,33 @@
         }
         else{
             // retrouve l'id du proprio
-            $stmt = $dbh->prepare("select client from locbreizh._demande_devis where num_demande_devis = :id_demande;");
-            $stmt->bindParam(':id_demande', $_POST['id_demande']);
+            $stmt = $dbh->prepare("select client from locbreizh._demande_devis where num_demande_devis = {$_POST['id_demande']};");
             $stmt->execute();
             $client = $stmt->fetch();
 
             // on cree une conversation entre le client et le proprio
             $stmt = $dbh->prepare("INSERT INTO locbreizh._conversation(compte1, compte2) 
-            VALUES (:id, :client);");
-            $stmt->bindParam(':id', $_SESSION['id']);
-            $stmt->bindParam(':client', $client['client']);
+            VALUES ({$_SESSION['id']}, {$client['client']});");
             $stmt->execute();
             // on recupere l'id de la conv cree
             $id_conv = $dbh->lastInsertId();
         }
 
-        $reqNomClient = $dbh->prepare("SELECT pseudo FROM locbreizh._compte where id_compte = :id");
-        $stmt->bindParam(':id', $_SESSION['id']);
+        $reqNomClient = $dbh->prepare("SELECT pseudo FROM locbreizh._compte where id_compte = {$_SESSION['id']}");
         $reqNomClient->execute();
         $infos_proprio = $reqNomClient->fetch();
         // ajoute le message type pour un devis
         $stmt = $dbh->prepare("INSERT INTO locbreizh._message(contenu_message, date_mess, heure_mess, auteur, conversation) 
-        VALUES (:contenu_message, :date, :time, :id, :id_conv);");
-        $stmt->bindParam(':contenu_message', "Voici le DEVIS final de {$infos_proprio['pseudo']}");
-        $stmt->bindParam(':date', $date);
-        $stmt->bindParam(':time', $time);
-        $stmt->bindParam(':id', $_SESSION['id']);
-        $stmt->bindParam(':id_conv', $id_conv);
+        VALUES ('Voici le DEVIS final de {$infos_proprio['pseudo']}', '$date', '$time', {$_SESSION['id']}, $id_conv);");
         $stmt->execute();
         $id_mess = $dbh->lastInsertId();
 
         $stmt = $dbh->prepare("INSERT INTO locbreizh._message_devis(id_message_devis, lien_devis, id_devis)
-        VALUES (:id_mess, :lien_devis, :id_devis);");
-        $stmt->bindParam(':id_mess', $id_mess);
-        $stmt->bindParam(':lien_devis', "devis$id_devis.pdf");
-        $stmt->bindParam(':id_devis', $id_devis);
+        VALUES ($id_mess, 'devis$id_devis.pdf', $id_devis);");
         $stmt->execute();
 
         // update le statut de la demande qui passe en accepte
-        $stmt = $dbh->prepare("UPDATE locbreizh._message_demande set accepte = TRUE where id_demande = :id_demande;");
-        $stmt->bindParam(':id_demande', $_POST['id_demande']);
+        $stmt = $dbh->prepare("UPDATE locbreizh._message_demande set accepte = TRUE where id_demande = {$_POST['id_demande']};");
         $stmt->execute();
 
 
