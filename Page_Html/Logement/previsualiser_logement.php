@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('parametre_connexion.php');
+include('../parametre_connexion.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -24,8 +24,6 @@ $nom_image6 = $_FILES["image6P"]["tmp_name"];
 
 $id_photo = 1;
 
-print_r($_POST);
-
 function id_photo($id_photo)
 {
     return time() . $id_photo;
@@ -34,8 +32,6 @@ $extension_img_1 = explode('/',$_FILES['image1P']['type'])[1];
 $nouveau_nom_image1 = id_photo($id_photo) . '.' . $extension_img_1;
 $id_photo++;
 move_uploaded_file($nom_image_principale, "../Ressources/Images/" . $nouveau_nom_image1);
-//echo '<p> avant l image 2 ! <p>';
-echo '<p>tableau session logement<p>';
 
 if ($_FILES['image2P']['name']!= '') {
     echo '<p>il y a une image 2 !<p>';
@@ -113,10 +109,6 @@ if ($_FILES['image6P']['name']!= '') {
 
         $_SESSION['post_logement']['image1P'] = $nouveau_nom_image1;
 
-        echo '<p> apres reset <p>';
-        print_r($_FILES);
-        echo '<p> image 2 : ' . $nouveau_nom_image2 .'<p>';
-
         
         if ($_FILES["image2P"]["name"] != "") {
             $_SESSION['post_logement']['image2P'] = $nouveau_nom_image2;
@@ -162,8 +154,6 @@ if ($_FILES['image6P']['name']!= '') {
         $nom_image4 = $_FILES["image4P"]["name"];
         $nom_image5 = $_FILES["image5P"]["name"];
         $nom_image6 = $_FILES["image6P"]["name"];
-
-        print_r($_FILES['image1P']);
 
         if (isset($_POST['balconP'])) {
             $balcon = 1;

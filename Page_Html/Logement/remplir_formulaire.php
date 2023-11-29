@@ -30,15 +30,55 @@
 </head>
 
 <body>
-<?php 
-        include('../header-footer/choose_header.php');
-    ?>
+    <header>
+        <a href="../Accueil/Tableau_de_bord.php">
+            <img class="logot" src="../svg/logo.svg">
+            <h2>Loc'Breizh</h2>
+        </a>
+            <div class="brecherche">
+                <img src="../svg/filtre.svg">
+                <input id="searchbar" type="text" name="search">
+                <img src="../svg/loupe.svg">
+            </div>
 
-    <main>
-        <div class='banniere'>
-            <img src='../svg/arrow-left-s-line 1.svg'>
-            <h1>Remplir la fiche logement</h1>
+            <img src="../svg/booklet-fill 1.svg">
+            <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
+
+            <div class="imghead">
+                <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+                <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+            </div>
+            <div id="popup" class="popup">
+            <a href="">Accéder au profil</a>
+            <br>
+            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+            <a onclick="closePopup()">Fermer la fenêtre</a>
         </div>
+    </header>
+
+
+        <div class="imghead">
+            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
+        </div>
+        <div id="overlay" onclick="closePopup()"></div>
+        <div id="popup" class="popup">
+            <table id="tableProfil">
+                <tr>
+                    <td>
+                        <a id="monprofil" href="">Accéder au profil</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 
+                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+                    </td>  
+                </tr>
+            </table>
+        </div>
+</header>
+    <main>
+
 
         <div class="column">
             <form method='POST' action='previsualiser_logement.php?id=2' enctype="multipart/form-data">
@@ -282,10 +322,6 @@
         </div>
 
     </main>
-
-    <?php 
-        echo file_get_contents('../header-footer/footer.html');
-    ?>
 </body>
 
 </html>
