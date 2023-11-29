@@ -28,18 +28,6 @@
     <script src="../scriptPopup.js"></script>
 </head>
 <?php
-    // import parametre de connexion + nouvelle instance de PDO
-    include('../parametre_connexion.php');
-
-    // id fictif pour les tests
-    try {
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        print "Erreur !: " . $e->getMessage() . "<br/>";
-        die();
-    }
 
     // recupere photo de profil pour le header
     $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
@@ -58,6 +46,7 @@
     <?php 
         include('../header-footer/choose_header.php');
     ?>
+
     <main class="MainTablo">
     <div class="headtablo">
         <a href="logement_detaille_client"><img src="../svg/flecheRetour.svg"/></a>
@@ -80,7 +69,7 @@
                     <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
                     <input class="logvct" type="number" id="nb_pers" name="nb_pers" min="1" max=<?php echo $nb_max['nb_pers']; ?> value=<?php if(isset($_GET['nb_pers']) && $_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>
                 </div>
-            
+            </div>
             <div class="cardSupplements">
             <h2 style="text-align:center;  font-family: 'Quicksand';">Suppléments</h2>
                 <div class="logcheckbox">
@@ -99,10 +88,7 @@
                 <input class="lognb" type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50"  value=<?php if(isset($_GET['nb_supp']) && $_GET['nb_supp'] > 0){echo $_GET['nb_supp'];} else{echo 0;} ?> required/>
                 </div>
             </div>
-            <?php 
-        include('../header-footer/choose_header.php');
-    ?>  <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
-            </div>
+            <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
             <div class="devis">
                 <?php
                 // Préviens des erreurs
@@ -122,7 +108,6 @@
                 ?>
             
             </div>
-            
         </form>
     </main>
     <?php 

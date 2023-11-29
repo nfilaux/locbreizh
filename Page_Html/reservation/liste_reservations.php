@@ -21,50 +21,16 @@ $photo = $stmt->fetch();
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
 </head>
 
 <body>
-<header>
-	<a href="../Accueil/accueil_client.php">
-    <div>
-        <img src="../svg//logo.svg">
-        <h2>Loc'Breizh</h2>
-    </div></a>
 
-    <div>
-        <img src="../svg//filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg//loupe.svg">
-    </div>
-        <div>
-            <img src="../svg//booklet-fill 1.svg">
-            <a href="../reservation/liste_reservations.php">
-                <h4>Accèder à mes reservations</h4>
-            </a>
-        </div>
-        
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-</header>
-
+<?php 
+        include('../header-footer/choose_header.php');
+    ?><?php 
+    include('../header-footer/choose_header.php');
+?>
     <main>
 
         <div>
@@ -126,4 +92,3 @@ $photo = $stmt->fetch();
 
 </html>
 
-<script src="../scriptPopup.js"></script>

@@ -112,9 +112,7 @@ $photo = $stmt->fetch();
             }
 
             if ($info['sauna'] == true) {
-                echo '<p>' . 'Sa    } else if ($card['en_ligne'] == false) {
-                    print_r("Ce logement est temporairement indisponible !");
-                }una inclus' . '</p>';
+                echo '<p>Sauna inclus</p>';
             }
 
             if ($info['hammam'] == true) {
