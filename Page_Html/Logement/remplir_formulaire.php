@@ -70,15 +70,15 @@ include('../parametre_connexion.php');
                             <input class="lognom" id='nomP' type='text' name='nomP' placeholder='Nom du logement' required>
                         </div>
                         <div class="logrowb"> 
-                            <div class=".log3vct">
+                            <div class="log3vct">
                                 <label for='ville'>Ville : </label>
                                 <input class="logvct" id='villeP' type='text' name='villeP' placeholder='Ville' required>
                             </div>
-                            <div class=".log3vct">
+                            <div class="log3vct">
                                 <label for='code_postal'>Code postal : </label>
                                 <input class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
                             </div>
-                            <div class=".log3vct">
+                            <div class="log3vct">
                                 <label for='tarif_de_base'>Tarif de base (en €) : </label>
                                 <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' value='0' required>
                             </div>
