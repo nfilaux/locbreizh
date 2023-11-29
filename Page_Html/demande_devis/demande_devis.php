@@ -110,7 +110,7 @@
             </div>
         </form>
     </main>
-    <?php 
+    <?php
         echo file_get_contents('../header-footer/footer.html');
     ?>
 </body>
