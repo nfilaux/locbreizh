@@ -90,7 +90,7 @@ $photo = $stmt->fetch();
                             </div>
                             <div class="resrow">
                             <div>
-                                <p>Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
+                                <p class="restitre resplustaille">Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
                                 <button class="btn-accueil">Contacter le proprietaire</button>
                             </div>
                             <img class="imgprofil" src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil"  width="75" height="75">
@@ -106,17 +106,12 @@ $photo = $stmt->fetch();
                             
                             
                             <div class="logrowb">
-                                <p>DISCLAIMER - La suppression du compte est définitve.</p>
+                                <p class="resplustaille">DISCLAIMER - La suppression du compte est définitve.</p>
                             </div>
                         </secion>
                     </div>
                 <?php } ?>
             
-        </div>
-        <div class='voir_plus'>
-            <hr>
-            <h4>Voir plus</h4>
-            <hr>
         </div>
     </main>
     <footer>

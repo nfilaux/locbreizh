@@ -355,11 +355,6 @@ if (isset($_SESSION['post_logement']['image6P'])) {
                                 <h3 class="policetitre">Description</h3>
                                 <p><?php echo $logement_data['description']; ?></p>
                                 <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
-                                <a href="" class='voir_plus'>
-                                    <hr> 
-                                    <h4>Voir plus</h4> 
-                                    <hr>
-                                </a>
                             </div>
                         
                         </div>

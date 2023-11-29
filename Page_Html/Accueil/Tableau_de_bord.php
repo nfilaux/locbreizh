@@ -153,7 +153,7 @@
 
 
                 <h2>Mes Réservation</h2>
-                <p>Aucune réservation en cours </p>
+                <!--<p>Aucune réservation en cours </p> -->
                 <?php
             
                 $stmt = $dbh->prepare("SELECT l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
@@ -170,19 +170,30 @@
                 foreach ($reservations as $reservation) {
 
                     ?>
-                    <div class="card">        
+                    <div class="cardlogmain">        
                         <img src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>">
-                        <h3> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
-                        <div>
-                            <p>Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
-                            <img src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil">
-                            <button disabled>Contacter le proprietaire</button>
-                        </div>
-                        <a href="../devis/pdf_devis/"><button class="btn-accueil" disabled>CONSULTER DEVIS</button></a>
-                        <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-accueilins">CONSULTER LOGEMENT</button></a>
+                       
+                        <section class="rescol">      
+                            <div class="logrowb">
+                            <div>
+                            <h3 class="titrecard"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
+                            <hr class="hrcard">
+                            </div>
+                            </div>
+                            
 
-                        <a><button class="btn-accueil" disabled>ANNULER</button></a>
-                        <p>DISCLAIMER - L’annulation est définitve et irréversible.</p>
+                            <div class="resrow">
+                                <a href="../devis/pdf_devis/"><button class="btn-ajoutlog" disabled>CONSULTER DEVIS</button></a>
+                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
+                                <a><button class="btn-suppr" disabled>ANNULER</button></a>
+                            </div>
+                            
+                            
+                            <div class="logrowb">
+                                <p>DISCLAIMER - La suppression du compte est définitve.</p>
+                            </div>
+                        </secion>
+                       
                     </div>
                 <?php } ?>
             </article>

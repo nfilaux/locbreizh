@@ -542,8 +542,8 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     flex-wrap: nowrap;
     justify-content: space-around;
     border: 2px solid #745086;
-    width: auto;
-    margin: auto;
+    width: 80%;
+    margin: 1em auto;
     background-color: #FCF0E2;
 }
 
@@ -1045,8 +1045,8 @@ iframe {
 }
 
 .cardresmainimg {
-    width: 30%;
-    height: 100%;
+    width: 25%;
+    height: 90%;
     margin: auto 0.5em auto 0em;
     border: 2px solid #745086;
     border-radius: 10px;
@@ -1075,7 +1075,11 @@ iframe {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    font-size: 2em;
+    font-size: 1.5em;
+}
+
+.resplustaille{
+    font-size: 1.2em;
 }
 
 /*----------------------------------------------------------------Autre----------------------------------------------------------------*/
@@ -1108,6 +1112,11 @@ iframe {
     font-size: 2.5em;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.restitre {
+    font-family: 'PatuaOne';
+    font-weight: 600;
 }
 
 .width {
