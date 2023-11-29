@@ -100,12 +100,7 @@ $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_
         }
         ?>
 
-    </div>
-        <a href="" class='voir_plus'>
-            <hr> 
-            <h4>Voir plus</h4> 
-            <hr>
-        </a>
+        </div>
     </main>
     
     <footer>

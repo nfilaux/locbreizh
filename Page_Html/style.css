@@ -176,6 +176,7 @@ main{
     padding-bottom: 5vw;
     padding-left: 2em;
     padding-right: 2em;
+    background-color: #F5F4F4;
 }
 
 main label, .Tablobord h2{
@@ -505,8 +506,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .card{
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: auto;
 }
 
 .card section{
@@ -517,6 +519,8 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     background-color: #745086;
     border-radius: 15px;
     padding-top: 0.5em;
+    width: 20%;
+    margin: 1em 2%;
 }
 
 .card section article{
@@ -832,7 +836,7 @@ fieldset label{
     border: 1px solid #957BB0;
     border-radius: 5px; 
     width: 100%;
-    height: 5em;
+    height: 8em;
 }
 
 .lognom{

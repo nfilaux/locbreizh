@@ -353,7 +353,7 @@ if (isset($_SESSION['post_logement']['image6P'])) {
                         <div class="logrowt">  
                             <div class="logcolumn">
                                 <h3 class="policetitre">Description</h3>
-                                <p><?php echo $logement_data['description']; ?></p>
+                                <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $logement_data['description']; ?>' disabled></textarea>
                                 <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
                             </div>
                         

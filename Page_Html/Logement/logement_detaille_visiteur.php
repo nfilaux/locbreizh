@@ -87,8 +87,8 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 <div class="logrowt">  
                     <div class="logcolumn">
                         <h3 class="policetitre">Description</h3>
-                        <p><?php echo $info['descriptif_logement']; ?></p>
-                        <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
+                        <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $info['descriptif_logement']; ?>' required></textarea>
+                        <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
                     <div class="logc">
                         <a class="center"><button class="btn-demlogno">Demander un devis</button></a>

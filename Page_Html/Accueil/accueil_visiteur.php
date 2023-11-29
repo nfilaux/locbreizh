@@ -74,11 +74,6 @@
         ?>
 
     </div>
-        <a href="" class='voir_plus'>
-            <hr> 
-            <h4>Voir plus</h4> 
-            <hr>
-        </a>
     </main>
     <footer>
             <div class="tfooter">

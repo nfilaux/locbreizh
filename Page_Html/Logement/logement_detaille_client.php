@@ -100,7 +100,7 @@ $photo = $stmt->fetch();
                 <div class="logrowt">  
                     <div class="logcolumn">
                         <h3 class="policetitre">Description</h3>
-                        <p><?php echo $info['descriptif_logement']; ?></p>
+                        <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $info['descriptif_logement']; ?>' required></textarea>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
                     </div>
                     <div class="logc">
