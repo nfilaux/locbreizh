@@ -20,7 +20,10 @@
     }
 
     $code->execute();
+    
     $variable = $code->fetch();
+
+    print_r($variable);
 
     if (isset($_POST['indisponible'])) {
         $indisponible = $_POST['indisponible'];
@@ -35,7 +38,8 @@
     $stmt->bindValue(':code_planning', $variable['code_planning']);
     $stmt->execute();
 
-    header("location: ../Accueil/Tableau_de_bord.php");
+    header("location: ../Accueil/Tableau_de_bord.php?popup={$_POST['nomPopUp']}&overlay={$_POST['overlayPopUp']}");
+    
 
 
 ?>
