@@ -1,7 +1,9 @@
 <?php 
     // lancement de la session
     session_start();
-
+    /*echo $_POST['dateArrivee'] ."\n";
+    echo $_POST['dateDepart'] . "\n";
+    echo($_POST['dateArrivee'] > $_POST['dateDepart']) ;*/
     require_once('../tcpdf/tcpdf.php');
     //test si date d'arrivée est avant date de depart
     if($_POST['dateArrivee'] > $_POST['dateDepart']){
@@ -27,19 +29,13 @@
         }
         // insert la demande dans _demande_devis
         $stmt = $dbh->prepare("INSERT INTO locbreizh._demande_devis(nb_personnes, date_arrivee, date_depart, client, logement) 
-        VALUES (:nb_personnes, :date_arrivee, :date_depart, :idCompte, :logement);");
-        $stmt->bindParam(':nb_personnes', $_POST['nb_pers']);
-        $stmt->bindParam(':date_arrivee', $_POST['dateArrivee']);
-        $stmt->bindParam(':date_depart', $_POST['dateDepart']);
-        $stmt->bindParam(':idCompte', $_SESSION['id']);
-        $stmt->bindParam(':logement', $_POST['logement']);
+        VALUES ({$_POST['nb_pers']}, '{$_POST['dateArrivee']}', '{$_POST['dateDepart']}', {$_SESSION['id']}, {$_POST['logement']});");
         $stmt->execute();
         // recupere l'id crée automatiquement (en serial)
         $id_demande = $dbh->lastInsertId();
 
         // recupere le libelle du logement pour pdf + message type
-        $stmt = $dbh->prepare("SELECT libelle_logement from locbreizh._logement where id_logement = :logement;");
-        $stmt->bindParam(':logement', $_POST['logement']);
+        $stmt = $dbh->prepare("SELECT libelle_logement from locbreizh._logement where id_logement = {$_POST['logement']};");
         $stmt->execute();
         $libelle_log = $stmt->fetch();
 
@@ -51,9 +47,7 @@
         $stmt = $dbh->prepare("SELECT c.id_conversation
         FROM locbreizh._conversation c
         INNER JOIN locbreizh._logement ON (_logement.id_proprietaire = compte1 or _logement.id_proprietaire = compte2)
-        WHERE id_logement = :logement and ((compte1 = :id and compte2 = id_proprietaire) or (compte2 = :id and compte1 = id_proprietaire));");
-        $stmt->bindParam(':logement', $_POST['logement']);
-        $stmt->bindParam(':id', $_SESSION['id']);
+        WHERE id_logement = {$_POST['logement']} and ((compte1 = {$_SESSION['id']} and compte2 = id_proprietaire) or (compte2 = {$_SESSION['id']} and compte1 = id_proprietaire));");
         $stmt->execute();
         // stock dans conv_request
         $conv_request = $stmt->fetch();
@@ -65,24 +59,20 @@
         }
         else{
             // retrouve l'id du proprio
-            $stmt = $dbh->prepare("select id_proprietaire from locbreizh._logement where id_logement = :logement");
-            $stmt->bindParam(':logement', $_POST['logement']);
+            $stmt = $dbh->prepare("select id_proprietaire from locbreizh._logement where id_logement = {$_POST['logement']}");
             $stmt->execute();
             $proprio = $stmt->fetch();
 
             // on cree une conversation entre le client et le proprio
             $stmt = $dbh->prepare("INSERT INTO locbreizh._conversation(compte1, compte2) 
-            VALUES (:id, :id_proprio);");
-            $stmt->bindParam(':id', $_SESSION['id']);
-            $stmt->bindParam(':id_proprio', $proprio['id_proprietaire']);
+            VALUES ({$_SESSION['id']}, {$proprio['id_proprietaire']});");
             $stmt->execute();
             // on recupere l'id de la conv cree
             $id_conv = $dbh->lastInsertId();
         }
 
         // on recupere les infos necessaires sur le clinet pour le pdf de la demande de devis + message
-        $stmt = $dbh->prepare("select * from locbreizh._compte where id_compte = :id;");
-        $stmt->bindParam(':id', $_SESSION['id']);
+        $stmt = $dbh->prepare("select * from locbreizh._compte where id_compte = {$_SESSION['id']};");
         $stmt->execute();
         $info_user = $stmt->fetch();
 
@@ -114,47 +104,36 @@
         // ajout de la charge menage si demandee
         if(isset($_POST['menage'])){
             // recupere le prix de la charge
-            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement where id_logement = :logement and nom_charges = 'menage';");
-            $stmt->bindParam(':logement', $_POST['logement']);
+            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement where id_logement = {$_POST['logement']} and nom_charges = 'menage';");
             $stmt->execute();
-            $prix_menage = $stmt->fetch();
-
+            $prix_menage = $stmt->fetchColumn();
             // ajoute le lien entre la charges et la demande avec le prix en plus
-            $stmt = $dbh->prepare("INSERT INTO locbreizh._comporte_charges_associee_demande_devis (prix_charges, num_demande_devis, nom_charges)
-            VALUES (:prix_charges, ::id_demande, 'menage');");
-            $stmt->bindParam(':prix_charges', $prix_menage['prix_charges']);
-            $stmt->bindParam(':id_demande',$id_demande);
+            $stmt = $dbh->prepare("INSERT INTO locbreizh._comporte_charges_associee_demande_devis (prix_charges, num_demande_devis, nom_charges,nombre)
+            VALUES ($prix_menage,  $id_demande , 'menage',NULL);");
             $stmt->execute();
         }
         // ajout de la charge animaux si demandee
         if(isset($_POST['animaux'])){
             // recupere le prix de la charge
-            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement where id_logement = :logement and nom_charges = 'animaux';");
-            $stmt->bindParam(':logement', $_POST['logement']);
+            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement where id_logement = {$_POST['logement']} and nom_charges = 'animaux';");
             $stmt->execute();
             $prix_animaux = $stmt->fetch();
 
             // ajoute le lien entre la charges et la demande avec le prix en plus
             $stmt = $dbh->prepare("INSERT INTO locbreizh._comporte_charges_associee_demande_devis (prix_charges, num_demande_devis, nom_charges)
-            VALUES (:prix_charges, :id_demande, 'animaux');");
-            $stmt->bindParam(':prix_charges', $prix_animaux['prix_charges']);
-            $stmt->bindParam(':id_demande', $id_demande);
+            VALUES ({$prix_animaux['prix_charges']}, $id_demande, 'animaux');");
             $stmt->execute();
         }
         // ajout de la charge personnes supplementaires si demandee
         if($_POST['nb_pers_supp'] > 0){
             // recupere le prix de la charge
-            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement where id_logement = :logement and nom_charges = 'personnes_supplementaires';");
-            $stmt->bindParam(':logement', $_POST['logement']);
+            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement where id_logement = {$_POST['logement']} and nom_charges = 'personnes_supplementaires';");
             $stmt->execute();
             $prix_supp = $stmt->fetch();
 
             // ajoute le lien entre la charges et la demande avec le prix et le nombre en plus
             $stmt = $dbh->prepare("INSERT INTO locbreizh._comporte_charges_associee_demande_devis (prix_charges, num_demande_devis, nom_charges, nombre)
-            VALUES (:prix_charges, :id_demande, 'personnes_supplementaires', :nb_pers_supp);");
-            $stmt->bindParam(':prix_charges', $prix_supp['prix_charges']);
-            $stmt->bindParam(':id_demande', $id_demande);
-            $stmt->bindParam(':nb_pers_supp', $_POST['nb_pers_supp']);
+            VALUES ({$prix_supp['prix_charges']}, $id_demande, 'personnes_supplementaires', {$_POST['nb_pers_supp']});");
             $stmt->execute();
         }
 

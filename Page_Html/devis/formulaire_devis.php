@@ -12,8 +12,7 @@
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
-    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id;");
-    $stmt->bindParam(':id', $_SESSION['id']);
+    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $photo = $stmt->fetch();
 ?>
@@ -44,18 +43,40 @@
             $date_val = "13.2";
             $delai_accept = "3";
 
-            $reqNomClient = $dbh->prepare("SELECT nom, prenom FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = :demande");
-            $stmt->bindParam(':demande', $_GET['demande']);
+            $reqNomClient = $dbh->prepare("SELECT nom, prenom FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = {$_GET['demande']}");
             $reqNomClient->execute();
             $infos_user = $reqNomClient->fetch(); 
 
             // recupere le nombre maximum de personnes pour le logement
             $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers from locbreizh._logement l
             join locbreizh._demande_devis d on d.logement = l.id_logement
-            where d.num_demande_devis = :demande;");
-            $stmt->bindParam(':demande', $_GET['demande']);
+            where d.num_demande_devis = {$_GET['demande']};");
             $stmt->execute();
             $nb_max = $stmt->fetch();
+
+            $num_demande = $_GET["demande"];
+            
+            //on récupère les informatiosn pour préremplir le devis en fonction de la demande de devis qui lui est associé
+            
+            $stmt = $dbh->prepare("SELECT date_arrivee,date_depart,nb_personnes from locbreizh._demande_devis where num_demande_devis = $num_demande;");
+            $stmt->execute();
+            $infos_demande = $stmt->fetch();
+
+            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._comporte_charges_associee_demande_devis where num_demande_devis = $num_demande and nom_charges = 'menage';");
+            $stmt->execute();
+            $menage = $stmt->fetchColumn();
+
+            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._comporte_charges_associee_demande_devis where num_demande_devis = $num_demande and nom_charges = 'animaux';");
+            $stmt->execute();
+            $animaux = $stmt->fetchColumn();
+
+            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._comporte_charges_associee_demande_devis where num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
+            $stmt->execute();
+            $vac_sup = $stmt->fetchColumn();
+
+            //echo $num_demande;
+            //print("c'est un chien mec" . $animaux);
+            if ($animaux == ''){echo 'vide';};
             
         ?>
         <style>#erreur {color : red;}</style>
@@ -63,11 +84,11 @@
         <form name="formulaire" action="ajouter_devis.php" method="post">
 
             <label for="date_arrivee">date d'arrivée:</label>
-            <input type="date" id="date_arrivee" name="date_arrivee" value="<?php if(isset($_SESSION['valeurs_complete']['date_arrivee'])){ echo $_SESSION['valeurs_complete']['date_arrivee'];} ?>" required /> 
-            <br />
+            <input type="date" id="date_arrivee" name="date_arrivee" value="<?php if(isset($_SESSION['valeurs_complete']['date_arrivee'])){ echo $_SESSION['valeurs_complete']['date_arrivee'];}else{if(!isset($erreurs['valide_dates'])){echo $infos_demande['date_arrivee']; }}; ?>" required /> 
+            <br/>
 
             <label for="date_depart">date de départ:</label>
-            <input type="date" id="date_depart" name="date_depart" value=<?php if(isset($_SESSION['valeurs_complete']['date_depart'])){ echo $_SESSION['valeurs_complete']['date_depart'];} ?> required /> 
+            <input type="date" id="date_depart" name="date_depart" value="<?php if(isset($_SESSION['valeurs_complete']['date_depart'])){ echo $_SESSION['valeurs_complete']['date_depart'];}else{if(!isset($erreurs['valide_dates'])){echo $infos_demande['date_depart']; }}; ?>" required /> 
             <br/>
 
             <?php
@@ -77,7 +98,7 @@
             ?>
 
             <label for="nb_pers">nombre de personnes:</label>
-            <input type="number" id="nb_pers" name="nb_pers" placeholder="nombre de personnes" min="1" max=<?php echo $nb_max['nb_pers']; ?> value="<?php if(isset($_SESSION['valeurs_complete']['nb_pers'])){echo $_SESSION['valeurs_complete']['nb_pers'];} ?>" required />
+            <input type="number" id="nb_pers" name="nb_pers" placeholder="nombre de personnes" min="1" max=<?php echo $nb_max['nb_pers']; ?> value="<?php if(isset($_SESSION['valeurs_complete']['nb_pers'])){echo $_SESSION['valeurs_complete']['nb_pers'];}else{if(!isset($erreurs['valide_dates'])){echo $infos_demande['nb_personnes'];}}; ?>" required />
             <br/>
 
             
@@ -102,13 +123,13 @@
 
             <h1>Charges aditionnelles</h1>
 
-            <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo 'checked';} ?>>
+            <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo 'checked';}else if ($menage !=''){echo 'checked';}; ?>>
             <label for="animaux"> Animaux </label>
 
-            <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['menage'])){echo 'checked';} ?>>
+            <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['menage'])){echo 'checked';}else{if ($animaux !=''){echo 'checked';}}; ?>>
             <label for="menage"> Menage </label>
 
-            <input type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="vacanciers supplémentaires" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}; ?>"/>
+            <input type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="vacanciers supplémentaires" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else{if ($vac_sup!=''){echo $vac_sup;}}; ?>"/>
 
             <h1>Details pour le paiement</h1>
 

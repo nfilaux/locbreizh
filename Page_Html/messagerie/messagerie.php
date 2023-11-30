@@ -26,13 +26,11 @@
     }
 
     // requete pour obtenir la photo de profil pour le header
-    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = :id;");
-    $stmt->bindParam(':id', $_SESSION['id']);
+    $stmt = $dbh->prepare("SELECT * from locbreizh._compte join locbreizh._photo on locbreizh._compte.photo = locbreizh._photo.url_photo where locbreizh._compte.id_compte = '{$_SESSION['id']}';");
     $stmt->execute();
     $photo_profil = $stmt->fetch();
 
-    $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = :id ;");
-    $stmt->bindParam(':id', $_SESSION['id']);
+    $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
     $stmt->execute();
     $est_client = $stmt->fetch();
 
@@ -45,8 +43,7 @@
 
 
 
-    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id;");
-    $stmt->bindParam(':id', $_SESSION['id']);
+    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $photo = $stmt->fetch();
 
@@ -56,7 +53,7 @@
                         SELECT
                             c.id_conversation,
                             CASE
-                                WHEN c.compte1 = :id THEN c.compte2
+                                WHEN c.compte1 = '{$_SESSION['id']}' THEN c.compte2
                                 ELSE c.compte1
                             END AS id_autre_compte,
                             cp.nom AS nom_autre_compte,
@@ -71,13 +68,13 @@
                             locbreizh._conversation c
                         INNER JOIN locbreizh._compte cp ON (
                             cp.id_compte = CASE
-                                WHEN c.compte1 = :id THEN c.compte2
+                                WHEN c.compte1 = '{$_SESSION['id']}' THEN c.compte2
                                 ELSE c.compte1
                             END
                         )
                         LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
                         WHERE
-                            c.compte1 = :id OR c.compte2 = :id
+                            c.compte1 = '{$_SESSION['id']}' OR c.compte2 = '{$_SESSION['id']}'
                     )
                     SELECT
                         id_conversation,
@@ -91,7 +88,7 @@
                         heure_mess
                     FROM messageOrdre
                     WHERE message_rank = 1;");
-    $stmt->bindParam(':id', $_SESSION['id']);
+
     $stmt->execute();
     // recuperation des lignes dans la variable test_conv
     $liste_conv = $stmt->fetchAll();
@@ -130,10 +127,10 @@
         LEFT JOIN locbreizh._message m ON c.id_conversation = m.conversation
         INNER JOIN locbreizh._compte cp1 ON cp1.id_compte = c.compte1
         INNER JOIN locbreizh._compte cp2 ON cp2.id_compte = c.compte2
-        WHERE c.id_conversation = :selectionne
+        WHERE c.id_conversation = '$selectionne'
         ORDER BY date_mess DESC,
             heure_mess DESC;");
-        $stmt->bindParam(':selectionne', $selectionne);
+        
         $stmt->execute();
         // sotck les lignes de la requete dans liste_message
         $liste_message = $stmt->fetchAll();
@@ -265,13 +262,11 @@
                                         ?></p>
                                         <?php 
                                             if($est_demande){
-                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_demande m where m.id_message_demande = :id_message;");
-                                                $stmt->bindParam(':id_message', $message['id_message']);
+                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_demande m where m.id_message_demande = {$message['id_message']};");
                                                 $stmt->execute();
                                                 $statut = $stmt->fetch();
 
-                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = :id;");
-                                                $stmt->bindParam(':id', $_SESSION['id']);
+                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
                                                 $stmt->execute();
                                                 $est_client = $stmt->fetch();
 
@@ -292,13 +287,11 @@
                                         <?php } ?>
                                         <?php 
                                             if($est_devis){
-                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_devis m where m.id_message_devis = :id_message;");
-                                                $stmt->bindParam(':id_message', $message['id_message']);
+                                                $stmt = $dbh->prepare("SELECT accepte from locbreizh._message_devis m where m.id_message_devis = {$message['id_message']};");
                                                 $stmt->execute();
                                                 $statut = $stmt->fetch();
 
-                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = :id;");
-                                                $stmt->bindParam(':id', $_SESSION['id']);
+                                                $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
                                                 $stmt->execute();
                                                 $est_client = $stmt->fetch();
 

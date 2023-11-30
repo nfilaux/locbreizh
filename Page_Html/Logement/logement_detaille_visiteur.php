@@ -18,6 +18,8 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page détaillé d'un logement</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 
 
@@ -35,9 +37,9 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         </div>
         
 
-    <div>
-        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-        <a onclick="openPopup()"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
+    <div class="col-2 row">
+        <a href="../messagerie/messagerie.php" class="offset-md-6 row"><img src="../svg/message.svg"></a>
+        <a onclick="openPopup()" class="offset-md-2 row"><img id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>"></a> 
     </div>
     <div id="popup" class="popup">
         <a href="">Accéder au profil</a>

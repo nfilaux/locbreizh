@@ -25,7 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un logement</title>
     <link rel="stylesheet" href="../style.css">
-</head>
+</head> 
 
 <body>
     <header>
@@ -50,7 +50,7 @@
             <a href="">Accéder au profil</a>
             <br>
             <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-            <a onclick="closePopup()">Fermer la fenêtre</a>
+            <a onclick="closePopup()">Fermer la fenêtre</a> 
         </div>
     </header>
 
@@ -61,7 +61,7 @@
         </div>
         <div id="overlay" onclick="closePopup()"></div>
         <div id="popup" class="popup">
-            <table id="tableProfil">
+            <table id="tableProfil"> 
                 <tr>
                     <td>
                         <a id="monprofil" href="">Accéder au profil</a>
@@ -87,19 +87,39 @@
                             <label for='nom'>Libellé logement :</label>
                             <input class="lognom" id='nomP' type='text' name='nomP' placeholder='Nom du logement' required>
                         </div>
+
+                        <?php if(isset($_SESSION['erreurs']['libelle'])){
+                            echo "<p>" . $_SESSION['erreurs']['libelle'] . "<p>";
+                        };
+                        ?>
+
                         <div class="logrowb"> 
                             <div class=".log3vct">
                                 <label for='ville'>Ville : </label>
                                 <input class="logvct" id='villeP' type='text' name='villeP' placeholder='Ville' required>
                             </div>
+
+                            <?php if(isset($_SESSION['erreurs']['ville'])){
+                                echo "<p>" . $_SESSION['erreurs']['ville'] . "<p>"; 
+                            };
+                            ?>
+
                             <div class=".log3vct">
                                 <label for='code_postal'>Code postal : </label>
                                 <input class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
                             </div>
+
+                            <?php if(isset($_SESSION['erreurs']['code_postal'])){
+                                echo "<p>" . $_SESSION['erreurs']['code_postal'] . "<p>";
+                            };
+                            ?>
+
                             <div class=".log3vct">
                                 <label for='tarif_de_base'>Tarif de base (en €) : </label>
                                 <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' value='0' required>
                             </div>
+
+                            <?php if (isset($_SESSION['erreurs']['prix'])){echo '<p>Le prix est un incorrect il ne dois pas dépasser 100 000 € et doit être décimal !';}; echo "<br>"; ?>
                         </div>
                         <div class="logpc">
                             <label for='phrase_daccroche'>Phrase d'accroche : </label>
@@ -149,7 +169,7 @@
                                 <label for='nb_sdb'>Nombre de salles de bain : </label>
                                 <input  class="logvct" id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' value='0' required>
                             </div>
-                        </div>
+                        </div> 
 
                         <div class="logrowb"> 
                             <div class="log3vct">
@@ -187,7 +207,7 @@
                                                 <input id='equipement' type='checkbox' name='piscineP'>Piscine
                                             </div>
                                             <div class="logcheckbox">
-                                                <input id='equipement' type='checkbox' name='climatisationP'>Piscine
+                                                <input id='equipement' type='checkbox' name='climatisationP'>Climatisation
                                             </div>
                                             <div class="logcheckbox">
                                                 <input id='equipement' type='checkbox' name='jacuzziP'>Jacuzzi
@@ -244,25 +264,52 @@
                             <label for='taxe_sejour'>Taxe de séjour pour une personne : </label>
                             <input class="cardprixcharge" id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' required>
                         </div>
+
+                        <?php 
+                            if(isset($_SESSION['erreurs']['taxe'])){
+                                echo "<p>" . $_SESSION['erreurs']['taxe'] . "<p>";
+                            };
+                        ?>
+
                         <div class="logpc">
                             <label for='charges_menage'>Prix charge additionnelle "ménage" : </label>
                             <input class="cardprixcharge" id='charges_menage' type='number' name='charges1P' min='0' max='1000' step='1' required>
                         </div>
+
+                        <?php 
+                            if(isset($_SESSION['erreurs']['menage'])){
+                                echo "<p>" . $_SESSION['erreurs']['menage'] . "<p>";
+                            };
+                        ?>
+
                         <div class="logpc">
                             <label for='charges_animaux'>Prix charge additionnelles "animaux" : </label>
                             <input class="cardprixcharge" id='charges_animaux' type='number' name='charges2P' min='0' max='1000' step='1' required>
                         </div>
+
+                        <?php 
+                            if(isset($_SESSION['erreurs']['animaux'])){
+                                echo "<p>" . $_SESSION['erreurs']['animaux'] . "<p>";
+                            };
+                        ?>
+
                         <div class="logpc">
                             <label for='charges_pers_sup'>Prix charge additionnelle "personnes supplémentaire" : </label>
                             <input class="cardprixcharge" id='charges_pers_sup' type='number' name='charges3P' min='0' max='1000' step='1' required>
                         </div>
+
+                        <?php 
+                            if(isset($_SESSION['erreurs']['pers_sup'])){
+                                echo "<p>" . $_SESSION['erreurs']['pers_sup'] . "<p>";
+                            };
+                        ?>
                     </div>
                 </div>
                 <div class="logpc">
                     <h4 class="titreAL">Images logement</h4>
                     <div class="logrow">
                         <div class="logpc">
-                            <label for='image1'>Image 1</label>
+                            <label for='image1'>Image 1</label> 
                             <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
 
                             <label for='image2'>Image 2</label>

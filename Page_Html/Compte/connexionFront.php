@@ -23,37 +23,29 @@
     <header class="headconn">
             <a href="../Accueil/accueil_visiteur.php"><img src="../svg/flecheRetour.svg"></a>
 
-            <h1>Bienvenue sur Loc’Breizh !</h1>
-
+            <h1 class="col-8 text-center titre">Bienvenue sur Loc’Breizh !</h1>
+        </div>
     </header>
-    <main class="Maincompte">
-        <section>
+    <main class="container offset-md-2 col-8">
         <form action="connexionBack.php" method="post">
-            <article>
-                <input type="text" id="pseudo" name="pseudo" placeholder="Identifiant" class="custom-input" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>" />
+            <div class="form-group mt-2">
+                <input type="text" id="pseudo" style="font-size: 2em;" name="pseudo" class=" offset-md-2 col-8 text-center custom-input mb-5" placeholder="Identifiant" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>" />
                 <?php
                     erreur("pseudo");
                 ?>
-            </article>
-            <br>
-            <article>
-                <input type="password" id="motdepasse" name="motdepasse" class="custom-input" placeholder="Mot de passe"/>
+            </div>
+            <div class="form-group mt-2">
+                <input type="password" id="motdepasse" style="font-size: 2em;" name="motdepasse" class=" offset-md-2 col-8  text-center custom-input mb-5" placeholder="Mot de passe"/>
                 <?php
                     erreur("motdepasse");
                 ?>
-            </article>
-            <br>
-            <button class="btn-compte" type="submit">Se connecter</button>
-        </form>
-
-        <article> 
-            <div class="rowcompte">
-                <p>Nouveau ici ?</p>
-                <a href="CreerCompte.html">Créer un compte</a> 
-                <a href="mdpOublierFront.php">Mot de passe oublié ?</a>
             </div>
+            <button type="submit" class="btn-compte offset-md-3 col-6 mb-5 mt-5">Se connecter</button>
+        </form>
+        <article class="text-center mt-2"> 
+            <span>Nouveau ici ? <a class="col-2" href="CreerCompte.html">Créer un compte</a> <a class="offset-md-1 col-2" href="mdpOublierFront.php">Mot de passe oublié ?</a></span>
         </article>
-        </section>
+       
     </main>
     <?php 
         echo file_get_contents('../header-footer/footer.html');

@@ -19,6 +19,7 @@
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
+    <script src="../scriptPopup.js"></script>
 </head>
 
 <body class="pagecompte">
@@ -36,7 +37,7 @@
                     
                     $stmt = $dbh->prepare(
                         "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
-                        from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
+                        from locbreizh._logement where id_proprietaire = {$pid};"
                     );
 
                     function formatDate($start, $end)
@@ -45,6 +46,8 @@
                     $endDate = date('j', strtotime($end));
                     $month = date('M', strtotime($end));
 
+                    return "$startDate-$endDate $month";
+                }
                     return "$startDate-$endDate $month";
                 }
 

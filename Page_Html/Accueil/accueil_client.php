@@ -1,30 +1,20 @@
-<?php
-// début de la session pour récupérer l'id du compte connecté
+<?php 
 session_start();
-
 include('../parametre_connexion.php');
-  
 try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-
 $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
-$stmt->execute();
-$photo = $stmt->fetch();
-
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id_compte;");
-$stmt->bindParam(':id_compte', $_SESSION['id']);
 $stmt->execute();
 $photo = $stmt->fetch();
 ?>
 <!doctype html>
 <html lang="fr">
-
 <head>
     <meta charset="utf-8">
     <title>Accueil</title>
@@ -32,7 +22,6 @@ $photo = $stmt->fetch();
     <script src="../scriptPopup.js"></script>
 
 </head>
-
 <body>
     <?php 
         include('../header-footer/choose_header.php');
@@ -41,7 +30,6 @@ $photo = $stmt->fetch();
 
     <main>
         <?php
-        // récupération des données de logement dans la base de donnée
         try {
             include('../parametre_connexion.php');
 
@@ -50,15 +38,22 @@ $photo = $stmt->fetch();
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
             $stmt = $dbh->prepare(
-                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
+                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
                 from locbreizh._logement;'
             );
+            /*
+            $stmt = $dbh->prepare(
+                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, note_avis, debut_plage_ponctuelle, fin_plage_ponctuelle
+                from locbreizh._logement 
+                    INNER JOIN locbreizh._avis ON logement = id_logement
+                    INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
+                    INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning;'
+            );*/
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
         }
 
-        // fonction qui permet d'afficher la date de début et de fin d'une réservation
         function formatDate($start, $end)
         {
             $startDate = date('j', strtotime($start));
@@ -69,10 +64,6 @@ $photo = $stmt->fetch();
         }
 
         $stmt->execute();
-
-        ?> <div class="card"> <?php
-
-        // affichage des données de logement
         foreach ($stmt->fetchAll() as $card) {
             if ($card['en_ligne'] == true) {
                 ?><section> <?php
@@ -98,12 +89,10 @@ $photo = $stmt->fetch();
 
         ?>
 
-        </div>
-        <a href="" class='voir_plus'>
+        <div class='voir_plus'>
             <hr>
             <h4>Voir plus</h4>
             <hr>
-        </a>
         </a>
     </main>
 
@@ -114,4 +103,44 @@ $photo = $stmt->fetch();
 
 </html>
 
-<script src="../scriptPopup.js"></script>
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 15%;
+        left: 91%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+</style>
+<script>
+// Ouvrir la popup
+function openPopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'block';
+}
+
+// Fermer la popup
+function closePopup() {
+var popup = document.getElementById('popup');
+popup.style.display = 'none';
+}
+
+// Ajouter des gestionnaires d'événements aux boutons
+var profilButton = document.getElementById('profilButton');
+profilButton.addEventListener('click', function() {
+alert('Accéder au profil');
+closePopup();
+});
+
+var deconnexionButton = document.getElementById('deconnexionButton');
+deconnexionButton.addEventListener('click', function() {
+alert('Se déconnecter');
+closePopup();
+});
+</Script>

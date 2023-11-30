@@ -9,8 +9,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id;");
-$stmt->bindParam(':id', $_SESSION['id']);
+$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
 $stmt->execute();
 $photo = $stmt->fetch();
 ?>
@@ -33,7 +32,7 @@ $photo = $stmt->fetch();
 ?>
     <main>
 
-        <div>
+        <div class="offset-2 col-8">
             <?php
             include('../parametre_connexion.php');
                 try {
