@@ -3,6 +3,7 @@ session_start();
 include('../parametre_connexion.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -305,78 +306,137 @@ if (isset($_SESSION['post_logement']['image6P'])) {
         if (isset($_SESSION['logement_data'])) {
             $logement_data = $_SESSION['logement_data'];
 
-        ?>
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-            <h1> <?php echo 'Prévisualisation des données du logement'; ?> </h1>
-            <p> <?php echo 'Nom du logement : ' . $logement_data['nom']; ?> </p>
-            <p> <?php echo 'Ville : ' . $logement_data['ville']; ?> </p>
-            <p> <?php echo 'Code postal : ' . $logement_data['code_postal']; ?> </p>
-            <p> <?php echo 'Tarif de base : ' . $logement_data['tarif_de_base']; ?> </p>
-            <p> <?php echo 'Phrase d\'accroche : ' . $logement_data['accroche']; ?> </p>
-            <p> <?php echo 'Description : ' . $logement_data['description']; ?> </p>
-            <p> <?php echo 'Nature : ' . $logement_data['nature']; ?> </p>
-            <p> <?php echo 'Type : ' . $logement_data['type']; ?> </p>
-            <p> <?php echo 'Nombre de chambres : ' . $logement_data['nb_chambres']; ?> </p>
-            <p> <?php echo 'Nombre de lits simples : ' . $logement_data['nb_lit_simple']; ?> </p>
-            <p> <?php echo 'Nombre de lits doubles : ' . $logement_data['nb_lit_double']; ?> </p>
-            <p> <?php echo 'Nombre de salles de bain : ' . $logement_data['nb_sdb']; ?> </p>
-            <p> <?php echo 'Surface du logement : ' . $logement_data['surface_maison']; ?> </p>
-            <p> <?php echo 'Nombre de personnes maximum : ' . $logement_data['nb_personne_max']; ?> </p>
-            <p> <?php echo 'Surface du jardin : ' . $logement_data['surface_jardin']; ?> </p>
-            <p> <?php echo 'Taxe de séjour : ' . $logement_data['taxe_sejour']; ?> </p>
-            <p> <?php echo 'Balcon : ' . $logement_data['balcon']; ?> </p>
-            <p> <?php echo 'Terrasse : ' . $logement_data['terrasse']; ?> </p>
-            <p> <?php echo 'Parking public : ' . $logement_data['parking_public']; ?> </p>
-            <p> <?php echo 'Parking privée : ' . $logement_data['parking_privee']; ?> </p>
-            <p> <?php echo 'Sauna : ' . $logement_data['sauna']; ?> </p>
-            <p> <?php echo 'Hammam : ' . $logement_data['hammam']; ?> </p>
-            <p> <?php echo 'Piscine : ' . $logement_data['piscine']; ?> </p>
-            <p> <?php echo 'Climatisation : ' . $logement_data['climatisation']; ?> </p>
-            <p> <?php echo 'Jacuzzi : ' . $logement_data['jacuzzi']; ?> </p>
-            <p> <?php echo 'Télévision : ' . $logement_data['television']; ?> </p>
-            <p> <?php echo 'Wifi : ' . $logement_data['wifi']; ?> </p>
-            <p> <?php echo 'Lave vaisselle : ' . $logement_data['lave_vaiselle']; ?> </p>
-            <p> <?php echo 'Lave linge : ' . $logement_data['lave_linge']; ?> </p>
-            <p> <?php echo 'Ménage : ' . $logement_data['menage']; ?> </p>
-            <p> <?php echo 'Navette : ' . $logement_data['navette']; ?> </p>
-            <p> <?php echo 'Linge : ' . $logement_data['linge']; ?> </p>
-            <p> <?php echo 'Charges 1 : ' . $logement_data['charges1']; ?> </p>
-            <p> <?php echo 'Charges 2 : ' . $logement_data['charges2']; ?> </p>
-            <p> <?php echo 'Charges 3 : ' . $logement_data['charges3']; ?> </p>
-            <img src="<?php echo "../Ressources/Images/$nouveau_nom_image1" ?>">
 
-            <?php if (isset($_SESSION['post_logement']['image2P'])) {
-            ?> <img src="<?php echo "../Ressources/Images/$nouveau_nom_image2" ?>"> <?php
-            }
+?>
+       <h1 class="policetitre"> <?php echo 'Prévisualisation des données du logement'; ?> </h1>
 
-            if (isset($_SESSION['post_logement']['image3P'])) {
-                ?> <img src="<?php echo "../Ressources/Images/$nouveau_nom_image3" ?>"> <?php
-            }
+        <div class="logpc">
+                        <h3 class="logtitre"><?php echo $logement_data['accroche'];;?></h3>
+                        <div class="logrowb">
+                            <div class="logrowt">
+                                <h3 class="policetitre"><?php echo $logement_data['nom']; ?></h3>
+                                <p>pour <?php echo $logement_data['nb_personne_max'];?>  personnes</p>
+                                <p>logement de <?php echo $logement_data['surface_maison'];?> m<sup>2</sup> </p>
+                            </div>
+                            <div class="logrowt">
+                                <p class="nuit"><?php echo $logement_data['tarif_de_base'];?> €/nuit</p>
+                                <!--
+                                <img src="/Ressources/Images/star-fill 1.svg"><h4> echo $info['note_avis'];,0</p>
+                                -->
+                            </div>
+                        </div>
+                        <img src="<?php echo "../Ressources/Images/$nouveau_nom_image1" ?>">
 
-            if (isset($_SESSION['post_logement']['image4P'])) {
-                ?> <img src="<?php echo "../Ressources/Images/$nouveau_nom_image4" ?>"> <?php
-            }
+                        <!-- 
+                        <img src="<?php// echo $info['photo_url'];?> ">
+                        <img src="<?php// echo $info['photo_url'];?> ">
+                        -->
+                        <div class="logrowt">  
+                            <div class="logcolumn">
+                                <h3 class="policetitre">Description</h3>
+                                <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $logement_data['description']; ?>' disabled></textarea>
+                                <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
+                            </div>
+                        
+                        </div>
+                    </div>
+                
 
-            if (isset($_SESSION['post_logement']['image5P'])) {
-                ?> <img src="<?php echo "../Ressources/Images/$nouveau_nom_image5" ?>"> <?php
-            }
+                <div class="logrow">
+                    <div class="logcolumn">
+                        <h3 class="potitre">Services et équipements du logement</h3>
+                        <?php
+                            $stmt = $dbh->prepare(
+                                'SELECT nb_chambre, nb_salle_bain, lave_vaisselle, wifi, piscine, sauna, hammam, climatisation, jacuzzi, television, lave_linge, parking_public, parking_privee, balcon, terrasse, jardin FROM locbreizh._logement'
+                            );
+                            $stmt->execute();
+                            $info = $stmt->fetch();
+                        ?>
 
-            if (isset($_SESSION['post_logement']['image6P'])) {
-                ?> <img src="<?php echo "../Ressources/Images/$nouveau_nom_image6" ?>"> <?php
-            }
+                        <div class="logrow">
+                            <div class="logcp">
+                                <p><?php  echo $logement_data['nb_chambre'] ?> Chambres</p><?php
 
-            } else {
-                echo 'Aucune donnée de logement à prévisualiser.';
-            }
 
-            ?>
-        <form method='POST' action='ajouter_logement.php' enctype="multipart/form-data">
-            <button type='submit'>Créer le logement</button>
-        </form>
-        <form method='POST' action='annuler_logement.php' enctype="multipart/form-data">
-            <button type='submit'>Annuler</button>
-        </form>
+                            } else {
+                                echo 'Aucune donnée de logement à prévisualiser.';
+                            }
+
+                                if ($logement_data['lave_vaisselle'] == true) {
+                                    ?><p><?php  echo 'Cuisine équipée'; ?></p><?php
+                                }
+
+                                if ($logement_data['wifi'] == true) {
+                                    ?><p><?php  echo 'Wifi inclus'; ?></p><?php
+                                }
+
+                                if ($logement_data['piscine'] == true) {
+                                    ?><p><?php  echo 'Piscine incluse'; ?></p><?php
+                                }
+
+                                if ($logement_data['sauna'] == true) {
+                                    ?><p><?php  echo 'Sauna inclus'; ?></p><?php
+                                }
+
+                                if ($logement_data['hammam'] == true) {
+                                    ?><p><?php  echo 'Hammam inclus'; ?></p><?php
+                                }
+
+                                if ($logement_data['jacuzzi'] == true) {
+                                    ?><p><?php  echo 'Jacuzzi inclus'; ?></p><?php
+                                }
+
+                                if ($logement_data['climatisation'] == true) {
+                                    ?><p><?php  echo 'Climatisation incluse'; ?></p><?php
+                                }?>
+                            </div>
+                            <div class="logcp">
+                                <p><?php  echo $logement_data['nb_salle_bain'] ?> Salles de bain</p><?php
+                                if ($logement_data['television'] == true) {
+                                    ?><p><?php  echo 'Television inclus'; ?></p><?php
+                                }
+
+                                if ($logement_data['lave_linge'] == true) {
+                                    ?><p><?php  echo 'Lave-linge inclus'; ?></p><?php
+                                }
+
+                                if ($logement_data['parking_privee'] == true) {
+                                    ?><p><?php  echo 'Parking privée inclus'; ?></p><?php
+                                }
+
+                                if ($logement_data['parking_public'] == true) {
+                                    ?><p><?php  echo 'Parking public inclus'; ?></p><?php
+                                }
+
+                                if ( $logement_data['balcon'] == true) {
+                                    ?><p><?php  echo 'Balcon inclus'; ?></p><?php
+                                }
+
+                                if ($logement_data['terrasse'] == true) {
+                                    ?><p><?php  echo 'Terrasse incluse'; ?></p><?php
+                                }?>
+                            </div>
+                        </div>
+                        <p>Surface du jardin : <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                    </div>
+                    <hr class="hr">
+                    <div class="logcolumn">
+                        <h3 class="potitre">Calendrier</h3>
+                    </div>
+                </div>
+        <div class="logrow" style="margin-top:2em   ;">
+            <form method='POST' action='annuler_logement.php' enctype="multipart/form-data">
+                <button class="btn-demlog" type='submit'>Annuler</button>
+            </form>
+            <form method='POST' action='ajouter_logement.php' enctype="multipart/form-data">
+                <button class="btn-demlog" type='submit'>Créer le logement</button>
+            </form>
+        </div>
     </main>
+
+
     <?php 
         echo file_get_contents('../header-footer/footer.html');
     ?>

@@ -30,7 +30,10 @@
         include('../header-footer/choose_header.php');
     ?>
 
-    <main>
+    <main class="MainTablo">
+        <div class="headtablo"> 
+            <h1>Faire mon devis</h1>
+        </div>
         <?php
             // id fictif
             include('../parametre_connexion.php');
@@ -74,45 +77,72 @@
             $stmt->execute();
             $vac_sup = $stmt->fetchColumn();
 
-            //echo $num_demande;
-            //print("c'est un chien mec" . $animaux);
-            if ($animaux == ''){echo 'vide';};
             
         ?>
         <style>#erreur {color : red;}</style>
-        <h1>La demande de devis de <?php echo $infos_user['prenom'] . ' '. $infos_user['nom']; ?> !</h1>
+    <fieldset>
+        <h1 class="policetitre colorviolet">La demande de devis de <?php echo $infos_user['prenom'] . ' '. $infos_user['nom']; ?> !</h1>
         <form name="formulaire" action="ajouter_devis.php" method="post">
+    
+        <div class="logrow">
+            <div class="devispc">
+                <div class="logrow">
+                    <div class="log3vct">  
+                        <label for="date_arrivee">date d'arrivée:</label>
+                        <input class="logvct" type="date" id="date_arrivee" name="date_arrivee" value="<?php if(isset($_SESSION['valeurs_complete']['date_arrivee'])){ echo $_SESSION['valeurs_complete']['date_arrivee'];}else{if(!isset($erreurs['valide_dates'])){echo $infos_demande['date_arrivee']; }}; ?>" required /> 
+                    </div>
+                    <div class="log3vct">   
+                        <label for="date_depart">date de départ:</label>
+                        <input class="logvct" type="date" id="date_depart" name="date_depart" value="<?php if(isset($_SESSION['valeurs_complete']['date_depart'])){ echo $_SESSION['valeurs_complete']['date_depart'];}else{if(!isset($erreurs['valide_dates'])){echo $infos_demande['date_depart']; }}; ?>" required /> 
+                    </div>
+                    
+                    <div class="log3vct">  
+                    <label for="nb_pers">nombre de personnes:</label>
+                    <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
+                    <input class="logvct" type="number" id="nb_pers" name="nb_pers" placeholder="nombre de personnes" min="1" max=<?php echo $nb_max['nb_pers']; ?> value="<?php if(isset($_SESSION['valeurs_complete']['nb_pers'])){echo $_SESSION['valeurs_complete']['nb_pers'];}else{if(!isset($erreurs['valide_dates'])){echo $infos_demande['nb_personnes'];}}; ?>" required />
+                    </div>
+                </div>
+                <div class="logrow">
+                    <div class="log2vct">  
+                        <label for="delais_accept">délais d'acceptation ( de 1 à 4 jours ) :</label>
+                        <input class="logvct" type="number" min="1" max="4" id="delais_accept" name="delais_accept" value="<?php if(isset($_SESSION['valeurs_complete']['delais_accept'])){echo $_SESSION['valeurs_complete']['delais_accept'];} ?>" required />
+                    </div>
+                    <div class="log2vct"> 
+                        <label for="date_val">date validité du devis ( en mois) :</label>
+                        <input class="logvct" type="number" id="date_val" name="date_val" value="<?php if(isset($_SESSION['valeurs_complete']['date_val'])){echo $_SESSION['valeurs_complete']['date_val'];} ?>" required /> 
+                    </div>
+                </div>
+            </div>
 
-            <label for="date_arrivee">date d'arrivée:</label>
-            <input type="date" id="date_arrivee" name="date_arrivee" value="<?php if(isset($_SESSION['valeurs_complete']['date_arrivee'])){ echo $_SESSION['valeurs_complete']['date_arrivee'];}else{if(!isset($erreurs['valide_dates'])){echo $infos_demande['date_arrivee']; }}; ?>" required /> 
-            <br/>
+            <div class="cardSupplements">
+            <h2 style="text-align:center;  font-family: 'Quicksand';">Charges aditionnelles</h2>
+                <div class="logcheckbox">
+                <!--pre-remplie les iinfos si ils sont dans get-->
+                <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo 'checked';}else if ($menage !=''){echo 'checked';}; ?>>
+                 <label for="animaux"> Animaux </label>
+                </div>
+                <div class="logcheckbox">
+                <!--pre-remplie les iinfos si ils sont dans get-->
+                <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['menage'])){echo 'checked';}else{if ($animaux !=''){echo 'checked';}}; ?>>
+                <label for="menage"> Menage </label>
+                </div>
+                <!--pre-remplie les iinfos si ils sont dans get-->
+                <div class="logpc">
+                <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
+                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else{if ($vac_sup!=''){echo $vac_sup;}}; ?>"/>
+                </div>
+            </div>
+            <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
+            </div>
 
-            <label for="date_depart">date de départ:</label>
-            <input type="date" id="date_depart" name="date_depart" value="<?php if(isset($_SESSION['valeurs_complete']['date_depart'])){ echo $_SESSION['valeurs_complete']['date_depart'];}else{if(!isset($erreurs['valide_dates'])){echo $infos_demande['date_depart']; }}; ?>" required /> 
-            <br/>
+
 
             <?php
             if (isset($erreurs['valide_dates'])){
                 echo '<p id="erreur">' . $erreurs['valide_dates'] . '</p>';
             }
             ?>
-
-            <label for="nb_pers">nombre de personnes:</label>
-            <input type="number" id="nb_pers" name="nb_pers" placeholder="nombre de personnes" min="1" max=<?php echo $nb_max['nb_pers']; ?> value="<?php if(isset($_SESSION['valeurs_complete']['nb_pers'])){echo $_SESSION['valeurs_complete']['nb_pers'];}else{if(!isset($erreurs['valide_dates'])){echo $infos_demande['nb_personnes'];}}; ?>" required />
-            <br/>
-
             
-            <label for="delais_accept">délais d'acceptation ( de 1 à 4 jours ) :</label>
-            <input type="number" min="1" max="4" id="delais_accept" name="delais_accept" value="<?php if(isset($_SESSION['valeurs_complete']['delais_accept'])){echo $_SESSION['valeurs_complete']['delais_accept'];} ?>" required />
-            <br />
-
-            <label for="date_val">date validité du devis ( en mois) :</label>
-            <input type="number" id="date_val" name="date_val" value="<?php if(isset($_SESSION['valeurs_complete']['date_val'])){echo $_SESSION['valeurs_complete']['date_val'];} ?>" required /> 
-            <br />
-
-            <label for="annulation">Condition annulation</label>
-            <input type="text" id="annulation" name="annulation" value="<?php if(isset($_SESSION['valeurs_complete']['annulation'])){echo $_SESSION['valeurs_complete']['annulation'];} ?>" required/>
-
             <?php
             if (isset($erreurs['cond_annul'])){
                 echo '<p id="erreur">' . $erreurs['cond_annul'] .  '</p>';
@@ -121,39 +151,58 @@
 
             <input type="hidden" id="id_demande" name="id_demande" value=<?PHP echo $_GET['demande']; ?>>
 
-            <h1>Charges aditionnelles</h1>
+            <label for="annulation">Condition annulation</label>
+            <input class="logvct" type="text" id="annulation" name="annulation" value="<?php if(isset($_SESSION['valeurs_complete']['annulation'])){echo $_SESSION['valeurs_complete']['annulation'];} ?>" required/>
+        </fieldset>
 
-            <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo 'checked';}else if ($menage !=''){echo 'checked';}; ?>>
-            <label for="animaux"> Animaux </label>
+        <fieldset>
+            <h1 class="policetitre colorviolet">Details pour le paiement</h1>
+            <div class="devisrow">
+                <p class="ren">A RENSEIGNER</p>
+                <div class="deviscol">
+                <label for="tarif_loc">Tarif HT de la location du logement (en €) :</label>
+                <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required /> 
+                </div>
+                <div class="deviscol">
+                <label for="charges additionnelles">Charges additionnelles HT (en €) :</label>
+                <input class="logvct" type="number" id="charges" name="charges" value="<?php if(isset($_SESSION['valeurs_complete']['charges'])){echo $_SESSION['valeurs_complete']['charges'];} ?>" required />
+                </div>
+                <input class="btn-ajoutlog" type="button" value="Calculer" onclick="calcul()"/>
+            </div>
+            
+            <hr class="hr">
 
-            <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['menage'])){echo 'checked';}else{if ($animaux !=''){echo 'checked';}}; ?>>
-            <label for="menage"> Menage </label>
-
-            <input type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="vacanciers supplémentaires" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else{if ($vac_sup!=''){echo $vac_sup;}}; ?>"/>
-
-            <h1>Details pour le paiement</h1>
-
-            <p>à renseigner</p>
-
-            <label for="tarif_loc">Tarif HT de la location du logement (en €) :</label>
-            <input type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required /> 
-            <br/>
-
-            <label for="charges additionnelles">Charges additionnelles HT (en €) :</label>
-            <input type="number" id="charges" name="charges" value="<?php if(isset($_SESSION['valeurs_complete']['charges'])){echo $_SESSION['valeurs_complete']['charges'];} ?>" required />
-            <hr>
-
-            <p>Calculer automatiquement</p>
-            <div id="resultat">
-                    <p> Total HT (en € ) </p>
-                    <p> Total TTC (en € ) </p>
-                    <p> Taxe de séjour (en € ) </p>
-                    <p> Montant total du devis (en € ) </p>
-                    <p> Frais de plateforme HT (en € ) </p>
-                    <p> Frais de plateforme TTC (en € ) </p>
-                <?php
-                //}
-                ?>
+            
+            <div id="resultat" class="deviscol">
+                    <div class="devisrow">
+                    <p class="ren">Calculer automatiquement</p>
+                        <div class="deviscolinput">
+                            <p> Total HT (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                        <div class="deviscolinput">
+                            <p> Total TTC (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                        <div class="deviscolinput">
+                            <p> Taxe de séjour (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="devisrow">
+                    <div class="devisvct">
+                            <p> Montant total du devis (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value=""  disabled>
+                        </div>
+                    <div class="devisvct">
+                            <p> Frais de plateforme HT (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                    <div class="devisvct">
+                        <p> Frais de plateforme TTC (en € ) </p>
+                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        </div>
+                    </div>
             </div>
             <script>
                 function roundDecimal(nombre, precision){
@@ -167,26 +216,33 @@
                     let baliseprixcharges = document.getElementById("charges")
                     let prix_charges = baliseprixcharges.value
                     let html = "";
-                    total_HT = prix_loc + prix_charges;
+                    total_HT = parseInt(prix_loc) + parseInt(prix_charges);
                     total_TTC = roundDecimal(total_HT * 1.1,2)
                     taxe_sejour = 120;
                     total_montant_devis = roundDecimal(total_TTC + taxe_sejour,2)
                     total_plateforme_HT = roundDecimal(total_montant_devis*1.01,2)
                     total_plateforme_TTC = roundDecimal(total_plateforme_HT * 1.2,2)
-                    html += `<p> Total HT : ${total_HT}€</p>`;
-                    html += `<p> Total TTC : ${total_TTC}€</p>`;
-                    html += `<p> Taxe séjour : ${taxe_sejour}€</p>`;
-                    html += `<p> Montant total du devis : ${total_montant_devis}€</p>`;
-                    html += `<p> Frais de plateforme HT : ${total_plateforme_HT}€</p>`;
-                    html += `<p> Frais de plateforme TTC: ${total_plateforme_TTC}€</p>`;
+                    html += `<div class="deviscol">`;
+                    html += `<div class="devisrow">`;
+                    html += `<p class="ren">Calculer automatiquement</p>`;
+                    html += `<div class="deviscolinput"><p> Total HT (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_HT}€" disabled></div>`;
+                    html += `<div class="deviscolinput"><p> Total TTC (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_TTC}€" disabled></div>`;
+                    html += `<div class="deviscolinput"><p> Taxe de séjour (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${taxe_sejour}€" disabled></div>`;
+                    html += '</div>';
+                    html += `<div class="devisrow">`;
+                    html += `<div class="devisvct"><p> Montant total du devis</p><input class="logvct" id="totalht" name="totalht" value="${total_montant_devis}€"  disabled></div>`;
+                    html += `<div class="devisvct"><p> Frais de plateforme HT</p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_HT}€" disabled></div>`;
+                    html += `<div class="devisvct"><p> Frais de plateforme TT</p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_TTC} €" disabled></div>`;
+                    html += '</div>';
+                    html += '</div>';
                     document.getElementById("resultat").innerHTML = html;
                     document.getElementById("envoyerDevisBtn").removeAttribute("disabled");
                 }
             </script>
-            <input type="button" value="Calculer" onclick="calcul()"/>
             <br/>
             <input type="hidden" id="id_demande" name ="id_demande" value=<?php echo $_GET['demande'];?>>
-            <input type="submit" id="envoyerDevisBtn" value="Envoyer le devis" disabled />
+            </fieldset>
+            <input class="btn-envoidevis" type="submit" id="envoyerDevisBtn" value="Envoyer le devis" />
         </form>
     </main>
     

@@ -41,8 +41,10 @@ $photo = $stmt->fetch();
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Modifier logement</title>
         <script src="../scriptPopup.js"></script>
+        <title>Modifier un logement</title>
+        <link rel="stylesheet" href="../style.css">
     </head>
-    
+
     <body>
         <?php 
             include('../header-footer/choose_header.php');
@@ -53,141 +55,224 @@ $photo = $stmt->fetch();
             <img src='/Ressources/Images/arrow-left-s-line 1.svg'>
             <h1>La fiche de votre logement</h1>
         </div>
-    
-        <main>
+
             <form method='POST' action='modifier.php?id_logement=<?php echo $id_logement ?>' enctype="multipart/form-data">
-                <fieldset>
-                    <label for='nom'>Libellé logement</label>
-                    <input id='nom' type='text' name='nomP' maxlength="50" value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
-                    <?php
-                    if (isset($erreur['libelle'])){
-                        echo '<p id="erreur">' . $erreur['libelle'] .  '</p>';
-                    }
-                    ?>
-                    <br>
-                    <label for='ville'>Ville</label>
-                    <input id='ville' type='text' name='villeP' maxlength="50"  value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
-                    <?php
-                    if (isset($erreur['ville'])){
-                        echo '<p id="erreur">' . $erreur['ville'] .  '</p>';
-                    }
-                    ?>
-                    <br>
-                    <label for='code_postal'>Code postal</label>
-                    <input id='code_postal' type='text' name='code_postalP' maxlength="5" placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
-                    <?php
-                    if (isset($erreur['code_postal'])){
-                        echo '<p id="erreur">' . $erreur['code_postal'] .  '</p>';
-                    }
-                    ?>
-                    <br>
-                    <label for='tarif_de_base'>Tarif de base (en €)</label>
-                    <input id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' value="<?php if (!isset($erreur['tarif_base_ht'])){echo $res["tarif_base_ht"];} ?>" required>
-                    <?php
-                    if (isset($erreur['tarif_base_ht'])){
-                        echo '<p id="erreur">' . $erreur['tarif_base_ht'] .  '</p>';
-                    }
-                    ?>
-                    <br>
-                    <label for='phrase_daccroche' >Phrase d'accroche</label>
-                    <input disabled id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255" value="<?php echo $res["accroche_logement"]; ?>"required>
-                    <br>
-                    <label for='description'>Description</label>
-                    <textarea id='description' name='descriptionP' placeholder='Description' maxlength="255" required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
-                    <?php
-                    if (isset($erreur['descriptif_logement'])){
-                        echo '<p id="erreur">' . $erreur['descriptif_logement'] .  '</p>';
-                    }
-                    ?>
-                    <label for='nature'>Nature</label>
-                    <select id='nature' name='natureP' placeholder='Nature' disabled required>
-                        <option value='1'>Maison</option>
-                        <option value='2'>Appartement</option>
-                        <option value='3'>Manoir</option>
-                        <option value='4'>Château</option>
-                    </select>
+                <div class="logrow">  
+                    <div class="logcolumn">     
+                        <div class="logpc">  
+                            <label for='nom'>Libellé logement</label>
+                            <input class="lognom" id='nom' type='text' name='nomP' value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
+                            <?php
+                            if (isset($erreur['libelle'])){
+                                echo '<p id="erreur">' . $erreur['libelle'] .  '</p>';
+                            }
+                            ?>
+                        </div>
+                        <div class="logrowb"> 
+                            <div class="log3vct">
+                                <label for='ville'>Ville</label>
+                                <input class="logvct" id='ville' type='text' name='villeP' value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
+                                <?php
+                                if (isset($erreur['ville'])){
+                                    echo '<p id="erreur">' . $erreur['ville'] .  '</p>';
+                                }
+                                ?>
+                            </div>
+                            <div class="log3vct">
+                                <label for='code_postal'>Code postal</label>
+                                <input class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
+                                <?php
+                                if (isset($erreur['code_postal'])){
+                                    echo '<p id="erreur">' . $erreur['code_postal'] .  '</p>';
+                                }
+                                ?>
+                            </div>
+                            <div class="log3vct">
+                                <label for='tarif_de_base'>Tarif de base (en €)</label>
+                                <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' value="<?php if (!isset($erreur['tarif_base_ht'])){echo $res["tarif_base_ht"];} ?>" required>
+                                <?php
+                                if (isset($erreur['tarif_base_ht'])){
+                                    echo '<p id="erreur">' . $erreur['tarif_base_ht'] .  '</p>';
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <div class="logpc">
+                            <label for='phrase_daccroche' >Phrase d'accroche</label>
+                            <input disabled class="logPA" id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" value="<?php echo $res["accroche_logement"]; ?>"required>
+                        </div>
+                        <div class="logrowb"> 
+                                <div class="log2vct">
+                                    <label for='nature'>Nature</label>
+                                    <select class="logselect" id='nature' name='natureP' placeholder='Nature' disabled required>
+                                        <option value='1'>Maison</option>
+                                        <option value='2'>Appartement</option>
+                                        <option value='3'>Manoir</option>
+                                        <option value='4'>Château</option>
+                                    </select>
+                                </div>
+                                <div class="log2vct">
+                                    <label for='type'>Type</label>
+                                    <select class="logselect" id='type' name='typeP' aria-placeholder="Type" disabled required>
+                                        <option value='1'>T1</option>
+                                        <option value='2'>T2</option>
+                                        <option value='3'>T3</option>
+                                        <option value='4'>T4</option>
+                                        <option value='5'>T5</option>
+                                        <option value='6'>T6</option>
+                                        <option value='7'>T7</option>
+                                        <option value='8'>T8</option>
+                                        <option value='9'>T9</option>
+                                        <option value='10'>T10</option>
+                                    </select>
+                                </div>
+                        </div>
+        
+                        <div class="logrowb"> 
+                            <div class="log4vct">
+                                <label for='nb_chamnbres' >Nombre de chambres</label>
+                                <input class="logvct" id='nb_chambres' disabled type='number' name='nb_chambresP' min='0' max='15' step='1' value=<?php echo $res["nb_chambre"] ?> required>
+                            </div>
+                            <div class="log4vct">
+                                <label for='nb_lit_simple'>Nombre de lits simples</label>
+                                <input class="logvct" id='nb_lit_simple' disabled type='number' name='nb_lit_simpleP' min='0' max='15' step='1' value=<?php echo $res["lit_simple"] ?> required>
+                            </div>
+                            <div class="log4vct">
+                                <label for='nb_lit_double'>Nombre de lits doubles</label>
+                                <input class="logvct" id='nb_lit_double' disabled type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value=<?php echo $res["lit_double"] ?> required>
+                            </div>
+                            <div class="log4vct">
+                                <label for='nb_sdb'>Nombre de salles de bain</label>
+                                <input class="logvct" id='nb_sdb' disabled type='number' name='nb_sdbP' min='0' max='10' step='1' value=<?php echo $res["nb_salle_bain"] ?> required>
+                            </div>
+                        </div>
+
+                        <div class="logrowb"> 
+                            <div class="log3vct">
+                                <label for='surface_maison'>Surface (en m²)</label>
+                                <input class="logvct" id='surface_maison' disabled type='number' name='surface_maisonP' min='0' max='300' step='1' value=<?php echo $res["surface_logement"] ?> required>
+                            </div>
+                            <div class="log3vct">
+                                <label for='nb_personne_max'>Nombre de personnes maximum</label>
+                                <input class="logvct" id='nb_personne_max' disabled type='number' name='nb_personne_maxP' min='1' max='15' step='1' value=<?php echo $res["nb_personnes_logement"] ?> required>
+                            </div>
+                            <div class="log3vct">
+                                <label for='surface_jardin'>Surface du jardin (en m2)</label>
+                                <input class="logvct" id='surface_jardin' disabled type='number' name='surface_jardinP' min='0' max='50000' step='1' value=<?php echo $res["jardin"] ?> required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logcolumn">
+                        <div class="description">
+                            <label for='description'>Description</label>
+                            <textarea class="logPA" id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
+                            <?php
+                            if (isset($erreur['descriptif_logement'])){
+                                echo '<p id="erreur">' . $erreur['descriptif_logement'] .  '</p>';
+                            }
+                            ?>
+                        </div>
+                        <fieldset>
+                            <div class="logrow">
+                                <div class="logcolumn">
+                                    <label for='equipement'>Equipements</label>
+                                        <div class="logrow">
+                                                <div class="logcolumn">
+                                                    <div class="logcheckbox">
+                                                        <input disabled id='equipement' type='checkbox' name='balcon' value='1' <?php if($res["balcon"] == true){ ?> checked <?php ;}?>>Balcon
+                                                    </div>
+                                                    <div class="logcheckbox">
+                                                        <input  disabled id='equipement' type='checkbox' name='terrasseP' value='2' <?php if($res["terrasse"] == true){ ?> checked <?php ;}?>>Terrasse
+                                                    </div>
+                                                    <div class="logcheckbox">
+                                                        <input disabled id='equipement' type='checkbox' name='piscineP' value='3' <?php if($res["piscine"] == true){ ?> checked <?php ;}?>>Piscine
+                                                    </div>
+                                                    <div class="logcheckbox">
+                                                        <input disabled id='equipement' type='checkbox' name='jacuzziP' value='4' <?php if($res["jacuzzi"] == true){ ?> checked <?php ;}?>>Jacuzzi
+                                                    </div>
+                                                    <div class="logcheckbox">
+                                                        <input disabled id='equipement' type='checkbox' name='saunaP' value='5' <?php if($res["sauna"] == true){ ?> checked <?php ;}?>>Sauna
+                                                    </div>
+                                                    <div class="logcheckbox">
+                                                        <input disabled id='equipement' type='checkbox' name='hammamP' value='6' <?php if($res["hammam"] == true){ ?> checked <?php ;}?>>Hammam
+                                                    </div>
+                                                </div>
+                                                <div class="logcolumn">
+                                                    <div class="logcheckbox">
+                                                        <input disabled id='equipement' type='checkbox' name='parking_publicP' value='7' <?php if($res["parking_public"] == false){ ?> checked <?php ;}?>>Parking public
+                                                    </div>
+                                                    <div class="logcheckbox">
+                                                        <input disabled id='equipement' type='checkbox' name='parking_priveP' value='8' <?php if($res["parking_privee"] == false){ ?> checked <?php ;}?>>Parking privé
+                                                    </div>
+                                                    <div class="logcheckbox"> 
+                                                        <input disabled id='equipement' type='checkbox' name='televisionP' value='9' <?php if($res["television"] == false){ ?> checked <?php ;}?>>Télévision
+                                                    </div>
+                                                    <div class="logcheckbox"> 
+                                                        <input disabled id='equipement' type='checkbox' name='wifiP' value='10' <?php if($res["wifi"] == false){ ?> checked <?php ;}?>>Wifi
+                                                    </div>
+                                                    <div class="logcheckbox">
+                                                        <input disabled id='equipement' type='checkbox' name='lave_vaisselleP' value='11' <?php if($res["lave_vaisselle"] == false){ ?> checked <?php ;}?>>Lave vaisselle
+                                                    </div>
+                                                    <div class="logcheckbox">
+                                                        <input disabled id='equipement' type='checkbox' name='lave_lingeP' value='12' <?php if($res["lave_linge"] == false){ ?> checked <?php ;}?>>Lave linge
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                                            <div class="logcolumn">
+                                                <label for='service'>Service</label>
+                                                <div class="logcheckbox">
+                                                    <input disabled id='service' type='checkbox' name='menageP' placeholder='Service'>Ménage
+                                                </div>
+                                                <div class="logcheckbox">
+                                                    <input disabled id='service' type='checkbox' name='navetteP' placeholder='Service'>Navette/Taxi
+                                                </div>
+                                                <div class="logcheckbox">    
+                                                    <input disabled id='service' type='checkbox' name='lingeP' placeholder='Service'>Linge
+                                                </div> 
+                                            </div>   
+                                        </div>   
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="logpc">
+                    <h4 class="titreAL">Prix des charges</h4>
+                    <div class="logrow">
+                        <div class="logpc">
+                            <label for='taxe_sejour'>Taxe de séjour</label>
+                            <input class="logvct" disabled id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' value=<?php echo $taxe; ?> required>
+                        </div>
+                    </div>
+                </div>  
+                        <div class="logpc">
+                            <h4 class="titreAL">Images logement</h4>
+                            <div class="logrow">
+                                <div class="logpc">
+                                    <label for='image1'>Image 1</label>
+                                    <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
+
+                                    <label for='image2'>Image 2</label>
+                                    <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
+
+                                    <label for='image3'>Image 3</label>
+                                    <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
+                                </div>
+                                <div class="logpc">
+                                    <label for='image4'>Image 4</label>
+                                    <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
+
+                                    <label for='image5'>Image 5</label>
+                                    <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
+
+                                    <label for='image6'>Image 6</label>
+                                    <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
+                                </div>
+                            </div>
+                            <button class="btn-accueil" name='previsualiser' type='submit'>Modifier</button>
+                        </div>
     
-                    <label for='type'>Type</label>
-                    <select id='type' name='typeP' aria-placeholder="Type" disabled required>
-                        <option value='1'>T1</option>
-                        <option value='2'>T2</option>
-                        <option value='3'>T3</option>
-                        <option value='4'>T4</option>
-                        <option value='5'>T5</option>
-                        <option value='6'>T6</option>
-                        <option value='7'>T7</option>
-                        <option value='8'>T8</option>
-                        <option value='9'>T9</option>
-                        <option value='10'>T10</option>
-    
-                    </select>
-    
-                    <label for='nb_chamnbres' >Nombre de chambres</label>
-                    <input id='nb_chambres' disabled type='number' name='nb_chambresP' min='0' max='15' step='1' value=<?php echo $res["nb_chambre"] ?> required>
-    
-                    <label for='nb_lit_simple'>Nombre de lits simples</label>
-                    <input id='nb_lit_simple' disabled type='number' name='nb_lit_simpleP' min='0' max='15' step='1' value=<?php echo $res["lit_simple"] ?> required>
-    
-                    <label for='nb_lit_double'>Nombre de lits doubles</label>
-                    <input id='nb_lit_double' disabled type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value=<?php echo $res["lit_double"] ?> required>
-    
-                    <label for='nb_sdb'>Nombre de salles de bain</label>
-                    <input id='nb_sdb' disabled type='number' name='nb_sdbP' min='0' max='10' step='1' value=<?php echo $res["nb_salle_bain"] ?> required>
-    
-                    <label for='surface_maison'>Surface (en m²)</label>
-                    <input id='surface_maison' disabled type='number' name='surface_maisonP' min='0' max='300' step='1' value=<?php echo $res["surface_logement"] ?> required>
-    
-                    <label for='nb_personne_max'>Nombre de personnes maximum</label>
-                    <input id='nb_personne_max' disabled type='number' name='nb_personne_maxP' min='1' max='15' step='1' value=<?php echo $res["nb_personnes_logement"] ?> required>
-    
-                    <label for='surface_jardin'>Surface du jardin (en m2)</label>
-                    <input id='surface_jardin' disabled type='number' name='surface_jardinP' min='0' max='50000' step='1' value=<?php echo $res["jardin"] ?> required>
-    
-                    <fieldset>
-                        <label for='equipement'>Equipements</label>
-                        <input disabled id='equipement' type='checkbox' name='balcon' value='1' <?php if($res["balcon"] == true){ ?> checked <?php ;}?>>Balcon
-                        <input  disabled id='equipement' type='checkbox' name='terrasseP' value='2' <?php if($res["terrasse"] == true){ ?> checked <?php ;}?>>Terrasse
-                        <input disabled id='equipement' type='checkbox' name='piscineP' value='3' <?php if($res["piscine"] == true){ ?> checked <?php ;}?>>Piscine
-                        <input disabled id='equipement' type='checkbox' name='jacuzziP' value='4' <?php if($res["jacuzzi"] == true){ ?> checked <?php ;}?>>Jacuzzi
-                        <input disabled id='equipement' type='checkbox' name='saunaP' value='5' <?php if($res["sauna"] == true){ ?> checked <?php ;}?>>Sauna
-                        <input disabled id='equipement' type='checkbox' name='hammamP' value='6' <?php if($res["hammam"] == true){ ?> checked <?php ;}?>>Hammam
-                        <input disabled id='equipement' type='checkbox' name='parking_publicP' value='7' <?php if($res["parking_public"] == false){ ?> checked <?php ;}?>>Parking public
-                        <input disabled id='equipement' type='checkbox' name='parking_priveP' value='8' <?php if($res["parking_privee"] == false){ ?> checked <?php ;}?>>Parking privé
-                        <input disabled id='equipement' type='checkbox' name='televisionP' value='9' <?php if($res["television"] == false){ ?> checked <?php ;}?>>Télévision
-                        <input disabled id='equipement' type='checkbox' name='wifiP' value='10' <?php if($res["wifi"] == false){ ?> checked <?php ;}?>>Wifi
-                        <input disabled id='equipement' type='checkbox' name='lave_vaisselleP' value='11' <?php if($res["lave_vaisselle"] == false){ ?> checked <?php ;}?>>Lave vaisselle
-                        <input disabled id='equipement' type='checkbox' name='lave_lingeP' value='12' <?php if($res["lave_linge"] == false){ ?> checked <?php ;}?>>Lave linge
-    
-                        <label for='service'>Service</label>
-                        <input disabled id='service' type='checkbox' name='menageP' placeholder='Service'>Ménage
-                        <input disabled id='service' type='checkbox' name='navetteP' placeholder='Service'>Navette/Taxi
-                        <input disabled id='service' type='checkbox' name='lingeP' placeholder='Service'>Linge
-                    </fieldset>
-    
-                    <h1>Images logement</h1>
-                    <label for='image1'>Image 1</label>
-                    <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
-    
-                    <label for='image2'>Image 2</label>
-                    <input id='image2' type='file' name='image2' accept='image/png, image/jpeg'>
-    
-                    <label for='image3'>Image 3</label>
-                    <input id='image3' type='file' name='image3' accept='image/png, image/jpeg'>
-    
-                    <label for='image4'>Image 4</label>
-                    <input id='image4' type='file' name='image4' accept='image/png, image/jpeg'>
-    
-                    <label for='image5'>Image 5</label>
-                    <input id='image5' type='file' name='image5' accept='image/png, image/jpeg'>
-    
-                    <label for='image6'>Image 6</label>
-                    <input id='image6' type='file' name='image6' accept='image/png, image/jpeg'>
-    
-                    <label for='taxe_sejour'>Taxe de séjour</label>
-                    <input disabled id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' value=<?php echo $taxe; ?> required>
-    
-                    <button name='previsualiser' type='submit'>Modifier</button>
-                </fieldset>
             </form>
     
             

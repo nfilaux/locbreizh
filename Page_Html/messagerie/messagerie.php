@@ -151,15 +151,17 @@
     ?>
 
 
-    <main>
+    <main class="messrowb">
         <!--partie de gauche de la page (liste des conversations)-->
-        <div>
+        <div class="messcolumnconv">
             <!--barre de recherche (pour le filtre)-->
-            <div>
+            <div class="messrow">
                 <img src="../svg/filtre.svg">
                 <form name="formulaire" method="post" action="recherche_conv.php" enctype="multipart/form-data">
-                    <input type="search" id="recherche_conv" name="recherche_conv" placeholder="Rechercher"><br>
-                    <input type="image" id="loupe" alt="loupe" src="../svg/loupe.svg" />
+                    <div class="messrow">
+                        <input type="search" id="recherche_conv" name="recherche_conv" placeholder="Rechercher"><br>
+                        <input type="image" id="loupe" alt="loupe" src="../svg/loupe.svg" />
+                    </div>
                 </form>
             </div>
             <!--liste conversations-->
@@ -172,7 +174,7 @@
                         // ajoute les id
                         $tab_id_conv[] = $conv['id_conversation'];
                         ?>
-                <div>
+                <div class="messcard">
                     <a href=<?php echo "?conv=" . $conv['id_conversation'];?>>
                         <!--image de profil-->
                         <img src=<?php echo '../Ressources/Images/' . $conv['photo_autre_compte'];?> alt="image de profil">
@@ -196,9 +198,9 @@
             </div>
         </div>
 
-        <hr><hr><hr>
+        <hr>
         <!--partie de droite (liste des messages de la conversation selectionnee)-->
-        <div>
+        <div class="messcolumn">
             <?php
                 // si il y a au moins une conversation
                 if(count($tab_id_conv) != 0 ){?>

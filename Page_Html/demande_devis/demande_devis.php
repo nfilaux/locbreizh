@@ -69,7 +69,7 @@
                     <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
                     <input class="logvct" type="number" id="nb_pers" name="nb_pers" min="1" max=<?php echo $nb_max['nb_pers']; ?> value=<?php if(isset($_GET['nb_pers']) && $_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>
                 </div>
-            </div>
+            
             <div class="cardSupplements">
             <h2 style="text-align:center;  font-family: 'Quicksand';">Suppléments</h2>
                 <div class="logcheckbox">
@@ -89,9 +89,9 @@
                 </div>
             </div>
             <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
+            </div>
             <div class="devis">
                 <?php
-                // Préviens des erreurs
                 if(isset($_GET['erreur'])){
                     if($_GET['erreur'] == 2){
                         echo '<p class="err">La date ne peut pas être utlérieure à celle d\'aujourd\'hui !</p>';
@@ -100,14 +100,11 @@
                         echo '<p class="err">La date de départ ne doit pas être utlérieure à la date d\'arrivee !</p>';
                     }
                 }
-                if ($nb_max['en_ligne'] == false){
-                    echo '<p class="err">Ce logement n\'est plus disponible !</p>';
-                } else {
-                    echo '<input class="btn-accueil" type="submit" value="Soumettre ma demande" /> ';
-                }
+                    
                 ?>
-            
+                <input class="btn-accueil" type="submit" value="Soumettre ma demande" />
             </div>
+            
         </form>
     </main>
     <?php

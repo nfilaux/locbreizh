@@ -25,68 +25,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un logement</title>
     <link rel="stylesheet" href="../style.css">
-</head>
+</head> 
 
 <body>
-    <header>
-        <a href="../Accueil/Tableau_de_bord.php">
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
-        </a>
-            <div class="brecherche">
-                <img src="../svg/filtre.svg">
-                <input id="searchbar" type="text" name="search">
-                <img src="../svg/loupe.svg">
-            </div>
 
-            <img src="../svg/booklet-fill 1.svg">
-            <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
 
-            <div class="imghead">
-                <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-                <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
-            </div>
-            <div id="popup" class="popup">
-            <a href="">Accéder au profil</a>
-            <br>
-            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-            <a onclick="closePopup()">Fermer la fenêtre</a>
+
+    <main class="MainTablo">
+        <div class="headtablo">
+            <a><img src="../svg/flecheRetour.svg"></a>
+            <h1>Remplir la fiche logement</h1>
         </div>
-    </header>
-
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-</header>
-    <main>
-
-
         <div class="column">
             <form method='POST' action='previsualiser_logement.php' enctype="multipart/form-data">
+                <div class="logrow">  
+                    <div class="logcolumn">  
                 <div class="logrow">  
                     <div class="logcolumn">  
                     
                         <div class="logpc">  
                             <label for='nom'>Libellé logement :</label>
                             <input class="lognom" id='nomP' type='text' name='nomP' placeholder='Nom du logement' required>
-                        </div>
+                        </div> 
 
                         <?php if(isset($_SESSION['erreurs']['libelle'])){
                             echo "<p>" . $_SESSION['erreurs']['libelle'] . "<p>";
@@ -100,7 +60,7 @@
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['ville'])){
-                                echo "<p>" . $_SESSION['erreurs']['ville'] . "<p>";
+                                echo "<p>" . $_SESSION['erreurs']['ville'] . "<p>"; 
                             };
                             ?>
 
@@ -169,9 +129,9 @@
                                 <label for='nb_sdb'>Nombre de salles de bain : </label>
                                 <input  class="logvct" id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' value='0' required>
                             </div>
-                        </div>
+                        </div>  
 
-                        <div class="logrowb"> 
+                        <div class="logrowb">  
                             <div class="log3vct">
                                 <label for='surface_maison'>Surface (en m²) : </label>
                                 <input class="logvct" id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='1' value='0' required>
@@ -309,7 +269,7 @@
                     <h4 class="titreAL">Images logement</h4>
                     <div class="logrow">
                         <div class="logpc">
-                            <label for='image1'>Image 1</label>
+                            <label for='image1'>Image 1</label> 
                             <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
 
                             <label for='image2'>Image 2</label>
@@ -336,6 +296,6 @@
         </div>
 
     </main>
-</body>
+</body> 
 
 </html>

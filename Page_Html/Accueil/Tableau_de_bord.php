@@ -1,3 +1,4 @@
+<script src="../scriptPopup.js"></script>
 <?php 
     session_start();
     include('../parametre_connexion.php');
@@ -19,13 +20,13 @@
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
-    <script src="../scriptPopup.js"></script>
 </head>
 
 <body class="pagecompte">
     <?php 
         include('../header-footer/choose_header.php');
     ?>
+
     <main class="MainTablo">
         <div class="headtablo"> 
             <h1>Mon tableau de bord</h1>
@@ -37,7 +38,7 @@
                     
                     $stmt = $dbh->prepare(
                         "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
-                        from locbreizh._logement where id_proprietaire = {$pid};"
+                        from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
                     );
 
                     function formatDate($start, $end)
@@ -48,11 +49,9 @@
 
                     return "$startDate-$endDate $month";
                 }
-                    return "$startDate-$endDate $month";
-                }
 
                 $stmt->execute();
-                foreach ($stmt->fetchAll() as $card) {
+                foreach ($stmt->fetchAll() as $key => $card) {
                     ?>
                         <div class="cardlogmain">
                             <img src="../Ressources/Images/<?php echo $card['photo_principale']?>">
@@ -71,46 +70,48 @@
                                     <a><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 
-                                <p>DISCLAIMER - La suppression du compte est définitve.</p>
-                                <p class="err">Condition requise : Aucune réservation prévue.</p>
-
-                                <?php $nomPlage = 'plage' . $key; 
-                                $overlayPlage = 'overlay' . $key;?>
+                                <div class="logrowb">
+                                    <div class="logcp">
+                                        <p>DISCLAIMER - La suppression du compte est définitve.</p>
+                                        <p class="err">Condition requise : Aucune réservation prévue.</p>
+                                    </div>
+                            
+                                    <?php
+                                $nomPlage = 'plage' . $key; 
+                                $overlayPlage = 'overlay' . $key?>
 
                                 <a class="calend" onclick="openPopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>    
 
-                                <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
-                                    <div id="<?php echo $nomPlage; ?>" class='plages'> 
-                                        <h1>Ajouter une plage ponctuelle</h1><br>
-                                        <form action="../Planning/plageBack.php" method="post">
-                                            
-                                            <label for="debut_plage_ponctuelle"> date de début de la plage : </label>
-                                            <input type="date" id="debut_plage_ponctuelle" name="dateDeb" required/>
-                                            <br><br>
-                                            
-                                            <label for="fin_plage_ponctuelle"> date de fin de la plage : </label>
-                                            <input type="date" id="fin_plage_ponctuelle" name="dateFin" required/>
-                                            <br><br>
-
-                                            <label for="prix_plage_ponctuelle"> Prix : </label>
-                                            <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht']?>" value="<?php echo $card['tarif_base_ht']?>"/>
-                                            <br><br>
-
-                                            <label for="indisponible"> Disponible : </label>
-                                            <input type="checkbox" id="disponible" name="disponible" value="false"/>
-                                            <br><br>
-
-                                            <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
-                                            <button type="submit">ajouter</button>
-                                            
-                                        </form>
+                            <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
+                                <div id="<?php echo $nomPlage; ?>" class='plages'> 
+                                    <h1>Ajouter une plage ponctuelle</h1><br>
+                                    <form action="../Planning/plageBack.php" method="post">
                                         
-                                        <hr><h1>Les plages ponctuelles</h1><br>
-                                        <p> Aucune plage définie </p>
-                                    </div>
+                                        <label for="debut_plage_ponctuelle"> date de début de la plage : </label>
+                                        <input type="date" id="debut_plage_ponctuelle" name="dateDeb"/>
+                                        <br><br>
+                                        
+                                        <label for="fin_plage_ponctuelle"> date de fin de la plage : </label>
+                                        <input type="date" id="fin_plage_ponctuelle" name="dateFin"/>
+                                        <br><br>
 
-                            </section>
-                        </div>
+                                        <label for="prix_plage_ponctuelle"> Prix : </label>
+                                        <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>"/>
+                                        <br><br>
+
+                                        <label for="disponible"> Disponible : </label>
+                                        <input type="checkbox" id="disponible" name="disponible" value="true"/>
+                                        <br><br>
+                    
+                                        <button type="submit">ajouter</button>
+                                    </form>
+                                    
+                                    <hr><h1>Les plages ponctuelles</h1><br>
+                                    <p> Aucune plage définie </p>
+                                </div>                  
+                            </div>
+                    </section>
+</div>
                     <?php
                 }
                 ?>
@@ -123,10 +124,9 @@
                 <h2>Notifications</h2>
 
                 <div class="box">
-                    <p>Aucune notifications</p>
-                    <?php //foreach ($notifications as $notification) {?>
+                    <?php foreach ($notifications as $notification) {?>
 
-                    <?php //} ?>
+                    <?php } ?>
                 </div>
 
 
@@ -148,19 +148,30 @@
                 foreach ($reservations as $reservation) {
 
                     ?>
-                    <div class="card">        
+                    <div class="cardlogmain">        
                         <img src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>">
-                        <h3> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
-                        <div>
-                            <p>Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
-                            <img src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil">
-                            <button disabled>Contacter le proprietaire</button>
-                        </div>
-                        <a href="../devis/pdf_devis/"><button class="btn-accueil" disabled>CONSULTER DEVIS</button></a>
-                        <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-accueilins">CONSULTER LOGEMENT</button></a>
+                       
+                        <section class="rescol">      
+                            <div class="logrowb">
+                            <div>
+                            <h3 class="titrecard"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
+                            <hr class="hrcard">
+                            </div>
+                            </div>
+                            
 
-                        <a><button class="btn-accueil" disabled>ANNULER</button></a>
-                        <p>DISCLAIMER - L’annulation est définitve et irréversible.</p>
+                            <div class="resrow">
+                                <a href="../devis/pdf_devis/"><button class="btn-ajoutlog" disabled>CONSULTER DEVIS</button></a>
+                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
+                                <a><button class="btn-suppr" disabled>ANNULER</button></a>
+                            </div>
+                            
+                            
+                            <div class="logrowb">
+                                <p>DISCLAIMER - La suppression du compte est définitve.</p>
+                            </div>
+                        </secion>
+                       
                     </div>
                 <?php } ?>
             </article>
@@ -173,6 +184,3 @@
 </body>
 
 </html>
-
-
-<script src="../scriptPopup.js"></script>

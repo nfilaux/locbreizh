@@ -32,7 +32,7 @@ $photo = $stmt->fetch();
 ?>
     <main>
 
-        <div class="offset-2 col-8">
+        <div>
             <?php
             include('../parametre_connexion.php');
                 try {
@@ -61,27 +61,38 @@ $photo = $stmt->fetch();
                 foreach ($reservations as $reservation) {
 
                     ?>
-                    <div class="card">        
-                        <img src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>">
-                        <h3> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
-                        <div>
-                            <p>Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
-                            <img src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil">
-                            <button disabled>Contacter le proprietaire</button>
-                        </div>
-                        <a href="../devis/pdf_devis/"><button class="btn-accueil" disabled>CONSULTER DEVIS</button></a>
-                        <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-accueilins">CONSULTER LOGEMENT</button></a>
+                    <div class="cardresmain"> 
+                        <img class="cardresmainimg" src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>"> 
+                        <section class="rescol">      
+                            <div class="logrowb">
+                            <div>
+                            <h3 class="titrecardres"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
+                            <hr class="hrcard">
+                            </div>
+                            <div class="resrow">
+                            <div>
+                                <p class="restitre resplustaille">Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
+                                <button class="btn-accueil">Contacter le proprietaire</button>
+                            </div>
+                            <img class="imgprofil" src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil"  width="75" height="75">
+                            </div>
+                            </div>
+                            
 
-                        <a><button class="btn-accueil" disabled>ANNULER</button></a>
-                        <p>DISCLAIMER - L’annulation est définitve et irréversible.</p>
+                            <div class="rescrow">
+                                <a href="../devis/pdf_devis/"><button class="btn-ajoutlog" disabled>CONSULTER DEVIS</button></a>
+                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
+                                <a><button class="btn-suppr" disabled>ANNULER</button></a>
+                            </div>
+                            
+                            
+                            <div class="logrowb">
+                                <p class="resplustaille">DISCLAIMER - La suppression du compte est définitve.</p>
+                            </div>
+                        </secion>
                     </div>
                 <?php } ?>
             
-        </div>
-        <div class='voir_plus'>
-            <hr>
-            <h4>Voir plus</h4>
-            <hr>
         </div>
     </main>
     <?php 
