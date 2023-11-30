@@ -85,19 +85,19 @@
                                         <form action="../Planning/plageBack.php" method="post">
                                             
                                             <label for="debut_plage_ponctuelle"> date de début de la plage : </label>
-                                            <input type="date" id="debut_plage_ponctuelle" name="dateDeb"/>
+                                            <input type="date" id="debut_plage_ponctuelle" name="dateDeb" required/>
                                             <br><br>
                                             
                                             <label for="fin_plage_ponctuelle"> date de fin de la plage : </label>
-                                            <input type="date" id="fin_plage_ponctuelle" name="dateFin"/>
+                                            <input type="date" id="fin_plage_ponctuelle" name="dateFin" required/>
                                             <br><br>
 
                                             <label for="prix_plage_ponctuelle"> Prix : </label>
-                                            <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>"/>
+                                            <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht']?>" value="<?php echo $card['tarif_base_ht']?>"/>
                                             <br><br>
 
-                                            <label for="disponible"> Disponible : </label>
-                                            <input type="checkbox" id="disponible" name="disponible" value="true"/>
+                                            <label for="indisponible"> Disponible : </label>
+                                            <input type="checkbox" id="disponible" name="disponible" value="false"/>
                                             <br><br>
 
                                             <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
