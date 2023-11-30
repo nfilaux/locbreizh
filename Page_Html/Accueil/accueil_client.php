@@ -65,7 +65,7 @@ $photo = $stmt->fetch();
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
             $stmt = $dbh->prepare(
-                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
+                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
                 from locbreizh._logement;'
             );
             /*
@@ -92,6 +92,7 @@ $photo = $stmt->fetch();
 
         $stmt->execute();
         foreach ($stmt->fetchAll() as $card) {
+            if ($card['en_ligne'] == 1){
             echo "<a href=\"../Logement/logement_detaille_client.php?logement={$card['id_logement']}\"><div class=\"card\">";
             echo '<img src="../Ressources/Images/' . $card['photo_principale'] . '">';
             echo '<h3>' . $card['libelle_logement'] . '</h3>';
@@ -100,6 +101,7 @@ $photo = $stmt->fetch();
             /*
             echo '<h4>' . formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle']) . '</h4>';*/
             echo '<h4>' . $card['nb_personnes_logement'] . ' personnes</h4></div></a>';
+        }
         }
         ?>
 
