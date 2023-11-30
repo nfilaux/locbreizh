@@ -25,7 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un logement</title>
     <link rel="stylesheet" href="../style.css">
-</head> 
+</head>
 
 <body>
     <header>
@@ -50,7 +50,7 @@
             <a href="">Accéder au profil</a>
             <br>
             <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-            <a onclick="closePopup()">Fermer la fenêtre</a> 
+            <a onclick="closePopup()">Fermer la fenêtre</a>
         </div>
     </header>
 
@@ -61,7 +61,7 @@
         </div>
         <div id="overlay" onclick="closePopup()"></div>
         <div id="popup" class="popup">
-            <table id="tableProfil"> 
+            <table id="tableProfil">
                 <tr>
                     <td>
                         <a id="monprofil" href="">Accéder au profil</a>
@@ -100,7 +100,7 @@
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['ville'])){
-                                echo "<p>" . $_SESSION['erreurs']['ville'] . "<p>"; 
+                                echo "<p>" . $_SESSION['erreurs']['ville'] . "<p>";
                             };
                             ?>
 
@@ -169,7 +169,7 @@
                                 <label for='nb_sdb'>Nombre de salles de bain : </label>
                                 <input  class="logvct" id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' value='0' required>
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="logrowb"> 
                             <div class="log3vct">
@@ -309,7 +309,7 @@
                     <h4 class="titreAL">Images logement</h4>
                     <div class="logrow">
                         <div class="logpc">
-                            <label for='image1'>Image 1</label> 
+                            <label for='image1'>Image 1</label>
                             <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
 
                             <label for='image2'>Image 2</label>

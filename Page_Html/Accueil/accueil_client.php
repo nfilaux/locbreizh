@@ -41,14 +41,12 @@ $photo = $stmt->fetch();
                 'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
                 from locbreizh._logement;'
             );
-            /*
+            
             $stmt = $dbh->prepare(
-                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, note_avis, debut_plage_ponctuelle, fin_plage_ponctuelle
-                from locbreizh._logement 
-                    INNER JOIN locbreizh._avis ON logement = id_logement
-                    INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
-                    INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning;'
-            );*/
+                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, en_ligne
+                from locbreizh._logement '
+
+            );
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
