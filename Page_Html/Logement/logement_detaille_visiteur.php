@@ -86,14 +86,70 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                     </div>
                 </div>
             </div>
-        
+    id_logement            serial,
+   libelle_logement       varchar(30)    NOT NULL,
+   tarif_base_ht          numeric(5,2)   NOT NULL,
+   accroche_logement      varchar(255)   NOT NULL,
+   descriptif_logement    varchar(255)   NOT NULL,
+   nature_logement        varchar(15)    NOT NULL,
+   type_logement          varchar(20),
+   surface_logement       numeric(4)     NOT NULL,
+   en_ligne               boolean        NOT NULL,
+   nb_chambre             numeric(3)     NOT NULL,
+   nb_personnes_logement  numeric(3)     NOT NULL,
+   lit_simple             numeric(3)     NOT NULL,
+   lit_double             numeric(3)     NOT NULL,
+   nb_salle_bain          numeric(3)     NOT NULL,
+   jardin                 numeric(5)     NOT NULL,
+   balcon                 boolean        NOT NULL,
+   terrasse               boolean        NOT NULL,
+   parking_public         boolean        NOT NULL,
+   parking_privee         boolean        NOT NULL,
+   sauna                  boolean        NOT NULL,
+   hammam                 boolean        NOT NULL,
+   piscine                boolean        NOT NULL,
+   climatisation          boolean        NOT NULL,
+   jacuzzi                boolean        NOT NULL,
+   television             boolean        NOT NULL,
+   wifi                   boolean        NOT NULL,
+   lave_linge             boolean        NOT NULL,
+   lave_vaisselle         boolean        NOT NULL,
+   code_planning          integer,
+   id_proprietaire        integer        NOT NULL,
+   id_adresse             integer        NOT NULL,
+   photo_principale       varchar(50)    NOT NULL,
+   taxe_sejour            integer        NOT NULL
+
 
         <div class="logrow">
             <div class="logcolumn">
                 <h3 class="potitre">Services et équipements du logement</h3>
                 <?php
                     $stmt = $dbh->prepare(
-                        'SELECT nb_chambre, nb_salle_bain, lave_vaisselle, wifi, piscine, sauna, hammam, climatisation, jacuzzi, television, lave_linge, parking_public, parking_privee, balcon, terrasse, jardin FROM locbreizh._logement'
+                        "SELECT 
+                        surface_logement,
+                        nb_chambre,
+                        lit_simple,
+                        lit_double,
+                        nb_salle_bain,
+                        jardin,
+                        balcon,
+                        terrasse,
+                        parking_public,
+                        parking_privee,
+                        sauna,
+                        hammam,
+                        piscine,
+                        climatisation,
+                        jacuzzi,
+                        television,
+                        wifi,
+                        lave_linge,
+                        lave_vaisselle,
+                        
+
+                        FROM locbreizh._logement
+                        where id_logement = {$_GET['logement']}"
                     );
                     $stmt->execute();
                     $info = $stmt->fetch();
@@ -311,7 +367,9 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             <hr>
             <div class="logrowc">
             <?php   
-                        $stmt = $dbh->prepare("SELECT nom,prenom,photo from locbreizh._compte JOIN locbreizh._logement ON id_compte=id_proprietaire WHERE id_logement= {$_GET['logement']} ;");
+                        $stmt = $dbh->prepare("SELECT nom,prenom,photo 
+                        from locbreizh._compte JOIN locbreizh._logement ON id_compte=id_proprietaire 
+                        WHERE id_logement= {$_GET['logement']} ;");
 
                         $stmt->execute();
                         $info = $stmt->fetch();
