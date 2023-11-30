@@ -142,7 +142,7 @@
                                 <input class="logvct" id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='15' step='1' value='0' required>
                             </div>
                             <div class="log3vct">
-                                <label for='surface_jardin'>Surface du jardin (en m2): : </label>
+                                <label for='surface_jardin'>Surface du jardin (en m2): </label>
                                 <input class="logvct" id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='1' value='0' required>
                             </div>
                         </div>

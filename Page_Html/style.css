@@ -555,7 +555,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     justify-content: space-between;
     background-color: #745086;
     border-radius: 15px;
-    padding-top: 0.5em;
+    padding-top: 5px;
     width: 20%;
     margin: 1em 2%;
 }
@@ -733,6 +733,11 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     flex-direction: column;
     justify-content: space-between;
     width: 48%;
+    margin-bottom: 3%;
+    margin-top: 3%;
+}
+.logcolumn > p{
+    margin: 4vw
 }
 
 .logpc{
@@ -796,6 +801,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .logrowt {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .logrowc {
@@ -809,6 +815,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .cardSupplements {
@@ -932,8 +939,8 @@ fieldset label{
 }
 
 
-.logrowt p {
-    margin: auto 0 1em 1em;
+.logrowt > p {
+    margin: 0 4vw;
 }
 
 
@@ -1458,4 +1465,8 @@ iframe {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
+}
+
+.description-detail{
+    max-width: 50vw;
 }

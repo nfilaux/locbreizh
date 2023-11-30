@@ -357,7 +357,7 @@ if (isset($_SESSION['post_logement']['image6P'])) {
 
                         <div class="logrow">
                             <div class="logcp">
-                                <p><?php  echo $logement_data['nb_chambre'] ?> Chambres</p><?php
+                                <p><?php  echo $logement_data['nb_chambres'] ?> chambres</p><?php
 
 
                             } else {
@@ -390,6 +390,9 @@ if (isset($_SESSION['post_logement']['image6P'])) {
 
                                 if ($logement_data['climatisation'] == true) {
                                     ?><p><?php  echo 'Climatisation incluse'; ?></p><?php
+                                }
+                                if ($logement_data['lave_vaiselle'] == true) {
+                                    ?><p><?php  echo 'Lave-vaisselle incluse'; ?></p><?php
                                 }?>
                             </div>
                             <div class="logcp">

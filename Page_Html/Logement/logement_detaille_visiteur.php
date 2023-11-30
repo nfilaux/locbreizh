@@ -56,8 +56,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 <div class="logrowb">
                     <div class="logrowt">
                         <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
-                        <p>pour <?php echo $info['nb_personnes_logement'];?>  personnes</p>
-                        <p>logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> </p>
+                        <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                     <div class="logrowt">
                         <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
@@ -75,7 +74,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 <div class="logrowt">  
                     <div class="logcolumn">
                         <h3 class="policetitre">Description</h3>
-                        <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $info['descriptif_logement']; ?>' disabled></textarea>
+                        <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
                     <div class="logc">
@@ -86,44 +85,9 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                     </div>
                 </div>
             </div>
-    id_logement            serial,
-   libelle_logement       varchar(30)    NOT NULL,
-   tarif_base_ht          numeric(5,2)   NOT NULL,
-   accroche_logement      varchar(255)   NOT NULL,
-   descriptif_logement    varchar(255)   NOT NULL,
-   nature_logement        varchar(15)    NOT NULL,
-   type_logement          varchar(20),
-   surface_logement       numeric(4)     NOT NULL,
-   en_ligne               boolean        NOT NULL,
-   nb_chambre             numeric(3)     NOT NULL,
-   nb_personnes_logement  numeric(3)     NOT NULL,
-   lit_simple             numeric(3)     NOT NULL,
-   lit_double             numeric(3)     NOT NULL,
-   nb_salle_bain          numeric(3)     NOT NULL,
-   jardin                 numeric(5)     NOT NULL,
-   balcon                 boolean        NOT NULL,
-   terrasse               boolean        NOT NULL,
-   parking_public         boolean        NOT NULL,
-   parking_privee         boolean        NOT NULL,
-   sauna                  boolean        NOT NULL,
-   hammam                 boolean        NOT NULL,
-   piscine                boolean        NOT NULL,
-   climatisation          boolean        NOT NULL,
-   jacuzzi                boolean        NOT NULL,
-   television             boolean        NOT NULL,
-   wifi                   boolean        NOT NULL,
-   lave_linge             boolean        NOT NULL,
-   lave_vaisselle         boolean        NOT NULL,
-   code_planning          integer,
-   id_proprietaire        integer        NOT NULL,
-   id_adresse             integer        NOT NULL,
-   photo_principale       varchar(50)    NOT NULL,
-   taxe_sejour            integer        NOT NULL
-
-
         <div class="logrow">
             <div class="logcolumn">
-                <h3 class="potitre">Services et équipements du logement</h3>
+                <h3 class="potitre">Services et équipements du logement :</h3>
                 <?php
                     $stmt = $dbh->prepare(
                         "SELECT 
@@ -145,9 +109,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                         television,
                         wifi,
                         lave_linge,
-                        lave_vaisselle,
-                        
-
+                        lave_vaisselle
                         FROM locbreizh._logement
                         where id_logement = {$_GET['logement']}"
                     );
@@ -157,7 +119,10 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
                 <div class="logrow">
                     <div class="logcp">
-                        <p><?php  echo $info['nb_chambre'] ?> Chambres</p><?php
+                        <p><?php  echo $info['nb_chambre'] ?> chambres</p>
+                        <p><?php  echo $info['lit_simple'] ?> lits simples</p>
+                        <p><?php  echo $info['lit_double'] ?> lit_double</p>
+                        <?php
                         if ($info['lave_vaisselle'] == true) {
                             ?><p><?php  echo 'Cuisine équipée'; ?></p><?php
                         }
@@ -182,12 +147,10 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                             ?><p><?php  echo 'Jacuzzi inclus'; ?></p><?php
                         }
 
-                        if ($info['climatisation'] == true) {
-                            ?><p><?php  echo 'Climatisation incluse'; ?></p><?php
-                        }?>
+                        ?>
                     </div>
                     <div class="logcp">
-                        <p><?php  echo $info['nb_salle_bain'] ?> Salles de bain</p><?php
+                        <p><?php  echo $info['nb_salle_bain'] ?> salles de bain</p><?php
                         if ($info['television'] == true) {
                             ?><p><?php  echo 'Television inclus'; ?></p><?php
                         }
@@ -210,7 +173,11 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
                         if ($info['terrasse'] == true) {
                             ?><p><?php  echo 'Terrasse incluse'; ?></p><?php
-                        }?>
+                        }
+                        if ($info['climatisation'] == true) {
+                            ?><p><?php  echo 'Climatisation incluse'; ?></p><?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <p>Surface du jardin : <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
@@ -223,8 +190,6 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         
         <div>
             <?php
-
-
                 $stmt = $dbh->prepare(
                     'SELECT nom, prenom,photo, contenu_avis
                                         from locbreizh._avis
@@ -314,7 +279,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $stmt->execute();
             $info = $stmt->fetch();
             ?>
-            <p><?php  echo $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>  
+            <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>  
             
         </div>
         <hr>
