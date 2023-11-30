@@ -168,7 +168,7 @@
                             
                             
                             <div class="logrowb">
-                                <p>DISCLAIMER - La suppression du compte est définitve.</p>
+                                <p>DISCLAIMER - La suppression du logement est définitve.</p>
                             </div>
                         </secion>
                        

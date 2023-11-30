@@ -1,6 +1,8 @@
 <?php
-    // JE DÉTRUIT LA SESSION ACTUELLE POUR QUE $_SESSION SOIT VIDE DE NOUVEAU COMME A L'ARRIVEE SUR L'APPLICATION
-    unset($_SESSION);
+    // unset les variables de session
+    session_unset();
+    // fermeture de la session
+    session_destroy();
     // JE SUIS REDIRIGER VERS LA PAGE D'ACCEUIL EN TANT QUE SIMPLE VISITEUR
     header("location: ../../../index.php");
 ?>

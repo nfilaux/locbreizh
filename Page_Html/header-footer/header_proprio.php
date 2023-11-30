@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                     <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
+                        <a id="deconnexion" href="../Compte/seDeconnecter.php">Se déconnecter</a>
                     </td>  
                 </tr>
             </table>

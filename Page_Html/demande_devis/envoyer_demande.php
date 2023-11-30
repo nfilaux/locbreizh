@@ -100,7 +100,6 @@
         $stmt->bindParam(':temps', $time);
         $stmt->bindParam(':id', $_SESSION['id']);
         $stmt->bindParam(':id_conv', $id_conv);
-        VALUES (:contenu_message, :date, :temps, :id, :id_conv);");
         $tempMessage = "Voici une demande de DEVIS de {$info_user['pseudo']} pour le logement {$libelle_log['libelle_logement']}";
         $stmt->bindParam(':contenu_message', $tempMessage);
 
@@ -129,10 +128,11 @@
             $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement where id_logement = :logement and nom_charges = 'menage';");
             $stmt->bindParam(':logement', $_POST['logement']);
             $stmt->execute();
-            $prix_menage = $stmt->fetchColumn();
+            $prix_menage = $stmt->fetch();
+
             // ajoute le lien entre la charges et la demande avec le prix en plus
             $stmt = $dbh->prepare("INSERT INTO locbreizh._comporte_charges_associee_demande_devis (prix_charges, num_demande_devis, nom_charges)
-            VALUES (:prix_charges, ::id_demande, 'menage');");
+            VALUES (:prix_charges, :id_demande, 'menage');");
             $stmt->bindParam(':prix_charges', $prix_menage['prix_charges']);
             $stmt->bindParam(':id_demande',$id_demande);
             $stmt->execute();

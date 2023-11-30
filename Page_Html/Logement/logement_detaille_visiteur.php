@@ -91,7 +91,10 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
                     <div class="logc">
-                        <a class="center"><button class="btn-demlogno">Demander un devis</button></a>
+                    <form class="center" action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                        <button class="btn-demlog" type="submit">Demander un devis</button>
+                    </form>
+
                     </div>
                 </div>
             </div>
@@ -254,18 +257,20 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             <h3 class="policetitre">Localisation</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83998.77845041982!2d2.2644625084947463!3d48.85893831264307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e1f06e2b70f%3A0x40b82c3688c9460!2sParis!5e0!3m2!1sfr!2sfr!4v1697885937861!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-            <?php
+                <?php
                 $stmt = $dbh->prepare(
-                    'SELECT _logement.id_adresse, ville, nom_rue, numero_rue, pays
-                        from locbreizh._logement
-                            INNER JOIN locbreizh._adresse ON _logement.id_adresse = _adresse.id_adresse'
+                    'SELECT ville, nom_rue, numero_rue
+                    from locbreizh._logement
+                    natural JOIN locbreizh._adresse
+                    where id_logement = :id'
                 );
+                $stmt->bindParam(':id', $_GET['logement']);
 
 
             $stmt->execute();
             $info = $stmt->fetch();
             ?>
-            <p><?php  echo $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] . ' ' . $info['pays']; ?></p>  
+            <p><?php  echo $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>  
             
         </div>
         <hr>
@@ -323,15 +328,12 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                         $stmt->execute();
                         $info = $stmt->fetch();
                 ?>
-                <img class="imgprofil" src='<?php echo '../Ressources/Images/'.$info['photo'];?>'>
+                <img class="imgprofil" src="../Ressources/Images/<?php echo $info['photo']; ?>" width="100" height="100">
                 <div class="logcp">
-                    <h4 class="policetitre"><?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
-                    
-                    
-                    <form action="../Redirection/redirection_visiteur_messagerie.php" method="post">
-                        <button class="btn-accueil" type="submit" disabled>Contacter le propriétaire</button>
-                    </form>
+                    <h4 class="policetitre">Par <?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
+                    <a href="../Redirection/redirection_visiteur_messagerie.php"><button class="btn-accueil" type='button'>Contacter le propriétaire</button></a>
                 </div>
+            </div>
 
     </main>
     <?php 

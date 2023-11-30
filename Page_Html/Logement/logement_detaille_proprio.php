@@ -269,16 +269,18 @@ $photo = $stmt->fetch();
 
             <?php
                 $stmt = $dbh->prepare(
-                    'SELECT _logement.id_adresse, ville, nom_rue, numero_rue, pays
-                        from locbreizh._logement
-                            INNER JOIN locbreizh._adresse ON _logement.id_adresse = _adresse.id_adresse'
+                    'SELECT ville, nom_rue, numero_rue
+                    from locbreizh._logement
+                    natural JOIN locbreizh._adresse
+                    where id_logement = :id'
                 );
+                $stmt->bindParam(':id', $_GET['logement']);
 
 
             $stmt->execute();
             $info = $stmt->fetch();
             ?>
-            <p><?php  echo $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] . ' ' . $info['pays']; ?></p>  
+            <p><?php  echo $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>  
             
         </div>
         <hr>
@@ -311,7 +313,19 @@ $photo = $stmt->fetch();
                     </p>
                     <a href="" class='voir_plusR'>
                         Voir plus  
-                    </a>
+                    </a><div class="logrowc">
+            <?php   
+                        $stmt = $dbh->prepare("SELECT nom,prenom,photo from locbreizh._compte JOIN locbreizh._logement ON id_compte=id_proprietaire WHERE id_logement= {$_GET['logement']} ;");
+
+                        $stmt->execute();
+                        $info = $stmt->fetch();
+                ?>
+                <img class="imgprofil" src="../Ressources/Images/<?php echo $info['photo']; ?>" width="100" height="100">
+                <div class="logcp">
+                    <h4 class="policetitre">Par <?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
+                    <a href="../Redirection/redirection_visiteur_messagerie.php"><button class="btn-accueil" type='button'>Contacter le propriétaire</button></a>
+                </div>
+            </div>
                 </div>
 
                 <div class="cardcondition">
@@ -327,20 +341,6 @@ $photo = $stmt->fetch();
                 <p>Veuillez consultez</p>
                 <p><a href=''>Le réglemement intérieur</a></p>
             </div>    
-            </div>
-            <hr>
-            <div class="logrowc">
-            <?php   
-                        $stmt = $dbh->prepare("SELECT nom,prenom,photo from locbreizh._compte JOIN locbreizh._logement ON id_compte=id_proprietaire WHERE id_logement= {$_GET['logement']} ;");
-
-                        $stmt->execute();
-                        $info = $stmt->fetch();
-                ?>
-                <img class="imgprofil" src="../Ressources/Images/<?php echo $info['photo']; ?>" width="100" height="100">
-                <div class="logcp">
-                    <h4 class="policetitre">Par <?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
-                    <button class="btn-accueil" type='button' disabled>Contacter le propriétaire</button>
-                </div>
             </div>
 
     </main>

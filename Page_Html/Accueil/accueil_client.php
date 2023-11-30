@@ -1,36 +1,46 @@
-<?php 
+<?php
+// début de la session pour récupérer l'id du compte connecté
 session_start();
+
 include('../parametre_connexion.php');
+  
 try {
-$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
-    $stmt->execute();
-    $photo = $stmt->fetch();
 
+$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+$stmt->execute();
+$photo = $stmt->fetch();
+
+$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = :id_compte;");
+$stmt->bindParam(':id_compte', $_SESSION['id']);
+$stmt->execute();
+$photo = $stmt->fetch();
 ?>
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
-
 </head>
+
 <body>
-    <?php 
+<?php 
         include('../header-footer/choose_header.php');
     ?>
 
 
     <main>
         <?php
+        // récupération des données de logement dans la base de donnée
         try {
             include('../parametre_connexion.php');
 
@@ -39,20 +49,15 @@ $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
             $stmt = $dbh->prepare(
-                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
+                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
                 from locbreizh._logement;'
-            );
-            
-            $stmt = $dbh->prepare(
-                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, en_ligne
-                from locbreizh._logement '
-
             );
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
         }
 
+        // fonction qui permet d'afficher la date de début et de fin d'une réservation
         function formatDate($start, $end)
         {
             $startDate = date('j', strtotime($start));
@@ -63,7 +68,10 @@ $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_
         }
 
         $stmt->execute();
+
         ?> <div class="card"> <?php
+
+        // affichage des données de logement
         foreach ($stmt->fetchAll() as $card) {
             if ($card['en_ligne'] == true) {
                 ?><section> <?php
@@ -89,14 +97,10 @@ $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_
 
         ?>
 
-        <div class='voir_plus'>
-            <hr>
-            <h4>Voir plus</h4>
-            <hr>
-        </a>
+        </div>
     </main>
 
-    <?php 
+    <?php
         echo file_get_contents('../header-footer/footer.html');
     ?>
 </body>

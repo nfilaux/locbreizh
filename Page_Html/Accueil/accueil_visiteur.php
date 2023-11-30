@@ -70,11 +70,6 @@
         ?>
 
     </div>
-    <a href="" class='voir_plus'>
-        <hr> 
-        <h4>Voir plus</h4> 
-        <hr>
-    </a>
     </main>
     <?php 
         echo file_get_contents('../header-footer/footer.html');
