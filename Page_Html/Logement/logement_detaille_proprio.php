@@ -25,31 +25,9 @@ $photo = $stmt->fetch();
 </head>
 
 <body>
-<header>
-    <a href="../Accueil/Tableau_de_bord.php">
-        <img class="logot" src="../svg/logo.svg">
-        <h2>Loc'Breizh</h2>
-    </a>
-        <div class="brecherche">
-            <img src="../svg/filtre.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
-        </div>
-
-        <img src="../svg/booklet-fill 1.svg">
-        <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
-        </div>
-        <div id="popup" class="popup">
-        <a href="">Accéder au profil</a>
-        <br>
-        <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-        <a onclick="closePopup()">Fermer la fenêtre</a>
-    </div>
-    </header>
+<?php 
+        include('../header-footer/choose_header.php');
+    ?>
 <main>
         <div>
         <?php
@@ -100,7 +78,7 @@ $photo = $stmt->fetch();
                 <div class="logrowt">  
                     <div class="logcolumn">
                         <h3 class="policetitre">Description</h3>
-                        <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $info['descriptif_logement']; ?>' required></textarea>
+                        <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $info['descriptif_logement']; ?>' disabled></textarea>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
                     </div>
                     <div class="logc">
@@ -314,17 +292,6 @@ $photo = $stmt->fetch();
                     <a href="" class='voir_plusR'>
                         Voir plus  
                     </a><div class="logrowc">
-            <?php   
-                        $stmt = $dbh->prepare("SELECT nom,prenom,photo from locbreizh._compte JOIN locbreizh._logement ON id_compte=id_proprietaire WHERE id_logement= {$_GET['logement']} ;");
-
-                        $stmt->execute();
-                        $info = $stmt->fetch();
-                ?>
-                <img class="imgprofil" src="../Ressources/Images/<?php echo $info['photo']; ?>" width="100" height="100">
-                <div class="logcp">
-                    <h4 class="policetitre">Par <?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
-                    <a href="../Redirection/redirection_visiteur_messagerie.php"><button class="btn-accueil" type='button'>Contacter le propriétaire</button></a>
-                </div>
             </div>
                 </div>
 
@@ -351,45 +318,3 @@ $photo = $stmt->fetch();
 </body>
 
 </html>
-
-
-<style>
-    .popup {
-        display: none;
-        position: fixed;
-        top: 15%;
-        left: 91%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-</style>
-<script>
-// Ouvrir la popup
-function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-}
-
-// Fermer la popup
-function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
-}
-
-// Ajouter des gestionnaires d'événements aux boutons
-var profilButton = document.getElementById('profilButton');
-profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
-});
-
-var deconnexionButton = document.getElementById('deconnexionButton');
-deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
-});
-</Script>

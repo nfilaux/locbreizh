@@ -28,54 +28,15 @@
 </head>
 
 <body>
-    <header>
-        <a href="../Accueil/Tableau_de_bord.php">
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
-        </a>
-            <div class="brecherche">
-                <img src="../svg/filtre.svg">
-                <input id="searchbar" type="text" name="search">
-                <img src="../svg/loupe.svg">
-            </div>
-
-            <img src="../svg/booklet-fill 1.svg">
-            <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
-
-            <div class="imghead">
-                <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-                <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
-            </div>
-            <div id="popup" class="popup">
-            <a href="">Accéder au profil</a>
-            <br>
-            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-            <a onclick="closePopup()">Fermer la fenêtre</a>
+<?php 
+        include('../header-footer/choose_header.php');
+    ?>
+    <main class="MainTablo">
+    <div class="headtablo">
+            <a href="../Accueil/Tableau_de_bord.php"><img src="../svg/flecheRetour.svg"></a>
+            <h1>Remplir la fiche logement</h1>
         </div>
-    </header>
 
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
-        </div>
-        <div id="overlay" onclick="closePopup()"></div>
-        <div id="popup" class="popup">
-            <table id="tableProfil">
-                <tr>
-                    <td>
-                        <a id="monprofil" href="">Accéder au profil</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <a id="deconnexion" href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-                    </td>  
-                </tr>
-            </table>
-        </div>
-</header>
-    <main>
 
 
         <div class="column">
@@ -123,7 +84,7 @@
                         </div>
                         <div class="logpc">
                             <label for='phrase_daccroche'>Phrase d'accroche : </label>
-                            <textarea class="logPA" id='accroche' maxlength="250" name='accrocheP' placeholder="Phrase d'accroche" required></textarea>
+                            <textarea class="logPA" id='accroche' maxlength="100" name='accrocheP' placeholder="Phrase d'accroche" required></textarea>
                         </div>
                         <div class="logrowb"> 
                                 <div class="log2vct">
@@ -189,7 +150,7 @@
                     <div class="logcolumn">
                         <div class="description">
                             <label for='description'>Description : </label>
-                            <textarea class="logPA" id='description' name='descriptionP' placeholder='Description' required></textarea>
+                            <textarea class="logPA" id='description' maxlength="499"name='descriptionP' placeholder='Description' required></textarea>
                         </div>
                         <fieldset>
                             <div class="logrow">

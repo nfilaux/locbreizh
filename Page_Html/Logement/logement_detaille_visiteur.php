@@ -22,21 +22,9 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
 
 <body>
-    <header>
-        <div style="display:flex; flex-direction:row;">
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
-        </div>
-
-        <div class="brecherche">
-            <img src="../svg/filtre.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
-        </div>
-        
-        <a href="../Compte/CreerCompte.html" class="btn-accueilins btn_visi"><h5>S'inscrire</h5></a>
-        <a href="../Compte/connexionFront.php" class="btn-accueil btn_visi"><h5>Se connecter</h5></a>
-    </header>
+<?php 
+        include('../header-footer/choose_header.php');
+    ?>
     <main>
         <div>
         <?php
@@ -87,7 +75,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 <div class="logrowt">  
                     <div class="logcolumn">
                         <h3 class="policetitre">Description</h3>
-                        <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $info['descriptif_logement']; ?>' required></textarea>
+                        <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $info['descriptif_logement']; ?>' disabled></textarea>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
                     <div class="logc">
