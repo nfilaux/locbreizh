@@ -10,19 +10,9 @@
         die();
     }
 
-    function disable($id){
-        global $dbh;
-        $stmt = $dbh->prepare(
-            "UPDATE locbreizh._logement SET en_ligne = false where id_logement = $id;"
-        );
-        $stmt->execute();
-        //echo "celà marche";
-    }
 ?>
-
 <!doctype html>
 <html lang="fr">
-
 <head>
     <meta charset="utf-8">
     <title>Accueil</title>
@@ -42,7 +32,6 @@
             <article class="width">
                 <h2>Mes logements</h2>
                 <?php
-                    print_r($_SESSION);
                     $pid = $_SESSION['id'];
                     $stmt = $dbh->prepare(
                         "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
@@ -60,7 +49,8 @@
                 }
 
                 $stmt->execute();
-                foreach ($stmt->fetchAll() as $card) {
+                $liste_mes_logements = $stmt->fetchAll();
+                foreach ($liste_mes_logements as $card) {
                     $id_log = $card['id_logement'];
                     $stmt = $dbh->prepare(
                         "SELECT en_ligne
@@ -68,12 +58,11 @@
                         where id_logement = $id_log;"
                     );
                     $stmt->execute();
-                    $etat = $stmt->fetchColumn();
+                    $etat = $stmt->fetch();
 
-                    echo "etat" . print_r($etat);
-                    if ($etat == 0){
+                    if ($etat["en_ligne"] == 1){
                         $bouton_desactiver = "DESACTIVER";  
-                    } else {
+                    } else{
                         $bouton_desactiver = "ACTIVER";
                     }
                     
@@ -91,19 +80,12 @@
                                 
                                 <div class="logrowb">
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $card['id_logement'] ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
-                                    <?php print_r($card); $id_disable = $card['id_logement']; ?>
-                                    <form method="post">
-                                    <input type="submit" name="desactiver" class="button" value=<?php echo $bouton_desactiver; ?> />
-                                        <a><button class="btn-desactive" onclik="desactiver(<?php echo $id_disable ?>)">DESACTIVER</button></a>
+                                    <?php $id_un_logement = $card['id_logement']; ?>
+                                    <form action="ChangeEtat.php" method="post">
+                                        <input type="submit" name=<?php echo $id_un_logement ?> class="button" value=<?php echo $bouton_desactiver; ?> />
                                     </form>
-                                    <?php 
-                                    if(array_key_exists('desactiver', $_POST)) {
-                                        disable($id_disable);
-                                    }
-                                    ?>
                                     <a><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
-                                
                                 <p>DISCLAIMER - La suppression du compte est définitve.</p>
                                 <p class="err">Condition requise : Aucune réservation prévue.</p>
                             </section>
