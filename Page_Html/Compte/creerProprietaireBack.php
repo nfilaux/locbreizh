@@ -93,7 +93,7 @@
     // tests permettant de savoir si les images envoyées utilisent les bonnes extensions
     $arrayNom1 = explode('.', $_FILES['carteIdentite']['name']);
     $extension1 = $arrayNom1[sizeof($arrayNom1)-1];
-    if ($extension1 == "png" or $extension1 == "gif" or $extension1 == "jpg" or $extension1 == "jpeg"){
+    if ($extension1 == "png" or $extension1 == "gif" or $extension1 == "jpg" or $extension1 == "jpeg" or $extension1 == "pdf"){
         $temps1 = time();
     }
     else{
@@ -115,7 +115,7 @@
     }
     $arrayNom3 = explode('.', $_FILES['rib']['name']);
     $extension3 = $arrayNom3[sizeof($arrayNom3)-1];
-    if ($extension3 == "png" or $extension3 == "gif" or $extension3 == "jpg" or $extension3 == "jpeg"){
+    if ($extension3 == "png" or $extension3 == "gif" or $extension3 == "jpg" or $extension3 == "jpeg" or $extension3 == "pdf"){
         $temps3 = time();
     }
     else{

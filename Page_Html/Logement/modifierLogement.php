@@ -51,8 +51,8 @@ $photo = $stmt->fetch();
         ?>
 
     
-        <div class='banniere'>
-            <img src='/Ressources/Images/arrow-left-s-line 1.svg'>
+        <div class="headconn">
+            <a href="../Accueil/Tableau_de_bord.php"><img src='../svg/flecheRetour.svg'></a>
             <h1>La fiche de votre logement</h1>
         </div>
 
@@ -270,7 +270,8 @@ $photo = $stmt->fetch();
                                     <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
                                 </div>
                             </div>
-                            <button class="btn-accueil" name='previsualiser' type='submit'>Modifier</button>
+                            <div class="btn-modif-logement">
+                            <button class="btn-accueil" name='previsualiser' type='submit'>Modifier</button></div>
                         </div>
     
             </form>

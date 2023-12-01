@@ -1470,3 +1470,12 @@ iframe {
 .description-detail{
     max-width: 50vw;
 }
+
+.btn-modif-logement{
+    text-align: center;
+    margin-top: 3vw;
+    margin-bottom: 3vw;
+}
+.btn-modif-logement button{
+    width: 30vw;
+}
