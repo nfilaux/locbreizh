@@ -103,6 +103,21 @@ body {
     z-index: 999;
 }
 
+.unePlage {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.unePlage button{
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
 /*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/
 
 #mdp{

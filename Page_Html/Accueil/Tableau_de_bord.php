@@ -10,6 +10,8 @@
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
+
+    
 ?>
 
 <!doctype html>
@@ -88,26 +90,75 @@
                                     <form action="../Planning/plageBack.php" method="post">
                                         
                                         <label for="debut_plage_ponctuelle"> date de début de la plage : </label>
-                                        <input type="date" id="debut_plage_ponctuelle" name="dateDeb"/>
+                                        <input type="date" id="debut_plage_ponctuelle" name="dateDeb" required/>
                                         <br><br>
                                         
                                         <label for="fin_plage_ponctuelle"> date de fin de la plage : </label>
-                                        <input type="date" id="fin_plage_ponctuelle" name="dateFin"/>
+                                        <input type="date" id="fin_plage_ponctuelle" name="dateFin" required/>
                                         <br><br>
 
                                         <label for="prix_plage_ponctuelle"> Prix : </label>
-                                        <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>"/>
+                                        <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>" value="<?php echo $card['tarif_base_ht'] ?>"/>
                                         <br><br>
 
-                                        <label for="disponible"> Disponible : </label>
-                                        <input type="checkbox" id="disponible" name="disponible" value="true"/>
+                                        <label for="indisponible"> Indisponible : </label>
+                                        <input type="checkbox" id="indisponible" name="indisponible" value="false"/>
                                         <br><br>
+
+                                        <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
+
+                                        <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
+                                        <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
+
                     
                                         <button type="submit">ajouter</button>
                                     </form>
                                     
                                     <hr><h1>Les plages ponctuelles</h1><br>
-                                    <p> Aucune plage définie </p>
+
+                                    <?php
+                                    try {
+                                        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+                                        $code = $dbh->prepare("SELECT code_planning FROM locbreizh._planning NATURAL JOIN locbreizh._logement WHERE id_logement = {$card['id_logement']};");
+
+                                        $code->execute();
+
+                                        $lesPlages = $dbh->prepare("SELECT id_plage_ponctuelle, debut_plage_ponctuelle, fin_plage_ponctuelle, prix_plage_ponctuelle, disponible FROM locbreizh._plage_ponctuelle WHERE code_planning = {$code->fetch()['code_planning']} ;");
+                                        
+                                        $lesPlages->execute();
+
+                                    } catch (PDOException $e) {
+                                        print "Erreur !:" . $e->getMessage() . "<br/>";
+                                        die();
+                                    }
+
+                                    $lesPlages = $lesPlages->fetchAll();
+
+                                    if($lesPlages != null){
+                                        foreach($lesPlages as $plage){  ?>
+                                            <div class="unePlage">
+                                                <?php 
+                                                $deb = new DateTime($plage['debut_plage_ponctuelle']);
+                                                $fin = new DateTime($plage['fin_plage_ponctuelle']);
+                                                $dispo = $plage['disponible']==true ? "oui" : "non";
+                                                echo $deb->format("d/m/Y") . " - " . $fin->format("d/m/Y") . " | "  . "Prix = " . $plage['prix_plage_ponctuelle'] . " | Disponible : " . $dispo ;
+                                                ?>
+                                                <form action="../Planning/supprimerPlage.php" method=post>
+                                                    <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
+                                                    <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
+                                                    <input type="hidden" name="id_plage_ponctuelle" value="<?php echo $plage['id_plage_ponctuelle'] ?>"/>
+                                                    <button type="submit"><img class="btnPlageSupp" src="../svg/croix.svg" alt="supprimer" width="2em" height="2em"></button>
+                                                </form>
+                                                </div>
+                                                <?php }
+                                    } else { ?>
+                                     <p> Aucune plage définie </p>
+                                
+                                <?php } ?>
+                                            
                                 </div>                  
                             </div>
                     </section>
@@ -124,9 +175,9 @@
                 <h2>Notifications</h2>
 
                 <div class="box">
-                    <?php //foreach ($notifications as $notification) {?>
+                    <?php /*foreach ($notifications as $notification) {?>
 
-                    <?php //} ?>
+                    <?php } */?>
                 </div>
 
 
@@ -153,10 +204,10 @@
                        
                         <section class="rescol">      
                             <div class="logrowb">
-                            <div>
-                            <h3 class="titrecard"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
-                            <hr class="hrcard">
-                            </div>
+                                <div>
+                                    <h3 class="titrecard"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
+                                    <hr class="hrcard">
+                                </div>
                             </div>
                             
 
@@ -177,6 +228,11 @@
             </article>
         </section>    
     </main>
+
+    <?php
+    if ((isset($_GET['popup'])&&(isset($_GET['overlay'])))){?>
+        <script> openPopup(<?php echo "'". $_GET['popup'] ."'" ?>, <?php echo "'". $_GET['overlay'] ."'" ?>) </script>
+    <?php } ?>
     
     <?php 
         echo file_get_contents('../header-footer/footer.html');
