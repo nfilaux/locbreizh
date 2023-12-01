@@ -20,21 +20,11 @@
     $en_ligne = true;
     $id_proprietaire = $_SESSION['id'];
     $nom_image_principale = $_SESSION['post_logement']['image1P'];
-    if (isset($_SESSION['post_logement']['image2P'])){
-        $nom_image2 = $_SESSION['post_logement']['image2P'];
-    }
-    if (isset($_SESSION['post_logement']['image3P'])){
-        $nom_image3 = $_SESSION['post_logement']['image3P'];
-    }
-    if (isset($_SESSION['post_logement']['image4P'])){
-        $nom_image4 = $_SESSION['post_logement']['image4P'];
-    }
-    if (isset($_SESSION['post_logement']['image5P'])){
-        $nom_image5 = $_SESSION['post_logement']['image5P'];
-    }
-    if (isset($_SESSION['post_logement']['image6P'])){
-        $nom_image6 = $_SESSION['post_logement']['image6P'];
-    }
+    /*$nom_image2 = $_SESSION['post_logement']['image2P'];
+    $nom_image3 = $_SESSION['post_logement']['image3P'];
+    $nom_image4 = $_SESSION['post_logement']['image4P'];
+    $nom_image5 = $_SESSION['post_logement']['image5P'];
+    $nom_image6 = $_SESSION['post_logement']['image6P'];*/
     $charges1 = $_SESSION['post_logement']['charges1P'];
     $charges2 = $_SESSION['post_logement']['charges2P'];
     $charges3 = $_SESSION['post_logement']['charges3P'];
@@ -135,6 +125,24 @@
         $lave_vaiselle = 0;
     }
 
+    if (isset($_SESSION['post_logement']['menageP'])) {
+        $menage_service = "menage";
+    } else {
+        $menage_service = "";
+    }
+
+    if (isset($_SESSION['post_logement']['navetteP'])) {
+        $navette = "navette";
+    } else {
+        $navette = "";
+    }
+
+    if (isset($_SESSION['post_logement']['lingeP'])) {
+        $linge = "linge";
+    } else {
+        $linge = "";
+    }
+
     try {
         include('../parametre_connexion.php');
 
@@ -145,6 +153,16 @@
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
+
+    //echo $dbh->lastInsertId() . "+" . $linge;
+
+    $stmt = $dbh->prepare(
+        "INSERT INTO locbreizh._taxe_sejour (prix_journalier_adulte)
+            VALUES (:prix_journalier_adulte)"
+    );
+
+    $stmt->bindParam(':prix_journalier_adulte', $taxe_sejour);
+    $stmt->execute();
 
     $stmt = $dbh->prepare(
         "INSERT INTO locbreizh._taxe_sejour (prix_journalier_adulte)
@@ -182,8 +200,6 @@
             VALUES (:libelle_logement, :tarif_de_base, :accroche, :description, :nature, :type, :nb_chambres, :nb_lit_simple, :nb_lit_double, :nb_sdb, :surface_maison, :nb_personne_max, :surface_jardin, :balcon, :terrasse, :parking_public, :parking_privee, :sauna, :hammam, :piscine, :climatisation, :jacuzzi, :television, :wifi, :lave_vaisselle, :lave_linge, :image1, :id_taxe_sejour, :en_ligne, :id_proprietaire, :id_adresse)"
     );
 
-    
-
     $stmt->bindParam(':id_taxe_sejour', $id_taxe_sejour);
     $stmt->bindParam(':libelle_logement', $nom);
     $stmt->bindParam(':tarif_de_base', $tarif_de_base);
@@ -218,6 +234,39 @@
 
     $stmt->execute();
     $id_logement = $dbh->lastInsertId();
+
+    if ($linge != ""){
+        $stmt = $dbh->prepare(
+            "INSERT INTO locbreizh._services_compris (logement,nom_service)
+                VALUES (:logement,:nom_service)"
+        );
+    
+        $stmt->bindParam(':logement',$id_logement );
+        $stmt->bindParam(':nom_service', $linge);
+        $stmt->execute();
+    }
+
+    if ($navette != ""){
+        $stmt = $dbh->prepare(
+            "INSERT INTO locbreizh._services_compris (logement,nom_service)
+                VALUES (:logement,:nom_service)"
+        );
+    
+        $stmt->bindParam(':logement',$id_logement );
+        $stmt->bindParam(':nom_service', $navette);
+        $stmt->execute();
+    }
+
+    if ($menage != ""){
+        $stmt = $dbh->prepare(
+            "INSERT INTO locbreizh._services_compris (logement,nom_service)
+                VALUES (:logement,:nom_service)"
+        );
+    
+        $stmt->bindParam(':logement',$id_logement );
+        $stmt->bindParam(':nom_service', $menage_service);
+        $stmt->execute();
+    }
 
     $stmt = $dbh->prepare("INSERT INTO locbreizh._possede_charges_associee_logement
     values($charges1, $id_logement, 'menage');");
