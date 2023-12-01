@@ -129,7 +129,6 @@ CREATE TABLE
     _planning (
         code_planning SERIAL,
         tarif_journee NUMERIC(5, 2) NOT NULL, -- d'une journée
-        duree_minimale_sejour NUMERIC(2) NOT NULL,
         delai_depart_arrivee NUMERIC(2) NOT NULL,
         disponible          BOOLEAN NOT NULL,
         libelle_indisponibilite  VARCHAR(255),

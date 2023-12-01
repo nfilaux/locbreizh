@@ -1,7 +1,7 @@
 <?php
-$server = 'flora.db.elephantsql.com';
+$server = 'servbdd.iutlan.etu.univ-rennes1.fr';
 $driver = 'pgsql';
-$dbname = 'awudbnxg';
-$user   = 'awudbnxg';
-$pass	= '2eFRQlhUqSl6lxXkGKfRGCDISPMIGAWF';
+$dbname = 'pg_nfilaux';
+$user   = 'nfilaux';
+$pass	= 'R0binetGris';
 ?>

@@ -132,7 +132,6 @@
                 <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else{if ($vac_sup!=''){echo $vac_sup;}}; ?>"/>
                 </div>
             </div>
-            <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
             </div>
 
 

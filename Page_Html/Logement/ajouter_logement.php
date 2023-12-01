@@ -165,13 +165,25 @@
     $stmt->bindParam(':image1', $nom_image_principale);
     $stmt->execute();
 
+    $planning = $dbh->prepare(
+        'INSERT INTO locbreizh._planning(tarif_journee, delai_depart_arrivee, disponible) 
+            VALUES(:tarif_journee, :delai_depart_arrivee, :disponible);'
+    ); 
 
+
+    $delai = 1;
+    $planning->bindParam(':tarif_journee', $tarif_de_base);
+    $planning->bindParam(':delai_depart_arrivee', $delai);
+    $planning->bindParam(':disponible', $en_ligne);
+
+    $planning->execute();
+
+    $code_planning = $dbh->lastInsertId();
 
     $stmt = $dbh->prepare(
-        "INSERT INTO locbreizh._logement (libelle_logement, tarif_base_HT, accroche_logement, descriptif_logement, nature_logement, type_logement, nb_chambre, lit_simple, lit_double, nb_salle_bain, surface_logement, nb_personnes_logement, jardin, balcon, terrasse, parking_public, parking_privee, sauna, hammam, piscine, climatisation, jacuzzi, television, wifi, lave_vaisselle, lave_linge, photo_principale, taxe_sejour, en_ligne, id_proprietaire, id_adresse)
-            VALUES (:libelle_logement, :tarif_de_base, :accroche, :description, :nature, :type, :nb_chambres, :nb_lit_simple, :nb_lit_double, :nb_sdb, :surface_maison, :nb_personne_max, :surface_jardin, :balcon, :terrasse, :parking_public, :parking_privee, :sauna, :hammam, :piscine, :climatisation, :jacuzzi, :television, :wifi, :lave_vaisselle, :lave_linge, :image1, :id_taxe_sejour, :en_ligne, :id_proprietaire, :id_adresse)"
+        "INSERT INTO locbreizh._logement (libelle_logement, tarif_base_HT, accroche_logement, descriptif_logement, nature_logement, type_logement, nb_chambre, lit_simple, lit_double, nb_salle_bain, surface_logement, nb_personnes_logement, jardin, balcon, terrasse, parking_public, parking_privee, sauna, hammam, piscine, climatisation, jacuzzi, television, wifi, lave_vaisselle, code_planning,lave_linge, photo_principale, taxe_sejour, en_ligne, id_proprietaire, id_adresse)
+            VALUES (:libelle_logement, :tarif_de_base, :accroche, :description, :nature, :type, :nb_chambres, :nb_lit_simple, :nb_lit_double, :nb_sdb, :surface_maison, :nb_personne_max, :surface_jardin, :balcon, :terrasse, :parking_public, :parking_privee, :sauna, :hammam, :piscine, :climatisation, :jacuzzi, :television, :wifi, :lave_vaisselle, :code_planning, :lave_linge, :image1, :id_taxe_sejour, :en_ligne, :id_proprietaire, :id_adresse)"
     );
-
     
 
     $stmt->bindParam(':id_taxe_sejour', $id_taxe_sejour);
@@ -200,6 +212,7 @@
     $stmt->bindParam(':television', $television);
     $stmt->bindParam(':wifi', $wifi);
     $stmt->bindParam(':lave_vaisselle', $lave_vaiselle);
+    $stmt->bindParam(':code_planning', $code_planning);
     $stmt->bindParam(':lave_linge', $lave_linge);
     $stmt->bindParam(':image1', $nom_image_principale);
     $stmt->bindParam(':en_ligne', $en_ligne);

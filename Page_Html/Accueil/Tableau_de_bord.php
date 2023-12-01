@@ -185,14 +185,15 @@
                 <p>Aucune réservation en cours </p>
                 <?php
             
-                $stmt = $dbh->prepare("SELECT l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
+                $stmt = $dbh->prepare("SELECT lien_devis, l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
                 from locbreizh._reservation r
                 join locbreizh._logement l on l.id_logement = r.logement
                 join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
                 join locbreizh._compte c on c.id_compte = p.id_proprietaire
                 join locbreizh._adresse a on l.id_adresse = a.id_adresse
                 join locbreizh._facture f on f.num_facture = r.facture
-                join locbreizh._devis d on d.num_devis = f.num_devis");
+                join locbreizh._devis d on d.num_devis = f.num_devis
+                join locbreizh._message_devis on d.num_devis = _message_devis.id_devis");
                 $stmt->execute();
                 $reservations = $stmt->fetchAll();
 
@@ -212,7 +213,7 @@
                             
 
                             <div class="resrow">
-                                <a href="../devis/pdf_devis/"><button class="btn-ajoutlog" disabled>CONSULTER DEVIS</button></a>
+                                <a href="../devis/pdf_devis/<?php echo $reservation['lien_devis'];?>" target="_blank"><button class="btn-ajoutlog" >CONSULTER DEVIS</button></a>
                                 <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
                                 <a><button class="btn-suppr" disabled>ANNULER</button></a>
                             </div>

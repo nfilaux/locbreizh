@@ -32,11 +32,10 @@ $extension_img_1 = explode('/',$_FILES['image1P']['type'])[1];
 $nouveau_nom_image1 = id_photo($id_photo) . '.' . $extension_img_1;
 $id_photo++;
 move_uploaded_file($nom_image_principale, "../Ressources/Images/" . $nouveau_nom_image1);
-//echo '<p> avant l image 2 ! <p>';
-echo '<p>tableau session logement<p>';
+
+
 
 if ($_FILES['image2P']['name']!= '') {
-    echo '<p>il y a une image 2 !<p>';
     $extension_img_2 = explode('/',$_FILES['image2P']['type'])[1];
     $nouveau_nom_image2 = id_photo($id_photo) . '.' . $extension_img_2;
     $id_photo++;
