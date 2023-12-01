@@ -13,10 +13,8 @@
 
     
 ?>
-
 <!doctype html>
 <html lang="fr">
-
 <head>
     <meta charset="utf-8">
     <title>Accueil</title>
@@ -53,7 +51,23 @@
                 }
 
                 $stmt->execute();
-                foreach ($stmt->fetchAll() as $key => $card) {
+                $liste_mes_logements = $stmt->fetchAll();
+                foreach ($liste_mes_logements as $card) {
+                    $id_log = $card['id_logement'];
+                    $stmt = $dbh->prepare(
+                        "SELECT en_ligne
+                        from locbreizh._logement 
+                        where id_logement = $id_log;"
+                    );
+                    $stmt->execute();
+                    $etat = $stmt->fetch();
+
+                    if ($etat["en_ligne"] == 1){
+                        $bouton_desactiver = "DESACTIVER";  
+                    } else{
+                        $bouton_desactiver = "ACTIVER";
+                    }
+                    
                     ?>
                         <div class="cardlogmain">
                             <img src="../Ressources/Images/<?php echo $card['photo_principale']?>">
@@ -68,7 +82,10 @@
                                 
                                 <div class="logrowb">
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $card['id_logement'] ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
-                                    <a><button class="btn-desactive">DESACTIVER</button></a>
+                                    <?php $id_un_logement = $card['id_logement']; ?>
+                                    <form action="ChangeEtat.php" method="post">
+                                        <input type="submit" name=<?php echo $id_un_logement ?> class="button" value=<?php echo $bouton_desactiver; ?> />
+                                    </form>
                                     <a><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 

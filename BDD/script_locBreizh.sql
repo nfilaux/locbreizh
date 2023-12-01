@@ -492,6 +492,15 @@ CREATE TABLE
         CONSTRAINT possede_charges_associee_logement_fk_logement FOREIGN KEY (id_logement) REFERENCES _logement (id_logement),
         CONSTRAINT possede_charges_associee_logement_fk_charges FOREIGN KEY (nom_charges) REFERENCES _charge_additionnelles (nom_charges)
     );
+/*table de referencement des services compris dans chaque logement */
+
+CREATE TABLE IF NOT EXISTS locbreizh._services_compris
+(
+    logement integer NOT NULL,
+    nom_service varchar(50) not null,
+    CONSTRAINT services_compris_pk PRIMARY KEY (logement, nom_service),
+    CONSTRAINT services_compris_fk_logement FOREIGN KEY (logement) REFERENCES locbreizh._logement (id_logement)
+)
 
 /* Peuplement de la base */
 
