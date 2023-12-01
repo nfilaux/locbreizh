@@ -124,9 +124,9 @@
                 <h2>Notifications</h2>
 
                 <div class="box">
-                    <?php foreach ($notifications as $notification) {?>
+                    <?php //foreach ($notifications as $notification) {?>
 
-                    <?php } ?>
+                    <?php //} ?>
                 </div>
 
 
