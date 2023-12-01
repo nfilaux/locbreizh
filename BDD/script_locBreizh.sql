@@ -153,16 +153,6 @@ CREATE TABLE
         CONSTRAINT plage_ponctuelle_fk FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
     );
 
-/*   table plage_ponctuelle_indisponibilite : est utilisée pour renseigner les plages d'indisponibilité de manière ponctuelle   */
-
-CREATE TABLE
-    _plage_ponctuelle_indisponibilite (
-        id_plage_ponctuelle_indisp INTEGER NOT NULL,
-        motif_indisponibilite VARCHAR(255) NOT NULL,
-        CONSTRAINT plage_ponctuelle_indisponibilite_pk PRIMARY KEY (motif_indisponibilite),
-        CONSTRAINT plage_ponctuelle_indisponibilite_fk_id_plage FOREIGN KEY (id_plage_ponctuelle_indisp) REFERENCES _plage_ponctuelle (id_plage_ponctuelle)
-    );
-
 /*   table contrainte : est utilisée pour renseigner une contrainte au niveau du planning (ex : pas après 18h)   */
 
 CREATE TABLE

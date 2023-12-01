@@ -10,7 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="../scriptPopup.js"></script>
 </head>
 <?php
     // inclusion d'une instance PDO
@@ -149,8 +148,6 @@
 <?php 
         include('../header-footer/choose_header.php');
     ?>
-
-
     <main class="messrowb">
         <!--partie de gauche de la page (liste des conversations)-->
         <div class="messcolumnconv">
@@ -297,6 +294,9 @@
                                                 $stmt->execute();
                                                 $est_client = $stmt->fetch();
 
+                                                $devis_annule = $statut['accepte']; 
+
+
                                                 if(isset($est_client['id_compte'])){
                                                     $est_client = True;
                                                 }
@@ -305,10 +305,13 @@
                                                 }
                                                 ?>
                                                 <form method="post" action="accepter_devis.php?message=<?php echo $message['id_message']; ?>">
-                                                    <button type="submit" <?php if(isset($statut['accepte']) || !$est_client){ echo 'disabled';} ?>>Accepter</button>
+                                                    <button type="submit" <?php if(isset($statut['accepte']) || !$est_client || $devis_annule){ echo 'disabled';} ?>>Accepter</button>
                                                 </form>
                                                 <form method="post" action="refuser_devis.php?message=<?php echo $message['id_message']; ?>">
-                                                    <button type="submit" <?php if(isset($statut['accepte']) || !$est_client){ echo 'disabled';} ?>>Refuser</button>
+                                                    <button type="submit" <?php if(isset($statut['accepte']) || !$est_client || $devis_annule){ echo 'disabled';} ?>>Refuser</button>
+                                                </form>
+                                                <form method="post" action="annuler_devis.php?message=<?php echo $message['id_message']; ?>">
+                                                    <button type="submit" <?php if(isset($statut['accepte']) || $est_client || $devis_annule){ echo 'disabled';} ?>>Annuler</button>
                                                 </form>
                                         <?php } ?>
                                     </div>
@@ -332,9 +335,10 @@
             <?php }?>
         </div>
     </main>
-    <?php 
+    <?php
         echo file_get_contents('../header-footer/footer.html');
     ?>
+    
 </body>
 
 </html>
