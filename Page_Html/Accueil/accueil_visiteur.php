@@ -63,9 +63,9 @@
             </article></a><?php
             ?></section><?php
 
-            } else if ($card['en_ligne'] == false) {
+            } /*else if ($card['en_ligne'] == false) {
                 print_r("Ce logement est temporairement indisponible !");
-            }
+            }*/
         }
         ?>
 

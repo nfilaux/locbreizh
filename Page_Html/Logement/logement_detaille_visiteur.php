@@ -51,7 +51,17 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
 
             $stmt->execute();
-            $info = $stmt->fetch();?>
+            $info = $stmt->fetch();
+            
+            $stmt = $dbh->prepare(
+                "SELECT photo
+                from locbreizh._photos_secondaires 
+                WHERE logement = {$_GET['logement']};"
+            );
+            $stmt->execute();
+            $photos_secondaires = $stmt->fetchAll();
+            
+            ?>
             <div class="logpc">
                 <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
                 <div class="logrowb">
@@ -66,12 +76,51 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                         -->
                     </div>
                 </div>
-                <img src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
-
-                <!-- 
-                <img src="<?php// echo $info['photo_url'];?> ">
-                <img src="<?php// echo $info['photo_url'];?> ">
-                -->
+                <div class="detailimg">
+                    <?php
+                        $cpt = 1;
+                        for ($i = 0 ; $i <5; $i++){
+                            if (isset($photos_secondaires[$i]['photo'])){
+                                $cpt ++;
+                            }
+                        }
+                        switch($cpt){
+                            case 1 : ?><img class="photoprincipal" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                     break;
+                            case 2 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                    for ($i = 0 ; $i < 5; $i++) {
+                                        if (isset($photos_secondaires[$i]['photo'])){
+                                            ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                        }
+                                    } break; 
+                            case 3 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                     for ($i = 0 ; $i < 5; $i++) {
+                                            if (isset($photos_secondaires[$i]['photo'])){
+                                                ?><img class="photosecondaireI" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                            }
+                                        } break;
+                            case 4 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                    for ($i = 0 ; $i < 5; $i++) {
+                                        if (isset($photos_secondaires[$i]['photo'])){
+                                            ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                        }
+                                    } break;
+                            case 5 :?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php 
+                                    for ($i = 0 ; $i < 5; $i++) {
+                                        if (isset($photos_secondaires[$i]['photo'])){
+                                            ?><img class="photosecondaireI" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                        }
+                                    } break;
+                            case 6 : ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                    for ($i = 0 ; $i < 5; $i++) {
+                                        if (isset($photos_secondaires[$i]['photo'])){
+                                            ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                        }
+                                    } break;
+                        }
+                        
+                        ?>
+                </div>
                 <div class="logrowt">  
                     <div class="logcolumn">
                         <h3 class="policetitre">Description</h3>

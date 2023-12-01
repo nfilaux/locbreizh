@@ -87,13 +87,13 @@ $photo = $stmt->fetch();
                 ?><h4><?php echo $card['nb_personnes_logement']; ?> personnes</h4>
                 </article></a><?php
                 ?></section><?php
-            } else if ($card['en_ligne'] == false) {
+            } /*else if ($card['en_ligne'] == false) {
                     echo "Ce logement est temporairement indisponible !";
-                }
+                }*/
         }
-        if (!isset($card)) {
+        /*if (!isset($card)) {
             print_r("Ce logement est indisponible !");
-        }
+        }*/
 
         ?>
 

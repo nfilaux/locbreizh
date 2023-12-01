@@ -210,7 +210,8 @@
                 join locbreizh._adresse a on l.id_adresse = a.id_adresse
                 join locbreizh._facture f on f.num_facture = r.facture
                 join locbreizh._devis d on d.num_devis = f.num_devis
-                join locbreizh._message_devis on d.num_devis = _message_devis.id_devis");
+                join locbreizh._message_devis on d.num_devis = _message_devis.id_devis
+                where id_compte = {$_SESSION['id']}");
                 $stmt->execute();
                 $reservations = $stmt->fetchAll();
 

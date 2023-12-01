@@ -18,7 +18,7 @@ $photo = $stmt->fetch();
 $nom_image_principale = $_FILES["image1P"]["tmp_name"];
 $nom_image2 = $_FILES["image2P"]["tmp_name"];
 $nom_image3 = $_FILES["image3P"]["tmp_name"];
-$nom_image4 = $_FILES["image2P"]["tmp_name"];
+$nom_image4 = $_FILES["image4P"]["tmp_name"];
 $nom_image5 = $_FILES["image5P"]["tmp_name"];
 $nom_image6 = $_FILES["image6P"]["tmp_name"];
 
@@ -312,7 +312,7 @@ if ($_FILES['image6P']['name']!= '') {
             'image3' => $nouveau_nom_image3,
             'image4' => $nouveau_nom_image4,
             'image5' => $nouveau_nom_image5,
-            'image6' => $nouveau_nom_image6
+            'image6' => $nouveau_nom_image6,
         ];
 
         if (isset($_SESSION['logement_data'])) {
@@ -408,7 +408,7 @@ if ($_FILES['image6P']['name']!= '') {
                                 }?>
                             </div>
                             <div class="logcp">
-                                <p><?php  echo $logement_data['nb_salle_bain'] ?> Salles de bain</p><?php
+                                <p><?php  echo $logement_data['nb_sdb'] ?> Salles de bain</p><?php
                                 if ($logement_data['television'] == true) {
                                     ?><p><?php  echo 'Television inclus'; ?></p><?php
                                 }

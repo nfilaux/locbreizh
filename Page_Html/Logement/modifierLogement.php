@@ -1,6 +1,6 @@
 <?php
     session_start();
-<<<<<<< HEAD
+
     ?>
     <style> #erreur {color: red; font-size : bold}</style>
     <?php
@@ -51,7 +51,7 @@ $photo = $stmt->fetch();
             include('../header-footer/choose_header.php');
         ?>
 
-    
+        <main>
         <div class="headconn">
             <a href="../Accueil/Tableau_de_bord.php"><img src='../svg/flecheRetour.svg'></a>
             <h1>La fiche de votre logement</h1>
@@ -247,36 +247,36 @@ $photo = $stmt->fetch();
                         </div>
                     </div>
                 </div>  
+                <div class="logpc">
+                    <h4 class="titreAL">Images logement</h4>
+                    <div class="logrow">
                         <div class="logpc">
-                            <h4 class="titreAL">Images logement</h4>
-                            <div class="logrow">
-                                <div class="logpc">
-                                    <label for='image1'>Image 1</label>
-                                    <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg'>
+                            <label for='image1'>Image 1</label>
+                            <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg'>
 
-                                    <label for='image2'>Image 2</label>
-                                    <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
+                            <label for='image2'>Image 2</label>
+                            <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
 
-                                    <label for='image3'>Image 3</label>
-                                    <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
-                                </div>
-                                <div class="logpc">
-                                    <label for='image4'>Image 4</label>
-                                    <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
-
-                                    <label for='image5'>Image 5</label>
-                                    <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
-
-                                    <label for='image6'>Image 6</label>
-                                    <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
-                                </div>
-                            </div>
-                            <div class="btn-modif-logement">
-                            <button class="btn-accueil" name='previsualiser' type='submit'>Modifier</button></div>
+                            <label for='image3'>Image 3</label>
+                            <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
                         </div>
+                        <div class="logpc">
+                            <label for='image4'>Image 4</label>
+                            <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
+
+                            <label for='image5'>Image 5</label>
+                            <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
+
+                            <label for='image6'>Image 6</label>
+                            <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
+                        </div>
+                    </div>
+                    <div class="btn-modif-logement">
+                    <button class="btn-accueil" name='previsualiser' type='submit'>Modifier</button></div>
+                </div>
     
             </form>
-=======
+            <?php
 
     $nom = $_SESSION['post_logement']['nomP'];
     $ville = $_SESSION['post_logement']['villeP'];
@@ -297,11 +297,11 @@ $photo = $stmt->fetch();
     $en_ligne = true;
     $id_proprietaire = $_SESSION['id'];
     $nom_image_principale = $_SESSION['post_logement']['image1P'];
-    /*$nom_image2 = $_SESSION['post_logement']['image2P'];
+    $nom_image2 = $_SESSION['post_logement']['image2P'];
     $nom_image3 = $_SESSION['post_logement']['image3P'];
     $nom_image4 = $_SESSION['post_logement']['image4P'];
     $nom_image5 = $_SESSION['post_logement']['image5P'];
-    $nom_image6 = $_SESSION['post_logement']['image6P'];*/
+    $nom_image6 = $_SESSION['post_logement']['image6P'];
     $charges1 = $_SESSION['post_logement']['charges1P'];
     $charges2 = $_SESSION['post_logement']['charges2P'];
     $charges3 = $_SESSION['post_logement']['charges3P'];
@@ -431,8 +431,6 @@ $photo = $stmt->fetch();
         die();
     }
 
-    //echo $dbh->lastInsertId() . "+" . $linge;
-
     $stmt = $dbh->prepare(
         "INSERT INTO locbreizh._taxe_sejour (prix_journalier_adulte)
             VALUES (:prix_journalier_adulte)"
@@ -549,7 +547,7 @@ $photo = $stmt->fetch();
             "INSERT INTO locbreizh._services_compris (logement,nom_service)
                 VALUES (:logement,:nom_service)"
         );
->>>>>>> origin/youen
+
     
         $stmt->bindParam(':logement',$id_logement );
         $stmt->bindParam(':nom_service', $menage_service);
@@ -658,26 +656,17 @@ $photo = $stmt->fetch();
     if (isset($_SESSION['post_logement']['image6P'])) {
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
-                VALUES (:logement, :image6)'
+                    VALUES (:logement, :image6)'
+        );
+        $stmt->bindParam(':image6', $nom_image5);
+        $stmt->bindParam(':logement', $id_logement);
+        $stmt->execute(); 
+    } ?>
             
-<<<<<<< HEAD
-        </main>
-    
-        <?php 
+</main>
+    <?php 
         echo file_get_contents('../header-footer/footer.html');
     ?>
 </body>
 
 </html>
-<script src="../scriptPopup.js"></script>
-=======
-        );
-        $stmt->bindParam(':image6', $nom_image6);
-        $stmt->bindParam(':logement', $id_logement);
-        $stmt->execute();
-    }
-    unset($_SESSION['post_logement']);
-
-    header("Location: ../Accueil/Tableau_de_bord.php");
-?>
->>>>>>> origin/youen

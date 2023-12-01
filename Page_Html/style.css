@@ -1023,6 +1023,38 @@ iframe {
     margin: auto;
 }
 
+.detailimg {
+    background-color: #745086;
+    width: 100%;
+    padding: 1em;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.photoprincipal{
+    width: 90%;
+    border-radius: 15px;
+    height: 20em;
+}
+
+.photosecondaireP {
+    width: 48%;
+    height: 20em;
+}
+
+.photosecondaireI {
+    width: 25%;
+    height: 20em;
+}
+
+.photosecondaireP6 {
+    width: 30%;
+    height: 20em;
+}
+
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
 
 .messcolumn{

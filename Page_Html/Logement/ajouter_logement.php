@@ -20,19 +20,13 @@
     $en_ligne = true;
     $id_proprietaire = $_SESSION['id'];
     $nom_image_principale = $_SESSION['post_logement']['image1P'];
-<<<<<<< HEAD
+
     $nom_image2 = $_SESSION['post_logement']['image2P'];
     $nom_image3 = $_SESSION['post_logement']['image3P'];
     $nom_image4 = $_SESSION['post_logement']['image4P'];
     $nom_image5 = $_SESSION['post_logement']['image5P'];
     $nom_image6 = $_SESSION['post_logement']['image6P'];
-=======
-    /*$nom_image2 = $_SESSION['post_logement']['image2P'];
-    $nom_image3 = $_SESSION['post_logement']['image3P'];
-    $nom_image4 = $_SESSION['post_logement']['image4P'];
-    $nom_image5 = $_SESSION['post_logement']['image5P'];
-    $nom_image6 = $_SESSION['post_logement']['image6P'];*/
->>>>>>> origin/youen
+
     $charges1 = $_SESSION['post_logement']['charges1P'];
     $charges2 = $_SESSION['post_logement']['charges2P'];
     $charges3 = $_SESSION['post_logement']['charges3P'];
@@ -220,10 +214,7 @@
         "INSERT INTO locbreizh._logement (libelle_logement, tarif_base_HT, accroche_logement, descriptif_logement, nature_logement, type_logement, nb_chambre, lit_simple, lit_double, nb_salle_bain, surface_logement, nb_personnes_logement, jardin, balcon, terrasse, parking_public, parking_privee, sauna, hammam, piscine, climatisation, jacuzzi, television, wifi, lave_vaisselle, code_planning,lave_linge, photo_principale, taxe_sejour, en_ligne, id_proprietaire, id_adresse)
             VALUES (:libelle_logement, :tarif_de_base, :accroche, :description, :nature, :type, :nb_chambres, :nb_lit_simple, :nb_lit_double, :nb_sdb, :surface_maison, :nb_personne_max, :surface_jardin, :balcon, :terrasse, :parking_public, :parking_privee, :sauna, :hammam, :piscine, :climatisation, :jacuzzi, :television, :wifi, :lave_vaisselle, :code_planning, :lave_linge, :image1, :id_taxe_sejour, :en_ligne, :id_proprietaire, :id_adresse)"
     );
-<<<<<<< HEAD
     
-=======
->>>>>>> origin/youen
 
     $stmt->bindParam(':id_taxe_sejour', $id_taxe_sejour);
     $stmt->bindParam(':libelle_logement', $nom);
