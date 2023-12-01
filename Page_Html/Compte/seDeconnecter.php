@@ -1,4 +1,5 @@
 <?php
+    session_start();
     // unset les variables de session
     session_unset();
     // fermeture de la session
