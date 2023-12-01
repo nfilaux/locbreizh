@@ -18,6 +18,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page détaillé d'un logement</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptPopup.js"></script>
 </head>
 
 

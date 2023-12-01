@@ -103,6 +103,21 @@ body {
     z-index: 999;
 }
 
+/*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/
+
+#mdp{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#mdp img, .rowcompte img{
+    height : 50px;
+    margin-left : 20px;
+    cursor: pointer;
+}
+
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
@@ -689,6 +704,16 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: 100%;
     margin: 1em auto auto auto;
     font-family: 'Quicksand';
+}
+
+.rowcompte input[type='password']{
+    width: 85%;
+
+}
+
+.rowcompte .messerr >div{
+    display: flex;
+    align-items: end;
 }
 
 .nbrueinput {

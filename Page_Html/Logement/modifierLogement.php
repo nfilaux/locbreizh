@@ -199,22 +199,22 @@ $photo = $stmt->fetch();
                                                 </div>
                                                 <div class="logcolumn">
                                                     <div class="logcheckbox">
-                                                        <input disabled id='equipement' type='checkbox' name='parking_publicP' value='7' <?php if($res["parking_public"] == false){ ?> checked <?php ;}?>>Parking public
+                                                        <input disabled id='equipement' type='checkbox' name='parking_publicP' value='7' <?php if($res["parking_public"] == true){ ?> checked <?php ;}?>>Parking public
                                                     </div>
                                                     <div class="logcheckbox">
-                                                        <input disabled id='equipement' type='checkbox' name='parking_priveP' value='8' <?php if($res["parking_privee"] == false){ ?> checked <?php ;}?>>Parking privé
+                                                        <input disabled id='equipement' type='checkbox' name='parking_priveP' value='8' <?php if($res["parking_privee"] == true){ ?> checked <?php ;}?>>Parking privé
                                                     </div>
                                                     <div class="logcheckbox"> 
-                                                        <input disabled id='equipement' type='checkbox' name='televisionP' value='9' <?php if($res["television"] == false){ ?> checked <?php ;}?>>Télévision
+                                                        <input disabled id='equipement' type='checkbox' name='televisionP' value='9' <?php if($res["television"] == true){ ?> checked <?php ;}?>>Télévision
                                                     </div>
                                                     <div class="logcheckbox"> 
-                                                        <input disabled id='equipement' type='checkbox' name='wifiP' value='10' <?php if($res["wifi"] == false){ ?> checked <?php ;}?>>Wifi
+                                                        <input disabled id='equipement' type='checkbox' name='wifiP' value='10' <?php if($res["wifi"] == true){ ?> checked <?php ;}?>>Wifi
                                                     </div>
                                                     <div class="logcheckbox">
-                                                        <input disabled id='equipement' type='checkbox' name='lave_vaisselleP' value='11' <?php if($res["lave_vaisselle"] == false){ ?> checked <?php ;}?>>Lave vaisselle
+                                                        <input disabled id='equipement' type='checkbox' name='lave_vaisselleP' value='11' <?php if($res["lave_vaisselle"] == true){ ?> checked <?php ;}?>>Lave vaisselle
                                                     </div>
                                                     <div class="logcheckbox">
-                                                        <input disabled id='equipement' type='checkbox' name='lave_lingeP' value='12' <?php if($res["lave_linge"] == false){ ?> checked <?php ;}?>>Lave linge
+                                                        <input disabled id='equipement' type='checkbox' name='lave_lingeP' value='12' <?php if($res["lave_linge"] == true){ ?> checked <?php ;}?>>Lave linge
                                                     </div>
                                                 </div>
                                             </div>

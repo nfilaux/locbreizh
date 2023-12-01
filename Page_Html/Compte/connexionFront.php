@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Page de connexion</title>
     <link rel="stylesheet" href="../style.css">
+
+<script src="../scriptMDP.js"></script>
+
 </head>
 <body class="pagecompte">
         <?php
@@ -36,12 +39,14 @@
                 ?>
             </article>
             <br>
-            <article>
+            <article id="mdp">
                 <input type="password" id="motdepasse" name="motdepasse" class="custom-input" placeholder="Mot de passe"/>
+                <img src="../svg/oeil.svg" id="eye" onClick="changer('motdepasse', 'eye')"/>
                 <?php
                     erreur("motdepasse");
                 ?>
             </article>
+
             <br>
             <button class="btn-compte" type="submit">Se connecter</button>
         </form>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../scriptMDP.js"></script>
 </head>
 <body class="pagecompte">
     <?php
@@ -112,18 +113,23 @@
 
             <div class="rowcompte">
                 <div style="width: 48%;" class="messerr">
+                <div>
                 <input class="testinput" type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required/>
+                <img id="eye1" src="../svg/oeil.svg" onClick="changer('motdepasse', 'eye1')"/></div>
                 <?php
                     erreur("motdepasse");
                 ?>
                 </div>
                 <div style="width: 48%;" class="messerr">
+                <div>
                 <input class="testinput" type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation Mdp" required/>
+                <img id="eye2" src="../svg/oeil.svg"  onClick="changer('confirmationMDP', 'eye2')"/></div>
                 <?php
                     erreur("confirmationMDP");
                 ?>
                 </div>
             </div>
+
 
             <div class="rowcompte">
                 <div style="width: 48%;" class="messerr">
