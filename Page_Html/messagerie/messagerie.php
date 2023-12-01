@@ -210,7 +210,7 @@
                         }
                         else{
                             echo '../Ressources/Images/' . $liste_message[0]['photo1']; 
-                        }?> alt='image de profil'>
+                        }?> alt='image de profil' width="150px" height="150px">
 
                         <p><?php 
                         // affichage du nom, prenom
@@ -237,7 +237,7 @@
                             ?>                      
                             <!--un seul message-->
                             <div>
-                                <img src=<?php echo '../Ressources/Images/' . $photo_mess; ?> alt="photo de profil">
+                                <img src=<?php echo '../Ressources/Images/' . $photo_mess; ?> alt="photo de profil" width="150px" height="150px">
                                 <!--contenu message + date... -->
                                 <div>
                                     <div>

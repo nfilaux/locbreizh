@@ -54,14 +54,22 @@ $photo = $stmt->fetch();
 
 
             $stmt->execute();
-            $info = $stmt->fetch();?>
+            $info = $stmt->fetch();
+            $stmt = $dbh->prepare(
+                "SELECT photo
+                from locbreizh._photos_secondaires 
+                WHERE logement = {$_GET['logement']};"
+            );
+            $stmt->execute();
+            $photos_secondaires = $stmt->fetchAll();
+            
+            ?>
             <div class="logpc">
                 <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
                 <div class="logrowb">
                     <div class="logrowt">
                         <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
-                        <p>pour <?php echo $info['nb_personnes_logement'];?>  personnes</p>
-                        <p>logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> </p>
+                        <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                     <div class="logrowt">
                         <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
@@ -70,12 +78,51 @@ $photo = $stmt->fetch();
                         -->
                     </div>
                 </div>
-                <img src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
-
-                <!-- 
-                <img src="<?php// echo $info['photo_url'];?> ">
-                <img src="<?php// echo $info['photo_url'];?> ">
-                -->
+                <div class="detailimg">
+                    <?php
+                        $cpt = 1;
+                        for ($i = 0 ; $i <5; $i++){
+                            if (isset($photos_secondaires[$i]['photo'])){
+                                $cpt ++;
+                            }
+                        }
+                        switch($cpt){
+                            case 1 : ?><img class="photoprincipal" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                     break;
+                            case 2 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                    for ($i = 0 ; $i < 5; $i++) {
+                                        if (isset($photos_secondaires[$i]['photo'])){
+                                            ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                        }
+                                    } break; 
+                            case 3 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                     for ($i = 0 ; $i < 5; $i++) {
+                                            if (isset($photos_secondaires[$i]['photo'])){
+                                                ?><img class="photosecondaireI" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                            }
+                                        } break;
+                            case 4 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                    for ($i = 0 ; $i < 5; $i++) {
+                                        if (isset($photos_secondaires[$i]['photo'])){
+                                            ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                        }
+                                    } break;
+                            case 5 :?><img class="photosecondaireP5" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "> <div class="imgsecondaire"><?php 
+                                for ($i = 0 ; $i < 5; $i++) {
+                                    if (isset($photos_secondaires[$i]['photo'])){
+                                        ?><img class="photosecondaireI5" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                    }
+                                } ?> </div> <?php break;
+                            case 6 : ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
+                                    for ($i = 0 ; $i < 5; $i++) {
+                                        if (isset($photos_secondaires[$i]['photo'])){
+                                            ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                        }
+                                    } break;
+                        }
+                        
+                        ?>
+                </div>
                 <div class="logrowt">  
                 <div class="logcolumn">
                         <h3 class="policetitre">Description</h3>
