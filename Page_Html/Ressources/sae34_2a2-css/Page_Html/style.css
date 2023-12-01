@@ -1,35 +1,29 @@
 /*----------------------------------------------------------------Polices---------------------------------------------------------------*/
 
 @font-face {
-    font-family: 'PatuaOne';
-    src: url('Ressources/polices/patuaone-regular-webfont.woff2') format('woff2'),
-         url('Ressources/polices/patuaone-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'PatuaOne';
+	src: url(‘Ressources/Polices/patua_one/PatuaOne-Regular.woff2’) format(‘woff2’),
+		url(‘Ressources/Polices/patua_one/PatuaOne-Regular.ttf’) format(‘truetype’)
 }
 
 @font-face {
-    font-family: 'quicksandregular';
-    src: url('Ressources/polices/quicksand-regular-webfont.woff2') format('woff2'),
-         url('Ressources/polices/quicksand-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-html{
-    height: 100%;
+	font-family: 'Quicksand';
+	src: url(‘Ressources/Polices/quicksand/Quicksand-Bold.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-Light.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-Medium.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-Regular.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-SemiBold.woff2’) format(‘woff2’),
+         url(‘Ressources/Polices/quicksand/Quicksand-VariableFont_wght.woff2’) format(‘woff2’)
 }
 
 body {
-    height: 100%;
+    height: auto;
     padding-bottom: 0;
     margin: 0;
     background-origin: content-box;
     width: 100%;
-    font-family: 'Quicksand', sans-serif, 'Trebuchet MS';
+    font-family: 'Quicksand';
     background-color: #F5F4F4;
-    display: table;
 }
 
 .pagecompte {
@@ -38,50 +32,6 @@ body {
 
 /*----------------------------------------------------------------popup----------------------------------------------------------------*/
 
-/*-- Pop-up (accéder profil & déconnexion) --*/
-#popup {
-    padding: 0px;
-    font-size: 0.7em;
-    display: none;
-    position: absolute;
-    top: 110%;
-    left: 88%;
-    transform: translate(-50%, -50%);
-    background-color: transparent;
-    border: transparent;
-    box-shadow: none;
-    z-index: 1000;
-}
-
-#overlay_profil-deconnexion {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-}
-
-#tableProfil, #tableProfil td{
-    border-collapse: collapse;
-    background-color: #fff;
-    border: 1px solid #745086;
-}
-
-#deconnexion{
-    width: 8.5em;
-    padding: 10px 40px;
-    color: red;
-}
-
-#monprofil{
-    width: 8.5em;
-    padding: 10px 40px;
-    color: #000;
-}
-
-
 /*-- Pop-up (Calendrier) --*/
 
 .plages {
@@ -89,7 +39,6 @@ body {
     font-size: 1em;
     display: none;
     position: fixed;
-    text-align: start;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -97,17 +46,6 @@ body {
     border: 1px solid #745086;
     box-shadow: none;
     z-index: 1000;
-}
-
-.plages .btn-ajt {
-    margin-left: 85%;
-}
-
-.plages .btn-supr {
-    font-size: 7em;
-    margin-left: 25%;
-    border: none;
-    border-radius: unset;
 }
 
 .overlay_plages{
@@ -119,35 +57,6 @@ body {
     height: 100%;
     background: rgba(0, 0, 0, 0.2);
     z-index: 999;
-}
-
-.unePlage {
-    display: flex;
-    flex-wrap: nowrap;
-}
-
-.unePlage button{
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-}
-/*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/
-
-#mdp{
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-#mdp img, .rowcompte img{
-    height : 50px;
-    margin-left : 20px;
-    cursor: pointer;
 }
 
 
@@ -344,13 +253,13 @@ footer{
     background-color: #745086;
     color: #F6E4FF;
     margin-bottom: 0;
-    display: table-row;
+    display: block;
+    position: static;
     bottom: 0;
     box-sizing: border-box;
     border-top: 1px solid #F6E4FF   ;
     width: 100%;
 }
-
 
 .tfooter, .bfooter{
     display: flex;
@@ -602,7 +511,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     justify-content: space-between;
     background-color: #745086;
     border-radius: 15px;
-    padding-top: 5px;
+    padding-top: 0.5em;
     width: 20%;
     margin: 1em 2%;
 }
@@ -738,16 +647,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-family: 'Quicksand';
 }
 
-.rowcompte input[type='password']{
-    width: 85%;
-
-}
-
-.rowcompte .messerr >div{
-    display: flex;
-    align-items: end;
-}
-
 .nbrueinput {
     color: #957BB0; 
     border: 1px solid #957BB0;
@@ -790,11 +689,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     flex-direction: column;
     justify-content: space-between;
     width: 48%;
-    margin-bottom: 3%;
-    margin-top: 3%;
-}
-.logcolumn > p{
-    margin: 4vw
 }
 
 .logpc{
@@ -858,7 +752,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .logrowt {
     display: flex;
     flex-direction: row;
-    align-items: center;
 }
 
 .logrowc {
@@ -872,7 +765,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
 }
 
 .cardSupplements {
@@ -990,14 +882,14 @@ fieldset label{
 .logtitre{
     font-family: 'PatuaOne';
     color: #745086;
-    font-size: 2em;
+    font-size: 4em;
     margin-top: auto;
     margin-bottom: 0.2em;
 }
 
 
-.logrowt > p {
-    margin: 0 4vw;
+.logrowt p {
+    margin: auto 0 1em 1em;
 }
 
 
@@ -1038,55 +930,6 @@ iframe {
     width: 30%;
     height: auto;
     margin: auto;
-}
-
-.detailimg {
-    background-color: #745086;
-    width: 100%;
-    padding: 1em;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.photoprincipal{
-    width: 90%;
-    border-radius: 15px;
-    height: 20em;
-}
-
-.photosecondaireP {
-    width: 48%;
-    height: 20em;
-}
-
-.photosecondaireI {
-    width: 23%;
-    height: 20em;
-}
-
-.photosecondaireP5 {
-    width: 48%;
-    height: 22em;
-}
-
-.photosecondaireI5 {
-    width: 48%;
-    height: 10em;
-}
-
-.photosecondaireP6 {
-    width: 30%;
-    height: 20em;
-}
-
-.imgsecondaire {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 48%;
 }
 
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
@@ -1193,7 +1036,7 @@ iframe {
     justify-content: center;
     border: 2px solid #745086;
     width: 80%;
-    margin: auto;
+    margin: 1em auto;
     background-color: #FCF0E2;
     padding: 0.2em;
 }
@@ -1268,6 +1111,14 @@ iframe {
     margin-bottom: auto;
 }
 
+.policetitreh4 {
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    font-size: 1.5em;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .restitre {
     font-family: 'PatuaOne';
     font-weight: 600;
@@ -1284,304 +1135,4 @@ iframe {
 
 .colorviolet{
     color: #745086;
-}
-
-/*------------------------------------------- CONSULTER PROFIL -----------------------------------------------*/
-
-.row-profil {
-    display: flex;
-    justify-content: space-between;
-    margin: 1vh 0;
-    align-items: center;
-}
-
-.row-profil label {
-    width: 50%;
-    font-weight: normal;
-    color: #745086;
-    text-transform: inherit;
-}
-
-.row-profil input {
-    width: 50%;
-    height: 2.5vw;
-    border-radius: 5px;
-    padding-left: 1vw;
-}
-
-.main-profil {
-    padding: 4vw;
-    font-size: 1.5em;
-}
-
-.compte-infos label,
-.div-adresse>p {
-    color: #000;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.row-profil>div {
-    width: 60%;
-}
-
-.header-profil {
-    text-transform: uppercase;
-    background-color: #745086;
-    color: #fff;
-    text-align: center;
-    padding: 2vh;
-}
-
-.compte-infos {
-    background-color: #FCF0E2;
-    display: flex;
-    flex-direction: column;
-    padding: 3vh 7vw;
-}
-
-.row-adresse {
-    min-width: 210px;
-    display: flex;
-    justify-content: space-between;
-    padding: 1vh 0;
-}
-
-.row-adresse label {
-    font-weight: normal;
-    color: #745086;
-    text-transform: inherit;
-    font-size: medium;
-}
-
-.row-adresse>div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 45%;
-    min-width: 200px;
-}
-
-.row-adresse>div:first-of-type>input {
-    width: 25%;
-}
-
-.row-adresse>div:last-of-type>input {
-    width: 10vw;
-}
-
-
-.doc-profil {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.doc-profil input {
-    height: auto;
-    color: #745086;
-}
-
-.voir-doc {
-    display: flex;
-    text-decoration: none;
-    align-items: center;
-}
-
-.voir-doc p {
-    text-transform: none;
-    color: #745086;
-    font-weight: normal;
-    font-size: medium;
-    margin: 0 1em 0 0;
-}
-
-.voir-doc img {
-    padding: 3px;
-    width: fit-content;
-    height: fit-content;
-    border: solid 1px #745086;
-    border-radius: 20%;
-}
-
-.profil-form {
-    display: flex;
-    background-color: #FAE3C6;
-    border: solid 1px #957BB0;
-}
-
-.profil-form>div:last-of-type {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.profil-form>div:last-of-type img {
-    aspect-ratio: 1 / 1;
-    width: 70%;
-    border: 1px solid #5B3F69;
-    border-radius: 50%;
-}
-
-.profil-form>div:last-of-type>label {
-    color: #000;
-    font-weight: bold;
-}
-
-.profil-form>div:first-of-type {
-    width: 75%;
-    border-right: solid 1px #957BB0;
-}
-
-.submit-profil {
-    position: relative;
-    left: 37%;
-    width: 25%;
-    background-color: #957BB0;
-    color: #fff;
-    height: 5vh;
-    margin: 2vh;
-    border: none;
-    border-radius: 10px;
-    padding: 0;
-    font-size: large;
-    font-weight: bold;
-}
-
-.main-profil input[type=text],
-.main-profil input[type=number],
-.main-profil input[type=date],
-.main-profil input[type=tel],
-.main-profil input[type=password],
-.main-profil input[type=email] {
-    border: solid 1px #957BB0;
-    border-radius: 5px;
-    font-size: 0.7em;
-}
-
-.profil-mdp {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    margin-top: 3vw;
-    margin-bottom: 3vw;
-}
-
-.btn-mdp {
-    margin-left: 10vw;
-    background-color: #957BB0;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    height: 3vw;
-    width: 20vw;
-    font-size: large;
-    font-weight: bold;
-}
-
-.suppr-compte {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    width: 80%;
-}
-
-.suppr-compte button {
-    background-color: rgb(207, 119, 119);
-    color: white;
-    width: 20vw;
-    height: 5vw;
-    border: none;
-    border-radius: 10px;
-    font-size: large;
-    font-weight: bold;
-    margin-bottom: 2em;
-}
-
-.condition-profil {
-    color: red;
-}
-
-.profil-erreurs {
-    font-size: medium;
-    color: #FF0000;
-    text-align: end;
-}
-
-.mdp-popup .profil-erreurs {
-    text-align: center;
-}
-
-/*----------------------------------------------------------------MDP POP UP-------------------------------------------------------------*/
-
-.mdp-popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    text-align: center;
-}
-
-.mdp-popup>form {
-    display: flex;
-    flex-direction: column;
-
-    padding: 2vw;
-    width: 20vw;
-}
-
-.mdp-popup>.mdpCroix {
-    text-align: end;
-}
-
-.mdp-popup label,
-.mdp-popup input {
-    margin-bottom: 10px;
-    font-size: larger;
-}
-
-.mdp-popup input {
-    height: 1.5vw;
-    padding-left: 1vw;
-}
-
-.mdp-popup input:last-of-type {
-    margin-top: 10%;
-    background-color: #957BB0;
-    color: #F6E4FF;
-    border: none;
-    border-radius: 5px;
-    height: 2vw;
-}
-
-#overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
-
-.description-detail{
-    max-width: 50vw;
-}
-
-.btn-modif-logement{
-    text-align: center;
-    margin-top: 3vw;
-    margin-bottom: 3vw;
-}
-.btn-modif-logement button{
-    width: 30vw;
 }
