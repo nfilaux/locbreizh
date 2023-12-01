@@ -20,6 +20,7 @@ $photo = $stmt->fetch();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page détaillé d'un logement</title>
+    <script src="./scriptCalendrier.js" defer></script>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
 </head>
@@ -84,7 +85,15 @@ $photo = $stmt->fetch();
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
                     <div class="logc">
-                        <a class="center" href='../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>'><button class="btn-demlog">Demander un devis</button></a>
+                        <div class="center" id="datesPlage">
+                            <button class="btn-demlog"></button>
+                            <button class="btn-demlog"></button>
+                        </div>
+                        <form class="center" action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                            <input type='hidden' id="arrive" value="">
+                            <input type='hidden' id="depart" value="">
+                            <button class="btn-demlog" type="submit">Demander un devis</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -189,6 +198,52 @@ $photo = $stmt->fetch();
             <hr class="hr">
             <div class="logcolumn">
                 <h3 class="potitre">Calendrier</h3>
+                <div class="corpsCalendrier">
+                    <div class="fond">
+                        <div class="teteCalendrier">
+                            <div class="fleches">
+                                <svg id="precedent" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                    <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                </svg>
+                            </div>
+                            <p class="date_actuelle"></p>
+                        </div>
+                        <div class="calendrier">
+                            <ul class="semaines">
+                                <li>Lun</li>
+                                <li>Mar</li>
+                                <li>Mer</li>
+                                <li>Jeu</li>
+                                <li>Ven</li>
+                                <li>Sam</li>
+                                <li>Dim</li>
+                            </ul>
+                            <ul class="jours"></ul>
+                        </div>
+                    </div>
+                    <div class="fond">
+                        <div class="teteCalendrier">
+                            <p class="date_actuelle"></p>
+                            <div class="fleches">
+                                <svg id="suivant" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                    <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="calendrier">
+                            <ul class="semaines">
+                                <li>Lun</li>
+                                <li>Mar</li>
+                                <li>Mer</li>
+                                <li>Jeu</li>
+                                <li>Ven</li>
+                                <li>Sam</li>
+                                <li>Dim</li>
+                            </ul>
+                            <ul class="jours"></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         

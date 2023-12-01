@@ -1089,6 +1089,121 @@ iframe {
     width: 48%;
 }
 
+/*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
+
+.corpsCalendrier{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.fond{
+    background-color: #fff;
+    border: 1px solid #745086;
+    height: 40vh;
+    width: 60vh;
+}
+
+.teteCalendrier{
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+    justify-content: space-between;
+}
+
+.date_actuelle{
+    cursor: pointer;
+    color: #745086;
+    font-size: 1.5em;
+    text-decoration: underline;
+}
+
+.fleches svg{
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+#suivant{
+    margin-left: 10px;
+    transform: rotate(180deg);
+}
+
+.fleches svg:hover{
+    cursor: pointer;
+    background-color: #745086;
+}
+
+.fleches svg:hover path {
+    fill: #fff;
+}
+
+.calendrier{
+    padding: 0px 20px;
+}
+
+.semaines{
+    font-weight: bold;
+    color: #745086;
+}
+
+.jours li{
+    z-index: 1;
+    margin-top: 30px;
+}
+
+.normal:hover{
+    color: #000;
+}
+
+.calendrier ul{
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    text-align: center;
+    padding: 0px;
+}
+
+.calendrier ul li{
+    position: relative;
+    width: calc(100% / 7);
+}
+
+.inactif{
+    color: #A9A9A9;
+}
+
+.actif{
+    color: #fff;
+}
+
+.calendrier ul li::before{
+    position: absolute;
+    content: "";
+    height: 45px;
+    width: 45px;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.entreDeux:hover::before, .normal:hover::before{
+    cursor: pointer;
+    background-color: #D3D3D3;
+}
+
+.actif::before{
+    background-color: #745086;
+}
+
+.entreDeux{
+    background-color: rgba(130, 100, 170, 0.25);
+    width: 100px;
+}
+
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
 
 .messcolumn{
