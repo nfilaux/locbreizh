@@ -251,7 +251,7 @@ $photo = $stmt->fetch();
                             <div class="logrow">
                                 <div class="logpc">
                                     <label for='image1'>Image 1</label>
-                                    <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
+                                    <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg'>
 
                                     <label for='image2'>Image 2</label>
                                     <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
