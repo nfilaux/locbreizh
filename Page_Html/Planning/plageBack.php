@@ -23,21 +23,21 @@
     
     $variable = $code->fetch();
 
-    print_r($variable);
+    $err = false;
 
-    if (isset($_POST['indisponible'])) {
-        $indisponible = $_POST['indisponible'];
-    } else {
-        $indisponible = true; 
+    if ($_POST['prix']<=0){
+        $_SESSION['erreurs'] = ["prix" => "Le prix doit être supérieur à 0\n"];
+        $err = true;
     }
 
-    $stmt->bindValue(':debut_plage_ponctuelle', $_POST['dateDeb']);
-    $stmt->bindValue(':fin_plage_ponctuelle', $_POST['dateFin']);
-    $stmt->bindValue(':prix_plage_ponctuelle', $_POST['prix']);
-    $stmt->bindValue(':disponible', $indisponible);
-    $stmt->bindValue(':code_planning', $variable['code_planning']);
-    $stmt->execute();
-
+    if(!$err){
+        $stmt->bindValue(':debut_plage_ponctuelle', $_POST['dateDeb']);
+        $stmt->bindValue(':fin_plage_ponctuelle', $_POST['dateFin']);
+        $stmt->bindValue(':prix_plage_ponctuelle', $_POST['prix']);
+        $stmt->bindValue(':disponible', $indisponible);
+        $stmt->bindValue(':code_planning', $variable['code_planning']);
+        $stmt->execute();
+    }
     header("location: ../Accueil/Tableau_de_bord.php?popup={$_POST['nomPopUp']}&overlay={$_POST['overlayPopUp']}");
     
 

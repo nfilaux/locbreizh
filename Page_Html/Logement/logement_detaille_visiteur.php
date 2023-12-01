@@ -105,12 +105,12 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                                             ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
                                         }
                                     } break;
-                            case 5 :?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php 
-                                    for ($i = 0 ; $i < 5; $i++) {
-                                        if (isset($photos_secondaires[$i]['photo'])){
-                                            ?><img class="photosecondaireI" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                        }
-                                    } break;
+                            case 5 :?><img class="photosecondaireP5" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "> <div class="imgsecondaire"><?php 
+                                for ($i = 0 ; $i < 5; $i++) {
+                                    if (isset($photos_secondaires[$i]['photo'])){
+                                        ?><img class="photosecondaireI5" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
+                                    }
+                                } ?> </div> <?php break;
                             case 6 : ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
                                     for ($i = 0 ; $i < 5; $i++) {
                                         if (isset($photos_secondaires[$i]['photo'])){

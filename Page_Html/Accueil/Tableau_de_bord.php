@@ -10,6 +10,13 @@
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
+    // fontion pour afficher les erreurs de modification
+    function erreur($nomErreur){
+        if(isset($_SESSION["erreurs"][$nomErreur])){
+            ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+            unset($_SESSION["erreurs"][$nomErreur]);
+        }
+}
 
     
 ?>
@@ -77,7 +84,14 @@
                                         <h3 class="titrecard"><?php echo $card['libelle_logement'] ?></h3>
                                         <hr class="hrcard">
                                     </div>
-                                    <a class="btn-modiftst" href="../Logement/modifierLogement.php?id_logement=<?php echo $card['id_logement'] ?>"><button class="btn-modif">Modifier</button></a>
+                                    <a class="btn-modiftst" href="../Logement/modifierLogement.php?id_logement=<?php echo $card['id_logement'] ?>">
+                                        <button class="btn-modif"> Modifier
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" viewBox="0 0 10 10">
+                                            <path stroke="#745086" stroke-width=".3" d="M.917.503h8.405v8.405H.917z"/>
+                                            <path fill="#745086" d="M2.58 7.205h.513l3.378-3.378-.513-.513L2.58 6.692v.513Zm5.803.725H1.855V6.39l4.873-4.873a.363.363 0 0 1 .513 0l1.026 1.026a.363.363 0 0 1 0 .513L4.119 7.205h4.264v.725ZM6.471 2.8l.513.514.513-.513-.513-.513-.513.513Z"/>
+                                        </svg>
+                                    </button>
+                                    </a>
                                 </div>
                                 
                                 <div class="logrowb">
@@ -102,7 +116,7 @@
                                 <a class="calend" onclick="openPopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>    
 
                             <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
-                                <div id="<?php echo $nomPlage; ?>" class='plages'> 
+                            <div id="<?php echo $nomPlage; ?>" class='plages'> 
                                     <h1>Ajouter une plage ponctuelle</h1><br>
                                     <form action="../Planning/plageBack.php" method="post">
                                         
@@ -116,7 +130,7 @@
 
                                         <label for="prix_plage_ponctuelle"> Prix : </label>
                                         <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>" value="<?php echo $card['tarif_base_ht'] ?>"/>
-                                        <br><br>
+                                        <br><?php erreur("prix") ?><br>
 
                                         <label for="indisponible"> Indisponible : </label>
                                         <input type="checkbox" id="indisponible" name="indisponible" value="false"/>
@@ -128,7 +142,7 @@
                                         <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
 
                     
-                                        <button type="submit">ajouter</button>
+                                        <button type="submit" class="btn-ajt">Ajouter</button>
                                     </form>
                                     
                                     <hr><h1>Les plages ponctuelles</h1><br>
@@ -167,16 +181,16 @@
                                                     <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
                                                     <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
                                                     <input type="hidden" name="id_plage_ponctuelle" value="<?php echo $plage['id_plage_ponctuelle'] ?>"/>
-                                                    <button type="submit"><img class="btnPlageSupp" src="../svg/croix.svg" alt="supprimer" width="2em" height="2em"></button>
+                                                    <button type="submit"><img class="btn-supr" src="../svg/croix_plage.svg" alt="supprimer" width="2em" height="2em"></button>
                                                 </form>
-                                                </div>
-                                                <?php }
+                                            </div>
+                                    <?php }
                                     } else { ?>
                                      <p> Aucune plage définie </p>
                                 
                                 <?php } ?>
                                             
-                                </div>                  
+                                </div>  
                             </div>
                     </section>
 </div>

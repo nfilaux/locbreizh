@@ -83,6 +83,7 @@ body {
     font-size: 1em;
     display: none;
     position: fixed;
+    text-align: start;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -90,6 +91,17 @@ body {
     border: 1px solid #745086;
     box-shadow: none;
     z-index: 1000;
+}
+
+.plages .btn-ajt {
+    margin-left: 85%;
+}
+
+.plages .btn-supr {
+    font-size: 7em;
+    margin-left: 25%;
+    border: none;
+    border-radius: unset;
 }
 
 .overlay_plages{
@@ -110,14 +122,13 @@ body {
 
 .unePlage button{
     background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
 }
-
 /*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/
 
 #mdp{
@@ -1046,13 +1057,30 @@ iframe {
 }
 
 .photosecondaireI {
-    width: 25%;
+    width: 23%;
     height: 20em;
+}
+
+.photosecondaireP5 {
+    width: 48%;
+    height: 22em;
+}
+
+.photosecondaireI5 {
+    width: 48%;
+    height: 10em;
 }
 
 .photosecondaireP6 {
     width: 30%;
     height: 20em;
+}
+
+.imgsecondaire {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 48%;
 }
 
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
