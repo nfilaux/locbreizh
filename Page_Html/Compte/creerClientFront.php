@@ -1,3 +1,18 @@
+<?php
+    session_start();
+    function erreur($nomErreur)
+    {
+        // si on trouve une erreur dans la variable $_SESSION 
+        if(isset($_SESSION["erreurs"][$nomErreur])){
+            // on affiche l'erreur en question
+            ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+            /* puis on supprime l'erreur car il n'y a plus d'erreur à afficher si l'utilisateur retape bien l'attribut
+                sinon l'erreur sera à nouveau affiché */
+            unset($_SESSION["erreurs"][$nomErreur]);
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,20 +23,6 @@
     <script src="../scriptMDP.js"></script>
 </head>
 <body class="pagecompte">
-    <?php
-        session_start();
-        function erreur($nomErreur)
-        {
-            // si on trouve une erreur dans la variable $_SESSION 
-            if(isset($_SESSION["erreurs"][$nomErreur])){
-                // on affiche l'erreur en question
-                ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
-                /* puis on supprime l'erreur car il n'y a plus d'erreur à afficher si l'utilisateur retape bien l'attribut
-                 sinon l'erreur sera à nouveau affiché */
-                unset($_SESSION["erreurs"][$nomErreur]);
-            }
-        }
-    ?>
     <header class="headconn">
             <a href="CreerCompte.html"><img src="../svg/flecheRetour.svg"/></a>
             <h1>Créer mon compte client  !</h1>

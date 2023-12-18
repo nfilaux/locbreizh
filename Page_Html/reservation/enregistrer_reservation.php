@@ -1,7 +1,6 @@
 <?php
     // lancement de la session
-    session_start(); 
-    print_r($_GET);
+    session_start();
 
     // import parametre de connexion + nouvelle instance de PDO
     include('../parametre_connexion.php');

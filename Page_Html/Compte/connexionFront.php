@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Page de connexion</title>
-    <link rel="stylesheet" href="../style.css">
-
-<script src="../scriptMDP.js"></script>
-
-</head>
-<body class="pagecompte">
-        <?php
+<?php
         // On démarre la session
             session_start();
 
@@ -23,6 +11,18 @@
                 }
             }
         ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Page de connexion</title>
+    <link rel="stylesheet" href="../style.css">
+
+<script src="../scriptMDP.js"></script>
+
+</head>
+<body class="pagecompte">
     <header class="headconn">
             <a href="../Accueil/accueil_visiteur.php"><img src="../svg/flecheRetour.svg"></a>
 

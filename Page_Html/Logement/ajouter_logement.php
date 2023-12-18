@@ -20,12 +20,21 @@
     $en_ligne = true;
     $id_proprietaire = $_SESSION['id'];
     $nom_image_principale = $_SESSION['post_logement']['image1P'];
-
-    $nom_image2 = $_SESSION['post_logement']['image2P'];
-    $nom_image3 = $_SESSION['post_logement']['image3P'];
-    $nom_image4 = $_SESSION['post_logement']['image4P'];
-    $nom_image5 = $_SESSION['post_logement']['image5P'];
-    $nom_image6 = $_SESSION['post_logement']['image6P'];
+    if (isset($_POST["image2P"])){
+        $nom_image2 = $_SESSION['post_logement']['image2P'];
+    }
+    if (isset($_POST["image3P"])){
+        $nom_image3 = $_SESSION['post_logement']['image3P'];
+    }
+    if (isset($_POST["image4P"])){
+        $nom_image4 = $_SESSION['post_logement']['image4P'];
+    }
+    if (isset($_POST["image5P"])){
+        $nom_image5 = $_SESSION['post_logement']['image5P']; 
+    }
+    if (isset($_POST["image6P"])){
+        $nom_image6 = $_SESSION['post_logement']['image6P'];
+    }
 
     $charges1 = $_SESSION['post_logement']['charges1P'];
     $charges2 = $_SESSION['post_logement']['charges2P'];
@@ -297,7 +306,7 @@
     values($charges3, $id_logement, 'personnes_supplementaires');");
     $stmt->execute();
 
-    if (isset($_SESSION['post_logement']['image2P'])) {
+    if (isset($nom_image2)) {
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image2)'
@@ -306,7 +315,7 @@
         $stmt->execute();
     }
 
-    if (isset($_SESSION['post_logement']['image3P'])) {
+    if (isset($nom_image3)) {
         $stmt = $dbh->prepare(
             "INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image3)"
@@ -315,7 +324,7 @@
         $stmt->execute();
     }
 
-    if (isset($_SESSION['post_logement']['image4P'])) {
+    if (isset($nom_image4)) {
         $stmt = $dbh->prepare(
             "INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image4)"
@@ -324,7 +333,7 @@
         $stmt->execute();
     }
 
-    if (isset($_SESSION['post_logement']['image5P'])) {
+    if (isset($nom_image5)) {
         $stmt = $dbh->prepare(
             "INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image5)"
@@ -333,7 +342,7 @@
         $stmt->execute();
     }
 
-    if (isset($_SESSION['post_logement']['image6P'])) {
+    if (isset($nom_image6)) {
         $stmt = $dbh->prepare(
             "INSERT INTO locbreizh._photo (url_photo)
                 VALUES (:image6)"
@@ -342,7 +351,7 @@
         $stmt->execute();
     }
 
-    if (isset($_SESSION['post_logement']['image2P'])) {
+    if (isset($nom_image2)) {
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image2)'
@@ -352,7 +361,7 @@
         $stmt->execute();
     }
 
-    if (isset($_SESSION['post_logement']['image3P'])) {
+    if (isset($nom_image3)) {
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image3)'
@@ -363,7 +372,7 @@
     }
 
 
-    if (isset($_SESSION['post_logement']['image4P'])) {
+    if (isset($nom_image4)) {
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image4)'
@@ -373,7 +382,7 @@
         $stmt->execute();
     }
 
-    if (isset($_SESSION['post_logement']['image5P'])) {
+    if (isset($nom_image5)) {
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image5)'
@@ -384,7 +393,7 @@
     }
 
 
-    if (isset($_SESSION['post_logement']['image6P'])) {
+    if (isset($nom_image6)) {
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image6)'

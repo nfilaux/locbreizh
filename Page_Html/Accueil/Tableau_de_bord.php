@@ -1,4 +1,3 @@
-<script src="../scriptPopup.js"></script>
 <?php 
     session_start();
     include('../parametre_connexion.php');
@@ -17,7 +16,6 @@
             unset($_SESSION["erreurs"][$nomErreur]);
         }
 }
-
     
 ?>
 <!doctype html>
@@ -59,7 +57,7 @@
 
                 $stmt->execute();
                 $liste_mes_logements = $stmt->fetchAll();
-                foreach ($liste_mes_logements as $card) {
+                foreach ($liste_mes_logements as $key => $card) {
                     $id_log = $card['id_logement'];
                     $stmt = $dbh->prepare(
                         "SELECT en_ligne

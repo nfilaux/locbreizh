@@ -33,8 +33,6 @@ $nouveau_nom_image1 = id_photo($id_photo) . '.' . $extension_img_1;
 $id_photo++;
 move_uploaded_file($nom_image_principale, "../Ressources/Images/" . $nouveau_nom_image1);
 
-
-
 if ($_FILES['image2P']['name']!= '') {
     $extension_img_2 = explode('/',$_FILES['image2P']['type'])[1];
     $nouveau_nom_image2 = id_photo($id_photo) . '.' . $extension_img_2;
@@ -334,22 +332,13 @@ if ($_FILES['image6P']['name']!= '') {
                             </div>
                             <div class="logrowt">
                                 <p class="nuit"><?php echo $logement_data['tarif_de_base'];?> €/nuit</p>
-                                <!--
-                                <img src="/Ressources/Images/star-fill 1.svg"><h4> echo $info['note_avis'];,0</p>
-                                -->
                             </div>
                         </div>
                         <img src="<?php echo "../Ressources/Images/$nouveau_nom_image1" ?>">
-
-                        <!-- 
-                        <img src="<?php// echo $info['photo_url'];?> ">
-                        <img src="<?php// echo $info['photo_url'];?> ">
-                        -->
                         <div class="logrowt">  
                             <div class="logcolumn">
                                 <h3 class="policetitre">Description</h3>
                                 <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $logement_data['description']; ?>' disabled></textarea>
-                                <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
                             </div>
                         
                         </div>
@@ -376,7 +365,7 @@ if ($_FILES['image6P']['name']!= '') {
                                 echo 'Aucune donnée de logement à prévisualiser.';
                             }
 
-                                if ($logement_data['lave_vaisselle'] == true) {
+                                if ($logement_data['lave_vaiselle'] == true) {
                                     ?><p><?php  echo 'Cuisine équipée'; ?></p><?php
                                 }
 
@@ -434,7 +423,7 @@ if ($_FILES['image6P']['name']!= '') {
                                 }?>
                             </div>
                         </div>
-                        <p>Surface du jardin : <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p>Surface du jardin : <?php echo $logement_data['surface_jardin']; ?> m<sup>2</sup></p>
                     </div>
                     <hr class="hr">
                     <div class="logcolumn">
