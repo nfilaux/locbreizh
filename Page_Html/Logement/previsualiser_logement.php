@@ -109,7 +109,6 @@ if ($_FILES['image6P']['name']!= '') {
         $_SESSION['post_logement'] = $_POST;
 
         $_SESSION['post_logement']['image1P'] = $nouveau_nom_image1;
-
         
         if ($_FILES["image2P"]["name"] != "") {
             $_SESSION['post_logement']['image2P'] = $nouveau_nom_image2;
