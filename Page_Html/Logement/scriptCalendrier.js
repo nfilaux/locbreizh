@@ -2,7 +2,7 @@
 dateActuelle = document.querySelectorAll(".date_actuelle");
 baliseJour = document.querySelectorAll(".jours");
 precedentSuivant = document.querySelectorAll(".fleches svg");
-datesPlage = document.querySelectorAll("#datesPlage .btn-demlog");
+datesPlage = document.querySelectorAll("#datesPlage .dateresa");
 boutonsDates = document.querySelectorAll(".logc form input");
 
 //constante pour les mois de l'année
