@@ -28,6 +28,7 @@ $photo = $stmt->fetch();
 
 <body>
 <?php 
+        // appel script pour header
         include('../header-footer/choose_header.php');
     ?>
 <main>
