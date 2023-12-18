@@ -19,6 +19,7 @@
 
 html{
     height: 100%;
+    width: 100%;
 }
 
 body {
@@ -534,6 +535,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-size: 1em;
     padding: 0.5em;
     font-family: 'Quicksand';
+    width: 20em;
 }
 
 .btn-demlogno {
@@ -545,6 +547,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-size: 1em;
     padding: 0.5em;
     font-family: 'Quicksand';
+    width: 20em;
 }
 
 .btn-input {
@@ -1014,7 +1017,8 @@ fieldset label{
 .potitre {
     font-family: 'PatuaOne';
     font-weight: 600;
-    margin: auto;
+    font-size: 1.5em;
+    margin: auto 0;
 }
 
 iframe {
@@ -1088,6 +1092,18 @@ iframe {
     flex-direction: row;
     flex-wrap: wrap;
     width: 48%;
+}
+
+.dateresa {
+    margin: auto 0.5em;
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    width: 8em;
 }
 
 /*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
@@ -1382,6 +1398,13 @@ iframe {
     font-size: 2.5em;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.policetitres {
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    font-size: 2.5em;
+    margin: auto;
 }
 
 .restitre {
@@ -1701,6 +1724,3 @@ iframe {
 .btn-modif-logement button{
     width: 30vw;
 }
-
-
-/*oubujnvjmjnvibvuebvj vmibveuiovbnvejbviub*/
