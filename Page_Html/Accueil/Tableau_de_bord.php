@@ -98,19 +98,13 @@
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $card['id_logement'] ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
                                     <?php $id_un_logement = $card['id_logement']; ?>
                                     <form action="ChangeEtat.php" method="post">
-                                        <input type="submit" name=<?php echo $id_un_logement ?> class="button" value=<?php echo $bouton_desactiver; ?> />
+                                        <input type="submit" name=<?php echo $id_un_logement ?> class="btn-desactive" value=<?php echo $bouton_desactiver; ?> />
                                         <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
                                     </form>
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $card['id_logement'] ?>"><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 
-<<<<<<< HEAD
-                                <div class="logrowb">   
-=======
                                 <div class="logrowb">
-                                    
-                                    <?php
-                                    ?>
 
                                     <div class="overlay_plages" id="overlay_erreur" onclick="closePopup('erreur_suppr','overlay_erreur')"></div>
                                     <div class="plages" class="erreur" id="erreur_suppr" > <p> Impossible de supprimer un logement lié à une réservation ! <p> <button onclick="closePopup('erreur_suppr','overlay_erreur')">Ok</button></div>
@@ -124,12 +118,10 @@
                                         }
                                     </script>
                             
->>>>>>> c5f37717a4579a59459a8fc69d08b62d2b46ed8d
+
                                     <?php
                                 $nomPlage = 'plage' . $key; 
                                 $overlayPlage = 'overlay' . $key?>
-
-                                <a class="calend" onclick="openPopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>    
                             
                             <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
                             <div id="<?php echo $nomPlage; ?>" class='plages'> 
