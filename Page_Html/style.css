@@ -168,14 +168,26 @@ body {
     outline: inherit;
 }
 /*------------------------------------------------popup supprimer -----------------------------------------*/
-#erreur{
-    color : red;
-    font-size : bold;
+#erreur_suppr{
+    color:red;
+    font-weight : bold;
+    text-align: center;
+    padding : 1.5em;
 }
 
-.erreur_suppr{
-    display : flex;
-    background-color: blue;
+.erreur{
+    color:red;
+    font-weight: bold;
+}
+
+.valid{
+    color:green;
+    font-weight: bold;
+}
+
+#boutons{
+    display: flex;
+    justify-content: space-around;
 }
 
 /*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/
@@ -359,8 +371,9 @@ main h1{
 
 .Tablobord{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
+    align-items: center;
 }
 
 .Tablobord article{
@@ -792,14 +805,21 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: column-reverse;
     flex-wrap: nowrap;
+    width: 80%;
 }
 
 .cardlogmainP img {
     width: 20%;
-    height: 80%;
+    height: 10em;
     margin: auto 0.5em auto 0em;
     border: 2px solid #274065;
     border-radius: 10px;
+    object-fit: cover;
+}
+.cardlogmainP section img {
+    border: none;
+    height: 5em;
+    object-fit: none;
 }
 
 .titrecard {
@@ -960,6 +980,13 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+
+.logcp{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 70%;
 }
 
 .logc{
@@ -1634,7 +1661,19 @@ iframe {
     width: 80%;
     margin: auto;
     background-color: #FCF0E2;
-    padding: 0.2em;
+    padding: 1em;
+}
+
+.cardresmainP {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    border: 2px solid #274065;
+    width: 80%;
+    margin: auto;
+    background-color: #FCF0E2;
+    padding: 1em;
 }
 
 .cardresmainimg {
@@ -1668,7 +1707,6 @@ iframe {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    font-size: 1.5em;
 }
 
 .resplustaille{

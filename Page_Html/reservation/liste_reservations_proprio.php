@@ -23,33 +23,14 @@ $photo = $stmt->fetch();
 </head>
 
 <body>
-    <header>
-        <a href="../Accueil/accueil_client.php">
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
-        </a>
-        <div class="brecherche">
-            <img src="../svg/filtre.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
-        </div>
+    <?php 
+    include('../header-footer/choose_header.php');
+    ?>
 
-        <img src="../svg/booklet-fill 1.svg">
-        <a href="../reservation/liste_reservations.php"><h4>Accèder à mes réservations</h4></a>
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php" ><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+    <main class="MainTablo">
+        <div class="headtabloP"> 
+            <h1>Mes Réservations</h1>
         </div>
-        <div id="popup" class="popup">
-            <a href="">Accéder au profil</a>
-            <br>
-            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-            <a onclick="closePopup()">Fermer la fenêtre</a>
-        </div>
-    </header>
-
-    <main>
 
         <div>
             <?php
@@ -66,7 +47,7 @@ $photo = $stmt->fetch();
                 } 
 
                 
-                $stmt = $dbh->prepare("SELECT lien_devis, l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
+                $stmt = $dbh->prepare("SELECT lien_devis, l.photo_principale,libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
                 from locbreizh._reservation r
                 join locbreizh._logement l on l.id_logement = r.logement
                 join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
@@ -81,18 +62,18 @@ $photo = $stmt->fetch();
                 foreach ($reservations as $reservation) {
 
                     ?>
-                    <div class="cardresmain"> 
+                    <div class="cardresmainP"> 
                         <img class="cardresmainimg" src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>"> 
-                        <section class="rescol">      
+                        <section class="logcp">      
                             <div class="logrowb">
                             <div>
-                            <h3 class="titrecardres"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
-                            <hr class="hrcard">
+                                <h3 class="titrecard"><?php echo $reservation['libelle_logement'] ?></h3>
+                                <hr class="hrcard">
                             </div>
                             <div class="resrow">
                             <div>
                                 <p class="restitre resplustaille">Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
-                                <button class="btn-accueil">Contacter le proprietaire</button>
+                                <button class="btn-previsualiser">Contacter le proprietaire</button>
                             </div>
                             <img class="imgprofil" src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil"  width="75" height="75">
                             </div>
@@ -104,27 +85,16 @@ $photo = $stmt->fetch();
                                 <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
                                 <a><button class="btn-suppr" disabled>ANNULER</button></a>
                             </div>
-                            
+
                         </secion>
                     </div>
                 <?php } ?>
             
         </div>
     </main>
-    <footer>
-            <div class="tfooter">
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-            </div>
-            <hr>  
-            <div class="bfooter">
-                <p>©2023 Loc’Breizh</p>
-                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-            </div>
-    </footer>
+    <?php 
+        echo file_get_contents('../header-footer/footerP.html');
+    ?>
 </body>
 
 </html>

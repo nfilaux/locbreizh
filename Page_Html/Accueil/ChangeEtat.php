@@ -28,7 +28,7 @@ function unable($id){
 }
 
 foreach($_POST as $id_log => $changer_vers_etat){
-    if ($changer_vers_etat == "DESACTIVER"){
+    if ($changer_vers_etat == "METTRE_HORS_LIGNE1"){
         disable($id_log);
     } else {
         unable($id_log);
