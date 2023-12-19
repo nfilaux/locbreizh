@@ -126,6 +126,6 @@
         $chemin_complet = $chemin_dossier . $nom_fichier;
         file_put_contents($chemin_complet, $contenu_pdf);
 
-        header("Location: devis_ajoute.html");
+        header("Location: ./formulaire_devis.php?demande={$_POST['id_demande']}&erreur=0");
     }
 ?>

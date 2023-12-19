@@ -104,10 +104,6 @@ $photo = $stmt->fetch();
                                 <a><button class="btn-suppr" disabled>ANNULER</button></a>
                             </div>
                             
-                            
-                            <div class="logrowb">
-                                <p class="resplustaille">DISCLAIMER - La suppression du compte est définitve.</p>
-                            </div>
                         </secion>
                     </div>
                 <?php } ?>

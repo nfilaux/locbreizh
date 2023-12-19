@@ -28,8 +28,8 @@
             <h1>Créer mon compte client  !</h1>
     </header>
     <main>
-        <!--
-        <?php /* creation du formulaire, si la valeur entré n'est pas bonne on affiche l'erreur de l'attribut en question ?>
+        
+        <?php// creation du formulaire, si la valeur entré n'est pas bonne on affiche l'erreur de l'attribut en question ?>
         <form action="creerClientBack.php" method="post" enctype="multipart/form-data">
             
             <div class="rowcompte">
@@ -168,12 +168,12 @@
                 <label for="conditions">Accepter les conditions générales d'utilisations</label>
                 <?php
                     erreur("conditions");
-                */?>
+                ?>
             </div>
 
             <input class="btn-input" type="submit" value="Créer le compte" />
 
-        </form>-->
+        </form>
 
         <h1 class="header-profil">Mon compte</h1>
         <!-- debut du formulaire pour afficher/modifier les informations "simples" du compte -->

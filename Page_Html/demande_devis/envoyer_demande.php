@@ -159,6 +159,6 @@
         file_put_contents($chemin_complet, $contenu_pdf);
 
         // renvoie l'utilisateur sur une page de reussite
-        header("Location: ../messagerie/messagerie.php?conv=$id_conv");
+        header("Location: demande_devis.php?logement={$_POST['logement']}&erreur=0");
     }
 ?>

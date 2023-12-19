@@ -68,17 +68,17 @@
             <div class="logrow">
                 <div class="log5vct">  
                     <label for="dateArrivee">Date d’arrivée :</label>
-                    <input class="logvct" type="date" id="dateArrivee" name="dateArrivee" value="<?php if(isset($_POST['arrive'])) { echo htmlentities($_POST['arrive']);}?>" required/>
+                    <input class="logvctC" type="date" id="dateArrivee" name="dateArrivee" value="<?php if(isset($_POST['arrive'])) { echo htmlentities($_POST['arrive']);}?>" required/>
                 </div>
                 <div class="log5vct">  
                     <label for="dateDepart">Date de depart :</label>
-                    <input class="logvct" type="date" id="dateDepart" name="dateDepart" value="<?php if(isset($_POST['depart'])) { echo htmlentities($_POST['depart']);}?>" required/>
+                    <input class="logvctC" type="date" id="dateDepart" name="dateDepart" value="<?php if(isset($_POST['depart'])) { echo htmlentities($_POST['depart']);}?>" required/>
                 </div>
                 
                 <div class="log5vct">  
                     <label for="nb_pers">Nombre de persones :</label>
                     <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
-                    <input class="logvct" type="number" id="nb_pers" name="nb_pers" min="1" max=<?php echo $nb_max['nb_pers']; ?> value=<?php if(isset($_GET['nb_pers']) && $_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>
+                    <input class="logvctC" type="number" id="nb_pers" name="nb_pers" min="1" max=<?php echo $nb_max['nb_pers']; ?> value=<?php if(isset($_GET['nb_pers']) && $_GET['nb_pers'] > 1){echo $_GET['nb_pers'];} else{echo 1;} ?> required/>
                 </div>
             
             <div class="cardSupplements">
@@ -96,7 +96,7 @@
                 <!--pre-remplie les iinfos si ils sont dans get-->
                 <div class="logpc">
                 <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
-                <input class="lognb" type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50"  value=<?php if(isset($_GET['nb_supp']) && $_GET['nb_supp'] > 0){echo $_GET['nb_supp'];} else{echo 0;} ?> required/>
+                <input class="lognbC" type="number" id="nb_pers_supp" name="nb_pers_supp" min="0" max="50"  value=<?php if(isset($_GET['nb_supp']) && $_GET['nb_supp'] > 0){echo $_GET['nb_supp'];} else{echo 0;} ?> required/>
                 </div>
             </div>
             <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
@@ -113,18 +113,29 @@
                 }
                     
                 ?>
-                <input class="btn-accueil" type="submit">Demander un devis</button>
+                <input class="btn-accueil" type="submit" value="Demander un devis"/>
             </div>
             
         </form>
         <div id="overlayDemandeDeDevis" onclick="closePopupFeedback('popupFeedback', 'overlayDemandeDeDevis')"></div>
-            <div id="popupFeedback" class="popupFeedback">
-                <p>Votre demande de devis a bien été envoyée !</p>
-            <input class="btn-accueil" type="submit" value="OK"/> 
-            </div>
+        <div id="popupFeedback" class="popupFeedback">
+            <p>Votre demande de devis a bien été envoyée !</p>
+            <a href="../messagerie/messagerie.php" class="btn-accueil"></button>OK</a>
+        </div>
     </main>
     <?php
         echo file_get_contents('../header-footer/footer.html');
     ?>
 </body>
 </html>
+
+<?php
+    if($_GET['erreur'] === '0'){
+        ?>
+        <script>
+            openPopupFeedback('popupFeedback', 'overlayDemandeDeDevis');
+        </script>
+        <?php
+    }
+    
+?>
