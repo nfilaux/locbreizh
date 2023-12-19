@@ -124,29 +124,27 @@ $photo = $stmt->fetch();
                         
                         ?>
                 </div>
-                <div class="logrowt">  
+            <div class="logrowt">  
                 <div class="logcolumn">
                         <h3 class="policetitre">Description</h3>
                         <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
-                    <div class="logc">
-                    <div class="logrowc" id="datesPlage">
-                        <p class="dateresa"></p>
-                        <p class="dateresa"></p>
-                    </div>
-                    <form class="center" action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                        <button class="btn-demlog" type="submit">Demander un devis</button>
-                    </form>
-
+                    <div class="logdem">
+                        <div class="logrowb" id="datesPlage">
+                            <p class="dateresa"></p>
+                            <p class="dateresa"></p>
+                        </div>
+                        <form action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                            <button class="btn-demlogno" type="submit" disabled>Demander un devis</button>
+                        </form>
                     </div>
                 </div>
             </div>
         
-
             <div class="logrow">
             <div class="logcolumn">
-                <h3 class="policetitres">Services et équipements du logement</h3>
+                <h3 class="policetitres">Informations du logement</h3>
                 <?php
                     $stmt = $dbh->prepare(
                         "SELECT 
@@ -178,68 +176,68 @@ $photo = $stmt->fetch();
 
                 <div class="logrow">
                     <div class="logcp">
-                        <p><?php  echo $info['nb_chambre'] ?> chambres</p>
-                        <p><?php  echo $info['lit_simple'] ?> lits simples</p>
-                        <p><?php  echo $info['lit_double'] ?> lit_double</p>
+                        <p><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
+                        <p><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
+                        <h4 class="potitres">Equipements</h4>
+                        <p>jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
-                        if ($info['lave_vaisselle'] == true) {
-                            ?><p><?php  echo 'Cuisine équipée'; ?></p><?php
-                        }
-
-                        if ($info['wifi'] == true) {
-                            ?><p><?php  echo 'Wifi inclus'; ?></p><?php
-                        }
-
-                        if ($info['piscine'] == true) {
-                            ?><p><?php  echo 'Piscine incluse'; ?></p><?php
-                        }
-
-                        if ($info['sauna'] == true) {
-                            ?><p><?php  echo 'Sauna inclus'; ?></p><?php
-                        }
-
-                        if ($info['hammam'] == true) {
-                            ?><p><?php  echo 'Hammam inclus'; ?></p><?php
-                        }
-
-                        if ($info['jacuzzi'] == true) {
-                            ?><p><?php  echo 'Jacuzzi inclus'; ?></p><?php
-                        }
-
-                        ?>
-                    </div>
-                    <div class="logcp">
-                        <p><?php  echo $info['nb_salle_bain'] ?> salles de bain</p><?php
-                        if ($info['television'] == true) {
-                            ?><p><?php  echo 'Television inclus'; ?></p><?php
-                        }
-
-                        if ($info['lave_linge'] == true) {
-                            ?><p><?php  echo 'Lave-linge inclus'; ?></p><?php
-                        }
-
-                        if ($info['parking_privee'] == true) {
-                            ?><p><?php  echo 'Parking privée inclus'; ?></p><?php
-                        }
-
-                        if ($info['parking_public'] == true) {
-                            ?><p><?php  echo 'Parking public inclus'; ?></p><?php
-                        }
-
                         if ($info['balcon'] == true) {
-                            ?><p><?php  echo 'Balcon inclus'; ?></p><?php
+                            ?><p><?php  echo 'Balcon'; ?></p><?php
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p><?php  echo 'Terrasse incluse'; ?></p><?php
+                            ?><p><?php  echo 'Terrasse'; ?></p><?php
                         }
+                        if ($info['parking_privee'] == true) {
+                            ?><p><?php  echo 'Parking privée'; ?></p><?php
+                        }
+
+                        if ($info['parking_public'] == true) {
+                            ?><p><?php  echo 'Parking public'; ?></p><?php
+                        }
+                        if ($info['television'] == true) {
+                            ?><p><?php  echo 'Television'; ?></p><?php
+                        }
+                        if ($info['wifi'] == true) {
+                            ?><p><?php  echo 'Wifi'; ?></p><?php
+                        }
+                        if ($info['lave_linge'] == true) {
+                            ?><p><?php  echo 'Lave-linge'; ?></p><?php
+                        }
+                        if ($info['lave_vaisselle'] == true) {
+                            ?><p><?php  echo 'Cuisine équipée'; ?></p><?php
+                        }
+                        
+                        ?>
+                    </div>
+                    <div class="logcp">
+                        <p><?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
+                        <p><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
+                        <h4 class="potitres">Installations</h4>
+                        <?php
+
                         if ($info['climatisation'] == true) {
-                            ?><p><?php  echo 'Climatisation incluse'; ?></p><?php
+                            ?><p><?php  echo 'Climatisation'; ?></p><?php
+                        }
+                        if ($info['piscine'] == true) {
+                            ?><p><?php  echo 'Piscine'; ?></p><?php
+                        }
+
+                        if ($info['sauna'] == true) {
+                            ?><p><?php  echo 'Sauna'; ?></p><?php
+                        }
+
+                        if ($info['hammam'] == true) {
+                            ?><p><?php  echo 'Hammam'; ?></p><?php
+                        }
+
+                        if ($info['jacuzzi'] == true) {
+                            ?><p><?php  echo 'Jacuzzi'; ?></p><?php
                         }
                         ?>
                     </div>
                 </div>
-                <p>Surface du jardin : <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                
             </div>
             <hr class="hr">
             <div class="logcolumn">
@@ -396,38 +394,24 @@ $photo = $stmt->fetch();
                         <h4 class="potitre">Conditions d'annulation</h4>
                         <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                         </p>
-                        <a href="" class='voir_plusR'>
-                            Voir plus  
-                        </a>
                     </div>
 
                     <div class="cardcondition">
                         <h4 class="potitre">Conditions de paiement</h4>
                         <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                         </p>
-                        <a href="" class='voir_plusR'>
-                            Voir plus  
-                        </a>
                     </div>
                 </div>
                 <div class="logrow">
                 <div class="cardcondition">
                     <h4 class="potitre">Informations d'arrivée</h4>
-                    <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                    </p>
-                    <a href="" class='voir_plusR'>
-                        Voir plus  
-                    </a><div class="logrowc">
-            </div>
+                    <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.</p>
                 </div>
 
                 <div class="cardcondition">
                     <h4 class="potitre">Informations de départ</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
-                    <a href="" class='voir_plusR'>
-                        Voir plus  
-                    </a>
                 </div>
             </div>
             <div class="logrowc">

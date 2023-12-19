@@ -20,19 +20,19 @@
     $en_ligne = true;
     $id_proprietaire = $_SESSION['id'];
     $nom_image_principale = $_SESSION['post_logement']['image1P'];
-    if (isset($_POST["image2P"])){
+    if (isset($_SESSION['post_logement']["image2P"])){
         $nom_image2 = $_SESSION['post_logement']['image2P'];
     }
-    if (isset($_POST["image3P"])){
+    if (isset($_SESSION['post_logement']["image3P"])){
         $nom_image3 = $_SESSION['post_logement']['image3P'];
     }
-    if (isset($_POST["image4P"])){
+    if (isset($_SESSION['post_logement']["image4P"])){
         $nom_image4 = $_SESSION['post_logement']['image4P'];
     }
-    if (isset($_POST["image5P"])){
+    if (isset($_SESSION['post_logement']["image5P"])){
         $nom_image5 = $_SESSION['post_logement']['image5P']; 
     }
-    if (isset($_POST["image6P"])){
+    if (isset($_SESSION['post_logement']["image6P"])){
         $nom_image6 = $_SESSION['post_logement']['image6P'];
     }
 
@@ -313,45 +313,7 @@
         );
         $stmt->bindParam(':image2', $nom_image2);
         $stmt->execute();
-    }
 
-    if (isset($nom_image3)) {
-        $stmt = $dbh->prepare(
-            "INSERT INTO locbreizh._photo (url_photo)
-                VALUES (:image3)"
-        );
-        $stmt->bindParam(':image3', $nom_image3);
-        $stmt->execute();
-    }
-
-    if (isset($nom_image4)) {
-        $stmt = $dbh->prepare(
-            "INSERT INTO locbreizh._photo (url_photo)
-                VALUES (:image4)"
-        );
-        $stmt->bindParam(':image4', $nom_image4);
-        $stmt->execute();
-    }
-
-    if (isset($nom_image5)) {
-        $stmt = $dbh->prepare(
-            "INSERT INTO locbreizh._photo (url_photo)
-                VALUES (:image5)"
-        );
-        $stmt->bindParam(':image5', $nom_image5);
-        $stmt->execute();
-    }
-
-    if (isset($nom_image6)) {
-        $stmt = $dbh->prepare(
-            "INSERT INTO locbreizh._photo (url_photo)
-                VALUES (:image6)"
-        );
-        $stmt->bindParam(':image6', $nom_image6);
-        $stmt->execute();
-    }
-
-    if (isset($nom_image2)) {
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image2)'
@@ -363,6 +325,13 @@
 
     if (isset($nom_image3)) {
         $stmt = $dbh->prepare(
+            "INSERT INTO locbreizh._photo (url_photo)
+                VALUES (:image3)"
+        );
+        $stmt->bindParam(':image3', $nom_image3);
+        $stmt->execute();
+
+        $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image3)'
         );
@@ -371,8 +340,14 @@
         $stmt->execute();
     }
 
-
     if (isset($nom_image4)) {
+        $stmt = $dbh->prepare(
+            "INSERT INTO locbreizh._photo (url_photo)
+                VALUES (:image4)"
+        );
+        $stmt->bindParam(':image4', $nom_image4);
+        $stmt->execute();
+
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image4)'
@@ -384,6 +359,14 @@
 
     if (isset($nom_image5)) {
         $stmt = $dbh->prepare(
+            "INSERT INTO locbreizh._photo (url_photo)
+                VALUES (:image5)"
+        );
+        $stmt->bindParam(':image5', $nom_image5);
+        $stmt->execute();
+
+
+        $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image5)'
         );
@@ -392,8 +375,14 @@
         $stmt->execute();
     }
 
-
     if (isset($nom_image6)) {
+        $stmt = $dbh->prepare(
+            "INSERT INTO locbreizh._photo (url_photo)
+                VALUES (:image6)"
+        );
+        $stmt->bindParam(':image6', $nom_image6);
+        $stmt->execute();
+
         $stmt = $dbh->prepare(
             'INSERT INTO locbreizh._photos_secondaires (logement, photo)
                 VALUES (:logement, :image6)'
@@ -403,6 +392,8 @@
         $stmt->bindParam(':logement', $id_logement);
         $stmt->execute();
     }
+
+
     unset($_SESSION['post_logement']);
 
     header("Location: ../Accueil/Tableau_de_bord.php");

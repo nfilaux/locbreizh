@@ -527,7 +527,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-demlog {
-    margin: auto;
     background-color: #957BB0; 
     color: #F6E4FF;
     border: 1px solid #957BB0; 
@@ -535,11 +534,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-size: 1em;
     padding: 0.5em;
     font-family: 'Quicksand';
-    width: 20em;
+    width: 100%;
 }
 
 .btn-demlogno {
-    margin: auto;
     background-color: #cccccc; 
     color: #745086;
     border: 1px solid #957BB0; 
@@ -547,7 +545,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-size: 1em;
     padding: 0.5em;
     font-family: 'Quicksand';
-    width: 20em;
+    width: 100%;
 }
 
 .btn-input {
@@ -814,6 +812,17 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: 48%;
 }
 
+.logdem{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    width: 20%;
+    padding: 1em;
+    margin: auto;
+    border-radius: 15px;
+}
+
 .logcarte{
     display: flex;
     flex-direction: column;
@@ -1058,33 +1067,44 @@ iframe {
 
 .photoprincipal{
     width: 90%;
-    border-radius: 15px;
     height: 20em;
+    object-fit: contain;
+    border-radius: 15px;
 }
 
 .photosecondaireP {
     width: 48%;
     height: 20em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .photosecondaireI {
     width: 23%;
     height: 20em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .photosecondaireP5 {
     width: 48%;
     height: 22em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .photosecondaireI5 {
     width: 48%;
     height: 10em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .photosecondaireP6 {
     width: 30%;
     height: 20em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .imgsecondaire {
@@ -1092,10 +1112,11 @@ iframe {
     flex-direction: row;
     flex-wrap: wrap;
     width: 48%;
+    margin-left: 1em;
+    justify-content: space-between;
 }
 
 .dateresa {
-    margin: auto 0.5em;
     background-color: #957BB0; 
     color: #F6E4FF;
     border: 1px solid #957BB0; 
@@ -1103,7 +1124,9 @@ iframe {
     font-size: 1em;
     padding: 0.5em;
     font-family: 'Quicksand';
-    width: 8em;
+    width: 40%;
+    text-align: center;
+    font-weight: 600;
 }
 
 /*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
