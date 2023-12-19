@@ -19,7 +19,7 @@
     <a href="../reservation/liste_reservations.php"><h4>Accèder à mes réservations</h4></a>
 
     <div class="imghead">
-        <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
+        <a href="../gestion_devis/gestion_des_devis_client.php"><img src="../svg/message.svg"></a>
         <a class="margleft" onclick="openPopup('popup', 'overlay_profil-deconnexion')"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
     </div>
     </div>

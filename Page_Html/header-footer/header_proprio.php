@@ -19,7 +19,7 @@
         <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
 
         <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/messagebleu.svg"></a>
+            <a href="../gestion_devis/gestion_des_devis_proprio.php"><img src="../svg/messagebleu.svg"></a>
             <a class="margleft" onclick="openPopup('popup', 'overlay_profil-deconnexion')"><img id="pp" class="imgprofilP" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
         </div>
         </div>
