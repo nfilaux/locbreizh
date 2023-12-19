@@ -19,6 +19,7 @@
 
 html{
     height: 100%;
+    width: 100%;
 }
 
 body {
@@ -34,6 +35,10 @@ body {
 
 .pagecompte {
     background: url(svg/triskel2.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
+}
+
+.pageproprio {
+    background: url(svg/triskel3.svg) top right no-repeat, url(svg/triskel1.svg) bottom left no-repeat;
 }
 
 /*----------------------------------------------------------------popup----------------------------------------------------------------*/
@@ -162,6 +167,17 @@ body {
     cursor: pointer;
     outline: inherit;
 }
+/*------------------------------------------------popup supprimer -----------------------------------------*/
+#erreur{
+    color : red;
+    font-size : bold;
+}
+
+.erreur_suppr{
+    display : flex;
+    background-color: blue;
+}
+
 /*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/
 
 #mdp{
@@ -248,6 +264,14 @@ header a:last-child {
     padding: none;
 }
 
+.imgprofilP {
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid #274065;
+    border-radius: 50%;
+    padding: none;
+}
+
 .headconn{
     position: relative;
     background-color: #745086;
@@ -261,6 +285,17 @@ header a:last-child {
 .headtablo{
     position: relative;
     background-color: #745086;
+    color: #fff;
+    margin-bottom: 2em;
+    display: flex;
+    justify-content: center;
+    margin-top: 0vw;
+    width: 100%;
+}
+
+.headtabloP{
+    position: relative;
+    background-color: #274065;
     color: #fff;
     margin-bottom: 2em;
     display: flex;
@@ -283,6 +318,20 @@ header a:last-child {
     font-family: 'PatuaOne';
 }
 
+.headconn img , .headtabloP img{
+    position: absolute;
+    left: 5em;
+    top: 1em;
+}
+
+.headconn h1 , .headtabloP h1 {
+    color: #fff;
+    font-size: 4em;
+    margin: 3px;
+    font-family: 'PatuaOne';
+}
+
+
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
 
 .MainTablo{
@@ -299,7 +348,7 @@ main{
 }
 
 main label, .Tablobord h2{
-    color: #745086;
+    color: #274065;
 }
 
 main h1{
@@ -375,6 +424,19 @@ footer{
     bottom: 0;
     box-sizing: border-box;
     border-top: 1px solid #F6E4FF   ;
+    width: 100%;
+    height:5em;
+}
+
+.footerP{
+    padding-top: 1px;
+    background-color: #274065;
+    color: #b8cded;
+    margin-bottom: 0;
+    display: table-row;
+    bottom: 0;
+    box-sizing: border-box;
+    border-top: 1px solid #b8cded;
     width: 100%;
     height:5em;
 }
@@ -491,9 +553,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-ajoutlog {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #957BB0; 
-    color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    background-color: #345C99; 
+    color: #fff;
+    border: 1px solid #345C99; 
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -553,7 +615,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-demlog {
-    margin: auto;
     background-color: #957BB0; 
     color: #F6E4FF;
     border: 1px solid #957BB0; 
@@ -561,10 +622,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-size: 1em;
     padding: 0.5em;
     font-family: 'Quicksand';
+    width: 100%;
 }
 
 .btn-demlogno {
-    margin: auto;
     background-color: #cccccc; 
     color: #745086;
     border: 1px solid #957BB0; 
@@ -572,7 +633,20 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-size: 1em;
     padding: 0.5em;
     font-family: 'Quicksand';
+    width: 100%;
 }
+
+.btn-demlognoP {
+    background-color: #cccccc; 
+    color: #274065;
+    border: 1px solid #274065; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    width: 100%;
+}
+
 
 .btn-input {
     background-color: #957BB0; 
@@ -658,9 +732,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     flex-wrap: nowrap;
     justify-content: space-around;
     border: 2px solid #745086;
-    width: 80%;
     margin: 1em auto;
     background-color: #FCF0E2;
+    padding: 1em;
 }
 
 .cardlogmain img {
@@ -836,6 +910,17 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     flex-direction: column;
     justify-content: center;
     width: 48%;
+}
+
+.logdem{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    width: 20%;
+    padding: 1em;
+    margin: auto;
+    border-radius: 15px;
 }
 
 .logcarte{
@@ -1023,6 +1108,14 @@ fieldset label{
     margin-bottom: 0.2em;
 }
 
+.logtitreP{
+    font-family: 'PatuaOne';
+    color: #274065;
+    font-size: 2em;
+    margin-top: auto;
+    margin-bottom: 0.2em;
+}
+
 
 .logrowt > p {
     margin: 0 4vw;
@@ -1038,10 +1131,20 @@ fieldset label{
     align-self: flex-end;
 }
 
+.nuitP {
+    background-color: #FAE3C6;
+    border-radius: 10px;
+    color: #274065;
+    padding: 5px;
+    display: flex;
+    align-self: flex-end;
+}
+
 .potitre {
     font-family: 'PatuaOne';
     font-weight: 600;
-    margin: auto;
+    font-size: 1.5em;
+    margin: auto 0;
 }
 
 iframe {
@@ -1065,7 +1168,6 @@ iframe {
 .calend {
     width: 30%;
     height: auto;
-    margin: auto;
 }
 
 .detailimg {
@@ -1079,35 +1181,58 @@ iframe {
     justify-content: center;
 }
 
+.detailimgP {
+    background-color: #274065;
+    width: 100%;
+    padding: 1em;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
 .photoprincipal{
     width: 90%;
-    border-radius: 15px;
     height: 20em;
+    object-fit: contain;
+    border-radius: 15px;
 }
 
 .photosecondaireP {
     width: 48%;
     height: 20em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .photosecondaireI {
     width: 23%;
     height: 20em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .photosecondaireP5 {
     width: 48%;
     height: 22em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .photosecondaireI5 {
     width: 48%;
     height: 10em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .photosecondaireP6 {
     width: 30%;
     height: 20em;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 .imgsecondaire {
@@ -1115,6 +1240,34 @@ iframe {
     flex-direction: row;
     flex-wrap: wrap;
     width: 48%;
+    margin-left: 1em;
+    justify-content: space-between;
+}
+
+.dateresa {
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    width: 40%;
+    text-align: center;
+    font-weight: 600;
+}
+
+.demresaP{
+    background-color: #274065; 
+    color: #fff;
+    border: 1px solid #274065; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    width: 40%;
+    text-align: center;
+    font-weight: 600;
 }
 
 /*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
@@ -1128,7 +1281,12 @@ iframe {
 .fond{
     background-color: #fff;
     border: 1px solid #745086;
-    height: 40vh;
+    width: 60vh;
+}
+
+.fondP{
+    background-color: #fff;
+    border: 1px solid #274065;
     width: 60vh;
 }
 
@@ -1142,6 +1300,13 @@ iframe {
 .date_actuelle{
     cursor: pointer;
     color: #745086;
+    font-size: 1.5em;
+    text-decoration: underline;
+}
+
+.date_actuelleP{
+    cursor: pointer;
+    color: #345C99;
     font-size: 1.5em;
     text-decoration: underline;
 }
@@ -1161,6 +1326,11 @@ iframe {
 .fleches svg:hover{
     cursor: pointer;
     background-color: #745086;
+}
+
+.fleches svg:hover{
+    cursor: pointer;
+    background-color: #274065;
 }
 
 .fleches svg:hover path {
@@ -1409,6 +1579,13 @@ iframe {
     font-size: 2.5em;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.policetitres {
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    font-size: 2.5em;
+    margin: auto;
 }
 
 .restitre {
@@ -1728,6 +1905,3 @@ iframe {
 .btn-modif-logement button{
     width: 30vw;
 }
-
-
-/*oubujnvjmjnvibvuebvj vmibveuiovbnvejbviub*/

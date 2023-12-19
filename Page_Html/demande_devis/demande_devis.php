@@ -68,11 +68,11 @@
             <div class="logrow">
                 <div class="log5vct">  
                     <label for="dateArrivee">Date d’arrivée :</label>
-                    <input class="logvct" type="date" id="dateArrivee" name="dateArrivee" required/>
+                    <input class="logvct" type="date" id="dateArrivee" name="dateArrivee" value="<?php if(isset($_POST['arrive'])) { echo htmlentities($_POST['arrive']);}?>" required/>
                 </div>
                 <div class="log5vct">  
                     <label for="dateDepart">Date de depart :</label>
-                    <input class="logvct" type="date" id="dateDepart" name="dateDepart" required/>
+                    <input class="logvct" type="date" id="dateDepart" name="dateDepart" value="<?php if(isset($_POST['depart'])) { echo htmlentities($_POST['depart']);}?>" required/>
                 </div>
                 
                 <div class="log5vct">  
