@@ -137,8 +137,8 @@ $photo = $stmt->fetch();
                             <button class="btn-demlog"></button>
                         </div>
                         <form class="center" action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                            <input type='hidden' id="arrive" value="">
-                            <input type='hidden' id="depart" value="">
+                            <input type='hidden' name="arrive" id="arrive" value="">
+                            <input type='hidden' name="depart" id="depart" value="">
                             <button class="btn-demlog" type="submit">Demander un devis</button>
                         </form>
                     </div>
