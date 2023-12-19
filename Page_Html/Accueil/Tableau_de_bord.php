@@ -39,8 +39,8 @@
             <h1>Mon tableau de bord</h1>
         </div>
         <section class="Tablobord">
-            <article class="width">
                 <h2>Mes logements</h2>
+                <div class="colreverse">
                 <?php
                     
                     $stmt = $dbh->prepare(
@@ -76,7 +76,7 @@
                     }
                     
                     ?>
-                        <div class="cardlogmain">
+                        <div class="cardlogmainP">
                             <img src="../Ressources/Images/<?php echo $card['photo_principale']?>">
                             <section class="logcp">
                                 <div class="logrowb">
@@ -88,8 +88,8 @@
                                     <a class="btn-modiftst" href="../Logement/modifierLogement.php?id_logement=<?php echo $card['id_logement'] ?>">
                                         <button class="btn-modif"> Modifier
                                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" viewBox="0 0 10 10">
-                                            <path stroke="#745086" stroke-width=".3" d="M.917.503h8.405v8.405H.917z"/>
-                                            <path fill="#745086" d="M2.58 7.205h.513l3.378-3.378-.513-.513L2.58 6.692v.513Zm5.803.725H1.855V6.39l4.873-4.873a.363.363 0 0 1 .513 0l1.026 1.026a.363.363 0 0 1 0 .513L4.119 7.205h4.264v.725ZM6.471 2.8l.513.514.513-.513-.513-.513-.513.513Z"/>
+                                            <path stroke="#345C99" stroke-width=".3" d="M.917.503h8.405v8.405H.917z"/>
+                                            <path fill="#345C99" d="M2.58 7.205h.513l3.378-3.378-.513-.513L2.58 6.692v.513Zm5.803.725H1.855V6.39l4.873-4.873a.363.363 0 0 1 .513 0l1.026 1.026a.363.363 0 0 1 0 .513L4.119 7.205h4.264v.725ZM6.471 2.8l.513.514.513-.513-.513-.513-.513.513Z"/>
                                         </svg>
                                     </button>
                                     </a>
@@ -135,10 +135,10 @@
                                         }
                                     </script>
                             
+
                                     <?php
                                 $nomPlage = 'plage' . $key; 
                                 $overlayPlage = 'overlay' . $key?>
-
                             
                             <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
                             <div id="<?php echo $nomPlage; ?>" class='plages'> 
@@ -217,73 +217,15 @@
                                             
                                 </div>  
                             </div>
+                        
                     </section>
 </div>
                     <?php
                 }
                 ?>
-            <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
-            </article>
-
-            <hr class="hr">
-
-            <article>
-                <h2>Notifications</h2>
-
-                <div class="box">
-                    <?php /*foreach ($notifications as $notification) {?>
-
-                    <?php } */?>
                 </div>
+            <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
 
-
-                <h2>Mes Réservation</h2>
-                <p>Aucune réservation en cours </p>
-                <?php
-            
-                $stmt = $dbh->prepare("SELECT lien_devis, l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
-                from locbreizh._reservation r
-                join locbreizh._logement l on l.id_logement = r.logement
-                join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
-                join locbreizh._compte c on c.id_compte = p.id_proprietaire
-                join locbreizh._adresse a on l.id_adresse = a.id_adresse
-                join locbreizh._facture f on f.num_facture = r.facture
-                join locbreizh._devis d on d.num_devis = f.num_devis
-                join locbreizh._message_devis on d.num_devis = _message_devis.id_devis
-                where id_compte = {$_SESSION['id']}");
-                $stmt->execute();
-                $reservations = $stmt->fetchAll();
-
-                foreach ($reservations as $reservation) {
-
-                    ?>
-                    <div class="cardlogmain">        
-                        <img src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>">
-                       
-                        <section class="rescol">      
-                            <div class="logrowb">
-                                <div>
-                                    <h3 class="titrecard"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
-                                    <hr class="hrcard">
-                                </div>
-                            </div>
-                            
-
-                            <div class="resrow">
-                                <a href="../devis/pdf_devis/<?php echo $reservation['lien_devis'];?>" target="_blank"><button class="btn-ajoutlog" >CONSULTER DEVIS</button></a>
-                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
-                                <a><button class="btn-suppr" disabled>ANNULER</button></a>
-                            </div>
-                            
-                            
-                            <div class="logrowb">
-                                <p>DISCLAIMER - La suppression du logement est définitve.</p>
-                            </div>
-                        </secion>
-                       
-                    </div>
-                <?php } ?>
-            </article>
         </section>    
     </main>
 

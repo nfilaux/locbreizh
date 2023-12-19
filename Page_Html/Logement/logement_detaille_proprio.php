@@ -251,7 +251,7 @@ $photo = $stmt->fetch();
                             <p class="date_actuelle date_actuelleP"></p>
                         </div>
                         <div class="calendrier">
-                            <ul class="semaines">
+                            <ul class="semaines semainesP">
                                 <li>Lun</li>
                                 <li>Mar</li>
                                 <li>Mer</li>
@@ -273,7 +273,7 @@ $photo = $stmt->fetch();
                             </div>
                         </div>
                         <div class="calendrier">
-                            <ul class="semaines">
+                            <ul class="semaines semainesP">
                                 <li>Lun</li>
                                 <li>Mar</li>
                                 <li>Mer</li>
@@ -387,25 +387,25 @@ $photo = $stmt->fetch();
                 <h3 class="policetitre">Conditions du logement</h3>
 
                 <div class="logrow">
-                    <div class="cardcondition">
+                    <div class="cardconditionP">
                         <h4 class="potitre">Conditions d'annulation</h4>
                         <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                         </p>
                     </div>
 
-                    <div class="cardcondition">
+                    <div class="cardconditionP">
                         <h4 class="potitre">Conditions de paiement</h4>
                         <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                         </p>
                     </div>
                 </div>
                 <div class="logrow">
-                <div class="cardcondition">
+                <div class="cardconditionP">
                     <h4 class="potitre">Informations d'arrivée</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.</p>
                 </div>
 
-                <div class="cardcondition">
+                <div class="cardconditionP">
                     <h4 class="potitre">Informations de départ</h4>
                     <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                     </p>
@@ -413,7 +413,7 @@ $photo = $stmt->fetch();
             </div>
             <div class="logrowc">
                 <p>Veuillez consultez</p>
-                <p><a href=''>Le réglemement intérieur</a></p>
+                <p><a class="bleu" href=''>Le réglemement intérieur</a></p>
             </div>    
             </div>
 
