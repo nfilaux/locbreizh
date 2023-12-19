@@ -27,8 +27,9 @@
             <a href="CreerCompte.html"><img src="../svg/flecheRetour.svg"/></a>
             <h1>Créer mon compte client  !</h1>
     </header>
-    <main class="Maincompte">
-        <?php // creation du formulaire, si la valeur entré n'est pas bonne on affiche l'erreur de l'attribut en question ?>
+    <main>
+        <!--
+        <?php /* creation du formulaire, si la valeur entré n'est pas bonne on affiche l'erreur de l'attribut en question ?>
         <form action="creerClientBack.php" method="post" enctype="multipart/form-data">
             
             <div class="rowcompte">
@@ -167,13 +168,107 @@
                 <label for="conditions">Accepter les conditions générales d'utilisations</label>
                 <?php
                     erreur("conditions");
-                ?>
+                */?>
             </div>
 
             <input class="btn-input" type="submit" value="Créer le compte" />
 
-        </form>
+        </form>-->
 
+        <h1 class="header-profil">Mon compte</h1>
+        <!-- debut du formulaire pour afficher/modifier les informations "simples" du compte -->
+        <form action="modifier_client.php" method="post" enctype="multipart/form-data">
+            <div class="profil-form">
+                <div class="compte-infos">
+                    <div class="row-profil">
+                        <label for="prenom">Prénom</label>
+                        <!-- input pour pouvoir modifier l'information + pré-replissage -->
+                        <input type="text" id="prenom" name="prenom" maxlength="20" value="<?php echo $infos['prenom'];?>" required>
+                        <!-- affichage des possibles erreurs (même chose pour les prochains appels de la fonction) -->
+                    </div>
+                    <?php erreur("prenom");?>
+                    <div class="row-profil">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" maxlength="20" value="<?php echo $infos['nom'];?>" required>
+                        
+                    </div>
+                    <?php erreur("nom");?>
+                    <div class="row-profil">
+                        <label for="pseudo">Pseudo</label>
+                        <input type="text"  id="pseudo" name="pseudo" maxlength="20" value="<?php echo $infos['pseudo'];?>" required>
+                        
+                    </div>
+                    <?php erreur("pseudo");?>
+                    <div class="row-profil">
+                        <label for="mail">E-mail</label>
+                        <input type="email" id="mail" maxlength="50" name="mail" value="<?php echo $infos['mail'];?>" required>
+                        
+                    </div>
+                    <?php erreur("email");?>
+                    <div class="row-profil">
+                        <label for="telephone">Téléphone</label>
+                        <input type="tel" id="telephone" name="telephone" value="<?php echo substr($infos['telephone'], 0,2) . ' ' . substr($infos['telephone'], 2,2) . ' ' . substr($infos['telephone'], 4,2) . ' ' . substr($infos['telephone'], 6,2) . ' ' . substr($infos['telephone'], 8,2);?>" required>
+                        
+                    </div>
+                    <?php erreur("telephone");?>
+                    <div class="row-profil">
+                        <label for="date">Date de naissance</label>
+                        <input type="date" id="date" name="date" value=<?php 
+                            //on cree un objet date pouvoir l'afficher dans l'input
+                            $date = new DateTime($infos['datenaissance']);
+
+                            // le format annee-mois-jour
+                            $date_formatee = $date->format('Y-m-d');
+                        
+                            echo $date_formatee;
+                        ?> required>
+                        
+                    </div>
+                    <?php erreur("date");?>
+                    <!-- section pour les informations de l'adresse -->
+                    <div class="row-profil div-adresse">
+                        <p>Adresse</p>
+                        <div>
+                            <div class="row-adresse">
+                                <div>
+                                    <label for="no_rue">N° :</label>
+                                    <input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
+                                </div>
+                                    
+                                <div>
+                                    <label for="nom_rue">Rue :</label>
+                                    <input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
+                                    
+                                </div>
+                            </div>
+                            <?php erreur("numRue");?>
+                            <?php erreur("nomRue");?>
+                            <div class="row-adresse">
+                                <div>
+                                    <label for="codePostal">Code postal :</label>
+                                    <input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
+                                </div>
+                                <div>
+                                    <label for="ville">Ville :</label>
+                                    <input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
+                                </div>
+                            </div>
+                            <?php erreur("codePostal");?>
+                            <?php erreur("ville");?>
+                        </div>
+                    </div>
+                </div>
+                <!-- affichage de la photo de profil + input pour la modifier -->
+                <div>
+                    <img src="../Ressources/Images/<?php echo $infos['photo']; ?>" title="photo" alt="photo de profil">
+                    <label for="photo">Photo de profil</label>
+                    <input type="file" id="photo" name="photo"/>
+                    <?php erreur("photo"); ?>
+                </div>
+            </div>
+            <!-- boutton pour valider les changements -->
+            <input class="submit-profil" type="submit" value="Créer le compte">
+        </form>
     </main>
 
     <footer>
@@ -194,44 +289,3 @@
 
 </html>
 
-
-<style>
-    .popup {
-        display: none;
-        position: fixed;
-        top: 15%;
-        left: 91%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-</style>
-<script>
-// Ouvrir la popup
-function openPopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-}
-
-// Fermer la popup
-function closePopup() {
-var popup = document.getElementById('popup');
-popup.style.display = 'none';
-}
-
-// Ajouter des gestionnaires d'événements aux boutons
-var profilButton = document.getElementById('profilButton');
-profilButton.addEventListener('click', function() {
-alert('Accéder au profil');
-closePopup();
-});
-
-var deconnexionButton = document.getElementById('deconnexionButton');
-deconnexionButton.addEventListener('click', function() {
-alert('Se déconnecter');
-closePopup();
-});
-</Script>
