@@ -102,16 +102,7 @@
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $card['id_logement'] ?>"><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 
-<<<<<<< HEAD
                                 <div class="logrowb">   
-=======
-                                <div class="logrowb">
-                                    <div class="logcp">
-                                        <p>DISCLAIMER - La suppression du Logement est définitve.</p>
-                                        <p class="err">Condition requise : Aucune réservation prévue.</p>
-                                    </div>
-                            
->>>>>>> 147c43b08d6913062bd32cd3f280fce69e60360f
                                     <?php
                                 $nomPlage = 'plage' . $key; 
                                 $overlayPlage = 'overlay' . $key?>
