@@ -116,16 +116,18 @@
             <div class="rowcompte">
                 <div style="width: 48%;" class="messerr">
                 <div>
-                <input class="testinput" type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required/>
-                <img id="eye1" src="../svg/oeil.svg" onClick="changer('motdepasse', 'eye1')"/></div>
+                    <input class="testinput" type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required/>
+                    <img id="eye1" src="../svg/oeil.svg" onClick="changer('motdepasse', 'eye1')"/>
+                </div>
                 <?php
                     erreur("motdepasse");
                 ?>
                 </div>
                 <div style="width: 48%;" class="messerr">
                 <div>
-                <input class="testinput" type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation Mdp" required/>
-                <img id="eye2" src="../svg/oeil.svg"  onClick="changer('confirmationMDP', 'eye2')"/></div>
+                    <input class="testinput" type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation Mdp" required/>
+                    <img id="eye2" src="../svg/oeil.svg"  onClick="changer('confirmationMDP', 'eye2')"/>
+                </div>
                 <?php
                     erreur("confirmationMDP");
                 ?>
@@ -177,114 +179,143 @@
 
         <h1 class="header-profil">Mon compte</h1>
         <!-- debut du formulaire pour afficher/modifier les informations "simples" du compte -->
-        <form action="modifier_client.php" method="post" enctype="multipart/form-data">
+        <form action="creerClientBack.php" method="post" enctype="multipart/form-data">
             <div class="profil-form">
                 <div class="compte-infos">
                     <div class="row-profil">
                         <label for="prenom">Prénom</label>
                         <!-- input pour pouvoir modifier l'information + pré-replissage -->
-                        <input type="text" id="prenom" name="prenom" maxlength="20" value="<?php echo $infos['prenom'];?>" required>
+                        <input type="text" id="prenom" name="prenom" maxlength="20" required>
                         <!-- affichage des possibles erreurs (même chose pour les prochains appels de la fonction) -->
                     </div>
                     <?php erreur("prenom");?>
                     <div class="row-profil">
                         <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" maxlength="20" value="<?php echo $infos['nom'];?>" required>
+                        <input type="text" id="nom" name="nom" maxlength="20" required>
                         
                     </div>
                     <?php erreur("nom");?>
                     <div class="row-profil">
                         <label for="pseudo">Pseudo</label>
-                        <input type="text"  id="pseudo" name="pseudo" maxlength="20" value="<?php echo $infos['pseudo'];?>" required>
+                        <input type="text"  id="pseudo" name="pseudo" maxlength="20" required>
                         
                     </div>
+
+                    <div class="cp">
+                        <label>Civilité</label>
+                        <div class="cprow">
+                            <input type="radio" id="genre1" name="genre" value="Homme" <?php if(isset($_GET['genre'])) {if($_GET['genre'] == 'Homme') { ?> checked <?php }}?>/>
+                            <label for="genre1">Homme</label>
+                            <input type="radio" id="genre2" name="genre" value="Femme" <?php if(isset($_GET['genre'])) {if($_GET['genre'] == 'Femme') { ?> checked <?php }}?>/>
+                            <label for="genre2">Femme</label>
+                            <input type="radio" id="genre3" name="genre" value="Autre" <?php if(isset($_GET['genre'])) {if($_GET['genre'] == 'Autre') { ?> checked <?php }}?>/>
+                            <label for="genre3">Autre</label>
+                            <?php
+                                erreur("genre");
+                            ?>
+                        </div>   
+                    </div> 
+
                     <?php erreur("pseudo");?>
                     <div class="row-profil">
                         <label for="mail">E-mail</label>
-                        <input type="email" id="mail" maxlength="50" name="mail" value="<?php echo $infos['mail'];?>" required>
+                        <input type="email" id="mail" maxlength="50" name="mail" required>
                         
                     </div>
                     <?php erreur("email");?>
                     <div class="row-profil">
                         <label for="telephone">Téléphone</label>
-                        <input type="tel" id="telephone" name="telephone" value="<?php echo substr($infos['telephone'], 0,2) . ' ' . substr($infos['telephone'], 2,2) . ' ' . substr($infos['telephone'], 4,2) . ' ' . substr($infos['telephone'], 6,2) . ' ' . substr($infos['telephone'], 8,2);?>" required>
+                        <input type="tel" id="telephone" name="telephone" placeholder="XX XX XX XX XX" required>
                         
                     </div>
                     <?php erreur("telephone");?>
                     <div class="row-profil">
                         <label for="date">Date de naissance</label>
-                        <input type="date" id="date" name="date" value=<?php 
-                            //on cree un objet date pouvoir l'afficher dans l'input
-                            $date = new DateTime($infos['datenaissance']);
-
-                            // le format annee-mois-jour
-                            $date_formatee = $date->format('Y-m-d');
-                        
-                            echo $date_formatee;
-                        ?> required>
+                        <input type="date" id="date" name="date" required>
                         
                     </div>
                     <?php erreur("date");?>
-                    <!-- section pour les informations de l'adresse -->
-                    <div class="row-profil div-adresse">
-                        <p>Adresse</p>
-                        <div>
-                            <div class="row-adresse">
-                                <div>
-                                    <label for="no_rue">N° :</label>
-                                    <input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
-                                </div>
-                                    
-                                <div>
-                                    <label for="nom_rue">Rue :</label>
-                                    <input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
-                                    
-                                </div>
-                            </div>
-                            <?php erreur("numRue");?>
-                            <?php erreur("nomRue");?>
-                            <div class="row-adresse">
-                                <div>
-                                    <label for="codePostal">Code postal :</label>
-                                    <input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
-                                </div>
-                                <div>
-                                    <label for="ville">Ville :</label>
-                                    <input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
-                                </div>
-                            </div>
-                            <?php erreur("codePostal");?>
-                            <?php erreur("ville");?>
+
+                    <div class="row-profil-mdp">
+                        <label for="motdepasse">Mot de passe</label>
+                        <div class="mdpeye">
+                            <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required/>
+                            <img id="eye1" src="../svg/oeil.svg"  onClick="changer('motdepasse', 'eye1')"/>
                         </div>
                     </div>
+                    <?php erreur("motdepasse");?>
+
+                    
+
+                    <div class="row-profil-mdp">
+                        <label for="confirmationMDP">Confirmation du mot de passe</label>
+                        <div class="mdpeye">
+                            <input type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation mot de passe " required/>
+                            <img id="eye2" src="../svg/oeil.svg"  onClick="changer('confirmationMDP', 'eye2')"/>
+                        </div>
+                    </div>
+                    <?php erreur("confirmationMDP");?>
+
+                    <!-- section pour les informations de l'adresse -->
+                 
+                    <p>Adresse</p>
+                    <div class="part1_address">
+                        <div class="numero_rue">
+                            <label for="no_rue">N° :</label>
+                            <input type="text" id="no_rue" name="no_rue" maxlength="3" required>
+                        </div>
+                        <?php erreur("numRue");?>
+
+                        <div class="nom_rue">
+                            <label for="nom_rue">Rue :</label>
+                            <input type="text" id="nom_rue" name="nom_rue" maxlength="30" required>
+                            
+                        </div>
+                        <?php erreur("nomRue");?>
+
+                    </div> 
+                    <div>  
+                        <div>
+                            <label for="codePostal">Code postal :</label>
+                            <input type="text" maxlength="5" id="codePostal" name="codePostal" required> 
+                        </div>
+                        <?php erreur("codePostal");?>
+
+            
+                        <div>
+                            <label for="ville">Ville :</label>
+                            <input type="text" id="ville" maxlength="50" name="ville" required>
+                        </div>
+                        <?php erreur("ville");?>
+                    </div>
+                    
                 </div>
                 <!-- affichage de la photo de profil + input pour la modifier -->
                 <div>
-                    <img src="../Ressources/Images/<?php echo $infos['photo']; ?>" title="photo" alt="photo de profil">
+                    <img src="../svg/anonyme.svg" title="photo" alt="photo de profil">
                     <label for="photo">Photo de profil</label>
                     <input type="file" id="photo" name="photo"/>
                     <?php erreur("photo"); ?>
                 </div>
             </div>
+
+            <div class="condition">
+                <input type="checkbox" id="conditions" name="conditions" value="accepter" <?php if(isset($_GET['conditions'])) {if($_GET['conditions'] == 'accepter') { ?> checked <?php }}?> required/>
+                <label for="conditions">Accepter les conditions générales d'utilisations</label>
+                <?php
+                    erreur("conditions");
+                ?>
+            </div>
+
             <!-- boutton pour valider les changements -->
             <input class="submit-profil" type="submit" value="Créer le compte">
         </form>
     </main>
 
-    <footer>
-        <div class="tfooter">
-            <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-            <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-            <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-            <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-        </div>
-        <hr>  
-        <div class="bfooter">
-            <p>©2023 Loc’Breizh</p>
-            <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-            <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-        </div>
-    </footer>
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+    ?>
+
 </body>
 
 </html>
