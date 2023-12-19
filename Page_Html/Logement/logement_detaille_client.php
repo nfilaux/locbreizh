@@ -136,12 +136,19 @@ $photo = $stmt->fetch();
                             <p class="dateresa"></p>
                             <p class="dateresa"></p>
                         </div>
+<<<<<<< HEAD
                         
                         <form class="center" action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
                             <input type='hidden' name="arrive" id="arrive" value="">
                             <input type='hidden' name="depart" id="depart" value="">
                             <button class="btn-demlog" type="submit">Demander un devis</button>
 
+=======
+                        <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                            <input type='hidden' name="arrive" id="arrive" value="">
+                            <input type='hidden' name="depart" id="depart" value="">
+                            <button class="btn-demlog" type="submit">Demander un devis</button>
+>>>>>>> 4118ada788533318337f362bd604ba9348bcc319
                         </form>
                     </div>
                 </div>
@@ -149,7 +156,7 @@ $photo = $stmt->fetch();
         
             <div class="logrow">
             <div class="logcolumn">
-                <h3 class="potitre">Services et équipements du logement :</h3>
+            <h3 class="policetitres">Informations du logement</h3>
                 <?php
                     $stmt = $dbh->prepare(
                         "SELECT 
@@ -401,7 +408,7 @@ $photo = $stmt->fetch();
                     </div>
 
                     <div class="cardcondition">
-                        <h4 class="poetitre">Conditions de paiement</h4>
+                        <h4 class="potitre">Conditions de paiement</h4>
                         <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
                         </p>
                     </div>

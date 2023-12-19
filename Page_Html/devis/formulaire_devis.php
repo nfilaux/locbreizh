@@ -31,7 +31,7 @@
     ?>
 
     <main class="MainTablo">
-        <div class="headtablo"> 
+        <div class="headtabloP"> 
             <h1>Faire mon devis</h1>
         </div>
         <?php
@@ -81,7 +81,7 @@
         ?>
         <style>#erreur {color : red;}</style>
     <fieldset>
-        <h1 class="policetitre colorviolet">La demande de devis de <?php echo $infos_user['prenom'] . ' '. $infos_user['nom']; ?> !</h1>
+        <h1 class="policetitre colorbleu">La demande de devis de <?php echo $infos_user['prenom'] . ' '. $infos_user['nom']; ?> !</h1>
         <form name="formulaire" action="ajouter_devis.php" method="post">
     
         <div class="logrow">
@@ -114,7 +114,7 @@
                 </div>
             </div>
 
-            <div class="cardSupplements">
+            <div class="cardSupplementsP">
             <h2 style="text-align:center;  font-family: 'Quicksand';">Charges aditionnelles</h2>
                 <div class="logcheckbox">
                 <!--pre-remplie les iinfos si ils sont dans get-->
@@ -155,7 +155,7 @@
         </fieldset>
 
         <fieldset>
-            <h1 class="policetitre colorviolet">Details pour le paiement</h1>
+            <h1 class="policetitre colorbleu">Details pour le paiement</h1>
             <div class="devisrow">
                 <p class="ren">A RENSEIGNER</p>
                 <div class="deviscol">
@@ -169,7 +169,7 @@
                 <input class="btn-ajoutlog" type="button" value="Calculer" onclick="calcul()"/>
             </div>
             
-            <hr class="hr">
+            <hr class="hrP">
 
             
             <div id="resultat" class="deviscol">
@@ -246,7 +246,7 @@
     </main>
     
     <?php 
-        echo file_get_contents('../header-footer/footer.html');
+        echo file_get_contents('../header-footer/footerP.html');
     ?>
 
 </body>

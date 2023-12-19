@@ -72,10 +72,10 @@
         include('../header-footer/choose_header.php');
     ?>
     <main class="main-profil">
-        <h1 class="header-profil">Mon compte</h1>
+        <h1 class="header-profilP">Mon compte</h1>
         <!-- debut du formulaire pour afficher/modifier les informations "simples" du compte -->
         <form action="modifier_proprio.php" method="post" enctype="multipart/form-data" >
-            <div class="profil-form">
+            <div class="profil-form profil-formP">
                 <div class="compte-infos">
                     <div class="row-profil">
                         <label for="prenom">Prénom</label>
@@ -108,7 +108,7 @@
                     <div class="row-profil div-adresse">
                         <p>Adresse</p>
                         <div>
-                            <div class="row-adresse">
+                            <div class="row-adresseP">
                                 <div>
                                     <label for="no_rue">N° :</label>
                                     <input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
@@ -124,7 +124,7 @@
                             </div>
                             <?php erreur("numRue");?>
                             <?php erreur("nomRue");?>
-                            <div class="row-adresse">
+                            <div class="row-adresseP">
                                 <div>
                                     <label for="codePostal">Code postal :</label>
                                     <input type="text" maxlength="5" id="codePostal" name="codePostal"  class="petite-adresse" value="<?php echo $infos['code_postal'];?>" required> 
@@ -145,8 +145,8 @@
                     <!-- lien cliquable vers la carte d'iendité + input pour la modifier -->
                     <div class="row-profil">
                         <label for="carteIdentite">Carte d'identite</label>
-                        <div class="doc-profil">
-                            <a class="voir-doc" href="../Ressources/carte_identite/<?php echo $infos['carte_identite']; ?>" target="_blank">
+                        <div class="doc-profilP">
+                            <a class="voir-docP" href="../Ressources/carte_identite/<?php echo $infos['carte_identite']; ?>" target="_blank">
                             <p>Voir ma carte d'identité</p>
                             <img src="../svg/eye.svg" amt="voir"></a>
                             <input type="file" id="carteIdentite" name="carteIdentite"/>
@@ -157,8 +157,8 @@
                     <!-- lien cliquable vers le RIB + input pour le modifier -->
                     <div class="row-profil">
                         <label for="rib">RIB</label>
-                        <div class="doc-profil">
-                            <a class="voir-doc" href="../Ressources/rib/<?php echo $infos['rib']; ?>" target="_blank">
+                        <div class="doc-profilP">
+                            <a class="voir-docP" href="../Ressources/rib/<?php echo $infos['rib']; ?>" target="_blank">
                             <p>Voir le RIB</p>
                             <img src="../svg/eye.svg" alt="voir"></a>
                             <input type="file" id="rib" name="rib"/>
@@ -178,13 +178,13 @@
                 
             </div>
             <!-- boutton pour valider les changements -->
-            <input class="submit-profil" type="submit" value="Enregistrer les modifications">
+            <input class="submit-profil submit-profilP" type="submit" value="Enregistrer les modifications">
         </form>
         <!-- section pour modifier le mot de passe -->
         <div class="profil-mdp">
             <h2>Mot de passe :</h2>
             <!-- boutton pour ouvrir la popup -->
-            <button class="btn-mdp" type="button" onclick="openMdpPopup()">Changer le mot de passe</button>
+            <button class="btn-mdpP" type="button" onclick="openMdpPopup()">Changer le mot de passe</button>
         </div>
         <!-- section suppression du compte -->
         <div class="suppr-compte">
@@ -197,7 +197,7 @@
         </div>
     </main>
     <?php 
-        echo file_get_contents('../header-footer/footer.html');
+        echo file_get_contents('../header-footer/footerP.html');
     ?>
 </body>
 <?php

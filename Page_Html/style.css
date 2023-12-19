@@ -377,6 +377,13 @@ main h1{
     margin: 0;
 }
 
+.hrP{
+    height: auto;
+    border: none;
+    border: 1px solid #274065; 
+    margin: 0;
+}
+
 
 .Maincompte {
     display: flex;
@@ -510,6 +517,19 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding: 0.5em;
 }
 
+.btn-previsualiser {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #345C99; 
+    color: #fff;
+    border: 1px solid #345C99; 
+    border-radius: 20px;
+    font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
+}
+
+
 .btn-accueilins {
     margin-top: auto;
     margin-bottom: auto; 
@@ -604,7 +624,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .btn-modif {
     background-color: transparent; 
-    color: #745086;
+    color: #345C99;
     border: none; 
     border-radius: 5px;
     font-size: 1em;
@@ -618,6 +638,17 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     background-color: #957BB0; 
     color: #F6E4FF;
     border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    width: 100%;
+}
+
+.btn-demlogP {
+    background-color: #274065; 
+    color: #fff;
+    border: 1px solid #274065; 
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -662,9 +693,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .btn-envoidevis {
     
-    background-color: #957BB0; 
-    color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    background-color: #274065; 
+    color: #fff;
+    border: 1px solid #274065; 
     border-radius: 5px;
     font-size: 2em;
     padding: 0.5em;
@@ -742,6 +773,32 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     height: 80%;
     margin: auto 0.5em auto 0em;
     border: 2px solid #745086;
+    border-radius: 10px;
+}
+
+.cardlogmainP {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    border: 2px solid #274065;
+    margin: 1em auto;
+    background-color: #FCF0E2;
+    padding: 1em;
+    width: 90%;
+}
+
+.colreverse{
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+}
+
+.cardlogmainP img {
+    width: 20%;
+    height: 80%;
+    margin: auto 0.5em auto 0em;
+    border: 2px solid #274065;
     border-radius: 10px;
 }
 
@@ -999,6 +1056,17 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     align-items: center;
 }
 
+.cardSupplementsP {
+    border: 1px solid #274065;
+    width: 15%;
+    color: #345C99;
+    background-color: #FCF0E2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .cardprixcharge {
     width: 100%;
     font-size: 2em;
@@ -1007,7 +1075,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .titreAL {
     margin: auto;
-    color: #745086;
+    color: #274065;
     font-size: 2em;
     margin-top: 1em;
     margin-bottom: 0.5em;
@@ -1053,9 +1121,17 @@ fieldset label{
     height: 8em;
 }
 
+.logPAP{
+    color: #345C99; 
+    border: 1px solid #345C99;
+    border-radius: 5px; 
+    width: 100%;
+    height: 8em;
+}
+
 .lognom{
-    color: #957BB0; 
-    border: 1px solid #957BB0;
+    color: #345C99; 
+    border: 1px solid #345C99;
     border-radius: 5px; 
     width: 100%;
     height: 2em;
@@ -1063,8 +1139,17 @@ fieldset label{
 }
 
 .logvct{
-    color: #957BB0; 
-    border: 1px solid #957BB0;
+    color: #345C99; 
+    border: 1px solid #345C99;
+    border-radius: 5px; 
+    width: 100%;
+    height: 2em;
+    text-align: center;
+}
+
+.logvctC{
+    color: #745086; 
+    border: 1px solid #745086;
     border-radius: 5px; 
     width: 100%;
     height: 2em;
@@ -1072,8 +1157,18 @@ fieldset label{
 }
 
 .lognb{
-    color: #957BB0; 
-    border: 1px solid #957BB0;
+    color: #345C99; 
+    border: 1px solid #345C99;
+    border-radius: 5px; 
+    width: 80%;
+    height: 2em;
+    text-align: center;
+    margin:auto auto 0.5em auto;
+}
+
+.lognbC{
+    color: #745086; 
+    border: 1px solid #745086;
     border-radius: 5px; 
     width: 80%;
     height: 2em;
@@ -1082,8 +1177,8 @@ fieldset label{
 }
 
 .logselect{
-    color: #957BB0; 
-    border: 1px solid #957BB0;
+    color: #345C99; 
+    border: 1px solid #345C99;
     border-radius: 5px; 
     width: 100%;
     height: 2em;
@@ -1160,6 +1255,19 @@ iframe {
     border-radius: 15px;
     padding-top: 0.5em;
     border: 1px solid #745086; 
+    width: 45%;
+    padding: 1em;
+    margin: 0.5em auto;
+}
+
+.cardconditionP {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    border-radius: 15px;
+    padding-top: 0.5em;
+    border: 1px solid #274065; 
     width: 45%;
     padding: 1em;
     margin: 0.5em auto;
@@ -1270,6 +1378,14 @@ iframe {
     font-weight: 600;
 }
 
+.bleu {
+    color: #274065;
+}
+
+.bleu:visited {
+    color: #274065;
+}
+
 /*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
 
 .corpsCalendrier{
@@ -1346,6 +1462,12 @@ iframe {
     color: #745086;
 }
 
+.semainesP{
+    font-weight: bold;
+    color: #274065;
+}
+
+
 .jours li{
     z-index: 1;
     margin-top: 30px;
@@ -1379,7 +1501,7 @@ iframe {
 .calendrier ul li::before{
     position: absolute;
     content: "";
-    height: 45px;
+    height: 45px;   
     width: 45px;
     top: 50%;
     left: 50%;
@@ -1391,6 +1513,10 @@ iframe {
 .entreDeux:hover::before, .normal:hover::before{
     cursor: pointer;
     background-color: #D3D3D3;
+}
+
+.semainesP .jours ul li .actif{
+    background-color: #274065;
 }
 
 .actif::before{
@@ -1472,7 +1598,7 @@ iframe {
 }
 
 .ren {
-    color: #745086;
+    color: #345C99;
     font-size: 2em;
 
 }
@@ -1605,6 +1731,10 @@ iframe {
 .colorviolet{
     color: #745086;
 }
+.colorbleu{
+    color: #345C99;
+}
+
 
 /*------------------------------------------- CONSULTER PROFIL -----------------------------------------------*/
 
@@ -1616,7 +1746,6 @@ iframe {
 }
 
 .row-profil label {
-    width: 50%;
     font-weight: normal;
     color: #745086;
     text-transform: inherit;
@@ -1653,6 +1782,14 @@ iframe {
     padding: 2vh;
 }
 
+.header-profilP {
+    text-transform: uppercase;
+    background-color: #274065;
+    color: #fff;
+    text-align: center;
+    padding: 2vh;
+}
+
 .compte-infos {
     background-color: #FCF0E2;
     display: flex;
@@ -1665,6 +1802,20 @@ iframe {
     display: flex;
     justify-content: space-between;
     padding: 1vh 0;
+}
+
+.row-adresseP {
+    min-width: 210px;
+    display: flex;
+    justify-content: space-between;
+    padding: 1vh 0;
+}
+
+.row-adresseP label {
+    font-weight: normal;
+    color: #345C99;
+    text-transform: inherit;
+    font-size: medium;
 }
 
 .row-adresse label {
@@ -1682,11 +1833,28 @@ iframe {
     min-width: 200px;
 }
 
+.row-adresseP>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45%;
+    min-width: 200px;
+}
+
+
 .row-adresse>div:first-of-type>input {
     width: 25%;
 }
 
 .row-adresse>div:last-of-type>input {
+    width: 10vw;
+}
+
+.row-adresseP>div:first-of-type>input {
+    width: 25%;
+}
+
+.row-adresseP>div:last-of-type>input {
     width: 10vw;
 }
 
@@ -1702,7 +1870,24 @@ iframe {
     color: #745086;
 }
 
+.doc-profilP {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.doc-profilP input {
+    height: auto;
+    color: #345C99;
+}
+
 .voir-doc {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+}
+
+.voir-docP {
     display: flex;
     text-decoration: none;
     align-items: center;
@@ -1716,6 +1901,14 @@ iframe {
     margin: 0 1em 0 0;
 }
 
+.voir-docP p {
+    text-transform: none;
+    color: #345C99;
+    font-weight: normal;
+    font-size: medium;
+    margin: 0 1em 0 0;
+}
+
 .voir-doc img {
     padding: 3px;
     width: fit-content;
@@ -1724,10 +1917,24 @@ iframe {
     border-radius: 20%;
 }
 
+.voir-docP img {
+    padding: 3px;
+    width: fit-content;
+    height: fit-content;
+    border: solid 1px #274065;
+    border-radius: 20%;
+}
+
 .profil-form {
     display: flex;
     background-color: #FAE3C6;
     border: solid 1px #957BB0;
+}
+
+.profil-formP {
+    display: flex;
+    background-color: #FAE3C6;
+    border: solid 1px #274065;
 }
 
 .profil-form>div:last-of-type {
@@ -1755,11 +1962,31 @@ iframe {
     border-right: solid 1px #957BB0;
 }
 
+.profil-formP>div:first-of-type {
+    width: 75%;
+    border-right: solid 1px #274065;
+}
+
 .submit-profil {
     position: relative;
     left: 37%;
     width: 25%;
     background-color: #957BB0;
+    color: #fff;
+    height: 5vh;
+    margin: 2vh;
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+    font-size: large;
+    font-weight: bold;
+}
+
+.submit-profilP {
+    position: relative;
+    left: 37%;
+    width: 25%;
+    background-color: #274065;
     color: #fff;
     height: 5vh;
     margin: 2vh;
@@ -1792,6 +2019,18 @@ iframe {
 .btn-mdp {
     margin-left: 10vw;
     background-color: #957BB0;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    height: 3vw;
+    width: 20vw;
+    font-size: large;
+    font-weight: bold;
+}
+
+.btn-mdpP {
+    margin-left: 10vw;
+    background-color: #274065;
     color: #fff;
     border: none;
     border-radius: 10px;
