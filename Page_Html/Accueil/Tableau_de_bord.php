@@ -15,6 +15,7 @@
             ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
             unset($_SESSION["erreurs"][$nomErreur]);
         }
+    
 }
     
 ?>
@@ -61,15 +62,15 @@
                 foreach ($liste_mes_logements as $key => $card) {
                     $id_log = $card['id_logement'];
                     $stmt = $dbh->prepare(
-                        "SELECT en_ligne
+                        "SELECT en_ligne,libelle_logement
                         from locbreizh._logement 
                         where id_logement = $id_log;"
                     );
                     $stmt->execute();
-                    $etat = $stmt->fetch();
+                    $infos_log = $stmt->fetch();
 
-                    if ($etat["en_ligne"] == 1){
-                        $bouton_desactiver = "METTRE_HORS_LIGNE";  
+                    if ($infos_log["en_ligne"] == 1){
+                        $bouton_desactiver = "METTRE_HORS_LIGNE1";  
                     } else{
                         $bouton_desactiver = "METTRE_EN_LIGNE";
                     }
@@ -95,29 +96,42 @@
                                 </div>
                                 
                                 <div class="logrowb">
-                                    <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $card['id_logement'] ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
-                                    <?php $id_un_logement = $card['id_logement']; ?>
+                                    <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $id_log ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
+                                    <?php $id_un_logement = $id_log; ?>
                                     <form action="ChangeEtat.php" method="post">
-                                        <input type="submit" name=<?php echo $id_un_logement ?> class="button" value=<?php echo $bouton_desactiver; ?> />
-                                        <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
+                                        <input type="hidden" name=<?php echo $id_un_logement ?> value=<?php echo $bouton_desactiver ?>>
+                                        <button class="btn-desactive" name="bouton_changer_etat" type='submit'> <?php echo $bouton_desactiver; ?> </button>
                                     </form>
-                                    <a href="../Logement/supprimer_logement.php?id=<?php echo $card['id_logement'] ?>"><button class="btn-suppr">SUPPRIMER</button></a>
+                                    <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
+                                    <a href="../Logement/supprimer_logement.php?id=<?php echo $id_log ?>"><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 
                                 <div class="logrowb">
-                                    
-                                    <?php
-                                    ?>
 
                                     <div class="overlay_plages" id="overlay_erreur" onclick="closePopup('erreur_suppr','overlay_erreur')"></div>
-                                    <div class="plages" class="erreur" id="erreur_suppr" > <p> Impossible de supprimer un logement lié à une réservation ! <p> <button onclick="closePopup('erreur_suppr','overlay_erreur')">Ok</button></div>
+                                    <div id="erreur_suppr" class="plages" class="erreur" > <p> Impossible de supprimer un logement lié à une réservation ! <p> <button onclick="closePopup('erreur_suppr','overlay_erreur')" class="btn-ajoutlog">Ok</button></div>
 
+                                    <div class="overlay_plages" id="overlay_confirm" onclick="closePopup('confirm','overlay_confirm')"></div>
+                                    <div id="confirm" class="plages"> <p class="valid"> Votre logement vient d'être supprimé avec succès ! <p> <button onclick="closePopup('confirm','overlay_confirm')" class="btn-ajoutlog">Ok</button></div>
+                                    
+                                    <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
+                                    <div id="validation" class="plages"> 
+                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log["libelle_logement"]; ?> ? 
+                                        <p class="erreur">Cette action est irreversible !</p> 
+                                        <div id='boutons'>
+                                            <button onclick="closePopup('validation','overlay_validation')" class="btn-ajoutlog">Annuler</button> 
+                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $id_log?>" ><button class="btn-suppr">Supprimer</button></a>
+                                        </div>
+                                    </div>
+                                    
                                     <script>
                                         let cas = document.getElementById("cas_bouton_suppr");
-                                        //alert(cas.value);
-                                        if (cas.value == '2'){
-                                            //open("./avertissement_reservation_lie_logement.html","pop up","width=500,height=300").moveTo(500,300).focus();
+                                        if (cas.value == '1'){
                                             openPopup("erreur_suppr","overlay_erreur");
+                                        } else if (cas.value == '2') {
+                                            openPopup("validation","overlay_validation");
+                                        } else if (cas.value =='3'){
+                                            openPopup("confirm","overlay_confirm");
                                         }
                                     </script>
                             
@@ -125,7 +139,6 @@
                                 $nomPlage = 'plage' . $key; 
                                 $overlayPlage = 'overlay' . $key?>
 
-                                <a class="calend" onclick="openPopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>    
                             
                             <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
                             <div id="<?php echo $nomPlage; ?>" class='plages'> 

@@ -141,14 +141,26 @@ body {
     outline: inherit;
 }
 /*------------------------------------------------popup supprimer -----------------------------------------*/
-#erreur{
-    color : red;
-    font-size : bold;
+#erreur_suppr{
+    color:red;
+    font-weight : bold;
+    text-align: center;
+    padding : 1.5em;
 }
 
-.erreur_suppr{
-    display : flex;
-    background-color: blue;
+.erreur{
+    color:red;
+    font-weight: bold;
+}
+
+.valid{
+    color:green;
+    font-weight: bold;
+}
+
+#boutons{
+    display: flex;
+    justify-content: space-around;
 }
 
 /*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/

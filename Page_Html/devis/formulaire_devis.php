@@ -15,6 +15,12 @@
     $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $photo = $stmt->fetch();
+
+    //on récupère l'id de la taxe de séjour associé au logement du devis
+    
+    $stmt = $dbh->prepare("SELECT taxe_sejour from locbreizh._logement where id_compte = {$_SESSION['id']};");
+    $stmt->execute();
+    $photo = $stmt->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -40,12 +46,6 @@
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-            // obtenu par l'url ($_GET)
-            $d_a ="2015-02-25-";
-            $d_d ="2010-02-23";
-            $date_val = "13.2";
-            $delai_accept = "3";
-
             $reqNomClient = $dbh->prepare("SELECT nom, prenom FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = {$_GET['demande']}");
             $reqNomClient->execute();
             $infos_user = $reqNomClient->fetch(); 
@@ -59,7 +59,7 @@
 
             $num_demande = $_GET["demande"];
             
-            //on récupère les informatiosn pour préremplir le devis en fonction de la demande de devis qui lui est associé
+            //on récupère les informations pour préremplir le devis en fonction de la demande de devis qui lui est associé
             
             $stmt = $dbh->prepare("SELECT date_arrivee,date_depart,nb_personnes from locbreizh._demande_devis where num_demande_devis = $num_demande;");
             $stmt->execute();
@@ -117,16 +117,16 @@
             <div class="cardSupplements">
             <h2 style="text-align:center;  font-family: 'Quicksand';">Charges aditionnelles</h2>
                 <div class="logcheckbox">
-                <!--pre-remplie les iinfos si ils sont dans get-->
+                <!--pre-remplie les infos si ils sont dans get-->
                 <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo 'checked';}else if ($menage !=''){echo 'checked';}; ?>>
                  <label for="animaux"> Animaux </label>
                 </div>
                 <div class="logcheckbox">
-                <!--pre-remplie les iinfos si ils sont dans get-->
+                <!--pre-remplie les infos si ils sont dans get-->
                 <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['menage'])){echo 'checked';}else{if ($animaux !=''){echo 'checked';}}; ?>>
                 <label for="menage"> Menage </label>
                 </div>
-                <!--pre-remplie les iinfos si ils sont dans get-->
+                <!--pre-remplie les infos si ils sont dans get-->
                 <div class="logpc">
                 <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
                 <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else{if ($vac_sup!=''){echo $vac_sup;}}; ?>"/>
@@ -209,6 +209,7 @@
                     var tmp = Math.pow(10, precision);
                     return Math.round( nombre*tmp )/tmp;
                 }
+
                 function calcul() {
                     let baliseprixloc = document.getElementById("tarif_loc")
                     let prix_loc = baliseprixloc.value
