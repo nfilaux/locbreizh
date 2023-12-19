@@ -66,20 +66,20 @@ $photo = $stmt->fetch();
             
             ?>
             <div class="logpc">
-                <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
+                <h3 class="logtitreP"><?php echo $info['accroche_logement'];?></h3>
                 <div class="logrowb">
                     <div class="logrowt">
                         <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
                         <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                     <div class="logrowt">
-                        <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
+                        <p class="nuitP"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
                         <!--
                         <img src="/Ressources/Images/star-fill 1.svg"><h4> echo $info['note_avis'];,0</p>
                         -->
                     </div>
                 </div>
-                <div class="detailimg">
+                <div class="detailimgP">
                     <?php
                         $cpt = 1;
                         for ($i = 0 ; $i <5; $i++){
@@ -132,11 +132,11 @@ $photo = $stmt->fetch();
                     </div>
                     <div class="logdem">
                         <div class="logrowb" id="datesPlage">
-                            <p class="dateresa"></p>
-                            <p class="dateresa"></p>
+                            <p class="dateresa demresaP"></p>
+                            <p class="dateresa demresaP"></p>
                         </div>
                         <form action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                            <button class="btn-demlogno" type="submit" disabled>Demander un devis</button>
+                            <button class="btn-demlognoP" type="submit" disabled>Demander un devis</button>
                         </form>
                     </div>
                 </div>
@@ -243,14 +243,14 @@ $photo = $stmt->fetch();
             <div class="logcolumn">
                 <h3 class="policetitres">Calendrier</h3>
                 <div class="corpsCalendrier">
-                    <div class="fond">
+                    <div class="fondP">
                         <div class="teteCalendrier">
-                            <div class="fleches">
+                            <div class="fleches flechesP">
                                 <svg id="precedent" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
-                                    <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                    <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
                                 </svg>
                             </div>
-                            <p class="date_actuelle"></p>
+                            <p class="date_actuelle date_actuelleP"></p>
                         </div>
                         <div class="calendrier">
                             <ul class="semaines">
@@ -265,12 +265,12 @@ $photo = $stmt->fetch();
                             <ul class="jours"></ul>
                         </div>
                     </div>
-                    <div class="fond">
+                    <div class="fondP">
                         <div class="teteCalendrier">
-                            <p class="date_actuelle"></p>
-                            <div class="fleches">
+                            <p class="date_actuelle date_actuelleP"></p>
+                            <div class="fleches flechesP">
                                 <svg id="suivant" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
-                                    <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                    <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
                                 </svg>
                             </div>
                         </div>
@@ -423,7 +423,7 @@ $photo = $stmt->fetch();
     </main>
     
     <?php 
-        echo file_get_contents('../header-footer/footer.html');
+        echo file_get_contents('../header-footer/footerP.html');
     ?>
 </body>
 

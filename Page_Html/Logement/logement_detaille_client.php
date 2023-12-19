@@ -137,7 +137,7 @@ $photo = $stmt->fetch();
                             <p class="dateresa"></p>
                         </div>
                         <form action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                            <button class="btn-demlogno" type="submit" disabled>Demander un devis</button>
+                            <button class="btn-demlog" type="submit" >Demander un devis</button>
                         </form>
                     </div>
                 </div>
