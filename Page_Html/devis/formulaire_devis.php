@@ -24,6 +24,7 @@
     <title>Formulaire devis</title>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
+    <script src="../scriptPopupFeedback.js"></script>
 </head>
 <body>
     <?php 
@@ -176,29 +177,29 @@
                     <div class="devisrow">
                     <p class="ren">Calculer automatiquement</p>
                         <div class="deviscolinput">
-                            <p> Total HT (en € ) </p>
+                            <p> Total HT (en €) </p>
                             <input class="logvct" id="totalht" name="totalht" value="" disabled>
                         </div>
                         <div class="deviscolinput">
-                            <p> Total TTC (en € ) </p>
+                            <p> Total TTC (en €) </p>
                             <input class="logvct" id="totalht" name="totalht" value="" disabled>
                         </div>
                         <div class="deviscolinput">
-                            <p> Taxe de séjour (en € ) </p>
+                            <p> Taxe de séjour (en €) </p>
                             <input class="logvct" id="totalht" name="totalht" value="" disabled>
                         </div>
                     </div>
                     <div class="devisrow">
                     <div class="devisvct">
-                            <p> Montant total du devis (en € ) </p>
+                            <p> Montant total du devis (en €) </p>
                             <input class="logvct" id="totalht" name="totalht" value=""  disabled>
                         </div>
                     <div class="devisvct">
-                            <p> Frais de plateforme HT (en € ) </p>
+                            <p> Frais de plateforme HT (en €) </p>
                             <input class="logvct" id="totalht" name="totalht" value="" disabled>
                         </div>
                     <div class="devisvct">
-                        <p> Frais de plateforme TTC (en € ) </p>
+                        <p> Frais de plateforme TTC (en €) </p>
                             <input class="logvct" id="totalht" name="totalht" value="" disabled>
                         </div>
                     </div>
@@ -224,9 +225,9 @@
                     html += `<div class="deviscol">`;
                     html += `<div class="devisrow">`;
                     html += `<p class="ren">Calculer automatiquement</p>`;
-                    html += `<div class="deviscolinput"><p> Total HT (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_HT}€" disabled></div>`;
-                    html += `<div class="deviscolinput"><p> Total TTC (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_TTC}€" disabled></div>`;
-                    html += `<div class="deviscolinput"><p> Taxe de séjour (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${taxe_sejour}€" disabled></div>`;
+                    html += `<div class="deviscolinput"><p> Total HT (en €) </p><input class="logvct" id="totalht" name="totalht" value="${total_HT}€" disabled></div>`;
+                    html += `<div class="deviscolinput"><p> Total TTC (en €) </p><input class="logvct" id="totalht" name="totalht" value="${total_TTC}€" disabled></div>`;
+                    html += `<div class="deviscolinput"><p> Taxe de séjour (en €) </p><input class="logvct" id="totalht" name="totalht" value="${taxe_sejour}€" disabled></div>`;
                     html += '</div>';
                     html += `<div class="devisrow">`;
                     html += `<div class="devisvct"><p> Montant total du devis</p><input class="logvct" id="totalht" name="totalht" value="${total_montant_devis}€"  disabled></div>`;
@@ -243,10 +244,23 @@
             </fieldset>
             <input class="btn-envoidevis" type="submit" id="envoyerDevisBtn" value="Envoyer le devis" />
         </form>
+        <div id="overlayDemandeDeDevis" onclick="closePopupFeedback('popupFeedback', 'overlayDemandeDeDevis')"></div>
+        <div id="popupFeedback" class="popupFeedback">
+            <p>Votre devis a bien été envoyée !</p>
+            <a href="../Accueil/Tableau_de_bord.php" class="btn-accueil"></button>OK</a>
+        </div>
     </main>
     
     <?php 
         echo file_get_contents('../header-footer/footerP.html');
+
+        if ($_GET['erreur'] === '0'){
+            ?>
+            <script>
+                openPopupFeedback('popupFeedback', 'overlayDemandeDeDevis');
+            </script>
+            <?php
+        }
     ?>
 
 </body>
