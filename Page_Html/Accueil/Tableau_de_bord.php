@@ -69,9 +69,9 @@
                     $infos_log = $stmt->fetch();
 
                     if ($infos_log["en_ligne"] == 1){
-                        $bouton_desactiver = "METTRE_HORS_LIGNE1";  
+                        $bouton_desactiver = "METTRE HORS LIGNE";  
                     } else{
-                        $bouton_desactiver = "METTRE_EN_LIGNE";
+                        $bouton_desactiver = "METTRE EN LIGNE";
                     }
                     
                     ?>
