@@ -30,6 +30,7 @@
 <body class="pagecompte">
     <?php 
         include('../header-footer/choose_header.php');
+        $cas_popup = $_GET["cs"];
     ?>
 
     <main class="MainTablo">
@@ -97,6 +98,7 @@
                                     <?php $id_un_logement = $card['id_logement']; ?>
                                     <form action="ChangeEtat.php" method="post">
                                         <input type="submit" name=<?php echo $id_un_logement ?> class="button" value=<?php echo $bouton_desactiver; ?> />
+                                        <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
                                     </form>
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $card['id_logement'] ?>"><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
@@ -106,6 +108,21 @@
                                         <p>DISCLAIMER - La suppression du Logement est définitve.</p>
                                         <p class="err">Condition requise : Aucune réservation prévue.</p>
                                     </div>
+                                    
+                                    <?php
+                                    ?>
+
+                                    <div class="overlay_plages" id="overlay_erreur" onclick="closePopup('erreur_suppr','overlay_erreur')"></div>
+                                    <div class="plages" class="erreur" id="erreur_suppr" > <p> Impossible de supprimer un logement lié à une réservation ! <p> <button onclick="closePopup('erreur_suppr','overlay_erreur')">Ok</button></div>
+
+                                    <script>
+                                        let cas = document.getElementById("cas_bouton_suppr");
+                                        //alert(cas.value);
+                                        if (cas.value == '2'){
+                                            //open("./avertissement_reservation_lie_logement.html","pop up","width=500,height=300").moveTo(500,300).focus();
+                                            openPopup("erreur_suppr","overlay_erreur");
+                                        }
+                                    </script>
                             
                                     <?php
                                 $nomPlage = 'plage' . $key; 
@@ -113,6 +130,8 @@
 
                                 <a class="calend" onclick="openPopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"><img src="../svg/calendar.svg" alt="Gérer calendrier" title="Calendrier"></a>    
 
+
+                            
                             <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
                             <div id="<?php echo $nomPlage; ?>" class='plages'> 
                                     <h1>Ajouter une plage ponctuelle</h1><br>

@@ -10,13 +10,24 @@ try {
         die();
     }
 
-$id_logement = $_GET["id"];
-echo($id_logement);
+    $id_logement = $_GET["id"];
+    echo($id_logement);
 
     $stmt = $dbh->prepare(
-        "DELETE from locbreizh._possede_charges_associee_logement where id_logement=$id_logement;"
+        "SELECT num_reservation FROM locbreizh._reservation where logement=$id_logement;"
     );
     $stmt->execute();
+    $reservations_logement = $stmt->fetch();
+
+    // ici cs représente le cas de click sur le bouton qui va être traduit par des popups en js
+    if ($reservations_logement != []){
+        // au moins une réservation est liée avec le logement
+        $cs = 1;
+    } else {
+        // aucuen réservation n'est liée au logement
+        $cs = 2;
+    }
+    header("Location: ../Accueil/Tableau_de_bord.php?cs=$cs");
 
     //on supprimer les charges liées au logement 
 

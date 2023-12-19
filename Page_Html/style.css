@@ -135,6 +135,17 @@ body {
     cursor: pointer;
     outline: inherit;
 }
+/*------------------------------------------------popup supprimer -----------------------------------------*/
+#erreur{
+    color : red;
+    font-size : bold;
+}
+
+.erreur_suppr{
+    display : flex;
+    background-color: blue;
+}
+
 /*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/
 
 #mdp{
