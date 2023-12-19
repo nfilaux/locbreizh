@@ -40,6 +40,7 @@
         <section class="Tablobord">
             <article class="width">
                 <h2>Mes logements</h2>
+                <div class="colreverse">
                 <?php
                     
                     $stmt = $dbh->prepare(
@@ -200,15 +201,17 @@
                                             
                                 </div>  
                             </div>
+                        
                     </section>
 </div>
                     <?php
                 }
                 ?>
+                </div>
             <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
             </article>
 
-            <hr class="hr">
+            <hr class="hrP">
 
             <article>
 
