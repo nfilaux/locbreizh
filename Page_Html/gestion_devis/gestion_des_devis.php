@@ -36,11 +36,11 @@
         $list_demande = $stmt->fetchAll();
 
         $stmt = $dbh->prepare(
-            "SELECT num_demande_devis, nb_personnes, date_arrivee, date_depart, url_detail, libelle_logement, photo_principale
+            "SELECT num_devis, nb_personnes, date_arrivee, date_depart, url_detail, libelle_logement, photo_principale
             from locbreizh._devis
+            natural join locbreizh._demande_devis 
             join locbreizh._logement l on l.id_logement =  logement
-            join locbreizh.devis
-            WHERE client = {$_SESSION['id']} and accepte IS NOT TRUE;"
+            WHERE (client = {$_SESSION['id']} or id_proprietaire = {$_SESSION['id']}) and accepte IS NOT TRUE;"
         );
         $stmt->execute();
         $list_devis = $stmt->fetchAll();
@@ -49,56 +49,32 @@
         <!-- demande de devis -->
         <div>
             <?php 
-                foreach($list_demande as $demande){
-                    $stmt = $dbh->prepare(
-                        "SELECT nom_charges
-                        from locbreizh._comporte_charges_associee_demande_devis
-                        WHERE num_demande_devis = {$demande['num_demande_devis']};"
-                    );
-                    $stmt->execute();
-                    $charges = $stmt->fetchAll();
-            ?>
+                foreach($list_demande as $demande){?>
             <div>
-                <h6>Demande de devis</h6>
+                <h6>Demande de devis en cours</h6>
                 <p><?php echo $demande['libelle_logement']; ?></p>
+                <img src="<?php echo "../Ressources/Images/{$demande['photo_principale']}"; ?>" width="50" height="50">
                 <p><?php echo $demande['date_arrivee'] . " - " . $demande['date_depart'] ; ?></p>
                 <p>Nombre de personne : <?php echo $demande['nb_personnes'] ;?></p>
-                <p>Charges additionelles : </p>
-                <?php 
-                    foreach($charges as $charge){ ?>
-
-                    <p>- <?php echo $charge['nom_charges']; ?></p>
-
-                    <?php }
-                ?>
+                <button>Accepter</button>
+                <button>Refuser</button>
+                <button>Annuler</button>
             </div>
             <?php } ?>
         </div>
         <!-- devis -->
         <div>
             <?php 
-                foreach($list_demande as $demande){
-                    $stmt = $dbh->prepare(
-                        "SELECT nom_charges
-                        from locbreizh._comporte_charges_associee_demande_devis
-                        WHERE num_demande_devis = {$demande['num_demande_devis']};"
-                    );
-                    $stmt->execute();
-                    $charges = $stmt->fetchAll();
-            ?>
+                foreach($list_devis as $devis){ ?>
             <div>
-                <h6>Demande de devis</h6>
-                <p><?php echo $demande['libelle_logement']; ?></p>
-                <p><?php echo $demande['date_arrivee'] . " - " . $demande['date_depart'] ; ?></p>
-                <p>Nombre de personne : <?php echo $demande['nb_personnes'] ;?></p>
-                <p>Charges additionelles : </p>
-                <?php 
-                    foreach($charges as $charge){ ?>
-
-                    <p>- <?php echo $charge['nom_charges']; ?></p>
-
-                    <?php }
-                ?>
+                <h6>Devis proposé</h6>
+                <p><?php echo $devis['libelle_logement']; ?></p>
+                <img src="<?php echo "../Ressources/Images/{$demande['photo_principale']}"; ?>" width="50" height="50">
+                <p><?php echo $devis['date_arrivee'] . " - " . $devis['date_depart'] ; ?></p>
+                <p>Nombre de personne : <?php echo $devis['nb_personnes'] ;?></p>
+                <button>Accepter</button>
+                <button>Refuser</button>
+                <button>Annuler</button>
             </div>
             <?php } ?>
         </div>
