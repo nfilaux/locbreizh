@@ -26,6 +26,7 @@
     <title>Demande devis</title>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
+    <script src="../scriptPopupFeedback.js"></script>
 </head>
 <?php
 
@@ -34,10 +35,20 @@
     $stmt->execute();
     $photo_profil = $stmt->fetch();
 
+    // Initialisation avec une valeur par défaut
+    $nb_max = array('nb_pers' => 10, 'en_ligne' => 0);
+
     // recupere le nombre maximum de personnes pour le logement
-    $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers, en_ligne from locbreizh._logement where id_logement = {$_GET['logement']};");
-    $stmt->execute();
-    $nb_max = $stmt->fetch();
+    if(isset($_GET['logement']) && !empty($_GET['logement'])) {
+        $logementId = $_GET['logement'];
+        $stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers, en_ligne from locbreizh._logement where id_logement = :logementId");
+        $stmt->bindParam(':logementId', $logementId, PDO::PARAM_INT);
+        $stmt->execute();
+        $nb_max = $stmt->fetch();
+    }
+    //$stmt = $dbh->prepare("SELECT nb_personnes_logement as nb_pers, en_ligne from locbreizh._logement where id_logement = {$_GET['logement']};");
+    //$stmt->execute();
+    //$nb_max = $stmt->fetch();
 
    
 ?>
@@ -102,10 +113,15 @@
                 }
                     
                 ?>
-                <input class="btn-accueil" type="submit" value="Soumettre ma demande" />
+                <button onclick="openPopupFeedback('popupFeedback', 'overlayDemandeDeDevis');"class="btn-accueil" type="submit">Demander un devis</button>
             </div>
-            
+            <div id="overlayDemandeDeDevis" onclick="closePopupFeedback('popupFeedback', 'overlayDemandeDeDevis')"></div>
+            <div id="popupFeedback" class="popupFeedback">
+                <p>Votre demande de devis a bien été envoyée !</p>
+            <input class="btn-accueil" type="submit" value="OK"/> 
+            </div>
         </form>
+        
     </main>
     <?php
         echo file_get_contents('../header-footer/footer.html');

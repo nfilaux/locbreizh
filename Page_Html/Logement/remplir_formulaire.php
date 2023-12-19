@@ -32,7 +32,7 @@
         include('../header-footer/choose_header.php');
     ?>
     <main class="MainTablo">
-    <div class="headtablo">
+    <div class="headtabloP">
             <a href="../Accueil/Tableau_de_bord.php"><img src="../svg/flecheRetour.svg"></a>
             <h1>Remplir la fiche logement</h1>
         </div>
@@ -77,14 +77,14 @@
 
                             <div class=".log3vct">
                                 <label for='tarif_de_base'>Tarif de base (en €) : </label>
-                                <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' value='0' required>
+                                <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' placeholder='0' required>
                             </div>
 
                             <?php if (isset($_SESSION['erreurs']['prix'])){echo '<p>Le prix est un incorrect il ne dois pas dépasser 100 000 € et doit être décimal !';}; echo "<br>"; ?>
                         </div>
                         <div class="logpc">
                             <label for='phrase_daccroche'>Phrase d'accroche : </label>
-                            <textarea class="logPA" id='accroche' maxlength="100" name='accrocheP' placeholder="Phrase d'accroche" required></textarea>
+                            <textarea class="logPAP" id='accroche' maxlength="100" name='accrocheP' placeholder="Phrase d'accroche" required></textarea>
                         </div>
                         <div class="logrowb"> 
                                 <div class="log2vct">
@@ -116,41 +116,41 @@
                         <div class="logrowb"> 
                             <div class="log4vct">
                                 <label for='nb_chamnbres'>Nombre de chambres : </label>
-                                <input  class="logvct" id='nb_chambres' type='number' name='nb_chambresP' min='0' max='15' step='1' value='0' required>
+                                <input  class="logvct" id='nb_chambres' type='number' name='nb_chambresP' min='0' max='15' step='1' placeholder='0' required>
                             </div>
                             <div class="log4vct">
                                 <label for='nb_lit_simple'>Nombre de lits simples : </label>
-                                <input class="logvct" id='nb_lit_simple' type='number' name='nb_lit_simpleP' min='0' max='15' step='1' value='0' required>
+                                <input class="logvct" id='nb_lit_simple' type='number' name='nb_lit_simpleP' min='0' max='15' step='1' placeholder='0' required>
                             </div>
                             <div class="log4vct">
                                 <label for='nb_lit_double'>Nombre de lits doubles : </label>
-                                <input  class="logvct" id='nb_lit_double' type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value='0' required>
+                                <input  class="logvct" id='nb_lit_double' type='number' name='nb_lit_doubleP' min='0' max='15' step='1' placeholder='0' required>
                             </div>
                             <div class="log4vct">
                                 <label for='nb_sdb'>Nombre de salles de bain : </label>
-                                <input  class="logvct" id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' value='0' required>
+                                <input  class="logvct" id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' placeholder='0' required>
                             </div>
                         </div>
 
                         <div class="logrowb"> 
                             <div class="log3vct">
                                 <label for='surface_maison'>Surface (en m²) : </label>
-                                <input class="logvct" id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='1' value='0' required>
+                                <input class="logvct" id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='1' placeholder='0' required>
                             </div>
                             <div class="log3vct">
                                 <label for='nb_personne_max'>Nombre de personnes maximum : </label>
-                                <input class="logvct" id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='15' step='1' value='0' required>
+                                <input class="logvct" id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='15' step='1' placeholder='0' required>
                             </div>
                             <div class="log3vct">
                                 <label for='surface_jardin'>Surface du jardin (en m2): </label>
-                                <input class="logvct" id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='1' value='0' required>
+                                <input class="logvct" id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='1' placeholder='0' required>
                             </div>
                         </div>
                     </div>
                     <div class="logcolumn">
                         <div class="description">
                             <label for='description'>Description : </label>
-                            <textarea class="logPA" id='description' maxlength="499"name='descriptionP' placeholder='Description' required></textarea>
+                            <textarea class="logPAP" id='description' maxlength="499"name='descriptionP' placeholder='Description' required></textarea>
                         </div>
                         <fieldset>
                             <div class="logrow">
@@ -290,13 +290,16 @@
                             <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
                         </div>
                     </div>
-                    <button class="btn-accueil" name='previsualiser' type='submit'>Prévisualiser</button>
+                    <button class="btn-previsualiser" name='previsualiser' type='submit'>Prévisualiser</button>
                 </div>
 
             </form>
         </div>
 
     </main>
+    <?php
+    echo file_get_contents('../header-footer/footerP.html');
+    ?>
 </body>
 
 </html>

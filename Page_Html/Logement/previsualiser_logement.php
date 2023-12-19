@@ -441,7 +441,7 @@ if ($_FILES['image6P']['name']!= '') {
 
 
     <?php 
-        echo file_get_contents('../header-footer/footer.html');
+        echo file_get_contents('../header-footer/footerP.html');
     ?>
 </body>
 
