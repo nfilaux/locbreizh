@@ -74,7 +74,7 @@
                     }
                     
                     ?>
-                        <div class="cardlogmain">
+                        <div class="cardlogmainP">
                             <img src="../Ressources/Images/<?php echo $card['photo_principale']?>">
                             <section class="logcp">
                                 <div class="logrowb">
@@ -86,8 +86,8 @@
                                     <a class="btn-modiftst" href="../Logement/modifierLogement.php?id_logement=<?php echo $card['id_logement'] ?>">
                                         <button class="btn-modif"> Modifier
                                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" viewBox="0 0 10 10">
-                                            <path stroke="#745086" stroke-width=".3" d="M.917.503h8.405v8.405H.917z"/>
-                                            <path fill="#745086" d="M2.58 7.205h.513l3.378-3.378-.513-.513L2.58 6.692v.513Zm5.803.725H1.855V6.39l4.873-4.873a.363.363 0 0 1 .513 0l1.026 1.026a.363.363 0 0 1 0 .513L4.119 7.205h4.264v.725ZM6.471 2.8l.513.514.513-.513-.513-.513-.513.513Z"/>
+                                            <path stroke="#345C99" stroke-width=".3" d="M.917.503h8.405v8.405H.917z"/>
+                                            <path fill="#345C99" d="M2.58 7.205h.513l3.378-3.378-.513-.513L2.58 6.692v.513Zm5.803.725H1.855V6.39l4.873-4.873a.363.363 0 0 1 .513 0l1.026 1.026a.363.363 0 0 1 0 .513L4.119 7.205h4.264v.725ZM6.471 2.8l.513.514.513-.513-.513-.513-.513.513Z"/>
                                         </svg>
                                     </button>
                                     </a>
@@ -102,16 +102,7 @@
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $card['id_logement'] ?>"><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 
-<<<<<<< HEAD
                                 <div class="logrowb">   
-=======
-                                <div class="logrowb">
-                                    <div class="logcp">
-                                        <p>DISCLAIMER - La suppression du Logement est définitve.</p>
-                                        <p class="err">Condition requise : Aucune réservation prévue.</p>
-                                    </div>
-                            
->>>>>>> 147c43b08d6913062bd32cd3f280fce69e60360f
                                     <?php
                                 $nomPlage = 'plage' . $key; 
                                 $overlayPlage = 'overlay' . $key?>
@@ -204,14 +195,6 @@
             <hr class="hr">
 
             <article>
-                <h2>Notifications</h2>
-
-                <div class="box">
-                    <?php /*foreach ($notifications as $notification) {?>
-
-                    <?php } */?>
-                </div>
-
 
                 <h2>Mes Réservation</h2>
                 <p>Aucune réservation en cours </p>

@@ -472,6 +472,19 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding: 0.5em;
 }
 
+.btn-previsualiser {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #345C99; 
+    color: #fff;
+    border: 1px solid #345C99; 
+    border-radius: 20px;
+    font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
+}
+
+
 .btn-accueilins {
     margin-top: auto;
     margin-bottom: auto; 
@@ -566,7 +579,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .btn-modif {
     background-color: transparent; 
-    color: #745086;
+    color: #345C99;
     border: none; 
     border-radius: 5px;
     font-size: 1em;
@@ -704,6 +717,25 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     height: 80%;
     margin: auto 0.5em auto 0em;
     border: 2px solid #745086;
+    border-radius: 10px;
+}
+
+.cardlogmainP {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    border: 2px solid #274065;
+    margin: 1em auto;
+    background-color: #FCF0E2;
+    padding: 1em;
+}
+
+.cardlogmainP img {
+    width: 20%;
+    height: 80%;
+    margin: auto 0.5em auto 0em;
+    border: 2px solid #274065;
     border-radius: 10px;
 }
 
@@ -969,7 +1001,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .titreAL {
     margin: auto;
-    color: #745086;
+    color: #274065;
     font-size: 2em;
     margin-top: 1em;
     margin-bottom: 0.5em;
@@ -1015,9 +1047,17 @@ fieldset label{
     height: 8em;
 }
 
+.logPAP{
+    color: #345C99; 
+    border: 1px solid #345C99;
+    border-radius: 5px; 
+    width: 100%;
+    height: 8em;
+}
+
 .lognom{
-    color: #957BB0; 
-    border: 1px solid #957BB0;
+    color: #345C99; 
+    border: 1px solid #345C99;
     border-radius: 5px; 
     width: 100%;
     height: 2em;
@@ -1025,8 +1065,8 @@ fieldset label{
 }
 
 .logvct{
-    color: #957BB0; 
-    border: 1px solid #957BB0;
+    color: #345C99; 
+    border: 1px solid #345C99;
     border-radius: 5px; 
     width: 100%;
     height: 2em;
@@ -1034,8 +1074,8 @@ fieldset label{
 }
 
 .lognb{
-    color: #957BB0; 
-    border: 1px solid #957BB0;
+    color: #345C99; 
+    border: 1px solid #345C99;
     border-radius: 5px; 
     width: 80%;
     height: 2em;
@@ -1044,8 +1084,8 @@ fieldset label{
 }
 
 .logselect{
-    color: #957BB0; 
-    border: 1px solid #957BB0;
+    color: #345C99; 
+    border: 1px solid #345C99;
     border-radius: 5px; 
     width: 100%;
     height: 2em;
@@ -1122,6 +1162,19 @@ iframe {
     border-radius: 15px;
     padding-top: 0.5em;
     border: 1px solid #745086; 
+    width: 45%;
+    padding: 1em;
+    margin: 0.5em auto;
+}
+
+.cardconditionP {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    border-radius: 15px;
+    padding-top: 0.5em;
+    border: 1px solid #274065; 
     width: 45%;
     padding: 1em;
     margin: 0.5em auto;
@@ -1232,6 +1285,14 @@ iframe {
     font-weight: 600;
 }
 
+.bleu {
+    color: #274065;
+}
+
+.bleu:visited {
+    color: #274065;
+}
+
 /*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
 
 .corpsCalendrier{
@@ -1308,6 +1369,12 @@ iframe {
     color: #745086;
 }
 
+.semainesP{
+    font-weight: bold;
+    color: #274065;
+}
+
+
 .jours li{
     z-index: 1;
     margin-top: 30px;
@@ -1341,7 +1408,7 @@ iframe {
 .calendrier ul li::before{
     position: absolute;
     content: "";
-    height: 45px;
+    height: 45px;   
     width: 45px;
     top: 50%;
     left: 50%;
@@ -1353,6 +1420,10 @@ iframe {
 .entreDeux:hover::before, .normal:hover::before{
     cursor: pointer;
     background-color: #D3D3D3;
+}
+
+.semainesP .jours ul li .actif{
+    background-color: #274065;
 }
 
 .actif::before{

@@ -56,8 +56,8 @@ $services = $r_services->fetchAll();
         ?>
     <main class="MainTablo">
     
-        <div class='headconn'>
-            <img src='../svg/flecheRetour.svg'>
+        <div class='headtabloP'>
+            <a href="../Accueil/Tableau_de_bord.php"><img src="../svg/flecheRetour.svg"></a>
             <h1>La fiche de votre logement</h1>
         </div>
     
@@ -105,7 +105,7 @@ $services = $r_services->fetchAll();
                         </div>
                         <div class="logpc">
                             <label for='phrase_daccroche' >Phrase d'accroche</label>
-                            <input disabled class="logPA" id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255" value="<?php echo $res["accroche_logement"]; ?>"required>
+                            <input disabled class="logPAP" id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255" value="<?php echo $res["accroche_logement"]; ?>"required>
                     </div>
                         <div class="logrowb"> 
                                 <div class="log2vct">
@@ -187,7 +187,7 @@ $services = $r_services->fetchAll();
                     <div class="logcolumn">
                         <div class="description">
                             <label for='description'>Description</label>
-                            <textarea class="logPA" id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
+                            <textarea class="logPAP" id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
                             <?php
                             if (isset($erreur['descriptif_logement'])){
                                 echo '<p id="erreur">' . $erreur['descriptif_logement'] .  '</p>';
@@ -295,14 +295,14 @@ $services = $r_services->fetchAll();
     
                     </div>
                         </div>            
-                        <button class="btn-accueil" name='previsualiser' type='submit'>Modifier</button>
+                        <button class="btn-previsualiser" name='previsualiser' type='submit'>Modifier</button>
                     </div>
             </form>
         
         </main>
     
     <?php 
-    echo file_get_contents('../header-footer/footer.html');
+    echo file_get_contents('../header-footer/footerP.html');
 ?>
 </body>
 
