@@ -6,21 +6,21 @@
 
 <header>
     <a href="../Accueil/Tableau_de_bord.php">
-        <img class="logot" src="../svg/logo.svg">
-        <h2>Loc'Breizh</h2>
+        <img class="logot" src="../svg/logobleu.svg">
+        <h2 style="color:#274065;">Loc'Breizh</h2>
     </a>
         <div class="brecherche">
-            <img src="../svg/filtre.svg">
+            <img src="../svg/filtrebleu.svg">
             <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
+            <img src="../svg/loupebleu.svg">
         </div>
 
-        <img src="../svg/booklet-fill 1.svg">
+        <img src="../svg/booklet-fillbleu.svg">
         <a href="../Accueil/Tableau_de_bord.php"><h4>Accéder à mon tableau de bord</h4></a>
 
         <div class="imghead">
-            <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
-            <a class="margleft" onclick="openPopup('popup', 'overlay_profil-deconnexion')"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
+            <a href="../messagerie/messagerie.php"><img src="../svg/messagebleu.svg"></a>
+            <a class="margleft" onclick="openPopup('popup', 'overlay_profil-deconnexion')"><img id="pp" class="imgprofilP" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
         </div>
         </div>
         <div id="overlay_profil-deconnexion" onclick="closePopup('popup', 'overlay_profil-deconnexion')"></div>
