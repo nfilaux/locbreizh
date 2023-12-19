@@ -35,10 +35,9 @@
 
     <main class="MainTablo">
         <div class="headtabloP"> 
-            <h1>Mon tableau de bord</h1>
+            <h1>Mes Logements</h1>
         </div>
         <section class="Tablobord">
-                <h2>Mes logements</h2>
                 <div class="colreverse">
                 <?php
                     

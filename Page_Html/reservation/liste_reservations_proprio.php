@@ -70,19 +70,12 @@ $photo = $stmt->fetch();
                                 <h3 class="titrecard"><?php echo $reservation['libelle_logement'] ?></h3>
                                 <hr class="hrcard">
                             </div>
-                            <div class="resrow">
-                            <div>
-                                <p class="restitre resplustaille">Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
-                                <button class="btn-previsualiser">Contacter le proprietaire</button>
-                            </div>
-                            <img class="imgprofil" src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil"  width="75" height="75">
-                            </div>
                             </div>
                             
 
                             <div class="rescrow">
                                 <a href="../devis/pdf_devis/<?php echo $reservation['lien_devis'];?>" target="_blank"><button class="btn-ajoutlog">CONSULTER DEVIS</button></a>
-                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
+                                <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
                                 <a><button class="btn-suppr" disabled>ANNULER</button></a>
                             </div>
 
