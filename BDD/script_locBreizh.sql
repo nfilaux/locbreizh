@@ -359,6 +359,8 @@ CREATE TABLE
         date_depart DATE NOT NULL,
         client INTEGER NOT NULL,
         logement INTEGER NOT NULL,
+        url_detail varchar(50),
+        accepte boolean,
         CONSTRAINT demande_devis_pk PRIMARY KEY (num_demande_devis),
         CONSTRAINT demande_devis_fk_client FOREIGN KEY (client) REFERENCES _client (id_client),
         CONSTRAINT demande_devis_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement)
@@ -381,35 +383,11 @@ CREATE TABLE
         condition_annulation VARCHAR(255) NOT NULL,
         num_demande_devis INTEGER NOT NULL,
         taxe_sejour integer not null,
+        url_detail varchar(50),
+        accepte boolean,
         CONSTRAINT devis_pk PRIMARY KEY (num_devis),
         CONSTRAINT devis_fk_taxe_sejour FOREIGN KEY (taxe_sejour) REFERENCES _taxe_sejour (id_taxe),
         CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_demande_devis) REFERENCES _demande_devis (num_demande_devis)
-    );
-
-/*   table message_demande : est utilisée pour un message de type demande de devis   */
-
-create table
-    _message_demande(
-        id_message_demande integer not null,
-        lien_demande varchar(50) not null,
-        accepte boolean,
-        id_demande integer not null,
-        CONSTRAINT message_demande_pk PRIMARY KEY (id_message_demande),
-        constraint message_demande_fk_id FOREIGN KEY(id_message_demande) REFERENCES _message(id_message),
-        constraint message_demande_fk_id_demande FOREIGN KEY(id_demande) REFERENCES _demande_devis(num_demande_devis)
-    );
-
-/*   table message_devis : est utilisée pour un message de type devis   */
-
-create table
-    _message_devis(
-        id_message_devis integer not null,
-        lien_devis varchar(50) not null,
-        accepte boolean,
-        id_devis integer not null,
-        CONSTRAINT message_devis_pk PRIMARY KEY (id_message_devis),
-        constraint id_message_devis_fk_id FOREIGN KEY(id_message_devis) REFERENCES _message(id_message),
-        constraint message_devis_fk_id_devis FOREIGN KEY(id_devis) REFERENCES _devis(num_devis)
     );
 
 /*   table facture : est utilisée pour stocker les informations une facture   */
