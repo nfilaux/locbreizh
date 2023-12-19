@@ -98,12 +98,12 @@
                                     <form action="ChangeEtat.php" method="post">
                                         <input type="submit" name=<?php echo $id_un_logement ?> class="button" value=<?php echo $bouton_desactiver; ?> />
                                     </form>
-                                    <a><button class="btn-suppr">SUPPRIMER</button></a>
+                                    <a href="../Logement/supprimer_logement.php?id=<?php echo $card['id_logement'] ?>"><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 
                                 <div class="logrowb">
                                     <div class="logcp">
-                                        <p>DISCLAIMER - La suppression du compte est définitve.</p>
+                                        <p>DISCLAIMER - La suppression du Logement est définitve.</p>
                                         <p class="err">Condition requise : Aucune réservation prévue.</p>
                                     </div>
                             
