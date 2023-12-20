@@ -57,8 +57,9 @@ $photo = $stmt->fetch();
         <script src="https://www.paypal.com/sdk/js?client-id=AZ9f4oyPDCMS1YixHmqPR4wPGz2OM5CC59wpo0KTCHc2jaOMYZivqTjz-Wj52tAprCRF5PkLZD1dnn9s&currency=EUR"></script>
         <script src="paypal.js"></script>
     </main>
-    <?php 
-        echo file_get_contents('../header-footer/footer.html');
+    <?php
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 

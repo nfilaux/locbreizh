@@ -114,7 +114,8 @@
     </main>
     <!-- footer -->
     <?php
-    // appel du footer
-    include('../header-footer/choose_footer.php'); ?>
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
+    ?>
 </body>
 </html>

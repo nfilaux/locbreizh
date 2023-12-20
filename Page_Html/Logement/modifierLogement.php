@@ -301,9 +301,10 @@ $services = $r_services->fetchAll();
         
         </main>
     
-    <?php 
-    echo file_get_contents('../header-footer/footerP.html');
-?>
+        <?php
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
+    ?>
 </body>
 
 </html>
