@@ -27,100 +27,31 @@
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
+
+        // on recupère la valeur du prochain serial pour le mettre en nom de pdf
+        $stmt = $dbh->prepare("SELECT NEXTVAL('locbreizh._demande_devis_num_demande_devis_seq') as prochain_serial");
+        $stmt->execute();
+        $serial_actuel = $stmt->fetch();
+        $id_demande = $serial_actuel['prochain_serial'] + 1;
+
         // insert la demande dans _demande_devis
-        $stmt = $dbh->prepare("INSERT INTO locbreizh._demande_devis(nb_personnes, date_arrivee, date_depart, client, logement) 
-        VALUES (:nb_personnes, :date_arrivee, :date_depart, :client, :logement);");
+        $stmt = $dbh->prepare("INSERT INTO locbreizh._demande_devis(nb_personnes, date_arrivee, date_depart, client, logement, url_detail) 
+        VALUES (:nb_personnes, :date_arrivee, :date_depart, :client, :logement, :url_d);");
         $stmt->bindParam(':nb_personnes', $_POST['nb_pers']);
         $stmt->bindParam(':date_arrivee', $_POST['dateArrivee']);
         $stmt->bindParam(':date_depart', $_POST['dateDepart']);
         $stmt->bindParam(':client', $_SESSION['id']);
         $stmt->bindParam(':logement', $_POST['logement']);
+        $url = "demande_devis$id_demande.pdf";
+        $stmt->bindParam(':url_d', $url);
         $stmt->execute();
         // recupere l'id crée automatiquement (en serial)
-        $id_demande = $dbh->lastInsertId();
 
-        // recupere le libelle du logement pour pdf + message type
+        // recupere le libelle du logement pour pdf
         $stmt = $dbh->prepare("SELECT libelle_logement from locbreizh._logement where id_logement = :logement;");
         $stmt->bindParam(':logement', $_POST['logement']);
         $stmt->execute();
         $libelle_log = $stmt->fetch();
-
-        // date et heure actuelle (pour message)
-        $date = date('Y-m-d');
-        $time = date('H:i:s');
-
-        // recupere les convserations entre le client et le proprietaire du logement
-        $stmt = $dbh->prepare("SELECT c.id_conversation
-        FROM locbreizh._conversation c
-        INNER JOIN locbreizh._logement ON (_logement.id_proprietaire = compte1 or _logement.id_proprietaire = compte2)
-        WHERE id_logement = :logement and ((compte1 = :id and compte2 = id_proprietaire) or (compte2 = :id and compte1 = id_proprietaire));");
-        $stmt->bindParam(':logement', $_POST['logement']);
-        $stmt->bindParam(':id', $_SESSION['id']);
-        $stmt->execute();
-        // stock dans conv_request
-        $conv_request = $stmt->fetch();
-
-        // si conversation existe
-        if(!is_bool($conv_request)){
-            //stock id_conv
-            $id_conv = $conv_request['id_conversation'];
-        }
-        else{
-            // retrouve l'id du proprio
-            $stmt = $dbh->prepare("select id_proprietaire from locbreizh._logement where id_logement = :logement");
-            $stmt->bindParam(':logement', $_POST['logement']);
-            $stmt->execute();
-            $proprio = $stmt->fetch();
-
-            // on cree une conversation entre le client et le proprio
-            $stmt = $dbh->prepare("INSERT INTO locbreizh._conversation(compte1, compte2) 
-            VALUES (:id, :id_proprio);");
-            $stmt->bindParam(':id', $_SESSION['id']);
-            $stmt->bindParam(':id_proprio', $proprio['id_proprietaire']);
-            $stmt->execute();
-            // on recupere l'id de la conv cree
-            $id_conv = $dbh->lastInsertId();
-        }
-
-        // on recupere les infos necessaires sur le clinet pour le pdf de la demande de devis + message
-        $stmt = $dbh->prepare("select * from locbreizh._compte where id_compte = :id;");
-        $stmt->bindParam(':id', $_SESSION['id']);
-        $stmt->execute();
-        $info_user = $stmt->fetch();
-
-        // ajoute le message type pour une demande de devis
-        $stmt = $dbh->prepare("INSERT INTO locbreizh._message(contenu_message, date_mess, heure_mess, auteur, conversation) 
-        VALUES (:contenu_message, :date, :temps, :id, :id_conv);");
-
-
-
-        $tempmessage = "Voici une demande de DEVIS de {$info_user['pseudo']} pour le logement {$libelle_log['libelle_logement']}";
-        $stmt->bindParam(':contenu_message', $tempmessage);
-        $stmt->bindParam(':date', $date);
-        $stmt->bindParam(':temps', $time);
-        $stmt->bindParam(':id', $_SESSION['id']);
-        $stmt->bindParam(':id_conv', $id_conv);
-        $tempMessage = "Voici une demande de DEVIS de {$info_user['pseudo']} pour le logement {$libelle_log['libelle_logement']}";
-        $stmt->bindParam(':contenu_message', $tempMessage);
-
-        $stmt->bindParam(':date', $date);
-        $stmt->bindParam(':temps', $time);
-        $stmt->bindParam(':id', $_SESSION['id']);
-        $stmt->bindParam(':id_conv', $id_conv);
-        $stmt->execute();
-        $id_mess = $dbh->lastInsertId();
-
-        $stmt = $dbh->prepare("INSERT INTO locbreizh._message_demande(id_message_demande, lien_demande, id_demande)
-        VALUES (:id_mess, :lien_demande, :id_demande);");
-        $tempmessage = "demande_devis$id_demande.pdf";
-        $stmt->bindParam(':id_mess', $id_mess);
-
-        $tempDemande =  "demande_devis$id_demande.pdf";
-        $stmt->bindParam(':lien_demande', $tempDemande);
-
-        $stmt->bindParam(':id_demande', $id_demande);
-        $stmt->execute();
-
 
         // ajout de la charge menage si demandee
         if(isset($_POST['menage'])){
@@ -168,6 +99,12 @@
             $stmt->bindParam(':nb_pers_supp', $_POST['nb_pers_supp']);
             $stmt->execute();
         }
+
+        // on recupere les infos necessaires sur le clinet pour le pdf de la demande de devis
+        $stmt = $dbh->prepare("select * from locbreizh._compte where id_compte = :id;");
+        $stmt->bindParam(':id', $_SESSION['id']);
+        $stmt->execute();
+        $info_user = $stmt->fetch();
 
         // creation du pdf
         $pdf = new TCPDF();
@@ -222,6 +159,6 @@
         file_put_contents($chemin_complet, $contenu_pdf);
 
         // renvoie l'utilisateur sur une page de reussite
-        header("Location: ../messagerie/messagerie.php?conv=$id_conv");
+        header("Location: demande_devis.php?logement={$_POST['logement']}&erreur=0");
     }
 ?>

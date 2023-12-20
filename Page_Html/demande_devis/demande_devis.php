@@ -113,20 +113,30 @@
                 }
                     
                 ?>
-                <button onclick="openPopupFeedback('popupFeedback', 'overlayDemandeDeDevis');"class="btn-accueil" type="submit">Demander un devis</button>
+                <input class="btn-accueil" type="submit" value="Demander un devis"/>
             </div>
-            <div id="overlayDemandeDeDevis" onclick="closePopupFeedback('popupFeedback', 'overlayDemandeDeDevis')"></div>
-            <div id="popupFeedback" class="popupFeedback">
-                <p>Votre demande de devis a bien été envoyée !</p>
-            <input class="btn-accueil" type="submit" value="OK"/> 
-            </div>
+            
         </form>
-        
+        <div id="overlayDemandeDeDevis" onclick="closePopupFeedback('popupFeedback', 'overlayDemandeDeDevis')"></div>
+        <div id="popupFeedback" class="popupFeedback">
+            <p>Votre demande de devis a bien été envoyée !</p>
+            <a href="../messagerie/messagerie.php" class="btn-accueil"></button>OK</a>
+        </div>
     </main>
     <?php
-        echo file_get_contents('../header-footer/footer.html');
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
-
 </html>
 
+<?php
+    if($_GET['erreur'] === '0'){
+        ?>
+        <script>
+            openPopupFeedback('popupFeedback', 'overlayDemandeDeDevis');
+        </script>
+        <?php
+    }
+    
+?>

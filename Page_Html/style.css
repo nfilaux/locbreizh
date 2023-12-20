@@ -19,18 +19,15 @@
 
 html{
     height: 100%;
-    width: 100%;
 }
 
 body {
     height: 100%;
     padding-bottom: 0;
     margin: 0;
-    background-origin: content-box;
-    width: 100%;
     font-family: 'Quicksand', sans-serif, 'Trebuchet MS';
     background-color: #F5F4F4;
-    display: table;
+    width: 100%;
 }
 
 .pagecompte {
@@ -85,6 +82,17 @@ body {
 }
 
 #overlayDemandeDeDevis {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+#overlayModifierLogement {
     display: none;
     position: fixed;
     top: 0;
@@ -168,14 +176,26 @@ body {
     outline: inherit;
 }
 /*------------------------------------------------popup supprimer -----------------------------------------*/
-#erreur{
-    color : red;
-    font-size : bold;
+#erreur_suppr{
+    color:red;
+    font-weight : bold;
+    text-align: center;
+    padding : 1.5em;
 }
 
-.erreur_suppr{
-    display : flex;
-    background-color: blue;
+.erreur{
+    color:red;
+    font-weight: bold;
+}
+
+.valid{
+    color:green;
+    font-weight: bold;
+}
+
+#boutons{
+    display: flex;
+    justify-content: space-around;
 }
 
 /*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/
@@ -200,7 +220,6 @@ header{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    position: relative;
     color: #745086;
     box-sizing: border-box;
     border-bottom: 1px solid #745086; 
@@ -359,8 +378,9 @@ main h1{
 
 .Tablobord{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
+    align-items: center;
 }
 
 .Tablobord article{
@@ -427,20 +447,23 @@ footer{
     background-color: #745086;
     color: #F6E4FF;
     margin-bottom: 0;
-    display: table-row;
-    bottom: 0;
-    box-sizing: border-box;
-    border-top: 1px solid #F6E4FF   ;
     width: 100%;
     height:5em;
+    position: relative;
+    bottom: 0px;
+    display: table;
+    box-sizing: border-box;
+    border-top: 1px solid #F6E4FF   ;
+    
 }
+
 
 .footerP{
     padding-top: 1px;
     background-color: #274065;
     color: #b8cded;
     margin-bottom: 0;
-    display: table-row;
+    display: table;
     bottom: 0;
     box-sizing: border-box;
     border-top: 1px solid #b8cded;
@@ -456,7 +479,7 @@ footer{
     justify-content: space-around;
 }
 
-footer hr{
+footer>hr{
     border-width: 1px;
     border-color: #F6E4FF;
     width: 87%;
@@ -466,6 +489,15 @@ footer div p {
     padding: 0%;
 }
 
+.footerwrap{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.footerwrap p {
+    margin: auto;
+}
 
 /*----------------------------------------------------------------Link----------------------------------------------------------------*/
 
@@ -738,9 +770,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding-top: 5px;
     width: 20%;
     margin: 1em 2%;
+    padding: 0.5em;
 }
 
-.card section article{
+.card section article:last-child{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -754,8 +787,12 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .card section article img{
     margin: 0;
     border-radius: 15px;
-    width: 96%;
+    width: 100%;
 }
+.card section article .accicone img {
+    visibility: hidden;
+}
+
 
 .cardlogmain {
     display: flex;
@@ -792,14 +829,21 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: column-reverse;
     flex-wrap: nowrap;
+    width: 80%;
 }
 
 .cardlogmainP img {
     width: 20%;
-    height: 80%;
+    height: 10em;
     margin: auto 0.5em auto 0em;
     border: 2px solid #274065;
     border-radius: 10px;
+    object-fit: contain;
+}
+.cardlogmainP section img {
+    border: none;
+    height: 5em;
+    object-fit: none;
 }
 
 .titrecard {
@@ -960,6 +1004,13 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     justify-content: space-around;
 }
 
+.logcp{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 70%;
+}
+
 .logc{
     display: flex;
     flex-direction: column;
@@ -972,7 +1023,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     flex-direction: column;
     justify-content: center;
     background-color: #fff;
-    width: 20%;
+    width: 40%;
     padding: 1em;
     margin: auto;
     border-radius: 15px;
@@ -1209,19 +1260,15 @@ fieldset label{
     margin-bottom: 0.2em;
 }
 
-
-.logrowt > p {
-    margin: 0 4vw;
-}
-
-
 .nuit {
     background-color: #FAE3C6;
     border-radius: 10px;
     color: #745086;
     padding: 5px;
     display: flex;
-    align-self: flex-end;
+    justify-content: center;
+    width: 98%;
+
 }
 
 .nuitP {
@@ -1230,7 +1277,8 @@ fieldset label{
     color: #274065;
     padding: 5px;
     display: flex;
-    align-self: flex-end;
+    justify-content: center;
+    width: 98%;
 }
 
 .potitre {
@@ -1630,9 +1678,21 @@ iframe {
     justify-content: center;
     border: 2px solid #745086;
     width: 80%;
-    margin: auto;
+    margin: 1em auto;
     background-color: #FCF0E2;
-    padding: 0.2em;
+    padding: 1em;
+}
+
+.cardresmainP {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    border: 2px solid #274065;
+    width: 80%;
+    margin: 1em;
+    background-color: #FCF0E2;
+    padding: 1em;
 }
 
 .cardresmainimg {
@@ -1666,7 +1726,6 @@ iframe {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    font-size: 1.5em;
 }
 
 .resplustaille{
@@ -2250,4 +2309,317 @@ iframe {
 }
 .btn-modif-logement button{
     width: 30vw;
+}
+
+
+@media screen and (min-width: 900px) and (max-width: 1280px) {
+    .logot {
+        height: 3em;
+        width: 3em;
+    }
+    header input{
+        width: 100%;
+    }
+    header h2 {
+        margin:auto 0.5em auto 0.5em;
+    }
+    header h4{
+        margin-right: 0.5em;
+    }
+    .brecherche {
+        margin:auto 1em auto 1em;
+    }
+    
+}
+
+@media screen and (min-width: 600px) and (max-width: 899px) {
+
+    /*-------------------------------Header-------------------------------*/
+    .logot {
+        height: 2em;
+        width: 2em;
+    }
+    header h2 {
+        margin:auto 0em auto 0em;
+    }
+    header h4{
+        margin-right: 0em;
+    }
+    .brecherche {
+       visibility: hidden;
+       width: 0%;
+       margin: 0;
+    }
+    header a:last-child {
+        margin-left: 0.5em;
+    }
+    /*-------------------------------FOOTER-------------------------------*/
+    .tfooter, .bfooter {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    /*-------------------------------Accueil-------------------------------*/
+
+    .card section article .accicone{
+        display: flex;
+        flex-direction: row;
+    }
+    .card section article .accicone img {
+        visibility: visible;
+        text-decoration: none;
+        border: none;
+        margin: auto 0.5em;
+        width: auto;
+    }
+
+    .card section{
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        box-sizing: border-box;
+        border: 1px solid #745086;
+        border-radius: 15px;
+        width: 100%;
+        object-fit: cover;
+        padding: 0px;
+    }
+    
+    .card section article h3,.card section article h4{
+        color: #745086;
+    }
+
+    .card section article img{
+        margin: 0;
+        border-radius: 15px;
+        width:50%;
+        border: 5px solid #745086;
+
+    }
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .cardtel article:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel article:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    .cardphone article:first-child {
+        background-color: #745086;
+        width: 100%;
+        border-top-right-radius: 12px;
+    }
+    
+    .card section article:last-child {
+        flex-direction: column;
+        margin-left: 0.5em;
+    }
+
+    .card section article img {
+        margin: auto;
+        width: 100%; 
+    }
+
+    /*-------------------------------Logement-------------------------------*/
+    .logrowt {
+        flex-direction: column;
+    }
+
+    .logcolumn{
+        width: 96%;
+        margin: auto;
+    }
+
+    .logdem{
+        width: 60%;
+    }
+
+    .logrow {
+        flex-direction: column;
+    }
+
+    .cardcondition {
+        width: 80%;
+    }
+        
+}
+
+
+@media screen and (max-width: 599px) {
+    .brecherche {
+       visibility: hidden;
+       width: 0%;
+    }
+    .tfooter, .bfooter {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    /*-------------------------------Accueil-------------------------------*/
+
+    .card section article .accicone{
+        display: flex;
+        flex-direction: row;
+    }
+    .card section article .accicone img {
+        visibility: visible;
+        text-decoration: none;
+        border: none;
+        margin: auto 0.5em;
+        width: auto;
+    }
+
+    .card section{
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        box-sizing: border-box;
+        border: 1px solid #745086;
+        border-radius: 15px;
+        width: 100%;
+        object-fit: cover;
+        padding: 0px;
+    }
+    
+    .card section article h3,.card section article h4{
+        color: #745086;
+    }
+
+    .card section article img{
+        margin: 0;
+        border-radius: 15px;
+        width:50%;
+        border: 5px solid #745086;
+
+    }
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .cardtel article:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel article:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    .cardphone article:first-child {
+        background-color: #745086;
+        width: 100%;
+        border-top-right-radius: 12px;
+    }
+    
+    .card section article:last-child {
+        flex-direction: column;
+        margin-left: 0.5em;
+    }
+
+    .card section article img {
+        margin: auto;
+        width: 100%; 
+    }
+}
+/*--------------------------------- GESTION DES DEVIS ------------------------------*/
+
+.gestion_devis{
+    display: flex;
+    justify-content: space-evenly;
+
+}
+.partie_demande > div, .partie_devis > div {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.partie_demande, .partie_devis{
+    text-align: center;
+    width: 45%;
+}
+
+.partie_devis > div > div > div, .partie_demande > div > div > div{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.img_devis{
+    width: 40%;
+    height: auto;
+    margin: auto 0.5em auto 0em;
+    border: 2px solid #745086;
+    border-radius: 10px;
+}
+
+.card_devis{
+    border: 2px solid #745086;
+    margin: 1em auto;
+    background-color: #FCF0E2;
+    padding: 1em;
+}
+
+.card_devis  > div p{
+    color: #5B3F69;
+}
+.bouton_devis{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1em;
+}
+
+.bouton_devis button{
+    background-color: red; 
+    color: #fff;
+    border: 1px solid red; 
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+    width: 8vw;
+    min-width: 90px;
+    height: 2vw;
+    min-height: 20px;
+    align-self: center;
+}
+
+#devis_accepter{
+    background-color: green;
+    border: 1px solid green; 
+}
+
+.reponse_devis{
+    font-weight: bold;
+    color: red;
 }

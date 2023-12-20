@@ -298,7 +298,8 @@
 
     </main>
     <?php
-    echo file_get_contents('../header-footer/footerP.html');
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 

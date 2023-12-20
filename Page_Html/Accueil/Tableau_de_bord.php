@@ -15,6 +15,7 @@
             ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
             unset($_SESSION["erreurs"][$nomErreur]);
         }
+    
 }
     
 ?>
@@ -35,11 +36,9 @@
 
     <main class="MainTablo">
         <div class="headtabloP"> 
-            <h1>Mon tableau de bord</h1>
+            <h1>Mes Logements</h1>
         </div>
         <section class="Tablobord">
-            <article class="width">
-                <h2>Mes logements</h2>
                 <div class="colreverse">
                 <?php
                     
@@ -62,17 +61,17 @@
                 foreach ($liste_mes_logements as $key => $card) {
                     $id_log = $card['id_logement'];
                     $stmt = $dbh->prepare(
-                        "SELECT en_ligne
+                        "SELECT en_ligne,libelle_logement
                         from locbreizh._logement 
                         where id_logement = $id_log;"
                     );
                     $stmt->execute();
-                    $etat = $stmt->fetch();
+                    $infos_log = $stmt->fetch();
 
-                    if ($etat["en_ligne"] == 1){
-                        $bouton_desactiver = "METTRE_HORS_LIGNE";  
+                    if ($infos_log["en_ligne"] == 1){
+                        $bouton_desactiver = "METTRE HORS LIGNE";  
                     } else{
-                        $bouton_desactiver = "METTRE_EN_LIGNE";
+                        $bouton_desactiver = "METTRE EN LIGNE";
                     }
                     
                     ?>
@@ -96,26 +95,42 @@
                                 </div>
                                 
                                 <div class="logrowb">
-                                    <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $card['id_logement'] ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
-                                    <?php $id_un_logement = $card['id_logement']; ?>
+                                    <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $id_log ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
+                                    <?php $id_un_logement = $id_log; ?>
                                     <form action="ChangeEtat.php" method="post">
-                                        <input type="submit" name=<?php echo $id_un_logement ?> class="btn-desactive" value=<?php echo $bouton_desactiver; ?> />
-                                        <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
+                                        <input type="hidden" name=<?php echo $id_un_logement ?> value=<?php echo $bouton_desactiver ?>>
+                                        <button class="btn-desactive" name="bouton_changer_etat" type='submit'> <?php echo $bouton_desactiver; ?> </button>
                                     </form>
-                                    <a href="../Logement/supprimer_logement.php?id=<?php echo $card['id_logement'] ?>"><button class="btn-suppr">SUPPRIMER</button></a>
+                                    <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
+                                    <a href="../Logement/supprimer_logement.php?id=<?php echo $id_log ?>"><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 
                                 <div class="logrowb">
 
                                     <div class="overlay_plages" id="overlay_erreur" onclick="closePopup('erreur_suppr','overlay_erreur')"></div>
-                                    <div class="plages" class="erreur" id="erreur_suppr" > <p> Impossible de supprimer un logement lié à une réservation ! <p> <button onclick="closePopup('erreur_suppr','overlay_erreur')">Ok</button></div>
+                                    <div id="erreur_suppr" class="plages" class="erreur" > <p> Impossible de supprimer un logement lié à une réservation ! <p> <button onclick="closePopup('erreur_suppr','overlay_erreur')" class="btn-ajoutlog">Ok</button></div>
 
+                                    <div class="overlay_plages" id="overlay_confirm" onclick="closePopup('confirm','overlay_confirm')"></div>
+                                    <div id="confirm" class="plages"> <p class="valid"> Votre logement vient d'être supprimé avec succès ! <p> <button onclick="closePopup('confirm','overlay_confirm')" class="btn-ajoutlog">Ok</button></div>
+                                    
+                                    <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
+                                    <div id="validation" class="plages"> 
+                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log["libelle_logement"]; ?> ? 
+                                        <p class="erreur">Cette action est irreversible !</p> 
+                                        <div id='boutons'>
+                                            <button onclick="closePopup('validation','overlay_validation')" class="btn-ajoutlog">Annuler</button> 
+                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $id_log?>" ><button class="btn-suppr">Supprimer</button></a>
+                                        </div>
+                                    </div>
+                                    
                                     <script>
                                         let cas = document.getElementById("cas_bouton_suppr");
-                                        //alert(cas.value);
-                                        if (cas.value == '2'){
-                                            //open("./avertissement_reservation_lie_logement.html","pop up","width=500,height=300").moveTo(500,300).focus();
+                                        if (cas.value == '1'){
                                             openPopup("erreur_suppr","overlay_erreur");
+                                        } else if (cas.value == '2') {
+                                            openPopup("validation","overlay_validation");
+                                        } else if (cas.value =='3'){
+                                            openPopup("confirm","overlay_confirm");
                                         }
                                     </script>
                             
@@ -209,69 +224,17 @@
                 ?>
                 </div>
             <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
-            </article>
 
-            <hr class="hrP">
-
-            <article>
-
-                <h2>Mes Réservation</h2>
-                <p>Aucune réservation en cours </p>
-                <?php
-            
-                $stmt = $dbh->prepare("SELECT lien_devis, l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
-                from locbreizh._reservation r
-                join locbreizh._logement l on l.id_logement = r.logement
-                join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
-                join locbreizh._compte c on c.id_compte = p.id_proprietaire
-                join locbreizh._adresse a on l.id_adresse = a.id_adresse
-                join locbreizh._facture f on f.num_facture = r.facture
-                join locbreizh._devis d on d.num_devis = f.num_devis
-                join locbreizh._message_devis on d.num_devis = _message_devis.id_devis
-                where id_compte = {$_SESSION['id']}");
-                $stmt->execute();
-                $reservations = $stmt->fetchAll();
-
-                foreach ($reservations as $reservation) {
-
-                    ?>
-                    <div class="cardlogmain">        
-                        <img src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>">
-                       
-                        <section class="rescol">      
-                            <div class="logrowb">
-                                <div>
-                                    <h3 class="titrecard"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
-                                    <hr class="hrcard">
-                                </div>
-                            </div>
-                            
-
-                            <div class="resrow">
-                                <a href="../devis/pdf_devis/<?php echo $reservation['lien_devis'];?>" target="_blank"><button class="btn-ajoutlog" >CONSULTER DEVIS</button></a>
-                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
-                                <a><button class="btn-suppr" disabled>ANNULER</button></a>
-                            </div>
-                            
-                            
-                            <div class="logrowb">
-                                <p>DISCLAIMER - La suppression du logement est définitve.</p>
-                            </div>
-                        </secion>
-                       
-                    </div>
-                <?php } ?>
-            </article>
         </section>    
     </main>
 
     <?php
     if ((isset($_GET['popup'])&&(isset($_GET['overlay'])))){?>
         <script> openPopup(<?php echo "'". $_GET['popup'] ."'" ?>, <?php echo "'". $_GET['overlay'] ."'" ?>) </script>
-    <?php } ?>
+    <?php } 
     
-    <?php 
-        echo file_get_contents('../header-footer/footerP.html');
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 

@@ -26,7 +26,11 @@ $photo = $stmt->fetch();
     <?php 
     include('../header-footer/choose_header.php');
     ?>
-    <main>
+
+    <main class="MainTablo">
+        <div class="headtabloP"> 
+            <h1>Mes Réservations</h1>
+        </div>
 
         <div>
             <?php
@@ -43,7 +47,7 @@ $photo = $stmt->fetch();
                 } 
 
                 
-                $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale, libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
+                $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale,libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
                 from locbreizh._reservation r
                 join locbreizh._logement l on l.id_logement = r.logement
                 join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
@@ -57,30 +61,23 @@ $photo = $stmt->fetch();
                 foreach ($reservations as $reservation) {
 
                     ?>
-                    <div class="cardresmain"> 
+                    <div class="cardresmainP"> 
                         <img class="cardresmainimg" src="../Ressources/Images/<?php echo $reservation['photo_principale']; ?>"> 
-                        <section class="rescol">      
+                        <section class="logcp">      
                             <div class="logrowb">
                             <div>
-                            <h3 class="titrecard"><?php echo $reservation['libelle_logement'] ?></h3>
-                            <hr class="hrcard">
-                            </div>
-                            <div class="resrow">
-                            <div>
-                                <p class="restitre resplustaille">Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
-                                <button class="btn-accueil">Contacter le proprietaire</button>
-                            </div>
-                            <img class="imgprofil" src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil"  width="75" height="75">
+                                <h3 class="titrecard"><?php echo $reservation['libelle_logement'] ?></h3>
+                                <hr class="hrcard">
                             </div>
                             </div>
                             
 
                             <div class="rescrow">
-                                <a href="../devis/pdf_devis/<?php echo $reservation['url_detail'];?>" target="_blank"><button class="btn-ajoutlog">CONSULTER DEVIS</button></a>
-                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
+                                <a href="../devis/pdf_devis/<?php echo $reservation['lien_devis'];?>" target="_blank"><button class="btn-ajoutlog">CONSULTER DEVIS</button></a>
+                                <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
                                 <a><button class="btn-suppr" disabled>ANNULER</button></a>
                             </div>
-                            
+
                         </secion>
                     </div>
                 <?php } ?>
