@@ -45,9 +45,8 @@ $services = $r_services->fetchAll();
     <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Modifier logement</title>
-        <script src="../scriptPopup.js"></script>
-        <title>Modifier un logement</title>
         <link rel="stylesheet" href="../style.css">
+        <script src="../scriptPopupFeedback.js"></script>
     </head>
     
     <body>
@@ -61,7 +60,7 @@ $services = $r_services->fetchAll();
             <h1>La fiche de votre logement</h1>
         </div>
     
-        <form method='POST' action='modifier.php?id_logement=<?php echo $id_logement ?>' enctype="multipart/form-data">
+        <form method="post" action="modifier.php?id_logement=<?php echo $id_logement ?>" enctype="multipart/form-data">
                 <div class="logrow">  
                     <div class="logcolumn">     
                         <div class="logpc">  
@@ -298,7 +297,11 @@ $services = $r_services->fetchAll();
                         <button class="btn-previsualiser" name='previsualiser' type='submit'>Modifier</button>
                     </div>
             </form>
-        
+            <div id="overlayModifierLogement" onclick="closePopupFeedback('popupFeedback', 'overlayModifierLogement')"></div>
+            <div id="popupFeedback" class="popupFeedback">
+                <p>Votre logement a bien été modifié !</p>
+                <a href="../Accueil/Tableau_de_bord.php" class="btn-accueil"></button>OK</a>
+            </div>
         </main>
     
         <?php
@@ -308,6 +311,18 @@ $services = $r_services->fetchAll();
 </body>
 
 </html>
-<script src="../scriptPopup.js"></script>
+
+<?php
+    if(isset($_GET['modif']) == '1'){
+        ?>
+        <script>
+            openPopupFeedback('popupFeedback', 'overlayModifierLogement');
+        </script>
+        <?php
+    }
+    
+?>
+
+
 
 
