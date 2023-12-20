@@ -36,10 +36,9 @@
 
     <main class="MainTablo">
         <div class="headtabloP"> 
-            <h1>Mon tableau de bord</h1>
+            <h1>Mes Logements</h1>
         </div>
         <section class="Tablobord">
-                <h2>Mes logements</h2>
                 <div class="colreverse">
                 <?php
                     
@@ -70,9 +69,9 @@
                     $infos_log = $stmt->fetch();
 
                     if ($infos_log["en_ligne"] == 1){
-                        $bouton_desactiver = "METTRE_HORS_LIGNE1";  
+                        $bouton_desactiver = "METTRE HORS LIGNE";  
                     } else{
-                        $bouton_desactiver = "METTRE_EN_LIGNE";
+                        $bouton_desactiver = "METTRE EN LIGNE";
                     }
                     
                     ?>
@@ -232,10 +231,10 @@
     <?php
     if ((isset($_GET['popup'])&&(isset($_GET['overlay'])))){?>
         <script> openPopup(<?php echo "'". $_GET['popup'] ."'" ?>, <?php echo "'". $_GET['overlay'] ."'" ?>) </script>
-    <?php } ?>
+    <?php } 
     
-    <?php 
-        echo file_get_contents('../header-footer/footerP.html');
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 

@@ -825,7 +825,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     margin: auto 0.5em auto 0em;
     border: 2px solid #274065;
     border-radius: 10px;
-    object-fit: cover;
+    object-fit: contain;
 }
 .cardlogmainP section img {
     border: none;

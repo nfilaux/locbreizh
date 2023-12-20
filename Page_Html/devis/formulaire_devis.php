@@ -16,11 +16,7 @@
     $stmt->execute();
     $photo = $stmt->fetch();
 
-    //on récupère l'id de la taxe de séjour associé au logement du devis
-    
-    $stmt = $dbh->prepare("SELECT taxe_sejour from locbreizh._logement where id_compte = {$_SESSION['id']};");
-    $stmt->execute();
-    $photo = $stmt->fetch();
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -248,7 +244,7 @@
         <div id="overlayDemandeDeDevis" onclick="closePopupFeedback('popupFeedback', 'overlayDemandeDeDevis')"></div>
         <div id="popupFeedback" class="popupFeedback">
             <p>Votre devis a bien été envoyée !</p>
-            <a href="../Accueil/Tableau_de_bord.php" class="btn-accueil"></button>OK</a>
+            <a href="../reservation/liste_reservations_proprio.php" class="btn-accueil"></button>OK</a>
         </div>
     </main>
     

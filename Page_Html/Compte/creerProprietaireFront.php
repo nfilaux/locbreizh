@@ -196,20 +196,10 @@
         </form>
     </main>
 
-    <footer>
-        <div class="tfooter">
-            <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-            <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-            <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-            <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-        </div>
-        <hr>  
-        <div class="bfooter">
-            <p>©2023 Loc’Breizh</p>
-            <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-            <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-        </div>
-    </footer>
+    <?php
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
+    ?>
 </body>
 
 </html>
