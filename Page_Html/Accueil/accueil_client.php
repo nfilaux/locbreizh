@@ -76,16 +76,18 @@ $photo = $stmt->fetch();
             if ($card['en_ligne'] == true) {
                 ?><section> <?php
                 ?><a class="acclog" href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>"> <?php
-                ?><article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
-                ?><article>
+                ?><div class="cardtel">
+                <article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
+                ?><div class="cardphone">
+                <article>
                 <h3> <?php echo $card['libelle_logement']; ?> </h3>
                 </article><?php
                 /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
-                ?><article>
-                <h4> <?php echo $card['tarif_base_ht']; ?> €</h4><?php
+                ?><article><div class="accicone">
+                <img src="../svg/money.svg" width="25" height="25"> <h4><?php echo $card['tarif_base_ht']; ?> €</h4></div><?php
                 /*?><h4><?php formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle'])?></h4><?php*/
-                ?><h4><?php echo $card['nb_personnes_logement']; ?> personnes</h4>
-                </article></a><?php
+                ?><div class="accicone"><img src="../svg/group.svg" width="25" height="25"><h4><?php echo $card['nb_personnes_logement']; ?> personnes</h4></div>
+                </article></div></div></a><?php
                 ?></section><?php
             } /*else if ($card['en_ligne'] == false) {
                     echo "Ce logement est temporairement indisponible !";

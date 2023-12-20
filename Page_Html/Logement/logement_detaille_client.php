@@ -69,15 +69,9 @@ $photo = $stmt->fetch();
             <div class="logpc">
                 <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
                 <div class="logrowb">
-                    <div class="logrowt">
-                        <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
+                    <div class="logrowc">
+                        <h3 class="policetitre" style="margin-right:2em;"><?php echo $info['libelle_logement']; ?></h3>
                         <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
-                    </div>
-                    <div class="logrowt">
-                        <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
-                        <!--
-                        <img src="/Ressources/Images/star-fill 1.svg"><h4> echo $info['note_avis'];,0</p>
-                        -->
                     </div>
                 </div>
                 <div class="detailimg">
@@ -140,6 +134,10 @@ $photo = $stmt->fetch();
                             <input type='hidden' name="arrive" id="arrive" value="">
                             <input type='hidden' name="depart" id="depart" value="">
                             <button class="btn-demlog" type="submit">Demander un devis</button>
+
+                            <div class="logrowt">
+                                <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -177,7 +175,7 @@ $photo = $stmt->fetch();
                     $info = $stmt->fetch();
                 ?>
 
-<div class="logrow">
+        <div class="logrowb">
                     <div class="logcp">
                         <p><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
@@ -244,7 +242,7 @@ $photo = $stmt->fetch();
             </div>
             <hr class="hr">
             <div class="logcolumn">
-                <h3 class="potitre">Calendrier</h3>
+                <h3 class="policetitre">Calendrier</h3>
                 <div class="corpsCalendrier">
                     <div class="fond">
                         <div class="teteCalendrier">

@@ -23,9 +23,16 @@ $photo = $stmt->fetch();
 </head>
 
 <body>
+<<<<<<< HEAD
+<?php 
+        include('../header-footer/choose_header.php');
+    ?>
+
+=======
     <?php 
     include('../header-footer/choose_header.php');
     ?>
+>>>>>>> 87b115b77d154e53f396cce8396227cf04ded978
     <main>
 
         <div>
@@ -87,9 +94,14 @@ $photo = $stmt->fetch();
             
         </div>
     </main>
+<<<<<<< HEAD
+    <?php 
+        echo file_get_contents('../header-footer/footer.html');
+=======
     <?php
         // appel du footer
         include('../header-footer/choose_footer.php'); 
+>>>>>>> 87b115b77d154e53f396cce8396227cf04ded978
     ?>
 </body>
 
