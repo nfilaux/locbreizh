@@ -864,26 +864,24 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .cp {
     display: flex;
-    flex-direction: column;
-    margin: 1em auto auto auto;
-    font-size: 1.5em;
+    justify-content: space-between;
+    margin: 1vh 0;
+    align-items: center;
 }
 
-.cprow {
+.cprow{
+    width: 50%;
     display: flex;
-    flex-direction: row;
-    width: 100%;
+    justify-content: space-around;
+    align-items: baseline;
 }
 
 .condition {
-    width: auto;
-    padding-left: 35%;
-    padding-right: 35%;
     margin-top: 2em;
     margin-bottom: 2em;
-    font-size: 1em;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .testinput {
@@ -1758,13 +1756,113 @@ iframe {
     padding-left: 1vw;
 }
 
+.row-profil-mdp {
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 0;
+    align-items: center;
+}
+
+.row-profil-mdp label {
+    font-weight: normal;
+    color: #745086;
+    text-transform: inherit;
+}
+
+.row-profil-mdp input {
+    width: 100%;
+    height: 2.5vw;
+    border-radius: 5px;
+    padding-left: 1vw;
+    margin-right: 2em;
+}
+
+.mdpeye{
+    width: 52%;
+    display: flex;
+    height: 2.5vw;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
 .main-profil {
     padding: 4vw;
     font-size: 1.5em;
 }
 
-.compte-infos label,
-.div-adresse>p {
+.ligne_adresse{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.numero_rue{
+    width: 25%;
+    display: flex;
+    align-items: baseline;
+    padding: 0.5em 0 0.5em 0;
+}
+.numero_rue input{
+    width: 20%;
+    margin-left : 2em;
+    height: 2.5vw;
+    border-radius: 5px;
+}
+
+
+.nom_rue {
+    width: 75%;
+    display: flex;
+    align-items: baseline;
+    padding: 0.5em 0 0.5em 0;
+}
+
+.nom_rue input{
+    width: 90%;
+    margin-left : 2em;
+    height: 2.5vw;
+    border-radius: 5px;
+}
+.nom_rue label{
+    width: 10%;
+}
+
+.code_postal {
+    display: flex;
+    align-items: baseline;
+    width: 50%;
+    padding: 0.5em 0 0.5em 0;
+}
+
+
+.code_postal input{
+    margin-left: 2em;
+    height: 2.5vw;
+    border-radius: 5px;
+}
+
+
+.adresse_ville{
+    display: flex;
+    align-items: baseline;
+    width: 50%;
+    padding: 0.5em 0 0.5em 0;
+}
+
+.adresse_ville label{
+    width: 20%;
+}
+
+.adresse_ville input{
+    width: 80%;
+    margin-left: 2em;
+    height: 2.5vw;
+    border-radius: 5px;
+}
+
+.compte-infos label {
     color: #000;
     text-transform: uppercase;
     font-weight: bold;
@@ -1943,18 +2041,27 @@ iframe {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    color: #000;
+
+    
 }
 
 .profil-form>div:last-of-type img {
     aspect-ratio: 1 / 1;
     width: 70%;
-    border: 1px solid #5B3F69;
+    border: 4px solid #5B3F69;
     border-radius: 50%;
+    margin-bottom: 2em;
+    object-fit: cover;
 }
 
 .profil-form>div:last-of-type>label {
     color: #000;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .profil-form>div:first-of-type {

@@ -185,24 +185,24 @@
                     <div class="row-profil">
                         <label for="prenom">Prénom</label>
                         <!-- input pour pouvoir modifier l'information + pré-replissage -->
-                        <input type="text" id="prenom" name="prenom" maxlength="20" required>
+                        <input type="text" id="prenom" name="prenom" maxlength="20" value="<?php if(isset($_GET['prenom'])) { echo htmlentities($_GET['prenom']);}?>" required>
                         <!-- affichage des possibles erreurs (même chose pour les prochains appels de la fonction) -->
                     </div>
                     <?php erreur("prenom");?>
                     <div class="row-profil">
                         <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" maxlength="20" required>
+                        <input type="text" id="nom" name="nom" maxlength="20" value="<?php if(isset($_GET['nom'])) { echo htmlentities($_GET['nom']);}?>" required>
                         
                     </div>
                     <?php erreur("nom");?>
                     <div class="row-profil">
                         <label for="pseudo">Pseudo</label>
-                        <input type="text"  id="pseudo" name="pseudo" maxlength="20" required>
+                        <input type="text"  id="pseudo" name="pseudo" maxlength="20" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>" required>
                         
                     </div>
 
                     <div class="cp">
-                        <label>Civilité</label>
+                        <label for="genre1">Civilité</label>
                         <div class="cprow">
                             <input type="radio" id="genre1" name="genre" value="Homme" <?php if(isset($_GET['genre'])) {if($_GET['genre'] == 'Homme') { ?> checked <?php }}?>/>
                             <label for="genre1">Homme</label>
@@ -218,20 +218,20 @@
 
                     <?php erreur("pseudo");?>
                     <div class="row-profil">
-                        <label for="mail">E-mail</label>
-                        <input type="email" id="mail" maxlength="50" name="mail" required>
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" maxlength="50" name="email" value="<?php if(isset($_GET['email'])) { echo htmlentities($_GET['email']);}?>" required>
                         
                     </div>
                     <?php erreur("email");?>
                     <div class="row-profil">
                         <label for="telephone">Téléphone</label>
-                        <input type="tel" id="telephone" name="telephone" placeholder="XX XX XX XX XX" required>
+                        <input type="tel" id="telephone" name="telephone" placeholder="XX XX XX XX XX" value="<?php if(isset($_GET['telephone'])) { echo htmlentities($_GET['telephone']);}?>" required>
                         
                     </div>
                     <?php erreur("telephone");?>
                     <div class="row-profil">
                         <label for="date">Date de naissance</label>
-                        <input type="date" id="date" name="date" required>
+                        <input type="date" id="date" name="date" value="<?php if(isset($_GET['date'])) { echo htmlentities($_GET['date']);}?>" required>
                         
                     </div>
                     <?php erreur("date");?>
@@ -257,44 +257,43 @@
                     <?php erreur("confirmationMDP");?>
 
                     <!-- section pour les informations de l'adresse -->
-                 
-                    <p>Adresse</p>
-                    <div class="part1_address">
+                    <hr class="hr" style="margin: 2em 0 0.5em 0 ;">
+                    <h2 class="potitre" style="padding:0.75em;">Adresse</h2>
+                    <div class="ligne_adresse">
                         <div class="numero_rue">
-                            <label for="no_rue">N° :</label>
-                            <input type="text" id="no_rue" name="no_rue" maxlength="3" required>
+                            <label for="numRue">N° :</label>
+                            <input type="text" id="numRue" name="numRue" maxlength="3" value="<?php if(isset($_GET['numRue'])) { echo htmlentities($_GET['numRue']);}?>" required>
                         </div>
                         <?php erreur("numRue");?>
 
                         <div class="nom_rue">
-                            <label for="nom_rue">Rue :</label>
-                            <input type="text" id="nom_rue" name="nom_rue" maxlength="30" required>
-                            
+                            <label for="nomRue">Rue :</label>
+                            <input type="text" id="nomRue" name="nomRue" maxlength="30" value="<?php if(isset($_GET['nomRue'])) { echo htmlentities($_GET['nomRue']);}?>" required>
                         </div>
                         <?php erreur("nomRue");?>
 
                     </div> 
-                    <div>  
-                        <div>
+                    <div class="ligne_adresse">  
+                        <div class="code_postal">
                             <label for="codePostal">Code postal :</label>
-                            <input type="text" maxlength="5" id="codePostal" name="codePostal" required> 
+                            <input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php if(isset($_GET['codePostal'])) { echo htmlentities($_GET['codePostal']);}?>" required> 
                         </div>
                         <?php erreur("codePostal");?>
 
             
-                        <div>
+                        <div class="adresse_ville">
                             <label for="ville">Ville :</label>
-                            <input type="text" id="ville" maxlength="50" name="ville" required>
+                            <input type="text" id="ville" maxlength="50" name="ville" value="<?php if(isset($_GET['ville'])) { echo htmlentities($_GET['ville']);}?>" required>
                         </div>
                         <?php erreur("ville");?>
                     </div>
-                    
                 </div>
                 <!-- affichage de la photo de profil + input pour la modifier -->
                 <div>
-                    <img src="../svg/anonyme.svg" title="photo" alt="photo de profil">
-                    <label for="photo">Photo de profil</label>
+                    
+                    <label for="photo">  <img src="../svg/anonyme.svg" id="avatar" class=".photo-avatar" title="photo" alt="photo de profil"> Photo de profil</label>
                     <input type="file" id="photo" name="photo"/>
+                    
                     <?php erreur("photo"); ?>
                 </div>
             </div>
@@ -320,3 +319,4 @@
 
 </html>
 
+<script src="./actualiserPhoto.js" defer></script>

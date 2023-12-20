@@ -87,18 +87,8 @@
     }
 
     // tests permettant de savoir si les images envoyées utilisent les bonnes extensions
-    $arrayNom1 = explode('.', $_FILES['carteIdentite']['name']);
-    $extension1 = $arrayNom1[sizeof($arrayNom1)-1];
-    if ($extension1 == "png" or $extension1 == "gif" or $extension1 == "jpg" or $extension1 == "jpeg"){
-        $temps1 = time();
-    }
-    else{
-        if (!empty($extension1)){
-            $_SESSION['erreurs'] += ["carteIdentite" => "mauvaise extension de fichiers"];
-        }
-        $erreur = true;
-    }
-    $arrayNom2 = explode('.', $_FILES['photoProfil']['name']);
+    $arrayNom2 = explode('.', $_FILES['photo']['name']);
+    print_r($_FILES);
     $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
     if ($extension2 == "png" or $extension2 == "gif" or $extension2 == "jpg" or $extension2 == "jpeg"){
         $temps2 = time();
@@ -108,6 +98,7 @@
             $_SESSION['erreurs'] += ["photoProfil" => "mauvaise extension de fichiers"];
         }
         $erreur = true;
+        echo "ggggkjhkyuiyu";
     }
 
     // si il y a aucune érreur on vérifie que les contraintes d'unicité sont respectées
@@ -147,13 +138,10 @@
     // si il y a toujours pas d'érreur on peuple la base avec les données
     if(!$erreur){
         try {
-            $nom_profil = $temps1 . '.' . $extension2;
+            $nom_profil = $temps2 . '.' . $extension2;
             $cheminProfil = '../Ressources/Images/' ;
-            $nom_identite =  $temps1 . '1' . '.' . $extension1;
-            $cheminIdentite = '../Ressources/carte_identite/';
 
             move_uploaded_file($_FILES['photoProfil']['tmp_name'], $cheminProfil . $nom_profil);
-            move_uploaded_file($_FILES['carteIdentite']['tmp_name'], $cheminIdentite . $nom_identite);
 
             $mdp = password_hash($mdp, PASSWORD_DEFAULT);
 
@@ -161,7 +149,7 @@
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$nom_profil}'), ('{$nom_identite}');");
+            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$nom_profil}');");
             $requetePhotos->execute();
 
             $requeteAdresse = $dbh->prepare("INSERT INTO locbreizh._adresse(nom_rue, numero_rue, code_postal, pays, ville) VALUES ('{$nomRue}', {$numRue}, '{$codePostal}', 'France', '{$ville}');");
@@ -198,6 +186,7 @@
     // si il y a eu une érreur durant les test on renvoie l'utilisateur sur le formulaire
     if ($erreur){
         $url = substr($url, 0, -1);
+        print_r($erreur);
         header("Location: ./creerClientFront.php$url");
         exit;
     }
@@ -297,7 +286,7 @@
             $_SESSION['erreurs'] += ["motdepasse" => "Le mot de passe doit faire entre 12 et 25 caractères"];  
         }
         else{
-            if (!preg_match('/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,25}$/', $mdp)) {
+            if (!preg_match('/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[.#?!@$%^&*-]).{12,25}$/', $mdp)) {
                 $erreur = true;
                 $_SESSION['erreurs'] += ["motdepasse" => "Le mot de passe doit comporter 4 caractères de types différents (majuscule, minuscule, chiffre, caractère spécial)"];
             }
