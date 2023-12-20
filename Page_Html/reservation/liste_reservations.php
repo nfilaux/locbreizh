@@ -43,7 +43,7 @@ $photo = $stmt->fetch();
                 } 
 
                 
-                $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
+                $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale, libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
                 from locbreizh._reservation r
                 join locbreizh._logement l on l.id_logement = r.logement
                 join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
@@ -62,7 +62,7 @@ $photo = $stmt->fetch();
                         <section class="rescol">      
                             <div class="logrowb">
                             <div>
-                            <h3 class="titrecardres"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
+                            <h3 class="titrecard"><?php echo $reservation['libelle_logement'] ?></h3>
                             <hr class="hrcard">
                             </div>
                             <div class="resrow">

@@ -75,6 +75,7 @@
             </div>
             <?php } ?>
         </div>
+        <hr class="hrP">
         <!-- devis -->
         <div>
             <h6>Vos proposition de devis</h6>
