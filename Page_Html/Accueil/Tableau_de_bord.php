@@ -231,10 +231,10 @@
     <?php
     if ((isset($_GET['popup'])&&(isset($_GET['overlay'])))){?>
         <script> openPopup(<?php echo "'". $_GET['popup'] ."'" ?>, <?php echo "'". $_GET['overlay'] ."'" ?>) </script>
-    <?php } ?>
+    <?php } 
     
-    <?php 
-        echo file_get_contents('../header-footer/footerP.html');
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 

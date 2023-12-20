@@ -419,8 +419,9 @@ $photo = $stmt->fetch();
 
     </main>
     
-    <?php 
-        echo file_get_contents('../header-footer/footerP.html');
+    <?php
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 

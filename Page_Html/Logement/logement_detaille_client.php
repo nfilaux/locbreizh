@@ -130,13 +130,23 @@ $photo = $stmt->fetch();
                             <p class="dateresa"></p>
                             <p class="dateresa"></p>
                         </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 87b115b77d154e53f396cce8396227cf04ded978
                         <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+=======
+                        <form class="center" action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+>>>>>>> 021df732112c025f25cd155458644d174f3ab4d2
                             <input type='hidden' name="arrive" id="arrive" value="">
                             <input type='hidden' name="depart" id="depart" value="">
                             <button class="btn-demlog" type="submit">Demander un devis</button>
+<<<<<<< HEAD
                             <div class="logrowt">
                                 <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
                             </div>
+=======
+>>>>>>> 87b115b77d154e53f396cce8396227cf04ded978
                         </form>
                     </div>
                 </div>
@@ -436,8 +446,9 @@ $photo = $stmt->fetch();
 
     </main>
     
-    <?php 
-        echo file_get_contents('../header-footer/footer.html');
+    <?php
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 </html>

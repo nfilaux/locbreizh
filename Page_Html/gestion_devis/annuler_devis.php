@@ -1,5 +1,10 @@
 <?php
+    // Début de la session
+    session_start();
+
+    // Inclusion d'une instance PDO
     include('../parametre_connexion.php');
+
     try {
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -9,9 +14,11 @@
         die();
     }
 
-    $stmt = $dbh->prepare("SELECT id_devis from locbreizh._message_devis m where m.id_message_devis = {$_GET['message']};");
+    // On change le statut du devis
+    $stmt = $dbh->prepare("UPDATE locbreizh._devis 
+    set annule = TRUE 
+    where num_devis = {$_POST['id_devis']};");
     $stmt->execute();
-    $id_devis = $stmt->fetch();
 
-    header("Location: ../reservation/reservation.php?devis={$id_devis['id_devis']}")
+    header("Location: gestion_des_devis_proprio.php")
 ?>

@@ -27,20 +27,7 @@
     $logement = $stmt->fetch();
 
     // change le statut du message du devis car il a été accepte
-    $stmt = $dbh->prepare("UPDATE locbreizh._message_devis set accepte = TRUE where id_devis = {$_GET['devis']};");
-    $stmt->execute();
-
-    // date et heure actuelle (pour message)
-    $date = date('Y-m-d');
-    $time = date('H:i:s');
-
-    $stmt = $dbh->prepare("SELECT id_conversation from locbreizh._conversation 
-    where (compte1 = {$_SESSION['id']} and compte2 = {$logement['id_proprietaire']}) or (compte2 = {$_SESSION['id']} and compte1 = {$logement['id_proprietaire']});");
-    $stmt->execute();
-    $id_conv = $stmt->fetch();
-
-    $stmt = $dbh->prepare("INSERT into locbreizh._message(contenu_message, date_mess, heure_mess, auteur, conversation)
-    values('DEVIS ACCEPTER LA RESERVATION A ETE FAITE !', '$date', '$time', {$_SESSION['id']}, {$id_conv['id_conversation']});");
+    $stmt = $dbh->prepare("UPDATE locbreizh._devis set accepte = TRUE where num_devis = {$_GET['devis']};");
     $stmt->execute();
 
     // ajout reservation
