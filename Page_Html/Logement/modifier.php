@@ -163,7 +163,7 @@ if (preg_match('/[^a-zA-Z1-9-" "\'À-ÖØ-öø-ÿ]+/', $description)){
     $_SESSION['erreurs']['descriptif_logement'] = 'erreur la description ne pas contenir de caractères autres que des \' ou des tirets';
 }
 if ($_SESSION['erreurs'] != []){
-    header("location:modifier_logement.php?id_logement=" . $id_logement);
+    header("Location: modifierLogement.php?id_logement=" . $id_logement);
 }
 else {
     include('../parametre_connexion.php');
@@ -188,5 +188,5 @@ try {
     die();
 }
 }
-    header("Location: ../Accueil/Tableau_de_bord.php");
+    header("Location: modifierLogement.php?modif=1&id_logement=$id_logement");
 ?>
