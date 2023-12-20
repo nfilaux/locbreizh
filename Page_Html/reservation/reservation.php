@@ -50,7 +50,7 @@ $photo = $stmt->fetch();
 
     <main class="MainReser">
         <div class="headtablo"> 
-            <h1>Paiement de la reservation</h1>
+            <h1>Paiement de la réservation</h1>
         </div>
        
         <div id="paypal-button-container"></div>

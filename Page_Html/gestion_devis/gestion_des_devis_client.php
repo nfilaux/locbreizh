@@ -48,7 +48,7 @@
     <main class="gestion_devis">
         <!-- demande de devis -->
         <div class="partie_demande">
-            <h2>Les demandes de devis envoyées</h2>
+            <h1>Les demandes de devis envoyées</h1>
             <div>
             <?php 
                 foreach($list_demande as $demande){?>
@@ -60,26 +60,17 @@
                             <h3 class="titrecard"><?php echo $demande['libelle_logement']; ?></h3>
                             <hr class="hrcard">
                         </div>
-                        <p><?php echo str_replace('-','/',$demande['date_arrivee']) . " -> " . str_replace('-','/',$demande['date_depart']) ; ?></p>
+                        <p><?php echo "Du " . str_replace('-','/',$demande['date_arrivee']) . " au " . str_replace('-','/',$demande['date_depart']) ; ?></p>
                         <p>Nombre de personne : <?php echo $demande['nb_personnes'] ;?></p>
+                        <a target="_blank" href="../demande_devis/pdf_demande/<?php echo $demande['url_detail']; ?>">Voir les details de la demande de devis</a>
                     </div>
                 </div>
                 <?php 
-                if(!$est_client && ($demande['accepte'] === null)){ ?>
-                    <form method="post" action="accepter_demande.php">
-                        <input type="hidden" name="id_demande" id="id_demande" value="<?php echo $demande['num_demande_devis']; ?>">
-                        <button type="submit">Accepter</button>
-                    </form>
-                    <form method="post" action="refuser_demande.php">
-                        <input type="hidden" name="id_demande" id="id_demande" value="<?php echo $demande['num_demande_devis']; ?>">
-                        <button type="submit">Refuser</button>
-                    </form>
-                <?php } 
-                else if($demande['accepte'] === FALSE){ ?>
-                    <p>Cette demande à été refusé par le propriétaire.</p>
+                if($demande['accepte'] === FALSE){ ?>
+                    <p class="reponse_devis">Le propriétaire a refusé la demande de devis.</p>
                 <?php }
                 else{ ?>
-                    <p>La demande n'a pas encore été traité par le propriétaire.</p>
+                    <p class="reponse_devis">Le propriétaire n'a pas encore traité cette demande.</p>
                 <?php }
                 ?>
             </div>
@@ -90,7 +81,7 @@
         <hr class="hr">
         <!-- devis -->
         <div class="partie_devis">
-            <h2>Devis proposés par les propriétaires</h2>
+            <h1>Devis proposés par les propriétaires</h1>
             <div>
                 <?php 
                     foreach($list_devis as $devis){ ?>
@@ -102,29 +93,32 @@
                                 <h3 class="titrecard"><?php echo $devis['libelle_logement']; ?></h3>
                                 <hr class="hrcard">
                             </div>
-                            <p><?php echo str_replace('-','/',$devis['date_arrivee']) . " -> " .  str_replace('-','/',$devis['date_depart']) ; ?></p>
+                            <p><?php echo "Du " . str_replace('-','/',$devis['date_arrivee']) . " au " .  str_replace('-','/',$devis['date_depart']) ; ?></p>
                             <p>Nombre de personne : <?php echo $devis['nb_personnes'] ;?></p>
+                            <a target="_blank" href="../devis/pdf_devis/<?php echo $devis['url_detail']; ?>">Voir les details du devis</a>
                         </div>
                     </div>
                     <?php 
                         if($devis['annule']){ ?>
-                            <p>Le devis à été annulé par le propriétaire.</p>
+                            <p class="reponse_devis">Le propriétaire a annulé le devis.</p>
                         <?php } 
                         else if($devis['accepte']){ ?>
-                            <p>Vous avez acceptez le devis pour pouvez voir les details dans <a href="../reservation/liste_reservations.php">"Mes reservations".</a></p>
+                            <p class="reponse_devis">Vous avez accepté le devis, vous pouvez voir les details dans <a href="../reservation/liste_reservations.php">"Mes reservations".</a></p>
                         <?php }
                         else if($devis['accepte'] === FALSE){ ?>
-                            <p>Vous avez refuser ce devis.</p>
+                            <p class="reponse_devis">Vous avez refusé ce devis.</p>
                         <?php }
                         else{ ?>
-                        <form method="post" action="accepter_devis.php">
-                            <input type="hidden" name="id_devis" id="id_devis" value="<?php echo $devis['num_devis']; ?>">
-                            <button type="submit">Accepter</button>
-                        </form>
-                        <form method="post" action="refuser_devis.php">
-                            <input type="hidden" name="id_devis" id="id_devis" value="<?php echo $devis['num_devis']; ?>">
-                            <button type="submit">Refuser</button>
-                        </form>
+                        <div class="bouton_devis">
+                            <form method="post" action="accepter_devis.php">
+                                <input type="hidden" name="id_devis" id="id_devis" value="<?php echo $devis['num_devis']; ?>">
+                                <button id="devis_accepter" type="submit">ACCEPTER</button>
+                            </form>
+                            <form method="post" action="refuser_devis.php">
+                                <input type="hidden" name="id_devis" id="id_devis" value="<?php echo $devis['num_devis']; ?>">
+                                <button type="submit">REFUSER</button>
+                            </form>
+                        </div>
                         <?php } ?>
                 </div>
              <?php } ?>
