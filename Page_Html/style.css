@@ -19,18 +19,15 @@
 
 html{
     height: 100%;
-    width: 100%;
 }
 
 body {
     height: 100%;
     padding-bottom: 0;
     margin: 0;
-    background-origin: content-box;
-    width: 100%;
     font-family: 'Quicksand', sans-serif, 'Trebuchet MS';
     background-color: #F5F4F4;
-    display: table;
+    width: 100%;
 }
 
 .pagecompte {
@@ -212,7 +209,6 @@ header{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    position: relative;
     color: #745086;
     box-sizing: border-box;
     border-bottom: 1px solid #745086; 
@@ -440,20 +436,23 @@ footer{
     background-color: #745086;
     color: #F6E4FF;
     margin-bottom: 0;
-    display: table-row;
-    bottom: 0;
-    box-sizing: border-box;
-    border-top: 1px solid #F6E4FF   ;
     width: 100%;
     height:5em;
+    position: relative;
+    bottom: 0px;
+    display: table;
+    box-sizing: border-box;
+    border-top: 1px solid #F6E4FF   ;
+    
 }
+
 
 .footerP{
     padding-top: 1px;
     background-color: #274065;
     color: #b8cded;
     margin-bottom: 0;
-    display: table-row;
+    display: table;
     bottom: 0;
     box-sizing: border-box;
     border-top: 1px solid #b8cded;
@@ -469,7 +468,7 @@ footer{
     justify-content: space-around;
 }
 
-footer hr{
+footer>hr{
     border-width: 1px;
     border-color: #F6E4FF;
     width: 87%;
@@ -479,6 +478,15 @@ footer div p {
     padding: 0%;
 }
 
+.footerwrap{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.footerwrap p {
+    margin: auto;
+}
 
 /*----------------------------------------------------------------Link----------------------------------------------------------------*/
 
@@ -751,9 +759,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding-top: 5px;
     width: 20%;
     margin: 1em 2%;
+    padding: 0.5em;
 }
 
-.card section article{
+.card section article:last-child{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -767,8 +776,12 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .card section article img{
     margin: 0;
     border-radius: 15px;
-    width: 96%;
+    width: 100%;
 }
+.card section article .accicone img {
+    visibility: hidden;
+}
+
 
 .cardlogmain {
     display: flex;
@@ -1001,7 +1014,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     flex-direction: column;
     justify-content: center;
     background-color: #fff;
-    width: 20%;
+    width: 40%;
     padding: 1em;
     margin: auto;
     border-radius: 15px;
@@ -1238,19 +1251,15 @@ fieldset label{
     margin-bottom: 0.2em;
 }
 
-
-.logrowt > p {
-    margin: 0 4vw;
-}
-
-
 .nuit {
     background-color: #FAE3C6;
     border-radius: 10px;
     color: #745086;
     padding: 5px;
     display: flex;
-    align-self: flex-end;
+    justify-content: center;
+    width: 98%;
+
 }
 
 .nuitP {
@@ -1259,7 +1268,8 @@ fieldset label{
     color: #274065;
     padding: 5px;
     display: flex;
-    align-self: flex-end;
+    justify-content: center;
+    width: 98%;
 }
 
 .potitre {
@@ -2181,4 +2191,244 @@ iframe {
 }
 .btn-modif-logement button{
     width: 30vw;
+}
+
+
+@media screen and (min-width: 900px) and (max-width: 1280px) {
+    .logot {
+        height: 3em;
+        width: 3em;
+    }
+    header input{
+        width: 100%;
+    }
+    header h2 {
+        margin:auto 0.5em auto 0.5em;
+    }
+    header h4{
+        margin-right: 0.5em;
+    }
+    .brecherche {
+        margin:auto 1em auto 1em;
+    }
+    
+}
+
+@media screen and (min-width: 600px) and (max-width: 899px) {
+
+    /*-------------------------------Header-------------------------------*/
+    .logot {
+        height: 2em;
+        width: 2em;
+    }
+    header h2 {
+        margin:auto 0em auto 0em;
+    }
+    header h4{
+        margin-right: 0em;
+    }
+    .brecherche {
+       visibility: hidden;
+       width: 0%;
+       margin: 0;
+    }
+    header a:last-child {
+        margin-left: 0.5em;
+    }
+    /*-------------------------------FOOTER-------------------------------*/
+    .tfooter, .bfooter {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    /*-------------------------------Accueil-------------------------------*/
+
+    .card section article .accicone{
+        display: flex;
+        flex-direction: row;
+    }
+    .card section article .accicone img {
+        visibility: visible;
+        text-decoration: none;
+        border: none;
+        margin: auto 0.5em;
+        width: auto;
+    }
+
+    .card section{
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        box-sizing: border-box;
+        border: 1px solid #745086;
+        border-radius: 15px;
+        width: 100%;
+        object-fit: cover;
+        padding: 0px;
+    }
+    
+    .card section article h3,.card section article h4{
+        color: #745086;
+    }
+
+    .card section article img{
+        margin: 0;
+        border-radius: 15px;
+        width:50%;
+        border: 5px solid #745086;
+
+    }
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .cardtel article:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel article:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    .cardphone article:first-child {
+        background-color: #745086;
+        width: 100%;
+        border-top-right-radius: 12px;
+    }
+    
+    .card section article:last-child {
+        flex-direction: column;
+        margin-left: 0.5em;
+    }
+
+    .card section article img {
+        margin: auto;
+        width: 100%; 
+    }
+
+    /*-------------------------------Logement-------------------------------*/
+    .logrowt {
+        flex-direction: column;
+    }
+
+    .logcolumn{
+        width: 96%;
+        margin: auto;
+    }
+
+    .logdem{
+        width: 60%;
+    }
+
+    .logrow {
+        flex-direction: column;
+    }
+
+    .cardcondition {
+        width: 80%;
+    }
+        
+}
+
+
+@media screen and (max-width: 599px) {
+    .brecherche {
+       visibility: hidden;
+       width: 0%;
+    }
+    .tfooter, .bfooter {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    /*-------------------------------Accueil-------------------------------*/
+
+    .card section article .accicone{
+        display: flex;
+        flex-direction: row;
+    }
+    .card section article .accicone img {
+        visibility: visible;
+        text-decoration: none;
+        border: none;
+        margin: auto 0.5em;
+        width: auto;
+    }
+
+    .card section{
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        box-sizing: border-box;
+        border: 1px solid #745086;
+        border-radius: 15px;
+        width: 100%;
+        object-fit: cover;
+        padding: 0px;
+    }
+    
+    .card section article h3,.card section article h4{
+        color: #745086;
+    }
+
+    .card section article img{
+        margin: 0;
+        border-radius: 15px;
+        width:50%;
+        border: 5px solid #745086;
+
+    }
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .cardtel article:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel article:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    .cardphone article:first-child {
+        background-color: #745086;
+        width: 100%;
+        border-top-right-radius: 12px;
+    }
+    
+    .card section article:last-child {
+        flex-direction: column;
+        margin-left: 0.5em;
+    }
+
+    .card section article img {
+        margin: auto;
+        width: 100%; 
+    }
 }

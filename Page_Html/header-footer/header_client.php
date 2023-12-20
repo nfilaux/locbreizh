@@ -15,8 +15,7 @@
         <img src="../svg/loupe.svg">
     </div>
 
-    <img src="../svg/booklet-fill 1.svg">
-    <a href="../reservation/liste_reservations.php"><h4>Accèder à mes réservations</h4></a>
+    <a href="../reservation/liste_reservations.php"><div style="display:flex; flex-direction:row;"><img src="../svg/ReservationC.svg"><h4>Réservations</h4></div></a>
 
     <div class="imghead">
         <a href="../messagerie/messagerie.php"><img src="../svg/message.svg"></a>
