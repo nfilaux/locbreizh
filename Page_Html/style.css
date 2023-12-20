@@ -1682,7 +1682,7 @@ iframe {
     justify-content: center;
     border: 2px solid #274065;
     width: 80%;
-    margin: auto;
+    margin: 1em;
     background-color: #FCF0E2;
     padding: 1em;
 }
@@ -2232,4 +2232,38 @@ iframe {
     margin: 1em auto;
     background-color: #FCF0E2;
     padding: 1em;
+}
+
+.card_devis  > div p{
+    color: #5B3F69;
+}
+.bouton_devis{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1em;
+}
+
+.bouton_devis button{
+    background-color: red; 
+    color: #fff;
+    border: 1px solid red; 
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+    width: 8vw;
+    min-width: 90px;
+    height: 2vw;
+    min-height: 20px;
+    align-self: center;
+}
+
+#devis_accepter{
+    background-color: green;
+    border: 1px solid green; 
+}
+
+.reponse_devis{
+    font-weight: bold;
+    color: red;
 }
