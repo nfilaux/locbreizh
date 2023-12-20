@@ -72,7 +72,7 @@
                         <p>Cette demande à été refusé par le propriétaire.</p>
                     <?php }
                     else{ ?>
-                        <p>La demande n'a pas encore été traité par le propriétaire</p>
+                        <p>La demande n'a pas encore été traité par le propriétaire.</p>
                     <?php }
                 ?>
             </div>
@@ -84,17 +84,19 @@
             <?php 
                 foreach($list_devis as $devis){ ?>
             <div>
-                <h6>Devis proposé</h6>
                 <p><?php echo $devis['libelle_logement']; ?></p>
                 <img src="<?php echo "../Ressources/Images/{$devis['photo_principale']}"; ?>" width="50" height="50">
                 <p><?php echo $devis['date_arrivee'] . " - " . $devis['date_depart'] ; ?></p>
                 <p>Nombre de personne : <?php echo $devis['nb_personnes'] ;?></p>
                 <?php 
                 if($devis['annule']){ ?>
-                    <p>Le devis à été annulé par le propriétaire</p>
+                    <p>Le devis à été annulé par le propriétaire.</p>
                 <?php } 
                 else if($devis['accepte']){ ?>
-                    <p>Vous avez acceptez le devis pour pouvez voir les details dans <a href="../reservation/liste_reservations.php">"Mes reservations"</a></p>
+                    <p>Vous avez acceptez le devis pour pouvez voir les details dans <a href="../reservation/liste_reservations.php">"Mes reservations".</a></p>
+                <?php }
+                else if($devis['accepte'] === FALSE){ ?>
+                    <p>Vous avez refuser ce devis.</p>
                 <?php }
                 else{ ?>
                 <form method="post" action="accepter_devis.php">

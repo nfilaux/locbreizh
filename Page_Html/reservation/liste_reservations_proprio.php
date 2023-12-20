@@ -47,15 +47,14 @@ $photo = $stmt->fetch();
                 } 
 
                 
-                $stmt = $dbh->prepare("SELECT lien_devis, l.photo_principale,libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
+                $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale,libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
                 from locbreizh._reservation r
                 join locbreizh._logement l on l.id_logement = r.logement
                 join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
                 join locbreizh._compte c on c.id_compte = p.id_proprietaire
                 join locbreizh._adresse a on l.id_adresse = a.id_adresse
                 join locbreizh._facture f on f.num_facture = r.facture
-                join locbreizh._devis d on d.num_devis = f.num_devis
-                join locbreizh._message_devis on d.num_devis = _message_devis.id_devis");
+                join locbreizh._devis d on d.num_devis = f.num_devis");
                 $stmt->execute();
                 $reservations = $stmt->fetchAll();
 

@@ -81,23 +81,22 @@
             <?php 
                 foreach($list_devis as $devis){ ?>
             <div>
-                <h6>Devis proposé</h6>
                 <p><?php echo $devis['libelle_logement']; ?></p>
                 <img src="<?php echo "../Ressources/Images/{$devis['photo_principale']}"; ?>" width="50" height="50">
                 <p><?php echo $devis['date_arrivee'] . " - " . $devis['date_depart'] ; ?></p>
                 <p>Nombre de personne : <?php echo $devis['nb_personnes'] ;?></p>
                 <?php 
                     if($devis['annule']){ ?>
-                        <p>Vous avez annulé ce devis</p>
+                        <p>Vous avez annulé ce devis.</p>
                     <?php }
                     else if($devis['accepte']){ ?>
-                        <p>Le client à accepter le devis vous pouvez consulter la reservation dans <a href="../Accueil/Tableau_de_bord.php">"Mon tableau de bord"</a></p>
+                        <p>Le client à accepter le devis vous pouvez consulter la reservation dans <a href="../reservation/liste_reservations_proprio.php">"Mon tableau de bord".</a></p>
                     <?php }
                     else if($devis['accepte'] === false){ ?>
-                        <p>Le client à refuser le devis</p>
+                        <p>Le client à refuser le devis.</p>
                     <?php }
                     else{ ?>
-                        <p>La demande n'a pas encore été traité par le client</p>
+                        <p>La demande n'a pas encore été traité par le client.</p>
                         <form method="post" action="annuler_devis.php">
                             <input type="hidden" name="id_devis" id="id_devis" value="<?php echo $devis['num_devis']; ?>">
                             <button type="submit">Annuler</button>
