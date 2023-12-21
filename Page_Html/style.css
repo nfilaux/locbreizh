@@ -397,6 +397,14 @@ main h1{
     margin: 0;
 }
 
+.hr2{
+    height: auto;
+    border: none;
+    border: 1px solid #745086; 
+    margin: 0;
+    width: 90%;
+}
+
 .hrP{
     height: auto;
     border: none;
@@ -1802,18 +1810,29 @@ iframe {
     align-items: center;
 }
 
-.row-profil label {
+.row-profil label{
     font-weight: normal;
     color: #745086;
     text-transform: inherit;
 }
 
-.row-profil input {
+.row-profil input{
     width: 50%;
     height: 2.5vw;
     border-radius: 5px;
     padding-left: 1vw;
 }
+
+.row-profil select{
+    width: 52%;
+    height: 2.5vw;
+    border-radius: 5px;
+    padding-left: 1vw;
+    background-color: white;
+    color: #957BB0;
+    font-size: 1.25em;
+    border: #000 solid 2px;
+} 
 
 .row-profil-mdp {
     display: flex;
@@ -1868,6 +1887,7 @@ iframe {
     margin-left : 2em;
     height: 2.5vw;
     border-radius: 5px;
+    text-align: center;
 }
 
 
@@ -1883,6 +1903,7 @@ iframe {
     margin-left : 2em;
     height: 2.5vw;
     border-radius: 5px;
+    padding-left: 1vw;
 }
 .nom_rue label{
     width: 10%;
@@ -1900,6 +1921,7 @@ iframe {
     margin-left: 2em;
     height: 2.5vw;
     border-radius: 5px;
+    text-align: center;
 }
 
 
@@ -1919,9 +1941,10 @@ iframe {
     margin-left: 2em;
     height: 2.5vw;
     border-radius: 5px;
+    padding-left: 1vw;
 }
 
-.compte-infos label {
+.compte-infos label, .label {
     color: #000;
     text-transform: uppercase;
     font-weight: bold;

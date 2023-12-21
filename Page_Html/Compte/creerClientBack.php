@@ -88,52 +88,42 @@
 
     // tests permettant de savoir si les images envoyées utilisent les bonnes extensions
     $arrayNom2 = explode('.', $_FILES['photo']['name']);
-    print_r($_FILES);
     $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
     if ($extension2 == "png" or $extension2 == "gif" or $extension2 == "jpg" or $extension2 == "jpeg"){
         $temps2 = time();
     }
     else{
         if (!empty($extension2)){
-            $_SESSION['erreurs'] += ["photoProfil" => "mauvaise extension de fichiers"];
+            $_SESSION['erreurs'] += ["photo" => "mauvaise extension de fichiers"];
         }
         $erreur = true;
-        echo "ggggkjhkyuiyu";
     }
 
-    // si il y a aucune érreur on vérifie que les contraintes d'unicité sont respectées
-    if (!$erreur){
-        include('../parametre_connexion.php');
-        try {
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '{$mail}';");
-            $verifMail->execute();
-            $res = $verifMail->fetchColumn();
-            if ($res != 0){
-                $_SESSION['erreurs'] += ["email" => "mail déjà existant"];
-                $erreur = true;
-            }
-            $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '{$tel}';");
-            $verifTel->execute();
-            $res = $verifTel->fetchColumn();
-            if ($res != 0){
-                $_SESSION['erreurs'] += ["telephone" => "telephone déjà existant"];
-                $erreur = true;
-            }
-            $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '{$pseudo}';");
-            $verifPseudo->execute();
-            $res = $verifPseudo->fetchColumn();
-            if ($res != 0){
-                $_SESSION['erreurs'] += ["pseudo" => "pseudo déjà existant"];
-                $erreur = true;
-            }
-            $dbh = null;
-        } catch (PDOException $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
-            die();
+    //On vérifie que les contraintes d'unicité sont respectées
+    include('../parametre_connexion.php');
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $verifMail = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.mail = '{$mail}';");
+        $verifMail->execute();
+        $res = $verifMail->fetchColumn();
+        if ($res != 0){
+            $_SESSION['erreurs'] += ["email" => "mail déjà existant"];
+            $erreur = true;
         }
+        $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '{$pseudo}';");
+        $verifPseudo->execute();
+        $res = $verifPseudo->fetchColumn();
+        if ($res != 0){
+            $_SESSION['erreurs'] += ["pseudo" => "pseudo déjà existant"];
+            $erreur = true;
+        }
+        $dbh = null;
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage() . "<br/>";
+        die();
     }
+    
     
     // si il y a toujours pas d'érreur on peuple la base avec les données
     if(!$erreur){
@@ -186,7 +176,6 @@
     // si il y a eu une érreur durant les test on renvoie l'utilisateur sur le formulaire
     if ($erreur){
         $url = substr($url, 0, -1);
-        print_r($erreur);
         header("Location: ./creerClientFront.php$url");
         exit;
     }

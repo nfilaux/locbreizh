@@ -91,25 +91,14 @@
     }
     
     // tests permettant de savoir si les images envoyées utilisent les bonnes extensions
-    $arrayNom1 = explode('.', $_FILES['carteIdentite']['name']);
-    $extension1 = $arrayNom1[sizeof($arrayNom1)-1];
-    if ($extension1 == "png" or $extension1 == "gif" or $extension1 == "jpg" or $extension1 == "jpeg" or $extension1 == "pdf"){
-        $temps1 = time();
-    }
-    else{
-        if (!empty($extension1)){
-            $_SESSION['erreurs'] += ["carteIdentite" => "mauvaise extension de fichiers"];
-        }
-        $erreur = true;
-    }
-    $arrayNom2 = explode('.', $_FILES['photoProfil']['name']);
+    $arrayNom2 = explode('.', $_FILES['photo']['name']);
     $extension2 = $arrayNom2[sizeof($arrayNom2)-1];
     if ($extension2 == "png" or $extension2 == "gif" or $extension2 == "jpg" or $extension2 == "jpeg"){
         $temps2 = time();
     }
     else{
         if (!empty($extension2)){
-            $_SESSION['erreurs'] += ["photoProfil" => "mauvaise extension de fichiers"];
+            $_SESSION['erreurs'] += ["photo" => "mauvaise extension de fichiers"];
         }
         $erreur = true;
     }
@@ -165,16 +154,12 @@
     if(!$erreur){
         try {
             $cheminProfil = '../Ressources/Images/';
-            $nom_profil =   $temps1 . '1' . '.' . $extension2;
-
-            $cheminIdentite = '../Ressources/carte_identite/' ;
-            $nom_identite =  $temps2 . '2'. '.' . $extension1;
+            $nom_profil =   $temps2 . '1' . '.' . $extension2;
 
             $cheminRIB = '../Ressources/rib/';
-            $nom_rib = $temps3 . '3' . '.' . $extension3;
+            $nom_rib = $temps3 . '2' . '.' . $extension3;
 
-            move_uploaded_file($_FILES['photoProfil']['tmp_name'], $cheminProfil . $nom_profil);
-            move_uploaded_file($_FILES['carteIdentite']['tmp_name'], $cheminIdentite . $nom_identite);
+            move_uploaded_file($_FILES['photo']['tmp_name'], $cheminProfil . $nom_profil);
             move_uploaded_file($_FILES['rib']['tmp_name'], $cheminRIB . $nom_rib);
 
             $mdp = password_hash($mdp, PASSWORD_DEFAULT);
@@ -183,7 +168,7 @@
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$nom_profil}'), ('{$nom_identite}'), ('{$nom_rib}');");
+            $requetePhotos = $dbh->prepare("INSERT INTO locbreizh._photo(url_photo) VALUES ('{$nom_profil}'), ('{$nom_rib}');");
             $requetePhotos->execute();
 
             $requeteAdresse = $dbh->prepare("INSERT INTO locbreizh._adresse(nom_rue, numero_rue, code_postal, pays, ville) VALUES ('{$nomRue}', {$numRue}, '{$codePostal}', 'France', '{$ville}');");
@@ -324,7 +309,7 @@
             $_SESSION['erreurs'] += ["motdepasse" => "Le mot de passe doit faire entre 12 et 25 caractères"];  
         }
         else{
-            if (!preg_match('/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,25}$/', $mdp)) {
+            if (!preg_match('/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[.#?!@$%^&*-]).{12,25}$/', $mdp)) {
                 $erreur = true;
                 $_SESSION['erreurs'] += ["motdepasse" => "Le mot de passe doit comporter 4 caractères de types différents (majuscule, minuscule, chiffre, caractère spécial)"];
             }
