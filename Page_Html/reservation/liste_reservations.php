@@ -28,7 +28,7 @@ $photo = $stmt->fetch();
     ?>
     <main>
 
-        <div>
+        <div style="display:flex; flex-direction:column-reverse;">
             <?php
             include('../parametre_connexion.php');
                 try {

@@ -66,15 +66,16 @@
  
         <form name="envoie_demande_devis" method="post" action="envoyer_demande.php" enctype="multipart/form-data">
             <div class="logrow">
-                <div class="log5vct">  
+                <div class="datedevis">
+                <div class="demdevis">  
                     <label for="dateArrivee">Date d’arrivée :</label>
                     <input class="logvctC" type="date" id="dateArrivee" name="dateArrivee" value="<?php if(isset($_POST['arrive'])) { echo htmlentities($_POST['arrive']);}?>" required/>
                 </div>
-                <div class="log5vct">  
+                <div class="demdevis">  
                     <label for="dateDepart">Date de depart :</label>
                     <input class="logvctC" type="date" id="dateDepart" name="dateDepart" value="<?php if(isset($_POST['depart'])) { echo htmlentities($_POST['depart']);}?>" required/>
                 </div>
-                
+                </div>
                 <div class="log5vct">  
                     <label for="nb_pers">Nombre de persones :</label>
                     <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->

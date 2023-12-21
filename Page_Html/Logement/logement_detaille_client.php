@@ -365,7 +365,7 @@ $photo = $stmt->fetch();
             
         </div>
 
-        <hr>
+        <hr class="hr">
         <div class="logcarte">
             <h3 class="policetitre">Localisation</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1364671.57561899!2d-4.397375693978974!3d48.08372166501683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4811ca61ae7e8eaf%3A0x10ca5cd36df24b0!2sBretagne!5e0!3m2!1sfr!2sfr!4v1702909132704!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -385,7 +385,7 @@ $photo = $stmt->fetch();
             <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>   
             
         </div>
-        <hr>
+        <hr class="hr">
             <div>
                 <h3 class="policetitre">Conditions du logement</h3>
 
@@ -420,7 +420,7 @@ $photo = $stmt->fetch();
                 <p><a href=''>Le réglemement intérieur</a></p>
             </div>    
             </div>
-            <hr>
+            <hr class="hr">
             <div class="logrowc">
             <?php   
                         $stmt = $dbh->prepare("SELECT nom,prenom,photo from locbreizh._compte JOIN locbreizh._logement ON id_compte=id_proprietaire WHERE id_logement= {$_GET['logement']} ;");

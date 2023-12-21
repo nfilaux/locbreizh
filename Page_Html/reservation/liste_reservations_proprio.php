@@ -32,7 +32,7 @@ $photo = $stmt->fetch();
             <h1>Mes Réservations</h1>
         </div>
 
-        <div>
+        <div style="display:flex; flex-direction:column-reverse;">
             <?php
             include('../parametre_connexion.php');
                 try {
