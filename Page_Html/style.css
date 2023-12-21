@@ -1424,7 +1424,7 @@ iframe {
 .teteCalendrier{
     display: flex;
     align-items: center;
-    padding: 0px 20px;
+    padding: 0vh 2vh;
     justify-content: space-between;
 }
 
@@ -1488,7 +1488,7 @@ iframe {
     margin-top: 30px;
 }
 
-.normal:hover{
+.normal{
     color: #000;
 }
 
@@ -1541,6 +1541,16 @@ iframe {
 .entreDeux{
     background-color: rgba(130, 100, 170, 0.25);
     width: 100px;
+}
+
+.plages .logcolumn{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.plages .logcolumn .fond{
+    width: 30vh;
 }
 
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/

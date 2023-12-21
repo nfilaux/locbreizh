@@ -128,28 +128,42 @@ CREATE TABLE
 CREATE TABLE
     _planning (
         code_planning SERIAL,
-        tarif_journee NUMERIC(5, 2) NOT NULL, -- d'une journée
         delai_depart_arrivee NUMERIC(2) NOT NULL,
-        disponible          BOOLEAN NOT NULL,
-        libelle_indisponibilite  VARCHAR(255),
         CONSTRAINT planning_pk PRIMARY KEY (code_planning)
         -- disponible ?
         -- si indisponible pourquoi ?
         -- différence de temps entre les départs et les arrivées
     );
-
-/*   table plage_ponctuelle : est utilisée pour renseigner les plages de disponibilité de manière ponctuelle  */
+    
+/*   table plage_ponctuelle : est utilisée pour renseigner les plages de disponibilité et d'indisponibilité de manière ponctuelle  */
 
 CREATE TABLE
     _plage_ponctuelle (
         id_plage_ponctuelle SERIAL,
-        debut_plage_ponctuelle DATE NOT NULL,
-        fin_plage_ponctuelle DATE NOT NULL,
-        prix_plage_ponctuelle FLOAT NOT NULL,
-        disponible BOOLEAN NOT NULL,
+        jour_plage_ponctuelle DATE NOT NULL,
         code_planning INTEGER NOT NULL,
         CONSTRAINT plage_ponctuelle_pk PRIMARY KEY (id_plage_ponctuelle),
         CONSTRAINT plage_ponctuelle_fk FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
+    );
+
+/*   table plage_ponctuelle_disponible : est utilisée pour renseigner les plages de disponibilité de manière ponctuelle  */
+
+CREATE TABLE
+    _plage_ponctuelle_disponible (
+        id_plage_ponctuelle INTEGER,
+        prix_plage_ponctuelle FLOAT NOT NULL,
+        CONSTRAINT _plage_ponctuelle_disponible_pk PRIMARY KEY (id_plage_ponctuelle),
+        CONSTRAINT _plage_ponctuelle_disponible_fk FOREIGN KEY (id_plage_ponctuelle) REFERENCES _plage_ponctuelle (id_plage_ponctuelle) ON DELETE CASCADE
+    );
+    
+/*   table plage_ponctuelle_indisponible : est utilisée pour renseigner les plages d'indisponibilité de manière ponctuelle  */
+
+CREATE TABLE
+    _plage_ponctuelle_indisponible (
+        id_plage_ponctuelle INTEGER,
+        libelle_indisponibilite  VARCHAR(255),
+        CONSTRAINT _plage_ponctuelle_indisponible_pk PRIMARY KEY (id_plage_ponctuelle),
+        CONSTRAINT _plage_ponctuelle_indisponible_fk FOREIGN KEY (id_plage_ponctuelle) REFERENCES _plage_ponctuelle (id_plage_ponctuelle) ON DELETE CASCADE
     );
 
 /*   table contrainte : est utilisée pour renseigner une contrainte au niveau du planning (ex : pas après 18h)   */
@@ -168,9 +182,10 @@ CREATE TABLE
 CREATE TABLE
     _plage_recurrente (
         id_plage_recurrente SERIAL NOT NULL,
+        disponible BOOLEAN NOT NULL,
         code_planning INTEGER NOT NULL,
-        debut_plage VARCHAR(8) NOT NULL,
-        fin_plage VARCHAR(8) NOT NULL,
+        libelle_indisponibilite  VARCHAR(255),
+        jour_plage_recurrente VARCHAR(8) NOT NULL,
         type_plage VARCHAR(25) NOT NULL,
         CONSTRAINT plage_recurrente_pk PRIMARY KEY (id_plage_recurrente),
         CONSTRAINT plage_recurrente_fk_code_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)

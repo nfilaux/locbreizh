@@ -24,6 +24,7 @@
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../Logement/scriptCalendrier.js" defer></script>
     <script src="../scriptPopup.js"></script>
 </head>
 
@@ -73,6 +74,8 @@
                     } else{
                         $bouton_desactiver = "METTRE_EN_LIGNE";
                     }
+                    $nomPlage = 'plage' . $key; 
+                    $overlayPlage = 'overlay' . $key
                     
                     ?>
                         <div class="cardlogmainP">
@@ -118,30 +121,72 @@
                                         }
                                     </script>
                             
-
-                                    <?php
-                                $nomPlage = 'plage' . $key; 
-                                $overlayPlage = 'overlay' . $key?>
-                            
                             <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
                             <div id="<?php echo $nomPlage; ?>" class='plages'> 
                                     <h1>Ajouter une plage ponctuelle</h1><br>
+                                    <div class="logcolumn">
+                                        <div class="corpsCalendrier">
+                                            <div class="fond">
+                                                <div class="teteCalendrier">
+                                                    <div class="fleches">
+                                                        <svg id="precedent" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                                            <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <p class="date_actuelle"></p>
+                                                </div>
+                                                <div class="calendrier">
+                                                    <ul class="semaines">
+                                                        <li>Lun</li>
+                                                        <li>Mar</li>
+                                                        <li>Mer</li>
+                                                        <li>Jeu</li>
+                                                        <li>Ven</li>
+                                                        <li>Sam</li>
+                                                        <li>Dim</li>
+                                                    </ul>
+                                                    <ul class="jours"></ul>
+                                                </div>
+                                            </div>
+                                            <div class="fond">
+                                                <div class="teteCalendrier">
+                                                    <p class="date_actuelle"></p>
+                                                    <div class="fleches">
+                                                        <svg id="suivant" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                                            <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="calendrier">
+                                                    <ul class="semaines">
+                                                        <li>Lun</li>
+                                                        <li>Mar</li>
+                                                        <li>Mer</li>
+                                                        <li>Jeu</li>
+                                                        <li>Ven</li>
+                                                        <li>Sam</li>
+                                                        <li>Dim</li>
+                                                    </ul>
+                                                    <ul class="jours"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <form action="../Planning/plageBack.php" method="post">
                                         
-                                        <label for="debut_plage_ponctuelle"> date de début de la plage : </label>
-                                        <input type="date" id="debut_plage_ponctuelle" name="dateDeb" required/>
-                                        <br><br>
-                                        
-                                        <label for="fin_plage_ponctuelle"> date de fin de la plage : </label>
-                                        <input type="date" id="fin_plage_ponctuelle" name="dateFin" required/>
-                                        <br><br>
+                                        <input class="jesuiscache" type='hidden' name="debut_plage_ponctuelle" id="debut_plage_ponctuelle" value="" required>
+                                        <input class="jesuiscache" type='hidden' name="fin_plage_ponctuelle" id="fin_plage_ponctuelle" value="" required>
 
                                         <label for="prix_plage_ponctuelle"> Prix : </label>
-                                        <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>" value="<?php echo $card['tarif_base_ht'] ?>"/>
+                                        <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>" value="<?php echo $card['tarif_base_ht'] ?>" required/>
                                         <br><?php erreur("prix") ?><br>
 
                                         <label for="indisponible"> Indisponible : </label>
-                                        <input type="checkbox" id="indisponible" name="indisponible" value="false"/>
+                                        <input type="checkbox" id="indisponible" name="indisponible" value="false" onchange="changer(this.checked)"/>
+                                        <br><br>
+
+                                        <label for="libelleIndispo"> Raison d'indisponibilité : </label>
+                                        <input type="text" id="libelleIndispo" name="libelleIndispo" disabled=true/>
                                         <br><br>
 
                                         <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
@@ -152,6 +197,20 @@
                     
                                         <button type="submit" class="btn-ajt">Ajouter</button>
                                     </form>
+
+                                
+                                    <script type="text/javascript">
+                                        function changer(etat){
+                                            if (etat){
+                                                document.getElementById("prix_plage_ponctuelle").disabled = true;
+                                                document.getElementById("libelleIndispo").disabled = false;
+                                            }
+                                            else{
+                                                document.getElementById("prix_plage_ponctuelle").disabled = false;
+                                                document.getElementById("libelleIndispo").disabled = true;
+                                            }
+                                        }
+                                    </script>
                                     
                                     <hr><h1>Les plages ponctuelles</h1><br>
 
@@ -165,7 +224,7 @@
 
                                         $code->execute();
 
-                                        $lesPlages = $dbh->prepare("SELECT id_plage_ponctuelle, debut_plage_ponctuelle, fin_plage_ponctuelle, prix_plage_ponctuelle, disponible FROM locbreizh._plage_ponctuelle WHERE code_planning = {$code->fetch()['code_planning']} ;");
+                                        $lesPlages = $dbh->prepare("SELECT id_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE code_planning = {$code->fetch()['code_planning']} ;");
                                         
                                         $lesPlages->execute();
 
@@ -180,16 +239,14 @@
                                         foreach($lesPlages as $plage){  ?>
                                             <div class="unePlage">
                                                 <?php 
-                                                $deb = new DateTime($plage['debut_plage_ponctuelle']);
-                                                $fin = new DateTime($plage['fin_plage_ponctuelle']);
-                                                $dispo = $plage['disponible']==true ? "oui" : "non";
-                                                echo $deb->format("d/m/Y") . " - " . $fin->format("d/m/Y") . " | "  . "Prix = " . $plage['prix_plage_ponctuelle'] . " | Disponible : " . $dispo ;
+                                                $jour = new DateTime($plage['jour_plage_ponctuelle']);
+                                                echo $jour->format("d/m/Y") . " : ";
                                                 ?>
                                                 <form action="../Planning/supprimerPlage.php" method=post>
                                                     <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
                                                     <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
                                                     <input type="hidden" name="id_plage_ponctuelle" value="<?php echo $plage['id_plage_ponctuelle'] ?>"/>
-                                                    <button type="submit"><img class="btn-supr" src="../svg/croix_plage.svg" alt="supprimer" width="2em" height="2em"></button>
+                                                    <button type="submit">SUPPRIMER</button>
                                                 </form>
                                             </div>
                                     <?php }

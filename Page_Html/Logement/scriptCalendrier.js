@@ -3,7 +3,7 @@ dateActuelle = document.querySelectorAll(".date_actuelle");
 baliseJour = document.querySelectorAll(".jours");
 precedentSuivant = document.querySelectorAll(".fleches svg");
 datesPlage = document.querySelectorAll("#datesPlage .dateresa");
-boutonsDates = document.querySelectorAll(".logdem form input");
+boutonsDates = document.querySelectorAll(".jesuiscache");
 
 //constante pour les mois de l'année
 const tabMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -216,13 +216,26 @@ function changerDates() {
     else {
         newDId += '/' + dernierID.split('/')[0] + '/' + dernierID.split('/')[2];
     }
-    //envoie les dates dans le HTML pour l'affichage et pour l'envoie de devis
-    datesPlage[0].innerHTML = "<p>Arrivée</p><p>" + newPId + "</p>";
-    datesPlage[1].innerHTML = "<p>Départ</p><p>" + newDId + "</p>";
+    if (datesPlage[0]) {
+        //envoie les dates dans le HTML pour l'affichage et pour l'envoie de devis
+        datesPlage[0].innerHTML = "<p>Arrivée</p><p>" + newPId + "</p>";
+        datesPlage[1].innerHTML = "<p>Départ</p><p>" + newDId + "</p>";
+    }
     if (boutonsDates[0]) {
         newPId = newPId.split('/')[2] + "-" + newPId.split('/')[1] + "-" + newPId.split('/')[0];
         newDId = newDId.split('/')[2] + "-" + newDId.split('/')[1] + "-" + newDId.split('/')[0];
         boutonsDates[0].value = newPId;
         boutonsDates[1].value = newDId;
     }
+}
+
+function ajouterPlagesDispo(tabDispo, tabIndispo){
+    tabDispo.forEach(function (elem) {
+        jourDispo = elem['jour_plage_ponctuelle'].split('-')[1] + '/' + elem['jour_plage_ponctuelle'].split('-')[2] + '/' + elem['jour_plage_ponctuelle'].split('-')[0];
+        document.getElementById(jourDispo).className = "jour_disponible";
+    });
+    tabIndispo.forEach(function (elem) {
+        jourIndispo = elem['jour_plage_ponctuelle'].split('-')[1] + '/' + elem['jour_plage_ponctuelle'].split('-')[2] + '/' + elem['jour_plage_ponctuelle'].split('-')[0];
+        document.getElementById(jourDispo).className = "jour_disponible";
+    });
 }

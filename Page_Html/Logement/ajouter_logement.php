@@ -205,15 +205,13 @@
     $stmt->execute();
 
     $planning = $dbh->prepare(
-        'INSERT INTO locbreizh._planning(tarif_journee, delai_depart_arrivee, disponible) 
-            VALUES(:tarif_journee, :delai_depart_arrivee, :disponible);'
+        'INSERT INTO locbreizh._planning(delai_depart_arrivee) 
+            VALUES(:delai_depart_arrivee);'
     ); 
 
 
     $delai = 1;
-    $planning->bindParam(':tarif_journee', $tarif_de_base);
     $planning->bindParam(':delai_depart_arrivee', $delai);
-    $planning->bindParam(':disponible', $en_ligne);
 
     $planning->execute();
 
