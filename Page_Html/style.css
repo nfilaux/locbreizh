@@ -2376,16 +2376,6 @@ iframe {
     border-radius: 10px;
 }
 
-.card_devis{
-    border: 2px solid #745086;
-    margin: 1em auto;
-    background-color: #FCF0E2;
-    padding: 1em;
-}
-
-.card_devis  > div p{
-    color: #5B3F69;
-}
 .bouton_devis{
     display: flex;
     justify-content: space-evenly;
@@ -2412,9 +2402,84 @@ iframe {
     border: 1px solid green; 
 }
 
+
+.card_devis{
+    border: 2px solid #745086;
+    margin: 1em auto;
+    background-color: #FCF0E2;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.card_devis  > div p{
+    color: #5B3F69;
+}
+
+.card_devis > button{
+    align-self:flex-end;
+    background-color: red;
+    border: red;
+    border-radius: 5px;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    font-size: large;
+    font-weight: 900;
+}
+
+.bouton_devis{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1em;
+}
+
 .reponse_devis{
     font-weight: bold;
     color: red;
+}
+
+.popup_devis{
+    padding: 10px;
+    font-size: 1em;
+    display: none;
+    position: fixed;
+    text-align: start;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #745086;
+    box-shadow: none;
+    z-index: 1000;
+    text-align: center;
+}
+
+.btn_ferm_oui{
+    background-color: red; 
+    color: #fff;
+    border: 1px solid red; 
+    border-radius: 5px;
+    width: 50px;
+    height: 30px;
+}
+
+.btn_ferm_annulerP{
+    background-color: #274065; 
+    color: #ffffff;
+    border: 1px solid #274065; 
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+}
+
+.btn_ferm_annuler{
+    background-color: #745086; 
+    color: #ffffff;
+    border: 1px solid #745086; 
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
 }
 
 @media screen and (min-width: 900px) and (max-width: 1280px) {
@@ -2762,7 +2827,6 @@ iframe {
         margin: auto;
     }
 
-<<<<<<< HEAD
     .rescrow {
         flex-direction: column;
         margin: auto;
@@ -2777,38 +2841,8 @@ iframe {
         width: 100%;
         margin-top: 2em;
     }
-=======
-.card_devis{
-    border: 2px solid #745086;
-    margin: 1em auto;
-    background-color: #FCF0E2;
-    padding: 1em;
-    display: flex;
-    flex-direction: column;
-}
 
-.card_devis  > div p{
-    color: #5B3F69;
-}
 
-.card_devis > button{
-    align-self:flex-end;
-    background-color: red;
-    border: red;
-    border-radius: 5px;
-    color: #fff;
-    width: 30px;
-    height: 30px;
-    font-size: large;
-    font-weight: 900;
-}
-
-.bouton_devis{
-    display: flex;
-    justify-content: space-evenly;
-    margin: 1em;
-}
->>>>>>> 16a0fef31be7aa8570cae99eebe7d0029f220d3e
 
     /*-------------------------------Demande de devis-------------------------------*/
 
@@ -2816,7 +2850,6 @@ iframe {
         margin: 1em auto;
     }
 
-<<<<<<< HEAD
     .log5vct{
         margin: 1em auto;
         width: 40%;
@@ -2843,52 +2876,3 @@ iframe {
     }
    
 }
-=======
-.reponse_devis{
-    font-weight: bold;
-    color: red;
-}
-
-.popup_devis{
-    padding: 10px;
-    font-size: 1em;
-    display: none;
-    position: fixed;
-    text-align: start;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 1px solid #745086;
-    box-shadow: none;
-    z-index: 1000;
-    text-align: center;
-}
-
-.btn_ferm_oui{
-    background-color: red; 
-    color: #fff;
-    border: 1px solid red; 
-    border-radius: 5px;
-    width: 50px;
-    height: 30px;
-}
-
-.btn_ferm_annulerP{
-    background-color: #274065; 
-    color: #ffffff;
-    border: 1px solid #274065; 
-    border-radius: 5px;
-    width: 100px;
-    height: 30px;
-}
-
-.btn_ferm_annuler{
-    background-color: #745086; 
-    color: #ffffff;
-    border: 1px solid #745086; 
-    border-radius: 5px;
-    width: 100px;
-    height: 30px;
-}
->>>>>>> 16a0fef31be7aa8570cae99eebe7d0029f220d3e
