@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des devis</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="../scriptPopup.js"></script>
+    
 </head>
 <body>
     <?php 
@@ -30,7 +30,7 @@
             "SELECT num_demande_devis, nb_personnes, date_arrivee, date_depart, url_detail, libelle_logement, photo_principale, accepte
             from locbreizh._demande_devis
             join locbreizh._logement l on l.id_logement =  logement
-            WHERE (client = {$_SESSION['id']} or id_proprietaire = {$_SESSION['id']}) and accepte IS NOT TRUE;"
+            WHERE (id_proprietaire = {$_SESSION['id']}) and (accepte IS NOT TRUE) and (visible IS TRUE);"
         );
         $stmt->execute();
         $list_demande = $stmt->fetchAll();
@@ -40,7 +40,7 @@
             from locbreizh._devis
             join locbreizh._demande_devis on _devis.num_demande_devis = _demande_devis.num_demande_devis
             join locbreizh._logement l on l.id_logement =  logement
-            WHERE _devis.client = {$_SESSION['id']} or id_proprietaire = {$_SESSION['id']};"
+            WHERE id_proprietaire = {$_SESSION['id']} and _devis.visible IS TRUE;"
         );
         $stmt->execute();
         $list_devis = $stmt->fetchAll();
@@ -53,6 +53,7 @@
             <?php 
                 foreach($list_demande as $demande){?>
             <div class="card_devis">
+                <button onclick="openPopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')">X</button>
                 <div>
                     <img class="img_devis" src="<?php echo "../Ressources/Images/{$demande['photo_principale']}"; ?>" width="50" height="50">
                     <div>
@@ -82,7 +83,16 @@
                             <p class="reponse_devis">Vous avez refusé cette demande de devis.</p>
                         <?php } ?>
                 </div>
-            <?php } ?>
+                <div class="overlay_plages" id='<?php echo 'ov' . $demande['num_demande_devis']; ?>' onclick="closePopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')"></div>
+                <div id="<?php echo $demande['num_demande_devis']; ?>" class="popup_devis"> 
+                    <p>Êtes-vous certains de vouloir supprimer cet echange ?</p>
+                    <p>(vous ne pourrez plus y accéder par la suite)</p>
+                    <div>
+                        <a href="fermer_devis.php?id=<?php echo $demande['num_demande_devis']; ?>"><button class="btn_ferm_oui">OUI</button></a>
+                        <button onclick="closePopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')" class="btn_ferm_annulerP">ANNULER</button>
+                    </div> 
+                </div>
+            <?php } ?>                 
             </div>
         </div>
         <hr class="hrP">
@@ -93,6 +103,7 @@
                 <?php 
                     foreach($list_devis as $devis){ ?>
                 <div class="card_devis">
+                <button onclick="openPopup('<?php echo $devis['num_devis']; ?>', '<?php echo 'ov' . $devis['num_devis']; ?>')">X</button>
                     <div>
                         <img class="img_devis" src="<?php echo "../Ressources/Images/{$devis['photo_principale']}"; ?>" width="50" height="50">
                         <div>
@@ -123,6 +134,15 @@
                         </form>
                     <?php } ?>
                 </div>
+                <div class="overlay_plages" id='<?php echo 'ov' . $devis['num_devis']; ?>' onclick="closePopup('<?php echo $devis['num_devis']; ?>', '<?php echo 'ov' . $devis['num_devis']; ?>')"></div>
+                <div id="<?php echo $devis['num_devis']; ?>" class="popup_devis"> 
+                    <p>Êtes-vous certains de vouloir supprimer cet echange ?</p>
+                    <p>(vous ne pourrez plus y accéder par la suite)</p>
+                    <div>
+                        <a href="fermer_devis.php?id=<?php echo $devis['num_devis']; ?>"><button class="btn_ferm_oui">OUI</button></a>
+                        <button onclick="closePopup('<?php echo $devis['num_devis']; ?>', '<?php echo 'ov' . $devis['num_devis']; ?>')" class="btn_ferm_annulerP">ANNULER</button>
+                    </div> 
+                </div>
                 <?php } ?>
             </div>
         </div>
@@ -133,3 +153,5 @@
     include('../header-footer/choose_footer.php'); ?>
 </body>
 </html>
+
+<script src="../scriptPopup.js" defer></script>
