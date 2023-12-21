@@ -1,6 +1,10 @@
 <?php
+    // lancement de la session
+    session_start();
+    // inclusion d'une instance PDO
     include('../parametre_connexion.php');
     try {
+        // prend les parametres de connexion dans le fichiers importés plus haut
         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -9,9 +13,9 @@
         die();
     }
 
-    $stmt = $dbh->prepare("SELECT id_demande from locbreizh._message_demande m where m.id_message_demande = {$_GET['message']};");
+    // change le statut du message
+    $stmt = $dbh->prepare("UPDATE locbreizh._devis set accepte = False where num_devis = {$_POST['id_devis']};");
     $stmt->execute();
-    $id_demande = $stmt->fetch();
 
-    header("Location: ../devis/formulaire_devis.php?demande={$id_demande['id_demande']}")
+    header("Location: gestion_des_devis_client.php");
 ?>

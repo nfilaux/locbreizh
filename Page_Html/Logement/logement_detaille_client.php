@@ -69,15 +69,9 @@ $photo = $stmt->fetch();
             <div class="logpc">
                 <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
                 <div class="logrowb">
-                    <div class="logrowt">
-                        <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
+                    <div class="logrowc">
+                        <h3 class="policetitre" style="margin-right:2em;"><?php echo $info['libelle_logement']; ?></h3>
                         <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
-                    </div>
-                    <div class="logrowt">
-                        <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
-                        <!--
-                        <img src="/Ressources/Images/star-fill 1.svg"><h4> echo $info['note_avis'];,0</p>
-                        -->
                     </div>
                 </div>
                 <div class="detailimg">
@@ -136,6 +130,14 @@ $photo = $stmt->fetch();
                             <p class="dateresa"></p>
                             <p class="dateresa"></p>
                         </div>
+                        <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                            <input type='hidden' name="arrive" id="arrive" value="">
+                            <input type='hidden' name="depart" id="depart" value="">
+                            <button class="btn-demlog" type="submit">Demander un devis</button>
+
+                            <div class="logrowt">
+                                <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
+                            </div>
                         
                         <form class="center" action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
                             <input class="jesuiscache" type='hidden' name="arrive" id="arrive" value="">
@@ -179,7 +181,7 @@ $photo = $stmt->fetch();
                     $info = $stmt->fetch();
                 ?>
 
-<div class="logrow">
+        <div class="logrowb">
                     <div class="logcp">
                         <p><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
@@ -246,7 +248,7 @@ $photo = $stmt->fetch();
             </div>
             <hr class="hr">
             <div class="logcolumn">
-                <h3 class="potitre">Calendrier</h3>
+                <h3 class="policetitre">Calendrier</h3>
                 <div class="corpsCalendrier">
                     <div class="fond">
                         <div class="teteCalendrier">
@@ -369,7 +371,7 @@ $photo = $stmt->fetch();
             
         </div>
 
-        <hr>
+        <hr class="hr">
         <div class="logcarte">
             <h3 class="policetitre">Localisation</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1364671.57561899!2d-4.397375693978974!3d48.08372166501683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4811ca61ae7e8eaf%3A0x10ca5cd36df24b0!2sBretagne!5e0!3m2!1sfr!2sfr!4v1702909132704!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -389,7 +391,7 @@ $photo = $stmt->fetch();
             <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>   
             
         </div>
-        <hr>
+        <hr class="hr">
             <div>
                 <h3 class="policetitre">Conditions du logement</h3>
 
@@ -424,7 +426,7 @@ $photo = $stmt->fetch();
                 <p><a href=''>Le réglemement intérieur</a></p>
             </div>    
             </div>
-            <hr>
+            <hr class="hr">
             <div class="logrowc">
             <?php   
                         $stmt = $dbh->prepare("SELECT nom,prenom,photo from locbreizh._compte JOIN locbreizh._logement ON id_compte=id_proprietaire WHERE id_logement= {$_GET['logement']} ;");
@@ -441,8 +443,9 @@ $photo = $stmt->fetch();
 
     </main>
     
-    <?php 
-        echo file_get_contents('../header-footer/footer.html');
+    <?php
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 </html>

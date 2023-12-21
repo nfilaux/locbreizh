@@ -61,6 +61,7 @@
         </section>
     </main>
     <?php 
+        // appel du footer
         echo file_get_contents('../header-footer/footer.html');
     ?>
 </body>

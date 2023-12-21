@@ -61,69 +61,27 @@
         $reqNomClient = $dbh->prepare("SELECT nom, prenom, id_compte, pseudo FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = {$_POST['id_demande']}");
         $reqNomClient->execute();
         $infos_user = $reqNomClient->fetch();  
+
+        $stmt = $dbh->prepare("SELECT NEXTVAL('locbreizh._devis_num_devis_seq') as prochain_serial");
+        $stmt->execute();
+        $serial_actuel = $stmt->fetch();
+        $id_devis = $serial_actuel['prochain_serial'] + 1;
         
         $reg_devis = $dbh->prepare("INSERT INTO locbreizh._devis
         (client, prix_total_devis, tarif_ht_location_nuitee_devis,
         sous_total_ht_devis, sous_total_ttc_devis, frais_service_platforme_ht_devis,
         fras_service_platforme_ttc_devis, date_devis, date_validite, condition_annulation,
-        num_demande_devis, taxe_sejour) 
+        num_demande_devis, taxe_sejour, url_detail) 
         values (
         {$infos_user['id_compte']}, $total_montant_devis, $prix_loc,
          $total_HT, $total_TTC, $total_plateforme_HT, 
-        $total_plateforme_TTC, '$date_devis', {$_POST['date_val']}, '{$_POST['annulation']}', {$_POST['id_demande']}, 1);");
+        $total_plateforme_TTC, '$date_devis', {$_POST['date_val']}, '{$_POST['annulation']}', {$_POST['id_demande']}, 1, 'devis$id_devis.pdf');");
         $reg_devis->execute();
         $id_devis = $dbh->lastInsertId();
         
-        // heure et date actuelle
-        $date = date('Y-m-d');
-        $time = date('H:i:s');
-
-        // recupere les conversations entre le client et le proprietaire du logement
-        $stmt = $dbh->prepare("SELECT c.id_conversation
-        FROM locbreizh._conversation c
-        INNER JOIN locbreizh._demande_devis d ON (d.client = compte1 or d.client = compte2)
-        WHERE num_demande_devis = {$_POST['id_demande']} and ((compte1 = {$_SESSION['id']} and compte2 = client) or (compte2 = {$_SESSION['id']} and compte1 = client));");
+        $stmt = $dbh->prepare("UPDATE locbreizh._demande_devis set accepte = True where num_demande_devis = :num;");
+        $stmt->bindParam(':num', $_POST['id_demande']);
         $stmt->execute();
-
-        // stock dans conv_request
-        $conv_request = $stmt->fetch();
-
-        // si conversation existe
-        if(!is_bool($conv_request)){
-            //stock id_conv
-            $id_conv = $conv_request['id_conversation'];
-        }
-        else{
-            // retrouve l'id du proprio
-            $stmt = $dbh->prepare("select client from locbreizh._demande_devis where num_demande_devis = {$_POST['id_demande']};");
-            $stmt->execute();
-            $client = $stmt->fetch();
-
-            // on cree une conversation entre le client et le proprio
-            $stmt = $dbh->prepare("INSERT INTO locbreizh._conversation(compte1, compte2) 
-            VALUES ({$_SESSION['id']}, {$client['client']});");
-            $stmt->execute();
-            // on recupere l'id de la conv cree
-            $id_conv = $dbh->lastInsertId();
-        }
-
-        $reqNomClient = $dbh->prepare("SELECT pseudo FROM locbreizh._compte where id_compte = {$_SESSION['id']}");
-        $reqNomClient->execute();
-        $infos_proprio = $reqNomClient->fetch();
-        // ajoute le message type pour un devis
-        $stmt = $dbh->prepare("INSERT INTO locbreizh._message(contenu_message, date_mess, heure_mess, auteur, conversation) 
-        VALUES ('Voici le DEVIS final de {$infos_proprio['pseudo']}', '$date', '$time', {$_SESSION['id']}, $id_conv);");
-        $stmt->execute();
-        $id_mess = $dbh->lastInsertId();
-
-        $stmt = $dbh->prepare("INSERT INTO locbreizh._message_devis(id_message_devis, lien_devis, id_devis)
-        VALUES ($id_mess, 'devis$id_devis.pdf', $id_devis);");
-        $stmt->execute();
-
-        // update le statut de la demande qui passe en accepte
-        $stmt = $dbh->prepare("UPDATE locbreizh._message_demande set accepte = TRUE where id_demande = {$_POST['id_demande']};");
-        $stmt->execute();
-
 
         // creation du pdf
         $pdf = new TCPDF();
@@ -168,6 +126,6 @@
         $chemin_complet = $chemin_dossier . $nom_fichier;
         file_put_contents($chemin_complet, $contenu_pdf);
 
-        header("Location: devis_ajoute.html");
+        header("Location: ./formulaire_devis.php?demande={$_POST['id_demande']}&erreur=0");
     }
 ?>
