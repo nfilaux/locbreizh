@@ -20,7 +20,7 @@
         <a href="../reservation/liste_reservations_proprio.php"><div style="display:flex; flex-direction:row;"><img src="../svg/Reservation.svg"><h4>Réservations</h4></div></a>
         <a href="../gestion_devis/gestion_des_devis_proprio.php"><div style="display:flex; flex-direction:row;"><img src="../svg/gestionP.svg"><h4>Devis</h4></div></a>
         <div class="imghead">
-            <a class="margleft" onclick="openPopup('popup', 'overlay_profil-deconnexion')"><img id="pp" class="imgprofilP" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a>
+            <a onclick="openPopup('popup', 'overlay_profil-deconnexion')"><img  class="imgprofilP"  id="pp" src="../Ressources/Images/<?php echo $photo['photo']; ?>" alt="avatar" width="50" height="50"></a>
         </div>
         </div>
         <div id="overlay_profil-deconnexion" onclick="closePopup('popup', 'overlay_profil-deconnexion')"></div>
@@ -39,3 +39,5 @@
             </table>
         </div>
 </header>
+
+<script src="../scriptPopup.js" defer></script>
