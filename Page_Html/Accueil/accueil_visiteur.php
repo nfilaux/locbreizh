@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr">
-<!--elise est là-->
+
 <head>
     <meta charset="utf-8">
     <title>Accueil</title>
