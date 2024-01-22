@@ -189,3 +189,5 @@
 </body>
 
 </html>
+
+<script src="./actualiserPhoto.js" defer></script>
