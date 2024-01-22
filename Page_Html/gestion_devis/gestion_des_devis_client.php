@@ -64,7 +64,7 @@
                         </div>
                         <p><?php echo "Du " . str_replace('-','/',$demande['date_arrivee']) . " au " . str_replace('-','/',$demande['date_depart']) ; ?></p>
                         <p>Nombre de personne : <?php echo $demande['nb_personnes'] ;?></p>
-                        <a target="_blank" href="../demande_devis/pdf_demande/<?php echo $demande['url_detail']; ?>">Voir les details de la demande de devis</a>
+                        <a target="_blank" href="../demande_devis/pdf_demande/<?php echo $demande['url_detail']; ?>">Voir la demande de devis</a>
                     </div>
                 </div>
                 <?php 
