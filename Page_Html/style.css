@@ -994,7 +994,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .logcolumn{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     width: 48%;
     margin-bottom: 3%;
     margin-top: 3%;
@@ -1074,6 +1073,12 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .logrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.logrowcal {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -1443,6 +1448,7 @@ iframe {
     display: flex;
     align-items: center;
     justify-content: space-around;
+
 }
 
 .fond{
@@ -1790,8 +1796,8 @@ iframe {
     font-family: 'PatuaOne';
     font-weight: 600;
     font-size: 2.5em;
-    margin-top: auto;
-    margin-bottom: auto;
+    text-align: center;
+    margin-top: 0;
 }
 
 .policetitres {
@@ -2655,6 +2661,10 @@ iframe {
     .logrow {
         flex-direction: column;
     }
+    .logrowcal {
+        flex-direction: column-reverse;
+    }
+
 
     .cardcondition {
         width: 80%;

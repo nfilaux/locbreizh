@@ -142,7 +142,7 @@ $photo = $stmt->fetch();
                 </div>
             </div>
         
-            <div class="logrow">
+            <div class="logrowcal">
             <div class="logcolumn">
             <h3 class="policetitres">Informations du logement</h3>
                 <?php
