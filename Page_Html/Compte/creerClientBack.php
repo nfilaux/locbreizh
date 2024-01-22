@@ -39,6 +39,7 @@
                     $erreurTest = verifDate($date);
                 case "telephone":
                     $tel = $_POST["telephone"];
+                    $tel = str_replace(' ', '', $_POST['telephone']);
                     $erreurTest = verifTel($tel);
                     break;
                 case "pseudo":

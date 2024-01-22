@@ -141,7 +141,7 @@
 
 
                 </div>
-                <!-- affichage de la photo de profil + input pour la modifier -->
+                <!-- photo de profil -->
                 <div>
                     
                     <label for="photo">  <img src="../svg/anonyme.svg" id="avatar" class=".photo-avatar" title="photo" alt="photo de profil"> Photo de profil</label>
