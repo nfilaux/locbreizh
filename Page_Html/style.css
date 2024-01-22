@@ -2376,11 +2376,17 @@ iframe {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+
+}
+
+.partie_devis > div > div > div > div:last-of-type, .partie_demande > div > div > div> div:last-of-type{
+    margin-left: 3vw;
 }
 
 .img_devis{
-    width: 40%;
-    height: auto;
+    width: 20vw;
+    height: 10vw;
+    object-fit: cover;
     margin: auto 0.5em auto 0em;
     border: 2px solid #745086;
     border-radius: 10px;
