@@ -63,7 +63,7 @@
                         </div>
                         <p><?php echo "Du " . str_replace('-','/',$demande['date_arrivee']) . " au " . str_replace('-','/',$demande['date_depart']) ; ?></p>
                         <p>Nombre de personne : <?php echo $demande['nb_personnes'] ;?></p>
-                        <a target="_blank" href="../demande_devis/pdf_demande/<?php echo $demande['url_detail']; ?>">Voir les details de la demande de devis</a>
+                        <a target="_blank" href="../demande_devis/pdf_demande/<?php echo $demande['url_detail']; ?>">Voir la demande de devis</a>
                     </div>
                     </div>
                     <?php 
@@ -111,7 +111,7 @@
                                 <h3><?php echo $devis['libelle_logement']; ?></h3>
                                 <hr class="hrcard">
                             </div>
-                            <p><?php echo $devis['date_arrivee'] . " - " . $devis['date_depart'] ; ?></p>
+                            <p><?php echo "Du " . str_replace('-','/',$devis['date_arrivee']) . " au " .  str_replace('-','/',$devis['date_depart']) ; ?></p>
                             <p>Nombre de personne : <?php echo $devis['nb_personnes'] ;?></p>
                             <a target="_blank" href="../devis/pdf_devis/<?php echo $devis['url_detail']; ?>">Voir les details du devis</a>
                         </div>
