@@ -65,12 +65,9 @@ $photo = $stmt->fetch();
                             <h3 class="titrecard"><?php echo $reservation['libelle_logement'] ?></h3>
                             <hr class="hrcard">
                             </div>
-                            <div style="display:flex; flex-direction:column;">
                             <div class="resrow">
                                 <img class="imgprofil" src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil"  width="50" height="50">
                                 <p class="restitre resplustaille">Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
-                            </div>
-                                <button class="btn-accueil">Contacter le proprietaire</button>   
                             </div>
                             </div>
                             

@@ -1733,10 +1733,11 @@ iframe {
 
 .cardresmainimg {
     width: 25%;
-    height: 90%;
+    height: 20vh;
     margin: auto 0.5em auto 0em;
     border: 2px solid #745086;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 .titrecardres {
@@ -2702,7 +2703,7 @@ iframe {
 
     .rescrow {
         flex-direction: row;
-        margin: auto;
+        justify-content: space-around;
     }
 
     .rescrow a{
