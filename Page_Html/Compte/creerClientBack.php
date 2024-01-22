@@ -39,6 +39,7 @@
                     $erreurTest = verifDate($date);
                 case "telephone":
                     $tel = $_POST["telephone"];
+                    $tel = str_replace(' ', '', $_POST['telephone']);
                     $erreurTest = verifTel($tel);
                     break;
                 case "pseudo":
@@ -131,7 +132,7 @@
             $nom_profil = $temps2 . '.' . $extension2;
             $cheminProfil = '../Ressources/Images/' ;
 
-            move_uploaded_file($_FILES['photoProfil']['tmp_name'], $cheminProfil . $nom_profil);
+            move_uploaded_file($_FILES['photo']['tmp_name'], $cheminProfil . $nom_profil);
 
             $mdp = password_hash($mdp, PASSWORD_DEFAULT);
 

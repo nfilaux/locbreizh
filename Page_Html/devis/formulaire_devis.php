@@ -244,7 +244,7 @@
         <div id="overlayDemandeDeDevis" onclick="closePopupFeedback('popupFeedback', 'overlayDemandeDeDevis')"></div>
         <div id="popupFeedback" class="popupFeedback">
             <p>Votre devis a bien été envoyée !</p>
-            <a href="../reservation/liste_reservations_proprio.php" class="btn-accueil"></button>OK</a>
+            <a href="../gestion_devis/gestion_des_devis_proprio.php" class="btn-accueil"></button>OK</a>
         </div>
     </main>
     

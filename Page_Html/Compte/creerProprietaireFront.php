@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptMDP.js"></script>
-    <title>Creer compte proprio</title>
+    <title>Création du compte</title>
 </head>
 <body  class="pagecompte">
     <header class="headconn">
