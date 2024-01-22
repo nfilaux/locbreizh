@@ -121,7 +121,7 @@
         <div id="overlayDemandeDeDevis" onclick="closePopupFeedback('popupFeedback', 'overlayDemandeDeDevis')"></div>
         <div id="popupFeedback" class="popupFeedback">
             <p>Votre demande de devis a bien été envoyée !</p>
-            <a href="../messagerie/messagerie.php" class="btn-accueil"></button>OK</a>
+            <a href="../gestion_devis/gestion_des_devis_client.php" class="btn-accueil"></button>OK</a>
         </div>
     </main>
     <?php
