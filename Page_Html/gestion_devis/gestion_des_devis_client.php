@@ -81,7 +81,7 @@
                     <p>Êtes-vous certains de vouloir supprimer cet echange ?</p>
                     <p>(vous ne pourrez plus y accéder par la suite)</p>
                     <div>
-                        <a href="fermer_devis.php?id=<?php echo $demande['num_demande_devis']; ?>"><button class="btn_ferm_oui">OUI</button></a>
+                        <a href="fermer_demande_devis.php?id=<?php echo $demande['num_demande_devis']; ?>"><button class="btn_ferm_oui">OUI</button></a>
                         <button onclick="closePopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')" class="btn_ferm_annulerP">ANNULER</button>
                     </div> 
                 </div>

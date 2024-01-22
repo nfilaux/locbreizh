@@ -38,7 +38,7 @@
         <table id="tableProfil">
             <tr>
                 <td>
-                    <a id="monprofil" href="../Compte/consulter_profil_proprio.php">Accéder au profil</a>
+                    <a id="monprofil" href="../Compte/consulter_profil_client.php">Accéder au profil</a>
                 </td>
             </tr>
             <tr>
