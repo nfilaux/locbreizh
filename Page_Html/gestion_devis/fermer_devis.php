@@ -12,7 +12,7 @@
 
     $stmt = $dbh->prepare(
         "UPDATE locbreizh._devis 
-        set visible = FALSE
+        set visible = FALSE, accepte = false
         WHERE num_devis = {$_GET['id']}"
     );
     $stmt->execute();

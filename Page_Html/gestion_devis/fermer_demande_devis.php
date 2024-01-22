@@ -12,11 +12,11 @@
 
     $stmt = $dbh->prepare(
         "UPDATE locbreizh._demande_devis 
-        set visible = FALSE
+        set visible = FALSE, accepte = false
         WHERE num_demande_devis = {$_GET['id']}"
     );
     $stmt->execute();
-
+    
     $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
     $stmt->execute();
     $est_client = $stmt->fetch();
