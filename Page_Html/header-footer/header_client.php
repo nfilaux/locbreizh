@@ -9,11 +9,7 @@
         <img class="logot" src="../svg/logo.svg">
         <h2>Loc'Breizh</h2>
     </a>
-    <div class="brecherche">
-        <img src="../svg/filtre.svg">
-        <input id="searchbar" type="text" name="search">
-        <img src="../svg/loupe.svg">
-    </div>
+
 
     <a href="../reservation/liste_reservations.php">
         <div style="display:flex; flex-direction:row;">

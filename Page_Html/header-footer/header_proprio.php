@@ -9,11 +9,6 @@
         <img class="logot" src="../svg/logobleu.svg">
         <h2 style="color:#274065;">Loc'Breizh</h2>
     </a>
-        <div class="brecherche">
-            <img src="../svg/filtrebleu.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupebleu.svg">
-        </div>
 
         
         <a href="../Accueil/Tableau_de_bord.php"><div style="display:flex; flex-direction:row;"><img src="../svg/logement.svg"><h4>Logements</h4></div></a>

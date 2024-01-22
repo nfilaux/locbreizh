@@ -2553,6 +2553,10 @@ iframe {
     header a:last-child {
         margin-left: 0.5em;
     }
+
+    .btn-accueilins {
+        margin-left: 0;
+    }
     /*-------------------------------FOOTER-------------------------------*/
     .tfooter {
         display: flex;
@@ -2751,6 +2755,39 @@ iframe {
 
 /*-------------------------------------------------------TELEPHONE------------------------------------------------------------------------*/
 @media screen and (max-width: 599px)   {
+
+    /*-------------------------------Header-------------------------------*/
+    .logot {
+        height: 1.5em;
+        width: 1.5em;
+    }
+    header h2 {
+        margin:auto 0em auto 0em;
+        font-size: 1em;
+    }
+    header h4{
+        margin-right: 0em;
+        width: 0;
+        visibility: hidden;
+    }
+
+    .btn-accueilins h5, .btn-accueil h5{
+        font-size: 0.5em;
+    }
+    .btn-accueilins {
+        margin-left: 0;
+    }
+
+    .brecherche {
+       visibility: hidden;
+       width: 0%;
+       margin: 0;
+    }
+    header a:last-child {
+        margin-left: 0.5em;
+    }
+
+
     .brecherche {
        visibility: hidden;
        width: 0%;
@@ -2765,6 +2802,10 @@ iframe {
 
     /*-------------------------------Accueil-------------------------------*/
 
+    .card{
+        font-size: 0.6em;
+    }
+    
     .card section article .accicone{
         display: flex;
         flex-direction: row;
