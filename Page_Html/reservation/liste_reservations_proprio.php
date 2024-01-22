@@ -1,4 +1,4 @@
-<?php 
+    <?php 
 session_start();
 include('../parametre_connexion.php');
 try {
@@ -32,7 +32,7 @@ $photo = $stmt->fetch();
             <h1>Mes Réservations</h1>
         </div>
 
-        <div style="display:flex; flex-direction:column-reverse;">
+        <div class="Tablobord">
             <?php
             include('../parametre_connexion.php');
                 try {

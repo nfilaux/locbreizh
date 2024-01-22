@@ -131,15 +131,6 @@ $photo = $stmt->fetch();
                             <p class="dateresa"></p>
                         </div>
                         <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                            <input type='hidden' name="arrive" id="arrive" value="">
-                            <input type='hidden' name="depart" id="depart" value="">
-                            <button class="btn-demlog" type="submit">Demander un devis</button>
-
-                            <div class="logrowt">
-                                <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
-                            </div>
-                        
-                        <form class="center" action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
                             <input class="jesuiscache" type='hidden' name="arrive" id="arrive" value="">
                             <input class="jesuiscache" type='hidden' name="depart" id="depart" value="">
                             <button class="btn-demlog" type="submit">Demander un devis</button>
