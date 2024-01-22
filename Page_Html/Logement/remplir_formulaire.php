@@ -76,7 +76,7 @@
                             ?>
 
                             <div class=".log3vct">
-                                <label for='tarif_de_base'>Tarif de base (en €) : </label>
+                                <label for='tarif_de_base'>Tarif de base (en €/jour) : </label>
                                 <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' placeholder='0' required>
                             </div>
 
