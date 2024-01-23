@@ -394,7 +394,7 @@ CREATE TABLE
         sous_total_HT_devis NUMERIC(5, 2) NOT NULL,
         sous_total_TTC_devis NUMERIC(5, 2) NOT NULL,
         frais_service_platforme_HT_devis NUMERIC(5, 2) NOT NULL,
-        fras_service_platforme_TTC_devis NUMERIC(5, 2) NOT NULL,
+        frais_service_platforme_TTC_devis NUMERIC(5, 2) NOT NULL,
         date_devis DATE NOT NULL,
         date_validite numeric(3) not null,
         condition_annulation VARCHAR(255) NOT NULL,

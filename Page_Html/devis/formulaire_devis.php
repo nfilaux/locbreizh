@@ -144,6 +144,28 @@
             </div>
         </fieldset>
 
+        <?php 
+
+            
+                            ???
+            $stmt = $dbh->prepare("SELECT prix_plage_ponctuelle
+            FROM locbreizh._demande_devis d
+              JOIN locbreizh._logement l ON d.logement = l.id_logement
+              join locbreizh._planning p on p.code_planning = l.code_planning
+              join locbreizh._plage_ponctuelle p1 on p1.code_planning = p.code_planning
+              join locbreizh._plage_ponctuelle_disponible p2 on p2.id_plage_ponctuelle = p1.id_plage_ponctuelle
+            WHERE num_demande_devis = $num_demande and jour_plage_ponctuelle >= '???' and jour_plage_ponctuelle <= '???';");
+            $stmt->execute();
+            $tarif = $stmt->fetch();
+
+            // taxe de sejour
+            $stmt = $dbh->prepare("SELECT tarif_base_HT FROM locbreizh._demande_devis d 
+            JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+            WHERE num_demande_devis = $num_demande;");
+            $stmt->execute();
+            $tarif_base = $stmt->fetch();
+
+        ?>
         <fieldset>
             <h1 class="policetitre colorbleu">Details pour le paiement</h1>
             <div class="devisrow">
