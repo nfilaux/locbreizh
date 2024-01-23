@@ -11,7 +11,8 @@
     $_SESSION['valeurs_complete']['delais_accept'] = $_POST['delais_accept'];
     $_SESSION['valeurs_complete']['date_val'] = $_POST['date_val'];
     $_SESSION['valeurs_complete']['tarif_loc'] = $_POST['tarif_loc'];
-    $_SESSION['valeurs_complete']['charges'] = $_POST['charges'];
+    $_SESSION['valeurs_complete']['annulation'] = $_POST['annulation'];
+
     if(isset($_POST['menage'])){
         $_SESSION['valeurs_complete']['menage'] = $_POST['menage'];
     }
@@ -34,33 +35,83 @@
         $_SESSION['valeurs_complete']['date_depart'] = $_POST["date_depart"];
         $_SESSION['valeurs_complete']['date_arrivee'] = $_POST["date_arrivee"];
     }
-    if (preg_match('/[});]+/', $_POST["annulation"])){
-        $_SESSION['erreurs']['cond_annul'] = "Erreur, pour des mesures de sécurité vous ne pouvez pas mettre les caractères suivant dans vos conditions d'annulation.";
-    } else {
-        $_SESSION['valeurs_complete']['annulation'] = $_POST["annulation"];
-    }
+
     if ($_SESSION['erreurs'] != []){
         header("Location: formulaire_devis.php?demande={$_POST['id_demande']}");
     }
     else {
-        $prix_loc = $_POST['tarif_loc'];
-        $prix_charges = $_POST['charges'];
-        $total_HT = $prix_loc + $prix_charges;
-        $total_TTC = $total_HT * 1.1;
-        // gestion de la taxe de séjour à voir
-        $taxe_sejour = 120;
-        $total_montant_devis = $total_TTC + $taxe_sejour;
-        $total_plateforme_HT = $total_montant_devis*1.01;
-        $total_plateforme_TTC = $total_plateforme_HT * 1.2;
+        // taxe de sejour
+        $stmt = $dbh->prepare("SELECT taxe_sejour, nb_personnes FROM locbreizh._demande_devis d 
+        JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+        WHERE num_demande_devis = {$_POST['id_demande']};");
+        $stmt->execute();
+        $taxe = $stmt->fetch();
+
+        // recherche prix charge menage
+        $stmt = $dbh->prepare("SELECT prix_charges
+        FROM locbreizh._comporte_charges_associee_devis
+        WHERE num_devis = {$_POST['id_demande']} and nom_charges = 'menage';");
+        $stmt->execute();
+        $menage = $stmt->fetch();
+
+        // recherche prix charge animaux
+        $stmt = $dbh->prepare("SELECT prix_charges
+        FROM locbreizh._comporte_charges_associee_devis
+        WHERE num_devis = {$_POST['id_demande']} and nom_charges = 'animaux';");
+        $stmt->execute();
+        $animaux = $stmt->fetch();
+
+        // recherche prix charge pers supp
+        $stmt = $dbh->prepare("SELECT prix_charges, nombre
+        FROM locbreizh._comporte_charges_associee_devis
+        WHERE num_devis = {$_POST['id_demande']} and nom_charges = 'personnes_supplementaires';");
+        $stmt->execute();
+        $pers_supp = $stmt->fetch();
+
+        // ajout des charges
+        $totalCharges_HT = 0;
+        if(isset($menage['prix_charges'])){
+            $totalCharges_HT += $menage['prix_charges'];
+        }
+        if(isset($animaux['prix_charges'])){
+            $totalCharges_HT += $animaux['prix_charges'];
+        }
+        if(isset($pers_supp['prix_charges'])){
+            $totalCharges_HT += $pers_supp['prix_charges'] * $pers_supp['nombre'];
+        }
+
+        /*
+        • Tarif de location des nuitées HT
+        • Charges additionnelles HT
+        • Sous-total (location et charges) HT et TTC (application d’une TVA de 10%)
+        • Frais de service de la plateforme HT et TTC (application d’une TVA de 20%)
+        • Taxe de séjour (pas de TVA applicable)
+        • Prix total du devis
+        */
+
+
+
+        // doit calculer en fonction nb jours !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // calcul
+        $nuitees_HT = $_POST['tarif_loc'];
+        $sousTotal_HT = $nuitees_HT + $totalCharges_HT;
+        $sousTotal_TTC = $sousTotal_HT * 1.1;
+        $fraisService_HT = 0.1* $sousTotal_HT;
+        $fraisService_TTC = $fraisService_HT * 1.2;
+        $taxe_sejour = $taxe["taxe_sejour"] * ($taxe["nb_personnes"] + $pers_supp['nombre']);
+        $prixTotal = $sousTotal_TTC + $fraisService_TTC + $taxe_sejour;
+    
+
+
         $date_devis = date("Y-m-d");
 
-        $stmt = $dbh->prepare("SELECT libelle_logement FROM locbreizh._demande_devis d JOIN locbreizh._logement l ON  d.logement = l.id_logement WHERE num_demande_devis = {$_POST['id_demande']};");
-        $stmt->execute();
-        $libelle_log = $stmt->fetch();  
 
-        $reqNomClient = $dbh->prepare("SELECT nom, prenom, id_compte, pseudo FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte WHERE num_demande_devis = {$_POST['id_demande']}");
+
+        $reqNomClient = $dbh->prepare("SELECT nom, prenom, id_compte, pseudo 
+        FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte 
+        WHERE num_demande_devis = {$_POST['id_demande']}");
         $reqNomClient->execute();
-        $infos_user = $reqNomClient->fetch();  
+        $infos_user = $reqNomClient->fetch();
 
         $stmt = $dbh->prepare("SELECT NEXTVAL('locbreizh._devis_num_devis_seq') as prochain_serial");
         $stmt->execute();
@@ -68,20 +119,57 @@
         $id_devis = $serial_actuel['prochain_serial'] + 1;
         
         $reg_devis = $dbh->prepare("INSERT INTO locbreizh._devis
-        (client, prix_total_devis, tarif_ht_location_nuitee_devis,
-        sous_total_ht_devis, sous_total_ttc_devis, frais_service_platforme_ht_devis,
-        fras_service_platforme_ttc_devis, date_devis, date_validite, condition_annulation,
-        num_demande_devis, taxe_sejour, url_detail) 
-        values (
-        {$infos_user['id_compte']}, $total_montant_devis, $prix_loc,
-         $total_HT, $total_TTC, $total_plateforme_HT, 
-        $total_plateforme_TTC, '$date_devis', {$_POST['date_val']}, '{$_POST['annulation']}', {$_POST['id_demande']}, 1, 'devis$id_devis.pdf');");
+        (client, 
+        prix_total_devis, 
+        nb_personnes,
+        tarif_ht_location_nuitee_devis,
+        sous_total_HT_devis,
+        sous_total_TTC_devis,
+        frais_service_platforme_HT_devis,
+        frais_service_platforme_TTC_devis,
+        date_devis, date_validite, condition_annulation,
+        num_demande_devis, taxe_sejour, url_detail)
+        VALUES (
+        :client,
+        :prixTotal,
+        :nb_personnes,
+        :nuitees_HT,
+        :sousTotal_HT,
+        :sousTotal_TTC,
+        :fraisService_HT,
+        :fraisService_TTC,
+        :date_devis,
+        :date_val,
+        :annulation,
+        :id_demande,
+        :taxe_sejour,
+        :url_detail)");
+
+        $url = 'devis' . $id_devis . '.pdf';
+        $reg_devis->bindParam(':client', $infos_user['id_compte']);
+        $reg_devis->bindParam(':nb_personnes', $taxe['nb_personnes']);
+        $reg_devis->bindParam(':prixTotal', $prixTotal);
+        $reg_devis->bindParam(':nuitees_HT', $nuitees_HT);
+        $reg_devis->bindParam(':sousTotal_HT', $sousTotal_HT);
+        $reg_devis->bindParam(':sousTotal_TTC', $sousTotal_TTC);
+        $reg_devis->bindParam(':fraisService_HT', $fraisService_HT);
+        $reg_devis->bindParam(':fraisService_TTC', $fraisService_TTC);
+        $reg_devis->bindParam(':date_devis', $date_devis);
+        $reg_devis->bindParam(':date_val', $_POST['date_val']);
+        $reg_devis->bindParam(':annulation', $_POST['annulation']);
+        $reg_devis->bindParam(':id_demande', $_POST['id_demande']);
+        $reg_devis->bindParam(':taxe_sejour', $taxe["taxe_sejour"]);
+        $reg_devis->bindParam(':url_detail', $url);
+
         $reg_devis->execute();
+
         $id_devis = $dbh->lastInsertId();
-        
+
+        // accepte la demande pour informer le client
         $stmt = $dbh->prepare("UPDATE locbreizh._demande_devis set accepte = True where num_demande_devis = :num;");
         $stmt->bindParam(':num', $_POST['id_demande']);
         $stmt->execute();
+
 
         // creation du pdf
         $pdf = new TCPDF();
@@ -95,20 +183,26 @@
         // definit la police et la taille de la police
         $pdf->SetFont('', '', 12);
 
+        // cherche le libelle
+        $stmt = $dbh->prepare("SELECT libelle_logement FROM locbreizh._demande_devis d 
+        JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+        WHERE num_demande_devis = {$_POST['id_demande']};");
+        $stmt->execute();
+        $libelle_log = $stmt->fetch();
 
         // tableaux avec toutes les infos du pdf
         $devisInfo = array(
             'Nom' => $infos_user['nom'],
             'Prenom' => $infos_user['prenom'],
             'Libelle logement' => $libelle_log['libelle_logement'],
-            'Tarif ht location nuitee devis' => $prix_loc . ' €',
-            'Prix charges HT' => $prix_charges. ' €',
-            'Total HT' => $total_HT. ' €',
-            'Total TTC' => $total_TTC. ' €',
+            'Tarif ht location nuitee devis' => $nuitees_HT . ' €',
+            'Prix charges HT' => $totalCharges_HT. ' €',
+            'Sous total HT' => $sousTotal_HT. ' €',
+            'Sous total TTC' => $sousTotal_TTC. ' €',
             'Taxe de séjour' => $taxe_sejour. ' €',
-            'Total montant devis' =>$total_montant_devis. ' €',
-            'Total plateforme HT' =>$total_plateforme_HT. ' €',
-            'Total plateforme TTC' =>$total_plateforme_TTC. ' €',
+            'Total plateforme HT' =>$fraisService_HT. ' €',
+            'Total plateforme TTC' =>$fraisService_TTC. ' €',
+            'Total montant devis' =>$prixTotal. ' €',
             'Date devis' => $date_devis
         );
 
