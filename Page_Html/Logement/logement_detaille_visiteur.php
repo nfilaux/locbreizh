@@ -70,12 +70,6 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                         <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
                         <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
-                    <div class="logrowt">
-                        <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
-                        <!--
-                        <img src="/Ressources/Images/star-fill 1.svg"><h4> echo $info['note_avis'];,0</p>
-                        -->
-                    </div>
                 </div>
                 <div class="detailimg">
                     <?php
@@ -135,6 +129,9 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                         </div>
                         <form action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
                             <button class="btn-demlogno" type="submit" disabled>Demander un devis</button>
+                            <div class="logrowt">
+                                <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -238,7 +235,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             </div>
             <hr class="hr">
             <div class="logcolumn">
-                <h3 class="potitre">Calendrier</h3>
+                <h3 class="policetitre">Calendrier</h3>
                 <div class="corpsCalendrier">
                     <div class="fond">
                         <div class="teteCalendrier">
