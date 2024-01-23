@@ -222,13 +222,13 @@ body {
 header{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     color: #745086;
     box-sizing: border-box;
     border-bottom: 1px solid #745086; 
     flex-wrap: nowrap;
     background-color: #fff;
-    padding: 1em 0;
+    padding: 1em 2em;
 }
 
 .logot {
@@ -336,7 +336,7 @@ header a:last-child {
 
 .headconn h1 , .headtablo h1 {
     color: #fff;
-    font-size: 4em;
+    font-size: 3em;
     margin: 3px;
     font-family: 'PatuaOne';
 }
@@ -2552,18 +2552,28 @@ iframe {
     .btn-accueilins {
         margin-left: 0;
     }
+
+    .headconn h1, .headtabloP h1{
+        font-size: 2em;
+    }
+
+    .headconn img, .headtabloP img{
+        left: 2em;
+    }
     /*-------------------------------FOOTER-------------------------------*/
     .tfooter {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         flex-wrap: nowrap;
         justify-content: space-around;
         align-items: center;
+        font-size: 0.5em;
     }
 
     .bfooter {
         flex-direction: row;
         justify-content: center;
+        font-size: 0.5em;   
     }
     .bfooter p:first-child{
         margin-right: 2em;
@@ -2572,6 +2582,9 @@ iframe {
     .bfooter p:last-child{
         visibility: hidden;
         width: 0px;
+    }
+    .margintb img{
+        width: 20px;
     }
     /*-------------------------------Accueil-------------------------------*/
 
@@ -2676,6 +2689,37 @@ iframe {
         width: 80%;
     }
 
+    /*-------------------------------Conexion-------------------------------*/
+
+    .custom-input{
+        font-size: 2em;
+        width: 100%;
+    }
+
+    #mdp img, .rowcompte img{
+        height: 40px;
+        margin-left: 10px;
+    }
+    .Maincompte section{
+        width: 80%;
+    }
+    .btn-compte{
+        width: 100%;
+        font-size: 1.5em;
+    }
+
+    .rowcompte{
+        flex-direction: column;
+    }
+
+    .rowcompte:first-child{
+        text-align: center;
+    }
+
+    .rowcompte a + a {
+        margin-top: 1em;
+    }
+
     /*-------------------------------Réservation-------------------------------*/
     .cardresmain {
         flex-direction: column;
@@ -2762,7 +2806,7 @@ iframe {
     }
     header h4{
         margin-right: 0em;
-        width: 0;
+        width: 0 ;
         visibility: hidden;
     }
 
@@ -2795,6 +2839,46 @@ iframe {
         align-items: center;
     }
 
+    .headconn h1, .headtabloP h1{
+        font-size: 1.5em;
+    }
+
+    .headconn img, .headtabloP img{
+        left: 1em;
+        top: 0.6em;
+    }
+
+    /*-------------------------------FOOTER-------------------------------*/
+    footer{
+        height: auto;
+        padding-top: 0.5em;
+    }
+    
+    .tfooter {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 0.3em;
+    }
+
+    .bfooter {
+        flex-direction: row;
+        justify-content: center;
+        font-size: 0.3em;   
+    }
+    .bfooter p:first-child{
+        margin-right: 2em;
+    }
+
+    .bfooter p:last-child{
+        visibility: hidden;
+        width: 0px;
+    }
+    .margintb img{
+        width: 20px;
+    }
     /*-------------------------------Accueil-------------------------------*/
 
     .card{
@@ -2873,6 +2957,38 @@ iframe {
         margin: auto;
         width: 100%; 
     }
+
+    /*-------------------------------Conexion-------------------------------*/
+
+    .custom-input{
+        font-size: 2em;
+        width: 100%;
+    }
+
+    #mdp img, .rowcompte img{
+        height: 40px;
+        margin-left: 10px;
+    }
+    .Maincompte section{
+        width: 80%;
+    }
+    .btn-compte{
+        width: 100%;
+        font-size: 1.5em;
+    }
+
+    .rowcompte{
+        flex-direction: column;
+    }
+
+    .rowcompte:first-child{
+        text-align: center;
+    }
+
+    .rowcompte a + a {
+        margin-top: 1em;
+    }
+
 
     /*-------------------------------Réservation-------------------------------*/
     .cardresmain {
