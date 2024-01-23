@@ -105,7 +105,7 @@ $services = $r_services->fetchAll();
                         <div class="logpc">
                             <label for='phrase_daccroche' >Phrase d'accroche</label>
                             <input disabled class="logPAP" id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255" value="<?php echo $res["accroche_logement"]; ?>"required>
-                    </div>
+                        </div>
                         <div class="logrowb"> 
                                 <div class="log2vct">
                                     <label for='nature'>Nature</label>
@@ -151,7 +151,7 @@ $services = $r_services->fetchAll();
                         <div class="log4vct">
                     
                     <label for='nb_lit_double'>Nombre de lits doubles</label>
-                    <input id='nb_lit_double' disabled type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value=<?php echo $res["lit_double"] ?> required>
+                    <input class="logvct" id='nb_lit_double' disabled type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value=<?php echo $res["lit_double"] ?> required>
     
                     </div>
                         <div class="log4vct">

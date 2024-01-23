@@ -100,11 +100,15 @@
             $stmt->execute();
         }
 
-        // on recupere les infos necessaires sur le clinet pour le pdf de la demande de devis
+        // on recupere les infos necessaires sur le client pour le pdf de la demande de devis
         $stmt = $dbh->prepare("select * from locbreizh._compte where id_compte = :id;");
         $stmt->bindParam(':id', $_SESSION['id']);
         $stmt->execute();
         $info_user = $stmt->fetch();
+
+        $stmt = $dbh->prepare("SELECT nom,prenom from locbreizh._compte where id_compte = {$_SESSION['id']};");
+        $stmt->execute();
+        $proprioinfo = $stmt->fetch();
 
         // creation du pdf
         $pdf = new TCPDF();
@@ -133,18 +137,27 @@
 
         //titre sur le document
         $pdf->SetFont('', 'B', 30);
+        $pdf->SetTextColor(116,80,134);
         $pdf->Cell(0, 25, "Demande de devis", 0, 1,'C');
-
+        $pdf->SetTextColor(0,0,0);
         // definit la police et la taille de la police
         $pdf->SetFont('', '', 12);
+
+
+        $endatearrive = strtotime($_POST['dateArrivee']);
+        $frdatearrive = date("d/m/Y", $endatearrive);
+
+        $endatedepart = strtotime($_POST['dateDepart']);
+        $frdatedepart = date("d/m/Y", $endatedepart);
 
         // tableaux avec toutes les infos du pdf
         $demandeInfo = array(
             'Logement demandé' => $libelle_log['libelle_logement'],
+            'Nom du propriétaire' => $proprioinfo['nom'] . ' ' . $proprioinfo['prenom'] ,
             'Nom du client' => $info_user['nom'] . ' ' . $info_user['prenom'] ,
-            'Email' => $info_user['mail'],
-            'Date d\'arrivée' => $_POST['dateArrivee'],
-            'Date de départ' => $_POST['dateDepart'],
+            'Email du client' => $info_user['mail'],
+            'Date d\'arrivée' => $frdatearrive,
+            'Date de départ' => $frdatedepart,
             'Nombre de personnes' => $_POST['nb_pers'],
             'Animaux' =>$animaux,
             'Menage' => $menage,
@@ -158,7 +171,7 @@
         }
 
         // genere le contenu PDF
-        $contenu_pdf = $pdf->Output('demande_devis.pdf', 'I'); // 'S' pour obtenir le contenu du PDF
+        $contenu_pdf = $pdf->Output('demande_devis.pdf', 'S'); // 'S' pour obtenir le contenu du PDF
 
         // enregistre le PDF dans un dossier
         $chemin_dossier = 'pdf_demande/';
