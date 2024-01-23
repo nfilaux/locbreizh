@@ -376,7 +376,8 @@ CREATE TABLE
         logement INTEGER NOT NULL,
         url_detail varchar(50) not null,
         accepte boolean,
-        visible boolean DEFAULT TRUE NOT NULL,
+        visibleP boolean DEFAULT TRUE NOT NULL,
+        visibleC boolean DEFAULT TRUE NOT NULL,
         CONSTRAINT demande_devis_pk PRIMARY KEY (num_demande_devis),
         CONSTRAINT demande_devis_fk_client FOREIGN KEY (client) REFERENCES _client (id_client),
         CONSTRAINT demande_devis_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement)
@@ -402,7 +403,8 @@ CREATE TABLE
         url_detail varchar(50) not null,
         accepte boolean,
         annule boolean DEFAULT FALSE NOT NULL,
-        visible boolean DEFAULT TRUE NOT NULL,
+        visibleP boolean DEFAULT TRUE NOT NULL,
+        visibleC boolean DEFAULT TRUE NOT NULL,
         CONSTRAINT devis_pk PRIMARY KEY (num_devis),
         CONSTRAINT devis_fk_taxe_sejour FOREIGN KEY (taxe_sejour) REFERENCES _taxe_sejour (id_taxe),
         CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_demande_devis) REFERENCES _demande_devis (num_demande_devis)

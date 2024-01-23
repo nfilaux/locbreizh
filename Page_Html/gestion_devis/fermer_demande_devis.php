@@ -10,21 +10,27 @@
         die();
     }
 
-    $stmt = $dbh->prepare(
-        "UPDATE locbreizh._demande_devis 
-        set visible = FALSE, accepte = false
-        WHERE num_demande_devis = {$_GET['id']}"
-    );
-    $stmt->execute();
-    
     $stmt = $dbh->prepare("SELECT id_compte from locbreizh._compte c join locbreizh._client on c.id_compte = id_client where id_compte = {$_SESSION['id']} ;");
     $stmt->execute();
     $est_client = $stmt->fetch();
+    
 
     if(isset($est_client['id_compte'])){
+        $stmt = $dbh->prepare(
+            "UPDATE locbreizh._demande_devis 
+            set visibleC = FALSE
+            WHERE num_demande_devis = {$_GET['id']}"
+        );
+        $stmt->execute();
         header("Location: gestion_des_devis_client.php");
     }
     else{
+        $stmt = $dbh->prepare(
+            "UPDATE locbreizh._demande_devis
+            set visibleP = FALSE
+            WHERE num_demande_devis = {$_GET['id']}"
+        );
+        $stmt->execute();
         header("Location: gestion_des_devis_proprio.php");
     }
 

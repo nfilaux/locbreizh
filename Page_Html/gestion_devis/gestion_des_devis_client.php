@@ -30,7 +30,7 @@
             "SELECT num_demande_devis, nb_personnes, date_arrivee, date_depart, url_detail, libelle_logement, photo_principale, accepte
             from locbreizh._demande_devis
             join locbreizh._logement l on l.id_logement =  logement
-            WHERE client = {$_SESSION['id']} and accepte IS NOT TRUE and visible IS TRUE;"
+            WHERE client = {$_SESSION['id']} and accepte IS NOT TRUE and visibleC IS TRUE;"
         );
         $stmt->execute();
         $list_demande = $stmt->fetchAll();
@@ -40,7 +40,7 @@
             from locbreizh._devis
             join locbreizh._demande_devis on _devis.num_demande_devis = _demande_devis.num_demande_devis
             join locbreizh._logement l on l.id_logement =  logement
-            WHERE _devis.client = {$_SESSION['id']} and _devis.visible IS TRUE;"
+            WHERE _devis.client = {$_SESSION['id']} and _devis.visibleC IS TRUE;"
         );
         $stmt->execute();
         $list_devis = $stmt->fetchAll();
