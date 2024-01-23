@@ -764,7 +764,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     text-align: center;
 }
 
-#charges_animaux, #charges_pers_sup, #charges_menage ,#taxe_sejour{
+#charges_animaux, #charges_pers_sup, #charges_menage {
     color: #957BB0;
     text-align: center;
 }

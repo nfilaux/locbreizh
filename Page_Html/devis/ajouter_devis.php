@@ -89,8 +89,11 @@
         • Prix total du devis
         */
 
+
+
+        // doit calculer en fonction nb jours !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // calcul
-        $nuitees_HT = $_POST['tarif_nuit'];
+        $nuitees_HT = $_POST['tarif_loc'];
         $sousTotal_HT = $nuitees_HT + $totalCharges_HT;
         $sousTotal_TTC = $sousTotal_HT * 1.1;
         $fraisService_HT = 0.1* $sousTotal_HT;
@@ -118,28 +121,48 @@
         $reg_devis = $dbh->prepare("INSERT INTO locbreizh._devis
         (client, 
         prix_total_devis, 
+        nb_personnes,
         tarif_ht_location_nuitee_devis,
-        sous_total_ht_devis,
-        sous_total_ttc_devis,
-        frais_service_platforme_ht_devis,
-        fras_service_platforme_ttc_devis,
+        sous_total_HT_devis,
+        sous_total_TTC_devis,
+        frais_service_platforme_HT_devis,
+        frais_service_platforme_TTC_devis,
         date_devis, date_validite, condition_annulation,
         num_demande_devis, taxe_sejour, url_detail)
-        values (
-        {$infos_user['id_compte']},
-        $prixTotal,
-        $nuitees_HT,
-        $sousTotal_HT,
-        $sousTotal_TTC,
-        $fraisService_HT,
-        $fraisService_TTC,
-        '$date_devis',
-        {$_POST['date_val']},
-        '{$_POST['annulation']}',
-        {$_POST['id_demande']},
-        $taxe_sejour,
-        'devis$id_devis.pdf');");
+        VALUES (
+        :client,
+        :prixTotal,
+        :nb_personnes,
+        :nuitees_HT,
+        :sousTotal_HT,
+        :sousTotal_TTC,
+        :fraisService_HT,
+        :fraisService_TTC,
+        :date_devis,
+        :date_val,
+        :annulation,
+        :id_demande,
+        :taxe_sejour,
+        :url_detail)");
+
+        $url = 'devis' . $id_devis . '.pdf';
+        $reg_devis->bindParam(':client', $infos_user['id_compte']);
+        $reg_devis->bindParam(':nb_personnes', $taxe['nb_personnes']);
+        $reg_devis->bindParam(':prixTotal', $prixTotal);
+        $reg_devis->bindParam(':nuitees_HT', $nuitees_HT);
+        $reg_devis->bindParam(':sousTotal_HT', $sousTotal_HT);
+        $reg_devis->bindParam(':sousTotal_TTC', $sousTotal_TTC);
+        $reg_devis->bindParam(':fraisService_HT', $fraisService_HT);
+        $reg_devis->bindParam(':fraisService_TTC', $fraisService_TTC);
+        $reg_devis->bindParam(':date_devis', $date_devis);
+        $reg_devis->bindParam(':date_val', $_POST['date_val']);
+        $reg_devis->bindParam(':annulation', $_POST['annulation']);
+        $reg_devis->bindParam(':id_demande', $_POST['id_demande']);
+        $reg_devis->bindParam(':taxe_sejour', $taxe["taxe_sejour"]);
+        $reg_devis->bindParam(':url_detail', $url);
+
         $reg_devis->execute();
+
         $id_devis = $dbh->lastInsertId();
 
         // accepte la demande pour informer le client

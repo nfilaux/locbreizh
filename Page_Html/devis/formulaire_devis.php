@@ -73,7 +73,7 @@
             $vac_sup = $stmt->fetch();
 
             // taxe de sejour
-            $stmt = $dbh->prepare("SELECT taxe_sejour, nb_personnes FROM locbreizh._demande_devis d 
+            $stmt = $dbh->prepare("SELECT taxe_sejour FROM locbreizh._demande_devis d 
             JOIN locbreizh._logement l ON  d.logement = l.id_logement 
             WHERE num_demande_devis = $num_demande;");
             $stmt->execute();
@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <?php
-                    if ($_SESSION['erreurs']['valide_dates']){ ?>
+                    if (isset($_SESSION['erreurs']['valide_dates'])){ ?>
                         <p id="erreur" class=erreur><?php echo $_SESSION['erreurs']['valide_dates']; ?></p>
                     <?php } ?>
                 <div class="logrow">
@@ -169,7 +169,6 @@
                 <label for="tarif_loc">Tarif moyen HT par jour(en €) :</label>
                 <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required /> 
                 </div>
-                <input class="btn-ajoutlog" type="button" value="Calculer" onclick="calcul()"/>
             </div>
             
             <hr class="hrP">
@@ -206,90 +205,6 @@
                         </div>
                     </div>
             </div>
-            <script>
-                var menage = <?php echo json_encode($menage); ?>;
-                var animaux = <?php echo json_encode($animaux); ?>;
-                var vac_sup = <?php echo json_encode($vac_sup); ?>;
-                var taxe_sejour = <?php echo json_encode($taxe); ?>;
-                
-                function getPrixPlagePonctuelle() {
-                    const num_demande = <?php echo $_GET['demande']; ?>; // Assuming you pass the 'demande' as a parameter
-
-                    // Get the date values from the form
-                    const dateArrivee = document.getElementById('date_arrivee').value;
-                    const dateDepart = document.getElementById('date_depart').value;
-
-                    fetch(`total_tarif_nuit.php?num_demande=${num_demande}&date_arrivee=${dateArrivee}&date_depart=${dateDepart}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            // Handle the data received from the server (prices)
-                            const prices = data.prices;
-                            const totalSum = prices.reduce((sum, price) => sum + parseFloat(price), 0);
-                            const average = prices.length > 0 ? totalSum / prices.length : 0;
-
-                            const totalInputElement = document.getElementById('tarif_loc');
-                            totalInputElement.value = `${average}`;
-
-                        })
-                        .catch(error => {
-                            console.error('Error fetching Prices:', error);
-                        });
-                }
-                getPrixPlagePonctuelle();
-
-                document.getElementById('date_arrivee').addEventListener('input', getPrixPlagePonctuelle);
-                document.getElementById('date_depart').addEventListener('input', getPrixPlagePonctuelle);
-
-                function roundDecimal(nombre, precision){
-                    var precision = precision || 2;
-                    var tmp = Math.pow(10, precision);
-                    return Math.round( nombre*tmp )/tmp;
-                }
-
-                function calcul() {
-                    const tarif_loc_input = document.getElementById('tarif_loc');
-                    const tarif_nuit = parseFloat(tarif_loc_input.value.replace(',', '.'));
-
-                    console.log(tarif_nuit);
-
-                    const nb_personnes = parseInt(document.getElementById('nb_pers').value);
-
-                    // Vérifiez si les cases à cocher sont cochées
-                    const menageChecked = document.getElementById('menage').checked;
-                    const animauxChecked = document.getElementById('animaux').checked;
-
-                    // Calculez total_charges en fonction des cases cochées
-                    let total_charges = 0;
-                    if (menageChecked) {
-                        total_charges += parseFloat(menage.prix_charges);
-                        
-
-                    }
-                    if (animauxChecked) {
-                        total_charges += parseFloat(animaux.prix_charges);
-                    }
-                    total_charges += parseFloat(vac_sup.prix_charges) * parseInt(vac_sup.nombre);
-
-                    console.log(total_charges);
-
-                    const nuitees_HT = tarif_nuit;
-                    const sousTotal_HT = nuitees_HT + total_charges;
-                    const sousTotal_TTC = sousTotal_HT * 1.1;
-                    const fraisService_HT = 0.1 * sousTotal_HT;
-                    const fraisService_TTC = fraisService_HT * 1.2;
-                    const total_taxe_sejour =  taxe_sejour * (vac_sup.nombre + nb_personnes);
-                    const prixTotal = sousTotal_TTC + fraisService_TTC + taxe_sejour;
-
-                    document.getElementById('sousTotal_HT').value = `${sousTotal_HT}`;
-                    document.getElementById('sousTotal_TTC').value = `${sousTotal_TTC}`;
-                    document.getElementById('fraisService_HT').value = `${fraisService_HT}`;
-                    document.getElementById('fraisService_TTC').value = `${fraisService_TTC}`;
-                    document.getElementById('taxe_sejour').value = `${total_taxe_sejour}`;
-                    document.getElementById('prixTotal').value = `${prixTotal}`;
-                }
-                document.getElementById('tarif_loc').addEventListener('input', calcul);
-                calcul();
-            </script>
             <br/>
             <input type="hidden" id="id_demande" name ="id_demande" value=<?php echo $_GET['demande'];?>>
             </fieldset>
@@ -305,7 +220,7 @@
     <?php 
         echo file_get_contents('../header-footer/footerP.html');
 
-        if ($_GET['erreur'] === '0'){
+        if (isset($_GET['erreur']) && $_GET['erreur'] === '0'){
             ?>
             <script>
                 openPopupFeedback('popupFeedback', 'overlayDemandeDeDevis');
@@ -319,3 +234,98 @@
 
 </body>
 </html>
+<script>
+    var menage = <?php echo json_encode($menage); ?>;
+    var animaux = <?php echo json_encode($animaux); ?>;
+    var vac_sup = <?php echo json_encode($vac_sup); ?>;
+    var taxe_sejour = <?php echo json_encode($taxe); ?>;
+
+    function arrondi(number) {
+    return number.toFixed(2);
+}
+    let totalSum = 0;
+    
+    function getPrixPlagePonctuelle() {
+        const num_demande = <?php echo $_GET['demande']; ?>; // Assuming you pass the 'demande' as a parameter
+
+        // Get the date values from the form
+        const dateArrivee = document.getElementById('date_arrivee').value;
+        const dateDepart = document.getElementById('date_depart').value;
+
+        fetch(`total_tarif_nuit.php?num_demande=${num_demande}&date_arrivee=${dateArrivee}&date_depart=${dateDepart}`)
+            .then(response => response.json())
+            .then(data => {
+                // Handle the data received from the server (prices)
+                const prices = data.prices;
+                totalSum = prices.reduce((sum, price) => sum + parseFloat(price), 0);
+                const average = prices.length > 0 ? totalSum / prices.length : 0;
+
+                const totalInputElement = document.getElementById('tarif_loc');
+                totalInputElement.value = `${average}`;
+
+            })
+            .catch(error => {
+                console.error('Error fetching Prices:', error);
+            });
+    }
+    getPrixPlagePonctuelle();
+
+    document.getElementById('date_arrivee').addEventListener('input', getPrixPlagePonctuelle);
+    document.getElementById('date_depart').addEventListener('input', getPrixPlagePonctuelle);
+
+
+    function calcul() {
+
+
+        const nb_personnes = parseInt(document.getElementById('nb_pers').value);
+        const nb_pers_supp = parseInt(document.getElementById('vacanciers_sup').value) || 0;
+
+        // Vérifiez si les cases à cocher sont cochées
+        const menageChecked = document.getElementById('menage').checked;
+        const animauxChecked = document.getElementById('animaux').checked;
+
+        // Calculez total_charges en fonction des cases cochées
+        let total_charges = 0;
+        if (menageChecked) {
+            total_charges += parseFloat(menage.prix_charges);
+        }
+        if (animauxChecked) {
+            total_charges += parseFloat(animaux.prix_charges);
+        }
+        total_charges += parseFloat(vac_sup.prix_charges) * nb_pers_supp;
+
+        const sousTotal_HT = totalSum + total_charges;
+        const sousTotal_TTC = sousTotal_HT * 1.1;
+        const fraisService_HT = 0.1 * sousTotal_HT;
+        const fraisService_TTC = fraisService_HT * 1.2;
+        const total_taxe_sejour =  taxe_sejour.taxe_sejour * (nb_pers_supp + nb_personnes);
+        const prixTotal = sousTotal_TTC + fraisService_TTC + total_taxe_sejour;
+
+        document.getElementById('sousTotal_HT').value = `${arrondi(sousTotal_HT)}`;
+        document.getElementById('sousTotal_TTC').value = `${arrondi(sousTotal_TTC)}`;
+        document.getElementById('fraisService_HT').value = `${arrondi(fraisService_HT)}`;
+        document.getElementById('fraisService_TTC').value = `${arrondi(fraisService_TTC)}`;
+        document.getElementById('taxe_sejour').value = `${arrondi(total_taxe_sejour)}`;
+        document.getElementById('prixTotal').value = `${arrondi(prixTotal)}`;
+    }
+    document.getElementById('vacanciers_sup').addEventListener('input', calcul);
+    document.getElementById('menage').addEventListener('input', calcul);
+    document.getElementById('animaux').addEventListener('input', calcul);
+    document.getElementById('nb_pers').addEventListener('input', calcul);
+
+    document.getElementById('tarif_loc').addEventListener('input', calcul);
+    document.getElementById('date_arrivee').addEventListener('input', calcul);
+    document.getElementById('date_depart').addEventListener('input', calcul);
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            calcul();
+    }, 300);
+    });
+
+
+    
+
+</script>
