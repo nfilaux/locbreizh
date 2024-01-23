@@ -13,24 +13,48 @@
         include('../header-footer/choose_header.php');
     ?>
     <main>
-        <?php
+        <!-- Champs de séléction des Tris -->
+        <div>
+            <label for="tri">Trier par :</label>
+                <select class="triage" id="tri" name="tri">
+                    <option value="none" hidden>Choisir tri</option>
+                    <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
+                    <option value="prix_c">Prix (croissant)</option>
+                    <option value="prix_d">Prix (décroissant)</option>
+                </select>
+        <div>
 
-        // récupération des données de logement dans la base de donnée
+        <?php
         try {
             include('../parametre_connexion.php');
-
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-            $stmt = $dbh->prepare(
-                'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
-                from locbreizh._logement;'
-            );
+            if (isset($_GET['tri'])){
+                switch($_GET['tri']){
+                    case 'prix_c' : $tri = "tarif_base_ht ASC"; break;
+                    case 'prix_d' : $tri = "tarif_base_ht DESC"; break;
+                }
+
+                // récupération des données de logement dans la base de donnée avec le tri
+                $stmt = $dbh->prepare(
+                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
+                    from locbreizh._logement ORDER BY $tri;"
+                );
+            } else {
+                // récupération des données de logement dans la base de donnée
+                $stmt = $dbh->prepare(
+                    'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
+                    from locbreizh._logement;'
+                );
+            }
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
         }
+        
+        
 
         // fonction qui permet d'afficher la date de début et de fin d'une réservation
         function formatDate($start, $end)
@@ -44,7 +68,11 @@
 
         $stmt->execute();
 
-        ?> <div class="card"> <?php
+        ?> 
+        
+       
+        
+        <div class="card"> <?php
 
         // affichage des données de logement
         foreach ($stmt->fetchAll() as $card) {
@@ -79,3 +107,5 @@
 </body>
 
 </html>
+
+<script src="./actualiserTri.js" defer></script>

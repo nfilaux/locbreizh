@@ -55,7 +55,7 @@
                         ?>
 
                         <div class="logrowb"> 
-                            <div class=".log3vct">
+                            <div class="log3vct">
                                 <label for='ville'>Ville : </label>
                                 <input class="logvct" id='villeP' type='text' name='villeP' placeholder='Ville' required>
                             </div>
@@ -65,7 +65,7 @@
                             };
                             ?>
 
-                            <div class=".log3vct">
+                            <div class="log3vct">
                                 <label for='code_postal'>Code postal : </label>
                                 <input class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
                             </div>
@@ -75,16 +75,16 @@
                             };
                             ?>
 
-                            <div class=".log3vct">
+                            <div class="log3vct">
                                 <label for='tarif_de_base'>Tarif de base (en €/jour) : </label>
                                 <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' placeholder='0' required>
                             </div>
 
-                            <?php if (isset($_SESSION['erreurs']['prix'])){echo '<p>Le prix est un incorrect il ne dois pas dépasser 100 000 € et doit être décimal !';}; echo "<br>"; ?>
+                            <?php if (isset($_SESSION['erreurs']['prix'])){echo '<p>Le prix est un incorrect il ne dois pas dépasser 100 000 € et doit être décimal !';};?>
                         </div>
                         <div class="logpc">
                             <label for='phrase_daccroche'>Phrase d'accroche : </label>
-                            <textarea class="logPAP" id='accroche' maxlength="100" name='accrocheP' placeholder="Phrase d'accroche" required></textarea>
+                            <textarea class="logPAP" id='accroche' name='accrocheP' placeholder="Phrase d'accroche" required></textarea>
                         </div>
                         <div class="logrowb"> 
                                 <div class="log2vct">
