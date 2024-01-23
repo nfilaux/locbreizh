@@ -11,7 +11,8 @@
     $_SESSION['valeurs_complete']['delais_accept'] = $_POST['delais_accept'];
     $_SESSION['valeurs_complete']['date_val'] = $_POST['date_val'];
     $_SESSION['valeurs_complete']['tarif_loc'] = $_POST['tarif_loc'];
-    $_SESSION['valeurs_complete']['charges'] = $_POST['charges'];
+    $_SESSION['valeurs_complete']['annulation'] = $_POST['annulation'];
+
     if(isset($_POST['menage'])){
         $_SESSION['valeurs_complete']['menage'] = $_POST['menage'];
     }
@@ -34,11 +35,7 @@
         $_SESSION['valeurs_complete']['date_depart'] = $_POST["date_depart"];
         $_SESSION['valeurs_complete']['date_arrivee'] = $_POST["date_arrivee"];
     }
-    if (preg_match('/[});]+/', $_POST["annulation"])){
-        $_SESSION['erreurs']['cond_annul'] = "Erreur, pour des mesures de sécurité vous ne pouvez pas mettre les caractères suivant dans vos conditions d'annulation.";
-    } else {
-        $_SESSION['valeurs_complete']['annulation'] = $_POST["annulation"];
-    }
+
     if ($_SESSION['erreurs'] != []){
         header("Location: formulaire_devis.php?demande={$_POST['id_demande']}");
     }
