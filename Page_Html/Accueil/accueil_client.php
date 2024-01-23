@@ -181,3 +181,4 @@ $photo = $stmt->fetch();
 </html>
 
 <script src="./actualiserTri.js" defer></script>
+<script src="./actualiserFiltre.js" defer></script>
