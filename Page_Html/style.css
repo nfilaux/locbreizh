@@ -1677,6 +1677,24 @@ iframe {
     width: 25%;
 }
 
+.devis_select{
+    width: 30%;
+    border-radius: 5px;
+    height: 30px;
+    padding-left: 1vw;
+    background-color: white;
+    color: #345C99;
+    border: #000 solid 1px;
+}
+
+.annulation{
+    display: flex;
+    width: 40%;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+}
+
 .datedevis{
     display: flex;
     flex-direction: row;
