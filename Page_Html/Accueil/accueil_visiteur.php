@@ -78,7 +78,7 @@
         foreach ($stmt->fetchAll() as $card) {
             if ($card['en_ligne'] == true) {
                 ?><section> <?php
-                ?><a class="acclog" href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>"> <?php
+                ?><a class="acclog" href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>"> <?php
                 ?><div class="cardtel">
                 <article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
                 ?><div class="cardphone">
