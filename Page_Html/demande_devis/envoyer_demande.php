@@ -106,7 +106,7 @@
         $stmt->execute();
         $info_user = $stmt->fetch();
 
-        $stmt = $dbh->prepare("SELECT nom,prenom from locbreizh._compte where id_compte = {$_SESSION['id']};");
+        $stmt = $dbh->prepare("SELECT nom,prenom,mail,telephone from locbreizh._compte natural join locbreizh._logement where id_compte = locbreizh._logement.id_proprietaire;");
         $stmt->execute();
         $proprioinfo = $stmt->fetch();
 
@@ -123,16 +123,16 @@
 
         // on regarde les charges a mettre dans le pdf
         if(isset($_POST['animaux'])){
-            $animaux= 'Oui';
+            $animaux= 'nous aurons des animaux';
         }
         else{
-            $animaux = 'Non';
+            $animaux = 'nous n’aurons pas d’animaux';
         }
         if(isset($_POST['menage'])){
-            $menage = 'Oui';    
+            $menage = 'Nous souhaitons ajouter la prestation pour le ménage';    
         }
         else{
-            $menage = 'Non';
+            $menage = 'Nous ne souhaitons pas rajouter la prestation pour le ménage';
         }
 
         //titre sur le document
@@ -143,33 +143,40 @@
         // definit la police et la taille de la police
         $pdf->SetFont('', '', 12);
 
-
         $endatearrive = strtotime($_POST['dateArrivee']);
         $frdatearrive = date("d/m/Y", $endatearrive);
 
         $endatedepart = strtotime($_POST['dateDepart']);
         $frdatedepart = date("d/m/Y", $endatedepart);
-
-        // tableaux avec toutes les infos du pdf
-        $demandeInfo = array(
-            'Logement demandé' => $libelle_log['libelle_logement'],
-            'Nom du propriétaire' => $proprioinfo['nom'] . ' ' . $proprioinfo['prenom'] ,
-            'Nom du client' => $info_user['nom'] . ' ' . $info_user['prenom'] ,
-            'Email du client' => $info_user['mail'],
-            'Date d\'arrivée' => $frdatearrive,
-            'Date de départ' => $frdatedepart,
-            'Nombre de personnes' => $_POST['nb_pers'],
-            'Animaux' =>$animaux,
-            'Menage' => $menage,
-            'Personnes supplémentaire' => $_POST['nb_pers_supp']
-        );
-
         
-        // Boucle pour mettre les informations de la demande dans le PDF
-        foreach ($demandeInfo as $label => $valeur) {
-            $pdf->Cell(0, 10, $label . ' : ' . $valeur, 0, 1);
-        }
 
+        $pdf->Cell(0, 8, $info_user['nom'] . ' ' . $info_user['prenom'], 0, 1);
+        $pdf->Cell(0, 8, $info_user['mail'], 0, 1);
+        $pdf->Cell(0, 8, $info_user['telephone'], 0, 1);
+
+        $pdf->Cell(0, 8, $proprioinfo['nom'] . ' ' . $proprioinfo['prenom'], 0, 1,'R');
+        $pdf->Cell(0, 8, $proprioinfo['mail'], 0, 1,'R');
+        $pdf->Cell(0, 8, $proprioinfo['telephone'], 0, 1,'R');
+
+        $pdf->Ln(15 );
+
+        $pdf->Cell(0, 20, 'Objet : Demande de devis pour la réservation du logement "' . $libelle_log['libelle_logement'] . "\"" , 0,'L');
+        $pdf->Cell(0, 20,  'Madame, Monsieur ' , 0, 'L');
+        $pdf->Cell(0, 5,  'Je me permets de vous contacter afin de solliciter un devis pour la réservation de votre logement "', 0, 'L');
+        $pdf->Cell(0, 5,  $libelle_log['libelle_logement'] . '" pour la période du ' . $frdatearrive . ' au ' . $frdatedepart . '. Nous serons  ' . $_POST['nb_pers'] . ' personnes et ', 0, 'L');
+        $pdf->Cell(0, 5,  $animaux . '.' . $menage, 0, 1);
+        $pdf->Cell(0, 5,  'et ' . $_POST['nb_pers_supp'] . ' personne(s) supplémentaire(s).', 0, 'L');
+
+/*         $paragraphe= "Je me permets de vous contacter afin de solliciter un devis pour la réservation de votre logement :" . $libelle_log['libelle_logement'] . " pour la période du " . $frdatearrive . " au " . $frdatedepart . ". Je serai " . $_POST['nb_pers'] . " personne et $animaux . '.' . $menage" . 'et ' . $_POST['nb_pers_supp'] . ' personne(s) supplémentaire(s).';
+        $pdf->MultiCell(0, 10, $paragraphe, 0, 'J'); */
+        
+        $pdf->Cell(0, 15, '', 0, 1);
+        $pdf->MultiCell(0, 10, "Je vous serais reconnaissant de bien vouloir nous fournir un devis détaillé, incluant le coût total du séjour, ainsi que les éventuels frais supplémentaires." , 0, 'L',false);
+        $pdf->Cell(0, 15, '', 0, 1);
+        $pdf->MultiCell(0, 10, "Je vous remercie par avance pour l'attention que vous porterez à notre demande et reste à votre disposition pour tout complément d'information.", 0, 'L',false);
+        
+        $pdf->Cell(0, 25, "Cordialement,", 0, 1);
+        $pdf->Cell(0, 15, $info_user['nom'] . ' ' . $info_user['prenom'], 0, 1,'R');
         // genere le contenu PDF
         $contenu_pdf = $pdf->Output('demande_devis.pdf', 'S'); // 'S' pour obtenir le contenu du PDF
 

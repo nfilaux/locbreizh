@@ -2706,6 +2706,14 @@ iframe {
         width: 80%;
     }
 
+    main div .logrow {
+        flex-direction: column-reverse;
+    }
+
+    .cardlogmainP {
+        width: 100%;
+    }
+
     /*-------------------------------Conexion-------------------------------*/
 
     .custom-input{
