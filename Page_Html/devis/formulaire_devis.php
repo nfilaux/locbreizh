@@ -71,6 +71,13 @@
             where num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
             $stmt->execute();
             $vac_sup = $stmt->fetch();
+
+            // taxe de sejour
+            $stmt = $dbh->prepare("SELECT taxe_sejour, nb_personnes FROM locbreizh._demande_devis d 
+            JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+            WHERE num_demande_devis = $num_demande;");
+            $stmt->execute();
+            $taxe = $stmt->fetch();
             
         ?>
     <fieldset>
@@ -146,18 +153,6 @@
 
         <?php 
 
-            
-                            ???
-            $stmt = $dbh->prepare("SELECT prix_plage_ponctuelle
-            FROM locbreizh._demande_devis d
-              JOIN locbreizh._logement l ON d.logement = l.id_logement
-              join locbreizh._planning p on p.code_planning = l.code_planning
-              join locbreizh._plage_ponctuelle p1 on p1.code_planning = p.code_planning
-              join locbreizh._plage_ponctuelle_disponible p2 on p2.id_plage_ponctuelle = p1.id_plage_ponctuelle
-            WHERE num_demande_devis = $num_demande and jour_plage_ponctuelle >= '???' and jour_plage_ponctuelle <= '???';");
-            $stmt->execute();
-            $tarif = $stmt->fetch();
-
             // taxe de sejour
             $stmt = $dbh->prepare("SELECT tarif_base_HT FROM locbreizh._demande_devis d 
             JOIN locbreizh._logement l ON  d.logement = l.id_logement 
@@ -171,7 +166,7 @@
             <div class="devisrow">
                 <p class="ren">A VERIFIER</p>
                 <div class="deviscol">
-                <label for="tarif_loc">Tarif HT de la location du logement (en €) :</label>
+                <label for="tarif_loc">Tarif moyen HT par jour(en €) :</label>
                 <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required /> 
                 </div>
                 <input class="btn-ajoutlog" type="button" value="Calculer" onclick="calcul()"/>
@@ -182,36 +177,69 @@
             
             <div id="resultat" class="deviscol">
                     <div class="devisrow">
-                    <p class="ren">Calculer automatiquement</p>
+                    <p class="ren">Prix :</p>
                         <div class="deviscolinput">
-                            <p> Total HT (en €) </p>
-                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                            <p>Sous total HT (en €) </p>
+                            <input class="logvct" id="sousTotal_HT" name="sousTotal_HT" value="" disabled>
                         </div>
                         <div class="deviscolinput">
-                            <p> Total TTC (en €) </p>
-                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                            <p>Sous total TTC (en €) </p>
+                            <input class="logvct" id="sousTotal_TTC" name="sousTotal_TTC" value="" disabled>
                         </div>
                         <div class="deviscolinput">
-                            <p> Taxe de séjour (en €) </p>
-                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                            <p>Frais de service HT (en €) </p>
+                            <input class="logvct" id="fraisService_HT" name="fraisService_HT" value="" disabled>
                         </div>
                     </div>
                     <div class="devisrow">
                     <div class="devisvct">
-                            <p> Montant total du devis (en €) </p>
-                            <input class="logvct" id="totalht" name="totalht" value=""  disabled>
+                            <p>Frais de service TTC (en €) </p>
+                            <input class="logvct" id="fraisService_TTC" name="fraisService_TTC" value=""  disabled>
                         </div>
                     <div class="devisvct">
-                            <p> Frais de plateforme HT (en €) </p>
-                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                            <p>Total taxe_sejour (en €) </p>
+                            <input class="logvct" id="taxe_sejour" name="taxe_sejour" value="" disabled>
                         </div>
                     <div class="devisvct">
-                        <p> Frais de plateforme TTC (en €) </p>
-                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                        <p>Prix total (en €) </p>
+                            <input class="logvct" id="prixTotal" name="prixTotal" value="" disabled>
                         </div>
                     </div>
             </div>
             <script>
+                var menage = <?php echo json_encode($menage); ?>;
+                var animaux = <?php echo json_encode($animaux); ?>;
+                var vac_sup = <?php echo json_encode($vac_sup); ?>;
+                var taxe_sejour = <?php echo json_encode($taxe); ?>;
+                
+                function getPrixPlagePonctuelle() {
+                    const num_demande = <?php echo $_GET['demande']; ?>; // Assuming you pass the 'demande' as a parameter
+
+                    // Get the date values from the form
+                    const dateArrivee = document.getElementById('date_arrivee').value;
+                    const dateDepart = document.getElementById('date_depart').value;
+
+                    fetch(`total_tarif_nuit.php?num_demande=${num_demande}&date_arrivee=${dateArrivee}&date_depart=${dateDepart}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Handle the data received from the server (prices)
+                            const prices = data.prices;
+                            const totalSum = prices.reduce((sum, price) => sum + parseFloat(price), 0);
+                            const average = prices.length > 0 ? totalSum / prices.length : 0;
+
+                            const totalInputElement = document.getElementById('tarif_loc');
+                            totalInputElement.value = `${average}`;
+
+                        })
+                        .catch(error => {
+                            console.error('Error fetching Prices:', error);
+                        });
+                }
+                getPrixPlagePonctuelle();
+
+                document.getElementById('date_arrivee').addEventListener('input', getPrixPlagePonctuelle);
+                document.getElementById('date_depart').addEventListener('input', getPrixPlagePonctuelle);
+
                 function roundDecimal(nombre, precision){
                     var precision = precision || 2;
                     var tmp = Math.pow(10, precision);
@@ -219,33 +247,48 @@
                 }
 
                 function calcul() {
-                    let baliseprixloc = document.getElementById("tarif_loc")
-                    let prix_loc = baliseprixloc.value
-                    let baliseprixcharges = document.getElementById("charges")
-                    let prix_charges = baliseprixcharges.value
-                    let html = "";
-                    total_HT = parseInt(prix_loc) + parseInt(prix_charges);
-                    total_TTC = roundDecimal(total_HT * 1.1,2)
-                    taxe_sejour = 120;
-                    total_montant_devis = roundDecimal(total_TTC + taxe_sejour,2)
-                    total_plateforme_HT = roundDecimal(total_montant_devis*1.01,2)
-                    total_plateforme_TTC = roundDecimal(total_plateforme_HT * 1.2,2)
-                    html += `<div class="deviscol">`;
-                    html += `<div class="devisrow">`;
-                    html += `<p class="ren">Calculer automatiquement</p>`;
-                    html += `<div class="deviscolinput"><p> Total HT (en €) </p><input class="logvct" id="totalht" name="totalht" value="${total_HT}€" disabled></div>`;
-                    html += `<div class="deviscolinput"><p> Total TTC (en €) </p><input class="logvct" id="totalht" name="totalht" value="${total_TTC}€" disabled></div>`;
-                    html += `<div class="deviscolinput"><p> Taxe de séjour (en €) </p><input class="logvct" id="totalht" name="totalht" value="${taxe_sejour}€" disabled></div>`;
-                    html += '</div>';
-                    html += `<div class="devisrow">`;
-                    html += `<div class="devisvct"><p> Montant total du devis</p><input class="logvct" id="totalht" name="totalht" value="${total_montant_devis}€"  disabled></div>`;
-                    html += `<div class="devisvct"><p> Frais de plateforme HT</p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_HT}€" disabled></div>`;
-                    html += `<div class="devisvct"><p> Frais de plateforme TT</p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_TTC} €" disabled></div>`;
-                    html += '</div>';
-                    html += '</div>';
-                    document.getElementById("resultat").innerHTML = html;
-                    document.getElementById("envoyerDevisBtn").removeAttribute("disabled");
+                    const tarif_loc_input = document.getElementById('tarif_loc');
+                    const tarif_nuit = parseFloat(tarif_loc_input.value.replace(',', '.'));
+
+                    console.log(tarif_nuit);
+
+                    const nb_personnes = parseInt(document.getElementById('nb_pers').value);
+
+                    // Vérifiez si les cases à cocher sont cochées
+                    const menageChecked = document.getElementById('menage').checked;
+                    const animauxChecked = document.getElementById('animaux').checked;
+
+                    // Calculez total_charges en fonction des cases cochées
+                    let total_charges = 0;
+                    if (menageChecked) {
+                        total_charges += parseFloat(menage.prix_charges);
+                        
+
+                    }
+                    if (animauxChecked) {
+                        total_charges += parseFloat(animaux.prix_charges);
+                    }
+                    total_charges += parseFloat(vac_sup.prix_charges) * parseInt(vac_sup.nombre);
+
+                    console.log(total_charges);
+
+                    const nuitees_HT = tarif_nuit;
+                    const sousTotal_HT = nuitees_HT + total_charges;
+                    const sousTotal_TTC = sousTotal_HT * 1.1;
+                    const fraisService_HT = 0.1 * sousTotal_HT;
+                    const fraisService_TTC = fraisService_HT * 1.2;
+                    const total_taxe_sejour =  taxe_sejour * (vac_sup.nombre + nb_personnes);
+                    const prixTotal = sousTotal_TTC + fraisService_TTC + taxe_sejour;
+
+                    document.getElementById('sousTotal_HT').value = `${sousTotal_HT}`;
+                    document.getElementById('sousTotal_TTC').value = `${sousTotal_TTC}`;
+                    document.getElementById('fraisService_HT').value = `${fraisService_HT}`;
+                    document.getElementById('fraisService_TTC').value = `${fraisService_TTC}`;
+                    document.getElementById('taxe_sejour').value = `${total_taxe_sejour}`;
+                    document.getElementById('prixTotal').value = `${prixTotal}`;
                 }
+                document.getElementById('tarif_loc').addEventListener('input', calcul);
+                calcul();
             </script>
             <br/>
             <input type="hidden" id="id_demande" name ="id_demande" value=<?php echo $_GET['demande'];?>>

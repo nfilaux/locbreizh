@@ -41,7 +41,7 @@
     }
     else {
         // taxe de sejour
-        $stmt = $dbh->prepare("SELECT taxe_sejour FROM locbreizh._demande_devis d 
+        $stmt = $dbh->prepare("SELECT taxe_sejour, nb_personnes FROM locbreizh._demande_devis d 
         JOIN locbreizh._logement l ON  d.logement = l.id_logement 
         WHERE num_demande_devis = {$_POST['id_demande']};");
         $stmt->execute();
@@ -95,8 +95,9 @@
         $sousTotal_TTC = $sousTotal_HT * 1.1;
         $fraisService_HT = 0.1* $sousTotal_HT;
         $fraisService_TTC = $fraisService_HT * 1.2;
-        $taxe_sejour = $taxe["taxe_sejour"];
+        $taxe_sejour = $taxe["taxe_sejour"] * ($taxe["nb_personnes"] + $pers_supp['nombre']);
         $prixTotal = $sousTotal_TTC + $fraisService_TTC + $taxe_sejour;
+    
 
 
         $date_devis = date("Y-m-d");

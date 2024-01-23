@@ -401,6 +401,7 @@ CREATE TABLE
         num_demande_devis INTEGER NOT NULL,
         taxe_sejour integer not null,
         url_detail varchar(50) not null,
+        nb_personnes NUMERIC(3) NOT NULL,
         accepte boolean,
         annule boolean DEFAULT FALSE NOT NULL,
         visibleP boolean DEFAULT TRUE NOT NULL,
