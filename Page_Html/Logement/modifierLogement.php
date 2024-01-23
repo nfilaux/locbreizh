@@ -307,6 +307,7 @@ $services = $r_services->fetchAll();
         <?php
         // appel du footer
         include('../header-footer/choose_footer.php'); 
+        unset($_SESSION["erreurs"]);
     ?>
 </body>
 

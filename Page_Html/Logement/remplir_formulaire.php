@@ -203,7 +203,7 @@
                                     </div>
                                 </div>
                                 <div class="logcolumn">
-                                <label for='service'>Service :</label><br>
+                                <label for='service'>Services :</label><br>
                                     <div class="logcheckbox">
                                     <input id='' type='checkbox' name=''>Ménage
                                     </div>
@@ -220,6 +220,8 @@
                 </div>
                 <div class="logpc">
                     <h4 class="titreAL">Prix des charges</h4>
+                    <div class="logcol">
+
                     <div class="logrow">
                         <div class="logpc">
                             <label for='taxe_sejour'>Taxe de séjour pour une personne : </label>
@@ -236,13 +238,14 @@
                             <label for='charges_menage'>Prix charge additionnelle "ménage" : </label>
                             <input class="cardprixcharge" id='charges_menage' type='number' name='charges1P' min='0' max='1000' step='1' required>
                         </div>
-
+                    
                         <?php 
                             if(isset($_SESSION['erreurs']['menage'])){
                                 echo "<p>" . $_SESSION['erreurs']['menage'] . "<p>";
                             };
                         ?>
-
+                    </div>
+                    <div class="logrow">
                         <div class="logpc">
                             <label for='charges_animaux'>Prix charge additionnelles "animaux" : </label>
                             <input class="cardprixcharge" id='charges_animaux' type='number' name='charges2P' min='0' max='1000' step='1' required>
@@ -264,6 +267,7 @@
                                 echo "<p>" . $_SESSION['erreurs']['pers_sup'] . "<p>";
                             };
                         ?>
+                        </div>
                     </div>
                 </div>
                 <div class="logpc">

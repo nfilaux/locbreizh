@@ -115,8 +115,7 @@
         // cree une nouvelle page
         $pdf->AddPage();
 
-        // definit la police et la taille de la police
-        $pdf->SetFont('', '', 12);
+        
 
         // on regarde les charges a mettre dans le pdf
         if(isset($_POST['animaux'])){
@@ -126,15 +125,23 @@
             $animaux = 'Non';
         }
         if(isset($_POST['menage'])){
-            $menage = 'Oui';
+            $menage = 'Oui';    
         }
         else{
             $menage = 'Non';
         }
 
+        //titre sur le document
+        $pdf->SetFont('', 'B', 30);
+        $pdf->Cell(0, 25, "Demande de devis", 0, 1,'C');
+
+        // definit la police et la taille de la police
+        $pdf->SetFont('', '', 12);
+
         // tableaux avec toutes les infos du pdf
         $demandeInfo = array(
-            'Nom' => $info_user['nom'] . ' ' . $info_user['prenom'] ,
+            'Logement demandé' => $libelle_log['libelle_logement'],
+            'Nom du client' => $info_user['nom'] . ' ' . $info_user['prenom'] ,
             'Email' => $info_user['mail'],
             'Date d\'arrivée' => $_POST['dateArrivee'],
             'Date de départ' => $_POST['dateDepart'],
@@ -144,13 +151,14 @@
             'Personnes supplémentaire' => $_POST['nb_pers_supp']
         );
 
+        
         // Boucle pour mettre les informations de la demande dans le PDF
         foreach ($demandeInfo as $label => $valeur) {
-            $pdf->Cell(0, 10, $label . ': ' . $valeur, 0, 1);
+            $pdf->Cell(0, 10, $label . ' : ' . $valeur, 0, 1);
         }
 
         // genere le contenu PDF
-        $contenu_pdf = $pdf->Output('demande_devis.pdf', 'S'); // 'S' pour obtenir le contenu du PDF
+        $contenu_pdf = $pdf->Output('demande_devis.pdf', 'I'); // 'S' pour obtenir le contenu du PDF
 
         // enregistre le PDF dans un dossier
         $chemin_dossier = 'pdf_demande/';
