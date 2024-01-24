@@ -100,7 +100,7 @@ $photo = $stmt->fetch();
                             case 'prixMin' :    $filtre = "WHERE tarif_base_ht>=$choix";  break;
                             case 'prixMax' :    $filtre = "WHERE tarif_base_ht<=$choix"; break;
                             case 'lieu' :       $filtre = "NATURAL JOIN locbreizh._adresse WHERE _adresse.ville='$choix'"; break;
-                            case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire ON _logement.id_proprietaire=_proprietaire.id_proprietaire JOIN locbreizh._compte ON _compte.id_compte=_proprietaire.id_proprietaire WHERE _compte.nom='$choix'"; break;
+/*SENSIBILITE A LA CASSE*/  case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire ON _logement.id_proprietaire=_proprietaire.id_proprietaire JOIN locbreizh._compte ON _compte.id_compte=_proprietaire.id_proprietaire WHERE _compte.nom='$choix'"; break;
                             case 'voyageurs' :  $filtre = "WHERE nb_personnes_logement=$choix;"; break;
                         }
                     }
