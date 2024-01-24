@@ -321,8 +321,6 @@ if ($_FILES['image6P']['name']!= '') {
         if (isset($_SESSION['logement_data'])) {
             $logement_data = $_SESSION['logement_data'];
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-
 
 ?>
         <div class="headtabloP"> 
@@ -347,7 +345,7 @@ if ($_FILES['image6P']['name']!= '') {
                             case 1 : ?><img class="photoprincipal" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?>"><?php
                                      break;
                             case 2 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?>">
-                                    <img class="photosecondaireP" src="../Ressources/Images/"<?php echo $nouveau_nom_image2;?>"><?php
+                                    <img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image2;?>"><?php
                                     break; 
                             case 3 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?>">
                                     <img class="photosecondaireI" src="../Ressources/Images/<?php echo $nouveau_nom_image2;?>">
@@ -524,19 +522,11 @@ if ($_FILES['image6P']['name']!= '') {
             <h3 class="policetitre">Localisation</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1364671.57561899!2d-4.397375693978974!3d48.08372166501683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4811ca61ae7e8eaf%3A0x10ca5cd36df24b0!2sBretagne!5e0!3m2!1sfr!2sfr!4v1702909132704!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 <?php
-                $stmt = $dbh->prepare(
-                    'SELECT ville, nom_rue, numero_rue
-                    from locbreizh._logement
-                    natural JOIN locbreizh._adresse
-                    where id_logement = :id'
-                );
-                $stmt->bindParam(':id', $_GET['logement']);
-
 
             $stmt->execute();
             $info = $stmt->fetch();
             ?>
-            <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>   
+            <p><?php echo 'Adresse : ' . $ville . ' ( ' . $code_postal . ' )' ?></p>   
             
         </div>
         <hr>
