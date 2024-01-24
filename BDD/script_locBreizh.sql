@@ -389,6 +389,8 @@ CREATE TABLE
     _devis (
         num_devis serial,
         client integer NOT NULL,
+        date_arrivee DATE NOT NULL,
+        date_depart DATE NOT NULL,
         prix_total_devis NUMERIC(5, 2) NOT NULL,
         tarif_HT_location_nuitee_devis NUMERIC(5, 2) NOT NULL,
         sous_total_ht_devis NUMERIC(5, 2) NOT NULL,

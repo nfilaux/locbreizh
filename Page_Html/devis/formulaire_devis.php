@@ -57,23 +57,54 @@
 
             // recupere le nombre maximum de personnes pour le logement
 
-            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._comporte_charges_associee_demande_devis 
-            where num_demande_devis = $num_demande and nom_charges = 'menage';");
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            FROM locbreizh._demande_devis d 
+            JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+            JOIN locbreizh._possede_charges_associee_logement c on c.id_logement = l.id_logement
+            WHERE num_demande_devis = $num_demande and nom_charges = 'menage';");
             $stmt->execute();
-            $menage = $stmt->fetch();
+            $menage1 = $stmt->fetch();
 
-            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._comporte_charges_associee_demande_devis 
-            where num_demande_devis = $num_demande and nom_charges = 'animaux';");
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            FROM locbreizh._demande_devis d 
+            JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+            JOIN locbreizh._possede_charges_associee_logement c on c.id_logement = l.id_logement
+            WHERE num_demande_devis = $num_demande and nom_charges = 'animaux';");
             $stmt->execute();
-            $animaux = $stmt->fetch();
+            $animaux1 = $stmt->fetch();
 
-            $stmt = $dbh->prepare("SELECT prix_charges, nombre from locbreizh._comporte_charges_associee_demande_devis 
-            where num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            FROM locbreizh._demande_devis d 
+            JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+            JOIN locbreizh._possede_charges_associee_logement c on c.id_logement = l.id_logement
+            WHERE num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
             $stmt->execute();
-            $vac_sup = $stmt->fetch();
+            $vac_sup1 = $stmt->fetch();
+
+
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            from locbreizh._comporte_charges_associee_demande_devis
+            WHERE num_demande_devis = $num_demande and nom_charges = 'menage';");
+            $stmt->execute();
+            $menage2 = $stmt->fetch();
+
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            from locbreizh._comporte_charges_associee_demande_devis 
+            WHERE num_demande_devis = $num_demande and nom_charges = 'animaux';");
+            $stmt->execute();
+            $animaux2 = $stmt->fetch();
+
+
+            $stmt = $dbh->prepare("SELECT nombre 
+            from locbreizh._comporte_charges_associee_demande_devis 
+            WHERE num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
+            $stmt->execute();
+            $vac_sup2 = $stmt->fetch();
+
 
             // taxe de sejour
-            $stmt = $dbh->prepare("SELECT prix_journalier_adulte FROM locbreizh._demande_devis d 
+            $stmt = $dbh->prepare("SELECT prix_journalier_adulte 
+            FROM locbreizh._demande_devis d 
             JOIN locbreizh._logement l ON  d.logement = l.id_logement 
             join locbreizh._taxe_sejour t on l.taxe_sejour = t.id_taxe
             WHERE num_demande_devis = $num_demande;");
@@ -125,18 +156,18 @@
             <h2 style="text-align:center;  font-family: 'Quicksand';">Charges aditionnelles</h2>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
-                <input type="checkbox" id="animaux" name="animaux" <?php  if(isset($_SESSION['valeurs_complete']['menage'])){echo "checked";} else if ($menage['prix_charges'] !=''){echo 'checked';}; ?>>
+                <input type="checkbox" id="animaux" name="animaux" <?php  if(isset($_SESSION['valeurs_complete']['menage'])){echo "checked";} else if ($menage2['prix_charges'] !=''){echo 'checked';}; ?>>
                  <label for="animaux"> Animaux </label>
                 </div>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
-                <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo "checked";} else if($animaux['prix_charges'] !=''){ echo 'checked';}; ?>>
+                <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo "checked";} else if($animaux2['prix_charges'] !=''){ echo 'checked';}; ?>>
                 <label for="menage"> Menage </label>
                 </div>
                 <!--pre-remplie les infos si ils sont dans get-->
                 <div class="logpc">
                 <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
-                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else if ($vac_sup['nombre']!=''){echo $vac_sup['nombre'];}; ?>"/>
+                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else if ($vac_sup2['nombre']!=''){echo $vac_sup['nombre'];}; ?>"/>
                 </div>
             </div>
             </div>
@@ -234,9 +265,9 @@
 </body>
 </html>
 <script>
-    var menage = <?php echo json_encode($menage); ?>;
-    var animaux = <?php echo json_encode($animaux); ?>;
-    var vac_sup = <?php echo json_encode($vac_sup); ?>;
+    var menage = <?php echo json_encode($menage1); ?>;
+    var animaux = <?php echo json_encode($animaux1); ?>;
+    var vac_sup = <?php echo json_encode($vac_sup1); ?>;
     var taxe_sejour = <?php echo json_encode($taxe); ?>;
 
     function arrondi(number) {
