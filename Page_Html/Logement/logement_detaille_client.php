@@ -20,7 +20,6 @@ $photo = $stmt->fetch();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page détaillé d'un logement</title>
-    <script src="./scriptCalendrier.js" defer></script>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
 </head>
@@ -135,7 +134,7 @@ $photo = $stmt->fetch();
                             <input class="jesuiscache" type='hidden' name="depart" id="depart" value="">
                             <button class="btn-demlog" type="submit">Demander un devis</button>
                             <div class="logrowt">
-                                <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
+                                <p class="nuit"></p>
                             </div>
                         </form>
                     </div>
@@ -291,6 +290,59 @@ $photo = $stmt->fetch();
             </div>
         </div>
         
+        <script src="./scriptCalendrier.js"></script>
+
+        <?php
+            try {
+                $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+                $code = $dbh->prepare("SELECT code_planning FROM locbreizh._planning NATURAL JOIN locbreizh._logement WHERE id_logement = {$_GET['logement']};");
+
+                $code->execute();
+
+                $code = $code->fetch()['code_planning'];
+
+                $plageDispo = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
+                ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
+                $plageDispo->execute();
+                $plageDispo = $plageDispo->fetchAll();
+
+            } catch (PDOException $e) {
+                print "Erreur !:" . $e->getMessage() . "<br/>";
+                die();
+            }
+        ?>
+
+        <script>
+            //Appel de la fonction pour créer les calendriers
+            afficherCalendrier("inactif");
+
+            changerDates();
+
+            var tab = <?php echo json_encode($plageDispo); ?>;
+            var tabRes = [];
+            var tabMotif = [];
+            for (i=0 ; i < tab.length; i++){
+                split = tab[i]["jour_plage_ponctuelle"];
+                part1 = split.split('-')[1];
+                if (part1[0] == '0'){
+                    part1 = part1[1];
+                }
+                part2 = split.split('-')[2];
+                if (part2[0] == '0'){
+                    part2 = part2[1];
+                }
+                tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
+                tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
+            }
+            afficherPlages(tabRes, "normal", tabMotif, "D");
+            if(document.getElementById(tabRes[0])){
+                changerJour(tabRes[0]);
+            }
+        </script>
+
         <div>
             <?php
                 $stmt = $dbh->prepare(

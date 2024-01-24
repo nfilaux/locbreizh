@@ -25,7 +25,6 @@
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="../Logement/scriptCalendrier.js" defer></script>
     <script src="../scriptPopup.js"></script>
 </head>
 
@@ -188,8 +187,10 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <form action="../Planning/plageBack.php" method="post">
                                         
+                                        <?php erreur("plage") ?>
                                         <input class="jesuiscache" type='hidden' name="debut_plage_ponctuelle" id="debut_plage_ponctuelle" value="" required>
                                         <input class="jesuiscache" type='hidden' name="fin_plage_ponctuelle" id="fin_plage_ponctuelle" value="" required>
 
@@ -203,7 +204,7 @@
 
                                         <label for="libelleIndispo"> Raison d'indisponibilité : </label>
                                         <input type="text" id="libelleIndispo" name="libelleIndispo" disabled=true/>
-                                        <br><br>
+                                        <br><?php erreur("libelleIndispo") ?><br>
 
                                         <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
 
@@ -211,7 +212,20 @@
                                         <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
 
                     
-                                        <button type="submit" class="btn-ajt">Ajouter</button>
+                                        <button type="submit" class="btn-ajt">Ajouter plage</button>
+                                    </form>
+
+                                    <form action="../Planning/supprimerPlage.php" method="post">
+                                        
+                                        <input class="jesuiscache" type='hidden' name="debut_plage_suppr" id="debut_plage_suppr" value="" required>
+                                        <input class="jesuiscache" type='hidden' name="fin_plage_suppr" id="fin_plage_suppr" value="" required>
+                                        
+                                        <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
+
+                                        <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
+                                        <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
+
+                                        <button type="submit" class="btn-ajt">Supprimer plage</button>
                                     </form>
 
                                 
@@ -227,8 +241,6 @@
                                             }
                                         }
                                     </script>
-                                    
-                                    <hr><h1>Les plages ponctuelles</h1><br>
 
                                     <?php
                                     try {
@@ -240,36 +252,70 @@
 
                                         $code->execute();
 
-                                        $lesPlages = $dbh->prepare("SELECT id_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE code_planning = {$code->fetch()['code_planning']} ;");
+                                        $code = $code->fetch()['code_planning'];
+
+                                        $lesPlages = $dbh->prepare("SELECT id_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE code_planning = {$code} ;");
                                         
                                         $lesPlages->execute();
+
+                                        $plageIndispo = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
+                                        ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_indisponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
+                                        $plageIndispo->execute();
+                                        $plageIndispo = $plageIndispo->fetchAll();
+
+                                        $plageDispo = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
+                                        ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
+                                        $plageDispo->execute();
+                                        $plageDispo = $plageDispo->fetchAll();
 
                                     } catch (PDOException $e) {
                                         print "Erreur !:" . $e->getMessage() . "<br/>";
                                         die();
                                     }
+                                    ?>
 
-                                    $lesPlages = $lesPlages->fetchAll();
+                                <script src="../Logement/scriptCalendrier.js"></script>
 
-                                    if($lesPlages != null){
-                                        foreach($lesPlages as $plage){  ?>
-                                            <div class="unePlage">
-                                                <?php 
-                                                $jour = new DateTime($plage['jour_plage_ponctuelle']);
-                                                echo $jour->format("d/m/Y") . " : ";
-                                                ?>
-                                                <form action="../Planning/supprimerPlage.php" method=post>
-                                                    <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
-                                                    <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
-                                                    <input type="hidden" name="id_plage_ponctuelle" value="<?php echo $plage['id_plage_ponctuelle'] ?>"/>
-                                                    <button type="submit">SUPPRIMER</button>
-                                                </form>
-                                            </div>
-                                    <?php }
-                                    } else { ?>
-                                     <p> Aucune plage définie </p>
-                                
-                                <?php } ?>
+                                <script>
+                                    //Appel de la fonction pour créer les calendriers
+                                    afficherCalendrier("normal");
+
+                                    var tab = <?php echo json_encode($plageIndispo); ?>;
+                                    var tabRes = [];
+                                    var tabMotif = [];
+                                    for (i=0 ; i < tab.length; i++){
+                                        split = tab[i]["jour_plage_ponctuelle"];
+                                        part1 = split.split('-')[1];
+                                        if (part1[0] == '0'){
+                                            part1 = part1[1];
+                                        }
+                                        part2 = split.split('-')[2];
+                                        if (part2[0] == '0'){
+                                            part2 = part2[1];
+                                        }
+                                        tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
+                                        tabMotif[i] = tab[i]["libelle_indisponibilite"];
+                                    }
+                                    afficherPlages(tabRes, "indisponible", tabMotif, "I");
+
+                                    var tab = <?php echo json_encode($plageDispo); ?>;
+                                    var tabRes = [];
+                                    var tabMotif = [];
+                                    for (i=0 ; i < tab.length; i++){
+                                        split = tab[i]["jour_plage_ponctuelle"];
+                                        part1 = split.split('-')[1];
+                                        if (part1[0] == '0'){
+                                            part1 = part1[1];
+                                        }
+                                        part2 = split.split('-')[2];
+                                        if (part2[0] == '0'){
+                                            part2 = part2[1];
+                                        }
+                                        tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
+                                        tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
+                                    }
+                                    afficherPlages(tabRes, "disponible", tabMotif, "D");
+                                </script>
                                             
                                 </div>  
                             </div>

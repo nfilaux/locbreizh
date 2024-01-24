@@ -8,7 +8,14 @@
         $_SESSION['erreurs'] = ["prix" => "Le prix doit être supérieur à 0\n"];
         $err = true;
     }
-    print_r($_POST['libelleIndispo']);
+    else if ($_POST['libelleIndispo'] === ""){
+        $_SESSION['erreurs'] = ["libelleIndispo" => "Veuillez renseigner la raison de l'indisponibilitée\n"];
+        $err = true;
+    }
+    if ($_POST['debut_plage_ponctuelle'] === "" || $_POST['fin_plage_ponctuelle'] === ""){
+        $_SESSION['erreurs'] = ["plage" => "Veuillez sélectionner une plage\n"];
+        $err = true;
+    }
 
     if(!$err){
         $tabJours = [];
