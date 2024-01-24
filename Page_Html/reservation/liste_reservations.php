@@ -30,29 +30,63 @@ $photo = $stmt->fetch();
         <div class="headtablo"> 
             <h1>Mes Réservations</h1>
         </div>
-        <div style="display:flex; flex-direction:column-reverse;">
-            <?php
-            include('../parametre_connexion.php');
+        <div class="filters">
+            <form action="filtrage.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
+                <div>
+                    <label for="prix_min">Prix min :</label>
+                    <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
+                </div>
+                <div>
+                    <label for="prix_max">Prix max :</label>
+                    <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
+                </div>
+                
+                <div>
+                    <label for="date">Date :</label>
+                    <input type="Date" id="date" name="date" placeholder="<?php if (isset($_GET['date'])){echo $_GET['date'];}  ?>"/>   
+                </div>
+                <br>
+                <button type="submit" id="filtrage">Filtrer</button>
+            </form>
+        </div>
+        
+        <?php if (isset($_GET['erreur'])){ ?>
+            <p class='err'>Le prix min doit être inférieur au prix max</p>
+        <?php }?>
+        <div style="display:flex; flex-direction:column-reverse;"><?php
                 try {
-                    
+                    $filtre = '';
 
-                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                    if (sizeof($_GET)==1){
+                        foreach ($_GET as $NomFiltre => $choix) {
+                            switch($NomFiltre){
+                                case 'prixMin' :    $filtre = "WHERE d.prix_total_devis>=$choix;";  break;
+                                case 'prixMax' :    $filtre = "WHERE d.prix_total_devis<=$choix;"; break;
+                                case 'date' :       $filtre = "WHERE d.date_depart>='$choix' AND d.date_arrivee<='$choix'"; break;
+                            }
+                        }
+                    } else if (sizeof($_GET)>1){
+                        $prix1 = $_GET['prixMin'];
+                        $prix2 = $_GET['prixMax'];
+                        $filtre = "WHERE d.prix_total_devis>=$prix1 AND d.prix_total_devis<=$prix2";
+                    }
+
+                    $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale, libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
+                        from locbreizh._reservation r
+                        join locbreizh._logement l on l.id_logement = r.logement
+                        join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
+                        join locbreizh._compte c on c.id_compte = p.id_proprietaire
+                        join locbreizh._adresse a on l.id_adresse = a.id_adresse
+                        join locbreizh._facture f on f.num_facture = r.facture
+                        join locbreizh._devis d on d.num_devis = f.num_devis $filtre");     
+
                 } catch (PDOException $e) {
                     print "Erreur !:" . $e->getMessage() . "<br/>";
                     die();
                 } 
 
                 
-                $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale, libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
-                from locbreizh._reservation r
-                join locbreizh._logement l on l.id_logement = r.logement
-                join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
-                join locbreizh._compte c on c.id_compte = p.id_proprietaire
-                join locbreizh._adresse a on l.id_adresse = a.id_adresse
-                join locbreizh._facture f on f.num_facture = r.facture
-                join locbreizh._devis d on d.num_devis = f.num_devis");
+                
                 $stmt->execute();
                 $reservations = $stmt->fetchAll();
 
@@ -85,6 +119,8 @@ $photo = $stmt->fetch();
                 <?php } ?>
             
         </div>
+            
+                
     </main>
     <?php
         // appel du footer
@@ -93,3 +129,4 @@ $photo = $stmt->fetch();
 </body>
 
 </html>
+<script src="./actualiserFiltre.js" defer></script>

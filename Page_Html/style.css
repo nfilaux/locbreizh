@@ -30,7 +30,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    min-width: 400px;
+    min-width: 350px;
 }
 
 .pagecompte {
@@ -1695,6 +1695,14 @@ iframe {
     color: #000;
 }
 
+.indisponible{
+    color: red;
+}
+
+.disponible{
+    color: green;
+}
+
 .calendrier ul{
     display: flex;
     list-style: none;
@@ -1728,7 +1736,7 @@ iframe {
     transform: translate(-50%, -50%);
 }
 
-.entreDeux:hover::before, .normal:hover::before{
+.entreDeux:hover::before, .normal:hover::before, .indisponible:hover::before, .disponible:hover::before{
     cursor: pointer;
     background-color: #D3D3D3;
 }
