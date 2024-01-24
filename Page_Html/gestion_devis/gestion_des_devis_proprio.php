@@ -90,7 +90,7 @@
                 <div class="overlay_plages" id='<?php echo 'ov' . $demande['num_demande_devis']; ?>' onclick="closePopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')"></div>
                 <div id="<?php echo $demande['num_demande_devis']; ?>" class="popup_devis"> 
                     <p>Êtes-vous certains de vouloir supprimer cet echange ?</p>
-                    <p>(vous ne pourrez plus y accéder par la suite et la demande sera annulée)</p>
+                    <p>(vous ne pourrez plus y accéder par la suite)</p>
                     <div>
                         <a href="fermer_demande_devis.php?id=<?php echo $demande['num_demande_devis']; ?>"><button class="btn_ferm_oui">OUI</button></a>
                         <button onclick="closePopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')" class="btn_ferm_annulerP">ANNULER</button>
@@ -141,7 +141,7 @@
                 <div class="overlay_plages" id='<?php echo 'ov' . $devis['num_devis']; ?>' onclick="closePopup('<?php echo $devis['num_devis']; ?>', '<?php echo 'ov' . $devis['num_devis']; ?>')"></div>
                 <div id="<?php echo $devis['num_devis']; ?>" class="popup_devis"> 
                     <p>Êtes-vous certains de vouloir supprimer cet echange ?</p>
-                    <p>(vous ne pourrez plus y accéder par la suite et la proposition de devis sera annulée)</p>
+                    <p>(vous ne pourrez plus y accéder par la suite)</p>
                     <div>
                         <a href="fermer_devis.php?id=<?php echo $devis['num_devis']; ?>"><button class="btn_ferm_oui">OUI</button></a>
                         <button onclick="closePopup('<?php echo $devis['num_devis']; ?>', '<?php echo 'ov' . $devis['num_devis']; ?>')" class="btn_ferm_annulerP">ANNULER</button>
