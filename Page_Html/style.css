@@ -607,6 +607,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     color: #745086;
 }
 
+.btn-accueilins:link{
+    color: #745086;
+}
+
 .btn-accueilins h5, .btn-accueil h5{
     margin: auto;
 }
