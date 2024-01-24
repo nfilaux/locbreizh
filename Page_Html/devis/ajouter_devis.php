@@ -51,34 +51,8 @@
 
         $taxe_sejour = $_POST['taxe_sejour'];
 
-<<<<<<< HEAD
-        /*
-        • Tarif de location des nuitées HT
-        • Charges additionnelles HT
-        • Sous-total (location et charges) HT et TTC (application d’une TVA de 10%)
-        • Frais de service de la plateforme HT et TTC (application d’une TVA de 20%)
-        • Taxe de séjour (pas de TVA applicable)
-        • Prix total du devis
-        */
-
-        //on recherhce les infos du proprio
-        $stmt = $dbh->prepare("SELECT nom,prenom,mail,telephone from locbreizh._compte natural join locbreizh._logement where id_compte = locbreizh._logement.id_proprietaire;");
-        $stmt->execute();
-        $proprioinfo = $stmt->fetch();
-
-        // doit calculer en fonction nb jours !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // calcul
-        $nuitees_HT = $_POST['tarif_loc'];
-        $sousTotal_HT = $nuitees_HT + $totalCharges_HT;
-        $sousTotal_TTC = $sousTotal_HT * 1.1;
-        $fraisService_HT = 0.1* $sousTotal_HT;
-        $fraisService_TTC = $fraisService_HT * 1.2;
-        $taxe_sejour = $taxe["taxe_sejour"] * ($taxe["nb_personnes"] + $pers_supp['nombre']);
-        $prixTotal = $sousTotal_TTC + $fraisService_TTC + $taxe_sejour;
-=======
         $prixTotal = $_POST['prixTotal'];
     
->>>>>>> 801899c965e21f4a2163c1ca9f3add248f7e8352
 
         $date_devis = date("Y-m-d");
         $date_devis_fr = date("d/m/Y", $date_devis);
@@ -234,7 +208,6 @@
         // definit la police et la taille de la police
         $pdf->SetFont('', '', 12);
 
-<<<<<<< HEAD
         $endatearrive = strtotime($_POST['dateArrivee']);
         $frdatearrive = date("d/m/Y", $endatearrive);
 
@@ -258,14 +231,6 @@
         // tableaux avec toutes les infos du pdf
         $devisInfo = array(
             'Libelle logement' => $libelle_log['libelle_logement'],
-=======
-
-        // tableaux avec toutes les infos du pdf
-        $devisInfo = array(
-            'Nom' => $infos_user['nom'],
-            'Prenom' => $infos_user['prenom'],
-            'Libelle logement' => $logement['libelle_logement'],
->>>>>>> 801899c965e21f4a2163c1ca9f3add248f7e8352
             'Tarif ht location nuitee devis' => $nuitees_HT . ' €',
             'Prix charges HT' => $totalCharges_HT. ' €',
             'Sous total HT' => $sousTotal_HT. ' €',
