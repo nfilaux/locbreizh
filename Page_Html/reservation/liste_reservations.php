@@ -40,8 +40,7 @@ $photo = $stmt->fetch();
                     <label for="prix_max">Prix max :</label>
                     <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
                 </div>
-                <?php if (isset($_GET['erreur'])){ ?>
-                    <p class='err'>Le prix min doit être inférieur au prix max</p>
+                
                 <div>
                     <label for="date">Date :</label>
                     <input type="Date" id="date" name="date" placeholder="<?php if (isset($_GET['date'])){echo $_GET['date'];}  ?>"/>   
@@ -50,8 +49,11 @@ $photo = $stmt->fetch();
                 <button type="submit" id="filtrage">Filtrer</button>
             </form>
         </div>
-        <div style="display:flex; flex-direction:column-reverse;">
-            <?php } else {
+        
+        <?php if (isset($_GET['erreur'])){ ?>
+            <p class='err'>Le prix min doit être inférieur au prix max</p>
+        <?php }?>
+        <div style="display:flex; flex-direction:column-reverse;"><?php
                 try {
                     $filtre = '';
 
@@ -60,10 +62,10 @@ $photo = $stmt->fetch();
                             switch($NomFiltre){
                                 case 'prixMin' :    $filtre = "WHERE d.prix_total_devis>=$choix;";  break;
                                 case 'prixMax' :    $filtre = "WHERE d.prix_total_devis<=$choix;"; break;
-                                //case 'date' :       $filtre = "WHERE "; break;
+                                case 'date' :       $filtre = "WHERE d.date_depart>='$choix' AND d.date_arrivee<='$choix'"; break;
                             }
                         }
-                    } else {
+                    } else if (sizeof($_GET)>1){
                         $prix1 = $_GET['prixMin'];
                         $prix2 = $_GET['prixMax'];
                         $filtre = "WHERE d.prix_total_devis>=$prix1 AND d.prix_total_devis<=$prix2";
@@ -114,7 +116,7 @@ $photo = $stmt->fetch();
                             
                         </secion>
                     </div>
-                <?php }} ?>
+                <?php } ?>
             
         </div>
             
