@@ -36,7 +36,7 @@
         $list_demande = $stmt->fetchAll();
 
         $stmt = $dbh->prepare(
-            "SELECT num_devis, _devis.nb_personnes, date_arrivee, date_depart, _devis.url_detail, libelle_logement, photo_principale, _devis.accepte, annule
+            "SELECT num_devis, _devis.nb_personnes, _devis.date_arrivee, _devis.date_depart, _devis.url_detail, libelle_logement, photo_principale, _devis.accepte, annule
             from locbreizh._devis
             join locbreizh._demande_devis on _devis.num_demande_devis = _demande_devis.num_demande_devis
             join locbreizh._logement l on l.id_logement =  logement

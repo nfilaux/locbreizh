@@ -55,8 +55,8 @@
     
 
         $date_devis = date("Y-m-d");
+     
 
-    
 
         // cherche le libelle(pour pdf) + id(pour charges) + id_taxe
         $stmt = $dbh->prepare("SELECT libelle_logement, id_logement,taxe_sejour FROM locbreizh._demande_devis d 
@@ -85,7 +85,7 @@
         frais_service_platforme_HT_devis,
         frais_service_platforme_TTC_devis,
         date_devis, date_validite, condition_annulation,
-        num_demande_devis, taxe_sejour, url_detail,nb_personnes )
+        num_demande_devis, taxe_sejour, url_detail,nb_personnes,date_arrivee,date_depart )
         VALUES (
         :client,
         :prixTotal,
@@ -100,7 +100,9 @@
         :id_demande,
         :taxe_sejour,
         :url_detail,
-        :nb_personnes)");
+        :nb_personnes,
+        :date_arrivee,
+        :date_depart)");
 
         $url = 'devis' . $id_devis . '.pdf';
         $reg_devis->bindParam(':client', $infos_user['id_compte']);
@@ -117,6 +119,8 @@
         $reg_devis->bindParam(':taxe_sejour', $logement['taxe_sejour']);
         $reg_devis->bindParam(':url_detail', $url);
         $reg_devis->bindParam(':nb_personnes', $_POST['nb_pers']);
+        $reg_devis->bindParam(':date_arrivee', $_POST['date_arrivee']);
+        $reg_devis->bindParam(':date_depart', $_POST['date_depart']);
 
         $reg_devis->execute();
 

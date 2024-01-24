@@ -10,19 +10,19 @@
         <h2>Loc'Breizh</h2>
     </a>
 
-
-    <a href="../reservation/liste_reservations.php">
-        <div style="display:flex; flex-direction:row;">
-            <img src="../svg/ReservationC.svg">
-            <h4>Réservations</h4>
-        </div>
-    </a>
     <a href="../gestion_devis/gestion_des_devis_client.php">
         <div style="display:flex; flex-direction:row;">
             <img src="../svg/gestion.svg">
             <h4>Devis</h4>
         </div>
     </a>
+    <a href="../reservation/liste_reservations.php">
+        <div style="display:flex; flex-direction:row;">
+            <img src="../svg/ReservationC.svg">
+            <h4>Réservations</h4>
+        </div>
+    </a>
+
     <div class="imghead">
         <a class="margleft" onclick="openPopup('popup', 'overlay_profil-deconnexion')">
             <img id="pp" class="imgprofilP" alt="avatar" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50">

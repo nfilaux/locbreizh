@@ -146,10 +146,6 @@ if (preg_match('/[^a-zA-Z1-9-" "\'À-ÖØ-öø-ÿ]+/', $libelle)){
     $_SESSION['erreurs']['libelle'] = 'Le libelle ne doit pas contenir de caractères spéciaux autre que des - et des \' il peut contenir des chiffres';
 }
 
-if (preg_match('/[^a-zA-Z-À-ÖØ-öø-ÿ]+/', $ville)){
-    $_SESSION['erreurs']['ville'] = 'la nom de ville de doit contenir que des lettres des espaces ou tirets';
-}
-
 if ((preg_match('/^[0-9]{5}$/', $cdp))){
 } else {
     $_SESSION['erreurs']['code_postal'] = 'le code postal doit être entier, ne doit pas contenir d\'espaces et ne doit pas avoir plus de 5 chiffres';
@@ -159,9 +155,6 @@ if ($tarif > $prix_max){
     $_SESSION['erreurs']['tarif_base_ht'] = 'le prix doit être entier et inférieur à 100 000 € ';
 }
 
-if (preg_match('/[^a-zA-Z1-9-" "\'À-ÖØ-öø-ÿ]+/', $description)){
-    $_SESSION['erreurs']['descriptif_logement'] = 'erreur la description ne pas contenir de caractères autres que des \' ou des tirets';
-}
 if ($_SESSION['erreurs'] != []){
     header("Location: modifierLogement.php?id_logement=" . $id_logement);
 }
@@ -187,6 +180,7 @@ try {
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-}
     header("Location: modifierLogement.php?modif=1&id_logement=$id_logement");
+}
+    
 ?>

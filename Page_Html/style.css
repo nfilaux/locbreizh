@@ -225,6 +225,7 @@ body {
 
 .menu-filtre{
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
     margin: 10px;
     background-color: white;
@@ -234,14 +235,106 @@ body {
 
 }
 
+.input-group {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 10%;
+    input {
+        
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group-ville {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 20%;
+    input {
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group-pers {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 17%;
+    input {
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group-proprio {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 30%;
+    input {
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group input, .input-group-proprio input , .input-group-pers input , .input-group-ville input {
+    border: none;
+}
+
+.input-group-prepend {
+    display: flex;
+    border-right: 1px solid #ddd;
+}
+
+.input-group-prepend label{
+    margin: auto 0.5em;
+}
+  
 .acc-accroche{
     color: white;
     font-family: 'PatuaOne';
     font-weight: 600;
-    font-size: 1.5em;
+    font-size: 2em;
     margin: auto 0;
     -webkit-text-stroke-width: 0.01em;
     -webkit-text-stroke-color: #000;
+}
+
+.btn-fill {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0.5em;
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
+}
+
+.triage{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 20%;
+    height: 2em;
+    text-align: center;
+    margin-top: 5px;
+    position: relative;
+    left: 78%;
+    margin-bottom: 2em;
 }
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
@@ -1595,6 +1688,14 @@ iframe {
     color: #000;
 }
 
+.indisponible{
+    color: red;
+}
+
+.disponible{
+    color: green;
+}
+
 .calendrier ul{
     display: flex;
     list-style: none;
@@ -1628,7 +1729,7 @@ iframe {
     transform: translate(-50%, -50%);
 }
 
-.entreDeux:hover::before, .normal:hover::before{
+.entreDeux:hover::before, .normal:hover::before, .indisponible:hover::before, .disponible:hover::before{
     cursor: pointer;
     background-color: #D3D3D3;
 }
@@ -2601,6 +2702,35 @@ iframe {
     .brecherche {
         margin:auto 1em auto 1em;
     }
+    /*-------------------------------Accueil-------------------------------*/
+    .menu-filtre{
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-ville {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-pers {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-proprio {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+
+    .btn-fill {
+        width: 50%;
+        margin: 0.5em auto;
+    }
 }
 
 
@@ -2741,6 +2871,39 @@ iframe {
         margin: auto;
         width: 100%; 
         object-fit: cover;
+    }
+
+    .section-filters{
+        padding: 5em;
+    }
+
+    .menu-filtre{
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-ville {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-pers {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-proprio {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+
+    .btn-fill {
+        width: 40%;
+        margin: 0.5em auto;
     }
 
     /*-------------------------------Logement-------------------------------*/
@@ -3044,6 +3207,39 @@ iframe {
     .card section article img {
         margin: auto;
         width: 100%; 
+    }
+
+    .section-filters{
+        padding: 2em;
+    }
+
+    .menu-filtre{
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-ville {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-pers {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-proprio {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+
+    .btn-fill {
+        width: 50%;
+        margin: 0.5em auto;
     }
 
     /*-------------------------------Conexion-------------------------------*/
