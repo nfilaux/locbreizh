@@ -57,32 +57,65 @@
 
             // recupere le nombre maximum de personnes pour le logement
 
-            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._comporte_charges_associee_demande_devis 
-            where num_demande_devis = $num_demande and nom_charges = 'menage';");
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            FROM locbreizh._demande_devis d 
+            JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+            JOIN locbreizh._possede_charges_associee_logement c on c.id_logement = l.id_logement
+            WHERE num_demande_devis = $num_demande and nom_charges = 'menage';");
             $stmt->execute();
-            $menage = $stmt->fetch();
+            $menage1 = $stmt->fetch();
 
-            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._comporte_charges_associee_demande_devis 
-            where num_demande_devis = $num_demande and nom_charges = 'animaux';");
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            FROM locbreizh._demande_devis d 
+            JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+            JOIN locbreizh._possede_charges_associee_logement c on c.id_logement = l.id_logement
+            WHERE num_demande_devis = $num_demande and nom_charges = 'animaux';");
             $stmt->execute();
-            $animaux = $stmt->fetch();
+            $animaux1 = $stmt->fetch();
 
-            $stmt = $dbh->prepare("SELECT prix_charges, nombre from locbreizh._comporte_charges_associee_demande_devis 
-            where num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            FROM locbreizh._demande_devis d 
+            JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+            JOIN locbreizh._possede_charges_associee_logement c on c.id_logement = l.id_logement
+            WHERE num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
             $stmt->execute();
-            $vac_sup = $stmt->fetch();
+            $vac_sup1 = $stmt->fetch();
+
+
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            from locbreizh._comporte_charges_associee_demande_devis
+            WHERE num_demande_devis = $num_demande and nom_charges = 'menage';");
+            $stmt->execute();
+            $menage2 = $stmt->fetch();
+
+            $stmt = $dbh->prepare("SELECT prix_charges 
+            from locbreizh._comporte_charges_associee_demande_devis 
+            WHERE num_demande_devis = $num_demande and nom_charges = 'animaux';");
+            $stmt->execute();
+            $animaux2 = $stmt->fetch();
+
+
+            $stmt = $dbh->prepare("SELECT nombre 
+            from locbreizh._comporte_charges_associee_demande_devis 
+            WHERE num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
+            $stmt->execute();
+            $vac_sup2 = $stmt->fetch();
+
 
             // taxe de sejour
-            $stmt = $dbh->prepare("SELECT taxe_sejour FROM locbreizh._demande_devis d 
+            $stmt = $dbh->prepare("SELECT prix_journalier_adulte 
+            FROM locbreizh._demande_devis d 
             JOIN locbreizh._logement l ON  d.logement = l.id_logement 
+            join locbreizh._taxe_sejour t on l.taxe_sejour = t.id_taxe
             WHERE num_demande_devis = $num_demande;");
             $stmt->execute();
             $taxe = $stmt->fetch();
             
         ?>
+    <form name="formulaire" action="ajouter_devis.php" method="post">
     <fieldset>
         <h1 class="policetitre colorbleu">La demande de devis de <?php echo $infos['prenom'] . ' '. $infos['nom']; ?> !</h1>
-        <form name="formulaire" action="ajouter_devis.php" method="post">
+        
     
         <div class="logrow">
             <div class="devispc">
@@ -123,18 +156,18 @@
             <h2 style="text-align:center;  font-family: 'Quicksand';">Charges aditionnelles</h2>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
-                <input type="checkbox" id="animaux" name="animaux" <?php  if(isset($_SESSION['valeurs_complete']['menage'])){echo "checked";} else if ($menage['prix_charges'] !=''){echo 'checked';}; ?>>
+                <input type="checkbox" id="animaux" name="animaux" <?php  if(isset($_SESSION['valeurs_complete']['menage'])){echo "checked";} else if ($menage2['prix_charges'] !=''){echo 'checked';}; ?>>
                  <label for="animaux"> Animaux </label>
                 </div>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
-                <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo "checked";} else if($animaux['prix_charges'] !=''){ echo 'checked';}; ?>>
+                <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo "checked";} else if($animaux2['prix_charges'] !=''){ echo 'checked';}; ?>>
                 <label for="menage"> Menage </label>
                 </div>
                 <!--pre-remplie les infos si ils sont dans get-->
                 <div class="logpc">
                 <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
-                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else if ($vac_sup['nombre']!=''){echo $vac_sup['nombre'];}; ?>"/>
+                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else if ($vac_sup2['nombre']!=''){echo $vac_sup['nombre'];}; ?>"/>
                 </div>
             </div>
             </div>
@@ -153,21 +186,14 @@
 
         <?php 
 
-            // taxe de sejour
-            $stmt = $dbh->prepare("SELECT tarif_base_HT FROM locbreizh._demande_devis d 
-            JOIN locbreizh._logement l ON  d.logement = l.id_logement 
-            WHERE num_demande_devis = $num_demande;");
-            $stmt->execute();
-            $tarif_base = $stmt->fetch();
-
         ?>
         <fieldset>
             <h1 class="policetitre colorbleu">Details pour le paiement</h1>
             <div class="devisrow">
-                <p class="ren">A VERIFIER</p>
+                <p class="ren">Calculé grâce au planning : </p>
                 <div class="deviscol">
                 <label for="tarif_loc">Tarif moyen HT par jour(en €) :</label>
-                <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required /> 
+                <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required readonly/> 
                 </div>
             </div>
             
@@ -175,33 +201,37 @@
 
             
             <div id="resultat" class="deviscol">
+            <input type="hidden" id="nuitees" name="nuitees" value="" readonly>
+            <input type="hidden" id="prixCharges" name="prixCharges" value="" readonly>
+
+
                     <div class="devisrow">
                     <p class="ren">Prix :</p>
                         <div class="deviscolinput">
                             <p>Sous total HT (en €) </p>
-                            <input class="logvct" id="sousTotal_HT" name="sousTotal_HT" value="" disabled>
+                            <input class="logvct" id="sousTotal_HT" name="sousTotal_HT" value="" readonly>
                         </div>
                         <div class="deviscolinput">
                             <p>Sous total TTC (en €) </p>
-                            <input class="logvct" id="sousTotal_TTC" name="sousTotal_TTC" value="" disabled>
+                            <input class="logvct" id="sousTotal_TTC" name="sousTotal_TTC" value="" readonly>
                         </div>
                         <div class="deviscolinput">
                             <p>Frais de service HT (en €) </p>
-                            <input class="logvct" id="fraisService_HT" name="fraisService_HT" value="" disabled>
+                            <input class="logvct" id="fraisService_HT" name="fraisService_HT" value="" readonly>
                         </div>
                     </div>
                     <div class="devisrow">
                     <div class="devisvct">
                             <p>Frais de service TTC (en €) </p>
-                            <input class="logvct" id="fraisService_TTC" name="fraisService_TTC" value=""  disabled>
+                            <input class="logvct" id="fraisService_TTC" name="fraisService_TTC" value=""  readonly>
                         </div>
                     <div class="devisvct">
                             <p>Total taxe_sejour (en €) </p>
-                            <input class="logvct" id="taxe_sejour" name="taxe_sejour" value="" disabled>
+                            <input class="logvct" id="taxe_sejour" name="taxe_sejour" value="" readonly>
                         </div>
                     <div class="devisvct">
                         <p>Prix total (en €) </p>
-                            <input class="logvct" id="prixTotal" name="prixTotal" value="" disabled>
+                            <input class="logvct" id="prixTotal" name="prixTotal" value="" readonly>
                         </div>
                     </div>
             </div>
@@ -235,9 +265,9 @@
 </body>
 </html>
 <script>
-    var menage = <?php echo json_encode($menage); ?>;
-    var animaux = <?php echo json_encode($animaux); ?>;
-    var vac_sup = <?php echo json_encode($vac_sup); ?>;
+    var menage = <?php echo json_encode($menage1); ?>;
+    var animaux = <?php echo json_encode($animaux1); ?>;
+    var vac_sup = <?php echo json_encode($vac_sup1); ?>;
     var taxe_sejour = <?php echo json_encode($taxe); ?>;
 
     function arrondi(number) {
@@ -246,6 +276,7 @@
     let totalSum = 0;
     
     function getPrixPlagePonctuelle() {
+        totalSum = 0;
         const num_demande = <?php echo $_GET['demande']; ?>; // Assuming you pass the 'demande' as a parameter
 
         // Get the date values from the form
@@ -262,6 +293,7 @@
 
                 const totalInputElement = document.getElementById('tarif_loc');
                 totalInputElement.value = `${average}`;
+                calcul();
 
             })
             .catch(error => {
@@ -276,8 +308,7 @@
 
     function calcul() {
 
-
-        const nb_personnes = parseInt(document.getElementById('nb_pers').value);
+        const nb_personnes = parseInt(document.getElementById('nb_pers').value)|| 0;
         const nb_pers_supp = parseInt(document.getElementById('vacanciers_sup').value) || 0;
 
         // Vérifiez si les cases à cocher sont cochées
@@ -298,9 +329,11 @@
         const sousTotal_TTC = sousTotal_HT * 1.1;
         const fraisService_HT = 0.1 * sousTotal_HT;
         const fraisService_TTC = fraisService_HT * 1.2;
-        const total_taxe_sejour =  taxe_sejour.taxe_sejour * (nb_pers_supp + nb_personnes);
+        const total_taxe_sejour =  taxe_sejour.prix_journalier_adulte * (nb_pers_supp + nb_personnes);
         const prixTotal = sousTotal_TTC + fraisService_TTC + total_taxe_sejour;
 
+        document.getElementById('nuitees').value = `${arrondi(totalSum)}`;
+        document.getElementById('prixCharges').value = `${arrondi(total_charges)}`;
         document.getElementById('sousTotal_HT').value = `${arrondi(sousTotal_HT)}`;
         document.getElementById('sousTotal_TTC').value = `${arrondi(sousTotal_TTC)}`;
         document.getElementById('fraisService_HT').value = `${arrondi(fraisService_HT)}`;
@@ -314,11 +347,9 @@
     document.getElementById('nb_pers').addEventListener('input', calcul);
 
     document.getElementById('tarif_loc').addEventListener('input', calcul);
-    document.getElementById('date_arrivee').addEventListener('input', calcul);
-    document.getElementById('date_depart').addEventListener('input', calcul);
 
 
-
+    // delai pour attendre le chargement de la page et les autres calcul précédents
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             calcul();

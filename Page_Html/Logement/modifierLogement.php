@@ -65,7 +65,7 @@ $services = $r_services->fetchAll();
                     <div class="logcolumn">     
                         <div class="logpc">  
                             <label for='nom'>Libellé logement</label>
-                            <input class="lognom" id='nom' type='text' name='nomP' value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
+                            <input maxlength="29" class="lognom" id='nom' type='text' name='nomP' value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
                     <?php
                     if (isset($erreur['libelle'])){
                         echo '<p id="erreur">' . $erreur['libelle'] .  '</p>';
@@ -76,7 +76,7 @@ $services = $r_services->fetchAll();
                         <div class="logrowb"> 
                             <div class="log3vct">
                                 <label for='ville'>Ville</label>
-                                <input class="logvct" id='ville' type='text' name='villeP' value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
+                                <input maxlength="49" class="logvct" id='ville' type='text' name='villeP' value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
                     <?php
                     if (isset($erreur['ville'])){
                         echo '<p id="erreur">' . $erreur['ville'] .  '</p>';
@@ -85,7 +85,7 @@ $services = $r_services->fetchAll();
                     </div>
                     <div class="log3vct">
                         <label for='code_postal'>Code postal</label>
-                        <input class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
+                        <input maxlength="5" class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
                     <?php
                     if (isset($erreur['code_postal'])){
                         echo '<p id="erreur">' . $erreur['code_postal'] .  '</p>';
@@ -94,7 +94,7 @@ $services = $r_services->fetchAll();
                     </div>
                             <div class="log3vct">
                                 <label for='tarif_de_base'>Tarif de base (en €)</label>
-                                <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' value="<?php if (!isset($erreur['tarif_base_ht'])){echo $res["tarif_base_ht"];} ?>" required>
+                                <input class="logvct" id='tarif_de_base' type='number' step="0.01" name='tarif_de_baseP' min='0' max='2500' value="<?php if (!isset($erreur['tarif_base_ht'])){echo $res["tarif_base_ht"];} ?>" required>
                     <?php
                     if (isset($erreur['tarif_base_ht'])){
                         echo '<p id="erreur">' . $erreur['tarif_base_ht'] .  '</p>';
@@ -186,7 +186,7 @@ $services = $r_services->fetchAll();
                     <div class="logcolumn">
                         <div class="description">
                             <label for='description'>Description</label>
-                            <textarea class="logPAP" id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
+                            <textarea maxlength="499" class="logPAP" id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
                             <?php
                             if (isset($erreur['descriptif_logement'])){
                                 echo '<p id="erreur">' . $erreur['descriptif_logement'] .  '</p>';
@@ -273,9 +273,11 @@ $services = $r_services->fetchAll();
                                     <h4 class="titreAL">Images logement</h4>
                                     <div class="logrow">
                                         <div class="logpc">
-                    <label for='image1'>Image 1</label>
+                    <label for='image1'>Image principale</label>
                     <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg'>
-    
+                    <img src="" id="image1" class=".photo-avatar" title="photo" alt="photo de profil">
+
+
                     <label for='image2'>Image 2</label>
                     <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
                           
