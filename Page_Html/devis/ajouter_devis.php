@@ -55,8 +55,8 @@
     
 
         $date_devis = date("Y-m-d");
-        $date_devis_fr = date("d/m/Y", $date_devis);
 
+    
 
         // cherche le libelle(pour pdf) + id(pour charges) + id_taxe
         $stmt = $dbh->prepare("SELECT libelle_logement, id_logement,taxe_sejour FROM locbreizh._demande_devis d 
@@ -65,7 +65,7 @@
         $stmt->execute();
         $logement = $stmt->fetch();
 
-        $reqNomClient = $dbh->prepare("SELECT nom, prenom, id_compte, pseudo 
+        $reqNomClient = $dbh->prepare("SELECT nom, prenom, id_compte, pseudo, mail 
         FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte 
         WHERE num_demande_devis = {$_POST['id_demande']}");
         $reqNomClient->execute();
@@ -193,8 +193,16 @@
         $stmt->execute();
         $libelle_log = $stmt->fetch();
 
+        //cherche info proprio
+        $stmt = $dbh->prepare("SELECT nom,prenom,mail,telephone from locbreizh._compte natural join locbreizh._logement where id_compte = locbreizh._logement.id_proprietaire;");
+        $stmt->execute();
+        $proprioinfo = $stmt->fetch();
+
         // creation du pdf
         $pdf = new TCPDF();
+
+        // cree une nouvelle page
+        $pdf->AddPage();
 
         //titre sur le document
         $pdf->SetFont('', 'B', 30);
@@ -202,16 +210,13 @@
         $pdf->Cell(0, 25, "Devis", 0, 1,'C');
         $pdf->SetTextColor(0,0,0);
 
-        // cree une nouvelle page
-        $pdf->AddPage();
-
         // definit la police et la taille de la police
         $pdf->SetFont('', '', 12);
 
-        $endatearrive = strtotime($_POST['dateArrivee']);
+        $endatearrive = strtotime($_POST["date_arrivee"]);
         $frdatearrive = date("d/m/Y", $endatearrive);
 
-        $endatedepart = strtotime($_POST['dateDepart']);
+        $endatedepart = strtotime($_POST["date_depart"]);
         $frdatedepart = date("d/m/Y", $endatedepart);
 
         
@@ -222,50 +227,37 @@
 
         $pdf->Cell(0, 8, $infos_user['nom'] . ' ' . $infos_user['prenom'], 0, 1, 'R');
         $pdf->Cell(0, 8, $infos_user['mail'], 0, 1,'R');
-        $pdf->Cell(0, 8, $infos_user['telephone'], 0, 1,'R');
 
-        $pdf->Cell(0, 8, 'Le' . $date_devis_fr, 0, 1, 'R');
+        $pdf->Ln();
+        $pdf->Cell(0, 8, 'Le ' . $date_devis, 0, 1, 'R');
 
         $pdf->Cell(0, 10, "Séjour du ".$frdatearrive . ' au ' . $frdatedepart . '.', 0, 1);
+        $pdf->Cell(0, 8, 'Logement demandé : ' . $libelle_log['libelle_logement'], 0, 1);
+        $pdf->Cell(0, 8, 'Nombre de personnes : ' . $nb_personnes, 0, 1);
 
-        // tableaux avec toutes les infos du pdf
-        $devisInfo = array(
-            'Libelle logement' => $libelle_log['libelle_logement'],
-            'Tarif ht location nuitee devis' => $nuitees_HT . ' €',
-            'Prix charges HT' => $totalCharges_HT. ' €',
-            'Sous total HT' => $sousTotal_HT. ' €',
-            'Sous total TTC' => $sousTotal_TTC. ' €',
-            'Taxe de séjour' => $taxe_sejour. ' €',
-            'Total plateforme HT' =>$fraisService_HT. ' €',
-            'Total plateforme TTC' =>$fraisService_TTC. ' €',
-            'Total montant devis' =>$prixTotal. ' €',
-            'Date devis' => $date_devis
-        );
 
-        // Boucle pour mettre les informations de la demande dans le PDF
-        foreach ($devisInfo as $label => $valeur) {
-            $pdf->Cell(0, 10, $label . ': ' . $valeur, 0, 1);
-        }
+        $pdf->Ln();
+        $pdf->Ln();
 
         // Informations pour le devis
         $informationsDevis = array(
-            array('Nom logement', 'Description', 'Quantité', 'Prix unitaire', 'Total'),
-            array('Article 1', 'Description de l\'article 1', 2, 50, 100),
-            array('Article 2', 'Description de l\'article 2', 1, 75, 75),
-            array('Article 3', 'Description de l\'article 3', 3, 30, 90)
+            array('Désignation', 'Prix HT', 'Prix TTC'), 
+            array('Logement', $nuitees_HT, $nuitees_HT*1.1),
+            array('Charges', $totalCharges_HT, $totalCharges_HT*1.1),
+            array('Taxe de séjour', $logement['taxe_sejour'], $logement['taxe_sejour']),
+            array('Frais de plateforme', $fraisService_HT, $fraisService_TTC)
         );
 
         // Définir les largeurs des colonnes
-        $colonneLargeurs = array(40, 70, 20, 30, 30);
+        $colonneLargeurs = array(60, 40, 40, 40);
 
         // Boucle pour créer le tableau
         foreach ($informationsDevis as $ligne) {
             for ($i = 0; $i < count($ligne); $i++) {
-                $pdf->MultiCell($colonneLargeurs[$i], 10, $ligne[$i], 1, 'C');
+                $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0,'C');
             }
-            $pdf->Ln(); // Saut de ligne après chaque ligne du tableau
+            $pdf->Ln();
         }
-
 
         // genere le contenu PDF
         $contenu_pdf = $pdf->Output('devis.pdf', 'S'); // 'S' pour obtenir le contenu du PDF

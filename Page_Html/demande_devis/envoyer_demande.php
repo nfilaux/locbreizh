@@ -139,7 +139,7 @@
         $pdf->SetFont('', 'B', 30);
         $pdf->SetTextColor(116,80,134);
         $pdf->Cell(0, 25, "Demande de devis", 0, 1,'C');
-        $pdf->SetTextColor(0,0,0);
+        $pdf->SetTextColor(0,0,0);  
         // definit la police et la taille de la police
         $pdf->SetFont('', '', 12);
 
