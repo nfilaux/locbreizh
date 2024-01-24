@@ -45,7 +45,11 @@
         $stmt->execute();
         $list_devis = $stmt->fetchAll();
     ?>
-    <main class="gestion_devis">
+    <main class="MainTablo">
+        <div class="headtablo"> 
+            <h1>Mes Devis</h1>
+        </div>
+        <div class="gestion_devis">
         <!-- demande de devis -->
         <div class="partie_demande">
             <h1>Les demandes de devis envoyées</h1>
@@ -87,7 +91,7 @@
                 </div>
                 <?php } ?>
                 </div>
-        </div>
+                </div>
         <hr class="hr">
         <!-- devis -->
         <div class="partie_devis">
@@ -143,6 +147,7 @@
                 </div>
              <?php } ?>
             </div>
+        </div>
         </div>
     </main>
     <!-- footer -->
