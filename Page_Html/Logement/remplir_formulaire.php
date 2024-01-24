@@ -46,7 +46,7 @@
                     
                         <div class="logpc">  
                             <label for='nom'>Libellé logement :</label>
-                            <input class="lognom" id='nomP' type='text' name='nomP' placeholder='Nom du logement' required>
+                            <input maxlength="29" class="lognom" id='nomP' type='text' name='nomP' placeholder='Nom du logement' required>
                         </div>
 
                         <?php if(isset($_SESSION['erreurs']['libelle'])){
@@ -57,7 +57,7 @@
                         <div class="logrowb"> 
                             <div class="log3vct">
                                 <label for='ville'>Ville : </label>
-                                <input class="logvct" id='villeP' type='text' name='villeP' placeholder='Ville' required>
+                                <input maxlength="49" class="logvct" id='villeP' type='text' name='villeP' placeholder='Ville' required>
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['ville'])){
@@ -67,7 +67,7 @@
 
                             <div class="log3vct">
                                 <label for='code_postal'>Code postal : </label>
-                                <input class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
+                                <input maxlength="5" class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['code_postal'])){
@@ -77,14 +77,14 @@
 
                             <div class="log3vct">
                                 <label for='tarif_de_base'>Tarif de base (en €/jour) : </label>
-                                <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='1' placeholder='0' required>
+                                <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' step='0.01' placeholder='0' required>
                             </div>
 
                             <?php if (isset($_SESSION['erreurs']['prix'])){echo '<p>Le prix est un incorrect il ne dois pas dépasser 100 000 € et doit être décimal !';};?>
                         </div>
                         <div class="logpc">
                             <label for='phrase_daccroche'>Phrase d'accroche : </label>
-                            <textarea class="logPAP" id='accroche' name='accrocheP' placeholder="Phrase d'accroche" required></textarea>
+                            <textarea class="logPAP" id='accroche' name='accrocheP' maxlength="99" placeholder="Phrase d'accroche" required></textarea>
                         </div>
                         <div class="logrowb"> 
                                 <div class="log2vct">
@@ -128,14 +128,14 @@
                             </div>
                             <div class="log4vct">
                                 <label for='nb_sdb'>Nombre de salles de bain : </label>
-                                <input  class="logvct" id='nb_sdb' type='number' name='nb_sdbP' min='0' max='10' step='1' placeholder='0' required>
+                                <input  class="logvct" id='nb_sdb' type='number' name='nb_sdbP' min='0' max='15' step='1' placeholder='0' required>
                             </div>
                         </div>
 
                         <div class="logrowb"> 
                             <div class="log3vct">
                                 <label for='surface_maison'>Surface (en m²) : </label>
-                                <input class="logvct" id='surface_maison' type='number' name='surface_maisonP' min='0' max='300' step='1' placeholder='0' required>
+                                <input class="logvct" id='surface_maison' type='number' name='surface_maisonP' min='0' max='500' step='1' placeholder='0' required>
                             </div>
                             <div class="log3vct">
                                 <label for='nb_personne_max'>Nombre de personnes maximum : </label>
@@ -143,7 +143,7 @@
                             </div>
                             <div class="log3vct">
                                 <label for='surface_jardin'>Surface du jardin (en m2): </label>
-                                <input class="logvct" id='surface_jardin' type='number' name='surface_jardinP' min='0' max='50000' step='1' placeholder='0' required>
+                                <input class="logvct" id='surface_jardin' type='number' name='surface_jardinP' min='0' max='5000' step='1' placeholder='0' required>
                             </div>
                         </div>
                     </div>
@@ -225,7 +225,7 @@
                     <div class="logrow">
                         <div class="logpc">
                             <label for='taxe_sejour'>Taxe de séjour pour une personne : </label>
-                            <input class="cardprixcharge" id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='1' required>
+                            <input class="cardprixcharge" id='taxe_sejour' type='number' name='taxe_sejourP' min='0' max='25' step='0.01' required>
                         </div>
 
                         <?php 
@@ -236,7 +236,7 @@
 
                         <div class="logpc">
                             <label for='charges_menage'>Prix charge additionnelle "ménage" : </label>
-                            <input class="cardprixcharge" id='charges_menage' type='number' name='charges1P' min='0' max='1000' step='1' required>
+                            <input class="cardprixcharge" id='charges_menage' type='number' name='charges1P' min='0' max='1000' step='0.01' required>
                         </div>
                     
                         <?php 
@@ -248,7 +248,7 @@
                     <div class="logrow">
                         <div class="logpc">
                             <label for='charges_animaux'>Prix charge additionnelles "animaux" : </label>
-                            <input class="cardprixcharge" id='charges_animaux' type='number' name='charges2P' min='0' max='1000' step='1' required>
+                            <input class="cardprixcharge" id='charges_animaux' type='number' name='charges2P' min='0' max='1000' step='0.01' required>
                         </div>
 
                         <?php 
@@ -259,7 +259,7 @@
 
                         <div class="logpc">
                             <label for='charges_pers_sup'>Prix charge additionnelle "personnes supplémentaire" : </label>
-                            <input class="cardprixcharge" id='charges_pers_sup' type='number' name='charges3P' min='0' max='1000' step='1' required>
+                            <input class="cardprixcharge" id='charges_pers_sup' type='number' name='charges3P' min='0' max='1000' step='0.01' required>
                         </div>
 
                         <?php 

@@ -215,12 +215,126 @@ body {
     margin-left : 20px;
     cursor: pointer;
 }
-/*---------------------------------------------------------------- Filtre --------------------------------------------------------------*/
+/*---------------------------------------------------------------- Filtres --------------------------------------------------------------*/
+.section-filters{
+    background: url("Ressources/Images/fond_catalogue.jpg") no-repeat ;
+    background-size: cover;
+    padding: 10em;
+    margin-bottom: 3em;
+}
 
 .menu-filtre{
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
     margin: 10px;
+    background-color: white;
+    padding: 1.25em;
+    border-radius: 0.5em;
+    box-shadow: 10px 5px 5px black;
+
+}
+
+.input-group {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 10%;
+    input {
+        
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group-ville {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 20%;
+    input {
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group-pers {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 17%;
+    input {
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group-proprio {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 30%;
+    input {
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group input, .input-group-proprio input , .input-group-pers input , .input-group-ville input {
+    border: none;
+}
+
+.input-group-prepend {
+    display: flex;
+    border-right: 1px solid #ddd;
+}
+
+.input-group-prepend label{
+    margin: auto 0.5em;
+}
+  
+.acc-accroche{
+    color: white;
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    font-size: 2em;
+    margin: auto 0;
+    -webkit-text-stroke-width: 0.01em;
+    -webkit-text-stroke-color: #000;
+}
+
+.btn-fill {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0.5em;
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
+}
+
+.triage{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 20%;
+    height: 2em;
+    text-align: center;
+    margin-top: 5px;
+    position: relative;
+    left: 78%;
+    margin-bottom: 2em;
 }
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
@@ -336,8 +450,8 @@ header a:last-child {
 
 .headconn img , .headtablo img{
     position: absolute;
-    left: 5em;
-    top: 1em;
+    left: 3em;
+    top: 1.5em;
 }
 
 .headconn h1 , .headtablo h1 {
@@ -349,8 +463,8 @@ header a:last-child {
 
 .headconn img , .headtabloP img{
     position: absolute;
-    left: 5em;
-    top: 1em;
+    left: 3em;
+    top: 1.5em;
 }
 
 .headconn h1 , .headtabloP h1 {
@@ -367,6 +481,12 @@ header a:last-child {
     padding-top: 0vw;
     padding-left: 0%;
     padding-right: 0%;
+}
+
+.mainacc{
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 main{
@@ -607,6 +727,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     color: #745086;
 }
 
+.btn-accueilins:link{
+    color: #745086;
+}
+
 .btn-accueilins h5, .btn-accueil h5{
     margin: auto;
 }
@@ -793,20 +917,28 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     background-color: #745086;
     border-radius: 15px;
     padding-top: 5px;
-    width: 20%;
+    width: 19%;
     margin: 1em 2%;
     padding: 0.5em;
 }
 
 .card section article:last-child{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-evenly;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 0.5em;
 }
 
-.card section article h3,.card section article h4{
+.card section article h3{
     color: #fff;
+}
+
+.card section article h4{
+    color: #fff;
+    margin: 0 0 0.5em 0;
 }
 
 .card section article img{
@@ -818,7 +950,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .card section article .accicone img {
     visibility: hidden;
 }
-
 
 .cardlogmain {
     display: flex;
@@ -2571,6 +2702,35 @@ iframe {
     .brecherche {
         margin:auto 1em auto 1em;
     }
+    /*-------------------------------Accueil-------------------------------*/
+    .menu-filtre{
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-ville {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-pers {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-proprio {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+
+    .btn-fill {
+        width: 50%;
+        margin: 0.5em auto;
+    }
 }
 
 
@@ -2607,7 +2767,8 @@ iframe {
     }
 
     .headconn img, .headtabloP img{
-        left: 2em;
+        left: 1.5em;
+        top: 1em;
     }
     /*-------------------------------FOOTER-------------------------------*/
     .tfooter {
@@ -2710,6 +2871,39 @@ iframe {
         margin: auto;
         width: 100%; 
         object-fit: cover;
+    }
+
+    .section-filters{
+        padding: 5em;
+    }
+
+    .menu-filtre{
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-ville {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-pers {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-proprio {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+
+    .btn-fill {
+        width: 40%;
+        margin: 0.5em auto;
     }
 
     /*-------------------------------Logement-------------------------------*/
@@ -3013,6 +3207,39 @@ iframe {
     .card section article img {
         margin: auto;
         width: 100%; 
+    }
+
+    .section-filters{
+        padding: 2em;
+    }
+
+    .menu-filtre{
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-ville {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-pers {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-proprio {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+
+    .btn-fill {
+        width: 50%;
+        margin: 0.5em auto;
     }
 
     /*-------------------------------Conexion-------------------------------*/

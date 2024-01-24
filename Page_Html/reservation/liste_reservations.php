@@ -26,8 +26,10 @@ $photo = $stmt->fetch();
     <?php 
     include('../header-footer/choose_header.php');
     ?>
-    <main>
-
+    <main class="MainTablo">
+        <div class="headtablo"> 
+            <h1>Mes Réservations</h1>
+        </div>
         <div style="display:flex; flex-direction:column-reverse;">
             <?php
             include('../parametre_connexion.php');
@@ -73,7 +75,7 @@ $photo = $stmt->fetch();
                             
 
                             <div class="rescrow">
-                                <a href="../devis/pdf_devis/<?php echo $reservation['url_detail'];?>" target="_blank"><button class="btn-ajoutlog">CONSULTER LA     FACTURE</button></a>
+                                <a href="../devis/pdf_devis/<?php echo $reservation['url_detail'];?>" target="_blank"><button class="btn-ajoutlog">CONSULTER LA FACTURE</button></a>
                                 <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
                                 <a><button class="btn-suppr" disabled>ANNULER</button></a>
                             </div>

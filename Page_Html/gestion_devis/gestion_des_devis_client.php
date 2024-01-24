@@ -36,7 +36,7 @@
         $list_demande = $stmt->fetchAll();
 
         $stmt = $dbh->prepare(
-            "SELECT num_devis, _devis.nb_personnes, date_arrivee, date_depart, _devis.url_detail, libelle_logement, photo_principale, _devis.accepte, annule
+            "SELECT num_devis, _devis.nb_personnes, _devis.date_arrivee, _devis.date_depart, _devis.url_detail, libelle_logement, photo_principale, _devis.accepte, annule
             from locbreizh._devis
             join locbreizh._demande_devis on _devis.num_demande_devis = _demande_devis.num_demande_devis
             join locbreizh._logement l on l.id_logement =  logement
@@ -45,7 +45,11 @@
         $stmt->execute();
         $list_devis = $stmt->fetchAll();
     ?>
-    <main class="gestion_devis">
+    <main class="MainTablo">
+        <div class="headtablo"> 
+            <h1>Mes Devis</h1>
+        </div>
+        <div class="gestion_devis">
         <!-- demande de devis -->
         <div class="partie_demande">
             <h1>Les demandes de devis envoyées</h1>
@@ -79,7 +83,7 @@
             <div class="overlay_plages" id='<?php echo 'ov' . $demande['num_demande_devis']; ?>' onclick="closePopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')"></div>
                 <div id="<?php echo $demande['num_demande_devis']; ?>" class="popup_devis"> 
                     <p>Êtes-vous certains de vouloir supprimer cet echange ?</p>
-                    <p>(vous ne pourrez plus y accéder par la suite et la demande sera annulée)</p>
+                    <p>(vous ne pourrez plus y accéder par la suite)</p>
                     <div>
                         <a href="fermer_demande_devis.php?id=<?php echo $demande['num_demande_devis']; ?>"><button class="btn_ferm_oui">OUI</button></a>
                         <button onclick="closePopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')" class="btn_ferm_annulerP">ANNULER</button>
@@ -87,7 +91,7 @@
                 </div>
                 <?php } ?>
                 </div>
-        </div>
+                </div>
         <hr class="hr">
         <!-- devis -->
         <div class="partie_devis">
@@ -135,7 +139,7 @@
                 <div class="overlay_plages" id='<?php echo 'ov' . $devis['num_devis']; ?>' onclick="closePopup('<?php echo $devis['num_devis']; ?>', '<?php echo 'ov' . $devis['num_devis']; ?>')"></div>
                 <div id="<?php echo $devis['num_devis']; ?>" class="popup_devis"> 
                     <p>Êtes-vous certains de vouloir supprimer cet echange ?</p>
-                    <p>(vous ne pourrez plus y accéder par la suite et la proposition de devis sera annulée)</p>
+                    <p>(vous ne pourrez plus y accéder par la suite)</p>
                     <div>
                         <a href="fermer_devis.php?id=<?php echo $devis['num_devis']; ?>"><button class="btn_ferm_oui">OUI</button></a>
                         <button onclick="closePopup('<?php echo $devis['num_devis']; ?>', '<?php echo 'ov' . $devis['num_devis']; ?>')" class="btn_ferm_annulerP">ANNULER</button>
@@ -143,6 +147,7 @@
                 </div>
              <?php } ?>
             </div>
+        </div>
         </div>
     </main>
     <!-- footer -->

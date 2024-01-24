@@ -40,72 +40,30 @@
         header("Location: formulaire_devis.php?demande={$_POST['id_demande']}");
     }
     else {
-        // taxe de sejour
-        $stmt = $dbh->prepare("SELECT taxe_sejour, nb_personnes FROM locbreizh._demande_devis d 
+        $nuitees_HT = $_POST['nuitees'];
+        $totalCharges_HT = $_POST['prixCharges'];
+
+        $sousTotal_HT = $_POST['sousTotal_HT'];
+        $sousTotal_TTC =  $_POST['sousTotal_TTC'];
+
+        $fraisService_HT = $_POST['fraisService_HT'];
+        $fraisService_TTC = $_POST['fraisService_TTC'];
+
+        $taxe_sejour = $_POST['taxe_sejour'];
+
+        $prixTotal = $_POST['prixTotal'];
+    
+
+        $date_devis = date("Y-m-d");
+     
+
+
+        // cherche le libelle(pour pdf) + id(pour charges) + id_taxe
+        $stmt = $dbh->prepare("SELECT libelle_logement, id_logement,taxe_sejour FROM locbreizh._demande_devis d 
         JOIN locbreizh._logement l ON  d.logement = l.id_logement 
         WHERE num_demande_devis = {$_POST['id_demande']};");
         $stmt->execute();
-        $taxe = $stmt->fetch();
-
-        // recherche prix charge menage
-        $stmt = $dbh->prepare("SELECT prix_charges
-        FROM locbreizh._comporte_charges_associee_devis
-        WHERE num_devis = {$_POST['id_demande']} and nom_charges = 'menage';");
-        $stmt->execute();
-        $menage = $stmt->fetch();
-
-        // recherche prix charge animaux
-        $stmt = $dbh->prepare("SELECT prix_charges
-        FROM locbreizh._comporte_charges_associee_devis
-        WHERE num_devis = {$_POST['id_demande']} and nom_charges = 'animaux';");
-        $stmt->execute();
-        $animaux = $stmt->fetch();
-
-        // recherche prix charge pers supp
-        $stmt = $dbh->prepare("SELECT prix_charges, nombre
-        FROM locbreizh._comporte_charges_associee_devis
-        WHERE num_devis = {$_POST['id_demande']} and nom_charges = 'personnes_supplementaires';");
-        $stmt->execute();
-        $pers_supp = $stmt->fetch();
-
-        // ajout des charges
-        $totalCharges_HT = 0;
-        if(isset($menage['prix_charges'])){
-            $totalCharges_HT += $menage['prix_charges'];
-        }
-        if(isset($animaux['prix_charges'])){
-            $totalCharges_HT += $animaux['prix_charges'];
-        }
-        if(isset($pers_supp['prix_charges'])){
-            $totalCharges_HT += $pers_supp['prix_charges'] * $pers_supp['nombre'];
-        }
-
-        /*
-        • Tarif de location des nuitées HT
-        • Charges additionnelles HT
-        • Sous-total (location et charges) HT et TTC (application d’une TVA de 10%)
-        • Frais de service de la plateforme HT et TTC (application d’une TVA de 20%)
-        • Taxe de séjour (pas de TVA applicable)
-        • Prix total du devis
-        */
-
-
-
-        // doit calculer en fonction nb jours !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // calcul
-        $nuitees_HT = $_POST['tarif_loc'];
-        $sousTotal_HT = $nuitees_HT + $totalCharges_HT;
-        $sousTotal_TTC = $sousTotal_HT * 1.1;
-        $fraisService_HT = 0.1* $sousTotal_HT;
-        $fraisService_TTC = $fraisService_HT * 1.2;
-        $taxe_sejour = $taxe["taxe_sejour"] * ($taxe["nb_personnes"] + $pers_supp['nombre']);
-        $prixTotal = $sousTotal_TTC + $fraisService_TTC + $taxe_sejour;
-    
-
-
-        $date_devis = date("Y-m-d");
-
-
+        $logement = $stmt->fetch();
 
         $reqNomClient = $dbh->prepare("SELECT nom, prenom, id_compte, pseudo 
         FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte 
@@ -121,18 +79,16 @@
         $reg_devis = $dbh->prepare("INSERT INTO locbreizh._devis
         (client, 
         prix_total_devis, 
-        nb_personnes,
         tarif_ht_location_nuitee_devis,
         sous_total_HT_devis,
         sous_total_TTC_devis,
         frais_service_platforme_HT_devis,
         frais_service_platforme_TTC_devis,
         date_devis, date_validite, condition_annulation,
-        num_demande_devis, taxe_sejour, url_detail)
+        num_demande_devis, taxe_sejour, url_detail,nb_personnes,date_arrivee,date_depart )
         VALUES (
         :client,
         :prixTotal,
-        :nb_personnes,
         :nuitees_HT,
         :sousTotal_HT,
         :sousTotal_TTC,
@@ -143,11 +99,13 @@
         :annulation,
         :id_demande,
         :taxe_sejour,
-        :url_detail)");
+        :url_detail,
+        :nb_personnes,
+        :date_arrivee,
+        :date_depart)");
 
         $url = 'devis' . $id_devis . '.pdf';
         $reg_devis->bindParam(':client', $infos_user['id_compte']);
-        $reg_devis->bindParam(':nb_personnes', $taxe['nb_personnes']);
         $reg_devis->bindParam(':prixTotal', $prixTotal);
         $reg_devis->bindParam(':nuitees_HT', $nuitees_HT);
         $reg_devis->bindParam(':sousTotal_HT', $sousTotal_HT);
@@ -158,30 +116,79 @@
         $reg_devis->bindParam(':date_val', $_POST['date_val']);
         $reg_devis->bindParam(':annulation', $_POST['annulation']);
         $reg_devis->bindParam(':id_demande', $_POST['id_demande']);
-        $reg_devis->bindParam(':taxe_sejour', $taxe["taxe_sejour"]);
+        $reg_devis->bindParam(':taxe_sejour', $logement['taxe_sejour']);
         $reg_devis->bindParam(':url_detail', $url);
+        $reg_devis->bindParam(':nb_personnes', $_POST['nb_pers']);
+        $reg_devis->bindParam(':date_arrivee', $_POST['date_arrivee']);
+        $reg_devis->bindParam(':date_depart', $_POST['date_depart']);
 
         $reg_devis->execute();
 
         $id_devis = $dbh->lastInsertId();
 
+
+        //insertion charges additionnelles
+
+        // menage
+        if(isset($_POST['menage'])){
+            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement 
+            where id_logement = {$logement['id_logement']} and nom_charges = 'menage';");
+            $stmt->execute();
+            $menage = $stmt->fetch();
+
+
+            $stmt = $dbh->prepare("INSERT into locbreizh._comporte_charges_associee_devis(
+            prix_charges,
+            num_devis,
+            nom_charges) 
+            values(
+                {$menage['prix_charges']},
+                $id_devis,
+                'menage')");
+            $stmt->execute();
+        }
+        
+
+        // animaux
+        if(isset($_POST['animaux'])){
+            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement 
+            where id_logement = {$logement['id_logement']} and nom_charges = 'animaux';");
+            $stmt->execute();
+            $animaux = $stmt->fetch();
+
+
+            $stmt = $dbh->prepare("INSERT into locbreizh._comporte_charges_associee_devis(
+            prix_charges,
+            num_devis,
+            nom_charges) 
+            values(
+                {$animaux['prix_charges']},
+                $id_devis,
+                'animaux')");
+            $stmt->execute();
+        }
+
+        // personnes supp
+        if($_POST['vacanciers_sup'] > 0){
+            $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement 
+            where id_logement = {$logement['id_logement']} and nom_charges = 'personnes_supplementaires';");
+            $stmt->execute();
+            $personnes_supplementaires = $stmt->fetch();
+
+
+            $stmt = $dbh->prepare("INSERT into locbreizh._comporte_charges_associee_devis
+            values(
+                {$personnes_supplementaires['prix_charges']},
+                $id_devis,
+                'personnes_supplementaires',
+                {$_POST['vacanciers_sup']})");
+            $stmt->execute();
+        }
         // accepte la demande pour informer le client
         $stmt = $dbh->prepare("UPDATE locbreizh._demande_devis set accepte = True where num_demande_devis = :num;");
         $stmt->bindParam(':num', $_POST['id_demande']);
         $stmt->execute();
 
-
-        // creation du pdf
-        $pdf = new TCPDF();
-
-        // titre pdf
-        $pdf->SetTitle('Devis');
-
-        // cree une nouvelle page
-        $pdf->AddPage();
-
-        // definit la police et la taille de la police
-        $pdf->SetFont('', '', 12);
 
         // cherche le libelle
         $stmt = $dbh->prepare("SELECT libelle_logement FROM locbreizh._demande_devis d 
@@ -190,10 +197,43 @@
         $stmt->execute();
         $libelle_log = $stmt->fetch();
 
+        // creation du pdf
+        $pdf = new TCPDF();
+
+        //titre sur le document
+        $pdf->SetFont('', 'B', 30);
+        $pdf->SetTextColor(116,80,134);
+        $pdf->Cell(0, 25, "Devis", 0, 1,'C');
+        $pdf->SetTextColor(0,0,0);
+
+        // cree une nouvelle page
+        $pdf->AddPage();
+
+        // definit la police et la taille de la police
+        $pdf->SetFont('', '', 12);
+
+        $endatearrive = strtotime($_POST['dateArrivee']);
+        $frdatearrive = date("d/m/Y", $endatearrive);
+
+        $endatedepart = strtotime($_POST['dateDepart']);
+        $frdatedepart = date("d/m/Y", $endatedepart);
+
+        
+
+        $pdf->Cell(0, 8, $proprioinfo['nom'] . ' ' . $proprioinfo['prenom'], 0, 1);
+        $pdf->Cell(0, 8, $proprioinfo['mail'], 0, 1);
+        $pdf->Cell(0, 8, $proprioinfo['telephone'], 0, 1);
+
+        $pdf->Cell(0, 8, $infos_user['nom'] . ' ' . $infos_user['prenom'], 0, 1, 'R');
+        $pdf->Cell(0, 8, $infos_user['mail'], 0, 1,'R');
+        $pdf->Cell(0, 8, $infos_user['telephone'], 0, 1,'R');
+
+        $pdf->Cell(0, 8, 'Le' . $date_devis_fr, 0, 1, 'R');
+
+        $pdf->Cell(0, 10, "Séjour du ".$frdatearrive . ' au ' . $frdatedepart . '.', 0, 1);
+
         // tableaux avec toutes les infos du pdf
         $devisInfo = array(
-            'Nom' => $infos_user['nom'],
-            'Prenom' => $infos_user['prenom'],
             'Libelle logement' => $libelle_log['libelle_logement'],
             'Tarif ht location nuitee devis' => $nuitees_HT . ' €',
             'Prix charges HT' => $totalCharges_HT. ' €',
@@ -210,6 +250,26 @@
         foreach ($devisInfo as $label => $valeur) {
             $pdf->Cell(0, 10, $label . ': ' . $valeur, 0, 1);
         }
+
+        // Informations pour le devis
+        $informationsDevis = array(
+            array('Nom logement', 'Description', 'Quantité', 'Prix unitaire', 'Total'),
+            array('Article 1', 'Description de l\'article 1', 2, 50, 100),
+            array('Article 2', 'Description de l\'article 2', 1, 75, 75),
+            array('Article 3', 'Description de l\'article 3', 3, 30, 90)
+        );
+
+        // Définir les largeurs des colonnes
+        $colonneLargeurs = array(40, 70, 20, 30, 30);
+
+        // Boucle pour créer le tableau
+        foreach ($informationsDevis as $ligne) {
+            for ($i = 0; $i < count($ligne); $i++) {
+                $pdf->MultiCell($colonneLargeurs[$i], 10, $ligne[$i], 1, 'C');
+            }
+            $pdf->Ln(); // Saut de ligne après chaque ligne du tableau
+        }
+
 
         // genere le contenu PDF
         $contenu_pdf = $pdf->Output('devis.pdf', 'S'); // 'S' pour obtenir le contenu du PDF
