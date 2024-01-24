@@ -269,32 +269,38 @@ $services = $r_services->fetchAll();
                             </div>
                         </div>
                     </div>
-                            <div class="logpc">
-                                    <h4 class="titreAL">Images logement</h4>
-                                    <div class="logrow">
-                                        <div class="logpc">
-                    <label for='image1'>Image principale</label>
-                    <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg'>
-                    <img src="" id="image1" class=".photo-avatar" title="photo" alt="photo de profil">
+                    <div class="logpc">
+                            <h4 class="titreAL">Images logement</h4>
+                            <div class="logrow">
+                                <div class="logpc">
+                                <label for='image1'>Image principale</label>
+                                <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg'>
+                                <img src="" id="in_image1"  title="photo" alt="photo de profil" class="modif_log_img">
 
 
                     <label for='image2'>Image 2</label>
                     <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
+                    <img src="" id="in_image2" title="photo" alt="photo de profil" class="modif_log_img">
                           
                     <label for='image3'>Image 3</label>
                     <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
+                    <img src="" id="in_image3"  title="photo" alt="photo de profil" class="modif_log_img">
                     </div>
                     <div class="logpc">      
                     <label for='image4'>Image 4</label>
                     <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
+                    <img src="" id="in_image4"  title="photo" alt="photo de profil" class="modif_log_img">
     
                     <label for='image5'>Image 5</label>
                     <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
+                    <img src="" id="in_image5" title="photo" alt="photo de profil" class="modif_log_img">
     
                     <label for='image6'>Image 6</label>
                     <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
+                    <img src="" id="in_image6" title="photo" alt="photo de profil" class="modif_log_img">
     
                     </div>
+                        </div>
                         </div>            
                         <button class="btn-previsualiser" name='previsualiser' type='submit'>Modifier</button>
                     </div>
@@ -328,4 +334,4 @@ $services = $r_services->fetchAll();
 
 
 
-
+<script src="./actualiserImage.js" defer></script>

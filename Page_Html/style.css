@@ -1131,6 +1131,13 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 /*----------------------------------------------------------------Logement----------------------------------------------------------------*/
 
+.modif_log_img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+
+}
+
 .logcolumn{
     display: flex;
     flex-direction: column;

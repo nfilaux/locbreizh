@@ -196,7 +196,7 @@ CREATE TABLE
 CREATE TABLE
     _taxe_sejour (
         id_taxe SERIAL,
-        prix_journalier_adulte NUMERIC(5, 2) NOT NULL,
+        prix_journalier_adulte NUMERIC(7, 2) NOT NULL,
         CONSTRAINT taxe_sejour_pk PRIMARY KEY (id_taxe)
     );
 
@@ -206,7 +206,7 @@ CREATE TABLE
     _logement (
         id_logement SERIAL NOT NULL,
         libelle_logement VARCHAR(30) NOT NULL,
-        tarif_base_HT NUMERIC(5, 2) NOT NULL,
+        tarif_base_HT NUMERIC(7, 2) NOT NULL,
         accroche_logement VARCHAR(100) NOT NULL,
         descriptif_logement VARCHAR(500) NOT NULL,
         nature_logement VARCHAR(15) NOT NULL,
@@ -391,12 +391,12 @@ CREATE TABLE
         client integer NOT NULL,
         date_arrivee DATE NOT NULL,
         date_depart DATE NOT NULL,
-        prix_total_devis NUMERIC(5, 2) NOT NULL,
-        tarif_HT_location_nuitee_devis NUMERIC(5, 2) NOT NULL,
-        sous_total_ht_devis NUMERIC(5, 2) NOT NULL,
-        sous_total_ttc_devis NUMERIC(5, 2) NOT NULL,
-        frais_service_platforme_ht_devis NUMERIC(5, 2) NOT NULL,
-        frais_service_platforme_ttc_devis NUMERIC(5, 2) NOT NULL,
+        prix_total_devis NUMERIC(7, 2) NOT NULL,
+        tarif_HT_location_nuitee_devis NUMERIC(7, 2) NOT NULL,
+        sous_total_ht_devis NUMERIC(7, 2) NOT NULL,
+        sous_total_ttc_devis NUMERIC(7, 2) NOT NULL,
+        frais_service_platforme_ht_devis NUMERIC(7, 2) NOT NULL,
+        frais_service_platforme_ttc_devis NUMERIC(7, 2) NOT NULL,
         date_devis DATE NOT NULL,
         date_validite numeric(3) not null,
         condition_annulation VARCHAR(255) NOT NULL,
@@ -457,7 +457,7 @@ CREATE TABLE
 
 CREATE TABLE
     _comporte_charges_associee_demande_devis (
-        prix_charges NUMERIC(5, 2) NOT NULL,
+        prix_charges NUMERIC(7, 2) NOT NULL,
         num_demande_devis INTEGER NOT NULL,
         nom_charges VARCHAR(50) NOT NULL,
         nombre INTEGER,
@@ -473,7 +473,7 @@ CREATE TABLE
 
 CREATE TABLE
     _comporte_charges_associee_devis (
-        prix_charges NUMERIC(5, 2) NOT NULL,
+        prix_charges NUMERIC(7, 2) NOT NULL,
         num_devis INTEGER NOT NULL,
         nom_charges VARCHAR(50) NOT NULL,
         nombre INTEGER,
@@ -486,7 +486,7 @@ CREATE TABLE
 
 CREATE TABLE
     _possede_charges_associee_logement (
-        prix_charges NUMERIC(5, 2) NOT NULL,
+        prix_charges NUMERIC(7, 2) NOT NULL,
         id_logement INTEGER NOT NULL,
         nom_charges VARCHAR(50) NOT NULL,
         CONSTRAINT possede_charges_associee_logement_pk PRIMARY KEY (id_logement, nom_charges),

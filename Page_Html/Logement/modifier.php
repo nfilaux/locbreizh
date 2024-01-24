@@ -37,7 +37,7 @@ $_SESSION['valeurs_complete']['descriptif_logement'] = $description;
 $_SESSION['valeurs_complete']['tarif_base_ht'] = $tarif;
 
 
-    if ($_FILES["image1P"]["tmp_name"] != ""){
+if ($_FILES["image1P"]["tmp_name"] != ""){
 
     // id_photo = 1 car c'est notre image principale de logement donc la première
 
@@ -95,8 +95,10 @@ $id_photo = 2;
 
 for ($i = 2; $i <= 6 ; $i++){
     if ($_FILES["image". $i . "P"]["tmp_name"] != ""){
+        print_r("dans la boucle");
         $extension_img = explode('/',$_FILES["image" . $i . "P"]['type'])[1];
         $images_secondaires["image" . $i . "P"] = id_photo($id_photo) . '.' . $extension_img;
+        move_uploaded_file($_FILES["image". $i . "P"]["tmp_name"] , "../Ressources/Images/" . $images_secondaires["image" . $i . "P"]);
         $id_photo++;
     }
 }
@@ -114,24 +116,33 @@ $photos = $stmt->fetchAll();
 
 
 foreach($images_secondaires as $key => $value){
-
+    
     $url_photo = "";
 
     $stmt = $dbh->prepare(
         "INSERT INTO locbreizh._photo VALUES('$value');"
     );
     $stmt->execute();
-
+    $add = 0;
     foreach($photos as $key => $une_photo){
         if ($une_photo["photo"][strlen($value) -5] == $cpt){
             $url_photo = $une_photo["photo"];
+            $add = 1 ;
         }
     }
 
-    $stmt = $dbh->prepare(
-        "UPDATE locbreizh._photos_secondaires SET photo =  '$value' WHERE photo = '$url_photo' AND logement = $id_logement"
-    );
-    $stmt->execute();
+    if($add == 0){
+        $stmt = $dbh->prepare(
+            "INSERT into locbreizh._photos_secondaires values($id_logement,'$value')"
+        );
+        $stmt->execute();
+    }
+    else{
+        $stmt = $dbh->prepare(
+            "UPDATE locbreizh._photos_secondaires SET photo =  '$value' WHERE photo = '$url_photo' AND logement = $id_logement"
+        );
+        $stmt->execute();
+    }
 
     $cpt++;
 
