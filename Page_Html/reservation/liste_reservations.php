@@ -26,8 +26,10 @@ $photo = $stmt->fetch();
     <?php 
     include('../header-footer/choose_header.php');
     ?>
-    <main>
-
+    <main class="MainTablo">
+        <div class="headtablo"> 
+            <h1>Mes Réservations</h1>
+        </div>
         <div style="display:flex; flex-direction:column-reverse;">
             <?php
             include('../parametre_connexion.php');

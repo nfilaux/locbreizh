@@ -12,31 +12,36 @@
     <?php 
         include('../header-footer/choose_header.php');
     ?>
-    <main>
-        <form action="filtrage.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
-            <div>
-                <label for="prix_min">Prix min :</label>
-                <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
+    <main class="mainacc">
+        <div class="section-filters">
+            <p class="acc-accroche">Rechercher votre logement selon votre critère</p>
+            <div class="filters">
+                <form action="filtrage.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
+                    <div>
+                        <label for="prix_min">Prix min :</label>
+                        <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
+                    </div>
+                    <div>
+                        <label for="prix_max">Prix max :</label>
+                        <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
+                    </div>
+                    <div>
+                        <label for="lieu">Ville :</label>
+                        <input type="text" id="lieu" name="lieu" placeholder="<?php if (isset($_GET['lieu'])){echo $_GET['lieu'];} else {echo 'Ville';} ?>"/>   
+                    </div>
+                    <div>
+                        <label for="proprietaire">Propriétaire :</label>
+                        <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>   
+                    </div>
+                    <div>
+                        <label for="personne">Nombre de voyageurs :</label>
+                        <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['voyageurs'])){echo $_GET['voyageurs'];} else {echo 0;} ?>"/>   
+                    </div>    
+                    <br>
+                    <button type="submit" id="filtrage">Filtrer</button>
+                </form>
             </div>
-            <div>
-                <label for="prix_max">Prix max :</label>
-                <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
-            </div>
-            <div>
-                <label for="lieu">Ville :</label>
-                <input type="text" id="lieu" name="lieu" placeholder="<?php if (isset($_GET['lieu'])){echo $_GET['lieu'];} else {echo 'Ville';} ?>"/>   
-            </div>
-            <div>
-                <label for="proprietaire">Propriétaire :</label>
-                <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprietaire'])){echo $_GET['proprietaire'];} else {echo 'Nom de propriétaire';} ?>"/>   
-            </div>
-            <div>
-                <label for="personne">Nombre de voyageurs :</label>
-                <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['voyageurs'])){echo $_GET['voyageurs'];} else {echo 0;} ?>"/>   
-            </div>    
-            <br>
-            <button type="submit" id="filtrage">Filtrer</button>
-        </form>
+        </div>
         
         <!-- Champs de séléction des Tris -->
         <div>
@@ -74,7 +79,7 @@
                             case 'prixMin' :    $filtre = "WHERE tarif_base_ht>=$choix";  break;
                             case 'prixMax' :    $filtre = "WHERE tarif_base_ht<=$choix"; break;
                             case 'lieu' :       $filtre = "NATURAL JOIN locbreizh._adresse WHERE _adresse.ville='$choix'"; break;
-                            case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire ON _logement.id_proprietaire=_proprietaire.id_proprietaire JOIN locbreizh._compte ON _compte.id_compte=_proprietaire.id_proprietaire WHERE _compte.nom='$choix'"; break;
+/*SENSIBILITE A LA CASSE*/  case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire ON _logement.id_proprietaire=_proprietaire.id_proprietaire JOIN locbreizh._compte ON _compte.id_compte=_proprietaire.id_proprietaire WHERE _compte.nom='$choix'"; break;
                             case 'voyageurs' :  $filtre = "WHERE nb_personnes_logement=$choix;"; break;
                         }
                     }
