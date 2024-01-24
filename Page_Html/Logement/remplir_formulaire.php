@@ -84,7 +84,7 @@
                         </div>
                         <div class="logpc">
                             <label for='phrase_daccroche'>Phrase d'accroche : </label>
-                            <textarea class="logPAP" id='accroche' name='accrocheP' placeholder="Phrase d'accroche" required></textarea>
+                            <textarea class="logPAP" id='accroche' name='accrocheP' maxlength="99" placeholder="Phrase d'accroche" required></textarea>
                         </div>
                         <div class="logrowb"> 
                                 <div class="log2vct">

@@ -18,8 +18,8 @@ try {
         JOIN locbreizh._plage_ponctuelle p1 ON p1.code_planning = p.code_planning
         JOIN locbreizh._plage_ponctuelle_disponible p2 ON p2.id_plage_ponctuelle = p1.id_plage_ponctuelle
         WHERE num_demande_devis = :num_demande
-        AND jour_plage_ponctuelle >= :date_arrivee
-        AND jour_plage_ponctuelle <= :date_depart
+        AND jour_plage_ponctuelle >= :date_arrivee::DATE
+        AND jour_plage_ponctuelle <= :date_depart::DATE
     ");
     $stmt->bindParam(':num_demande', $num_demande);
     $stmt->bindParam(':date_arrivee', $dateArrivee);
