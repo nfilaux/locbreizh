@@ -40,72 +40,21 @@
         header("Location: formulaire_devis.php?demande={$_POST['id_demande']}");
     }
     else {
-        // taxe de sejour
-        $stmt = $dbh->prepare("SELECT taxe_sejour, nb_personnes FROM locbreizh._demande_devis d 
-        JOIN locbreizh._logement l ON  d.logement = l.id_logement 
-        WHERE num_demande_devis = {$_POST['id_demande']};");
-        $stmt->execute();
-        $taxe = $stmt->fetch();
+        $nuitees_HT = $_POST['nuitees'];
+        $totalCharges_HT = $_POST['prixCharges'];
 
-        // recherche prix charge menage
-        $stmt = $dbh->prepare("SELECT prix_charges
-        FROM locbreizh._comporte_charges_associee_devis
-        WHERE num_devis = {$_POST['id_demande']} and nom_charges = 'menage';");
-        $stmt->execute();
-        $menage = $stmt->fetch();
+        $sousTotal_HT = $_POST['sousTotal_HT'];
+        $sousTotal_TTC =  $_POST['sousTotal_TTC'];
 
-        // recherche prix charge animaux
-        $stmt = $dbh->prepare("SELECT prix_charges
-        FROM locbreizh._comporte_charges_associee_devis
-        WHERE num_devis = {$_POST['id_demande']} and nom_charges = 'animaux';");
-        $stmt->execute();
-        $animaux = $stmt->fetch();
+        $fraisService_HT = $_POST['fraisService_HT'];
+        $fraisService_TTC = $_POST['fraisService_TTC'];
 
-        // recherche prix charge pers supp
-        $stmt = $dbh->prepare("SELECT prix_charges, nombre
-        FROM locbreizh._comporte_charges_associee_devis
-        WHERE num_devis = {$_POST['id_demande']} and nom_charges = 'personnes_supplementaires';");
-        $stmt->execute();
-        $pers_supp = $stmt->fetch();
+        $taxe_sejour = $_POST['taxe_sejour'];
 
-        // ajout des charges
-        $totalCharges_HT = 0;
-        if(isset($menage['prix_charges'])){
-            $totalCharges_HT += $menage['prix_charges'];
-        }
-        if(isset($animaux['prix_charges'])){
-            $totalCharges_HT += $animaux['prix_charges'];
-        }
-        if(isset($pers_supp['prix_charges'])){
-            $totalCharges_HT += $pers_supp['prix_charges'] * $pers_supp['nombre'];
-        }
-
-        /*
-        • Tarif de location des nuitées HT
-        • Charges additionnelles HT
-        • Sous-total (location et charges) HT et TTC (application d’une TVA de 10%)
-        • Frais de service de la plateforme HT et TTC (application d’une TVA de 20%)
-        • Taxe de séjour (pas de TVA applicable)
-        • Prix total du devis
-        */
-
-
-
-        // doit calculer en fonction nb jours !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // calcul
-        $nuitees_HT = $_POST['tarif_loc'];
-        $sousTotal_HT = $nuitees_HT + $totalCharges_HT;
-        $sousTotal_TTC = $sousTotal_HT * 1.1;
-        $fraisService_HT = 0.1* $sousTotal_HT;
-        $fraisService_TTC = $fraisService_HT * 1.2;
-        $taxe_sejour = $taxe["taxe_sejour"] * ($taxe["nb_personnes"] + $pers_supp['nombre']);
-        $prixTotal = $sousTotal_TTC + $fraisService_TTC + $taxe_sejour;
+        $prixTotal = $_POST['prixTotal'];
     
 
-
         $date_devis = date("Y-m-d");
-
-
 
         $reqNomClient = $dbh->prepare("SELECT nom, prenom, id_compte, pseudo 
         FROM locbreizh._demande_devis INNER JOIN locbreizh._compte ON _demande_devis.client = id_compte 
@@ -158,7 +107,7 @@
         $reg_devis->bindParam(':date_val', $_POST['date_val']);
         $reg_devis->bindParam(':annulation', $_POST['annulation']);
         $reg_devis->bindParam(':id_demande', $_POST['id_demande']);
-        $reg_devis->bindParam(':taxe_sejour', $taxe["taxe_sejour"]);
+        $reg_devis->bindParam(':taxe_sejour', $taxe_sejour);
         $reg_devis->bindParam(':url_detail', $url);
 
         $reg_devis->execute();

@@ -175,6 +175,10 @@
 
             
             <div id="resultat" class="deviscol">
+            <input type="hidden" id="nuitees" name="nuitees" value="" disabled>
+            <input type="hidden" id="prixCharges" name="prixCharges" value="" disabled>
+
+
                     <div class="devisrow">
                     <p class="ren">Prix :</p>
                         <div class="deviscolinput">
@@ -246,6 +250,7 @@
     let totalSum = 0;
     
     function getPrixPlagePonctuelle() {
+        totalSum = 0;
         const num_demande = <?php echo $_GET['demande']; ?>; // Assuming you pass the 'demande' as a parameter
 
         // Get the date values from the form
@@ -262,6 +267,7 @@
 
                 const totalInputElement = document.getElementById('tarif_loc');
                 totalInputElement.value = `${average}`;
+                calcul();
 
             })
             .catch(error => {
@@ -276,8 +282,7 @@
 
     function calcul() {
 
-
-        const nb_personnes = parseInt(document.getElementById('nb_pers').value);
+        const nb_personnes = parseInt(document.getElementById('nb_pers').value)|| 0;
         const nb_pers_supp = parseInt(document.getElementById('vacanciers_sup').value) || 0;
 
         // Vérifiez si les cases à cocher sont cochées
@@ -301,6 +306,8 @@
         const total_taxe_sejour =  taxe_sejour.taxe_sejour * (nb_pers_supp + nb_personnes);
         const prixTotal = sousTotal_TTC + fraisService_TTC + total_taxe_sejour;
 
+        document.getElementById('nuitees').value = `${arrondi(totalSum)}`;
+        document.getElementById('prixCharges').value = `${arrondi(total_charges)}`;
         document.getElementById('sousTotal_HT').value = `${arrondi(sousTotal_HT)}`;
         document.getElementById('sousTotal_TTC').value = `${arrondi(sousTotal_TTC)}`;
         document.getElementById('fraisService_HT').value = `${arrondi(fraisService_HT)}`;
@@ -314,11 +321,9 @@
     document.getElementById('nb_pers').addEventListener('input', calcul);
 
     document.getElementById('tarif_loc').addEventListener('input', calcul);
-    document.getElementById('date_arrivee').addEventListener('input', calcul);
-    document.getElementById('date_depart').addEventListener('input', calcul);
 
 
-
+    // delai pour attendre le chargement de la page et les autres calcul précédents
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             calcul();
