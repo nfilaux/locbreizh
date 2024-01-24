@@ -89,7 +89,10 @@
         • Prix total du devis
         */
 
-
+        //on recherhce les infos du proprio
+        $stmt = $dbh->prepare("SELECT nom,prenom,mail,telephone from locbreizh._compte natural join locbreizh._logement where id_compte = locbreizh._logement.id_proprietaire;");
+        $stmt->execute();
+        $proprioinfo = $stmt->fetch();
 
         // doit calculer en fonction nb jours !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // calcul
@@ -100,10 +103,9 @@
         $fraisService_TTC = $fraisService_HT * 1.2;
         $taxe_sejour = $taxe["taxe_sejour"] * ($taxe["nb_personnes"] + $pers_supp['nombre']);
         $prixTotal = $sousTotal_TTC + $fraisService_TTC + $taxe_sejour;
-    
-
 
         $date_devis = date("Y-m-d");
+        $date_devis_fr = date("d/m/Y", $date_devis);
 
 
 
@@ -171,18 +173,6 @@
         $stmt->execute();
 
 
-        // creation du pdf
-        $pdf = new TCPDF();
-
-        // titre pdf
-        $pdf->SetTitle('Devis');
-
-        // cree une nouvelle page
-        $pdf->AddPage();
-
-        // definit la police et la taille de la police
-        $pdf->SetFont('', '', 12);
-
         // cherche le libelle
         $stmt = $dbh->prepare("SELECT libelle_logement FROM locbreizh._demande_devis d 
         JOIN locbreizh._logement l ON  d.logement = l.id_logement 
@@ -190,10 +180,43 @@
         $stmt->execute();
         $libelle_log = $stmt->fetch();
 
+        // creation du pdf
+        $pdf = new TCPDF();
+
+        //titre sur le document
+        $pdf->SetFont('', 'B', 30);
+        $pdf->SetTextColor(116,80,134);
+        $pdf->Cell(0, 25, "Devis", 0, 1,'C');
+        $pdf->SetTextColor(0,0,0);
+
+        // cree une nouvelle page
+        $pdf->AddPage();
+
+        // definit la police et la taille de la police
+        $pdf->SetFont('', '', 12);
+
+        $endatearrive = strtotime($_POST['dateArrivee']);
+        $frdatearrive = date("d/m/Y", $endatearrive);
+
+        $endatedepart = strtotime($_POST['dateDepart']);
+        $frdatedepart = date("d/m/Y", $endatedepart);
+
+        
+
+        $pdf->Cell(0, 8, $proprioinfo['nom'] . ' ' . $proprioinfo['prenom'], 0, 1);
+        $pdf->Cell(0, 8, $proprioinfo['mail'], 0, 1);
+        $pdf->Cell(0, 8, $proprioinfo['telephone'], 0, 1);
+
+        $pdf->Cell(0, 8, $infos_user['nom'] . ' ' . $infos_user['prenom'], 0, 1, 'R');
+        $pdf->Cell(0, 8, $infos_user['mail'], 0, 1,'R');
+        $pdf->Cell(0, 8, $infos_user['telephone'], 0, 1,'R');
+
+        $pdf->Cell(0, 8, 'Le' . $date_devis_fr, 0, 1, 'R');
+
+        $pdf->Cell(0, 10, "Séjour du ".$frdatearrive . ' au ' . $frdatedepart . '.', 0, 1);
+
         // tableaux avec toutes les infos du pdf
         $devisInfo = array(
-            'Nom' => $infos_user['nom'],
-            'Prenom' => $infos_user['prenom'],
             'Libelle logement' => $libelle_log['libelle_logement'],
             'Tarif ht location nuitee devis' => $nuitees_HT . ' €',
             'Prix charges HT' => $totalCharges_HT. ' €',
@@ -210,6 +233,26 @@
         foreach ($devisInfo as $label => $valeur) {
             $pdf->Cell(0, 10, $label . ': ' . $valeur, 0, 1);
         }
+
+        // Informations pour le devis
+        $informationsDevis = array(
+            array('Nom logement', 'Description', 'Quantité', 'Prix unitaire', 'Total'),
+            array('Article 1', 'Description de l\'article 1', 2, 50, 100),
+            array('Article 2', 'Description de l\'article 2', 1, 75, 75),
+            array('Article 3', 'Description de l\'article 3', 3, 30, 90)
+        );
+
+        // Définir les largeurs des colonnes
+        $colonneLargeurs = array(40, 70, 20, 30, 30);
+
+        // Boucle pour créer le tableau
+        foreach ($informationsDevis as $ligne) {
+            for ($i = 0; $i < count($ligne); $i++) {
+                $pdf->MultiCell($colonneLargeurs[$i], 10, $ligne[$i], 1, 'C');
+            }
+            $pdf->Ln(); // Saut de ligne après chaque ligne du tableau
+        }
+
 
         // genere le contenu PDF
         $contenu_pdf = $pdf->Output('devis.pdf', 'S'); // 'S' pour obtenir le contenu du PDF
