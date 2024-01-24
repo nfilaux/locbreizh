@@ -357,8 +357,8 @@ header a:last-child {
 
 .headconn img , .headtablo img{
     position: absolute;
-    left: 5em;
-    top: 1em;
+    left: 3em;
+    top: 1.5em;
 }
 
 .headconn h1 , .headtablo h1 {
@@ -370,8 +370,8 @@ header a:last-child {
 
 .headconn img , .headtabloP img{
     position: absolute;
-    left: 5em;
-    top: 1em;
+    left: 3em;
+    top: 1.5em;
 }
 
 .headconn h1 , .headtabloP h1 {
@@ -634,6 +634,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     color: #745086;
 }
 
+.btn-accueilins:link{
+    color: #745086;
+}
+
 .btn-accueilins h5, .btn-accueil h5{
     margin: auto;
 }
@@ -827,13 +831,21 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .card section article:last-child{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-evenly;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 0.5em;
 }
 
-.card section article h3,.card section article h4{
+.card section article h3{
     color: #fff;
+}
+
+.card section article h4{
+    color: #fff;
+    margin: 0 0 0.5em 0;
 }
 
 .card section article img{
@@ -845,7 +857,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .card section article .accicone img {
     visibility: hidden;
 }
-
 
 .cardlogmain {
     display: flex;
@@ -2626,7 +2637,8 @@ iframe {
     }
 
     .headconn img, .headtabloP img{
-        left: 2em;
+        left: 1.5em;
+        top: 1em;
     }
     /*-------------------------------FOOTER-------------------------------*/
     .tfooter {
