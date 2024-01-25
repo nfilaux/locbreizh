@@ -43,6 +43,7 @@ $photo = $stmt->fetch();
                 <p class="acc-accroche">Rechercher votre logement selon votre critère</p>
                 <div class="filters">
                     <form action="filtrageC.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
+                    <div class="filters">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <label for="prix_min">min</label>
@@ -74,7 +75,7 @@ $photo = $stmt->fetch();
                                 <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>   
                             </div>
                                 <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
-                            
+                        </div>
                                 <?php if (isset($_GET['erreur'])){ ?>
                                     <p class='err'>Le prix min doit être inférieur au prix max</p>
                                 <?php }?>
