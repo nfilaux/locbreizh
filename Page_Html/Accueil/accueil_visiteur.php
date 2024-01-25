@@ -29,9 +29,6 @@
                         </div>
                         <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
                     </div>
-                    <?php if (isset($_GET['erreur'])){ ?>
-                        <p class='err'>Le prix min doit être inférieur au prix max</p>
-                    <?php }?>
                     <div class="input-group-ville">
                         <div class="input-group-prepend">
                             <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25"></label>
@@ -51,7 +48,9 @@
                         <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>   
                     </div>
                         <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
-                    
+                    <?php if (isset($_GET['erreur'])){ ?>
+                        <p class='err'>Le prix min doit être inférieur au prix max</p>
+                    <?php }?>
                 </form>
             </div>
         </div>

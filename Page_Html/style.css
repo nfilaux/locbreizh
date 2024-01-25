@@ -227,7 +227,27 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
     margin: 10px;
+    background-color: white;
+    padding: 1.25em;
+    border-radius: 0.5em;
+    box-shadow: 10px 5px 5px black;
+
+}
+
+.filR{
+    display:flex; 
+    flex-direction:row; 
+    justify-content:space-around;
+}
+
+.menu-filtreR{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: auto 10%;
     background-color: white;
     padding: 1.25em;
     border-radius: 0.5em;
@@ -290,6 +310,7 @@ body {
 
 .input-group input, .input-group-proprio input , .input-group-pers input , .input-group-ville input {
     border: none;
+    width: 100%;
 }
 
 .input-group-prepend {
@@ -2713,6 +2734,9 @@ iframe {
     .menu-filtre{
         flex-direction: column;
     }
+    .filR{
+        flex-direction: column;
+    }
 
     .input-group {
         width: 80%;
@@ -2885,6 +2909,10 @@ iframe {
     }
 
     .menu-filtre{
+        flex-direction: column;
+    }
+
+    .filR{
         flex-direction: column;
     }
 
@@ -3221,6 +3249,10 @@ iframe {
     }
 
     .menu-filtre{
+        flex-direction: column;
+    }
+
+    .filR{
         flex-direction: column;
     }
 

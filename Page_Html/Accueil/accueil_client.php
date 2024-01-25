@@ -43,41 +43,41 @@ $photo = $stmt->fetch();
                 <p class="acc-accroche">Rechercher votre logement selon votre critère</p>
                 <div class="filters">
                     <form action="filtrageC.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <label for="prix_min">min</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label for="prix_min">min</label>
+                                </div>
+                                <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
+                            </div>  
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label for="prix_max">max</label>
+                                </div>
+                                <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
                             </div>
-                            <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
-                        </div>  
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <label for="prix_max">max</label>
+                            <div class="input-group-ville">
+                                <div class="input-group-prepend">
+                                    <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25"></label>
+                                </div>
+                                <input type="text" id="lieu" name="lieu" placeholder="<?php if (isset($_GET['lieu'])){echo $_GET['lieu'];} else {echo 'Ville';} ?>"/> 
                             </div>
-                            <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
-                        </div>
-                        <?php if (isset($_GET['erreur'])){ ?>
-                            <p class='err'>Le prix min doit être inférieur au prix max</p>
-                        <?php }?>
-                        <div class="input-group-ville">
-                            <div class="input-group-prepend">
-                                <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25"></label>
+                            <div class="input-group-pers">
+                                <div class="input-group-prepend">
+                                    <label for="personne"><img src="../svg/group.svg" width="25" height="25"></label>
+                                </div>
+                                <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['voyageurs'])){echo $_GET['voyageurs'];} else {echo 0;} ?>"/>   
                             </div>
-                            <input type="text" id="lieu" name="lieu" placeholder="<?php if (isset($_GET['lieu'])){echo $_GET['lieu'];} else {echo 'Ville';} ?>"/> 
-                        </div>
-                        <div class="input-group-pers">
-                            <div class="input-group-prepend">
-                                <label for="personne"><img src="../svg/group.svg" width="25" height="25"></label>
+                            <div class="input-group-proprio">
+                                <div class="input-group-prepend">
+                                    <label for="proprietaire"><img src="../svg/home-office-fill.svg" width="25" height="25"></label>
+                                </div>
+                                <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>   
                             </div>
-                            <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['voyageurs'])){echo $_GET['voyageurs'];} else {echo 0;} ?>"/>   
-                        </div>
-                        <div class="input-group-proprio">
-                            <div class="input-group-prepend">
-                                <label for="proprietaire"><img src="../svg/home-office-fill.svg" width="25" height="25"></label>
-                            </div>
-                            <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>   
-                        </div>
-                            <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
-                        
+                                <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
+                            
+                                <?php if (isset($_GET['erreur'])){ ?>
+                                    <p class='err'>Le prix min doit être inférieur au prix max</p>
+                                <?php }?>
                     </form>
                 </div>
             </div>
