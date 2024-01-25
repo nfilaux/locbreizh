@@ -227,6 +227,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
     margin: 10px;
     background-color: white;
     padding: 1.25em;
@@ -290,6 +291,7 @@ body {
 
 .input-group input, .input-group-proprio input , .input-group-pers input , .input-group-ville input {
     border: none;
+    width: 100%;
 }
 
 .input-group-prepend {
