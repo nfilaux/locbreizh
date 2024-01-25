@@ -81,8 +81,9 @@
 
                 // récupération des données de logement dans la base de donnée avec le tri
                 $stmt = $dbh->prepare(
-                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
-                    from locbreizh._logement ORDER BY $tri;"
+                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
+                    from locbreizh._logement l JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse
+                    ORDER BY $tri;"
                 );
             } else if(sizeof($_GET)>0){
                 if (sizeof($_GET)==1){
@@ -91,7 +92,7 @@
                             case 'prixMin' :    $filtre = "WHERE tarif_base_ht>=$choix";  break;
                             case 'prixMax' :    $filtre = "WHERE tarif_base_ht<=$choix"; break;
                             case 'lieu' :       $filtre = "NATURAL JOIN locbreizh._adresse WHERE _adresse.ville='$choix'"; break;
-/*SENSIBILITE A LA CASSE*/  case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire ON _logement.id_proprietaire=_proprietaire.id_proprietaire JOIN locbreizh._compte ON _compte.id_compte=_proprietaire.id_proprietaire WHERE LOWER(_compte.nom)=LOWER('$choix')"; break;
+                            case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire ON _logement.id_proprietaire=_proprietaire.id_proprietaire JOIN locbreizh._compte ON _compte.id_compte=_proprietaire.id_proprietaire WHERE LOWER(_compte.nom)=LOWER('$choix')"; break;
                             case 'voyageurs' :  $filtre = "WHERE nb_personnes_logement=$choix;"; break;
                         }
                     }
@@ -103,14 +104,14 @@
 
                 // récupération des données de logement dans la base de donnée avec le filtre
                 $stmt = $dbh->prepare(
-                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
-                    from locbreizh._logement $filtre;"
+                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
+                    from locbreizh._logement l JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse $filtre;"
                 );
             } else {
                 // récupération des données de logement dans la base de donnée
                 $stmt = $dbh->prepare(
-                    'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
-                    from locbreizh._logement;'
+                    'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
+                    from locbreizh._logement l JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse;'
                 );
             }
         } catch (PDOException $e) {
@@ -137,35 +138,58 @@
        
         
         <div class="card"> <?php
-        $res = $stmt->fetchAll();
-        // affichage des données de logement
-        if (count($res)<=0){ ?> 
-            <p class="center" style="font-size: 1.5em;">Aucun logement trouvé</p>
-<?php   } 
-        foreach ($res as $card) {
-            if ($card['en_ligne'] == true) {
-                ?><section> <?php
-                ?><a class="acclog" href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>"> <?php
-                ?><div class="cardtel">
-                <article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article><?php
-                ?><div class="cardphone">
-                <article>
-                <h3> <?php echo $card['libelle_logement']; ?> </h3>
-                </article><?php
-                /*?> <img src="/Ressources/Images/star.svg">  <h4> <?php $card['note_avis']?> </h4><?php*/
-                ?><article><div class="accicone">
-                <img src="../svg/money.svg" width="25" height="25"> <h4><?php echo $card['tarif_base_ht']; ?> €</h4></div><?php
-                /*?><h4><?php formatDate($card['debut_plage_ponctuelle'], $card['fin_plage_ponctuelle'])?></h4><?php*/
-                ?><div class="accicone"><img src="../svg/group.svg" width="25" height="25"><h4><?php echo $card['nb_personnes_logement']; ?> personnes</h4></div>
-                </article></div></div></a><?php
-                ?></section><?php
-            } /*else if ($card['en_ligne'] == false) {
-                    echo "Ce logement est temporairement indisponible !";
-                }*/
-        }
-        ?>
+            $res = $stmt->fetchAll();
+            // affichage des données de logement
+            if (count($res)<=0){ ?> 
+                <p class="center" style="font-size: 1.5em;">Aucun logement trouvé</p>
+    <?php   }
+            foreach ($res as $card) {
+                if ($card['en_ligne'] == true) {?>
+                    <!-- <section class=""> 
+                        <a href="../Logement/logement_detaille_visiteur.php?logement=<?php /*echo $card['id_logement'] ?>"> 
+                            <div class="cardtel">
+                                <article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article>
+                                    <div class="cardphone">
+                                        <article> <h3> <?php echo $card['libelle_logement']; ?></h3></article>
+                                        <article> <p> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></p></article>
+                                        <article>
+                                            <div class="accicone"><img src="../svg/money.svg" width="25" height="25"> 
+                                                <h4><?php echo $card['tarif_base_ht']; ?> €</h4></div>
+                                            <div class="accicone">
+                                                <h4><?php echo $card['nb_personnes_logement']; */?> personnes</h4>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </article>
+                            </div>
+                        </a>
+                    </section> -->
+                    <article class="logementCard">
+                        <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>"> 
+                            <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
+                            <div class="infoContainer">
+                                <div class="mainInfos">
+                                    <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
+                                    <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
+                                </div>
+                                <div class="otherInfos">
+                                    <div>
+                                        <img src="../svg/money.svg" width="25" height="25">
+                                        <span><?php echo $card['tarif_base_ht']; ?> € </span>
+                                    </div>
+                                    <div>
+                                        <img src="../svg/group.svg" width="25" height="25">
+                                        </span><?php echo $card['nb_personnes_logement'];?> personnes</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+        <?php   } 
+            }
+            ?>
+        </div>
 
-    </div>
     </main>
     <?php
         // appel du footer

@@ -322,6 +322,7 @@ body {
 .input-group-prepend {
     display: flex;
     border-right: 1px solid #ddd;
+    margin-right: 5px;
 }
 
 .input-group-prepend label{
@@ -949,47 +950,60 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     margin: auto;
 }
 
-.card section{
+.logementCard{
+    width: 30%;
+    background-color: #ccc;
+    margin: 10px;
+    border-radius: 8px;
+    border: 2px solid #5B3F69;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.logementCard>a{
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    background-color: #745086;
-    border-radius: 15px;
-    padding-top: 5px;
-    width: 19%;
-    margin: 1em 2%;
-    padding: 0.5em;
 }
 
-.card section article:last-child{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    box-sizing: border-box;
-    border-radius: 10px;
-    margin-bottom: 0.5em;
-}
-
-.card section article h3{
-    color: #fff;
-}
-
-.card section article h4{
-    color: #fff;
-    margin: 0 0 0.5em 0;
-}
-
-.card section article img{
-    margin: 0;
-    border-radius: 15px;
-    width: 100%;
+.logementCard>a>img{
+    height: 300px;
     object-fit: cover;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
 }
-.card section article .accicone img {
-    visibility: hidden;
+
+.infoContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
 }
+
+.logementTitre{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.mainInfos{
+    display: flex;
+    flex-direction: column;
+}
+
+.otherInfos{
+    display: flex;
+    flex-direction: column;
+}
+
+.otherInfos div{
+    display: flex;
+    align-items: center;
+}
+
+.otherInfos img{
+    margin-right: 10px;
+}
+
+
 
 .cardlogmain {
     display: flex;
