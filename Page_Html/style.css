@@ -2894,6 +2894,78 @@ iframe {
     .menu-filtre{
         text-align: center;
     }
+
+    .card{
+        font-size: 0.6em;
+    }
+
+    .logementCard>a>img{
+        margin: 0;
+        border-radius: 0px;
+        width:50%;
+        border: 5px solid #745086;
+        height: 200px;
+    }
+    .mainInfos span:last-child{
+        font-size: 2em;
+    }
+    .logementCard>a{
+        width:100%;
+        flex-direction: row;
+    }
+
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin: 2em auto;
+    }
+    .cardtel div:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel div:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+
+    .infoContainer{
+        padding: 0;
+        justify-content: flex-start;
+        margin: 0;
+    }
+
+    .mainInfos:first-child{
+        flex-direction: column;
+        background-color: #745086;
+        width: 100%;
+        color: #fff;
+        width: 100%;
+    }
+    .otherInfos div{
+        margin-top: 1em;
+        margin-left: 2%;
+        font-size: 2em;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    
+    .card div:last-child {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .card .cardphone div:last-child {
+        flex-direction: row;
+        width: 100%;
+    }
 }
 
 
@@ -3000,7 +3072,8 @@ iframe {
     .cardtel{
         display: flex;
         flex-direction: row;
-        width: 100%;
+        width: 80%;
+        margin: 2em auto;
     }
     .cardtel article:first-child{
         margin-right: 0.5em;
@@ -3079,6 +3152,78 @@ iframe {
     .btn-fillP {
         width: 40%;
         margin: 0.5em auto;
+    }
+
+    .card{
+        font-size: 0.6em;
+    }
+
+    .logementCard>a>img{
+        margin: 0;
+        border-radius: 0px;
+        width:50%;
+        border: 5px solid #745086;
+        height: 200px;
+    }
+    .mainInfos span:last-child{
+        font-size: 2em;
+    }
+    .logementCard>a{
+        width:100%;
+        flex-direction: row;
+    }
+
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin: 2em auto;
+    }
+    .cardtel div:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel div:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+
+    .infoContainer{
+        padding: 0;
+        justify-content: flex-start;
+        margin: 0;
+    }
+
+    .mainInfos:first-child{
+        flex-direction: column;
+        background-color: #745086;
+        width: 100%;
+        color: #fff;
+        width: 100%;
+    }
+    .otherInfos div{
+        margin-top: 1em;
+        margin-left: 2%;
+        font-size: 2em;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    
+    .card div:last-child {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .card .cardphone div:last-child {
+        flex-direction: row;
+        width: 100%;
     }
 
     /*-------------------------------Logement-------------------------------*/
@@ -3319,54 +3464,54 @@ iframe {
     .card{
         font-size: 0.6em;
     }
-    
-    .card section article .accicone{
-        display: flex;
-        flex-direction: row;
-    }
-    .card section article .accicone img {
-        visibility: visible;
-        text-decoration: none;
-        border: none;
-        margin: auto 0.5em;
-        width: auto;
-    }
 
-    .card section{
-        display: flex;
-        flex-direction: column;
-        background-color: #fff;
-        box-sizing: border-box;
-        border: 1px solid #745086;
-        border-radius: 15px;
-        width: 100%;
-        object-fit: cover;
-        padding: 0px;
-    }
-    
-    .card section article h3,.card section article h4{
-        color: #745086;
-    }
-
-    .card section article img{
+    .logementCard>a>img{
         margin: 0;
-        border-radius: 15px;
+        border-radius: 0px;
         width:50%;
         border: 5px solid #745086;
-
+        height: 200px;
     }
+    .mainInfos span:last-child{
+        font-size: 2em;
+    }
+    .logementCard>a{
+        width:100%;
+        flex-direction: row;
+    }
+
     .cardtel{
         display: flex;
         flex-direction: row;
-        width: 100%;
+        width: 80%;
+        margin: 2em auto;
     }
-    .cardtel article:first-child{
+    .cardtel div:first-child{
         margin-right: 0.5em;
     }
-    .cardtel article:first-child img{
+    .cardtel div:first-child img{
         height: 95%;
         object-fit: cover;
         border-top-right-radius: 0%;
+    }
+
+    .infoContainer{
+        padding: 0;
+        justify-content: flex-start;
+        margin: 0;
+    }
+
+    .mainInfos:first-child{
+        flex-direction: column;
+        background-color: #745086;
+        width: 100%;
+        color: #fff;
+        width: 100%;
+    }
+    .otherInfos div{
+        margin-top: 1em;
+        margin-left: 2%;
+        font-size: 2em;
     }
     .cardphone{
         display: flex;
@@ -3377,21 +3522,17 @@ iframe {
         color: #fff;
         padding-left: 1em;
     }
-    .cardphone article:first-child {
-        background-color: #745086;
-        width: 100%;
-        border-top-right-radius: 12px;
-    }
     
-    .card section article:last-child {
+    .card div:last-child {
         flex-direction: column;
-        margin:auto;
+        width: 100%;
     }
 
-    .card section article img {
-        margin: auto;
-        width: 100%; 
+    .card .cardphone div:last-child {
+        flex-direction: row;
+        width: 100%;
     }
+
 
     .section-filters{
         padding: 2em;
