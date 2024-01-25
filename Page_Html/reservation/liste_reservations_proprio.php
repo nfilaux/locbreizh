@@ -34,20 +34,25 @@ $photo = $stmt->fetch();
         <div class="filters">
             <form action="filtrageP.php" method="post" class="menu-filtreR" onsubmit="return verifierChamps()">
             <div class="filR">
-                <div>
-                    <label for="prix_min">Prix min :</label>
-                    <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
-                </div>
-                <div>
-                    <label for="prix_max">Prix max :</label>
-                    <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
-                </div>
-                
-                <div>
-                    <label for="date">Date :</label>
-                    <input type="Date" id="date" name="date" placeholder="<?php if (isset($_GET['date'])){echo $_GET['date'];}  ?>"/>   
-                </div>
-                <button class="btn-fillP" type="submit" id="filtrage">Filtrer</button>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                            <label for="prix_min">min</label>
+                        </div>
+                        <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
+                    </div>  
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label for="prix_max">max</label>
+                        </div>
+                        <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
+                    </div>
+                    <div class="input-group-pers">
+                        <div class="input-group-prepend">
+                            <label for="date">Date</label>
+                        </div>
+                        <input type="Date" id="date" name="date" placeholder="<?php if (isset($_GET['date'])){echo $_GET['date'];}  ?>"/>   
+                    </div>
+                        <button class="btn-fillP" type="submit" id="filtrage">Filtrer</button>
                 </div>
                 <?php if (isset($_GET['erreur'])){ ?>
                     <p class='err'>Le prix min doit être inférieur au prix max</p>
