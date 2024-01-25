@@ -106,7 +106,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 </div>
 
                 
-
+                <div class="logrowt">
                     <div class="logcolumn">
                         <h3 class="policetitre">Description</h3>
                         <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
