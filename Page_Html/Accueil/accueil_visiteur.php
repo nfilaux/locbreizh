@@ -134,11 +134,12 @@
        
         
         <div class="card"> <?php
+        $res = $stmt->fetchAll();
         // affichage des données de logement
-        if (count($stmt->fetchAll())<=0){ ?> 
+        if (count($res)<=0){ ?> 
             <p class="center" style="font-size: 1.5em;">Aucun logement trouvé</p>
-<?php   } else {
-        foreach ($stmt->fetchAll() as $card) {
+<?php   } 
+        foreach ($res as $card) {
             if ($card['en_ligne'] == true) {
                 ?><section> <?php
                 ?><a class="acclog" href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>"> <?php
@@ -158,7 +159,7 @@
             } /*else if ($card['en_ligne'] == false) {
                     echo "Ce logement est temporairement indisponible !";
                 }*/
-        }}
+        }
         ?>
 
     </div>
