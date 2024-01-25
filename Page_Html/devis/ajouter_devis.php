@@ -29,27 +29,26 @@
     JOIN locbreizh._logement l ON l.code_planning = _planning.code_planning
     join locbreizh._demande_devis on _demande_devis.logement = l.id_logement
     WHERE num_demande_devis = :num_demande");
-    $stmt->bindParam(':num_demande', $_POST['demande']);
+    $stmt->bindParam(':num_demande', $_POST['id_demande']);
     $stmt->execute();
 
     $resDates = $stmt->fetchAll();
 
     $err = 0;
 
+    
     // Converti les dates donne en paramètre
-    $date_arrive = new DateTime($_POST["date_depart"]);
-    $date_depart = new DateTime($_POST["date_arrivee"]);
-
+    $date_arrive = new DateTime($_POST["date_arrive"]);
+    $date_depart = new DateTime($_POST["date_depart"]);
 
     // parcours tous les jours de la periode de reservation
-    for ($date = clone $date_arrive; $date <= $date_depart; $date->modify('+1 day')) {
+    for($date = clone $date_arrive; $date <= $date_depart; $date->modify('+1 day')) {
+
         $date_formate = $date->format('Y-m-d');
-    
+
+
         $date_trouve = false;
         foreach ($resDates as $resDate) {
-            print_r("resDate");
-            print_r("");
-
             if ($date_formate == $resDate['jour_plage_ponctuelle']) {
                 $date_trouve = true;
                 break;
@@ -70,6 +69,7 @@
         $_SESSION['erreurs']['valide_dates'] = "Les dates données sont ulterieures à aujourd'hui !";
     }
     else if($err == 1){
+        print_r("lkj");
         $_SESSION['erreurs']['valide_dates'] = "Les dates données ne sont pas présent dans le planning !";
     }
     else {
