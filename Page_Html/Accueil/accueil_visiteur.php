@@ -164,7 +164,7 @@
                             </div>
                         </a>
                     </section> -->
-                    <article class="logementCard">
+                    <article class="logementCard cardtel">
                         <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>"> 
                             <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
                             <div class="infoContainer">
@@ -172,7 +172,7 @@
                                     <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
                                     <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
                                 </div>
-                                <div class="otherInfos">
+                                <div class="otherInfos cardphone">
                                     <div>
                                         <img src="../svg/money.svg" width="25" height="25">
                                         <span><?php echo $card['tarif_base_ht']; ?> € </span>

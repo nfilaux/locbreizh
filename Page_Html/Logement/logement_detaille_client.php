@@ -73,50 +73,25 @@ $photo = $stmt->fetch();
                         <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
-                <div class="detailimg">
-                    <?php
-                        $cpt = 1;
-                        for ($i = 0 ; $i <5; $i++){
-                            if (isset($photos_secondaires[$i]['photo'])){
-                                $cpt ++;
+                <div class="slider-container">
+                    <div class="slider">
+                        <div class="slide">
+                                <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
+                            </div><?php
+                        for ($i = 0 ; $i < 5; $i++) {
+                            if (isset($photos_secondaires[$i]['photo'])){?>
+                                <div class="slide">
+                                    <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>">
+                                </div><?php
                             }
-                        }
-                        switch($cpt){
-                            case 1 : ?><img class="photoprincipal" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                     break;
-                            case 2 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                    for ($i = 0 ; $i < 5; $i++) {
-                                        if (isset($photos_secondaires[$i]['photo'])){
-                                            ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                        }
-                                    } break; 
-                            case 3 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                     for ($i = 0 ; $i < 5; $i++) {
-                                            if (isset($photos_secondaires[$i]['photo'])){
-                                                ?><img class="photosecondaireI" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                            }
-                                        } break;
-                            case 4 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                    for ($i = 0 ; $i < 5; $i++) {
-                                        if (isset($photos_secondaires[$i]['photo'])){
-                                            ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                        }
-                                    } break;
-                            case 5 :?><img class="photosecondaireP5" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "> <div class="imgsecondaire"><?php 
-                                for ($i = 0 ; $i < 5; $i++) {
-                                    if (isset($photos_secondaires[$i]['photo'])){
-                                        ?><img class="photosecondaireI5" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                    }
-                                } ?> </div> <?php break;
-                            case 6 : ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                    for ($i = 0 ; $i < 5; $i++) {
-                                        if (isset($photos_secondaires[$i]['photo'])){
-                                            ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                        }
-                                    } break;
-                        }
-                        
-                        ?>
+                        };?>
+                    </div>
+
+                    <div class="controls">
+                        <button class="left"><img src="../svg/arrow-left.svg"></button>
+                        <ul></ul>
+                        <button class="right"><img src="../svg/arrow-right.svg"></button>
+                    </div>
                 </div>
                 <div class="logrowt">  
                 <div class="logcolumn">
