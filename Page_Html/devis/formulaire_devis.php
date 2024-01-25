@@ -167,7 +167,7 @@
                 <!--pre-remplie les infos si ils sont dans get-->
                 <div class="logpc">
                 <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
-                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else if (isset($vac_sup2['nombre']) && $vac_sup2['nombre']!=''){echo $vac_sup['nombre'];}; ?>"/>
+                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else if (isset($vac_sup2['nombre']) && $vac_sup2['nombre']!=''){echo $vac_sup2['nombre'];}; ?>"/>
                 </div>
             </div>
             </div>
