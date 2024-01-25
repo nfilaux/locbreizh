@@ -953,23 +953,27 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .logementCard{
     width: 30%;
-    background-color: #ccc;
+    background-color: #fff;
     margin: 10px;
     border-radius: 8px;
-    border: 2px solid #5B3F69;
+    border: 4px solid #5B3F69;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .logementCard>a{
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+    font-weight:549;
 }
 
 .logementCard>a>img{
     height: 300px;
-    object-fit: cover;
+    object-fit:cover;
+    border: 1px solid #5B3F69;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .infoContainer{
