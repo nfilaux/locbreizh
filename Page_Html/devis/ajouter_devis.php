@@ -86,6 +86,9 @@
     }
     else {
         $nb_personnes = $_POST['nb_pers'];
+        $vac_supp = $_POST['vacanciers_sup'];
+        $prix_par_nuit = $_POST['tarif_loc'] ;
+        
         $nuitees_HT = $_POST['nuitees'];
         $totalCharges_HT = $_POST['prixCharges'];
 
@@ -269,6 +272,22 @@
         $endatedepart = strtotime($_POST["date_depart"]);
         $frdatedepart = date("d/m/Y", $endatedepart);
 
+        if(isset($_POST['menage'])){
+            $menage = 'Ménage : Oui';    
+        }
+        else{
+            $menage = 'Ménage : Non';
+        }
+
+        if(isset($_POST['animaux'])){
+            $animaux= 'Animaux : Oui';
+        }
+        else{
+            $animaux = 'Animaux : Non';
+        }
+        if($vac_supp == ''){
+            $vac_supp= 0;
+        }
         
 
         $pdf->Cell(0, 8, $proprioinfo['nom'] . ' ' . $proprioinfo['prenom'], 0, 1);
@@ -283,7 +302,12 @@
 
         $pdf->Cell(0, 10, "Séjour du ".$frdatearrive . ' au ' . $frdatedepart . '.', 0, 1);
         $pdf->Cell(0, 8, 'Logement demandé : ' . $libelle_log['libelle_logement'], 0, 1);
+        $pdf->Cell(0, 8, 'Prix à la nuité : ' . $prix_par_nuit . '€', 0, 1);
         $pdf->Cell(0, 8, 'Nombre de personnes : ' . $nb_personnes, 0, 1);
+        $pdf->Cell(0, 8, 'Nombre de personnes supplémentaires : ' . $vac_supp, 0, 1);
+        $pdf->Cell(0, 8, $menage, 0, 1);
+        $pdf->Cell(0, 8, $animaux, 0, 1);
+
 
 
         $pdf->Ln();
@@ -302,11 +326,41 @@
         $colonneLargeurs = array(60, 40, 40, 40);
 
         // Boucle pour créer le tableau
+        $premier = 1;
+
         foreach ($informationsDevis as $ligne) {
             for ($i = 0; $i < count($ligne); $i++) {
+                if ($i == 0) {
+                    $pdf->SetFont('', 'B', 12);
+                } elseif($premier){
+                    $pdf->SetFont('', 'B', 12);
+                }
+                else{
+                    $pdf->SetFont('', '', 12);
+                }
                 $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0,'C');
             }
             $pdf->Ln();
+            $premier = 0;
+        }
+
+        $pdf->Ln();
+        $informationsPrix = array(
+            array('Prix Total', $nuitees_HT + $totalCharges_HT + $logement['taxe_sejour']+ $fraisService_HT, $prixTotal)
+        );
+        foreach ($informationsPrix as $ligne) {
+            
+            for ($i = 0; $i < count($ligne); $i++) {
+                if ($i == 0) {
+                    $pdf->SetFont('', 'B', 12);
+                }
+                else{
+                    $pdf->SetFont('', '', 12);
+                }
+                $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0,'C');
+            }
+            $pdf->Ln();
+
         }
 
         // genere le contenu PDF
