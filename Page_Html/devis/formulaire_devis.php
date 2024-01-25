@@ -277,16 +277,16 @@
     
     function getPrixPlagePonctuelle() {
         totalSum = 0;
-        const num_demande = <?php echo $_GET['demande']; ?>; // Assuming you pass the 'demande' as a parameter
+        const num_demande = <?php echo $_GET['demande']; ?>; // On récupère le num de la demande de devis
 
-        // Get the date values from the form
+        // récupère la date d'arrivée et de départ
         const dateArrivee = document.getElementById('date_arrivee').value;
         const dateDepart = document.getElementById('date_depart').value;
 
         fetch(`total_tarif_nuit.php?num_demande=${num_demande}&date_arrivee=${dateArrivee}&date_depart=${dateDepart}`)
             .then(response => response.json())
             .then(data => {
-                // Handle the data received from the server (prices)
+                // récupère l'ensemble des prix puis on en fait la moyenne pour l'afficher
                 const prices = data.prices;
                 totalSum = prices.reduce((sum, price) => sum + parseFloat(price), 0);
                 const average = prices.length > 0 ? totalSum / prices.length : 0;
@@ -332,6 +332,7 @@
         const total_taxe_sejour =  taxe_sejour.prix_journalier_adulte * (nb_pers_supp + nb_personnes);
         const prixTotal = sousTotal_TTC + fraisService_TTC + total_taxe_sejour;
 
+        // modifie tous les champs concernés
         document.getElementById('nuitees').value = `${arrondi(totalSum)}`;
         document.getElementById('prixCharges').value = `${arrondi(total_charges)}`;
         document.getElementById('sousTotal_HT').value = `${arrondi(sousTotal_HT)}`;

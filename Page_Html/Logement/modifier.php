@@ -87,65 +87,60 @@ if ($_FILES["image1P"]["tmp_name"] != ""){
 
     }
 
-// liste des images secondaires du logement
+// liste des nouvelles images secondaires du logement
 
 $images_secondaires = [];
-
 $id_photo = 2;
 
-for ($i = 2; $i <= 6 ; $i++){
-    if ($_FILES["image". $i . "P"]["tmp_name"] != ""){
-        print_r("dans la boucle");
-        $extension_img = explode('/',$_FILES["image" . $i . "P"]['type'])[1];
+// On boucle pour traiter les images du formulaire
+for ($i = 2; $i <= 6; $i++) {
+    if ($_FILES["image" . $i . "P"]["tmp_name"] != "") {
+        $extension_img = pathinfo($_FILES["image" . $i . "P"]['name'], PATHINFO_EXTENSION);
         $images_secondaires["image" . $i . "P"] = id_photo($id_photo) . '.' . $extension_img;
-        move_uploaded_file($_FILES["image". $i . "P"]["tmp_name"] , "../Ressources/Images/" . $images_secondaires["image" . $i . "P"]);
+        move_uploaded_file(
+            $_FILES["image" . $i . "P"]["tmp_name"],
+            "../Ressources/Images/" . $images_secondaires["image" . $i . "P"]
+        );
         $id_photo++;
     }
 }
 
-$cpt = 2;
+// On met à jour ou ajoute les images 2 à 6 en fonction de leur position dans la réponse SQL
+for ($i = 2; $i <= 6; $i++) {
+    if (isset($images_secondaires["image" . $i . "P"])) {
+        $stmt = $dbh->prepare("
+            SELECT * 
+            from locbreizh._photos_secondaires
+            where logement = $id_logement and numero = $i;
+        ");
+        $stmt->execute();
+        $old = $stmt->fetch();
 
-$stmt = $dbh->prepare(
-    "SELECT photo FROM locbreizh._photos_secondaires WHERE logement = $id_logement"
-);
-$stmt->execute();
-$photos = $stmt->fetchAll();
 
-?>
-<?php
+        $stmt = $dbh->prepare("
+            INSERT into locbreizh._photo 
+            values('{$images_secondaires["image" . $i . "P"]}')
+        ");
+        $stmt->execute();
 
+        if($old["photo"] != ""){
+            
+            $stmt = $dbh->prepare("
+                UPDATE locbreizh._photos_secondaires
+                set photo = '{$images_secondaires["image" . $i . "P"]}'
+                where photo = '{$old['photo']}'
+            ");
+            $stmt->execute();
 
-foreach($images_secondaires as $key => $value){
-    
-    $url_photo = "";
-
-    $stmt = $dbh->prepare(
-        "INSERT INTO locbreizh._photo VALUES('$value');"
-    );
-    $stmt->execute();
-    $add = 0;
-    foreach($photos as $key => $une_photo){
-        if ($une_photo["photo"][strlen($value) -5] == $cpt){
-            $url_photo = $une_photo["photo"];
-            $add = 1 ;
+        }
+        else{
+            $stmt = $dbh->prepare("
+                INSERT into locbreizh._photos_secondaires
+                values($id_logement, '{$images_secondaires["image" . $i . "P"]}', $i)
+            ");
+            $stmt->execute();
         }
     }
-
-    if($add == 0){
-        $stmt = $dbh->prepare(
-            "INSERT into locbreizh._photos_secondaires values($id_logement,'$value')"
-        );
-        $stmt->execute();
-    }
-    else{
-        $stmt = $dbh->prepare(
-            "UPDATE locbreizh._photos_secondaires SET photo =  '$value' WHERE photo = '$url_photo' AND logement = $id_logement"
-        );
-        $stmt->execute();
-    }
-
-    $cpt++;
-
 }
 
 function id_photo($id_photo)

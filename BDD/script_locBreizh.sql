@@ -252,6 +252,7 @@ CREATE TABLE
     _photos_secondaires (
         logement INTEGER NOT NULL,
         photo VARCHAR(50) NOT NULL,
+        numero INTEGER NOT NULL,
         CONSTRAINT photos_secondaires_pk PRIMARY KEY (logement, photo),
         CONSTRAINT photos_secondaires_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement),
         CONSTRAINT photos_secondaires_fk_photo FOREIGN KEY (photo) REFERENCES _photo (url_photo)
