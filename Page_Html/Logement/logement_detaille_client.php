@@ -65,60 +65,116 @@ $photo = $stmt->fetch();
             $photos_secondaires = $stmt->fetchAll();
             
             ?>
-            <div class="logpc">
-                <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
+            <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
                 <div class="logrowb">
-                    <div class="logrowc">
-                        <h3 class="policetitre" style="margin-right:2em;"><?php echo $info['libelle_logement']; ?></h3>
-                        <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
+                    <div class="">
+                        <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
                     </div>
                 </div>
-                <div class="slider-container">
-                    <div class="slider">
-                        <div class="slide">
-                                <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
-                            </div><?php
-                        for ($i = 0 ; $i < 5; $i++) {
-                            if (isset($photos_secondaires[$i]['photo'])){?>
-                                <div class="slide">
-                                    <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>">
-                                </div><?php
-                            }
-                        };?>
-                    </div>
 
-                    <div class="controls">
-                        <button class="left"><img src="../svg/arrow-left.svg"></button>
-                        <ul></ul>
-                        <button class="right"><img src="../svg/arrow-right.svg"></button>
+
+                <div class="logrowb">
+                    <div class="logcolumn">
+                        <div class="slider-container">
+                            <div class="slider">
+                                <div class="slide">
+                                        <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
+                                    </div><?php
+                                for ($i = 0 ; $i < 5; $i++) {
+                                    if (isset($photos_secondaires[$i]['photo'])){?>
+                                        <div class="slide">
+                                            <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>">
+                                        </div><?php
+                                    }
+                                };?>
+                            </div>
+
+                            <div class="controls">
+                                <button class="left"><img src="../svg/arrow-left.svg"></button>
+                                <ul></ul>
+                                <button class="right"><img src="../svg/arrow-right.svg"></button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="logrowt">  
-                <div class="logcolumn">
+                    <div class="logcolumn logdem">
                         <h3 class="policetitre">Description</h3>
                         <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
-                    <div class="logdem">
-                        <div class="logrowb" id="datesPlage">
-                            <p class="dateresa"></p>
-                            <p class="dateresa"></p>
-                        </div>
-                        <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                            <input class="jesuiscache" type='hidden' name="arrive" id="arrive" value="">
-                            <input class="jesuiscache" type='hidden' name="depart" id="depart" value="">
-                            <button class="btn-demlog" type="submit">Demander un devis</button>
-                            <div class="logrowt">
-                                <p class="nuit"></p>
-                            </div>
-                        </form>
-                    </div>
                 </div>
-            </div>
         
-            <div class="logrowcal">
-            <div class="logcolumn">
-            <h3 class="policetitres">Informations du logement</h3>
+            <div class="logrowb">
+                    <div class="logcolumn">
+
+                        <h3 class="policetitre">Calendrier</h3>
+                        <div class="corpsCalendrier">
+                            <div class="fond">
+                                <div class="teteCalendrier">
+                                    <div class="fleches">
+                                        <svg id="precedent" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                            <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="date_actuelle"></p>
+                                </div>
+                                <div class="calendrier">
+                                    <ul class="semaines">
+                                        <li>Lun</li>
+                                        <li>Mar</li>
+                                        <li>Mer</li>
+                                        <li>Jeu</li>
+                                        <li>Ven</li>
+                                        <li>Sam</li>
+                                        <li>Dim</li>
+                                    </ul>
+                                    <ul class="jours"></ul>
+                                </div>
+                            </div>
+                            <div class="fond">
+                                <div class="teteCalendrier">
+                                    <p class="date_actuelle"></p>
+                                    <div class="fleches">
+                                        <svg id="suivant" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                            <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="calendrier">
+                                    <ul class="semaines">
+                                        <li>Lun</li>
+                                        <li>Mar</li>
+                                        <li>Mer</li>
+                                        <li>Jeu</li>
+                                        <li>Ven</li>
+                                        <li>Sam</li>
+                                        <li>Dim</li>
+                                    </ul>
+                                    <ul class="jours"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>      
+
+
+                        <div class="logdem">
+                            <div class="logrowb" id="datesPlage">
+                                <p class="dateresa"></p>
+                                <p class="dateresa"></p>
+                            </div>
+                            <form action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                                <button class="btn-demlogno" type="submit" disabled>Demander un devis</button>
+                                <div class="logrowt">
+                                    <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    
+                </div>
+
+            <div class="logI">
+                <h3 class="policetitres">Informations du logement</h3>
                 <?php
                     $stmt = $dbh->prepare(
                         "SELECT 
@@ -140,131 +196,89 @@ $photo = $stmt->fetch();
                         television,
                         wifi,
                         lave_linge,
-                        lave_vaisselle
+                        lave_vaisselle,
+                        nb_personnes_logement
                         FROM locbreizh._logement
                         where id_logement = {$_GET['logement']}"
                     );
                     $stmt->execute();
                     $info = $stmt->fetch();
                 ?>
-
-        <div class="logrowb">
+                <div class="logrow">
                     <div class="logcp">
-                        <p><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
-                        <p><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
                         <h4 class="potitres">Equipements</h4>
-                        <p>jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
                         if ($info['balcon'] == true) {
-                            ?><p><?php  echo 'Balcon'; ?></p><?php
+                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
                         }
                         if ($info['parking_privee'] == true) {
-                            ?><p><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
                         }
 
                         if ($info['parking_public'] == true) {
-                            ?><p><?php  echo 'Parking public'; ?></p><?php
+                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
                         }
                         if ($info['television'] == true) {
-                            ?><p><?php  echo 'Television'; ?></p><?php
+                            ?><p><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
                         }
                         if ($info['wifi'] == true) {
-                            ?><p><?php  echo 'Wifi'; ?></p><?php
+                            ?><p><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
                         }
                         if ($info['lave_linge'] == true) {
-                            ?><p><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
                         }
                         if ($info['lave_vaisselle'] == true) {
-                            ?><p><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
                         }
                         
                         ?>
                     </div>
+                    <hr class="hr">
                     <div class="logcp">
-                        <p><?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
-                        <p><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
                         <h4 class="potitres">Installations</h4>
                         <?php
 
                         if ($info['climatisation'] == true) {
-                            ?><p><?php  echo 'Climatisation'; ?></p><?php
+                            ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
                         }
                         if ($info['piscine'] == true) {
-                            ?><p><?php  echo 'Piscine'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
                         }
 
                         if ($info['sauna'] == true) {
-                            ?><p><?php  echo 'Sauna'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
                         }
 
                         if ($info['hammam'] == true) {
-                            ?><p><?php  echo 'Hammam'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
                         }
 
                         if ($info['jacuzzi'] == true) {
-                            ?><p><?php  echo 'Jacuzzi'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
                         }
                         ?>
                     </div>
                 </div>
-                
-            </div>
-            <hr class="hr">
-            <div class="logcolumn">
-                <h3 class="policetitre">Calendrier</h3>
-                <div class="corpsCalendrier">
-                    <div class="fond">
-                        <div class="teteCalendrier">
-                            <div class="fleches">
-                                <svg id="precedent" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
-                                    <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
-                                </svg>
-                            </div>
-                            <p class="date_actuelle"></p>
-                        </div>
-                        <div class="calendrier">
-                            <ul class="semaines">
-                                <li>Lun</li>
-                                <li>Mar</li>
-                                <li>Mer</li>
-                                <li>Jeu</li>
-                                <li>Ven</li>
-                                <li>Sam</li>
-                                <li>Dim</li>
-                            </ul>
-                            <ul class="jours"></ul>
-                        </div>
+                <hr class="hr">
+                <div class="logrow">
+                    <div class="logcp">
+                        <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
+                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
+                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
-                    <div class="fond">
-                        <div class="teteCalendrier">
-                            <p class="date_actuelle"></p>
-                            <div class="fleches">
-                                <svg id="suivant" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
-                                    <path fill="#745086" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="calendrier">
-                            <ul class="semaines">
-                                <li>Lun</li>
-                                <li>Mar</li>
-                                <li>Mer</li>
-                                <li>Jeu</li>
-                                <li>Ven</li>
-                                <li>Sam</li>
-                                <li>Dim</li>
-                            </ul>
-                            <ul class="jours"></ul>
-                        </div>
+                    <div class="logcp">
+                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
+                        <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
+                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
-            </div>
         </div>
-        
+
         <script src="./scriptCalendrier.js"></script>
 
         <?php
@@ -344,50 +358,7 @@ $photo = $stmt->fetch();
             }
 
             ?>
-            <!--
-                <h3>Avis</h3>
-                <?php
-                /*try {
-                    include('../parametre_connexion.php');
-
-                    $dbh2 = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                    $dbh2->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $dbh2->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-                    $stmt = $dbh2->prepare(
-                        'SELECT id_avis, note_avis
-                            from locbreizh._logement 
-                                INNER JOIN locbreizh._avis ON logement = id_logement'
-                    );
-                } catch (PDOException $e) {
-                    print "Erreur !:" . $e->getMessage() . "<br/>";
-                    die();
-                }
-
-                $stmt->execute();
-                $info = $stmt->fetch();
-                echo '<img src="/Ressources/Images/star-fill 1.svg">' . '<h4>' .  $info['note_avis'] . ',0</p>';
-
-                $nb_avis = $info['id_avis'];
-                $tab_avis[] = $nb_avis;
-
-                foreach ($tab_avis as $boucle => $nb_avis) {
-                    $boucle++;
-                }
-                echo '<p>' . '. ' . $boucle . ' commentaires' . '</p>';*/
-                ?>
-                Dubois
-                <a href=''>Répondre au commentaire</a>
-                <a href=''>Signaler</a>
-
-                <div >
-                    <hr>
-                    <h4>Voir plus</h4>
-                    <img src='../svg/arrow-down-s-line (1) 1.svg'>
-                    <hr>
-                </div>
-                <hr>
-            -->
+           
             
         </div>
 
@@ -411,56 +382,6 @@ $photo = $stmt->fetch();
             <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>   
             
         </div>
-        <hr class="hr">
-            <div>
-                <h3 class="policetitre">Conditions du logement</h3>
-
-                <div class="logrow">
-                    <div class="cardcondition">
-                        <h4 class="potitre">Conditions d'annulation</h4>
-                        <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                        </p>
-                    </div>
-
-                    <div class="cardcondition">
-                        <h4 class="potitre">Conditions de paiement</h4>
-                        <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                        </p>
-                    </div>
-                </div>
-                <div class="logrow">
-                <div class="cardcondition">
-                    <h4 class="potitre">Informations d'arrivée</h4>
-                    <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                    </p>
-                </div>
-
-                <div class="cardcondition">
-                    <h4 class="potitre">Informations de départ</h4>
-                    <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                    </p>
-                </div>
-            </div>
-            <div class="logrowc">
-                <p>Veuillez consultez</p>
-                <p><a href=''>Le réglemement intérieur</a></p>
-            </div>    
-            </div>
-            <hr class="hr">
-            <div class="logrowc">
-            <?php   
-                        $stmt = $dbh->prepare("SELECT nom,prenom,photo from locbreizh._compte JOIN locbreizh._logement ON id_compte=id_proprietaire WHERE id_logement= {$_GET['logement']} ;");
-
-                        $stmt->execute();
-                        $info = $stmt->fetch();
-                ?>
-                <img class="imgprofil" src="../Ressources/Images/<?php echo $info['photo']; ?>" width="100" height="100">
-                <div class="logcp">
-                    <h4 class="policetitre">Par <?php echo "{$info['prenom']}  {$info['nom']}";?></h4>
-                    <a href=""><button class="btn-accueil" type='button'>Contacter le propriétaire</button></a>
-                </div>
-            </div>
-
     </main>
     
     <?php

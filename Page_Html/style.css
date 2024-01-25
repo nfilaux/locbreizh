@@ -519,7 +519,7 @@ header a:last-child {
 /*----------------------------------------------------------------Carroussel----------------------------------------------------------------*/
 
 .slider-container {
-    width: 45%;
+    width: 90%;
     height: 500px;
     margin: auto;
     overflow: hidden;
@@ -1663,14 +1663,6 @@ iframe {
     justify-content: center;
 }
 
-
-.photoprincipal{
-    width: 90%;
-    height: 20em;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
 .photosecondaireP {
     width: 48%;
     height: 20em;
@@ -1678,33 +1670,6 @@ iframe {
     border-radius: 15px;
 }
 
-.photosecondaireI {
-    width: 23%;
-    height: 20em;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-.photosecondaireP5 {
-    width: 48%;
-    height: 22em;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-.photosecondaireI5 {
-    width: 48%;
-    height: 10em;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-.photosecondaireP6 {
-    width: 30%;
-    height: 20em;
-    object-fit: cover;
-    border-radius: 15px;
-}
 
 .imgsecondaire {
     display: flex;
@@ -3238,6 +3203,7 @@ iframe {
 
     .logdem{
         width: 60%;
+        margin: 2em auto;
     }
 
     .logrow {
@@ -3690,6 +3656,7 @@ iframe {
 
 .logdem{
     width: 60%;
+    margin: 2em auto;
 }
 
 .logrow {

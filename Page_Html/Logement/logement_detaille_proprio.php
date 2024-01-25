@@ -65,51 +65,42 @@ $photo = $stmt->fetch();
             <div class="logpc">
                 <h3 class="logtitreP"><?php echo $info['accroche_logement'];?></h3>
                 <div class="logrowb">
-                    <div class="logrowt">
+                    <div class="">
                         <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
-                        <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
-                    </div>
-                    <div class="logrowt">
-                        <p class="nuitP"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
                     </div>
                 </div>
-                <div class="slider-container">
-                    <div class="slider">
-                        <div class="slide">
-                                <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
-                            </div><?php
-                        for ($i = 0 ; $i < 5; $i++) {
-                            if (isset($photos_secondaires[$i]['photo'])){?>
-                                <div class="slide">
-                                    <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>">
-                                </div><?php
-                            }
-                        };?>
-                    </div>
 
-                    <div class="controls">
-                        <button class="left"><img src="../svg/arrow-left.svg"></button>
-                        <ul></ul>
-                        <button class="right"><img src="../svg/arrow-right.svg"></button>
+
+                <div class="logrowb">
+                    <div class="logcolumn">
+                        <div class="slider-container">
+                            <div class="slider">
+                                <div class="slide">
+                                        <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
+                                    </div><?php
+                                for ($i = 0 ; $i < 5; $i++) {
+                                    if (isset($photos_secondaires[$i]['photo'])){?>
+                                        <div class="slide">
+                                            <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>">
+                                        </div><?php
+                                    }
+                                };?>
+                            </div>
+
+                            <div class="controls">
+                                <button class="left"><img src="../svg/arrow-left.svg"></button>
+                                <ul></ul>
+                                <button class="right"><img src="../svg/arrow-right.svg"></button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            <div class="logrowt">  
-                <div class="logcolumn">
+                    <div class="logcolumn logdem">
                         <h3 class="policetitre">Description</h3>
                         <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
-                    <div class="logdem">
-                        <div class="logrowb" id="datesPlage">
-                            <p class="dateresa demresaP"></p>
-                            <p class="dateresa demresaP"></p>
-                        </div>
-                        <form action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                            <button class="btn-demlognoP" type="submit" disabled>Demander un devis</button>
-                        </form>
-                    </div>
                 </div>
-            </div>
+
         
             <div class="logrow">
             <div class="logcolumn">
@@ -260,7 +251,10 @@ $photo = $stmt->fetch();
             </div>
         </div>
 
+
         <script src="./scriptCalendrier.js"></script>
+
+
 
         <?php
             try {
@@ -339,51 +333,6 @@ $photo = $stmt->fetch();
             }
 
             ?>
-            <!--
-                <h3>Avis</h3>
-                <?php
-                /*try {
-                    include('../parametre_connexion.php');
-
-                    $dbh2 = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                    $dbh2->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $dbh2->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-                    $stmt = $dbh2->prepare(
-                        'SELECT id_avis, note_avis
-                            from locbreizh._logement 
-                                INNER JOIN locbreizh._avis ON logement = id_logement'
-                    );
-                } catch (PDOException $e) {
-                    print "Erreur !:" . $e->getMessage() . "<br/>";
-                    die();
-                }
-
-                $stmt->execute();
-                $info = $stmt->fetch();
-                echo '<img src="/Ressources/Images/star-fill 1.svg">' . '<h4>' .  $info['note_avis'] . ',0</p>';
-
-                $nb_avis = $info['id_avis'];
-                $tab_avis[] = $nb_avis;
-
-                foreach ($tab_avis as $boucle => $nb_avis) {
-                    $boucle++;
-                }
-                echo '<p>' . '. ' . $boucle . ' commentaires' . '</p>';*/
-                ?>
-                Dubois
-                <a href=''>Répondre au commentaire</a>
-                <a href=''>Signaler</a>
-
-                <div >
-                    <hr>
-                    <h4>Voir plus</h4>
-                    <img src='../svg/arrow-down-s-line (1) 1.svg'>
-                    <hr>
-                </div>
-                <hr>
-            -->
-            
         </div>
 
         <hr>
@@ -406,41 +355,7 @@ $photo = $stmt->fetch();
             <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>   
             
         </div>
-        <hr>
-            <div>
-                <h3 class="policetitre">Conditions du logement</h3>
-
-                <div class="logrow">
-                    <div class="cardconditionP">
-                        <h4 class="potitre">Conditions d'annulation</h4>
-                        <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                        </p>
-                    </div>
-
-                    <div class="cardconditionP">
-                        <h4 class="potitre">Conditions de paiement</h4>
-                        <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                        </p>
-                    </div>
-                </div>
-                <div class="logrow">
-                <div class="cardconditionP">
-                    <h4 class="potitre">Informations d'arrivée</h4>
-                    <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.</p>
-                </div>
-
-                <div class="cardconditionP">
-                    <h4 class="potitre">Informations de départ</h4>
-                    <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                    </p>
-                </div>
-            </div>
-            <div class="logrowc">
-                <p>Veuillez consultez</p>
-                <p><a class="bleu" href=''>Le réglemement intérieur</a></p>
-            </div>    
-            </div>
-
+       
     </main>
     
     <?php
