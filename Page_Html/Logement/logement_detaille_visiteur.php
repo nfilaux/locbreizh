@@ -76,8 +76,6 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $photos_secondaires = $stmt->fetchAll();
             
             ?>
-            
-            
                 <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
                 <div class="logrowb">
                     <div class="">
