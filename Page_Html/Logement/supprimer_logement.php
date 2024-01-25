@@ -52,32 +52,12 @@ try {
         );
         $stmt->execute();
 
-        //récupération du code du planning
-        $code = $dbh->prepare("SELECT code_planning FROM locbreizh._planning NATURAL JOIN locbreizh._logement WHERE id_logement = :id_logement;");
-        $code->bindParam(':id_logement', $id_logement);
-        $code->execute();
-        $variable = $code->fetchColumn();
-
         //enfin on supprime le logement 
 
         $stmt = $dbh->prepare(
             "DELETE from locbreizh._logement where id_logement=$id_logement;"
         );
         $stmt->execute();
-
-        //on supprime les plages du planning du logement
-
-        $stmt = $dbh->prepare(
-            "DELETE from locbreizh._plage_ponctuelle where code_planning=$variable;"
-        );
-        $stmt->execute();
-
-        //on supprime le planning du logement
-
-        $stmt = $dbh->prepare(
-            "DELETE from locbreizh._planning where code_planning=$variable;"
-        );
-        $stmt->execute();
     }
 
-    header("Location: ../Accueil/Tableau_de_bord.php?cs=$cs&idlog=$id_logement");
+    header("Location: ../Accueil/Tableau_de_bord.php?cs=$cs");
