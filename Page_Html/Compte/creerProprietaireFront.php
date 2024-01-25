@@ -3,7 +3,7 @@
     function erreur($nomErreur)
     {
         if(isset($_SESSION["erreurs"][$nomErreur])){
-            ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+            ?><p class="err"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
             unset($_SESSION["erreurs"][$nomErreur]);
         }
     }

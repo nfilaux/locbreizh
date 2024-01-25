@@ -112,6 +112,13 @@
             $_SESSION['erreurs'] += ["email" => "mail déjà existant"];
             $erreur = true;
         }
+        $verifTel = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.telephone = '{$tel}';");
+        $verifTel->execute();
+        $res = $verifTel->fetchColumn();
+        if ($res != 0){
+            $_SESSION['erreurs'] += ["telephone" => "telephone déjà existant"];
+            $erreur = true;
+        }
         $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE _compte.pseudo = '{$pseudo}';");
         $verifPseudo->execute();
         $res = $verifPseudo->fetchColumn();
