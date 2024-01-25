@@ -153,7 +153,7 @@
 
             <div class="condition">
                 <input type="checkbox" id="conditions" name="conditions" value="accepter" <?php if(isset($_GET['conditions'])) {if($_GET['conditions'] == 'accepter') { ?> checked <?php }}?> required/>
-                <label for="conditions">Accepter les conditions générales d'utilisations</label>
+                <label for="conditions">Accepter les <a target="_blank" href="../Ressources/conditions/CGV.pdf">conditions générales d'utilisations</a></label>
                 <?php
                     erreur("conditions");
                 ?>
