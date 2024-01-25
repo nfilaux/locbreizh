@@ -1,10 +1,53 @@
 <?php 
     // lancement de la session
     session_start();
-    /*echo $_POST['dateArrivee'] ."\n";
-    echo $_POST['dateDepart'] . "\n";
-    echo($_POST['dateArrivee'] > $_POST['dateDepart']) ;*/
     require_once('../tcpdf/tcpdf.php');
+    // import parametre de connexion + nouvelle instance PDO
+    include('../parametre_connexion.php');
+    try {
+        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage() . "<br/>";
+        die();
+    }
+
+    $stmt = $dbh->prepare("SELECT jour_plage_ponctuelle
+    FROM locbreizh._plage_ponctuelle_disponible d
+    JOIN locbreizh._plage_ponctuelle p ON d.id_plage_ponctuelle = p.id_plage_ponctuelle
+    JOIN locbreizh._planning ON p.code_planning = _planning.code_planning
+    JOIN locbreizh._logement l ON l.code_planning = _planning.code_planning
+    WHERE id_logement = :id_logement");
+    $stmt->bindParam(':id_logement', $_POST['logement']);
+    $stmt->execute();
+
+    $resDates = $stmt->fetchAll();
+
+    $err = 0;
+    // Converti les dates donne en paramètre
+    $date_arrive = new DateTime($_POST['dateArrivee']);
+    $date_depart = new DateTime($_POST['dateDepart']);
+
+
+    // parcours tous les jours de la periode de reservation
+    for ($date = clone $date_arrive; $date <= $date_depart; $date->modify('+1 day')) {
+        $date_formate = $date->format('Y-m-d');
+    
+        $date_trouve = false;
+        foreach ($resDates as $resDate) {
+
+            if ($date_formate == $resDate['jour_plage_ponctuelle']) {
+                $date_trouve = true;
+                break;
+            }
+        }
+
+        if (!$date_trouve) {
+            $err = 1;
+        }
+    }
+
     //test si date d'arrivée est avant date de depart
     if($_POST['dateArrivee'] > $_POST['dateDepart']){
         //renvoie l'utilisateur sur la page d'origine avec les infos preremplies
@@ -16,17 +59,10 @@
         header("Location: demande_devis.php?logement={$_POST['logement']}&animaux={$_POST['animaux']}&menage={$_POST['menage']}&nb_pers={$_POST['nb_pers']}&nb_supp={$_POST['nb_pers_supp']}&erreur=2");
     }
     // sinon ajout de la demande dans la BDD
+    else if($err == 1){
+        header("Location: demande_devis.php?logement={$_POST['logement']}&animaux={$_POST['animaux']}&menage={$_POST['menage']}&nb_pers={$_POST['nb_pers']}&nb_supp={$_POST['nb_pers_supp']}&erreur=3");
+    }
     else{
-        // import parametre de connexion + nouvelle instance PDO
-        include('../parametre_connexion.php');
-        try {
-            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
-            die();
-        }
 
         // on recupère la valeur du prochain serial pour le mettre en nom de pdf
         $stmt = $dbh->prepare("SELECT NEXTVAL('locbreizh._demande_devis_num_demande_devis_seq') as prochain_serial");

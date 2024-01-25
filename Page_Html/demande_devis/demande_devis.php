@@ -60,7 +60,7 @@
 
     <main class="MainTablo">
     <div class="headtablo">
-        <a href="logement_detaille_client"><img src="../svg/flecheRetour.svg"/></a>
+        <a href="../Logement/logement_detaille_client.php?logement=<?php echo $_GET['logement']; ?>"><img src="../svg/flecheRetour.svg"/></a>
             <h1>Faire ma demande de devis</h1>
     </div>
  
@@ -111,6 +111,9 @@
                     if($_GET['erreur'] == 1){
                         echo '<p class="err">La date de départ ne doit pas être utlérieure à la date d\'arrivee !</p>';
                     }
+                    if($_GET['erreur'] == 3){
+                        echo '<p class="err">Certains jours du planning ne sont pas disponible !</p>';
+                    }
                 }
                     
                 ?>
@@ -132,7 +135,7 @@
 </html>
 
 <?php
-    if($_GET['erreur'] === '0'){
+    if(isset($_GET['erreur']) && $_GET['erreur'] === '0'){
         ?>
         <script>
             openPopupFeedback('popupFeedback', 'overlayDemandeDeDevis');

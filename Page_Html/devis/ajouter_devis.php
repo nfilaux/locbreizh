@@ -22,6 +22,44 @@
     $_SESSION['valeurs_complete']['vacanciers_sup'] = $_POST['vacanciers_sup'];
     
     // test pour vérifier que les données soit bien entrée au format attendu
+    $stmt = $dbh->prepare("SELECT jour_plage_ponctuelle
+    FROM locbreizh._plage_ponctuelle_disponible d
+    JOIN locbreizh._plage_ponctuelle p ON d.id_plage_ponctuelle = p.id_plage_ponctuelle
+    JOIN locbreizh._planning ON p.code_planning = _planning.code_planning
+    JOIN locbreizh._logement l ON l.code_planning = _planning.code_planning
+    join locbreizh._demande_devis on _demande_devis.logement = l.id_logement
+    WHERE num_demande_devis = :num_demande");
+    $stmt->bindParam(':num_demande', $_POST['demande']);
+    $stmt->execute();
+
+    $resDates = $stmt->fetchAll();
+
+    $err = 0;
+
+    // Converti les dates donne en paramètre
+    $date_arrive = new DateTime($_POST["date_depart"]);
+    $date_depart = new DateTime($_POST["date_arrivee"]);
+
+
+    // parcours tous les jours de la periode de reservation
+    for ($date = clone $date_arrive; $date <= $date_depart; $date->modify('+1 day')) {
+        $date_formate = $date->format('Y-m-d');
+    
+        $date_trouve = false;
+        foreach ($resDates as $resDate) {
+            print_r("resDate");
+            print_r("");
+
+            if ($date_formate == $resDate['jour_plage_ponctuelle']) {
+                $date_trouve = true;
+                break;
+            }
+        }
+
+        if (!$date_trouve) {
+            $err = 1;
+        }
+    }
 
     if ($_POST["date_depart"] < $_POST["date_arrivee"]){
         //echo "y a une erreur de date";
@@ -30,6 +68,9 @@
     else if($_POST["date_depart"] < date('Y-m-d') or $_POST["date_arrivee"] < date('Y-m-d')) {
         //echo "y a une erreur de date";
         $_SESSION['erreurs']['valide_dates'] = "Les dates données sont ulterieures à aujourd'hui !";
+    }
+    else if($err == 1){
+        $_SESSION['erreurs']['valide_dates'] = "Les dates données ne sont pas présent dans le planning !";
     }
     else {
         $_SESSION['valeurs_complete']['date_depart'] = $_POST["date_depart"];
@@ -40,6 +81,7 @@
         header("Location: formulaire_devis.php?demande={$_POST['id_demande']}");
     }
     else {
+        $nb_personnes = $_POST['nb_pers'];
         $nuitees_HT = $_POST['nuitees'];
         $totalCharges_HT = $_POST['prixCharges'];
 
