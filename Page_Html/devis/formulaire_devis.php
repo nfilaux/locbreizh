@@ -192,7 +192,7 @@
             <div class="devisrow">
                 <p class="ren">Calculé grâce au planning : </p>
                 <div class="deviscol">
-                <label for="tarif_loc">Tarif moyen HT par jour(en €) :</label>
+                <label for="tarif_loc">Tarif moyen HT par nuit(en €) :</label>
                 <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required readonly/> 
                 </div>
             </div>

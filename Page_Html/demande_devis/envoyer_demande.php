@@ -62,6 +62,11 @@
     else if($err == 1){
         header("Location: demande_devis.php?logement={$_POST['logement']}&animaux={$_POST['animaux']}&menage={$_POST['menage']}&nb_pers={$_POST['nb_pers']}&nb_supp={$_POST['nb_pers_supp']}&erreur=3");
     }
+    //test si date d'arrivée est avant date de depart
+    else if($_POST['dateArrivee'] == $_POST['dateDepart']){
+        //renvoie l'utilisateur sur la page d'origine avec les infos preremplies
+        header("Location: demande_devis.php?logement={$_POST['logement']}&animaux={$_POST['animaux']}&menage={$_POST['menage']}&nb_pers={$_POST['nb_pers']}&nb_supp={$_POST['nb_pers_supp']}&erreur=4");
+    }
     else{
 
         // on recupère la valeur du prochain serial pour le mettre en nom de pdf

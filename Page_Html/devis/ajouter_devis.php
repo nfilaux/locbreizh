@@ -62,7 +62,7 @@
 
     if ($_POST["date_depart"] < $_POST["date_arrivee"]){
         //echo "y a une erreur de date";
-        $_SESSION['erreurs']['valide_dates'] = "La date d'arrivee se trouve après la date de départ !";
+        $_SESSION['erreurs']['valide_dates'] = "La date d'arrivée se trouve après la date de départ !";
     }
     else if($_POST["date_depart"] < date('Y-m-d') or $_POST["date_arrivee"] < date('Y-m-d')) {
         //echo "y a une erreur de date";
@@ -70,12 +70,16 @@
     }
     else if($err == 1){
         print_r("lkj");
-        $_SESSION['erreurs']['valide_dates'] = "Les dates données ne sont pas présent dans le planning !";
+        $_SESSION['erreurs']['valide_dates'] = "Les dates données ne sont pas présentes dans le planning !";
+    }
+    else if($_POST['date_arrivee'] == $_POST['date_depart']){
+        $_SESSION['erreurs']['valide_dates'] = "Il faut au minimum une nuit pour réserver un logement";
     }
     else {
         $_SESSION['valeurs_complete']['date_depart'] = $_POST["date_depart"];
         $_SESSION['valeurs_complete']['date_arrivee'] = $_POST["date_arrivee"];
     }
+
 
     if ($_SESSION['erreurs'] != []){
         header("Location: formulaire_devis.php?demande={$_POST['id_demande']}");
