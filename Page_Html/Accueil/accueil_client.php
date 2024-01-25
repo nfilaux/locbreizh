@@ -167,7 +167,7 @@ $photo = $stmt->fetch();
         foreach ($res as $card) {
             if ($card['en_ligne'] == true) {
                 ?>
-                <article class="logementCard">
+                <article class="logementCard cardtel">
                     <a href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>"> 
                         <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
                         <div class="infoContainer">
@@ -175,7 +175,7 @@ $photo = $stmt->fetch();
                                 <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
                                 <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
                             </div>
-                            <div class="otherInfos">
+                            <div class="otherInfos cardtel">
                                 <div>
                                     <img src="../svg/money.svg" width="25" height="25">
                                     <span><?php echo $card['tarif_base_ht']; ?> € </span>
