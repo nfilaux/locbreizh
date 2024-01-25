@@ -236,6 +236,25 @@ body {
 
 }
 
+.filR{
+    display:flex; 
+    flex-direction:row; 
+    justify-content:space-around;
+}
+
+.menu-filtreR{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: auto 10%;
+    background-color: white;
+    padding: 1.25em;
+    border-radius: 0.5em;
+    box-shadow: 10px 5px 5px black;
+
+}
+
 .input-group {
     display: inline-flex;
     border: 2px solid #ddd;
@@ -2715,6 +2734,9 @@ iframe {
     .menu-filtre{
         flex-direction: column;
     }
+    .filR{
+        flex-direction: column;
+    }
 
     .input-group {
         width: 80%;
@@ -2887,6 +2909,10 @@ iframe {
     }
 
     .menu-filtre{
+        flex-direction: column;
+    }
+
+    .filR{
         flex-direction: column;
     }
 
@@ -3223,6 +3249,10 @@ iframe {
     }
 
     .menu-filtre{
+        flex-direction: column;
+    }
+
+    .filR{
         flex-direction: column;
     }
 

@@ -32,7 +32,7 @@ $photo = $stmt->fetch();
             <h1>Mes Réservations</h1>
         </div>
         <div class="filters">
-            <form action="filtrageP.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
+            <form action="filtrageP.php" method="post" class="menu-filtreR" onsubmit="return verifierChamps()">
                 <div>
                     <label for="prix_min">Prix min :</label>
                     <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
@@ -47,7 +47,7 @@ $photo = $stmt->fetch();
                     <input type="Date" id="date" name="date" placeholder="<?php if (isset($_GET['date'])){echo $_GET['date'];}  ?>"/>   
                 </div>
                 <br>
-                <button type="submit" id="filtrage">Filtrer</button>
+                <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
             </form>
         </div>
         
