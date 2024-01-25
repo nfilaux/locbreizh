@@ -317,6 +317,7 @@ body {
 .input-group input, .input-group-proprio input , .input-group-pers input , .input-group-ville input {
     border: none;
     width: 100%;
+    height: 2em;
 }
 
 .input-group-prepend {
@@ -1214,14 +1215,32 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 70%;
+    
 }
+
+.logcp p {
+    align-items: center;
+    display: flex;
+}
+
+.logcp img {
+    margin-right: 1em;
+}
+
 
 .logc{
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 48%;
+}
+
+.logI{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 48%;
+    margin: 3em auto;
 }
 
 .logdem{
@@ -1233,12 +1252,17 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding: 1em;
     margin: auto;
     border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .logcarte{
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.logcarte p{
+    text-align: center;
 }
 
 .devis{
@@ -1516,6 +1540,8 @@ fieldset label{
 iframe {
     width: 80%;
     margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .cardcondition {
@@ -2799,6 +2825,9 @@ iframe {
         width: 50%;
         margin: 0.5em auto;
     }
+    .menu-filtre{
+        text-align: center;
+    }
 }
 
 
@@ -2932,7 +2961,7 @@ iframe {
     
     .card section article:last-child {
         flex-direction: column;
-        margin-left: 0.5em;
+        margin: auto 0.5em;
     }
 
     .card section article img {
@@ -2971,6 +3000,9 @@ iframe {
     .input-group-proprio {
         width: 80%;
         margin: 0.5em auto;
+    }
+    .menu-filtre{
+        text-align: center;
     }
 
     .btn-fill {
@@ -3015,6 +3047,15 @@ iframe {
 
     .cardlogmainP {
         width: 100%;
+    }
+
+    .logrowb{
+        flex-direction: column;
+    }
+
+    .logI{
+        align-items: center;
+        text-align: center;
     }
 
     /*-------------------------------Conexion-------------------------------*/
@@ -3278,7 +3319,7 @@ iframe {
     
     .card section article:last-child {
         flex-direction: column;
-        margin-left: 0.5em;
+        margin:auto;
     }
 
     .card section article img {
@@ -3430,4 +3471,44 @@ iframe {
         margin: auto;
     }
    
+   /*-------------------------------Logement-------------------------------*/
+   .logrowt {
+    flex-direction: column;
+}
+
+.logcolumn{
+    width: 96%;
+    margin: auto;
+}
+
+.logdem{
+    width: 60%;
+}
+
+.logrow {
+    flex-direction: column;
+}
+.logrowcal {
+    flex-direction: column-reverse;
+}
+
+
+.cardcondition {
+    width: 80%;
+}
+
+main div .logrow {
+    flex-direction: column-reverse;
+}
+
+.cardlogmainP {
+    width: 100%;
+}
+
+.logrowb{
+    flex-direction: column;
+    
+}
+
+
 }
