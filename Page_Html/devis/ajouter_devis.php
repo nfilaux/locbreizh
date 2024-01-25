@@ -22,24 +22,70 @@
     $_SESSION['valeurs_complete']['vacanciers_sup'] = $_POST['vacanciers_sup'];
     
     // test pour vérifier que les données soit bien entrée au format attendu
+    $stmt = $dbh->prepare("SELECT jour_plage_ponctuelle
+    FROM locbreizh._plage_ponctuelle_disponible d
+    JOIN locbreizh._plage_ponctuelle p ON d.id_plage_ponctuelle = p.id_plage_ponctuelle
+    JOIN locbreizh._planning ON p.code_planning = _planning.code_planning
+    JOIN locbreizh._logement l ON l.code_planning = _planning.code_planning
+    join locbreizh._demande_devis on _demande_devis.logement = l.id_logement
+    WHERE num_demande_devis = :num_demande");
+    $stmt->bindParam(':num_demande', $_POST['id_demande']);
+    $stmt->execute();
+
+    $resDates = $stmt->fetchAll();
+
+    $err = 0;
+
+    
+    // Converti les dates donne en paramètre
+    $date_arrive = new DateTime($_POST["date_arrive"]);
+    $date_depart = new DateTime($_POST["date_depart"]);
+
+    // parcours tous les jours de la periode de reservation
+    for($date = clone $date_arrive; $date <= $date_depart; $date->modify('+1 day')) {
+
+        $date_formate = $date->format('Y-m-d');
+
+
+        $date_trouve = false;
+        foreach ($resDates as $resDate) {
+            if ($date_formate == $resDate['jour_plage_ponctuelle']) {
+                $date_trouve = true;
+                break;
+            }
+        }
+
+        if (!$date_trouve) {
+            $err = 1;
+        }
+    }
 
     if ($_POST["date_depart"] < $_POST["date_arrivee"]){
         //echo "y a une erreur de date";
-        $_SESSION['erreurs']['valide_dates'] = "La date d'arrivee se trouve après la date de départ !";
+        $_SESSION['erreurs']['valide_dates'] = "La date d'arrivée se trouve après la date de départ !";
     }
     else if($_POST["date_depart"] < date('Y-m-d') or $_POST["date_arrivee"] < date('Y-m-d')) {
         //echo "y a une erreur de date";
         $_SESSION['erreurs']['valide_dates'] = "Les dates données sont ulterieures à aujourd'hui !";
+    }
+    else if($err == 1){
+        print_r("lkj");
+        $_SESSION['erreurs']['valide_dates'] = "Les dates données ne sont pas présentes dans le planning !";
+    }
+    else if($_POST['date_arrivee'] == $_POST['date_depart']){
+        $_SESSION['erreurs']['valide_dates'] = "Il faut au minimum une nuit pour réserver un logement";
     }
     else {
         $_SESSION['valeurs_complete']['date_depart'] = $_POST["date_depart"];
         $_SESSION['valeurs_complete']['date_arrivee'] = $_POST["date_arrivee"];
     }
 
+
     if ($_SESSION['erreurs'] != []){
         header("Location: formulaire_devis.php?demande={$_POST['id_demande']}");
     }
     else {
+        $nb_personnes = $_POST['nb_pers'];
         $nuitees_HT = $_POST['nuitees'];
         $totalCharges_HT = $_POST['prixCharges'];
 

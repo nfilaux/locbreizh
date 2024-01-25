@@ -6,7 +6,7 @@
             function erreur($nomErreur)
             {
                 if(isset($_SESSION["erreurs"][$nomErreur])){
-                    ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+                    ?><p class="err"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
                     unset($_SESSION["erreurs"][$nomErreur]);
                 }
             }
@@ -42,10 +42,10 @@
             <article id="mdp">
                 <input type="password" id="motdepasse" name="motdepasse" class="custom-input" placeholder="Mot de passe"/>
                 <img src="../svg/oeil.svg" id="eye" onClick="changer('motdepasse', 'eye')"/>
-                <?php
+            </article>
+            <?php
                     erreur("motdepasse");
                 ?>
-            </article>
 
             <br>
             <button class="btn-compte" type="submit">Se connecter</button>

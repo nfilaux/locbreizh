@@ -156,18 +156,18 @@
             <h2 style="text-align:center;  font-family: 'Quicksand';">Charges aditionnelles</h2>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
-                <input type="checkbox" id="animaux" name="animaux" <?php  if(isset($_SESSION['valeurs_complete']['menage'])){echo "checked";} else if ($menage2['prix_charges'] !=''){echo 'checked';}; ?>>
+                <input type="checkbox" id="animaux" name="animaux" <?php  if(isset($_SESSION['valeurs_complete']['menage'])){echo "checked";} else if (isset($menage2['prix_charges']) && $menage2['prix_charges'] !=''){echo 'checked';}; ?>>
                  <label for="animaux"> Animaux </label>
                 </div>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
-                <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo "checked";} else if($animaux2['prix_charges'] !=''){ echo 'checked';}; ?>>
+                <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo "checked";} else if(isset($animaux2['prix_charges']) && $animaux2['prix_charges'] !=''){ echo 'checked';}; ?>>
                 <label for="menage"> Menage </label>
                 </div>
                 <!--pre-remplie les infos si ils sont dans get-->
                 <div class="logpc">
                 <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
-                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else if ($vac_sup2['nombre']!=''){echo $vac_sup['nombre'];}; ?>"/>
+                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else if (isset($vac_sup2['nombre']) && $vac_sup2['nombre']!=''){echo $vac_sup['nombre'];}; ?>"/>
                 </div>
             </div>
             </div>
@@ -192,7 +192,7 @@
             <div class="devisrow">
                 <p class="ren">Calculé grâce au planning : </p>
                 <div class="deviscol">
-                <label for="tarif_loc">Tarif moyen HT par jour(en €) :</label>
+                <label for="tarif_loc">Tarif moyen HT par nuit(en €) :</label>
                 <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required readonly/> 
                 </div>
             </div>

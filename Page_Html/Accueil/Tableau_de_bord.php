@@ -15,16 +15,24 @@
             ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
             unset($_SESSION["erreurs"][$nomErreur]);
         }
-    
-}
-    
+    }
+
+    $plageIndispo = [];
+    $plageDispo = [];  
 ?>
+
+<script>
+    numCalendrier = -1;
+</script>
+
+
 <!doctype html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../Logement/scriptCalendrier.js"></script>
     <script src="../scriptPopup.js"></script>
 </head>
 
@@ -43,8 +51,7 @@
                 <?php
                     
                     $stmt = $dbh->prepare(
-                        "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement
-                        from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
+                        "SELECT * from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
                     );
 
                     function formatDate($start, $end)
@@ -60,15 +67,13 @@
                 $liste_mes_logements = $stmt->fetchAll();
                 foreach ($liste_mes_logements as $key => $card) {
                     $id_log = $card['id_logement'];
-                    $stmt = $dbh->prepare(
-                        "SELECT en_ligne,libelle_logement
-                        from locbreizh._logement 
-                        where id_logement = $id_log;"
-                    );
-                    $stmt->execute();
-                    $infos_log = $stmt->fetch();
+                    $infos_log[$id_log] = $card;
+                }
 
-                    if ($infos_log["en_ligne"] == 1){
+                foreach ($liste_mes_logements as $key => $card) {
+                    $id_log = $card['id_logement'];
+
+                    if ($infos_log[$id_log]["en_ligne"] == 1){
                         $bouton_desactiver = "METTRE HORS LIGNE";  
                     } else{
                         $bouton_desactiver = "METTRE EN LIGNE";
@@ -100,8 +105,8 @@
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $id_log ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
                                     <?php $id_un_logement = $id_log; ?>
                                     <form action="ChangeEtat.php" method="post">
-                                        <input type="hidden" name=<?php echo $id_un_logement ?> value=<?php echo $bouton_desactiver ?>>
-                                        <button class="btn-desactive" name="bouton_changer_etat" type='submit'> <?php echo $bouton_desactiver; ?> </button>
+                                        <input type="hidden" name=<?php echo $id_un_logement ?> value="<?php echo htmlentities($bouton_desactiver) ?>">
+                                        <button class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button>
                                     </form>
                                     <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $id_log ?>"><button class="btn-suppr">SUPPRIMER</button></a>
@@ -117,16 +122,16 @@
                                     
                                     <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
                                     <div id="validation" class="plages"> 
-                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log["libelle_logement"]; ?> ? 
+                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log[$_GET["idlog"]]["libelle_logement"]; ?> ? 
                                         <p class="erreur">Cette action est irreversible !</p> 
                                         <div id='boutons'>
                                             <button onclick="closePopup('validation','overlay_validation')" class="btn-ajoutlog">Annuler</button> 
-                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $id_log?>" ><button class="btn-suppr">Supprimer</button></a>
+                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $_GET["idlog"]?>" ><button class="btn-suppr">Supprimer</button></a>
                                         </div>
                                     </div>
                                     
                                     <script>
-                                        let cas = document.getElementById("cas_bouton_suppr");
+                                        cas = document.getElementById("cas_bouton_suppr");
                                         if (cas.value == '1'){
                                             openPopup("erreur_suppr","overlay_erreur");
                                         } else if (cas.value == '2') {
@@ -248,25 +253,17 @@
                                         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                         $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-                                        $code = $dbh->prepare("SELECT code_planning FROM locbreizh._planning NATURAL JOIN locbreizh._logement WHERE id_logement = {$card['id_logement']};");
+                                        $code = $infos_log[$id_log]['code_planning'];
 
-                                        $code->execute();
-
-                                        $code = $code->fetch()['code_planning'];
-
-                                        $lesPlages = $dbh->prepare("SELECT id_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE code_planning = {$code} ;");
-                                        
-                                        $lesPlages->execute();
-
-                                        $plageIndispo = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
+                                        $stmt = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
                                         ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_indisponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
-                                        $plageIndispo->execute();
-                                        $plageIndispo = $plageIndispo->fetchAll();
+                                        $stmt->execute();
+                                        $plageIndispo[$id_log] = $stmt->fetchAll();
 
-                                        $plageDispo = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
+                                        $stmt = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
                                         ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
-                                        $plageDispo->execute();
-                                        $plageDispo = $plageDispo->fetchAll();
+                                        $stmt->execute();
+                                        $plageDispo[$id_log] = $stmt->fetchAll();
 
                                     } catch (PDOException $e) {
                                         print "Erreur !:" . $e->getMessage() . "<br/>";
@@ -274,13 +271,13 @@
                                     }
                                     ?>
 
-                                <script src="../Logement/scriptCalendrier.js"></script>
-
                                 <script>
+                                    numCalendrier += 1;
                                     //Appel de la fonction pour créer les calendriers
-                                    afficherCalendrier("normal");
+                                    instancier(numCalendrier);
+                                    afficherCalendrier("normal", numCalendrier);
 
-                                    var tab = <?php echo json_encode($plageIndispo); ?>;
+                                    var tab = <?php echo json_encode($plageIndispo[$id_log]); ?>;
                                     var tabRes = [];
                                     var tabMotif = [];
                                     for (i=0 ; i < tab.length; i++){
@@ -296,9 +293,9 @@
                                         tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
                                         tabMotif[i] = tab[i]["libelle_indisponibilite"];
                                     }
-                                    afficherPlages(tabRes, "indisponible", tabMotif, "I");
+                                    afficherPlages(tabRes, "indisponible", tabMotif, "I", numCalendrier);
 
-                                    var tab = <?php echo json_encode($plageDispo); ?>;
+                                    var tab = <?php echo json_encode($plageDispo[$id_log]); ?>;
                                     var tabRes = [];
                                     var tabMotif = [];
                                     for (i=0 ; i < tab.length; i++){
@@ -314,7 +311,7 @@
                                         tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
                                         tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
                                     }
-                                    afficherPlages(tabRes, "disponible", tabMotif, "D");
+                                    afficherPlages(tabRes, "disponible", tabMotif, "D", numCalendrier);
                                 </script>
                                             
                                 </div>  
