@@ -56,7 +56,6 @@
         $_SESSION['erreurs']['valide_dates'] = "Les dates données sont ulterieures à aujourd'hui !";
     }
     else if($err == 1){
-        print_r("lkj");
         $_SESSION['erreurs']['valide_dates'] = "Les dates données ne sont pas présentes dans le planning !";
     }
     else if($_POST['date_arrivee'] == $_POST['date_depart']){
