@@ -556,11 +556,11 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                     
                                     <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
                                     <div id="validation" class="plages"> 
-                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log["libelle_logement"]; ?> ? 
+                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log[$_GET["idlog"]]["libelle_logement"]; ?> ? 
                                         <p class="erreur">Cette action est irreversible !</p> 
                                         <div id='boutons'>
                                             <button onclick="closePopup('validation','overlay_validation')" class="btn-ajoutlog">Annuler</button> 
-                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $id_log?>" ><button class="btn-suppr">Supprimer</button></a>
+                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $_GET["idlog"]?>" ><button class="btn-suppr">Supprimer</button></a>
                                         </div>
                                     </div>
                                     
@@ -634,15 +634,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         <input class="jesuiscache" type='hidden' name="fin_plage_ponctuelle" id="fin_plage_ponctuelle" value="" required>
 
                                         <label for="prix_plage_ponctuelle"> Prix : </label>
-                                        <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>" value="<?php echo $card['tarif_base_ht'] ?>" required/>
+                                        <input type="text" class="prix_plage_ponctu" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>" value="<?php echo $card['tarif_base_ht'] ?>" required/>
                                         <br><?php erreur("prix") ?><br>
 
                                         <label for="indisponible"> Indisponible : </label>
-                                        <input type="checkbox" id="indisponible" name="indisponible" value="false" onchange="changer(this.checked)"/>
+                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false" onchange="changer(this.checked, <?php echo $key; ?>)"/>
                                         <br><br>
 
                                         <label for="libelleIndispo"> Raison d'indisponibilité : </label>
-                                        <input type="text" id="libelleIndispo" name="libelleIndispo" disabled=true/>
+                                        <input type="text" class="libelleIndisponibilite" id="libelleIndispo" name="libelleIndispo" disabled=true/>
                                         <br><?php erreur("libelleIndispo") ?><br>
 
                                         <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
@@ -669,14 +669,14 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 
                                 
                                     <script type="text/javascript">
-                                        function changer(etat){
+                                        function changer(etat, key){
                                             if (etat){
-                                                document.getElementById("prix_plage_ponctuelle").disabled = true;
-                                                document.getElementById("libelleIndispo").disabled = false;
+                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = true;
+                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = false;
                                             }
                                             else{
-                                                document.getElementById("prix_plage_ponctuelle").disabled = false;
-                                                document.getElementById("libelleIndispo").disabled = true;
+                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = false;
+                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = true;
                                             }
                                         }
                                     </script>
