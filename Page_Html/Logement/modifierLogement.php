@@ -16,19 +16,21 @@ $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_
 $stmt->execute();
 $photo = $stmt->fetch();
 $id_logement = $_GET['id_logement'];
-$erreur = $_SESSION["erreurs"];
+if(isset($_SESSION["erreurs"])){
+    $erreur = $_SESSION["erreurs"];
+}
+else{
+    $erreur = [];
+}
 $reqinfosLogement = $dbh->prepare("SELECT libelle_logement,tarif_base_ht,accroche_logement,descriptif_logement,nature_logement,type_logement,surface_logement,en_ligne,nb_chambre,nb_personnes_logement,lit_simple,lit_double,nb_salle_bain,jardin,balcon,terrasse,parking_public,parking_privee,sauna,hammam,piscine,climatisation,jacuzzi,television,wifi,lave_linge,lave_vaisselle,code_planning,id_proprietaire,id_adresse,photo_principale,taxe_sejour FROM locbreizh._logement WHERE id_logement = $id_logement");
 $reqinfosLogement->execute();
 $res = $reqinfosLogement->fetch();
-
 $principale = $res['photo_principale'];
 $id_ad = $res["id_adresse"];
 $taxe = $res["taxe_sejour"];
-
 $r_adresse = $dbh->prepare("SELECT ville, code_postal FROM locbreizh._adresse WHERE id_adresse = $id_ad");
 $r_adresse->execute();
 $adresse = $r_adresse->fetch();
-
 $r_taxe = $dbh->prepare("SELECT prix_journalier_adulte FROM locbreizh._taxe_sejour WHERE id_taxe = $taxe");
 $r_taxe->execute();
 $taxe = $r_taxe->fetchColumn();
@@ -36,9 +38,7 @@ $taxe = $r_taxe->fetchColumn();
 $r_services = $dbh->prepare("SELECT nom_service FROM locbreizh._services_compris WHERE logement = $id_logement");
 $r_services->execute();
 $services = $r_services->fetchAll();
-
     ?>
-    
     <!DOCTYPE html>
     <html lang="en">
     
@@ -187,7 +187,7 @@ $services = $r_services->fetchAll();
                     <div class="logcolumn">
                         <div class="description">
                             <label for='description'>Description</label>
-                            <textarea maxlength="499" class="logPAP" id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement'])){echo $_SESSION['valeurs_complete']["descriptif_logement"];} ?></textarea>
+                            <textarea maxlength="499" class="logPAP" id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement']) && isset($_SESSION['valeurs_complete']["descriptif_logement"])){echo $_SESSION['valeurs_complete']["descriptif_logement"];}else{ echo  $res['descriptif_logement'];} ?></textarea>
                             <?php
                             if (isset($erreur['descriptif_logement'])){
                                 echo '<p id="erreur">' . $erreur['descriptif_logement'] .  '</p>';
@@ -369,7 +369,7 @@ $services = $r_services->fetchAll();
                         $stmt->execute();
                         $photo = $stmt->fetch();
 
-                        if($photo['photo'] != ''){
+                        if(isset$photo['photo'] != ''){
                             $src = $photo['photo'];
                         }
                         else{
