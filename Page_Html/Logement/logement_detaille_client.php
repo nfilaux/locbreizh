@@ -379,3 +379,5 @@
     ?>
 </body>
 </html>
+
+<script src="caroussel.js" defer></script>
