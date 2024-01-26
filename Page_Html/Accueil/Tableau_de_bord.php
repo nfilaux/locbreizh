@@ -78,7 +78,6 @@ $plageDispo = [];
                 foreach ($liste_mes_logements as $key => $card) {
                     $id_log = $card['id_logement'];
 
-                    print_r($infos_log[$id_log]["en_ligne"]);
                     if ($infos_log[$id_log]["en_ligne"] == 1){
                         $bouton_desactiver = "METTRE HORS LIGNE";  
                     } else{

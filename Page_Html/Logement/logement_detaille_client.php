@@ -335,8 +335,7 @@ $plageDispo = [];
                 }
                 tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
                 tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
-            }
-            console.log(tab) ;          
+            }        
             afficherPlages(tabRes, "normal", tabMotif, "D", numCalendrier);
             if(document.getElementById(tabRes[0])){
                 changerJour(tabRes[0]);

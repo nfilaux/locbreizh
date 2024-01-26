@@ -93,7 +93,6 @@ function instancier(id, nbCache){
             anneeActuelle2[id] = date2[id].getFullYear();
             moisActuel2[id] = date2[id].getMonth();
             afficherCalendrier(classeNormale[id], id);
-            console.log(classeDispo[id]);
             if (classeDispo[id]){
                 afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
             }
@@ -370,7 +369,6 @@ function changerDates(id) {
         if (prixSejour[id]){
             prixPlage[id] = 0;
             for (i=0; i<listeActif.length; i++){
-                console.log(tabDispo[id].indexOf(listeActif[i].id.split(',')[1]));
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -403,7 +401,6 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             tabDispo[id] = tabPlage;
             tabPrix[id] = tabMotif;
             classeDispo[id] = classe;
-            console.log(classeDispo[id]);
         }
         else{
             tabIndispo[id] = tabPlage;
