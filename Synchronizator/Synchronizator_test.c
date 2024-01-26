@@ -274,7 +274,7 @@ int main(int argc, char **argv){
         printf("lignes : %d\n",nombres_lignes_req);
 
         strcpy(id_proprio,PQgetvalue(res,0,0));
-
+        printf("id du propriétaire : %s",id_proprio);
     }
 
     // Boucle de lecture des commandes
@@ -628,7 +628,7 @@ int main(int argc, char **argv){
                 res = PQexec(conn,requete);
 
                 int nombres_plages = PQntuples(res);
-                printf("nombre de plages déjà existante ^^ : %d\n",nombres_plages);
+                printf("nombre de plages déjà existante : %d\n",nombres_plages);
 
                 if (verbose == 1){
                     printf("%02d:%02d:%d %02d:%02d:%02d début de la mise en indisponibilité du logement %s du %s au %s: \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
@@ -654,16 +654,16 @@ int main(int argc, char **argv){
                     
                     if (nombres_lignes_req == 1 ){
                         strcpy(id_plage,PQgetvalue(res,0,0));
-                    } 
+                    }
                     
                     //si la plage n'existe pas on la créer
                     if(nombres_lignes_req < 1){
                         nombres_plages++;
-                        snprintf(requete, sizeof(requete), "INSERT INTO locbreizh2._plage_ponctuelle(id_plage_ponctuelle,jour_plage_ponctuelle,code_planning) VALUES (%d,'%s',%s)",nombres_plages,formatted_date,code_planning);
+                        snprintf(requete, sizeof(requete), "INSERT INTO locbreizh2._plage_ponctuelle(id_plage_ponctuelle,jour_plage_ponctuelle,code_planning) VALUES (%d,'%s',%s)",nombres_plages+1,formatted_date,code_planning);
                         printf("la requete : %s\n",requete);
                         res = PQexec(conn,requete);
 
-                        snprintf(requete, sizeof(requete), "INSERT INTO locbreizh2._plage_ponctuelle_indisponible(id_plage_ponctuelle,libelle_indisponibilite) Values(%d,'%s')",nombres_plages,"le propriétaire est indisponible");
+                        snprintf(requete, sizeof(requete), "INSERT INTO locbreizh2._plage_ponctuelle_indisponible(id_plage_ponctuelle,libelle_indisponibilite) Values(%d,'%s')",nombres_plages+1,"le propriétaire est indisponible");
                         printf("la requete : %s\n",requete);
                         res = PQexec(conn,requete);
                     } else if(nombres_lignes_req == 1){
