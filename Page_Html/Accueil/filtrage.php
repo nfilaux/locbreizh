@@ -1,6 +1,5 @@
 <?php
-
-if ((isset($_POST['prix_min']))&&(isset($_POST['prix_max']))&&($_POST['prix_min']>$_POST['prix_max'])&&($_POST['prix_max']>0)){   
+if (($_POST['prix_min']>$_POST['prix_max'])&&($_POST['prix_max']>0)){   
     header("Location: ./accueil_visiteur.php?erreur=supérieur");
 } else if((isset($_POST['prix_min']))&&(isset($_POST['prix_max']))&&($_POST['prix_min']>0)&&($_POST['prix_max']>0)){ // Filtre par les 2 bornes de prix remplies
     $prix_min = urlencode($_POST['prix_min']);
