@@ -114,7 +114,7 @@
                     a.ville,
                     a.code_postal
                     FROM locbreizh._logement l
-                    JOIN locbreizh._adresse a ON l.id_adresse = _adresse.id_adresse $filtre;"
+                    JOIN locbreizh._adresse a ON l.id_adresse = _adresse.id_adresse $filtre"
                 );
             } else {
                 // récupération des données de logement dans la base de donnée
