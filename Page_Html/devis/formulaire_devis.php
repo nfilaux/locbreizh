@@ -64,7 +64,7 @@
             WHERE num_demande_devis = $num_demande and nom_charges = 'menage';");
             $stmt->execute();
             $menage1 = $stmt->fetch();
-
+            
             $stmt = $dbh->prepare("SELECT prix_charges 
             FROM locbreizh._demande_devis d 
             JOIN locbreizh._logement l ON  d.logement = l.id_logement 
