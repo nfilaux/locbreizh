@@ -80,34 +80,34 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 <div class="logrowb">
                     <div class="">
                         <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
-                        <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
-                    </div>
-                </div>
-        
-                <div class="slider-container">
-                    <div class="slider">
-                        <div class="slide">
-                                <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
-                            </div><?php
-                        for ($i = 0 ; $i < 5; $i++) {
-                            if (isset($photos_secondaires[$i]['photo'])){?>
-                                <div class="slide">
-                                    <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>">
-                                </div><?php
-                            }
-                        };?>
-                    </div>
-
-                    <div class="controls">
-                        <button class="left"><img src="../svg/arrow-left.svg"></button>
-                        <ul></ul>
-                        <button class="right"><img src="../svg/arrow-right.svg"></button>
                     </div>
                 </div>
 
-                
 
+                <div class="logrowb">
                     <div class="logcolumn">
+                        <div class="slider-container">
+                            <div class="slider">
+                                <div class="slide">
+                                        <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
+                                    </div><?php
+                                for ($i = 0 ; $i < 5; $i++) {
+                                    if (isset($photos_secondaires[$i]['photo'])){?>
+                                        <div class="slide">
+                                            <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>">
+                                        </div><?php
+                                    }
+                                };?>
+                            </div>
+
+                            <div class="controls">
+                                <button class="left"><img src="../svg/arrow-left.svg"></button>
+                                <ul></ul>
+                                <button class="right"><img src="../svg/arrow-right.svg"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logcolumn logdem">
                         <h3 class="policetitre">Description</h3>
                         <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
@@ -213,7 +213,8 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                         television,
                         wifi,
                         lave_linge,
-                        lave_vaisselle
+                        lave_vaisselle,
+                        nb_personnes_logement
                         FROM locbreizh._logement
                         where id_logement = {$_GET['logement']}"
                     );
@@ -285,10 +286,12 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
+                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
+                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
         </div>

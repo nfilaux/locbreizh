@@ -40,49 +40,49 @@ $photo = $stmt->fetch();
 
     <main class="mainacc">
         <div class="section-filters">
-                <p class="acc-accroche">Rechercher votre logement selon votre critère</p>
-                <div class="filters">
-                    <form action="filtrageC.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
-                    <div class="filters">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label for="prix_min">min</label>
-                                </div>
-                                <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
-                            </div>  
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label for="prix_max">max</label>
-                                </div>
-                                <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
-                            </div>
-                            <div class="input-group-ville">
-                                <div class="input-group-prepend">
-                                    <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25"></label>
-                                </div>
-                                <input type="text" id="lieu" name="lieu" placeholder="<?php if (isset($_GET['lieu'])){echo $_GET['lieu'];} else {echo 'Ville';} ?>"/> 
-                            </div>
-                            <div class="input-group-pers">
-                                <div class="input-group-prepend">
-                                    <label for="personne"><img src="../svg/group.svg" width="25" height="25"></label>
-                                </div>
-                                <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['voyageurs'])){echo $_GET['voyageurs'];} else {echo 0;} ?>"/>   
-                            </div>
-                            <div class="input-group-proprio">
-                                <div class="input-group-prepend">
-                                    <label for="proprietaire"><img src="../svg/home-office-fill.svg" width="25" height="25"></label>
-                                </div>
-                                <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>   
-                            </div>
-                                <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
+            <p class="acc-accroche">Rechercher votre logement selon votre critère</p>
+            <div class="filters">
+                <form action="filtrageC.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
+                <div class="fil">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12"></label>
                         </div>
-                                <?php if (isset($_GET['erreur'])){ ?>
-                                    <p class='err'>Le prix min doit être inférieur au prix max</p>
-                                <?php }?>
-                    </form>
-                </div>
+                        <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
+                    </div>  
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12"></label>
+                        </div>
+                        <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
+                    </div>
+                    <div class="input-group-ville">
+                        <div class="input-group-prepend">
+                            <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25"></label>
+                        </div>
+                        <input type="text" id="lieu" name="lieu" placeholder="<?php if (isset($_GET['lieu'])){echo $_GET['lieu'];} else {echo 'Ville';} ?>"/> 
+                    </div>
+                    <div class="input-group-pers">
+                        <div class="input-group-prepend">
+                            <label for="personne"><img src="../svg/group.svg" width="25" height="25"></label>
+                        </div>
+                        <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['voyageurs'])){echo $_GET['voyageurs'];} else {echo 0;} ?>"/>   
+                    </div>
+                    <div class="input-group-proprio">
+                        <div class="input-group-prepend">
+                            <label for="proprietaire"><img src="../svg/home-office-fill.svg" width="25" height="25"></label>
+                        </div>
+                        <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>   
+                    </div>
+                    <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
+                    </div>
+                        
+                    <?php if (isset($_GET['erreur'])){ ?>
+                        <p class='err'>Le prix min doit être inférieur au prix max</p>
+                    <?php }?>
+                </form>
             </div>
-        
+        </div>
         <!-- Champs de séléction des Tris -->
         <select class="triage" id="tri" name="tri">
             <option value="none" hidden> Trier par : choisir tri</option>
@@ -107,8 +107,9 @@ $photo = $stmt->fetch();
 
                 // récupération des données de logement dans la base de donnée avec le tri
                 $stmt = $dbh->prepare(
-                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
-                    from locbreizh._logement ORDER BY $tri;"
+                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
+                    from locbreizh._logement l JOIN locbreizh._adresse ON l.id_adresse = _adresse.id_adresse
+                    ORDER BY $tri;"
                 );
             } else if(sizeof($_GET)>0){
                 if (sizeof($_GET)==1){
@@ -116,8 +117,8 @@ $photo = $stmt->fetch();
                         switch($NomFiltre){
                             case 'prixMin' :    $filtre = "WHERE tarif_base_ht>=$choix";  break;
                             case 'prixMax' :    $filtre = "WHERE tarif_base_ht<=$choix"; break;
-                            case 'lieu' :       $filtre = "NATURAL JOIN locbreizh._adresse WHERE _adresse.ville='$choix'"; break;
-/*SENSIBILITE A LA CASSE*/  case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire ON _logement.id_proprietaire=_proprietaire.id_proprietaire JOIN locbreizh._compte ON _compte.id_compte=_proprietaire.id_proprietaire WHERE LOWER(_compte.nom)=LOWER('$choix')"; break;
+                            case 'lieu' :       $filtre = "WHERE _adresse.ville='$choix'"; break;
+                            case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire p ON l.id_proprietaire = p.id_proprietaire JOIN locbreizh._compte c ON p.id_proprietaire = c.id_compte WHERE LOWER(c.nom) = LOWER('$choix');"; break;
                             case 'voyageurs' :  $filtre = "WHERE nb_personnes_logement=$choix;"; break;
                         }
                     }
@@ -129,14 +130,23 @@ $photo = $stmt->fetch();
 
                 // récupération des données de logement dans la base de donnée avec le filtre
                 $stmt = $dbh->prepare(
-                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
-                    from locbreizh._logement $filtre;"
+                    "SELECT
+                    l.photo_principale,
+                    l.libelle_logement,
+                    l.tarif_base_ht,
+                    l.nb_personnes_logement,
+                    l.id_logement,
+                    l.en_ligne,
+                    a.ville,
+                    a.code_postal
+                    FROM locbreizh._logement l
+                    JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse $filtre;"
                 );
             } else {
                 // récupération des données de logement dans la base de donnée
                 $stmt = $dbh->prepare(
-                    'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne
-                    from locbreizh._logement;'
+                    'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
+                    from locbreizh._logement l JOIN locbreizh._adresse ON l.id_adresse = _adresse.id_adresse;'
                 );
             }
             $stmt->execute();
@@ -167,7 +177,7 @@ $photo = $stmt->fetch();
         foreach ($res as $card) {
             if ($card['en_ligne'] == true) {
                 ?>
-                <article class="logementCard">
+                <article class="logementCard cardtel">
                     <a href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>"> 
                         <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
                         <div class="infoContainer">
@@ -175,7 +185,7 @@ $photo = $stmt->fetch();
                                 <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
                                 <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
                             </div>
-                            <div class="otherInfos">
+                            <div class="otherInfos cardtel">
                                 <div>
                                     <img src="../svg/money.svg" width="25" height="25">
                                     <span><?php echo $card['tarif_base_ht']; ?> € </span>
