@@ -10,7 +10,15 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     die();
 }
 
+$plageIndispo = [];
+$plageDispo = []; 
+
 ?>
+
+<script>
+    numCalendrier = -1;
+</script>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -118,7 +126,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                     <div class="logcolumn">
 
                         <h3 class="policetitre">Calendrier</h3>
-                        <div class="corpsCalendrier">
+                        <div class="corpsCalendrier" id="">
                             <div class="fond">
                                 <div class="teteCalendrier">
                                     <div class="fleches">
@@ -308,8 +316,7 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
                 $code->execute();
 
-                $code = $code->fetch();
-                $code = $code['code_planning'];
+                $code = $code->fetch()['code_planning'];
 
                 $plageDispo = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
                 ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
@@ -322,11 +329,21 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             }
         ?>
 
-<script>
-            //Appel de la fonction pour créer les calendriers
-            afficherCalendrier("inactif");
+        <script>
+            numCalendrier += 1;
 
-            changerDates();
+            calendrier = document.getElementsByClassName("corpsCalendrier");
+            calendrier[numCalendrier].id = "calendrier" + numCalendrier;
+
+            //Appel de la fonction pour créer les calendriers
+            instancier(numCalendrier);
+            afficherCalendrier("inactif", numCalendrier);
+
+            changerDates(numCalendrier, 2);
+
+            var tabRes = [];
+            var tabMotif = [];
+            afficherPlages(tabRes, "indisponible", tabMotif, "NI", numCalendrier);
 
             var tab = <?php echo json_encode($plageDispo); ?>;
             var tabRes = [];
@@ -343,8 +360,8 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                 }
                 tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
                 tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
-            }
-            afficherPlages(tabRes, "normal", tabMotif, "D");
+            }        
+            afficherPlages(tabRes, "normal", tabMotif, "D", numCalendrier);
             if(document.getElementById(tabRes[0])){
                 changerJour(tabRes[0]);
             }
