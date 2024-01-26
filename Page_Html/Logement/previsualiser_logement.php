@@ -82,8 +82,15 @@ if ($_FILES['image6P']['name']!= '') {
     $nom_image6 = null;
     $nouveau_nom_image6 = null;
 }
+
+$plageIndispo = [];
+$plageDispo = []; 
+
 ?>
 
+<script>
+    numCalendrier = -1;
+</script>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -93,7 +100,6 @@ if ($_FILES['image6P']['name']!= '') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prévisualisez un logement</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="./scriptCalendrier.js" defer></script>
     <script src="../scriptPopup.js"></script>
 </head>
 
@@ -370,7 +376,7 @@ if ($_FILES['image6P']['name']!= '') {
                         <div class="logrowb">
                     <div class="logcolumn">
                         <h3 class="policetitres">Calendrier</h3>
-                        <div class="corpsCalendrier">
+                        <div class="corpsCalendrier" id="">
                             <div class="fondP">
                                 <div class="teteCalendrier">
                                     <div class="fleches flechesP">
@@ -417,6 +423,22 @@ if ($_FILES['image6P']['name']!= '') {
                             </div>
                     </div>
                 </div>
+
+                <script src="./scriptCalendrier.js"></script>
+
+        <script>
+            numCalendrier += 1;
+
+            calendrier = document.getElementsByClassName("corpsCalendrier");
+            calendrier[numCalendrier].id = "calendrier" + numCalendrier;
+
+            //Appel de la fonction pour créer les calendriers
+            instancier(numCalendrier);
+            afficherCalendrier("inactif", numCalendrier);
+
+            changerDates(numCalendrier, 2);
+
+        </script>
 
                     <div class="logdem">
                         <div class="logrowb" id="datesPlage">

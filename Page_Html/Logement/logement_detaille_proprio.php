@@ -13,7 +13,15 @@ $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_
 $stmt->execute();
 $photo = $stmt->fetch();
 
+$plageIndispo = [];
+$plageDispo = []; 
+
 ?>
+
+<script>
+    numCalendrier = -1;
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,7 +112,7 @@ $photo = $stmt->fetch();
                 <div class="logrowb">
                     <div class="logcolumn">
                         <h3 class="policetitres">Calendrier</h3>
-                        <div class="corpsCalendrier">
+                        <div class="corpsCalendrier" id="">
                             <div class="fondP">
                                 <div class="teteCalendrier">
                                     <div class="fleches flechesP">
@@ -273,13 +281,9 @@ $photo = $stmt->fetch();
                         <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
-        </div>
-                
-
+        </div>      
 
         <script src="./scriptCalendrier.js"></script>
-
-
 
         <?php
             try {
@@ -305,10 +309,20 @@ $photo = $stmt->fetch();
         ?>
 
         <script>
-            //Appel de la fonction pour créer les calendriers
-            afficherCalendrier("inactif");
+            numCalendrier += 1;
 
-            changerDates();
+            calendrier = document.getElementsByClassName("corpsCalendrier");
+            calendrier[numCalendrier].id = "calendrier" + numCalendrier;
+
+            //Appel de la fonction pour créer les calendriers
+            instancier(numCalendrier);
+            afficherCalendrier("inactif", numCalendrier);
+
+            changerDates(numCalendrier, 2);
+
+            var tabRes = [];
+            var tabMotif = [];
+            afficherPlages(tabRes, "indisponible", tabMotif, "NI", numCalendrier);
 
             var tab = <?php echo json_encode($plageDispo); ?>;
             var tabRes = [];
@@ -325,8 +339,8 @@ $photo = $stmt->fetch();
                 }
                 tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
                 tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
-            }
-            afficherPlages(tabRes, "normal", tabMotif, "D");
+            }        
+            afficherPlages(tabRes, "normal", tabMotif, "D", numCalendrier);
             if(document.getElementById(tabRes[0])){
                 changerJour(tabRes[0]);
             }

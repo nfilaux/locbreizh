@@ -38,7 +38,7 @@
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-            $num_demande = $_GET["demande"];
+            $num_demande = $_GET["id_demande"];
 
             $stmt = $dbh->prepare("SELECT 
                 nom,

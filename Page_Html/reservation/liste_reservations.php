@@ -85,7 +85,8 @@ $photo = $stmt->fetch();
                         join locbreizh._compte c on c.id_compte = p.id_proprietaire
                         join locbreizh._adresse a on l.id_adresse = a.id_adresse
                         join locbreizh._facture f on f.num_facture = r.facture
-                        join locbreizh._devis d on d.num_devis = f.num_devis $filtre");     
+                        join locbreizh._devis d on d.num_devis = f.num_devis $filtre
+                        where p.id_proprietaire = {$_SESSION['id']}");     
 
                 } catch (PDOException $e) {
                     print "Erreur !:" . $e->getMessage() . "<br/>";
