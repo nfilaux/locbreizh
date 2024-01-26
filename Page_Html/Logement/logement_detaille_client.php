@@ -12,7 +12,15 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
 $stmt->execute();
 $photo = $stmt->fetch();
+
+$plageIndispo = [];
+$plageDispo = []; 
 ?>
+
+<script>
+    numCalendrier = -1;
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -241,7 +249,7 @@ $photo = $stmt->fetch();
             <hr class="hr">
             <div class="logcolumn">
                 <h3 class="policetitre">Calendrier</h3>
-                <div class="corpsCalendrier">
+                <div class="corpsCalendrier" id="">
                     <div class="fond">
                         <div class="teteCalendrier">
                             <div class="fleches">
@@ -316,10 +324,20 @@ $photo = $stmt->fetch();
         ?>
 
         <script>
-            //Appel de la fonction pour créer les calendriers
-            afficherCalendrier("inactif");
+            numCalendrier += 1;
 
-            changerDates();
+            calendrier = document.getElementsByClassName("corpsCalendrier");
+            calendrier[numCalendrier].id = "calendrier" + numCalendrier;
+
+            //Appel de la fonction pour créer les calendriers
+            instancier(numCalendrier);
+            afficherCalendrier("inactif", numCalendrier);
+
+            changerDates(numCalendrier, 2);
+
+            var tabRes = [];
+            var tabMotif = [];
+            afficherPlages(tabRes, "indisponible", tabMotif, "NI", numCalendrier);
 
             var tab = <?php echo json_encode($plageDispo); ?>;
             var tabRes = [];
@@ -337,7 +355,7 @@ $photo = $stmt->fetch();
                 tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
                 tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
             }
-            afficherPlages(tabRes, "normal", tabMotif, "D");
+            afficherPlages(tabRes, "normal", tabMotif, "D", numCalendrier);
             if(document.getElementById(tabRes[0])){
                 changerJour(tabRes[0]);
             }

@@ -145,7 +145,7 @@
                             <div id="<?php echo $nomPlage; ?>" class='plages'> 
                                     <h1>Ajouter une plage ponctuelle</h1><br>
                                     <div class="logcolumn">
-                                        <div class="corpsCalendrier">
+                                        <div class="corpsCalendrier" id="">
                                             <div class="fond">
                                                 <div class="teteCalendrier">
                                                     <div class="fleches">
@@ -273,9 +273,14 @@
 
                                 <script>
                                     numCalendrier += 1;
+
+                                    calendrier = document.getElementsByClassName("corpsCalendrier");
+                                    calendrier[numCalendrier].id = "calendrier" + numCalendrier;
+
                                     //Appel de la fonction pour créer les calendriers
-                                    instancier(numCalendrier);
+                                    instancier(numCalendrier, 4);
                                     afficherCalendrier("normal", numCalendrier);
+
 
                                     var tab = <?php echo json_encode($plageIndispo[$id_log]); ?>;
                                     var tabRes = [];

@@ -35,16 +35,28 @@ dernierID = [];
 //classe des jours normaux
 classeNormale = [];
 
-function instancier(id){
+//prix des plages sélectionner
+prixPlage = [];
+
+function instancier(id, nbCache){
     //recupération des element du html qu'on vas remplir d'information
-    calendrier[id] = document.getElementById("plage" + id);
-    console.log(calendrier[id]);
+    calendrier[id] = document.getElementById("calendrier" + id);
     dateActuelle[id] = calendrier[id].querySelectorAll(".date_actuelle");
     baliseJour[id] = calendrier[id].querySelectorAll(".jours");
     precedentSuivant[id] = calendrier[id].querySelectorAll(".fleches svg");
-    datesPlage[id] = calendrier[id].querySelectorAll("#datesPlage .dateresa");
-    boutonsDates[id] = calendrier[id].querySelectorAll(".jesuiscache");
-    prixSejour[id] = calendrier[id].querySelectorAll(".nuit");
+    datesPlage[id] = [document.querySelectorAll("#datesPlage .dateresa")[id*2], ''];
+    datesPlage[id][1] = document.querySelectorAll("#datesPlage .dateresa")[id*2+1];
+    if (nbCache == 4){
+        boutonsDates[id] = [document.querySelectorAll(".jesuiscache")[id*4], '', '', ''];
+        boutonsDates[id][1] = (document.querySelectorAll(".jesuiscache")[id*4+1]);
+        boutonsDates[id][2] = (document.querySelectorAll(".jesuiscache")[id*4+2]);
+        boutonsDates[id][3] = (document.querySelectorAll(".jesuiscache")[id*4+3]);
+    }
+    else{
+        boutonsDates[id] = [document.querySelectorAll(".jesuiscache")[id*2], ''];
+        boutonsDates[id][1] = (document.querySelectorAll(".jesuiscache")[id*2+1]);
+    }
+    prixSejour[id] = document.querySelectorAll(".nuit")[id];
 
     //création de dates qui vont êtres utilisé pour le premier et deuxieme calendrier
     date[id] = new Date();
@@ -80,7 +92,7 @@ function instancier(id){
             date2[id] = new Date(anneeActuelle2[id], moisActuel2[id]);
             anneeActuelle2[id] = date2[id].getFullYear();
             moisActuel2[id] = date2[id].getMonth();
-            afficherCalendrier(classeNormale[id]);
+            afficherCalendrier(classeNormale[id], id);
             if (classeDispo[id]){
                 afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D");
             }
@@ -122,11 +134,12 @@ function afficherCalendrier(classe, id) {
     }
 
     for (i = 1; i <= derniereDateMois; i++) {
-        idJour = (moisActuel+ 1) + '/' + (k + 1) + '/' + anneeActuelle[id];
-        texteListe += '<li onclick="changerJour(this.id, ' + id + ')" id=' + idJour + ' class="' + classe + '">' + i + '</li>';
+        idJour = (moisActuel[id]+ 1) + '/' + (k + 1) + '/' + anneeActuelle[id];
+        texteListe += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '</li>';
         k++;
         nbJours++;
     }
+
 
     for (i = derniereJourMois; nbJours < 42; i++) {
         texteListe += '<li class="inactif">' + (i - derniereJourMois + 1) + '</li>';
@@ -143,7 +156,7 @@ function afficherCalendrier(classe, id) {
 
         for (i = 1; i <= derniereDateMois2; i++) {
             idJour = (moisActuel2[id] + 1) + '/' + (k + 1 - derniereDateMois) + '/' + anneeActuelle2[id];
-            texteListe2 += '<li onclick="changerJour(this.id, ' + id + ')" id=' + idJour + ' class="' + classe + '">' + i + '</li>';
+            texteListe2 += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '</li>';
             k++;
             nbJours++;
         }
@@ -179,7 +192,7 @@ function changerJour(elem, id) {
         entreDeux = calendrier[id].getElementsByClassName("entreDeux");
         nbEntreDeux = entreDeux.length;
         for (i = 0; i < nbEntreDeux; i++) {
-            entreDeux[id][0].className = "normal";
+            entreDeux[0].className = "normal";
         }
         //remet les plages
         if (tabDispo[id][0]){
@@ -198,9 +211,9 @@ function changerJour(elem, id) {
             }
             //cas ou il il y a une ou deux dates de sélectionner
             else {
-                let dateElem = new Date(element.id).getTime();
-                let datePremier = new Date(premierID[id]).getTime();
-                let dateDernier = new Date(dernierID[id]).getTime();
+                let dateElem = new Date(element.id.split(',')[1]).getTime();
+                let datePremier = new Date(premierID[id].split(',')[1]).getTime();
+                let dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
                 milieu = (dateDernier + datePremier) / 2;
                 //détermine si le nouveau jour seras le début ou la fin de la plage
                 if (dateElem < milieu) {
@@ -234,8 +247,8 @@ function changerJour(elem, id) {
                     element.className = "actif";
                 }
                 //active la zone de selection entre les deux dates
-                datePremier = new Date(premierID[id]).getTime();
-                dateDernier = new Date(dernierID[id]).getTime();
+                datePremier = new Date(premierID[id].split(',')[1]).getTime();
+                dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
                 listeJours = calendrier[id].querySelectorAll(".jours li");
                 inactif = false;
                 fini = false;
@@ -246,7 +259,7 @@ function changerJour(elem, id) {
                         fini = true;
                     }
                     if (!fini){
-                        let dateJour = new Date(jour.id).getTime();
+                        let dateJour = new Date(jour.id.split(',')[1]).getTime();
                         if (dateJour < dateDernier && dateJour > datePremier) {
                             if (jour.className !== "inactif"){
                                 jour.className = "entreDeux";
@@ -264,11 +277,11 @@ function changerJour(elem, id) {
                 }
                 if (inactif){
                     nbEntreDeux = calendrier[id].getElementsByClassName("entreDeux").length;
-                    JourAChanger = calendrier[id].getElementById(dernierID[id]);
+                    JourAChanger = document.getElementById(dernierID[id]);
                     JourAChanger.className = classeDispo[id];
                     if (nbEntreDeux > 0){
                         dernierID[id] = listeJours[loop-2].id;
-                        calendrier[id].getElementById(dernierID[id]).className = "actif";
+                        document.getElementById(dernierID[id]).className = "actif";
                         dernierID[id].className = "actif";
                     }
                     else{
@@ -302,7 +315,7 @@ function changerJour(elem, id) {
             premierID[id] = "";
             dernierID[id] = "";
         }
-        //changerDates(id);
+        changerDates(id);
     }
 }
 
@@ -310,33 +323,35 @@ function changerJour(elem, id) {
 function changerDates(id) {
     listeActif = calendrier[id].getElementsByClassName("actif");
     listeEntreDeux = calendrier[id].getElementsByClassName("entreDeux");
+    pIdDate = premierID[id].split(',')[1];
+    dIdDate = dernierID[id].split(',')[1];
     if (listeActif.length !== 0){
         //change format du premier ID
-        if (premierID[id].split('/')[1].length == 1) {
-            newPId = '0' + premierID[id].split('/')[1];
+        if (pIdDate.split('/')[1].length == 1) {
+            newPId = '0' + pIdDate.split('/')[1];
         }
         else {
-            newPId = premierID[id].split('/')[1];
+            newPId = pIdDate.split('/')[1];
         }
-        if (premierID[id].split('/')[0].length == 1) {
-            newPId += '/0' + premierID[id].split('/')[0] + '/' + premierID[id].split('/')[2];
+        if (pIdDate.split('/')[0].length == 1) {
+            newPId += '/0' + pIdDate.split('/')[0] + '/' + pIdDate.split('/')[2];
         }
         else {
-            newPId += '/' + premierID[id].split('/')[0] + '/' + premierID[id].split('/')[2];
+            newPId += '/' + pIdDate.split('/')[0] + '/' + pIdDate.split('/')[2];
         }
 
         //change format du dernier ID
-        if (dernierID[id].split('/')[1].length == 1) {
-            newDId = '0' + dernierID[id].split('/')[1];
+        if (dIdDate.split('/')[1].length == 1) {
+            newDId = '0' + dIdDate.split('/')[1];
         }
         else {
-            newDId = dernierID[id].split('/')[1];
+            newDId = dIdDate.split('/')[1];
         }
-        if (dernierID[id].split('/')[0].length == 1) {
-            newDId += '/0' + dernierID[id].split('/')[0] + '/' + dernierID[id].split('/')[2];
+        if (dIdDate.split('/')[0].length == 1) {
+            newDId += '/0' + dIdDate.split('/')[0] + '/' + dIdDate.split('/')[2];
         }
         else {
-            newDId += '/' + dernierID[id].split('/')[0] + '/' + dernierID[id].split('/')[2];
+            newDId += '/' + dIdDate.split('/')[0] + '/' + dIdDate.split('/')[2];
         }
         if (datesPlage[id][0]) {
             //envoie les dates dans le HTML pour l'affichage et pour l'envoie de devis
@@ -351,16 +366,17 @@ function changerDates(id) {
                 boutonsDates[id][i+1].value = newDId;
             }
         }
-        if (prixSejour[id][0]){
+        if (prixSejour[id]){
             prixPlage[id] = 0;
             for (i=0; i<listeActif.length; i++){
-                prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id)]);
+                console.log(tabDispo[id].indexOf(listeActif[i].id.split(',')[1]));
+                prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
 
             }
             for (i=0; i<listeEntreDeux.length; i++){
-                prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeEntreDeux[i].id)]);
+                prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeEntreDeux[i].id.split(',')[1])]);
             }
-            prixSejour[id][0].innerHTML = prixPlage[id] + "€ pour les nuits";
+            prixSejour[id].innerHTML = prixPlage[id] + "€ pour les nuits";
         }
     }
     else{
@@ -374,35 +390,42 @@ function changerDates(id) {
                 boutonsDates[id][i].value = "";
             }
         }
-        if (prixSejour[id][0]){
-            prixSejour[id][0].innerHTML = "0€ pour les nuits";
+        if (prixSejour[id]){
+            prixSejour[id].innerHTML = "0€ pour les nuits";
         }
     }
 }
 
 //fonction qui affiche les plages
 function afficherPlages(tabPlage, classe, tabMotif, type, id){
-    idBalise = "#" + id + " ";
-    if (type === "D"){
-        tabDispo[id] = tabPlage;
-        tabPrix[id] = tabMotif;
-        classeDispo[id] = classe;
-    }
-    else{
-        tabIndispo[id] = tabPlage;
-        tabRaison[id] = tabMotif;
-        classeIndispo[id] = classe;
-    }
-    for (i=0; i < tabPlage.length; i++){
-        if (document.getElementById(tabPlage[i]) && document.getElementById(tabPlage[i]).className !== "actif") {
-            
-            document.getElementById(tabPlage[i]).className = classe;
-            if (classe === "disponible"){
-                document.getElementById(tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
-            }
-            else if (classe === "indisponible"){
-                document.getElementById(tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i];
+    if (type !== "NI"){
+        if (type === "D"){
+            tabDispo[id] = tabPlage;
+            tabPrix[id] = tabMotif;
+            classeDispo[id] = classe;
+        }
+        else{
+            tabIndispo[id] = tabPlage;
+            tabRaison[id] = tabMotif;
+            classeIndispo[id] = classe;
+        }
+        for (i=0; i < tabPlage.length; i++){
+            if (document.getElementById(id + "," + tabPlage[i]) && document.getElementById(id + "," + tabPlage[i]).className !== "actif") {
+                
+                document.getElementById(id + "," + tabPlage[i]).className = classe;
+                if (classe === "disponible"){
+                    document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
+                }
+                else if (classe === "indisponible"){
+                    document.getElementById(id + "," + tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i];
+                }
             }
         }
     }
+    else{
+        tabIndispo[id] = [];
+        tabRaison[id] = [];
+        classeIndispo[id] = [];
+    }
+    
 }
