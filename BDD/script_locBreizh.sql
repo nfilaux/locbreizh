@@ -47,7 +47,7 @@ CREATE TABLE
     );
 /* table clefs API */
 CREATE TABLE IF NOT EXISTS locbreizh._clefsapi(
-    idclef numeric NOT NULL DEFAULT nextval('locbreizh._clefsapi_idclef_seq1'::regclass),
+    idclef numeric NOT NULL,
     droitgrandeconsultation boolean,
     droitpetiteconsultation boolean,
     droitconsultationcalendrier boolean,

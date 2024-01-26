@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include('../parametre_connexion.php');
 try {
@@ -15,6 +15,7 @@ $photo = $stmt->fetch();
 
 $plageIndispo = [];
 $plageDispo = []; 
+
 ?>
 
 <script>
@@ -50,17 +51,6 @@ $plageDispo = [];
                     from locbreizh._logement 
                     WHERE id_logement = {$_GET['logement']};"
                 );
-
-                /*$stmt = $dbh->prepare(
-                    "SELECT libelle_logement, nb_personnes_logement, surface_logement, tarif_base_ht, note_avis, photo_principale, photo, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
-                    from locbreizh._logement 
-                        INNER JOIN locbreizh._avis ON logement = id_logement
-                        INNER JOIN locbreizh._photos_secondaires p ON p.logement = id_logement
-                        INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
-                        INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning
-                        WHERE id_logement = {$_GET['logement']};"
-                );*/
-
 
             $stmt->execute();
             $info = $stmt->fetch();
@@ -217,7 +207,7 @@ $plageDispo = [];
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg"> jardin <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
                         if ($info['balcon'] == true) {
                             ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
@@ -411,3 +401,5 @@ $plageDispo = [];
     ?>
 </body>
 </html>
+
+<script src="caroussel.js" defer></script>

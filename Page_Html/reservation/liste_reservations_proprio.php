@@ -1,4 +1,4 @@
-    <?php 
+<?php 
 session_start();
 include('../parametre_connexion.php');
 try {
