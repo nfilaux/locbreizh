@@ -31,7 +31,12 @@
 <body class="pageproprio">
     <?php 
         include('../header-footer/choose_header.php');
-        $cas_popup = $_GET["cs"];
+        if(isset($_GET["cs"])){
+            $cas_popup = $_GET["cs"];
+        }
+        else{
+            $cas_popup = '';
+        }
     ?>
 
     <main class="MainTablo">
