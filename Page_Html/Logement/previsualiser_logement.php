@@ -444,7 +444,7 @@ if ($_FILES['image6P']['name']!= '') {
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $surface_jardin; ?> m<sup>2</sup></p>
                         <?php
                         if (isset($balcon) && $balcon == true) {
                             ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
