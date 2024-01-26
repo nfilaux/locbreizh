@@ -423,7 +423,7 @@ if ($_FILES['image6P']['name']!= '') {
                             <p class="dateresa demresaP"></p>
                             <p class="dateresa demresaP"></p>
                         </div>
-                        <form action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                        <form>
                             <button class="btn-demlognoP" type="submit" disabled>Demander un devis</button>
                             <div class="logrowt">
                                 <p class="nuit"><?php echo $logement_data['tarif_de_base'];?> €/nuit</p>
@@ -453,30 +453,30 @@ if ($_FILES['image6P']['name']!= '') {
                         <h4 class="potitres">Equipements</h4>
                         <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
-                        if ($info['balcon'] == true) {
+                        if (isset($info['balcon']) && $info['balcon'] == true) {
                             ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
                         }
 
-                        if ($info['terrasse'] == true) {
+                        if (isset($info['terrasse']) && $info['terrasse'] == true) {
                             ?><p><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
                         }
-                        if ($info['parking_privee'] == true) {
+                        if (isset($info['parking_privee']) && $info['parking_privee'] == true) {
                             ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
                         }
 
-                        if ($info['parking_public'] == true) {
+                        if (isset($info['parking_public']) && $info['parking_public'] == true) {
                             ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
                         }
-                        if ($info['television'] == true) {
+                        if (isset($info['television']) && $info['television'] == true) {
                             ?><p><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
                         }
-                        if ($info['wifi'] == true) {
+                        if (isset($info['wifi']) && $info['wifi'] == true) {
                             ?><p><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
                         }
-                        if ($info['lave_linge'] == true) {
+                        if (isset($info['lave_linge']) &&  $info['lave_linge'] == true) {
                             ?><p><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
                         }
-                        if ($info['lave_vaisselle'] == true) {
+                        if (isset($info['lave_vaisselle']) &&  $info['lave_vaisselle'] == true) {
                             ?><p><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
                         }
                         
@@ -487,22 +487,22 @@ if ($_FILES['image6P']['name']!= '') {
                         <h4 class="potitres">Installations</h4>
                         <?php
 
-                        if ($info['climatisation'] == true) {
+                        if (isset($info['climatisation']) && $info['climatisation'] == true) {
                             ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
                         }
-                        if ($info['piscine'] == true) {
+                        if (isset($info['piscine']) && $info['piscine'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
                         }
 
-                        if ($info['sauna'] == true) {
+                        if (isset($info['sauna']) &&  $info['sauna'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
                         }
 
-                        if ($info['hammam'] == true) {
+                        if (isset($info['hammam']) &&  $info['hammam'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
                         }
 
-                        if ($info['jacuzzi'] == true) {
+                        if (isset($info['jacuzzi']) && $info['jacuzzi'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
                         }
                         ?>
