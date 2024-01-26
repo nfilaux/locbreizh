@@ -20,13 +20,13 @@
                 <div class="fil">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <label for="prix_min">min</label>
+                            <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12"></label>
                         </div>
                         <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
                     </div>  
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <label for="prix_max">max</label>
+                            <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12"></label>
                         </div>
                         <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
                     </div>
@@ -82,7 +82,7 @@
                 // récupération des données de logement dans la base de donnée avec le tri
                 $stmt = $dbh->prepare(
                     "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
-                    from locbreizh._logement l JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse
+                    from locbreizh._logement l JOIN locbreizh._adresse ON l.id_adresse = _adresse.id_adresse
                     ORDER BY $tri;"
                 );
             } else if(sizeof($_GET)>0){
@@ -92,7 +92,7 @@
                             case 'prixMin' :    $filtre = "WHERE tarif_base_ht>=$choix";  break;
                             case 'prixMax' :    $filtre = "WHERE tarif_base_ht<=$choix"; break;
                             case 'lieu' :       $filtre = "NATURAL JOIN locbreizh._adresse WHERE _adresse.ville='$choix'"; break;
-                            case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire ON _logement.id_proprietaire=_proprietaire.id_proprietaire JOIN locbreizh._compte ON _compte.id_compte=_proprietaire.id_proprietaire WHERE LOWER(_compte.nom)=LOWER('$choix')"; break;
+                            case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire p ON l.id_proprietaire = p.id_proprietaire JOIN locbreizh._compte c ON p.id_proprietaire = c.id_compte WHERE LOWER(c.nom) = LOWER('$choix');"; break;
                             case 'voyageurs' :  $filtre = "WHERE nb_personnes_logement=$choix;"; break;
                         }
                     }
@@ -104,14 +104,23 @@
 
                 // récupération des données de logement dans la base de donnée avec le filtre
                 $stmt = $dbh->prepare(
-                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
-                    from locbreizh._logement l JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse $filtre;"
+                    "SELECT
+                    l.photo_principale,
+                    l.libelle_logement,
+                    l.tarif_base_ht,
+                    l.nb_personnes_logement,
+                    l.id_logement,
+                    l.en_ligne,
+                    a.ville,
+                    a.code_postal
+                    FROM locbreizh._logement l
+                    JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse $filtre;"
                 );
             } else {
                 // récupération des données de logement dans la base de donnée
                 $stmt = $dbh->prepare(
                     'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
-                    from locbreizh._logement l JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse;'
+                    from locbreizh._logement l JOIN locbreizh._adresse ON l.id_adresse = _adresse.id_adresse;'
                 );
             }
         } catch (PDOException $e) {
