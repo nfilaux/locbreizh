@@ -15,10 +15,11 @@
             ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
             unset($_SESSION["erreurs"][$nomErreur]);
         }
-    }
+}
+    
 
-    $plageIndispo = [];
-    $plageDispo = [];  
+$plageIndispo = [];
+$plageDispo = []; 
 ?>
 
 <script>
@@ -39,7 +40,12 @@
 <body class="pageproprio">
     <?php 
         include('../header-footer/choose_header.php');
-        $cas_popup = $_GET["cs"];
+        if(isset($_GET["cs"])){
+            $cas_popup = $_GET["cs"];
+        }
+        else{
+            $cas_popup = '';
+        }
     ?>
 
     <main class="MainTablo">
@@ -65,14 +71,14 @@
 
                 $stmt->execute();
                 $liste_mes_logements = $stmt->fetchAll();
+                $infos_log = [];
                 foreach ($liste_mes_logements as $key => $card) {
-                    $id_log = $card['id_logement'];
-                    $infos_log[$id_log] = $card;
+                    $infos_log[$card['id_logement']] = $card;
                 }
-
                 foreach ($liste_mes_logements as $key => $card) {
                     $id_log = $card['id_logement'];
 
+                    print_r($infos_log[$id_log]["en_ligne"]);
                     if ($infos_log[$id_log]["en_ligne"] == 1){
                         $bouton_desactiver = "METTRE HORS LIGNE";  
                     } else{
@@ -122,11 +128,11 @@
                                     
                                     <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
                                     <div id="validation" class="plages"> 
-                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log[$_GET["idlog"]]["libelle_logement"]; ?> ? 
+                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log["libelle_logement"]; ?> ? 
                                         <p class="erreur">Cette action est irreversible !</p> 
                                         <div id='boutons'>
                                             <button onclick="closePopup('validation','overlay_validation')" class="btn-ajoutlog">Annuler</button> 
-                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $_GET["idlog"]?>" ><button class="btn-suppr">Supprimer</button></a>
+                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $id_log?>" ><button class="btn-suppr">Supprimer</button></a>
                                         </div>
                                     </div>
                                     
@@ -253,17 +259,25 @@
                                         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                         $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-                                        $code = $infos_log[$id_log]['code_planning'];
+                                        $code = $dbh->prepare("SELECT code_planning FROM locbreizh._planning NATURAL JOIN locbreizh._logement WHERE id_logement = {$card['id_logement']};");
 
-                                        $stmt = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
+                                        $code->execute();
+
+                                        $code = $code->fetch()['code_planning'];
+
+                                        $lesPlages = $dbh->prepare("SELECT id_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE code_planning = {$code} ;");
+                                        
+                                        $lesPlages->execute();
+
+                                        $plageIndispo = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
                                         ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_indisponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
-                                        $stmt->execute();
-                                        $plageIndispo[$id_log] = $stmt->fetchAll();
+                                        $plageIndispo->execute();
+                                        $plageIndispo = $plageIndispo->fetchAll();
 
-                                        $stmt = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
+                                        $plageDispo = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
                                         ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
-                                        $stmt->execute();
-                                        $plageDispo[$id_log] = $stmt->fetchAll();
+                                        $plageDispo->execute();
+                                        $plageDispo = $plageDispo->fetchAll();
 
                                     } catch (PDOException $e) {
                                         print "Erreur !:" . $e->getMessage() . "<br/>";
@@ -281,8 +295,7 @@
                                     instancier(numCalendrier, 4);
                                     afficherCalendrier("normal", numCalendrier);
 
-
-                                    var tab = <?php echo json_encode($plageIndispo[$id_log]); ?>;
+                                    var tab = <?php echo json_encode($plageIndispo); ?>;
                                     var tabRes = [];
                                     var tabMotif = [];
                                     for (i=0 ; i < tab.length; i++){
@@ -300,7 +313,7 @@
                                     }
                                     afficherPlages(tabRes, "indisponible", tabMotif, "I", numCalendrier);
 
-                                    var tab = <?php echo json_encode($plageDispo[$id_log]); ?>;
+                                    var tab = <?php echo json_encode($plageDispo); ?>;
                                     var tabRes = [];
                                     var tabMotif = [];
                                     for (i=0 ; i < tab.length; i++){

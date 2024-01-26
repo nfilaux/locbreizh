@@ -45,14 +45,24 @@ CREATE TABLE
         CONSTRAINT compte_fk_adresse FOREIGN KEY (adresse) REFERENCES _adresse (id_adresse),
         CONSTRAINT compte_fk_photo FOREIGN KEY (photo) REFERENCES _photo (url_photo)
     );
-
+/* table clefs API */
+CREATE TABLE IF NOT EXISTS locbreizh._clefsapi(
+    idclef numeric NOT NULL DEFAULT nextval('locbreizh._clefsapi_idclef_seq1'::regclass),
+    droitgrandeconsultation boolean,
+    droitpetiteconsultation boolean,
+    droitconsultationcalendrier boolean,
+    droitrendreindisponible boolean,
+    estadmin boolean,
+    id_proprio integer,
+    CONSTRAINT _clefsapi_pk PRIMARY KEY (idclef)
+);
 /*   table proprietaire : est utilisée pour designer un propriétaire   */
 
 CREATE TABLE
     _proprietaire (
         id_proprietaire SERIAL,
         rib CHAR(34) NOT NULL,
-        carte_identite VARCHAR(50) NOT NULL,
+        carte_identite VARCHAR(50),
         CONSTRAINT proprietaire_pk PRIMARY KEY (id_proprietaire),
         CONSTRAINT proprietaire_fk_id FOREIGN KEY (id_proprietaire) REFERENCES _compte (id_compte)
     );

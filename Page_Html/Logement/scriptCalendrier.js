@@ -20,10 +20,10 @@ const tabMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet
 //tableaux qui gardent la liste des messages et de plages d'indisponibilitées
 var tabDispo = [];
 var tabPrix = [];
-var classeDispo = "";
+var classeDispo = [];
 var tabIndispo = [];
 var tabRaison = [];
-var classeIndispo = "";
+var classeIndispo = [];
 
 //tableau des calendriers du code HTML
 calendrier = [];
@@ -93,11 +93,12 @@ function instancier(id, nbCache){
             anneeActuelle2[id] = date2[id].getFullYear();
             moisActuel2[id] = date2[id].getMonth();
             afficherCalendrier(classeNormale[id], id);
+            console.log(classeDispo[id]);
             if (classeDispo[id]){
-                afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D");
+                afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
             }
             if (classeIndispo[id]){
-                afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I");
+                afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
             }
             if (premierID[id] !== ""){
                 selection(premierID[id], dernierID[id], id);
@@ -196,15 +197,15 @@ function changerJour(elem, id) {
         }
         //remet les plages
         if (tabDispo[id][0]){
-            afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D");
+            afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
         }
         if (tabIndispo[id][0]){
-            afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I");
+            afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
         }
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
-            if (nbActif == 0 && premierID[id] === "") {
+            if (nbActif == 0) {
                 premierID[id] = element.id;
                 dernierID[id] = element.id;
                 element.className = "actif";
@@ -310,7 +311,7 @@ function changerJour(elem, id) {
                 element.className = "normal";
             }
         }
-        nbActif = calendrier[id].getElementsByClassName("actif").length;
+        nbActif = document.getElementsByClassName("actif").length;
         if (nbActif == 0){
             premierID[id] = "";
             dernierID[id] = "";
@@ -361,7 +362,7 @@ function changerDates(id) {
         if (boutonsDates[id][0]) {
             newPId = newPId.split('/')[2] + "-" + newPId.split('/')[1] + "-" + newPId.split('/')[0];
             newDId = newDId.split('/')[2] + "-" + newDId.split('/')[1] + "-" + newDId.split('/')[0];
-            for (i=0; i < boutonsDates.length; i+=2){
+            for (i=0; i < boutonsDates[id].length; i+=2){
                 boutonsDates[id][i].value = newPId;
                 boutonsDates[id][i+1].value = newDId;
             }
@@ -371,7 +372,6 @@ function changerDates(id) {
             for (i=0; i<listeActif.length; i++){
                 console.log(tabDispo[id].indexOf(listeActif[i].id.split(',')[1]));
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
-
             }
             for (i=0; i<listeEntreDeux.length; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeEntreDeux[i].id.split(',')[1])]);
@@ -385,9 +385,9 @@ function changerDates(id) {
             datesPlage[id][0].innerHTML = "<p>Arrivée</p><p>" + " ../../.... " + "</p>";
             datesPlage[id][1].innerHTML = "<p>Départ</p><p>" + " ../../.... " + "</p>";
         }
-        if (boutonsDates[id][0]) {
-            for (i=0; i < boutonsDates[id].length; i++){
-                boutonsDates[id][i].value = "";
+        if (boutonsDates[0]) {
+            for (i=0; i < boutonsDates.length; i++){
+                boutonsDates[i].value = "";
             }
         }
         if (prixSejour[id]){
@@ -403,6 +403,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             tabDispo[id] = tabPlage;
             tabPrix[id] = tabMotif;
             classeDispo[id] = classe;
+            console.log(classeDispo[id]);
         }
         else{
             tabIndispo[id] = tabPlage;

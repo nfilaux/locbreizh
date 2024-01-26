@@ -103,7 +103,7 @@ if ($_FILES['image6P']['name']!= '') {
         include('../header-footer/choose_header.php');
     ?>
 
-    <main>
+    <main class="MainTableau">
         <?php
         unset($_SESSION['post_logement']);
 
@@ -332,192 +332,198 @@ if ($_FILES['image6P']['name']!= '') {
                         <div class="logrowb">
                             <div class="logrowt">
                                 <h3 class="policetitre"><?php echo $logement_data['nom']; ?></h3>
-                                <p>pour <?php echo $logement_data['nb_personne_max'];?>  personnes</p>
-                                <p>logement de <?php echo $logement_data['surface_maison'];?> m<sup>2</sup> </p>
                             </div>
+                        </div>
+
+
+                        <div class="logrowb">
+                            <div class="logcolumn">
+                                <div class="slider-container">
+                                    <div class="slider">
+                                        <div class="slide">
+                                                <img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?> ">
+                                            </div><?php
+                                        for ($i = 1; $i < 5; $i++) {
+                                            if (isset($_SESSION['post_logement']['image' .$i . 'P'] )){?>
+                                                <div class="slide">
+                                                    <img src="../Ressources/Images/<?php echo $_SESSION['post_logement']['image' . $i . 'P'] ;?>">
+                                                </div><?php
+                                            }
+                                        };?>
+                                    </div>
+
+                                    <div class="controls">
+                                        <button class="left"><img src="../svg/arrow-left.svg"></button>
+                                        <ul></ul>
+                                        <button class="right"><img src="../svg/arrow-right.svg"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="logcolumn logdem">
+                                <h3 class="policetitre">Description</h3>
+                                <p class="description-detail"><?php echo $logement_data['description']; ?></p>
+                                <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
+                            </div>
+                        </div>
+
+
+                        <div class="logrowb">
+                    <div class="logcolumn">
+                        <h3 class="policetitres">Calendrier</h3>
+                        <div class="corpsCalendrier">
+                            <div class="fondP">
+                                <div class="teteCalendrier">
+                                    <div class="fleches flechesP">
+                                        <svg id="precedent" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                            <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="date_actuelle date_actuelleP"></p>
+                                </div>
+                                <div class="calendrier">
+                                    <ul class="semaines semainesP">
+                                        <li>Lun</li>
+                                        <li>Mar</li>
+                                        <li>Mer</li>
+                                        <li>Jeu</li>
+                                        <li>Ven</li>
+                                        <li>Sam</li>
+                                        <li>Dim</li>
+                                    </ul>
+                                    <ul class="jours"></ul>
+                                </div>
+                            </div>
+                            <div class="fondP">
+                                <div class="teteCalendrier">
+                                    <p class="date_actuelle date_actuelleP"></p>
+                                    <div class="fleches flechesP">
+                                        <svg id="suivant" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                            <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="calendrier">
+                                    <ul class="semaines semainesP">
+                                        <li>Lun</li>
+                                        <li>Mar</li>
+                                        <li>Mer</li>
+                                        <li>Jeu</li>
+                                        <li>Ven</li>
+                                        <li>Sam</li>
+                                        <li>Dim</li>
+                                    </ul>
+                                    <ul class="jours"></ul>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                    <div class="logdem">
+                        <div class="logrowb" id="datesPlage">
+                            <p class="dateresa demresaP"></p>
+                            <p class="dateresa demresaP"></p>
+                        </div>
+                        <form>
+                            <button class="btn-demlognoP" type="submit" disabled>Demander un devis</button>
                             <div class="logrowt">
                                 <p class="nuit"><?php echo $logement_data['tarif_de_base'];?> €/nuit</p>
                             </div>
-                        </div>
-                        <div class="detailimgP">
-                    <?php
-                        switch($cpt){
-                            case 1 : ?><img class="photoprincipal" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?>"><?php
-                                     break;
-                            case 2 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?>">
-                                    <img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image2;?>"><?php
-                                    break; 
-                            case 3 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?>">
-                                    <img class="photosecondaireI" src="../Ressources/Images/<?php echo $nouveau_nom_image2;?>">
-                                    <img class="photosecondaireI" src="../Ressources/Images/<?php echo $nouveau_nom_image3;?>"><?php
-                                    break;
-                            case 4 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?>">
-                                    <img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image2;?>">
-                                    <img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image3;?>">
-                                    <img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image4;?>"><?php
-                                    break;
-                            case 5 :?><img class="photosecondaireP5" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?>"> <div class="imgsecondaire">
-                                    <img class="photosecondaireI5" src="../Ressources/Images/<?php echo $nouveau_nom_image2;?>">
-                                    <img class="photosecondaireI5" src="../Ressources/Images/<?php echo $nouveau_nom_image3;?>">
-                                    <img class="photosecondaireI5" src="../Ressources/Images/<?php echo $nouveau_nom_image4;?>">
-                                    <img class="photosecondaireI5" src="../Ressources/Images/<?php echo $nouveau_nom_image5;?>"></div><?php 
-                                    break;
-                            case 6 : ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?>">
-                                    <img class="photosecondaireP6" src="../Ressources/Images/<?php echo $nouveau_nom_image2;?>">
-                                    <img class="photosecondaireP6" src="../Ressources/Images/<?php echo $nouveau_nom_image3;?>">
-                                    <img class="photosecondaireP6" src="../Ressources/Images/<?php echo $nouveau_nom_image4;?>">
-                                    <img class="photosecondaireP6" src="../Ressources/Images/<?php echo $nouveau_nom_image5;?>">
-                                    <img class="photosecondaireP6" src="../Ressources/Images/<?php echo $nouveau_nom_image6;?>"><?php
-                                    break;
-                        }
-                        ?>
-                </div>
-                        <div class="logrowt">  
-                            <div class="logcolumn">
-                                <h3 class="policetitre">Description</h3>
-                                <textarea class="logPA" id='description' name='descriptionP' placeholder='<?php echo $logement_data['description']; ?>' disabled></textarea>
-                            </div>
-                            <div class="logdem">
-                            <div class="logrowb" id="datesPlage">
-                                <p class="dateresa demresaP"></p>
-                                <p class="dateresa demresaP"></p>
-                            </div>
-                            <form action="../Redirection/redirection_visiteur_demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                                <button class="btn-demlognoP" type="submit" disabled>Demander un devis</button>
-                            </form>
-                        </div>
-                        </div>
+                        </form>
                     </div>
+    
+                </div>
 
 
-                <div class="logrow">
-                    <div class="logcolumn">
-                        <h3 class="policetitres">Informations du logement</h3>
-                        <?php
+        <div class="logI">
+                <h3 class="policetitres">Informations du logement</h3>
+                <?php
                             $stmt = $dbh->prepare(
                                 'SELECT nb_chambre, nb_salle_bain, lave_vaisselle, wifi, piscine, sauna, hammam, climatisation, jacuzzi, television, lave_linge, parking_public, parking_privee, balcon, terrasse, jardin FROM locbreizh._logement'
                             );
                             $stmt->execute();
                             $info = $stmt->fetch();
                         ?>
+                    <?php
 
-                        <div class="logrow">
-                            <div class="logcp">
-                                <p><?php  echo $logement_data['nb_chambres'] ?> chambres</p>
-                                <p><?php  echo $logement_data['nb_sdb'] ?> Salles de bain</p>
-                                <h4 class="potitres">Equipements</h4><?php
+                    } else {
+                        echo 'Aucune donnée de logement à prévisualiser.';
+                    }?>
+                <div class="logrow">
+                    <div class="logcp">
+                        <h4 class="potitres">Equipements</h4>
+                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <?php
+                        if (isset($info['balcon']) && $info['balcon'] == true) {
+                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                        }
 
-                            } else {
-                                echo 'Aucune donnée de logement à prévisualiser.';
-                            }?>
-                                <p>Jardin : <?php echo $logement_data['surface_jardin']; ?> m<sup>2</sup></p><?php
-                                if ( $logement_data['balcon'] == true) {
-                                    ?><p><?php  echo 'Balcon'; ?></p><?php
-                                }
-                                if ($logement_data['terrasse'] == true) {
-                                    ?><p><?php  echo 'Terrasse'; ?></p><?php
-                                }
-                                if ($logement_data['parking_privee'] == true) {
-                                    ?><p><?php  echo 'Parking privée'; ?></p><?php
-                                }
+                        if (isset($info['terrasse']) && $info['terrasse'] == true) {
+                            ?><p><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                        }
+                        if (isset($info['parking_privee']) && $info['parking_privee'] == true) {
+                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                        }
 
-                                if ($logement_data['parking_public'] == true) {
-                                    ?><p><?php  echo 'Parking public'; ?></p><?php
-                                }
-                                if ($logement_data['television'] == true) {
-                                    ?><p><?php  echo 'Television'; ?></p><?php
-                                }
-                                if ($logement_data['wifi'] == true) {
-                                    ?><p><?php  echo 'Wifi'; ?></p><?php
-                                }
-                                if ($logement_data['lave_linge'] == true) {
-                                    ?><p><?php  echo 'Lave-linge'; ?></p><?php
-                                }
-                                if ($logement_data['lave_vaiselle'] == true) {
-                                    ?><p><?php  echo 'Cuisine équipée'; ?></p><?php
-                                }
-                                ?>
-                            </div>
-                            <div class="logcp">
-                                <p><?php  echo $logement_data['nb_lit_simple'] ?> lit(s) simple(s)</p>
-                                <p><?php  echo $logement_data['nb_lit_double'] ?> lit(s) double(s)</p>
-                                <h4 class="potitres">Installations</h4><?php
-                                if ($logement_data['climatisation'] == true) {
-                                    ?><p><?php  echo 'Climatisation'; ?></p><?php
-                                }
-                                if ($logement_data['piscine'] == true) {
-                                    ?><p><?php  echo 'Piscine'; ?></p><?php
-                                }
-                                if ($logement_data['sauna'] == true) {
-                                    ?><p><?php  echo 'Sauna'; ?></p><?php
-                                }
-
-                                if ($logement_data['hammam'] == true) {
-                                    ?><p><?php  echo 'Hammam'; ?></p><?php
-                                }
-
-                                if ($logement_data['jacuzzi'] == true) {
-                                    ?><p><?php  echo 'Jacuzzi'; ?></p><?php
-                                }
-
-                                
-
-                                ?>
-                            </div>
-                        </div>
+                        if (isset($info['parking_public']) && $info['parking_public'] == true) {
+                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                        }
+                        if (isset($info['television']) && $info['television'] == true) {
+                            ?><p><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                        }
+                        if (isset($info['wifi']) && $info['wifi'] == true) {
+                            ?><p><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                        }
+                        if (isset($info['lave_linge']) &&  $info['lave_linge'] == true) {
+                            ?><p><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                        }
+                        if (isset($info['lave_vaisselle']) &&  $info['lave_vaisselle'] == true) {
+                            ?><p><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                        }
+                        
+                        ?>
                     </div>
-                    <hr class="hrP">
-                    <div class="logcolumn">
-                <h3 class="policetitres">Calendrier</h3>
-                <div class="corpsCalendrier">
-                    <div class="fondP">
-                        <div class="teteCalendrier">
-                            <div class="fleches flechesP">
-                                <svg id="precedent" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
-                                    <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
-                                </svg>
-                            </div>
-                            <p class="date_actuelle date_actuelleP"></p>
-                        </div>
-                        <div class="calendrier">
-                            <ul class="semaines semainesP">
-                                <li>Lun</li>
-                                <li>Mar</li>
-                                <li>Mer</li>
-                                <li>Jeu</li>
-                                <li>Ven</li>
-                                <li>Sam</li>
-                                <li>Dim</li>
-                            </ul>
-                            <ul class="jours"></ul>
-                        </div>
-                    </div>
-                    <div class="fondP">
-                        <div class="teteCalendrier">
-                            <p class="date_actuelle date_actuelleP"></p>
-                            <div class="fleches flechesP">
-                                <svg id="suivant" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
-                                    <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="calendrier">
-                            <ul class="semaines semainesP">
-                                <li>Lun</li>
-                                <li>Mar</li>
-                                <li>Mer</li>
-                                <li>Jeu</li>
-                                <li>Ven</li>
-                                <li>Sam</li>
-                                <li>Dim</li>
-                            </ul>
-                            <ul class="jours"></ul>
-                        </div>
+                    <hr class="hr">
+                    <div class="logcp">
+                        <h4 class="potitres">Installations</h4>
+                        <?php
+
+                        if (isset($info['climatisation']) && $info['climatisation'] == true) {
+                            ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
+                        }
+                        if (isset($info['piscine']) && $info['piscine'] == true) {
+                            ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
+                        }
+
+                        if (isset($info['sauna']) &&  $info['sauna'] == true) {
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
+                        }
+
+                        if (isset($info['hammam']) &&  $info['hammam'] == true) {
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
+                        }
+
+                        if (isset($info['jacuzzi']) && $info['jacuzzi'] == true) {
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
+                        }
+                        ?>
                     </div>
                 </div>
-            </div>
+                <hr class="hr">
+                <div class="logrow">
+                    <div class="logcp">
+                        <p><img src="../svg/CHAMBRE.svg"> <?php  echo $logement_data['nb_lit_simple'] ?> lit(s) simple(s)</p>
+                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $logement_data['nb_lit_double'] ?> lit(s) double(s)</p>
+                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $logement_data['surface_maison'];?>m<sup>2<sup></p>
+                    </div>
+                    <div class="logcp">
+                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $logement_data['nb_chambres'] ?> chambre(s)</p>
+                        <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $logement_data['nb_sdb'] ?> salle(s) de bain</p>
+                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $logement_data['nb_personne_max'];?> personnes  </p>
+                    </div>
+                </div>
         </div>
-        <hr>
+        <hr class="hrP">
+        
         <div class="logcarte">
             <h3 class="policetitre">Localisation</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1364671.57561899!2d-4.397375693978974!3d48.08372166501683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4811ca61ae7e8eaf%3A0x10ca5cd36df24b0!2sBretagne!5e0!3m2!1sfr!2sfr!4v1702909132704!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -529,42 +535,7 @@ if ($_FILES['image6P']['name']!= '') {
             <p><?php echo 'Adresse : ' . $ville . ' ( ' . $code_postal . ' )' ?></p>   
             
         </div>
-        <hr>
-            <div>
-                <h3 class="policetitre">Conditions du logement</h3>
-
-                <div class="logrow">
-                    <div class="cardconditionP">
-                        <h4 class="potitre">Conditions d'annulation</h4>
-                        <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                        </p>
-                    </div>
-
-                    <div class="cardconditionP">
-                        <h4 class="potitre">Conditions de paiement</h4>
-                        <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                        </p>
-                    </div>
-                </div>
-                <div class="logrow">
-                <div class="cardconditionP">
-                    <h4 class="potitre">Informations d'arrivée</h4>
-                    <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.</p>
-                </div>
-
-                <div class="cardconditionP">
-                    <h4 class="potitre">Informations de départ</h4>
-                    <p>Culpa officia magna sit duis cillum laborum. Et labore fugiat ad ullamco excepteur nisi commodo nisi cupidatat nulla. Esse eu fugiat id veniam ipsum et dolor sint ullamco incididunt quis irure nulla. Mollit exercitation officia pariatur velit ullamco. Pariatur ipsum proident proident consectetur magna proident tempor ex commodo officia.
-                    </p>
-                </div>
-            </div>
-            <div class="logrowc">
-                <p>Veuillez consultez</p>
-                <p><a class="bleu" href=''>Le réglemement intérieur</a></p>
-            </div>    
-            </div>
         
-                </div>
         <div class="logrow" style="margin-top:2em;">
             <form method='POST' action='annuler_logement.php' enctype="multipart/form-data">
                 <button class="btn-desactive" type='submit'>Annuler</button>

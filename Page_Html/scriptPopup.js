@@ -19,4 +19,3 @@ function closePopup(id, overlay) {
     overlay.style.display = 'none';
 }
 
-

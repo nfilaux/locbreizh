@@ -19,6 +19,21 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     <title>Page détaillé d'un logement</title>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <style>
+        .carousel {
+            width: 90%;
+            height: 100%;
+            margin: auto; /* Centre le carrousel horizontalement */
+        }
+    </style>
+
+
 </head>
 
 
@@ -61,66 +76,38 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $photos_secondaires = $stmt->fetchAll();
             
             ?>
-            
-            
                 <h3 class="logtitre"><?php echo $info['accroche_logement'];?></h3>
                 <div class="logrowb">
                     <div class="">
                         <h3 class="policetitre"><?php echo $info['libelle_logement']; ?></h3>
-                        <p>Logement de <?php echo $info['surface_logement'];?> m<sup>2</sup> pour <?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
-               
-                <div class="logrowt">
-                    <div class="logcolumn">  
-                        <div class="detailimg">
-                        <?php
-                            $cpt = 1;
-                            for ($i = 0 ; $i <5; $i++){
-                                if (isset($photos_secondaires[$i]['photo'])){
-                                    $cpt ++;
-                                }
-                            }
-                            switch($cpt){
-                                case 1 : ?><img class="photoprincipal" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                        break;
-                                case 2 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                        for ($i = 0 ; $i < 5; $i++) {
-                                            if (isset($photos_secondaires[$i]['photo'])){
-                                                ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                            }
-                                        } break; 
-                                case 3 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                        for ($i = 0 ; $i < 5; $i++) {
-                                                if (isset($photos_secondaires[$i]['photo'])){
-                                                    ?><img class="photosecondaireI" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                                }
-                                            } break;
-                                case 4 : ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                        for ($i = 0 ; $i < 5; $i++) {
-                                            if (isset($photos_secondaires[$i]['photo'])){
-                                                ?><img class="photosecondaireP" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                            }
-                                        } break;
-                                case 5 :?><img class="photosecondaireP5" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "> <div class="imgsecondaire"><?php 
-                                    for ($i = 0 ; $i < 5; $i++) {
-                                        if (isset($photos_secondaires[$i]['photo'])){
-                                            ?><img class="photosecondaireI5" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                        }
-                                    } ?> </div> <?php break;
-                                case 6 : ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $info['photo_principale'];?> "><?php
-                                        for ($i = 0 ; $i < 5; $i++) {
-                                            if (isset($photos_secondaires[$i]['photo'])){
-                                                ?><img class="photosecondaireP6" src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>"><?php
-                                            }
-                                        } break;
-                            }
-                            
-                            ?>
-                    </div>
-                </div>            
-                    
+
+
+                <div class="logrowb">
                     <div class="logcolumn">
+                        <div class="slider-container">
+                            <div class="slider">
+                                <div class="slide">
+                                        <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale'];?> ">
+                                    </div><?php
+                                for ($i = 0 ; $i < 5; $i++) {
+                                    if (isset($photos_secondaires[$i]['photo'])){?>
+                                        <div class="slide">
+                                            <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo'];?>">
+                                        </div><?php
+                                    }
+                                };?>
+                            </div>
+
+                            <div class="controls">
+                                <button class="left"><img src="../svg/arrow-left.svg"></button>
+                                <ul></ul>
+                                <button class="right"><img src="../svg/arrow-right.svg"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logcolumn logdem">
                         <h3 class="policetitre">Description</h3>
                         <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
@@ -226,7 +213,8 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                         television,
                         wifi,
                         lave_linge,
-                        lave_vaisselle
+                        lave_vaisselle,
+                        nb_personnes_logement
                         FROM locbreizh._logement
                         where id_logement = {$_GET['logement']}"
                     );
@@ -298,10 +286,12 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
+                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
+                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
         </div>
@@ -318,7 +308,8 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
                 $code->execute();
 
-                $code = $code->fetch()['code_planning'];
+                $code = $code->fetch();
+                $code = $code['code_planning'];
 
                 $plageDispo = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
                 ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
@@ -458,5 +449,6 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
         include('../header-footer/choose_footer.php'); 
     ?>
 </body>
-
 </html>
+
+<script src="caroussel.js" defer></script>

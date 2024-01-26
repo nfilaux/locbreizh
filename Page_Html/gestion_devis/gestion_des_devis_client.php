@@ -55,6 +55,9 @@
             <h1>Les demandes de devis envoyées</h1>
             <div>
             <?php 
+            if($list_demande == []){ ?>
+                <p>Aucune demande en cours !</p>
+            <?php } 
                 foreach($list_demande as $demande){?>
             <div class="card_devis">
             <button onclick="openPopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')">X</button>
@@ -98,6 +101,9 @@
             <h1>Devis proposés par les propriétaires</h1>
             <div>
                 <?php 
+                if($list_devis == []){ ?>
+                    <p>Aucun devis en cours !</p>
+                <?php } 
                     foreach($list_devis as $devis){ ?>
                 <div class="card_devis">
                 <button onclick="openPopup('<?php echo $devis['num_devis']; ?>', '<?php echo 'ov' . $devis['num_devis']; ?>')">X</button>
