@@ -67,8 +67,8 @@ $photo = $stmt->fetch();
                     if (sizeof($_GET)==1){
                         foreach ($_GET as $NomFiltre => $choix) {
                             switch($NomFiltre){
-                                case 'prixMin' :    $filtre = "WHERE d.prix_total_devis>=$choix;";  break;
-                                case 'prixMax' :    $filtre = "WHERE d.prix_total_devis<=$choix;"; break;
+                                case 'prixMin' :    $filtre = "WHERE d.prix_total_devis>=$choix";  break;
+                                case 'prixMax' :    $filtre = "WHERE d.prix_total_devis<=$choix"; break;
                                 case 'date' :       $filtre = "WHERE d.date_depart>='$choix' AND d.date_arrivee<='$choix'"; break;
                             }
                         }
@@ -86,7 +86,7 @@ $photo = $stmt->fetch();
                         join locbreizh._adresse a on l.id_adresse = a.id_adresse
                         join locbreizh._facture f on f.num_facture = r.facture
                         join locbreizh._devis d on d.num_devis = f.num_devis $filtre
-                        where r.client = {$_SESSION['id']}");     
+                        where r.client = {$_SESSION['id']};");     
 
                 } catch (PDOException $e) {
                     print "Erreur !:" . $e->getMessage() . "<br/>";

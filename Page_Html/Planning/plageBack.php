@@ -2,9 +2,11 @@
     session_start();
     include('../parametre_connexion.php');
     $err = false;
-    if ($_POST['prix']<=0 && !isset($_POST['indisponible'])){
-        $_SESSION['erreurs'] = ["prix" => "Le prix doit être supérieur à 0\n"];
-        $err = true;
+    if (isset($_POST['prix'])){
+        if ($_POST['prix']<=0 && !isset($_POST['indisponible'])){
+            $_SESSION['erreurs'] = ["prix" => "Le prix doit être supérieur à 0\n"];
+            $err = true;
+        }
     }
     else if (isset($_POST['libelleIndispo']) && $_POST['libelleIndispo'] === ""){
         $_SESSION['erreurs'] = ["libelleIndispo" => "Veuillez renseigner la raison de l'indisponibilitée\n"];
