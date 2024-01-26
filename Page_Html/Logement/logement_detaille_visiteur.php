@@ -305,7 +305,8 @@ $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
 
                 $code->execute();
 
-                $code = $code->fetch()['code_planning'];
+                $code = $code->fetch();
+                $code = $code['code_planning'];
 
                 $plageDispo = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
                 ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
