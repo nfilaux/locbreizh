@@ -91,7 +91,7 @@
                         switch($NomFiltre){
                             case 'prixMin' :    $filtre = "WHERE tarif_base_ht>=$choix";  break;
                             case 'prixMax' :    $filtre = "WHERE tarif_base_ht<=$choix"; break;
-                            case 'lieu' :       $filtre = "WHERE _adresse.ville='$choix'"; break;
+                            case 'lieu' :       $filtre = "WHERE a.ville='$choix'"; break;
                             case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire p ON l.id_proprietaire = p.id_proprietaire JOIN locbreizh._compte c ON p.id_proprietaire = c.id_compte WHERE LOWER(c.nom) = LOWER('$choix');"; break;
                             case 'voyageurs' :  $filtre = "WHERE nb_personnes_logement=$choix;"; break;
                         }
@@ -120,7 +120,7 @@
                 // récupération des données de logement dans la base de donnée
                 $stmt = $dbh->prepare(
                     'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
-                    from locbreizh._logement l JOIN locbreizh._adresse ON l.id_adresse = _adresse.id_adresse;'
+                    from locbreizh._logement l JOIN locbreizh._adresse  a ON l.id_adresse = _adresse.id_adresse;'
                 );
             }
         } catch (PDOException $e) {
