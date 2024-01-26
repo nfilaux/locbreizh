@@ -101,9 +101,75 @@ $photo = $stmt->fetch();
                     </div>
                 </div>
 
-        
-            <div class="logrow">
-            <div class="logcolumn">
+                <div class="logrowb">
+                    <div class="logcolumn">
+                        <h3 class="policetitres">Calendrier</h3>
+                        <div class="corpsCalendrier">
+                            <div class="fondP">
+                                <div class="teteCalendrier">
+                                    <div class="fleches flechesP">
+                                        <svg id="precedent" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                            <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="date_actuelle date_actuelleP"></p>
+                                </div>
+                                <div class="calendrier">
+                                    <ul class="semaines semainesP">
+                                        <li>Lun</li>
+                                        <li>Mar</li>
+                                        <li>Mer</li>
+                                        <li>Jeu</li>
+                                        <li>Ven</li>
+                                        <li>Sam</li>
+                                        <li>Dim</li>
+                                    </ul>
+                                    <ul class="jours"></ul>
+                                </div>
+                            </div>
+                            <div class="fondP">
+                                <div class="teteCalendrier">
+                                    <p class="date_actuelle date_actuelleP"></p>
+                                    <div class="fleches flechesP">
+                                        <svg id="suivant" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
+                                            <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="calendrier">
+                                    <ul class="semaines semainesP">
+                                        <li>Lun</li>
+                                        <li>Mar</li>
+                                        <li>Mer</li>
+                                        <li>Jeu</li>
+                                        <li>Ven</li>
+                                        <li>Sam</li>
+                                        <li>Dim</li>
+                                    </ul>
+                                    <ul class="jours"></ul>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                    <div class="logdem">
+                        <div class="logrowb" id="datesPlage">
+                            <p class="dateresa demresaP"></p>
+                            <p class="dateresa demresaP"></p>
+                        </div>
+                        <form method="post">
+                            <button class="btn-demlognoP" type="submit" disabled>Demander un devis</button>
+                            <div class="logrowt">
+                                <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
+                            </div>
+                        </form>
+                    </div>
+    
+                </div>
+
+
+                   
+                <div class="logI">
                 <h3 class="policetitres">Informations du logement</h3>
                 <?php
                     $stmt = $dbh->prepare(
@@ -126,130 +192,89 @@ $photo = $stmt->fetch();
                         television,
                         wifi,
                         lave_linge,
-                        lave_vaisselle
+                        lave_vaisselle,
+                        nb_personnes_logement
                         FROM locbreizh._logement
                         where id_logement = {$_GET['logement']}"
                     );
                     $stmt->execute();
                     $info = $stmt->fetch();
                 ?>
-
                 <div class="logrow">
                     <div class="logcp">
-                        <p><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
-                        <p><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
                         <h4 class="potitres">Equipements</h4>
-                        <p>jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
                         if ($info['balcon'] == true) {
-                            ?><p><?php  echo 'Balcon'; ?></p><?php
+                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
                         }
                         if ($info['parking_privee'] == true) {
-                            ?><p><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
                         }
 
                         if ($info['parking_public'] == true) {
-                            ?><p><?php  echo 'Parking public'; ?></p><?php
+                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
                         }
                         if ($info['television'] == true) {
-                            ?><p><?php  echo 'Television'; ?></p><?php
+                            ?><p><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
                         }
                         if ($info['wifi'] == true) {
-                            ?><p><?php  echo 'Wifi'; ?></p><?php
+                            ?><p><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
                         }
                         if ($info['lave_linge'] == true) {
-                            ?><p><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
                         }
                         if ($info['lave_vaisselle'] == true) {
-                            ?><p><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
                         }
                         
                         ?>
                     </div>
+                    <hr class="hr">
                     <div class="logcp">
-                        <p><?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
-                        <p><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
                         <h4 class="potitres">Installations</h4>
                         <?php
 
                         if ($info['climatisation'] == true) {
-                            ?><p><?php  echo 'Climatisation'; ?></p><?php
+                            ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
                         }
                         if ($info['piscine'] == true) {
-                            ?><p><?php  echo 'Piscine'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
                         }
 
                         if ($info['sauna'] == true) {
-                            ?><p><?php  echo 'Sauna'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
                         }
 
                         if ($info['hammam'] == true) {
-                            ?><p><?php  echo 'Hammam'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
                         }
 
                         if ($info['jacuzzi'] == true) {
-                            ?><p><?php  echo 'Jacuzzi'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
                         }
                         ?>
                     </div>
                 </div>
-                
-            </div>
-            <hr class="hr">
-            <div class="logcolumn">
-                <h3 class="policetitres">Calendrier</h3>
-                <div class="corpsCalendrier">
-                    <div class="fondP">
-                        <div class="teteCalendrier">
-                            <div class="fleches flechesP">
-                                <svg id="precedent" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
-                                    <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
-                                </svg>
-                            </div>
-                            <p class="date_actuelle date_actuelleP"></p>
-                        </div>
-                        <div class="calendrier">
-                            <ul class="semaines semainesP">
-                                <li>Lun</li>
-                                <li>Mar</li>
-                                <li>Mer</li>
-                                <li>Jeu</li>
-                                <li>Ven</li>
-                                <li>Sam</li>
-                                <li>Dim</li>
-                            </ul>
-                            <ul class="jours"></ul>
-                        </div>
+                <hr class="hr">
+                <div class="logrow">
+                    <div class="logcp">
+                        <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
+                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
+                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
-                    <div class="fondP">
-                        <div class="teteCalendrier">
-                            <p class="date_actuelle date_actuelleP"></p>
-                            <div class="fleches flechesP">
-                                <svg id="suivant" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14">
-                                    <path fill="#274065" d="m2.828 7 4.95 4.95-1.414 1.415L0 7 6.364.637 7.778 2.05 2.828 7Z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="calendrier">
-                            <ul class="semaines semainesP">
-                                <li>Lun</li>
-                                <li>Mar</li>
-                                <li>Mer</li>
-                                <li>Jeu</li>
-                                <li>Ven</li>
-                                <li>Sam</li>
-                                <li>Dim</li>
-                            </ul>
-                            <ul class="jours"></ul>
-                        </div>
+                    <div class="logcp">
+                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
+                        <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
+                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
-            </div>
         </div>
+                
 
 
         <script src="./scriptCalendrier.js"></script>
@@ -335,7 +360,7 @@ $photo = $stmt->fetch();
             ?>
         </div>
 
-        <hr>
+        <hr class="hr">
         <div class="logcarte">
             <h3 class="policetitre">Localisation</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1364671.57561899!2d-4.397375693978974!3d48.08372166501683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4811ca61ae7e8eaf%3A0x10ca5cd36df24b0!2sBretagne!5e0!3m2!1sfr!2sfr!4v1702909132704!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
