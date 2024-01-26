@@ -286,7 +286,7 @@ $services = $r_services->fetchAll();
                         $stmt->execute();
                         $photo = $stmt->fetch();
 
-                        if($photo['photo'] != ''){
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
                             $src = $photo['photo'];
                         }
                         else{
@@ -307,7 +307,7 @@ $services = $r_services->fetchAll();
                         $stmt->execute();
                         $photo = $stmt->fetch();
 
-                        if($photo['photo'] != ''){
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
                             $src = $photo['photo'];
                         }
                         else{
@@ -328,7 +328,7 @@ $services = $r_services->fetchAll();
                         $stmt->execute();
                         $photo = $stmt->fetch();
 
-                        if($photo['photo'] != ''){
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
                             $src = $photo['photo'];
                         }
                         else{
@@ -349,7 +349,7 @@ $services = $r_services->fetchAll();
                         $stmt->execute();
                         $photo = $stmt->fetch();
 
-                        if($photo['photo'] != ''){
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
                             $src = $photo['photo'];
                         }
                         else{
@@ -369,7 +369,7 @@ $services = $r_services->fetchAll();
                         $stmt->execute();
                         $photo = $stmt->fetch();
 
-                        if(isset$photo['photo'] != ''){
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
                             $src = $photo['photo'];
                         }
                         else{
