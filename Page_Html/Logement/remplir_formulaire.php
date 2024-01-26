@@ -116,19 +116,19 @@
                         <div class="logrowb"> 
                             <div class="log4vct">
                                 <label for='nb_chamnbres'>Nombre de chambres : </label>
-                                <input  class="logvct" id='nb_chambres' type='number' name='nb_chambresP' min='0' max='15' step='1' placeholder='0' required>
+                                <input  class="logvct" id='nb_chambres' type='number' name='nb_chambresP' min='0' max='150' step='1' placeholder='0' required>
                             </div>
                             <div class="log4vct">
                                 <label for='nb_lit_simple'>Nombre de lits simples : </label>
-                                <input class="logvct" id='nb_lit_simple' type='number' name='nb_lit_simpleP' min='0' max='15' step='1' placeholder='0' required>
+                                <input class="logvct" id='nb_lit_simple' type='number' name='nb_lit_simpleP' min='0' max='150' step='1' placeholder='0' required>
                             </div>
                             <div class="log4vct">
                                 <label for='nb_lit_double'>Nombre de lits doubles : </label>
-                                <input  class="logvct" id='nb_lit_double' type='number' name='nb_lit_doubleP' min='0' max='15' step='1' placeholder='0' required>
+                                <input  class="logvct" id='nb_lit_double' type='number' name='nb_lit_doubleP' min='0' max='150' step='1' placeholder='0' required>
                             </div>
                             <div class="log4vct">
                                 <label for='nb_sdb'>Nombre de salles de bain : </label>
-                                <input  class="logvct" id='nb_sdb' type='number' name='nb_sdbP' min='0' max='15' step='1' placeholder='0' required>
+                                <input  class="logvct" id='nb_sdb' type='number' name='nb_sdbP' min='0' max='150' step='1' placeholder='0' required>
                             </div>
                         </div>
 
@@ -139,7 +139,7 @@
                             </div>
                             <div class="log3vct">
                                 <label for='nb_personne_max'>Nombre de personnes maximum : </label>
-                                <input class="logvct" id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='15' step='1' placeholder='0' required>
+                                <input class="logvct" id='nb_personne_max' type='number' name='nb_personne_maxP' min='1' max='100' step='1' placeholder='0' required>
                             </div>
                             <div class="log3vct">
                                 <label for='surface_jardin'>Surface du jardin (en m2): </label>

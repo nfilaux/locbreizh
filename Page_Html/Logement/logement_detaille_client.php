@@ -1,17 +1,17 @@
 <?php 
-session_start();
-include('../parametre_connexion.php');
-try {
-$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    print "Erreur !:" . $e->getMessage() . "<br/>";
-    die();
-}
-$stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
-$stmt->execute();
-$photo = $stmt->fetch();
+    session_start();
+    include('../parametre_connexion.php');
+    try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !:" . $e->getMessage() . "<br/>";
+        die();
+    }
+    $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
+    $stmt->execute();
+    $photo = $stmt->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,17 +42,6 @@ $photo = $stmt->fetch();
                     from locbreizh._logement 
                     WHERE id_logement = {$_GET['logement']};"
                 );
-
-                /*$stmt = $dbh->prepare(
-                    "SELECT libelle_logement, nb_personnes_logement, surface_logement, tarif_base_ht, note_avis, photo_principale, photo, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
-                    from locbreizh._logement 
-                        INNER JOIN locbreizh._avis ON logement = id_logement
-                        INNER JOIN locbreizh._photos_secondaires p ON p.logement = id_logement
-                        INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
-                        INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning
-                        WHERE id_logement = {$_GET['logement']};"
-                );*/
-
 
             $stmt->execute();
             $info = $stmt->fetch();
@@ -161,7 +150,7 @@ $photo = $stmt->fetch();
                                 <p class="dateresa"></p>
                                 <p class="dateresa"></p>
                             </div>
-                            <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?> method="post">
+                            <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
                                 <button class="btn-demlog" type="submit" >Demander un devis</button>
                                 <div class="logrowt">
                                     <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
@@ -207,7 +196,7 @@ $photo = $stmt->fetch();
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg"> jardin <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
                         if ($info['balcon'] == true) {
                             ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
