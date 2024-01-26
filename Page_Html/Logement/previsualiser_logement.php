@@ -547,3 +547,4 @@ if ($_FILES['image6P']['name']!= '') {
 </body>
 
 </html>
+<script src="caroussel.js" defer></script>
