@@ -118,9 +118,8 @@
                 );
             } else {
                 // récupération des données de logement dans la base de donnée
-                $stmt = $dbh->prepare(
-                    'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
-                    from locbreizh._logement l 
+                $stmt = $dbh->prepare('SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
+                     from locbreizh._logement l 
                     JOIN locbreizh._adresse a ON l.id_adresse = _adresse.id_adresse ;'
                 );
             }
