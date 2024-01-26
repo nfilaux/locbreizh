@@ -1,4 +1,4 @@
-<?php 
+<?php
     // lancement de la session
     session_start();
     require_once('../tcpdf/tcpdf.php');
