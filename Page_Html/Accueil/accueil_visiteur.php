@@ -121,7 +121,7 @@
                 print_r('ici1');
                 $stmt = $dbh->prepare('SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal 
                     FROM locbreizh._logement l
-                    JOIN locbreizh._adresse a ON l.id_adresse = _adresse.id_adresse ;'
+                    JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse ;'
                 );
             }
         } catch (PDOException $e) {
