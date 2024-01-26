@@ -121,7 +121,7 @@ $photo = $stmt->fetch();
                             
 
                             <div class="rescrow">
-                                <a href="../devis/pdf_devis/<?php echo $reservation['lien_devis']; ?>" target="_blank"><button class="btn-ajoutlog">CONSULTER DEVIS</button></a>
+                            <a href="../devis/pdf_devis/<?php echo $reservation['url_detail'];?>" target="_blank"><button class="btn-ajoutlog">CONSULTER LA FACTURE</button></a>
                                 <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
                                 <a><button class="btn-suppr" disabled>ANNULER</button></a>
                             </div>
