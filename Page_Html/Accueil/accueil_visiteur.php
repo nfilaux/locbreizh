@@ -101,7 +101,6 @@
                     $prix2 = $_GET['prixMax'];
                     $filtre = "WHERE tarif_base_ht>=$prix1 AND tarif_base_ht<=$prix2";
                 }
-                print_r('ici2');
  
                 // récupération des données de logement dans la base de donnée avec le filtre
                 $stmt = $dbh->prepare(
@@ -120,8 +119,8 @@
             } else {
                 // récupération des données de logement dans la base de donné
                 print_r('ici1');
-                $stmt = $dbh->prepare('SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
-                     from locbreizh._logement l 
+                $stmt = $dbh->prepare('SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal 
+                    FROM locbreizh._logement l
                     JOIN locbreizh._adresse a ON l.id_adresse = _adresse.id_adresse ;'
                 );
             }
