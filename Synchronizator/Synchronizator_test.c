@@ -518,7 +518,7 @@ int main(int argc, char **argv){
 
                         printf("la plage disponable : %s\n",PQgetvalue(res,i,1));
                         strcpy(chaine, "");
-                        snprintf(chaine,sizeof(chaine),"%s : disponible\n",PQgetvalue(res,i,1));
+                        snprintf(chaine,sizeof(chaine),"\033[38;2;0;0;139m%s :\033[0m \033[32mdisponible\033[0m\n",PQgetvalue(res,i,1));
                         write(cnx,chaine,sizeof(chaine));
                         fflush(stdout);
                    }
@@ -538,7 +538,7 @@ int main(int argc, char **argv){
                    printf("la plage indispinable : %s\n",PQgetvalue(res,i,1));
 
                    strcpy(chaine, "");
-                   snprintf(chaine,sizeof(chaine),"%s : indisponible\n",PQgetvalue(res,i,1));
+                   snprintf(chaine,sizeof(chaine),"\033[38;2;0;0;139m%s :\033[0m \033[31mindisponible\033[0m\n",PQgetvalue(res,i,1));
                    write(cnx,chaine,sizeof(chaine));
                    fflush(stdout);
                    }
@@ -690,7 +690,7 @@ int main(int argc, char **argv){
                 if (verbose == 1){
                     printf("%02d:%02d:%d %02d:%02d:%02d fin de la mise en indisponibilité du logement %s du %s au %s : \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
                 }
-                snprintf(chaine, sizeof(chaine), "la mise en indisponibilité de votre logement %s du %s au %s est bien effective",elements[1],elements[2],elements[3]);
+                snprintf(chaine, sizeof(chaine), "\033[32mla mise en indisponibilité de votre logement %s du %s au %s est bien effective\033[0m",elements[1],elements[2],elements[3]);
                 write(cnx,chaine,sizeof(chaine));
 
                 write(cnx,"fin",sizeof("fin"));
