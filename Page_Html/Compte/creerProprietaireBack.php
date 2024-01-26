@@ -186,7 +186,7 @@
             $requeteIDCompte->execute();
             $idCompte = $requeteIDCompte->fetchColumn();
 
-            $requeteProprio = $dbh->prepare("INSERT INTO locbreizh._proprietaire VALUES ('{$idCompte}' ,'{$nom_rib}', '{$nom_identite}');");
+            $requeteProprio = $dbh->prepare("INSERT INTO locbreizh._proprietaire(id_proprietaire, rib) VALUES ('{$idCompte}' ,'{$nom_rib}');");
             $requeteProprio->execute();
 
             $requeteLangueExiste = $dbh->prepare("SELECT COUNT(*) FROM locbreizh._langue WHERE nom_langue = '{$langue}';");

@@ -62,7 +62,7 @@ CREATE TABLE
     _proprietaire (
         id_proprietaire SERIAL,
         rib CHAR(34) NOT NULL,
-        carte_identite VARCHAR(50) NOT NULL,
+        carte_identite VARCHAR(50),
         CONSTRAINT proprietaire_pk PRIMARY KEY (id_proprietaire),
         CONSTRAINT proprietaire_fk_id FOREIGN KEY (id_proprietaire) REFERENCES _compte (id_compte)
     );
