@@ -74,15 +74,15 @@ $photo = $stmt->fetch();
                     if (sizeof($_GET)==1){
                         foreach ($_GET as $NomFiltre => $choix) {
                             switch($NomFiltre){
-                                case 'prixMin' :    $filtre = "WHERE d.prix_total_devis>=$choix;";  break;
-                                case 'prixMax' :    $filtre = "WHERE d.prix_total_devis<=$choix;"; break;
+                                case 'prixMin' :    $filtre = "WHERE d.prix_total_devis>=$choix";  break;
+                                case 'prixMax' :    $filtre = "WHERE d.prix_total_devis<=$choix"; break;
                                 case 'date' :       $filtre = "WHERE d.date_depart>='$choix' AND d.date_arrivee<='$choix'"; break;
                             }
                         }
                     } else if (sizeof($_GET)>1){
                         $prix1 = $_GET['prixMin'];
                         $prix2 = $_GET['prixMax'];
-                        $filtre = "WHERE d.prix_total_devis>=$prix1 AND d.prix_total_devis<=$prix2";
+                        $filtre = "WHERE d.prix_total_devis>=$prix1 AND d.prix_total_devis<=$prix2;";
                     }
                     
                     $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale,libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
@@ -93,7 +93,7 @@ $photo = $stmt->fetch();
                         join locbreizh._adresse a on l.id_adresse = a.id_adresse
                         join locbreizh._facture f on f.num_facture = r.facture
                         join locbreizh._devis d on d.num_devis = f.num_devis $filtre
-                        where p.id_proprietaire = {$_SESSION['id']}");
+                        where p.id_proprietaire = {$_SESSION['id']};");
 
                     
                 } catch (PDOException $e) {
