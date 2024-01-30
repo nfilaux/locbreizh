@@ -93,7 +93,7 @@ $photo = $stmt->fetch();
 
 
         <?php
-        $filtre='';
+        $filtre = '';
         try {
             include('../parametre_connexion.php');
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -116,9 +116,9 @@ $photo = $stmt->fetch();
                 if (sizeof($_GET)==1){
                     foreach ($_GET as $NomFiltre => $choix) {
                         switch($NomFiltre){
-                            case 'prixMin' :    $filtre = "WHERE tarif_base_ht>=$choix";  break;
-                            case 'prixMax' :    $filtre = "WHERE tarif_base_ht<=$choix"; break;
-                            case 'lieu' :       $filtre = "WHERE a.ville='$choix'"; break;
+                            case 'prixMin' :    $filtre = "WHERE tarif_base_ht>=$choix;";  break;
+                            case 'prixMax' :    $filtre = "WHERE tarif_base_ht<=$choix;"; break;
+                            case 'lieu' :       $filtre = "WHERE a.ville='$choix';"; break;
                             case 'proprio' :    $filtre = "JOIN locbreizh._proprietaire p ON l.id_proprietaire = p.id_proprietaire JOIN locbreizh._compte c ON p.id_proprietaire = c.id_compte WHERE LOWER(c.nom) = LOWER('$choix');"; break;
                             case 'voyageurs' :  $filtre = "WHERE nb_personnes_logement=$choix;"; break;
                         }
@@ -128,7 +128,7 @@ $photo = $stmt->fetch();
                     $prix2 = $_GET['prixMax'];
                     $filtre = "WHERE tarif_base_ht>=$prix1 AND tarif_base_ht<=$prix2";
                 }
-
+ 
                 // récupération des données de logement dans la base de donnée avec le filtre
                 $stmt = $dbh->prepare(
                     "SELECT
@@ -141,13 +141,13 @@ $photo = $stmt->fetch();
                     a.ville,
                     a.code_postal
                     FROM locbreizh._logement l
-                    JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse $filtre;"
+                    JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse $filtre"
                 );
             } else {
-                // récupération des données de logement dans la base de donnée
-                $stmt = $dbh->prepare(
-                    'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
-                    from locbreizh._logement l JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse;'
+                // récupération des données de logement dans la base de donné
+                $stmt = $dbh->prepare('SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal 
+                    FROM locbreizh._logement l
+                    JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse ;'
                 );
             }
             $stmt->execute();

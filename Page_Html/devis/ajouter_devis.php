@@ -7,7 +7,6 @@
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $_SESSION['valeurs_complete']['nb_pers'] = $_POST['nb_pers'];
-    $_SESSION['valeurs_complete']['delais_accept'] = $_POST['delais_accept'];
     $_SESSION['valeurs_complete']['date_val'] = $_POST['date_val'];
     $_SESSION['valeurs_complete']['tarif_loc'] = $_POST['tarif_loc'];
     $_SESSION['valeurs_complete']['annulation'] = $_POST['annulation'];
