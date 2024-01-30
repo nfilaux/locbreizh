@@ -10,6 +10,7 @@
 
 <body>
     <?php 
+    $filtre='';
         include('../header-footer/choose_header.php');
     ?>
     <main class="mainacc">
