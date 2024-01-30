@@ -31,6 +31,7 @@
 <body class="pageproprio">
     <?php 
         include('../header-footer/choose_header.php');
+        // ici on récupère le cas du bouton supprimer à traiter
         $cas_popup = $_GET["cs"];
     ?>
 
@@ -69,10 +70,12 @@
                     $stmt->execute();
                     $infos_log = $stmt->fetch();
 
+                    //si le logement est actif la valeur du bouton est à désactivé sinon elle est à activé
+                    
                     if ($infos_log["en_ligne"] == 1){
-                        $bouton_desactiver = "METTRE_HORS_LIGNE1";  
+                        $bouton_desactiver = "METTRE HORS LIGNE";  
                     } else{
-                        $bouton_desactiver = "METTRE_EN_LIGNE";
+                        $bouton_desactiver = "METTRE EN LIGNE";
                     }
                     
                     ?>
@@ -97,23 +100,26 @@
                                 
                                 <div class="logrowb">
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $id_log ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
-                                    <?php $id_un_logement = $id_log; ?>
+                                    <!-- ici le formulaire en charge de hors/en ligne -->
                                     <form action="ChangeEtat.php" method="post">
-                                        <input type="hidden" name=<?php echo $id_un_logement ?> value=<?php echo $bouton_desactiver ?>>
+                                        <!-- la valeur du bouton DESACTIVER ou ACTIVER et transmise via un champ fantôme le nom du boutonn reçoit l'id du logment à modifier -->
+                                        <input type="hidden" name="<?php echo $id_log ?>" value="<?php echo $bouton_desactiver ?>">
                                         <button class="btn-desactive" name="bouton_changer_etat" type='submit'> <?php echo $bouton_desactiver; ?> </button>
                                     </form>
+                                    <!-- ici le formulaire fantôme nous permet de pouvoir récupérer le cas à traiter en JavaScript -->
                                     <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $id_log ?>"><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 
                                 <div class="logrowb">
 
+                                    <!-- popup pour le cas 1 : lorsqu'un propriétaire veut supprimer un logement lié à une réservation -->
+                                
                                     <div class="overlay_plages" id="overlay_erreur" onclick="closePopup('erreur_suppr','overlay_erreur')"></div>
                                     <div id="erreur_suppr" class="plages" class="erreur" > <p> Impossible de supprimer un logement lié à une réservation ! <p> <button onclick="closePopup('erreur_suppr','overlay_erreur')" class="btn-ajoutlog">Ok</button></div>
 
-                                    <div class="overlay_plages" id="overlay_confirm" onclick="closePopup('confirm','overlay_confirm')"></div>
-                                    <div id="confirm" class="plages"> <p class="valid"> Votre logement vient d'être supprimé avec succès ! <p> <button onclick="closePopup('confirm','overlay_confirm')" class="btn-ajoutlog">Ok</button></div>
-                                    
+                                    <!-- popup pour le cas 2 : vérifier que le propriétaire veut bien supprimer ce logement -->
+
                                     <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
                                     <div id="validation" class="plages"> 
                                         <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log["libelle_logement"]; ?> ? 
@@ -123,6 +129,13 @@
                                             <a href="../Logement/supprimer_logement.php?idc=<?php echo $id_log?>" ><button class="btn-suppr">Supprimer</button></a>
                                         </div>
                                     </div>
+
+                                    <!-- popup pour le cas 3 : feedback pour le propriétaire lorsqu'il a supprimé avec succès un logement -->
+
+                                    <div class="overlay_plages" id="overlay_confirm" onclick="closePopup('confirm','overlay_confirm')"></div>
+                                    <div id="confirm" class="plages"> <p class="valid"> Votre logement vient d'être supprimé avec succès ! <p> <button onclick="closePopup('confirm','overlay_confirm')" class="btn-ajoutlog">Ok</button></div>
+                                    
+                                    <!-- script JavaScript qui ouvre les différentes popup en fonction du cas 1 , 2 ou 3 -->
                                     
                                     <script>
                                         let cas = document.getElementById("cas_bouton_suppr");

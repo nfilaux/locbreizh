@@ -18,9 +18,9 @@
 
     //on récupère l'id de la taxe de séjour associé au logement du devis
     
-    $stmt = $dbh->prepare("SELECT taxe_sejour from locbreizh._logement where id_compte = {$_SESSION['id']};");
+    /*$stmt = $dbh->prepare("SELECT taxe_sejour from locbreizh._logement where id_compte = {$_SESSION['id']};");
     $stmt->execute();
-    $photo = $stmt->fetch();
+    $photo = $stmt->fetch();*/
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -77,6 +77,21 @@
             $stmt->execute();
             $vac_sup = $stmt->fetchColumn();
 
+            //si le client a notifié des vacanciers supplémentaires dans sa demande on regarde leur nombre
+            
+            if ($vac_sup != ''){
+
+                $stmt = $dbh->prepare("SELECT nombre from locbreizh._comporte_charges_associee_demande_devis where num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
+                $stmt->execute();
+                $nb_vac_sup = $stmt->fetchColumn(); 
+
+                // le prix des vacanciers supplémentaires est égal au nombres d'entre eux multiplié par le tarif unitaire d'un vacancier en plus
+                
+                $vac_sup = $vac_sup * $nb_vac_sup;
+            }
+
+            $prix_charges = $animaux + $menage + $vac_sup;
+
             
         ?>
         <style>#erreur {color : red;}</style>
@@ -119,7 +134,8 @@
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
                 <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo 'checked';}else if ($menage !=''){echo 'checked';}; ?>>
-                 <label for="animaux"> Animaux </label>
+                <input type="hidden" name ="prix_animaux" id="prix_animaux" value=<?php echo $animaux; ?>>
+                <label for="animaux"> Animaux </label>
                 </div>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
@@ -128,8 +144,8 @@
                 </div>
                 <!--pre-remplie les infos si ils sont dans get-->
                 <div class="logpc">
-                <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
-                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else{if ($vac_sup!=''){echo $vac_sup;}}; ?>"/>
+                <label style="text-align:center;" for="vacanciers_sup">Vacanciers supplémentaires</label>
+                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else{if ($vac_sup!=''){echo $nb_vac_sup;}}; ?>"/>
                 </div>
             </div>
             </div>
@@ -163,8 +179,8 @@
                 <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required /> 
                 </div>
                 <div class="deviscol">
-                <label for="charges additionnelles">Charges additionnelles HT (en €) :</label>
-                <input class="logvct" type="number" id="charges" name="charges" value="<?php if(isset($_SESSION['valeurs_complete']['charges'])){echo $_SESSION['valeurs_complete']['charges'];} ?>" required />
+                <label for="charges">Charges additionnelles HT (en €) :</label>
+                <input class="logvct" type="number" id="charges" name="charges" value="<?php echo $prix_charges ?>" disabled />
                 </div>
                 <input class="btn-ajoutlog" type="button" value="Calculer" onclick="calcul()"/>
             </div>
@@ -181,25 +197,25 @@
                         </div>
                         <div class="deviscolinput">
                             <p> Total TTC (en € ) </p>
-                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                            <input class="logvct" id="totalttc" name="totalttc" value="" disabled>
                         </div>
                         <div class="deviscolinput">
                             <p> Taxe de séjour (en € ) </p>
-                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                            <input class="logvct" id="taxe_sejour" name="taxe_sejour" value="" disabled>
                         </div>
                     </div>
                     <div class="devisrow">
                     <div class="devisvct">
                             <p> Montant total du devis (en € ) </p>
-                            <input class="logvct" id="totalht" name="totalht" value=""  disabled>
+                            <input class="logvct" id="total" name="total" value=""  disabled>
                         </div>
                     <div class="devisvct">
                             <p> Frais de plateforme HT (en € ) </p>
-                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                            <input class="logvct" id="platht" name="platht" value="" disabled>
                         </div>
                     <div class="devisvct">
                         <p> Frais de plateforme TTC (en € ) </p>
-                            <input class="logvct" id="totalht" name="totalht" value="" disabled>
+                            <input class="logvct" id="platttc" name="plattc" value="" disabled>
                         </div>
                     </div>
             </div>
@@ -210,10 +226,32 @@
                     return Math.round( nombre*tmp )/tmp;
                 }
 
+            let baliseprixcharges = document.getElementById("charges");
+            let prix_animaux = document.getElementById("prix_animaux");
+            let animaux = document.getElementById("animaux");
+            let tarif_loc = document.getElementById("tarif_loc");
+            animaux.addEventListener("change",gerer_charge);
+            //tarif_loc.addEventListener("focus",test);
+
+            function gerer_charge(){
+                //console.log("detecter");
+                //alert(1);
+                if (animaux.checked === true){
+                    /*let test = parseInt(baliseprixcharges.value) + parseInt(prix_animaux.value)
+                    console.log(test);*/
+                    //console.log(tarif_loc);
+                    baliseprixcharges.value = parseInt(baliseprixcharges.value) + parseInt(prix_animaux.value);
+                } /*else {
+                    baliseprixcharges.value = parseInt(baliseprixcharges.value) - parseInt(prix_animaux);
+                }*/
+            }
+
+            /*function test(){
+                alert(1);
+            }*/
+
                 function calcul() {
-                    let baliseprixloc = document.getElementById("tarif_loc")
                     let prix_loc = baliseprixloc.value
-                    let baliseprixcharges = document.getElementById("charges")
                     let prix_charges = baliseprixcharges.value
                     let html = "";
                     total_HT = parseInt(prix_loc) + parseInt(prix_charges);
