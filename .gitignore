@@ -1,2 +1,11 @@
 Page_Html/parametre_connexion.php
-
+Page_Html/Ressources/*
+Page_Html/demande_devis/pdf_demande/*
+Page_Html/devis/pdf_devis/*
+!Page_Html/demande_devis/pdf_demande/.txt
+!Page_Html/devis/pdf_devis/.txt
+!Page_Html/Ressources/rib/.txt
+!Page_Html/Ressources/Images/image_vide_log.png
+!Page_Html/Ressources/Images/fond_catalogue.jpg
+!Page_Html/Ressources/conditions/*
+!Page_Html/Ressources/polices/*
