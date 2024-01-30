@@ -45,7 +45,7 @@ int main(int argc, char **argv){
     {
         fprintf(stderr, "%s", PQerrorMessage(conn));
     } else {
-        printf("Connexion établie\n");
+        printf("Connexion avec la base de donnée établie\n");
     }
 
     // Gestion des arguments
@@ -63,9 +63,8 @@ int main(int argc, char **argv){
             exit(0);
 
         case 'p':
-            printf("%s",optarg);
             port = atoi(optarg);
-            printf("port : %d\n",port);
+            printf("connexion établi sur le port : %d\n",port);
             break;
         
         case 'v':
@@ -112,7 +111,6 @@ int main(int argc, char **argv){
     addr.sin_port = htons(port);
 
     ret = bind(sock, (struct sockaddr *)&addr, sizeof(addr));
-    printf("ret bind: %d\n", ret);
 
     if (ret == -1)
     {
@@ -121,7 +119,6 @@ int main(int argc, char **argv){
     }
 
     ret = listen(sock, 1);
-    printf("ret listen: %d\n", ret);
 
     if (ret == -1)
     {
@@ -131,12 +128,8 @@ int main(int argc, char **argv){
 
     struct sockaddr_in conn_addr;
     size = sizeof(conn_addr);
-
-    printf("avant accept\n");
     
     cnx = accept(sock, (struct sockaddr *)&conn_addr, (socklen_t *)&size);
-    
-    printf("cnx accept: %d\n", cnx);
 
     if (cnx == -1)
     {
@@ -152,7 +145,6 @@ int main(int argc, char **argv){
     time(&now);
 
     // Convertion au format heure locale
-    printf("Aujourd'hui est : %s", ctime(&now));
     struct tm *local = localtime(&now);
     h = local->tm_hour;        
     min = local->tm_min;       
@@ -166,12 +158,9 @@ int main(int argc, char **argv){
         memset(r_buffer, 0, sizeof(r_buffer));
         char validation[6] = "";
 
-        printf("Lecture de la clef\n");
+        printf("Lecture de la clef propriétaire\n");
 
         r = read(cnx, r_buffer, sizeof(r_buffer));
-        printf("Nombre d'octets lus : %d\n", r);
-
-        printf("La clef du client2 est : %s\n", r_buffer);
 
         // Vérifification des caractères spéciaux ou des espaces dans la clé lue
         for (size_t i = 0; i < strlen(r_buffer); i++) {
@@ -189,53 +178,28 @@ int main(int argc, char **argv){
         }
 
         char request[10000] =""; // Requête sur la BDD
-        printf("Avant affichage de la taille de la requête\n");
-        printf("Taille actuelle de la requête : %zu\n", strlen(request));
-        printf("Taille totale allouée pour la requête : %zu\n", sizeof(request));
-        printf("Après affichage de la taille de la requête\n");
 
-        snprintf(request, sizeof(request), "SELECT * FROM locbreizh2._clefsapi WHERE idclef = '%s'", r_buffer);
-        printf("La requête : %s\n", request);
-
-        printf("Avant exécution de la requête\n");
+        snprintf(request, sizeof(request), "SELECT * FROM locbreizh._clefsapi WHERE idclef = '%s'", r_buffer);
 
         res = PQexec(conn, request);
 
         strcpy(request,"");
 
-        printf("Après exécution de la requête\n");
-
         // Vérification du résultat de la requête
         if (PQresultStatus(res) == PGRES_TUPLES_OK) {
             int nombre_de_lignes = PQntuples(res);
 
-            for (int i = 0; i < nombre_de_lignes; ++i) {
-                for (int j = 0; j < PQnfields(res); ++j) {
-                    printf("Valeur de la colonne %d pour la ligne %d : %s\n", j, i, PQgetvalue(res, i, j));
-                }
-            }
 
             // On accède aux colonnes uniquement si des lignes sont présentes
             if (nombre_de_lignes > 0) {
-                printf("La clé existe dans la base de données.\n");
-
-                
-                for (int i = 0; i < nombre_de_lignes; ++i) {
-                    printf("Valeur de la colonne 1 pour la ligne %d : %s\n", i, PQgetvalue(res, i, 0));
-                }
 
                 // Vérification du nombre de lignes pour la clé
                 if (nombre_de_lignes == 1) {
-                    printf("cle valide !\n");
                     strcpy(validation, "true");
-                    printf("valid : %s",validation);
                     write(cnx, validation, strlen(validation));
-
-                    printf("clef %s : ",r_buffer);
-                    snprintf(request, sizeof(request), "SELECT * FROM locbreizh2._clefsapi WHERE idclef = '%s' and estadmin = true", r_buffer);
+                    snprintf(request, sizeof(request), "SELECT * FROM locbreizh._clefsapi WHERE idclef = '%s' and estadmin = true", r_buffer);
                     res = PQexec(conn, request);
-                    int nombres_lignes_req = PQntuples(res);
-                    printf("nombre de comptes : %d\n",nombres_lignes_req);
+                    //int nombres_lignes_req = PQntuples(res);
 
                     if (PQntuples(res) == 1){
                         admin = true;
@@ -260,21 +224,15 @@ int main(int argc, char **argv){
             strcpy(validation, "false");
             write(cnx, validation, strlen(validation));
         }
-        printf("Après exécution de la requête SQL\n");
     }
 
     // Récupération de l'id du propriétaire
     char id_prop[10000] = "";
     if (admin == false){
 
-        snprintf(id_prop, sizeof(id_prop), "SELECT id_proprio FROM locbreizh2._clefsapi WHERE idclef = '%s'", r_buffer);
+        snprintf(id_prop, sizeof(id_prop), "SELECT id_proprio FROM locbreizh._clefsapi WHERE idclef = '%s'", r_buffer);
         res = PQexec(conn, id_prop);
-        printf("id : %s" , PQgetvalue(res,0,0));
-        int nombres_lignes_req = PQntuples(res);
-        printf("lignes : %d\n",nombres_lignes_req);
-
         strcpy(id_proprio,PQgetvalue(res,0,0));
-
     }
 
     // Boucle de lecture des commandes
@@ -282,10 +240,6 @@ int main(int argc, char **argv){
 
         // Réinitialisation le buffer à chaque itération
         memset(r_buffer, 0, sizeof(r_buffer));
-        char chaine [1000];
-
-        printf("lire");
-
         r = read(cnx, r_buffer, sizeof(r_buffer));
         
         if (r <= 0) {
@@ -293,14 +247,10 @@ int main(int argc, char **argv){
             break;
         }
 
-        printf("Message reçu du client : %s\n", r_buffer);
-
-        printf("lu : %d\n",r);
         ssize_t bytes_sent;
 
         if (r > 0) {
             r_buffer[r] = '\0';
-            printf("Message lu par le programme : %s\n", r_buffer);
             char chaine[1000] = "";
             char chaine1[1000] = "";
             char chaine2[1000] = "";
@@ -310,7 +260,6 @@ int main(int argc, char **argv){
             memset(chaine3, 0, sizeof(chaine3));
 
             if (strncmp(r_buffer, "--informations", strlen("--informations")) == 0) {
-                printf("test\n");
 
                 if (verbose == 1){
                     printf("%02d:%02d:%d %02d:%02d:%02d reçu du client la commande --infos\n",day, mois, an,h, min, s);
@@ -335,7 +284,6 @@ int main(int argc, char **argv){
                 }
 
                 snprintf(chaine, sizeof(chaine), "\t--ConsulterPlage|<logement>|<debut>|<fin>\n");
-                printf("Longueur du message chaine : %zu\n", strlen(chaine));
                 ssize_t bytes_sent1 = write(cnx, chaine, strlen(chaine) + 1);
                 if (bytes_sent1 == -1) {
                     perror("Erreur lors de l'envoi de chaine au client");
@@ -376,18 +324,12 @@ int main(int argc, char **argv){
                 const char *fin_message = "\nfin\n";
                 printf("fin ? : %s",fin_message);
                 bytes_sent = write(cnx, fin_message, strlen(fin_message));
-                if (bytes_sent < 0) {
-                    perror("Erreur lors de l'envoi de 'fin' au client.\n");
-                    // Gérer l'erreur...
-                } else {
-                    printf("Envoi de 'fin' au client.\n");
-                }
 
             } else if (strncmp(r_buffer, "--MesLogements", strlen("--MesLogements")) == 0) {
                     if (verbose == 1){
                         printf("%02d:%02d:%d %02d:%02d:%02d reçu du client la commande --MesLogements\n",day, mois, an,h, min, s);
                     }
-                    char requete[1000] = "SELECT * from locbreizh2._logement where id_proprietaire ="; // Requete sur la bdd
+                    char requete[1000] = "SELECT * from locbreizh._logement where id_proprietaire ="; // Requete sur la bdd
                     strcat(requete,id_proprio);
                     res = PQexec(conn,requete);
 
@@ -417,12 +359,6 @@ int main(int argc, char **argv){
 
                     const char *fin_message = "\nfin\n";
                     bytes_sent = write(cnx, fin_message, strlen(fin_message));
-                    if (bytes_sent < 0) {
-                        perror("Erreur lors de l'envoi de 'fin' au client.\n");
-                        // Gérer l'erreur...
-                    } else {
-                        printf("Envoi de 'fin' au client.\n");
-                    }
 
             } else if (strncmp(r_buffer, "--ListeLogements", strlen("--ListeLogements")) == 0) {
             
@@ -430,7 +366,7 @@ int main(int argc, char **argv){
                         printf("%02d:%02d:%d %02d:%02d:%02d reçu du client un --ListeLogements \n",day, mois, an,h, min, s);
                     }
 
-                    char requete[1000] = "SELECT * from locbreizh2._logement"; // Requete sur la bdd
+                    char requete[1000] = "SELECT * from locbreizh._logement"; // Requete sur la bdd
                     res = PQexec(conn,requete);
 
                     if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -440,7 +376,6 @@ int main(int argc, char **argv){
                     }
 
                     int nombres_lignes_req = PQntuples(res);
-                    printf("nombre de comptes : %d\n",nombres_lignes_req);
 
                     if (verbose == 1){
                         printf("%02d:%02d:%d %02d:%02d:%02d envoi de la liste des logements au client \n",day, mois, an,h, min, s);
@@ -484,7 +419,7 @@ int main(int argc, char **argv){
                 }
 
                 char requete[1000];
-                snprintf(requete, sizeof(requete), "SELECT code_planning FROM locbreizh2._logement WHERE libelle_logement='%s'", elements[1]);
+                snprintf(requete, sizeof(requete), "SELECT code_planning FROM locbreizh._logement WHERE libelle_logement='%s'", elements[1]);
                 res = PQexec(conn,requete);
 
                 if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -495,7 +430,7 @@ int main(int argc, char **argv){
 
                 printf("id du planning du logement : %s\n",PQgetvalue(res,0,0));
 
-                snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh2._plage_ponctuelle WHERE code_planning='%s' and jour_plage_ponctuelle >= '%s' and jour_plage_ponctuelle <= '%s'",PQgetvalue(res,0,0),elements[2],elements[3]);
+                snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle WHERE code_planning='%s' and jour_plage_ponctuelle >= '%s' and jour_plage_ponctuelle <= '%s'",PQgetvalue(res,0,0),elements[2],elements[3]);
                 printf("la requete : %s\n",requete);
                 res = PQexec(conn,requete);
 
@@ -508,7 +443,7 @@ int main(int argc, char **argv){
 
                 for(int i = 0; i < nombres_lignes_req ;i++){
                    
-                   snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh2._plage_ponctuelle_disponible WHERE id_plage_ponctuelle = %s",PQgetvalue(res,i,0));
+                   snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle_disponible WHERE id_plage_ponctuelle = %s",PQgetvalue(res,i,0));
                    printf("la requete : %s\n",requete);
                    resultat = PQexec(conn,requete);
 
@@ -518,7 +453,7 @@ int main(int argc, char **argv){
 
                         printf("la plage disponable : %s\n",PQgetvalue(res,i,1));
                         strcpy(chaine, "");
-                        snprintf(chaine,sizeof(chaine),"%s : disponible\n",PQgetvalue(res,i,1));
+                        snprintf(chaine,sizeof(chaine),"\033[38;2;0;0;139m%s :\033[0m \033[32mdisponible\033[0m\n",PQgetvalue(res,i,1));
                         write(cnx,chaine,sizeof(chaine));
                         fflush(stdout);
                    }
@@ -527,7 +462,7 @@ int main(int argc, char **argv){
 
                 for(int i = 0; i < nombres_lignes_req ;i++){
                    
-                   snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh2._plage_ponctuelle_indisponible WHERE id_plage_ponctuelle = '%s'",PQgetvalue(res,i,0));
+                   snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle_indisponible WHERE id_plage_ponctuelle = '%s'",PQgetvalue(res,i,0));
                    printf("la requete : %s\n",requete);
                    resultat = PQexec(conn,requete);
 
@@ -538,7 +473,7 @@ int main(int argc, char **argv){
                    printf("la plage indispinable : %s\n",PQgetvalue(res,i,1));
 
                    strcpy(chaine, "");
-                   snprintf(chaine,sizeof(chaine),"%s : indisponible\n",PQgetvalue(res,i,1));
+                   snprintf(chaine,sizeof(chaine),"\033[38;2;0;0;139m%s :\033[0m \033[31mindisponible\033[0m\n",PQgetvalue(res,i,1));
                    write(cnx,chaine,sizeof(chaine));
                    fflush(stdout);
                    }
@@ -584,7 +519,7 @@ int main(int argc, char **argv){
                 }
 
                 char requete[1000];
-                snprintf(requete, sizeof(requete), "SELECT code_planning FROM locbreizh2._logement WHERE libelle_logement='%s'", elements[1]);
+                snprintf(requete, sizeof(requete), "SELECT code_planning FROM locbreizh._logement WHERE libelle_logement='%s'", elements[1]);
                 res = PQexec(conn,requete);
 
                 if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -598,7 +533,7 @@ int main(int argc, char **argv){
 
                 printf("id du planning du logement : %s\n",PQgetvalue(res,0,0));
 
-                snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh2._plage_ponctuelle WHERE code_planning='%s' and jour_plage_ponctuelle >= '%s' and jour_plage_ponctuelle <= '%s'",code_planning,elements[2],elements[3]);
+                snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle WHERE code_planning='%s' and jour_plage_ponctuelle >= '%s' and jour_plage_ponctuelle <= '%s'",code_planning,elements[2],elements[3]);
                 printf("la requete : %s\n",requete);
                 res = PQexec(conn,requete);
 
@@ -623,12 +558,12 @@ int main(int argc, char **argv){
                     return EXIT_FAILURE;
                 }
 
-                snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh2._plage_ponctuelle");
+                snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle");
                 printf("la requete : %s\n",requete);
                 res = PQexec(conn,requete);
 
                 int nombres_plages = PQntuples(res);
-                printf("nombre de plages déjà existante ^^ : %d\n",nombres_plages);
+                printf("nombre de plages déjà existante : %d\n",nombres_plages);
 
                 if (verbose == 1){
                     printf("%02d:%02d:%d %02d:%02d:%02d début de la mise en indisponibilité du logement %s du %s au %s: \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
@@ -644,7 +579,7 @@ int main(int argc, char **argv){
                     printf("%s\n", formatted_date);
 
                     //on recup l'id de la plage associé au jour et au planning du logement sélectionné dans la commande
-                    snprintf(requete, sizeof(requete), "SELECT id_plage_ponctuelle FROM locbreizh2._plage_ponctuelle WHERE code_planning='%s' and jour_plage_ponctuelle = '%s'",code_planning,formatted_date);
+                    snprintf(requete, sizeof(requete), "SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE code_planning='%s' and jour_plage_ponctuelle = '%s'",code_planning,formatted_date);
                     printf("la requete : %s\n",requete);
                     res = PQexec(conn,requete);
 
@@ -654,20 +589,20 @@ int main(int argc, char **argv){
                     
                     if (nombres_lignes_req == 1 ){
                         strcpy(id_plage,PQgetvalue(res,0,0));
-                    } 
+                    }
                     
                     //si la plage n'existe pas on la créer
                     if(nombres_lignes_req < 1){
                         nombres_plages++;
-                        snprintf(requete, sizeof(requete), "INSERT INTO locbreizh2._plage_ponctuelle(id_plage_ponctuelle,jour_plage_ponctuelle,code_planning) VALUES (%d,'%s',%s)",nombres_plages,formatted_date,code_planning);
+                        snprintf(requete, sizeof(requete), "INSERT INTO locbreizh._plage_ponctuelle(id_plage_ponctuelle,jour_plage_ponctuelle,code_planning) VALUES (%d,'%s',%s)",nombres_plages+1,formatted_date,code_planning);
                         printf("la requete : %s\n",requete);
                         res = PQexec(conn,requete);
 
-                        snprintf(requete, sizeof(requete), "INSERT INTO locbreizh2._plage_ponctuelle_indisponible(id_plage_ponctuelle,libelle_indisponibilite) Values(%d,'%s')",nombres_plages,"le propriétaire est indisponible");
+                        snprintf(requete, sizeof(requete), "INSERT INTO locbreizh._plage_ponctuelle_indisponible(id_plage_ponctuelle,libelle_indisponibilite) Values(%d,'%s')",nombres_plages+1,"le propriétaire est indisponible");
                         printf("la requete : %s\n",requete);
                         res = PQexec(conn,requete);
                     } else if(nombres_lignes_req == 1){
-                        snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh2._plage_ponctuelle_indisponible WHERE id_plage_ponctuelle = '%s'",id_plage);
+                        snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle_indisponible WHERE id_plage_ponctuelle = '%s'",id_plage);
                         printf("la requete : %s\n",requete);
                         res = PQexec(conn,requete);
 
@@ -675,11 +610,11 @@ int main(int argc, char **argv){
 
                         if (plage_indisponible != 1){
 
-                            snprintf(requete, sizeof(requete), "DELETE from locbreizh2._plage_ponctuelle_disponible where id_plage_ponctuelle = '%s'",id_plage);
+                            snprintf(requete, sizeof(requete), "DELETE from locbreizh._plage_ponctuelle_disponible where id_plage_ponctuelle = '%s'",id_plage);
                             printf("la requete : %s\n",requete);
                             res = PQexec(conn,requete);
 
-                            snprintf(requete, sizeof(requete), "INSERT INTO locbreizh2._plage_ponctuelle_indisponible(id_plage_ponctuelle,libelle_indisponibilite) Values(%s,'%s')",id_plage,"le propriétaire est indisponible");
+                            snprintf(requete, sizeof(requete), "INSERT INTO locbreizh._plage_ponctuelle_indisponible(id_plage_ponctuelle,libelle_indisponibilite) Values(%s,'%s')",id_plage,"le propriétaire est indisponible");
                             printf("la requete : %s\n",requete);
                             res = PQexec(conn,requete);
                             
@@ -690,7 +625,7 @@ int main(int argc, char **argv){
                 if (verbose == 1){
                     printf("%02d:%02d:%d %02d:%02d:%02d fin de la mise en indisponibilité du logement %s du %s au %s : \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
                 }
-                snprintf(chaine, sizeof(chaine), "la mise en indisponibilité de votre logement %s du %s au %s est bien effective",elements[1],elements[2],elements[3]);
+                snprintf(chaine, sizeof(chaine), "\033[32mla mise en indisponibilité de votre logement %s du %s au %s est bien effective\033[0m",elements[1],elements[2],elements[3]);
                 write(cnx,chaine,sizeof(chaine));
 
                 write(cnx,"fin",sizeof("fin"));

@@ -540,7 +540,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                     <?php $id_un_logement = $id_log; ?>
                                     <form action="ChangeEtat.php" method="post">
                                         <input type="hidden" name=<?php echo $id_un_logement ?> value="<?php echo htmlentities($bouton_desactiver) ?>">
-                                        <button class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button>
+                                        <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button>
                                     </form>
                                     <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $id_log ?>"><button class="btn-suppr">SUPPRIMER</button></a>

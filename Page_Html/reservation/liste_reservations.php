@@ -35,13 +35,13 @@ $photo = $stmt->fetch();
                 <div class="filR">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                            <label for="prix_min">min</label>
+                            <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12"></label>
                         </div>
                         <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
                     </div>  
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <label for="prix_max">max</label>
+                            <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12"></label>
                         </div>
                         <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
                     </div>
