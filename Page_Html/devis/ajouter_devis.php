@@ -253,7 +253,7 @@
         $informationsDevis = array(
             array('Désignation', 'Prix HT', 'Prix TTC'), 
             array('Logement', number_format($nuitees_HT, 2) . " €", number_format($nuitees_HT*1.10). ' €'),
-            array('Charges', number_format($totalCharges_HT) . ' €', number_format($totalCharges_HT*1.10) . ' €'),
+            array('Charges', $totalCharges_HT . ' €', $totalCharges_HT*1.10 . ' €'),
             array('Taxe de séjour', number_format($logement['taxe_sejour']) . ' €', number_format($logement['taxe_sejour']) . ' €'),
             array('Frais de plateforme', number_format($fraisService_HT) . ' €', number_format($fraisService_TTC) . ' €')
         );
