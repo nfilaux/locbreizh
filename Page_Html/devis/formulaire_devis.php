@@ -141,13 +141,18 @@
                         <p id="erreur" class=erreur><?php echo $_SESSION['erreurs']['valide_dates']; ?></p>
                     <?php } ?>
                 <div class="logrow">
-                    <div class="log2vct">  
-                        <label for="delais_accept">Délais d'acceptation ( de 1 à 4 jours )</label>
-                        <input class="logvct" type="number" min="1" max="4" id="delais_accept" name="delais_accept" value="<?php if(isset($_SESSION['valeurs_complete']['delais_accept'])){echo $_SESSION['valeurs_complete']['delais_accept'];} ?>" required />
-                    </div>
                     <div class="log2vct"> 
-                        <label for="date_val">Date validité du devis ( en mois)</label>
-                        <input class="logvct" type="number" id="date_val" name="date_val" value="<?php if(isset($_SESSION['valeurs_complete']['date_val'])){echo $_SESSION['valeurs_complete']['date_val'];} ?>" required /> 
+                        <label for="date_val">Durée de validité du devis (en jour)</label>
+                        <input class="logvct" step="1" type="number" id="date_val" name="date_val" min="1" max="999" value="<?php if(isset($_SESSION['valeurs_complete']['date_val'])){echo $_SESSION['valeurs_complete']['date_val'];} ?>" required /> 
+                    </div>
+
+                    <div class="annulation">
+                        <label for="annulation">Condition annulation :</label>
+                        <select id="annulation" name="annulation" class="devis_select">
+                            <option value="stricte" <?php if(isset($_SESSION['valeurs_complete']['annulation'])) {if($_SESSION['valeurs_complete']['annulation'] == 'stricte') { ?> selected <?php }}?>>Stricte</option>
+                            <option value="flexible" <?php if(isset($_SESSION['valeurs_complete']['annulation'])) {if($_SESSION['valeurs_complete']['annulation'] == 'flexible') { ?> selected <?php }}?>>Flexible</option>
+                            <option value="non_remboursable" <?php if(isset($_SESSION['valeurs_complete']['annulation'])) {if($_SESSION['valeurs_complete']['annulation'] == 'non_remboursable') { ?> selected <?php }}?>>Non remboursable</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -173,15 +178,7 @@
             </div>
 
             <input type="hidden" id="id_demande" name="id_demande" value=<?PHP echo $_GET['demande']; ?>>
-
-            <div class="annulation">
-                <label for="annulation">Condition annulation :</label>
-                <select id="annulation" name="annulation" class="devis_select">
-                    <option value="stricte" <?php if(isset($_SESSION['valeurs_complete']['annulation'])) {if($_SESSION['valeurs_complete']['annulation'] == 'stricte') { ?> selected <?php }}?>>Stricte</option>
-                    <option value="flexible" <?php if(isset($_SESSION['valeurs_complete']['annulation'])) {if($_SESSION['valeurs_complete']['annulation'] == 'flexible') { ?> selected <?php }}?>>Flexible</option>
-                    <option value="non_remboursable" <?php if(isset($_SESSION['valeurs_complete']['annulation'])) {if($_SESSION['valeurs_complete']['annulation'] == 'non_remboursable') { ?> selected <?php }}?>>Non remboursable</option>
-                </select>
-            </div>
+            
         </fieldset>
 
         <?php 
