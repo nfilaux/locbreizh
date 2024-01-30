@@ -75,7 +75,7 @@ $photo = $stmt->fetch();
                     } else if (sizeof($_GET)>1){
                         $prix1 = $_GET['prixMin'];
                         $prix2 = $_GET['prixMax'];
-                        $filtre = "WHERE d.prix_total_devis>=$prix1 AND d.prix_total_devis<=$prix2";
+                        $filtre = "and d.prix_total_devis>=$prix1 AND d.prix_total_devis<=$prix2";
                     }
 
                     $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale, libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
