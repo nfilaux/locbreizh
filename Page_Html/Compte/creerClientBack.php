@@ -35,6 +35,7 @@
                 case "date":
                     $date = $_POST["date"];
                     $erreurTest = verifDate($date);
+                    break;
                 case "telephone":
                     $tel = $_POST["telephone"];
                     $tel = str_replace(' ', '', $_POST['telephone']);
