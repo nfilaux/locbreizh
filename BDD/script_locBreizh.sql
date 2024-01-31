@@ -520,21 +520,21 @@ CREATE TABLE IF NOT EXISTS locbreizh._services_compris
 CREATE OR REPLACE FUNCTION update_note_logement()
 RETURNS TRIGGER AS $$
 BEGIN
-    UPDATE _logement
+    UPDATE locbreizh._logement
     SET moyenne_avis = (
         /* COALESCE est utilisé pour mettre 0 si null*/
         SELECT COALESCE(AVG(note_avis), 0)
-        FROM _avis
-        WHERE logement = NEW.id_logement
+        FROM locbreizh._avis
+        WHERE logement = NEW.logement
     )
-    WHERE id_logement = NEW.id_logement;
+    WHERE id_logement = NEW.logement;
 
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER avis_trigger
-AFTER INSERT OR UPDATE OR DELETE ON _avis
+AFTER INSERT OR UPDATE OR DELETE ON locbreizh._avis
 FOR EACH ROW EXECUTE FUNCTION update_note_logement();
 
 /* Peuplement de la base */
