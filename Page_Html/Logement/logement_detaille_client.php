@@ -486,7 +486,8 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             $stmt = $dbh->prepare(
                 "SELECT photo
                 from locbreizh._photos_secondaires 
-                WHERE logement = {$_GET['logement']};"
+                WHERE logement = {$_GET['logement']}
+                ORDER BY numero ASC;"
             );
             $stmt->execute();
             $photos_secondaires = $stmt->fetchAll();

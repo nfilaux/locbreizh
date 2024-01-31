@@ -229,7 +229,7 @@ function changerJour(elem, id) {
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
-            if (nbActif == 0) {
+            if (premierID[id] == '' && dernierID[id] == '') {
                 premierID[id] = element.id;
                 dernierID[id] = element.id;
                 element.className = "actif";
@@ -242,7 +242,7 @@ function changerJour(elem, id) {
                 milieu = (dateDernier + datePremier) / 2;
                 //détermine si le nouveau jour seras le début ou la fin de la plage
                 if (dateElem < milieu) {
-                    if (nbActif > 1) {
+                    if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(premierID[id]) ){
                             document.getElementById(premierID[id]).className = classeDispo[id];
                         }
@@ -250,14 +250,16 @@ function changerJour(elem, id) {
                             document.getElementById(premierID[id]).className = classeIndispo[id];
                         }
                         else{
-                            document.getElementById(premierID[id]).className = "normal";
+                            if (document.getElementById(premierID[id])){
+                                document.getElementById(premierID[id]).className = "normal";
+                            }
                         }
                     }
                     premierID[id] = element.id;
                     element.className = "actif";
                 }
                 else {
-                    if (nbActif > 1) {
+                    if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(dernierID[id]) ){
                             document.getElementById(dernierID[id]).className = classeDispo[id];
                         }
@@ -265,7 +267,9 @@ function changerJour(elem, id) {
                             document.getElementById(dernierID[id]).className = classeIndispo[id];
                         }
                         else{
-                            document.getElementById(dernierID[id]).className = "normal";
+                            if (document.getElementById(dernierID[id])){
+                                document.getElementById(dernierID[id]).className = "normal";
+                            }
                         }
                     }
                     dernierID[id] = element.id;
@@ -317,13 +321,17 @@ function changerJour(elem, id) {
         }
         //désactive le jour si on clique dessus
         else if (element.className === "actif") {
-            if (nbActif == 2) {
+            if (premierID[id] !== dernierID[id]) {
                 if (element.id === premierID[id]) {
                     premierID[id] = dernierID[id];
                 }
                 else {
                     dernierID[id] = premierID[id];
                 }
+            }
+            else{
+                premierID[id] = "";
+                dernierID[id] = "";
             }
             if (tabDispo[id].includes(element.id) ){
                 element.className = classeDispo[id];
@@ -342,12 +350,38 @@ function changerJour(elem, id) {
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
             }
         }
-        nbActif = document.getElementsByClassName("actif").length;
-        if (nbActif == 0){
-            premierID[id] = "";
-            dernierID[id] = "";
-        }
         changerDates(id);
+    }
+    else if ( premierID[id] !== ""){
+        //active la zone de selection entre les deux dates
+        datePremier = new Date(premierID[id].split(',')[1]).getTime();
+        dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
+        listeJours = calendrier[id].querySelectorAll(".jours li");
+        inactif = false;
+        fini = false;
+        loop = 0;
+        while (!inactif && !fini){
+            jour = listeJours[loop];
+            if (!jour){
+                fini = true;
+            }
+            if (!fini){
+                let dateJour = new Date(jour.id.split(',')[1]).getTime();
+                if (dateJour < dateDernier && dateJour > datePremier) {
+                    if (jour.className !== "inactif"){
+                        jour.className = "entreDeux";
+                    }
+                    else{
+                        inactif = true;
+                    }
+                    
+                }
+                else if (dateJour === dateDernier){
+                    fini = true;
+                }
+            }
+            loop++;
+        }
     }
 }
 
