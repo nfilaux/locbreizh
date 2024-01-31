@@ -28,10 +28,23 @@
     $stmt->bindParam(':num_demande', $_POST['id_demande']);
     $stmt->execute();
     $resDates = $stmt->fetchAll();
+
     $err = 0;
     // Converti les dates donne en paramètre
     $date_arrive = new DateTime($_POST["date_arrivee"]);
     $date_depart = new DateTime($_POST["date_depart"]);
+
+    $stmt = $dbh->prepare("SELECT jour_plage_ponctuelle
+    FROM locbreizh._plage_ponctuelle_disponible d
+    JOIN locbreizh._plage_ponctuelle p ON d.id_plage_ponctuelle = p.id_plage_ponctuelle
+    JOIN locbreizh._planning ON p.code_planning = _planning.code_planning
+    JOIN locbreizh._logement l ON l.code_planning = _planning.code_planning
+    join locbreizh._demande_devis on _demande_devis.logement = l.id_logement
+    WHERE num_demande_devis = :num_demande 
+    AND <= $_POST["date_depart"]");
+    $stmt->bindParam(':num_demande', $_POST['id_demande']);
+    $stmt->execute();
+    $prixnuitunite = $stmt->fetchAll();
     // parcours tous les jours de la periode de reservation
     for($date = clone $date_arrive; $date <= $date_depart; $date->modify('+1 day')) {
         $date_formate = $date->format('Y-m-d');
@@ -232,6 +245,7 @@
         if($vac_supp == ''){
             $vac_supp= 0;
         }
+
         $pdf->Cell(0, 8, $proprioinfo['nom'] . ' ' . $proprioinfo['prenom'], 0, 1);
         $pdf->Cell(0, 8, $proprioinfo['mail'], 0, 1);
         $pdf->Cell(0, 8, $proprioinfo['telephone'], 0, 1);

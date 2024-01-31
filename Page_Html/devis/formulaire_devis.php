@@ -12,7 +12,6 @@
         print "Erreur !:" . $e->getMessage() . "<br/>";
         die();
     }
-<<<<<<< HEAD
     $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $photo = $stmt->fetch();
@@ -22,8 +21,6 @@
     /*$stmt = $dbh->prepare("SELECT taxe_sejour from locbreizh._logement where id_compte = {$_SESSION['id']};");
     $stmt->execute();
     $photo = $stmt->fetch();*/
-=======
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -114,7 +111,6 @@
             $vac_sup2 = $stmt->fetch();
 
 
-<<<<<<< HEAD
             //si le client a notifié des vacanciers supplémentaires dans sa demande on regarde leur nombre
             
             if ($vac_sup != ''){
@@ -130,7 +126,6 @@
 
             $prix_charges = $animaux + $menage + $vac_sup;
 
-=======
             // taxe de sejour
             $stmt = $dbh->prepare("SELECT prix_journalier_adulte 
             FROM locbreizh._demande_devis d 
@@ -139,7 +134,6 @@
             WHERE num_demande_devis = $num_demande;");
             $stmt->execute();
             $taxe = $stmt->fetch();
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
             
         ?>
     <form name="formulaire" action="ajouter_devis.php" method="post">
