@@ -321,13 +321,17 @@ function changerJour(elem, id) {
         }
         //désactive le jour si on clique dessus
         else if (element.className === "actif") {
-            if (nbActif == 2) {
+            if (premierID[id] !== dernierID[id]) {
                 if (element.id === premierID[id]) {
                     premierID[id] = dernierID[id];
                 }
                 else {
                     dernierID[id] = premierID[id];
                 }
+            }
+            else{
+                premierID[id] = "";
+                dernierID[id] = "";
             }
             if (tabDispo[id].includes(element.id) ){
                 element.className = classeDispo[id];
@@ -345,11 +349,6 @@ function changerJour(elem, id) {
             if (tabIndispo[id][0]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
             }
-        }
-        nbActif = document.getElementsByClassName("actif").length;
-        if (nbActif == 0){
-            premierID[id] = "";
-            dernierID[id] = "";
         }
         changerDates(id);
     }
