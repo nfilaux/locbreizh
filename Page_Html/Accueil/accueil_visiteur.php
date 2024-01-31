@@ -46,16 +46,25 @@
                         <div class="input-group-prepend">
                             <label for="proprietaire"><img src="../svg/home-office-fill.svg" width="25" height="25"></label>
                         </div>
-                        <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>   
+                        <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>           
                     </div>
+                    <a class="btn-filtre" >
+                        <img src="../svg/filtre.svg" width="20" height="20" onclick="openPopup('filtre','ovFiltre')">
+                    </a>
                     <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
                     </div>
-                        
                     <?php if (isset($_GET['erreur'])){ ?>
                         <p class='err'>Le prix min doit être inférieur au prix max</p>
                     <?php }?>
                 </form>
+                
             </div>
+        </div>
+
+
+        <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')" class=""></div>
+        <div id="filtre" class="filtrage">
+            <span>Filtre</span>
         </div>
         
         <!-- Champs de séléction des Tris -->
@@ -154,25 +163,6 @@
     <?php   }
             foreach ($res as $card) {
                 if ($card['en_ligne'] == true) {?>
-                    <!-- <section class=""> 
-                        <a href="../Logement/logement_detaille_visiteur.php?logement=<?php /*echo $card['id_logement'] ?>"> 
-                            <div class="cardtel">
-                                <article><img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" width="300" height="200"></article>
-                                    <div class="cardphone">
-                                        <article> <h3> <?php echo $card['libelle_logement']; ?></h3></article>
-                                        <article> <p> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></p></article>
-                                        <article>
-                                            <div class="accicone"><img src="../svg/money.svg" width="25" height="25"> 
-                                                <h4><?php echo $card['tarif_base_ht']; ?> €</h4></div>
-                                            <div class="accicone">
-                                                <h4><?php echo $card['nb_personnes_logement']; */?> personnes</h4>
-                                            </div>
-                                        </article>
-                                    </div>
-                                </article>
-                            </div>
-                        </a>
-                    </section> -->
                     <article class="logementCard cardtel">
                         <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>"> 
                             <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
@@ -208,5 +198,6 @@
 
 </html>
 
+<script src="../scriptPopup.js" defer></script>
 <script src="./actualiserTri.js" defer></script>
 <script src="./actualiserFiltre.js" defer></script>
