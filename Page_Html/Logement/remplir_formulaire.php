@@ -205,13 +205,13 @@
                                 <div class="logcolumn">
                                 <label for='service'>Services :</label><br>
                                     <div class="logcheckbox">
-                                    <input id='' type='checkbox' name=''>Ménage
+                                    <input id='' type='checkbox' name='menage'>Ménage
                                     </div>
                                     <div class="logcheckbox">
-                                    <input id='' type='checkbox' name=''>Navette/taxi 
+                                    <input id='' type='checkbox' name='navette'>Navette/taxi 
                                     </div>
                                     <div class="logcheckbox">
-                                    <input id='' type='checkbox' name=''>Linge
+                                    <input id='' type='checkbox' name='linge'>Linge
                                     </div>
                                 </div>
                             </div>

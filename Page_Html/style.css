@@ -916,6 +916,19 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-weight: 900;
 }
 
+.btn-desactiveGris {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #D3D3D3; 
+    color: #808080;
+    border: 1px solid #808080; 
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+}
+
 .btn-consulter {
     margin-top: auto;
     margin-bottom: auto;
