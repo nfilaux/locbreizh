@@ -28,7 +28,6 @@ $_SESSION['valeurs_complete']['ville'] = $ville;
 $_SESSION['valeurs_complete']['descriptif_logement'] = $description;
 $_SESSION['valeurs_complete']['tarif_base_ht'] = $tarif;
 
-print_r($_FILES);
 if ($_FILES["image1P"]["tmp_name"] != ""){
     // id_photo = 1 car c'est notre image principale de logement donc la première
     $id_photo = 1;
@@ -124,7 +123,7 @@ if ($tarif > $prix_max){
     $_SESSION['erreurs']['tarif_base_ht'] = 'le prix doit être entier et inférieur à 100 000 € ';
 }
 if ($_SESSION['erreurs'] != []){
-    //header("Location: modifierLogement.php?id_logement=" . $id_logement);
+    header("Location: modifierLogement.php?id_logement=" . $id_logement);
 }
 else {
     include('../parametre_connexion.php');
@@ -147,6 +146,6 @@ try {
     print "Erreur !:" . $e->getMessage() . "<br/>";
     die();
 }
-    //header("Location: modifierLogement.php?modif=1&id_logement=$id_logement");
+    header("Location: modifierLogement.php?modif=1&id_logement=$id_logement");
 } 
 ?>
