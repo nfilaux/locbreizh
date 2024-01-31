@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-print_r($_SESSION);
 include('../parametre_connexion.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -993,7 +992,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 
     <?php
         // appel du footer
-        //include('../header-footer/choose_footer.php'); 
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 
