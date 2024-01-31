@@ -141,7 +141,11 @@
         $stmt->bindParam(':id', $_SESSION['id']);
         $stmt->execute();
         $info_user = $stmt->fetch();
-        $stmt = $dbh->prepare("SELECT nom,prenom,mail,telephone from locbreizh._compte natural join locbreizh._logement where id_compte = locbreizh._logement.id_proprietaire;");
+        $stmt = $dbh->prepare("SELECT nom,prenom,mail,telephone from locbreizh._compte 
+        natural join locbreizh._logement 
+        where id_compte = locbreizh._logement.id_proprietaire
+        and id_logement = :logement;");
+        $stmt->bindParam(':logement', $_POST['logement']);
         $stmt->execute();
         $proprioinfo = $stmt->fetch();
         // creation du pdf
