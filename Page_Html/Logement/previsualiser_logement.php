@@ -775,10 +775,8 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                             <div class="logcolumn">
                                 <div class="slider-container">
                                     <div class="slider">
-                                        <div class="slide">
-                                                <img class="photosecondaireP" src="../Ressources/Images/<?php echo $nouveau_nom_image1;?> ">
-                                            </div><?php
-                                        for ($i = 1; $i < 5; $i++) {
+                                        <?php
+                                        for ($i = 1; $i <= 6; $i++) {
                                             if (isset($_SESSION['post_logement']['image' .$i . 'P'] )){?>
                                                 <div class="slide">
                                                     <img src="../Ressources/Images/<?php echo $_SESSION['post_logement']['image' . $i . 'P'] ;?>">
