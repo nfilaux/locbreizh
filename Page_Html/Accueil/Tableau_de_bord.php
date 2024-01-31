@@ -16,7 +16,7 @@
             unset($_SESSION["erreurs"][$nomErreur]);
         }
 }
-    
+   
 
 $plageIndispo = [];
 $plageDispo = []; 
@@ -334,6 +334,13 @@ function changerJour(elem, id) {
             else{
                 element.className = "normal";
             }
+            //remet les plages
+            if (tabDispo[id][0]){
+                afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+            }
+            if (tabIndispo[id][0]){
+                afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+            }
         }
         nbActif = document.getElementsByClassName("actif").length;
         if (nbActif == 0){
@@ -462,7 +469,6 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="../Logement/scriptCalendrier.js"></script>
     <script src="../scriptPopup.js"></script>
 </head>
 

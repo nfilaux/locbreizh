@@ -1835,18 +1835,19 @@ iframe {
 .jours li{
     z-index: 1;
     margin-top: 30px;
+    font-weight: bold;
 }
 
 .normal{
     color: #000;
 }
 
-.indisponible{
-    color: red;
+.disponible::before{
+    background-color: green;
 }
 
-.disponible{
-    color: green;
+.indisponible::before{
+    background-color: red;
 }
 
 .calendrier ul{
@@ -1866,7 +1867,7 @@ iframe {
     color: #A9A9A9;
 }
 
-.actif{
+.actif, .indisponible, .disponible{
     color: #fff;
 }
 

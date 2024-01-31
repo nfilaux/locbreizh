@@ -10,6 +10,7 @@
 
 <body>
     <?php 
+    $filtre='';
         include('../header-footer/choose_header.php');
     ?>
     <main class="mainacc">
@@ -76,6 +77,7 @@
         </select>
 
         <?php
+        $filtre ='';
         try {
             include('../parametre_connexion.php');
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);

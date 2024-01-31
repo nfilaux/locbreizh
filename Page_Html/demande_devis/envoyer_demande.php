@@ -94,7 +94,7 @@
         $stmt->execute();
         $libelle_log = $stmt->fetch();
         // ajout de la charge menage si demandee
-        if(isset($_POST['menage'])){
+        if(isset($_POST['menage']) && $_POST['menage'] != ''){
             // recupere le prix de la charge
             $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement where id_logement = :logement and nom_charges = 'menage';");
             $stmt->bindParam(':logement', $_POST['logement']);
@@ -108,7 +108,7 @@
             $stmt->execute();
         }
         // ajout de la charge animaux si demandee
-        if(isset($_POST['animaux'])){
+        if(isset($_POST['animaux']) && $_POST['animaux'] != ''){
             // recupere le prix de la charge
             $stmt = $dbh->prepare("SELECT prix_charges from locbreizh._possede_charges_associee_logement where id_logement = :logement and nom_charges = 'animaux';");
             $stmt->bindParam(':logement', $_POST['logement']);

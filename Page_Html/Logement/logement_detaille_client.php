@@ -528,6 +528,20 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
+<<<<<<< HEAD
+                    <div class="logdem">
+                        <div class="logrowb" id="datesPlage">
+                            <p class="dateresa"></p>
+                            <p class="dateresa"></p>
+                        </div>
+                        <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                            <input type='hidden' name="arrive" id="arrive" value="">
+                            <input type='hidden' name="depart" id="depart" value="">
+                            <button class="btn-demlog" type="submit">Demander un devis</button>
+                        </form>
+                    </div>
+=======
+>>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
                 </div>
         
             <div class="logrowb">
