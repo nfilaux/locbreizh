@@ -16,7 +16,7 @@
             unset($_SESSION["erreurs"][$nomErreur]);
         }
 }
-    
+   
 
 $plageIndispo = [];
 $plageDispo = []; 
