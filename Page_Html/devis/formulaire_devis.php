@@ -348,7 +348,7 @@
 
         const sousTotal_HT = totalSum + total_charges;
         const sousTotal_TTC = sousTotal_HT * 1.1;
-        const fraisService_HT = 0.1 * sousTotal_HT;
+        const fraisService_HT = 0.01 * sousTotal_HT;
         const fraisService_TTC = fraisService_HT * 1.2;
         const total_taxe_sejour =  taxe_sejour.prix_journalier_adulte * (nb_pers_supp + nb_personnes);
         const prixTotal = sousTotal_TTC + fraisService_TTC + total_taxe_sejour;
