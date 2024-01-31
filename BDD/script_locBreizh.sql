@@ -248,6 +248,7 @@ CREATE TABLE
         id_adresse INTEGER NOT NULL,
         photo_principale VARCHAR(50) NOT NULL,
         taxe_sejour integer not null,
+        moyenne_avis NUMERIC(2, 1),
         CONSTRAINT logement_pk PRIMARY KEY (id_logement),
         CONSTRAINT logement_fk_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning),
         CONSTRAINT logement_fk_proprietaire FOREIGN KEY (id_proprietaire) REFERENCES _proprietaire (id_proprietaire),
@@ -513,6 +514,28 @@ CREATE TABLE IF NOT EXISTS locbreizh._services_compris
     CONSTRAINT services_compris_pk PRIMARY KEY (logement, nom_service),
     CONSTRAINT services_compris_fk_logement FOREIGN KEY (logement) REFERENCES locbreizh._logement (id_logement)
 );
+
+/* TRIGGER */
+
+CREATE OR REPLACE FUNCTION update_note_logement()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE _logement
+    SET moyenne_avis = (
+        /* COALESCE est utilisé pour mettre 0 si null*/
+        SELECT COALESCE(AVG(note_avis), 0)
+        FROM _avis
+        WHERE logement = NEW.id_logement
+    )
+    WHERE id_logement = NEW.id_logement;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER avis_trigger
+AFTER INSERT OR UPDATE OR DELETE ON _avis
+FOR EACH ROW EXECUTE FUNCTION update_note_logement();
 
 /* Peuplement de la base */
 

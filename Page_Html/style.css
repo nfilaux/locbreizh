@@ -1287,6 +1287,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 /*----------------------------------------------------------------Logement----------------------------------------------------------------*/
 
+.svg-moyenne{
+    fill: #ffa723;
+}
+
 .modif_log_img{
     width: 150px;
     height: 150px;

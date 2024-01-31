@@ -821,6 +821,36 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>   
             
         </div>
+        <hr class="hr">
+        <img src="../svg/etoile.svg" title="étoile" alt="note"  class="svg-moyenne">
+
+        <!--Les avis-->
+        <?php 
+            
+            $stmt = $dbh->prepare('SELECT moyenne_avis
+            from locbreizh._logement
+            where id_logement = :logement;');
+            $stmt->bindParam(':logement', $_GET['logement']);
+            $stmt->execute();
+            $moyenne = $stmt->fetch();
+
+            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo
+            from locbreizh._avis a
+            join locbreizh._compte c on a.auteur = c.id_compte
+            where a.logement = :logement;');
+            $stmt->bindParam(':logement', $_GET['logement']);
+            $stmt->execute();
+            $avis = $stmt->fetchAll();
+
+            foreach($avis as $avi){ ?>
+                <div>
+                    <div>
+                        <img src="<?php echo $avi['photo'];?>" alt="Image de profil" title="Photo">
+                        <p><?php echo $avi['prenom'] . ' ' . $avi['nom'];?></p>
+                        <img src="../svg/etoile.svg" title="étoile" alt="note">
+                    </div>
+                </div>
+            <?php } ?>
     </main>
     
     <?php
@@ -831,3 +861,5 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 </html>
 
 <script src="caroussel.js" defer></script>
+
+
