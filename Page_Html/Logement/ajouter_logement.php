@@ -205,15 +205,13 @@
     $stmt->execute();
 
     $planning = $dbh->prepare(
-        'INSERT INTO locbreizh._planning(tarif_journee, delai_depart_arrivee, disponible) 
-            VALUES(:tarif_journee, :delai_depart_arrivee, :disponible);'
+        'INSERT INTO locbreizh._planning(delai_depart_arrivee) 
+            VALUES(:delai_depart_arrivee);'
     ); 
 
 
     $delai = 1;
-    $planning->bindParam(':tarif_journee', $tarif_de_base);
     $planning->bindParam(':delai_depart_arrivee', $delai);
-    $planning->bindParam(':disponible', $en_ligne);
 
     $planning->execute();
 
@@ -315,11 +313,13 @@
         $stmt->execute();
 
         $stmt = $dbh->prepare(
-            'INSERT INTO locbreizh._photos_secondaires (logement, photo)
-                VALUES (:logement, :image2)'
+            'INSERT INTO locbreizh._photos_secondaires (logement, photo, numero)
+                VALUES (:logement, :image2, :numero)'
         );
+        $n = 2;
         $stmt->bindParam(':image2', $nom_image2);
         $stmt->bindParam(':logement', $id_logement);
+        $stmt->bindParam(':numero', $n);
         $stmt->execute();
     }
 
@@ -332,11 +332,13 @@
         $stmt->execute();
 
         $stmt = $dbh->prepare(
-            'INSERT INTO locbreizh._photos_secondaires (logement, photo)
-                VALUES (:logement, :image3)'
+            'INSERT INTO locbreizh._photos_secondaires (logement, photo, numero)
+                VALUES (:logement, :image3, :numero)'
         );
+        $n = 3;
         $stmt->bindParam(':image3', $nom_image3);
         $stmt->bindParam(':logement', $id_logement);
+        $stmt->bindParam(':numero', $n);
         $stmt->execute();
     }
 
@@ -349,11 +351,13 @@
         $stmt->execute();
 
         $stmt = $dbh->prepare(
-            'INSERT INTO locbreizh._photos_secondaires (logement, photo)
-                VALUES (:logement, :image4)'
+            'INSERT INTO locbreizh._photos_secondaires (logement, photo,numero)
+                VALUES (:logement, :image4, :numero)'
         );
+        $n = 4;
         $stmt->bindParam(':image4', $nom_image4);
         $stmt->bindParam(':logement', $id_logement);
+        $stmt->bindParam(':numero', $n);
         $stmt->execute();
     }
 
@@ -367,11 +371,13 @@
 
 
         $stmt = $dbh->prepare(
-            'INSERT INTO locbreizh._photos_secondaires (logement, photo)
-                VALUES (:logement, :image5)'
+            'INSERT INTO locbreizh._photos_secondaires (logement, photo,numero)
+                VALUES (:logement, :image5, :numero)'
         );
+        $n = 5;
         $stmt->bindParam(':image5', $nom_image5);
         $stmt->bindParam(':logement', $id_logement);
+        $stmt->bindParam(':numero', $n);
         $stmt->execute();
     }
 
@@ -384,12 +390,15 @@
         $stmt->execute();
 
         $stmt = $dbh->prepare(
-            'INSERT INTO locbreizh._photos_secondaires (logement, photo)
-                VALUES (:logement, :image6)'
+            'INSERT INTO locbreizh._photos_secondaires (logement, photo,numero)
+                VALUES (:logement, :image6, :numero)'
             
         );
+        $n = 6;
         $stmt->bindParam(':image6', $nom_image6);
         $stmt->bindParam(':logement', $id_logement);
+        $stmt->bindParam(':image6', $nom_image6);
+        $stmt->bindParam(':numero', $n);
         $stmt->execute();
     }
 

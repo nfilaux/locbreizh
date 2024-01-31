@@ -45,14 +45,24 @@ CREATE TABLE
         CONSTRAINT compte_fk_adresse FOREIGN KEY (adresse) REFERENCES _adresse (id_adresse),
         CONSTRAINT compte_fk_photo FOREIGN KEY (photo) REFERENCES _photo (url_photo)
     );
-
+/* table clefs API */
+CREATE TABLE IF NOT EXISTS locbreizh._clefsapi(
+    idclef numeric NOT NULL,
+    droitgrandeconsultation boolean,
+    droitpetiteconsultation boolean,
+    droitconsultationcalendrier boolean,
+    droitrendreindisponible boolean,
+    estadmin boolean,
+    id_proprio integer,
+    CONSTRAINT _clefsapi_pk PRIMARY KEY (idclef)
+);
 /*   table proprietaire : est utilisée pour designer un propriétaire   */
 
 CREATE TABLE
     _proprietaire (
         id_proprietaire SERIAL,
         rib CHAR(34) NOT NULL,
-        carte_identite VARCHAR(50) NOT NULL,
+        carte_identite VARCHAR(50),
         CONSTRAINT proprietaire_pk PRIMARY KEY (id_proprietaire),
         CONSTRAINT proprietaire_fk_id FOREIGN KEY (id_proprietaire) REFERENCES _compte (id_compte)
     );
@@ -128,28 +138,42 @@ CREATE TABLE
 CREATE TABLE
     _planning (
         code_planning SERIAL,
-        tarif_journee NUMERIC(5, 2) NOT NULL, -- d'une journée
         delai_depart_arrivee NUMERIC(2) NOT NULL,
-        disponible          BOOLEAN NOT NULL,
-        libelle_indisponibilite  VARCHAR(255),
         CONSTRAINT planning_pk PRIMARY KEY (code_planning)
         -- disponible ?
         -- si indisponible pourquoi ?
         -- différence de temps entre les départs et les arrivées
     );
-
-/*   table plage_ponctuelle : est utilisée pour renseigner les plages de disponibilité de manière ponctuelle  */
+    
+/*   table plage_ponctuelle : est utilisée pour renseigner les plages de disponibilité et d'indisponibilité de manière ponctuelle  */
 
 CREATE TABLE
     _plage_ponctuelle (
         id_plage_ponctuelle SERIAL,
-        debut_plage_ponctuelle DATE NOT NULL,
-        fin_plage_ponctuelle DATE NOT NULL,
-        prix_plage_ponctuelle FLOAT NOT NULL,
-        disponible BOOLEAN NOT NULL,
+        jour_plage_ponctuelle DATE NOT NULL,
         code_planning INTEGER NOT NULL,
         CONSTRAINT plage_ponctuelle_pk PRIMARY KEY (id_plage_ponctuelle),
         CONSTRAINT plage_ponctuelle_fk FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
+    );
+
+/*   table plage_ponctuelle_disponible : est utilisée pour renseigner les plages de disponibilité de manière ponctuelle  */
+
+CREATE TABLE
+    _plage_ponctuelle_disponible (
+        id_plage_ponctuelle INTEGER,
+        prix_plage_ponctuelle FLOAT NOT NULL,
+        CONSTRAINT _plage_ponctuelle_disponible_pk PRIMARY KEY (id_plage_ponctuelle),
+        CONSTRAINT _plage_ponctuelle_disponible_fk FOREIGN KEY (id_plage_ponctuelle) REFERENCES _plage_ponctuelle (id_plage_ponctuelle) ON DELETE CASCADE
+    );
+    
+/*   table plage_ponctuelle_indisponible : est utilisée pour renseigner les plages d'indisponibilité de manière ponctuelle  */
+
+CREATE TABLE
+    _plage_ponctuelle_indisponible (
+        id_plage_ponctuelle INTEGER,
+        libelle_indisponibilite  VARCHAR(255),
+        CONSTRAINT _plage_ponctuelle_indisponible_pk PRIMARY KEY (id_plage_ponctuelle),
+        CONSTRAINT _plage_ponctuelle_indisponible_fk FOREIGN KEY (id_plage_ponctuelle) REFERENCES _plage_ponctuelle (id_plage_ponctuelle) ON DELETE CASCADE
     );
 
 /*   table contrainte : est utilisée pour renseigner une contrainte au niveau du planning (ex : pas après 18h)   */
@@ -168,9 +192,10 @@ CREATE TABLE
 CREATE TABLE
     _plage_recurrente (
         id_plage_recurrente SERIAL NOT NULL,
+        disponible BOOLEAN NOT NULL,
         code_planning INTEGER NOT NULL,
-        debut_plage VARCHAR(8) NOT NULL,
-        fin_plage VARCHAR(8) NOT NULL,
+        libelle_indisponibilite  VARCHAR(255),
+        jour_plage_recurrente VARCHAR(8) NOT NULL,
         type_plage VARCHAR(25) NOT NULL,
         CONSTRAINT plage_recurrente_pk PRIMARY KEY (id_plage_recurrente),
         CONSTRAINT plage_recurrente_fk_code_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
@@ -181,7 +206,7 @@ CREATE TABLE
 CREATE TABLE
     _taxe_sejour (
         id_taxe SERIAL,
-        prix_journalier_adulte NUMERIC(5, 2) NOT NULL,
+        prix_journalier_adulte NUMERIC(7, 2) NOT NULL,
         CONSTRAINT taxe_sejour_pk PRIMARY KEY (id_taxe)
     );
 
@@ -191,7 +216,7 @@ CREATE TABLE
     _logement (
         id_logement SERIAL NOT NULL,
         libelle_logement VARCHAR(30) NOT NULL,
-        tarif_base_HT NUMERIC(5, 2) NOT NULL,
+        tarif_base_HT NUMERIC(7, 2) NOT NULL,
         accroche_logement VARCHAR(100) NOT NULL,
         descriptif_logement VARCHAR(500) NOT NULL,
         nature_logement VARCHAR(15) NOT NULL,
@@ -237,6 +262,7 @@ CREATE TABLE
     _photos_secondaires (
         logement INTEGER NOT NULL,
         photo VARCHAR(50) NOT NULL,
+        numero INTEGER NOT NULL,
         CONSTRAINT photos_secondaires_pk PRIMARY KEY (logement, photo),
         CONSTRAINT photos_secondaires_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement),
         CONSTRAINT photos_secondaires_fk_photo FOREIGN KEY (photo) REFERENCES _photo (url_photo)
@@ -359,6 +385,10 @@ CREATE TABLE
         date_depart DATE NOT NULL,
         client INTEGER NOT NULL,
         logement INTEGER NOT NULL,
+        url_detail varchar(50) not null,
+        accepte boolean,
+        visibleP boolean DEFAULT TRUE NOT NULL,
+        visibleC boolean DEFAULT TRUE NOT NULL,
         CONSTRAINT demande_devis_pk PRIMARY KEY (num_demande_devis),
         CONSTRAINT demande_devis_fk_client FOREIGN KEY (client) REFERENCES _client (id_client),
         CONSTRAINT demande_devis_fk_logement FOREIGN KEY (logement) REFERENCES _logement (id_logement)
@@ -370,46 +400,28 @@ CREATE TABLE
     _devis (
         num_devis serial,
         client integer NOT NULL,
-        prix_total_devis NUMERIC(5, 2) NOT NULL,
-        tarif_HT_location_nuitee_devis NUMERIC(5, 2) NOT NULL,
-        sous_total_HT_devis NUMERIC(5, 2) NOT NULL,
-        sous_total_TTC_devis NUMERIC(5, 2) NOT NULL,
-        frais_service_platforme_HT_devis NUMERIC(5, 2) NOT NULL,
-        fras_service_platforme_TTC_devis NUMERIC(5, 2) NOT NULL,
+        date_arrivee DATE NOT NULL,
+        date_depart DATE NOT NULL,
+        prix_total_devis NUMERIC(7, 2) NOT NULL,
+        tarif_HT_location_nuitee_devis NUMERIC(7, 2) NOT NULL,
+        sous_total_ht_devis NUMERIC(7, 2) NOT NULL,
+        sous_total_ttc_devis NUMERIC(7, 2) NOT NULL,
+        frais_service_platforme_ht_devis NUMERIC(7, 2) NOT NULL,
+        frais_service_platforme_ttc_devis NUMERIC(7, 2) NOT NULL,
         date_devis DATE NOT NULL,
         date_validite numeric(3) not null,
         condition_annulation VARCHAR(255) NOT NULL,
         num_demande_devis INTEGER NOT NULL,
         taxe_sejour integer not null,
+        url_detail varchar(50) not null,
+        nb_personnes NUMERIC(3) NOT NULL,
+        accepte boolean,
+        annule boolean DEFAULT FALSE NOT NULL,
+        visibleP boolean DEFAULT TRUE NOT NULL,
+        visibleC boolean DEFAULT TRUE NOT NULL,
         CONSTRAINT devis_pk PRIMARY KEY (num_devis),
         CONSTRAINT devis_fk_taxe_sejour FOREIGN KEY (taxe_sejour) REFERENCES _taxe_sejour (id_taxe),
         CONSTRAINT devis_fk_demande_devis FOREIGN KEY (num_demande_devis) REFERENCES _demande_devis (num_demande_devis)
-    );
-
-/*   table message_demande : est utilisée pour un message de type demande de devis   */
-
-create table
-    _message_demande(
-        id_message_demande integer not null,
-        lien_demande varchar(50) not null,
-        accepte boolean,
-        id_demande integer not null,
-        CONSTRAINT message_demande_pk PRIMARY KEY (id_message_demande),
-        constraint message_demande_fk_id FOREIGN KEY(id_message_demande) REFERENCES _message(id_message),
-        constraint message_demande_fk_id_demande FOREIGN KEY(id_demande) REFERENCES _demande_devis(num_demande_devis)
-    );
-
-/*   table message_devis : est utilisée pour un message de type devis   */
-
-create table
-    _message_devis(
-        id_message_devis integer not null,
-        lien_devis varchar(50) not null,
-        accepte boolean,
-        id_devis integer not null,
-        CONSTRAINT message_devis_pk PRIMARY KEY (id_message_devis),
-        constraint id_message_devis_fk_id FOREIGN KEY(id_message_devis) REFERENCES _message(id_message),
-        constraint message_devis_fk_id_devis FOREIGN KEY(id_devis) REFERENCES _devis(num_devis)
     );
 
 /*   table facture : est utilisée pour stocker les informations une facture   */
@@ -456,7 +468,7 @@ CREATE TABLE
 
 CREATE TABLE
     _comporte_charges_associee_demande_devis (
-        prix_charges NUMERIC(5, 2) NOT NULL,
+        prix_charges NUMERIC(7, 2) NOT NULL,
         num_demande_devis INTEGER NOT NULL,
         nom_charges VARCHAR(50) NOT NULL,
         nombre INTEGER,
@@ -472,7 +484,7 @@ CREATE TABLE
 
 CREATE TABLE
     _comporte_charges_associee_devis (
-        prix_charges NUMERIC(5, 2) NOT NULL,
+        prix_charges NUMERIC(7, 2) NOT NULL,
         num_devis INTEGER NOT NULL,
         nom_charges VARCHAR(50) NOT NULL,
         nombre INTEGER,
@@ -485,7 +497,7 @@ CREATE TABLE
 
 CREATE TABLE
     _possede_charges_associee_logement (
-        prix_charges NUMERIC(5, 2) NOT NULL,
+        prix_charges NUMERIC(7, 2) NOT NULL,
         id_logement INTEGER NOT NULL,
         nom_charges VARCHAR(50) NOT NULL,
         CONSTRAINT possede_charges_associee_logement_pk PRIMARY KEY (id_logement, nom_charges),

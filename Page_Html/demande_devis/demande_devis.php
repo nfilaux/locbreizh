@@ -60,21 +60,22 @@
 
     <main class="MainTablo">
     <div class="headtablo">
-        <a href="logement_detaille_client"><img src="../svg/flecheRetour.svg"/></a>
+        <a href="../Logement/logement_detaille_client.php?logement=<?php echo $_GET['logement']; ?>"><img src="../svg/flecheRetour.svg"/></a>
             <h1>Faire ma demande de devis</h1>
     </div>
  
         <form name="envoie_demande_devis" method="post" action="envoyer_demande.php" enctype="multipart/form-data">
             <div class="logrow">
-                <div class="log5vct">  
+                <div class="datedevis">
+                <div class="demdevis">  
                     <label for="dateArrivee">Date d’arrivée :</label>
                     <input class="logvctC" type="date" id="dateArrivee" name="dateArrivee" value="<?php if(isset($_POST['arrive'])) { echo htmlentities($_POST['arrive']);}?>" required/>
                 </div>
-                <div class="log5vct">  
+                <div class="demdevis">  
                     <label for="dateDepart">Date de depart :</label>
                     <input class="logvctC" type="date" id="dateDepart" name="dateDepart" value="<?php if(isset($_POST['depart'])) { echo htmlentities($_POST['depart']);}?>" required/>
                 </div>
-                
+                </div>
                 <div class="log5vct">  
                     <label for="nb_pers">Nombre de persones :</label>
                     <!--appel php pour set la max value de nb personne par rapport au choix du proprio-->
@@ -108,7 +109,13 @@
                         echo '<p class="err">La date ne peut pas être utlérieure à celle d\'aujourd\'hui !</p>';
                     }
                     if($_GET['erreur'] == 1){
-                        echo '<p class="err">La date de départ ne doit pas être utlérieure à la date d\'arrivee !</p>';
+                        echo '<p class="err">La date de départ ne doit pas être utlérieure à la date d\'arrivée !</p>';
+                    }
+                    if($_GET['erreur'] == 3){
+                        echo '<p class="err">Certains jours du planning ne sont pas disponibles !</p>';
+                    }
+                    if($_GET['erreur'] == 4){
+                        echo '<p class="err">Il faut au minimum une nuit pour réserver un logement !</p>';
                     }
                 }
                     
@@ -120,18 +127,18 @@
         <div id="overlayDemandeDeDevis" onclick="closePopupFeedback('popupFeedback', 'overlayDemandeDeDevis')"></div>
         <div id="popupFeedback" class="popupFeedback">
             <p>Votre demande de devis a bien été envoyée !</p>
-            <a href="../messagerie/messagerie.php" class="btn-accueil"></button>OK</a>
+            <a href="../gestion_devis/gestion_des_devis_client.php" class="btn-accueil"></button>OK</a>
         </div>
     </main>
     <?php
-        echo file_get_contents('../header-footer/footer.html');
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
-
 </html>
 
 <?php
-    if($_GET['erreur'] === '0'){
+    if(isset($_GET['erreur']) && $_GET['erreur'] === '0'){
         ?>
         <script>
             openPopupFeedback('popupFeedback', 'overlayDemandeDeDevis');

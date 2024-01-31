@@ -23,58 +23,78 @@ $photo = $stmt->fetch();
 </head>
 
 <body>
-    <header>
-        <a href="../Accueil/accueil_client.php">
-            <img class="logot" src="../svg/logo.svg">
-            <h2>Loc'Breizh</h2>
-        </a>
-        <div class="brecherche">
-            <img src="../svg/filtre.svg">
-            <input id="searchbar" type="text" name="search">
-            <img src="../svg/loupe.svg">
+    <?php 
+    include('../header-footer/choose_header.php');
+    ?>
+    <main class="MainTablo">
+        <div class="headtablo"> 
+            <h1>Mes Réservations</h1>
         </div>
-
-        <img src="../svg/booklet-fill 1.svg">
-        <a href="../reservation/liste_reservations.php"><h4>Accèder à mes réservations</h4></a>
-
-        <div class="imghead">
-            <a href="../messagerie/messagerie.php" ><img src="../svg/message.svg"></a>
-            <a onclick="openPopup()"><img id="pp" class="imgprofil" src="../Ressources/Images/<?php echo $photo['photo']; ?>" width="50" height="50"></a> 
+        <div class="filters">
+            <form action="filtrage.php" method="post" class="menu-filtreR" onsubmit="return verifierChamps()">
+                <div class="filR">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                            <label for="prix_min">min</label>
+                        </div>
+                        <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
+                    </div>  
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label for="prix_max">max</label>
+                        </div>
+                        <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
+                    </div>
+                    <div class="input-group-pers">
+                        <div class="input-group-prepend">
+                            <label for="date">Date</label>
+                        </div>
+                        <input type="Date" id="date" name="date" placeholder="<?php if (isset($_GET['date'])){echo $_GET['date'];}  ?>"/>   
+                    </div>
+                        <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
+                </div>
+                <?php if (isset($_GET['erreur'])){ ?>
+                    <p class='err'>Le prix min doit être inférieur au prix max</p>
+                <?php }?>
+            </form>
         </div>
-        <div id="popup" class="popup">
-            <a href="">Accéder au profil</a>
-            <br>
-            <a href="../Compte/SeDeconnecter.php">Se déconnecter</a>
-            <a onclick="closePopup()">Fermer la fenêtre</a>
-        </div>
-    </header>
-
-    <main>
-
-        <div>
-            <?php
-            include('../parametre_connexion.php');
+        
+        
+        <div style="display:flex; flex-direction:column-reverse;"><?php
                 try {
-                    
+                    $filtre = '';
 
-                    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-                    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                    if (sizeof($_GET)==1){
+                        foreach ($_GET as $NomFiltre => $choix) {
+                            switch($NomFiltre){
+                                case 'prixMin' :    $filtre = "and d.prix_total_devis>=$choix";  break;
+                                case 'prixMax' :    $filtre = "and d.prix_total_devis<=$choix"; break;
+                                case 'date' :       $filtre = "and d.date_depart>='$choix' AND d.date_arrivee<='$choix'"; break;
+                            }
+                        }
+                    } else if (sizeof($_GET)>1){
+                        $prix1 = $_GET['prixMin'];
+                        $prix2 = $_GET['prixMax'];
+                        $filtre = "WHERE d.prix_total_devis>=$prix1 AND d.prix_total_devis<=$prix2";
+                    }
+
+                    $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale, libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo
+                        from locbreizh._reservation r
+                        join locbreizh._logement l on l.id_logement = r.logement
+                        join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
+                        join locbreizh._compte c on c.id_compte = p.id_proprietaire
+                        join locbreizh._adresse a on l.id_adresse = a.id_adresse
+                        join locbreizh._facture f on f.num_facture = r.facture
+                        join locbreizh._devis d on d.num_devis = f.num_devis
+                        where r.client = {$_SESSION['id']} $filtre;");     
+
                 } catch (PDOException $e) {
                     print "Erreur !:" . $e->getMessage() . "<br/>";
                     die();
                 } 
 
                 
-                $stmt = $dbh->prepare("SELECT lien_devis, l.photo_principale, ville, code_postal, f.url_facture, l.id_logement, nom, prenom, c.photo
-                from locbreizh._reservation r
-                join locbreizh._logement l on l.id_logement = r.logement
-                join locbreizh._proprietaire p on l.id_proprietaire = p.id_proprietaire
-                join locbreizh._compte c on c.id_compte = p.id_proprietaire
-                join locbreizh._adresse a on l.id_adresse = a.id_adresse
-                join locbreizh._facture f on f.num_facture = r.facture
-                join locbreizh._devis d on d.num_devis = f.num_devis
-                join locbreizh._message_devis on d.num_devis = _message_devis.id_devis");
+                
                 $stmt->execute();
                 $reservations = $stmt->fetchAll();
 
@@ -86,21 +106,18 @@ $photo = $stmt->fetch();
                         <section class="rescol">      
                             <div class="logrowb">
                             <div>
-                            <h3 class="titrecardres"> <?php echo $reservation['ville'] . ', ' . $reservation['code_postal'] ?> </h3>
+                            <h3 class="titrecard"><?php echo $reservation['libelle_logement'] ?></h3>
                             <hr class="hrcard">
                             </div>
                             <div class="resrow">
-                            <div>
+                                <img class="imgprofil" src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil"  width="50" height="50">
                                 <p class="restitre resplustaille">Par <?php echo $reservation['nom'] . ' ' . $reservation['prenom'];?></p>
-                                <button class="btn-accueil">Contacter le proprietaire</button>
-                            </div>
-                            <img class="imgprofil" src=<?php echo '../Ressources/Images/' . $reservation['photo']; ?> alt="photo de profil"  width="75" height="75">
                             </div>
                             </div>
                             
 
                             <div class="rescrow">
-                                <a href="../devis/pdf_devis/<?php echo $reservation['lien_devis'];?>" target="_blank"><button class="btn-ajoutlog">CONSULTER DEVIS</button></a>
+                                <a href="../devis/pdf_devis/<?php echo $reservation['url_detail'];?>" target="_blank"><button class="btn-ajoutlog">CONSULTER LA FACTURE</button></a>
                                 <a href="../Logement/logement_detaille_client.php?logement=<?php echo $reservation['id_logement'];?>"><button class="btn-consulter">CONSULTER LOGEMENT</button></a>
                                 <a><button class="btn-suppr" disabled>ANNULER</button></a>
                             </div>
@@ -110,21 +127,14 @@ $photo = $stmt->fetch();
                 <?php } ?>
             
         </div>
+            
+                
     </main>
-    <footer>
-            <div class="tfooter">
-                <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
-                <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-                <a class="margintb" href="connexion.html"><img src="../svg/instagram.svg">  <p>@LocBreizh</p></a>
-                <a  class="margintb" href="connexion.html"><img src="../svg/facebook.svg">  <p>@LocBreizh</p></a>
-            </div>
-            <hr>  
-            <div class="bfooter">
-                <p>©2023 Loc’Breizh</p>
-                <p style="text-decoration: underline;"><a href="connexion.html">Conditions générales</a></p>
-                <p>Développé par <a href="connexion.html" style="text-decoration: underline;">7ème sens</a></p>
-            </div>
-    </footer>
+    <?php
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
+    ?>
 </body>
 
 </html>
+<script src="./actualiserFiltre.js" defer></script>

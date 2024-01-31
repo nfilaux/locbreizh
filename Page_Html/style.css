@@ -19,18 +19,18 @@
 
 html{
     height: 100%;
-    width: 100%;
 }
 
 body {
-    height: 100%;
+    min-height: 100vh;
     padding-bottom: 0;
     margin: 0;
-    background-origin: content-box;
-    width: 100%;
     font-family: 'Quicksand', sans-serif, 'Trebuchet MS';
     background-color: #F5F4F4;
-    display: table;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 350px;
 }
 
 .pagecompte {
@@ -49,7 +49,7 @@ body {
     font-size: 0.7em;
     display: none;
     position: absolute;
-    top: 110%;
+    top: 10%;
     left: 88%;
     transform: translate(-50%, -50%);
     background-color: transparent;
@@ -85,6 +85,17 @@ body {
 }
 
 #overlayDemandeDeDevis {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+#overlayModifierLogement {
     display: none;
     position: fixed;
     top: 0;
@@ -204,20 +215,182 @@ body {
     margin-left : 20px;
     cursor: pointer;
 }
+/*---------------------------------------------------------------- Filtres --------------------------------------------------------------*/
+.section-filters{
+    background: url("Ressources/Images/fond_catalogue.jpg") no-repeat ;
+    background-size: cover;
+    padding: 10em;
+    margin-bottom: 3em;
+}
 
+.menu-filtre{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 10px;
+    background-color: white;
+    padding: 1.25em;
+    border-radius: 0.5em;
+    box-shadow: 10px 5px 5px black;
+
+}
+
+.filR{
+    display:flex; 
+    flex-direction:row; 
+    justify-content:space-around;
+}
+
+.fil{
+    display:flex; 
+    flex-direction:row; 
+    justify-content:space-around;
+}
+
+.menu-filtreR{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: auto 10%;
+    background-color: white;
+    padding: 1.25em;
+    border-radius: 0.5em;
+    box-shadow: 10px 5px 5px black;
+
+}
+
+.input-group {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 10%;
+    input {
+        
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group-ville {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 20%;
+    input {
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group-pers {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 17%;
+    input {
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group-proprio {
+    display: inline-flex;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 30%;
+    input {
+        &:focus {
+          outline: none;
+        }
+      }
+}
+
+.input-group input, .input-group-proprio input , .input-group-pers input , .input-group-ville input {
+    border: none;
+    width: 100%;
+    height: 2em;
+}
+
+.input-group-prepend {
+    display: flex;
+    border-right: 1px solid #ddd;
+    margin-right: 5px;
+}
+
+.input-group-prepend label{
+    margin: auto 0.5em;
+}
+  
+.acc-accroche{
+    color: white;
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    font-size: 2em;
+    margin: auto 0;
+    -webkit-text-stroke-width: 0.01em;
+    -webkit-text-stroke-color: #000;
+}
+
+.btn-fill {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0.5em;
+    background-color: #957BB0; 
+    color: #F6E4FF;
+    border: 1px solid #957BB0; 
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
+}
+
+.btn-fillP {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0.5em;
+    background-color: #274065; 
+    color: #fff;
+    border: 1px solid #274065; 
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Quicksand';
+    padding: 0.5em;
+}
+
+.triage{
+    color: #957BB0; 
+    border: 1px solid #957BB0;
+    border-radius: 5px; 
+    width: 20%;
+    height: 2em;
+    text-align: center;
+    margin-top: 5px;
+    position: relative;
+    left: 78%;
+    margin-bottom: 2em;
+}
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
 header{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    position: relative;
+    justify-content: space-between;
     color: #745086;
     box-sizing: border-box;
     border-bottom: 1px solid #745086; 
     flex-wrap: nowrap;
     background-color: #fff;
+    padding: 1em 2em;
 }
 
 .logot {
@@ -247,7 +420,7 @@ header a:first-child {
 }
 
 header input{
-    width: 25em;
+    width: 100%;
 }
 
 .brecherche {
@@ -319,21 +492,21 @@ header a:last-child {
 
 .headconn img , .headtablo img{
     position: absolute;
-    left: 5em;
-    top: 1em;
+    left: 3em;
+    top: 1.5em;
 }
 
 .headconn h1 , .headtablo h1 {
     color: #fff;
-    font-size: 4em;
+    font-size: 3em;
     margin: 3px;
     font-family: 'PatuaOne';
 }
 
 .headconn img , .headtabloP img{
     position: absolute;
-    left: 5em;
-    top: 1em;
+    left: 3em;
+    top: 1.5em;
 }
 
 .headconn h1 , .headtabloP h1 {
@@ -343,6 +516,68 @@ header a:last-child {
     font-family: 'PatuaOne';
 }
 
+/*----------------------------------------------------------------Carroussel----------------------------------------------------------------*/
+
+.slider-container {
+    width: 90%;
+    height: 500px;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slider {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.controls {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 10px;
+}
+
+.controls button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.controls ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.controls li {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #bbb;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.controls li.selected {
+    background-color: #333;
+}
 
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
 
@@ -352,11 +587,24 @@ header a:last-child {
     padding-right: 0%;
 }
 
+.MainTableau{
+    padding-top: 0vw;
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+.mainacc{
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
 main{
     padding-top: 5vw;
     padding-bottom: 5vw;
     padding-left: 2em;
     padding-right: 2em;
+    flex:1;
 }
 
 main label, .Tablobord h2{
@@ -387,14 +635,22 @@ main h1{
     height: auto;
     border: none;
     border: 1px solid #745086; 
+    margin: 2em 0 1em 0;
+}
+
+.hr2{
+    height: auto;
+    border: none;
+    border: 1px solid #745086; 
     margin: 0;
+    width: 90%;
 }
 
 .hrP{
     height: auto;
     border: none;
     border: 1px solid #274065; 
-    margin: 0;
+    margin: 1em 0 1em 0;
 }
 
 
@@ -440,25 +696,30 @@ footer{
     background-color: #745086;
     color: #F6E4FF;
     margin-bottom: 0;
-    display: table-row;
-    bottom: 0;
-    box-sizing: border-box;
-    border-top: 1px solid #F6E4FF   ;
     width: 100%;
     height:5em;
+    position: relative;
+    bottom: 0;
+    display: table;
+    box-sizing: border-box;
+    border-top: 1px solid #F6E4FF;
+    
 }
+
 
 .footerP{
     padding-top: 1px;
     background-color: #274065;
     color: #b8cded;
     margin-bottom: 0;
-    display: table-row;
+    display: table;
+    position: relative;
     bottom: 0;
     box-sizing: border-box;
     border-top: 1px solid #b8cded;
     width: 100%;
     height:5em;
+ 
 }
 
 
@@ -469,7 +730,11 @@ footer{
     justify-content: space-around;
 }
 
-footer hr{
+.bfooter p:last-child{
+    visibility: visible;
+}
+
+footer>hr{
     border-width: 1px;
     border-color: #F6E4FF;
     width: 87%;
@@ -479,6 +744,15 @@ footer div p {
     padding: 0%;
 }
 
+.footerwrap{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.footerwrap p {
+    margin: auto;
+}
 
 /*----------------------------------------------------------------Link----------------------------------------------------------------*/
 
@@ -560,6 +834,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-accueilins:visited{
+    color: #745086;
+}
+
+.btn-accueilins:link{
     color: #745086;
 }
 
@@ -726,7 +1004,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     text-align: center;
 }
 
-#charges_animaux, #charges_pers_sup, #charges_menage ,#taxe_sejour{
+#charges_animaux, #charges_pers_sup, #charges_menage {
     color: #957BB0;
     text-align: center;
 }
@@ -737,38 +1015,68 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     margin: auto;
 }
 
-.card section{
+.logementCard{
+    width: 30%;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 15px;
+    border: 4px solid #5B3F69;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.logementCard>a{
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    background-color: #745086;
-    border-radius: 15px;
-    padding-top: 5px;
-    width: 20%;
-    margin: 1em 2%;
+    text-decoration: none;
+    font-weight:549;
 }
 
-.card section article{
+.logementCard>a>img{
+    height: 300px;
+    object-fit:cover;
+    border: 1px solid #5B3F69;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.infoContainer{
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    padding: 10px;
 }
 
-.card section article h3,.card section article h4{
-    color: #fff;
+.logementTitre{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.card section article img{
-    margin: 0;
-    border-radius: 15px;
-    width: 96%;
+.mainInfos{
+    display: flex;
+    flex-direction: column;
 }
+
+.otherInfos{
+    display: flex;
+    flex-direction: column;
+}
+
+.otherInfos div{
+    display: flex;
+    align-items: center;
+}
+
+.otherInfos img{
+    margin-right: 10px;
+}
+
+
 
 .cardlogmain {
     display: flex;
@@ -798,7 +1106,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     margin: 1em auto;
     background-color: #FCF0E2;
     padding: 1em;
-    width: 90%;
+    width: 60%;
 }
 
 .colreverse{
@@ -839,18 +1147,6 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding-top: 0.2em;
 }
 
-.popup {
-    display: none;
-    position: fixed;
-    top: 15%;
-    left: 91%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
 
 .box {
     width: 30em;
@@ -884,26 +1180,24 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .cp {
     display: flex;
-    flex-direction: column;
-    margin: 1em auto auto auto;
-    font-size: 1.5em;
+    justify-content: space-between;
+    margin: 1vh 0;
+    align-items: center;
 }
 
-.cprow {
+.cprow{
+    width: 50%;
     display: flex;
-    flex-direction: row;
-    width: 100%;
+    justify-content: space-around;
+    align-items: baseline;
 }
 
 .condition {
-    width: auto;
-    padding-left: 35%;
-    padding-right: 35%;
     margin-top: 2em;
     margin-bottom: 2em;
-    font-size: 1em;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .testinput {
@@ -964,13 +1258,20 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 /*----------------------------------------------------------------Logement----------------------------------------------------------------*/
 
+.modif_log_img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+
+}
+
 .logcolumn{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     width: 48%;
     margin-bottom: 3%;
     margin-top: 3%;
+    justify-content: space-around;
 }
 .logcolumn > p{
     margin: 4vw
@@ -986,8 +1287,18 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 70%;
+    
 }
+
+.logcp p {
+    align-items: center;
+    display: flex;
+}
+
+.logcp img {
+    margin-right: 1em;
+}
+
 
 .logc{
     display: flex;
@@ -996,21 +1307,34 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: 48%;
 }
 
+.logI{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 48%;
+    margin: 3em auto;
+}
+
 .logdem{
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: #fff;
-    width: 20%;
+    width: 40%;
     padding: 1em;
     margin: auto;
     border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .logcarte{
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.logcarte p{
+    text-align: center;
 }
 
 .devis{
@@ -1029,8 +1353,8 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .log3vct{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    width: 25%;
+    justify-content: space-between;
+    width: 28%;
 }
 
 .log4vct{
@@ -1047,6 +1371,12 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .logrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.logrowcal {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -1095,9 +1425,15 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .cardprixcharge {
-    width: 100%;
-    font-size: 2em;
-    color: #745086;
+    width: 30em;
+    font-size: 1em;
+    color: #345C99; 
+    border: 1px solid #345C99;
+    border-radius: 5px; 
+    height: 2em;
+    text-align: center;
+    margin-bottom: 1em;
+    margin-top: 5px;
 }
 
 .titreAL {
@@ -1112,8 +1448,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: flex-end;
     margin: 0.2em auto 0.2em auto;
-    width: 8em;
+    width: 10em;
 }
 
 .description {
@@ -1129,8 +1466,8 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 fieldset {
-    width: 80%;
-    margin: 1em auto;
+    width: 82%;
+    margin: 1em 3.5em;
     padding: 1em;
     border: 1px solid #ccc;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
@@ -1146,6 +1483,7 @@ fieldset label{
     border-radius: 5px; 
     width: 100%;
     height: 8em;
+    margin-top: 5px;
 }
 
 .logPAP{
@@ -1153,7 +1491,9 @@ fieldset label{
     border: 1px solid #345C99;
     border-radius: 5px; 
     width: 100%;
-    height: 8em;
+    height: 4em;
+    margin-top: 5px;
+    padding: 5px;
 }
 
 .lognom{
@@ -1162,7 +1502,8 @@ fieldset label{
     border-radius: 5px; 
     width: 100%;
     height: 2em;
-    text-align: center;
+    padding: 5px;
+    margin-top: 5px;
 }
 
 .logvct{
@@ -1171,7 +1512,8 @@ fieldset label{
     border-radius: 5px; 
     width: 100%;
     height: 2em;
-    text-align: center;
+    padding: 5px;
+    margin-top: 5px;
 }
 
 .logvctC{
@@ -1207,9 +1549,10 @@ fieldset label{
     color: #345C99; 
     border: 1px solid #345C99;
     border-radius: 5px; 
-    width: 100%;
+    width: 104%;
     height: 2em;
     text-align: center;
+    margin-top: 5px;
 }
 .devis{
     display: flex;
@@ -1238,19 +1581,15 @@ fieldset label{
     margin-bottom: 0.2em;
 }
 
-
-.logrowt > p {
-    margin: 0 4vw;
-}
-
-
 .nuit {
     background-color: #FAE3C6;
     border-radius: 10px;
     color: #745086;
     padding: 5px;
     display: flex;
-    align-self: flex-end;
+    justify-content: center;
+    width: 98%;
+
 }
 
 .nuitP {
@@ -1259,7 +1598,8 @@ fieldset label{
     color: #274065;
     padding: 5px;
     display: flex;
-    align-self: flex-end;
+    justify-content: center;
+    width: 98%;
 }
 
 .potitre {
@@ -1272,6 +1612,8 @@ fieldset label{
 iframe {
     width: 80%;
     margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .cardcondition {
@@ -1327,14 +1669,6 @@ iframe {
     justify-content: center;
 }
 
-
-.photoprincipal{
-    width: 90%;
-    height: 20em;
-    object-fit: contain;
-    border-radius: 15px;
-}
-
 .photosecondaireP {
     width: 48%;
     height: 20em;
@@ -1342,33 +1676,6 @@ iframe {
     border-radius: 15px;
 }
 
-.photosecondaireI {
-    width: 23%;
-    height: 20em;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-.photosecondaireP5 {
-    width: 48%;
-    height: 22em;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-.photosecondaireI5 {
-    width: 48%;
-    height: 10em;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-.photosecondaireP6 {
-    width: 30%;
-    height: 20em;
-    object-fit: cover;
-    border-radius: 15px;
-}
 
 .imgsecondaire {
     display: flex;
@@ -1419,6 +1726,7 @@ iframe {
     display: flex;
     align-items: center;
     justify-content: space-around;
+
 }
 
 .fond{
@@ -1436,7 +1744,7 @@ iframe {
 .teteCalendrier{
     display: flex;
     align-items: center;
-    padding: 0px 20px;
+    padding: 0vh 2vh;
     justify-content: space-between;
 }
 
@@ -1500,8 +1808,16 @@ iframe {
     margin-top: 30px;
 }
 
-.normal:hover{
+.normal{
     color: #000;
+}
+
+.indisponible{
+    color: red;
+}
+
+.disponible{
+    color: green;
 }
 
 .calendrier ul{
@@ -1537,7 +1853,7 @@ iframe {
     transform: translate(-50%, -50%);
 }
 
-.entreDeux:hover::before, .normal:hover::before{
+.entreDeux:hover::before, .normal:hover::before, .indisponible:hover::before, .disponible:hover::before{
     cursor: pointer;
     background-color: #D3D3D3;
 }
@@ -1553,6 +1869,16 @@ iframe {
 .entreDeux{
     background-color: rgba(130, 100, 170, 0.25);
     width: 100px;
+}
+
+.plages .logcolumn{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.plages .logcolumn .fond{
+    width: 30vh;
 }
 
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
@@ -1637,6 +1963,39 @@ iframe {
     width: 25%;
 }
 
+.devis_select{
+    width: 30%;
+    border-radius: 5px;
+    height: 30px;
+    padding-left: 1vw;
+    background-color: white;
+    color: #345C99;
+    border: #000 solid 1px;
+}
+
+.annulation{
+    display: flex;
+    width: 40%;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+}
+
+.datedevis{
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: space-around;
+}
+
+.demdevis{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    margin: auto 1em;
+}
+
 /*----------------------------------------------------------------Réservation----------------------------------------------------------------*/
 
 .MainReser{
@@ -1649,7 +2008,7 @@ iframe {
 
 #paypal-button-container {
     margin: auto;
-    width: 50%;
+    width:45%;
 }
 
 .cardresmain {
@@ -1659,7 +2018,7 @@ iframe {
     justify-content: center;
     border: 2px solid #745086;
     width: 80%;
-    margin: auto;
+    margin: 1em auto;
     background-color: #FCF0E2;
     padding: 1em;
 }
@@ -1671,17 +2030,18 @@ iframe {
     justify-content: center;
     border: 2px solid #274065;
     width: 80%;
-    margin: auto;
+    margin: 1em;
     background-color: #FCF0E2;
     padding: 1em;
 }
 
 .cardresmainimg {
     width: 25%;
-    height: 90%;
+    height: 20vh;
     margin: auto 0.5em auto 0em;
     border: 2px solid #745086;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 .titrecardres {
@@ -1741,8 +2101,8 @@ iframe {
     font-family: 'PatuaOne';
     font-weight: 600;
     font-size: 2.5em;
-    margin-top: auto;
-    margin-bottom: auto;
+    text-align: center;
+    margin-top: 0;
 }
 
 .policetitres {
@@ -1783,17 +2143,58 @@ iframe {
     align-items: center;
 }
 
-.row-profil label {
+.row-profil label{
     font-weight: normal;
     color: #745086;
     text-transform: inherit;
 }
 
-.row-profil input {
+.row-profil input{
     width: 50%;
     height: 2.5vw;
     border-radius: 5px;
     padding-left: 1vw;
+}
+
+.row-profil select{
+    width: 52%;
+    height: 2.5vw;
+    border-radius: 5px;
+    padding-left: 1vw;
+    background-color: white;
+    color: #957BB0;
+    font-size: 1.25em;
+    border: #000 solid 2px;
+} 
+
+.row-profil-mdp {
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 0;
+    align-items: center;
+}
+
+.row-profil-mdp label {
+    font-weight: normal;
+    color: #745086;
+    text-transform: inherit;
+}
+
+.row-profil-mdp input {
+    width: 100%;
+    height: 2.5vw;
+    border-radius: 5px;
+    padding-left: 1vw;
+    margin-right: 2em;
+}
+
+.mdpeye{
+    width: 52%;
+    display: flex;
+    height: 2.5vw;
+    align-items: center;
+    justify-content: space-between;
+
 }
 
 .main-profil {
@@ -1801,8 +2202,82 @@ iframe {
     font-size: 1.5em;
 }
 
-.compte-infos label,
-.div-adresse>p {
+.ligne_adresse{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.numero_rue{
+    width: 25%;
+    display: flex;
+    align-items: baseline;
+    padding: 0.5em 0 0.5em 0;
+}
+.numero_rue input{
+    width: 20%;
+    margin-left : 2em;
+    height: 2.5vw;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.nom_rue {
+    width: 75%;
+    display: flex;
+    align-items: baseline;
+    padding: 0.5em 0 0.5em 0;
+}
+
+.nom_rue input{
+    width: 90%;
+    margin-left : 2em;
+    height: 2.5vw;
+    border-radius: 5px;
+    padding-left: 1vw;
+}
+.nom_rue label{
+    width: 10%;
+}
+
+.code_postal {
+    display: flex;
+    align-items: baseline;
+    width: 50%;
+    padding: 0.5em 0 0.5em 0;
+}
+
+
+.code_postal input{
+    margin-left: 2em;
+    height: 2.5vw;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.adresse_ville{
+    display: flex;
+    align-items: baseline;
+    width: 50%;
+    padding: 0.5em 0 0.5em 0;
+}
+
+.adresse_ville label{
+    width: 20%;
+}
+
+.adresse_ville input{
+    width: 80%;
+    margin-left: 2em;
+    height: 2.5vw;
+    border-radius: 5px;
+    padding-left: 1vw;
+}
+
+.compte-infos label, .label {
     color: #000;
     text-transform: uppercase;
     font-weight: bold;
@@ -1981,18 +2456,27 @@ iframe {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    color: #000;
+
+    
 }
 
 .profil-form>div:last-of-type img {
     aspect-ratio: 1 / 1;
     width: 70%;
-    border: 1px solid #5B3F69;
+    border: 4px solid #5B3F69;
     border-radius: 50%;
+    margin-bottom: 2em;
+    object-fit: cover;
 }
 
 .profil-form>div:last-of-type>label {
     color: #000;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .profil-form>div:first-of-type {
@@ -2181,4 +2665,1030 @@ iframe {
 }
 .btn-modif-logement button{
     width: 30vw;
+}
+
+
+/*--------------------------------- GESTION DES DEVIS ------------------------------*/
+
+.gestion_devis{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+.partie_demande > div, .partie_devis > div {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.partie_demande, .partie_devis{
+    text-align: center;
+    width: 45%;
+}
+
+.partie_devis > div > div > div, .partie_demande > div > div > div{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.img_devis{
+    width: 20vw;
+    height: 10vw;
+    object-fit: cover;
+    margin: auto 0.5em auto 0em;
+    border: 2px solid #745086;
+    border-radius: 10px;
+}
+
+.bouton_devis{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1em;
+}
+
+.bouton_devis button{
+    background-color: red; 
+    color: #fff;
+    border: 1px solid red; 
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+    width: 8vw;
+    min-width: 110px;
+    height: 2vw;
+    min-height: 40px;
+    align-self: center;
+}
+
+#devis_accepter{
+    background-color: green;
+    border: 1px solid green; 
+}
+
+
+.card_devis{
+    border: 2px solid #745086;
+    margin: 1em auto;
+    background-color: #FCF0E2;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.card_devis  > div p{
+    color: #5B3F69;
+}
+
+.card_devis > button{
+    align-self:flex-end;
+    background-color: red;
+    border: red;
+    border-radius: 5px;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    font-size: large;
+    font-weight: 900;
+}
+
+.bouton_devis{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1em;
+}
+
+.reponse_devis{
+    font-weight: bold;
+    color: red;
+}
+
+.popup_devis{
+    padding: 10px;
+    font-size: 1em;
+    display: none;
+    position: fixed;
+    text-align: start;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #745086;
+    box-shadow: none;
+    z-index: 1000;
+    text-align: center;
+}
+
+.btn_ferm_oui{
+    background-color: red; 
+    color: #fff;
+    border: 1px solid red; 
+    border-radius: 5px;
+    width: 50px;
+    height: 30px;
+}
+
+.btn_ferm_annulerP{
+    background-color: #274065; 
+    color: #ffffff;
+    border: 1px solid #274065; 
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+}
+
+.btn_ferm_annuler{
+    background-color: #745086; 
+    color: #ffffff;
+    border: 1px solid #745086; 
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+}
+
+@media screen and (min-width: 900px) and (max-width: 1280px) {
+    .logot {
+        height: 3em;
+        width: 3em;
+    }
+    header input{
+        width: 100%;
+    }
+    header h2 {
+        margin:auto 0.5em auto 0.5em;
+    }
+    header h4{
+        margin-right: 0.5em;
+    }
+    .brecherche {
+        margin:auto 1em auto 1em;
+    }
+    /*-------------------------------Accueil-------------------------------*/
+    .fil{
+        flex-direction: column;
+    }
+    .filR{
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-ville {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-pers {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-proprio {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+
+    .btn-fill {
+        width: 50%;
+        margin: 0.5em auto;
+    }
+    .btn-fillP {
+        width: 50%;
+        margin: 0.5em auto;
+    }
+    .menu-filtre{
+        text-align: center;
+    }
+
+    .card{
+        font-size: 0.6em;
+    }
+
+    .logementCard>a>img{
+        margin: 0;
+        border-radius: 0px;
+        width:50%;
+        border: 5px solid #745086;
+        height: 200px;
+    }
+    .mainInfos span:last-child{
+        font-size: 2em;
+    }
+    .logementCard>a{
+        width:100%;
+        flex-direction: row;
+    }
+
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin: 2em auto;
+    }
+    .cardtel div:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel div:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+
+    .infoContainer{
+        padding: 0;
+        justify-content: flex-start;
+        margin: 0;
+    }
+
+    .mainInfos:first-child{
+        flex-direction: column;
+        background-color: #745086;
+        width: 100%;
+        color: #fff;
+        width: 100%;
+    }
+    .otherInfos div{
+        margin-top: 1em;
+        margin-left: 2%;
+        font-size: 2em;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    
+    .card div:last-child {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .card .cardphone div:last-child {
+        flex-direction: row;
+        width: 100%;
+    }
+}
+
+
+@media screen and (min-width: 600px) and (max-width: 899px) {
+
+    /*-------------------------------Header-------------------------------*/
+    .logot {
+        height: 1.5em;
+        width: 1.5em;
+    }
+    header h2 {
+        margin:auto 0em auto 0em;
+        font-size: 1.5em;
+    }
+    header h4{
+        margin-right: 0em;
+        font-size: 0.7em;
+    }
+    .brecherche {
+       visibility: hidden;
+       width: 0%;
+       margin: 0;
+    }
+    header a:last-child {
+        margin-left: 0.5em;
+    }
+
+    .btn-accueilins {
+        margin-left: 0;
+    }
+
+    .headconn h1, .headtabloP h1{
+        font-size: 2em;
+    }
+
+    .headconn img, .headtabloP img{
+        left: 1.5em;
+        top: 1em;
+    }
+    /*-------------------------------FOOTER-------------------------------*/
+    .tfooter {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 0.5em;
+    }
+
+    .bfooter {
+        flex-direction: row;
+        justify-content: center;
+        font-size: 0.5em;   
+    }
+    .bfooter p:first-child{
+        margin-right: 2em;
+    }
+
+    .bfooter p:last-child{
+        visibility: hidden;
+        width: 0px;
+    }
+    .margintb img{
+        width: 20px;
+    }
+    /*-------------------------------Accueil-------------------------------*/
+
+    .card section article .accicone {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .card section article .accicone img {
+        visibility: visible;
+        text-decoration: none;
+        border: none;
+        margin: auto 0.5em;
+        width: auto;
+    }
+
+    .card section{
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        box-sizing: border-box;
+        border: 1px solid #745086;
+        border-radius: 15px;
+        width: 100%;
+        object-fit: cover;
+        padding: 0px;
+    }
+    
+    .card section article h3,.card section article h4{
+        color: #745086;
+    }
+
+    .card section article img{
+        margin: 0;
+        border-radius: 15px;
+        width:50%;
+        border: 5px solid #745086;
+        object-fit: cover;
+    }
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin: 2em auto;
+    }
+    .cardtel article:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel article:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    .cardphone article:first-child {
+        background-color: #745086;
+        width: 100%;
+        border-top-right-radius: 12px;
+    }
+    
+    .card section article:last-child {
+        flex-direction: column;
+        margin: auto 0.5em;
+    }
+
+    .card section article img {
+        margin: auto;
+        width: 100%; 
+        object-fit: cover;
+    }
+
+    .section-filters{
+        padding: 5em;
+    }
+
+    .fil{
+        flex-direction: column;
+    }
+
+    .filR{
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-ville {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-pers {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-proprio {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    .menu-filtre{
+        text-align: center;
+    }
+
+    .btn-fill {
+        width: 40%;
+        margin: 0.5em auto;
+    }
+
+    .btn-fillP {
+        width: 40%;
+        margin: 0.5em auto;
+    }
+
+    .card{
+        font-size: 0.6em;
+    }
+
+    .logementCard>a>img{
+        margin: 0;
+        border-radius: 0px;
+        width:50%;
+        border: 5px solid #745086;
+        height: 200px;
+    }
+    .mainInfos span:last-child{
+        font-size: 2em;
+    }
+    .logementCard>a{
+        width:100%;
+        flex-direction: row;
+    }
+
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin: 2em auto;
+    }
+    .cardtel div:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel div:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+
+    .infoContainer{
+        padding: 0;
+        justify-content: flex-start;
+        margin: 0;
+    }
+
+    .mainInfos:first-child{
+        flex-direction: column;
+        background-color: #745086;
+        width: 100%;
+        color: #fff;
+        width: 100%;
+    }
+    .otherInfos div{
+        margin-top: 1em;
+        margin-left: 2%;
+        font-size: 2em;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    
+    .card div:last-child {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .card .cardphone div:last-child {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    /*-------------------------------Logement-------------------------------*/
+    .logrowt {
+        flex-direction: column;
+    }
+
+    .logcolumn{
+        width: 96%;
+        margin: auto;
+    }
+
+    .logdem{
+        width: 60%;
+        margin: 2em auto;
+    }
+
+    .logrow {
+        flex-direction: column;
+    }
+    .logrowcal {
+        flex-direction: column-reverse;
+    }
+
+
+    .cardcondition {
+        width: 80%;
+    }
+
+    main div .logrow {
+        flex-direction: column-reverse;
+    }
+
+    .cardlogmainP {
+        width: 100%;
+    }
+
+    .logrowb{
+        flex-direction: column;
+    }
+
+    .logI{
+        align-items: center;
+        text-align: center;
+    }
+
+    /*-------------------------------Conexion-------------------------------*/
+
+    .custom-input{
+        font-size: 2em;
+        width: 100%;
+    }
+
+    #mdp img, .rowcompte img{
+        height: 40px;
+        margin-left: 10px;
+    }
+    .Maincompte section{
+        width: 80%;
+    }
+    .btn-compte{
+        width: 100%;
+        font-size: 1.5em;
+    }
+
+    .rowcompte{
+        flex-direction: column;
+    }
+
+    .rowcompte:first-child{
+        text-align: center;
+    }
+
+    .rowcompte a + a {
+        margin-top: 1em;
+    }
+
+    /*-------------------------------Réservation-------------------------------*/
+    .cardresmain {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .cardresmainimg {
+        width: 60%;
+        height: 15%;
+        margin: auto;
+    }
+
+    .rescol .logrowb{
+        flex-direction: column;
+    }
+
+    .rescol{
+        width: 100%;
+    }
+
+    .resrow{
+        margin: auto;
+    }
+
+    .rescrow {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .rescrow a{
+        display: flex;
+        justify-content: center;
+        text-decoration: none;
+    }
+    .rescrow a button{
+        width: 100%;
+        margin-top: 2em;
+    }
+
+
+    /*-------------------------------Demande de devis-------------------------------*/
+
+    .datedevis{
+        margin: 1em auto;
+    }
+
+    .log5vct{
+        margin: 1em auto;
+        width: 40%;
+    }
+
+    .datedevis{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .cardSupplements{
+        margin: 1em auto;
+        width: 50%;
+    }
+
+    /*--------------------------------- GESTION DES DEVIS ------------------------------*/
+
+    .gestion_devis{
+        flex-direction: column;
+    }
+    .partie_demande, .partie_devis {
+        width: 80%;
+        margin: auto;
+    }
+}
+
+/*-------------------------------------------------------TELEPHONE------------------------------------------------------------------------*/
+@media screen and (max-width: 599px)   {
+
+    /*-------------------------------Header-------------------------------*/
+    .logot {
+        height: 1.5em;
+        width: 1.5em;
+    }
+    header h2 {
+        margin:auto 0em auto 0em;
+        font-size: 1em;
+    }
+    header h4{
+        margin-right: 0em;
+        width: 0 ;
+        visibility: hidden;
+    }
+
+    .btn-accueilins h5, .btn-accueil h5{
+        font-size: 0.5em;
+    }
+    .btn-accueilins {
+        margin-left: 0;
+    }
+
+    .brecherche {
+       visibility: hidden;
+       width: 0%;
+       margin: 0;
+    }
+    header a:last-child {
+        margin-left: 0.5em;
+    }
+
+
+    .brecherche {
+       visibility: hidden;
+       width: 0%;
+    }
+    .tfooter, .bfooter {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .headconn h1, .headtabloP h1{
+        font-size: 1.5em;
+    }
+
+    .headconn img, .headtabloP img{
+        left: 1em;
+        top: 0.6em;
+    }
+
+    /*-------------------------------FOOTER-------------------------------*/
+    footer{
+        height: auto;
+        padding-top: 0.5em;
+    }
+    
+    .tfooter {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 0.3em;
+    }
+
+    .bfooter {
+        flex-direction: row;
+        justify-content: center;
+        font-size: 0.3em;   
+    }
+    .bfooter p:first-child{
+        margin-right: 2em;
+    }
+
+    .bfooter p:last-child{
+        visibility: hidden;
+        width: 0px;
+    }
+    .margintb img{
+        width: 20px;
+    }
+    /*-------------------------------Accueil-------------------------------*/
+
+    .card{
+        font-size: 0.6em;
+    }
+
+    .logementCard>a>img{
+        margin: 0;
+        border-radius: 0px;
+        width:50%;
+        border: 5px solid #745086;
+        height: 200px;
+    }
+    .mainInfos span:last-child{
+        font-size: 2em;
+    }
+    .logementCard>a{
+        width:100%;
+        flex-direction: row;
+    }
+
+    .cardtel{
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin: 2em auto;
+    }
+    .cardtel div:first-child{
+        margin-right: 0.5em;
+    }
+    .cardtel div:first-child img{
+        height: 95%;
+        object-fit: cover;
+        border-top-right-radius: 0%;
+    }
+
+    .infoContainer{
+        padding: 0;
+        justify-content: flex-start;
+        margin: 0;
+    }
+
+    .mainInfos:first-child{
+        flex-direction: column;
+        background-color: #745086;
+        width: 100%;
+        color: #fff;
+        width: 100%;
+    }
+    .otherInfos div{
+        margin-top: 1em;
+        margin-left: 2%;
+        font-size: 2em;
+    }
+    .cardphone{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card section article h3{
+        color: #fff;
+        padding-left: 1em;
+    }
+    
+    .card div:last-child {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .card .cardphone div:last-child {
+        flex-direction: row;
+        width: 100%;
+    }
+
+
+    .section-filters{
+        padding: 2em;
+    }
+
+    .fil{
+        flex-direction: column;
+    }
+
+    .filR{
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-ville {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-pers {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+    
+    .input-group-proprio {
+        width: 80%;
+        margin: 0.5em auto;
+    }
+
+    .btn-fill {
+        width: 50%;
+        margin: 0.5em auto;
+    }
+    .btn-fillP {
+        width: 50%;
+        margin: 0.5em auto;
+    }
+
+    /*-------------------------------Conexion-------------------------------*/
+
+    .custom-input{
+        font-size: 2em;
+        width: 100%;
+    }
+
+    #mdp img, .rowcompte img{
+        height: 40px;
+        margin-left: 10px;
+    }
+    .Maincompte section{
+        width: 80%;
+    }
+    .btn-compte{
+        width: 100%;
+        font-size: 1.5em;
+    }
+
+    .rowcompte{
+        flex-direction: column;
+    }
+
+    .rowcompte:first-child{
+        text-align: center;
+    }
+
+    .rowcompte a + a {
+        margin-top: 1em;
+    }
+
+
+    /*-------------------------------Réservation-------------------------------*/
+    .cardresmain {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .cardresmainimg {
+        width: 80%;
+        height: 25%;
+        margin: auto;
+    }
+
+    .rescol .logrowb{
+        flex-direction: column;
+    }
+
+    .rescol{
+        width: 100%;
+    }
+
+    .resrow{
+        margin: auto;
+    }
+
+    .rescrow {
+        flex-direction: column;
+        margin: auto;
+    }
+
+    .rescrow a{
+        display: flex;
+        justify-content: center;
+        text-decoration: none;
+    }
+    .rescrow a button{
+        width: 100%;
+        margin-top: 2em;
+    }
+
+
+    /*-------------------------------Demande de devis-------------------------------*/
+
+    .datedevis{
+        margin: 1em auto;
+    }
+
+    .log5vct{
+        margin: 1em auto;
+        width: 40%;
+    }
+
+    .datedevis{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .cardSupplements{
+        margin: 1em auto;
+        width: 50%;
+    }
+
+    /*--------------------------------- GESTION DES DEVIS ------------------------------*/
+
+    .gestion_devis{
+        flex-direction: column;
+    }
+    .partie_demande, .partie_devis {
+        width: 60%;
+        margin: auto;
+    }
+   
+   /*-------------------------------Logement-------------------------------*/
+   .logrowt {
+    flex-direction: column;
+}
+
+.logcolumn{
+    width: 96%;
+    margin: auto;
+}
+
+.logdem{
+    width: 60%;
+    margin: 2em auto;
+}
+
+.logrow {
+    flex-direction: column;
+}
+.logrowcal {
+    flex-direction: column-reverse;
+}
+
+
+.cardcondition {
+    width: 80%;
+}
+
+main div .logrow {
+    flex-direction: column-reverse;
+}
+
+.cardlogmainP {
+    width: 100%;
+}
+
+.logrowb{
+    flex-direction: column;
+    
+}
+
+
 }

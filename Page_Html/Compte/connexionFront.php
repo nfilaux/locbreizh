@@ -6,7 +6,7 @@
             function erreur($nomErreur)
             {
                 if(isset($_SESSION["erreurs"][$nomErreur])){
-                    ?><p><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+                    ?><p class="err"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
                     unset($_SESSION["erreurs"][$nomErreur]);
                 }
             }
@@ -42,10 +42,10 @@
             <article id="mdp">
                 <input type="password" id="motdepasse" name="motdepasse" class="custom-input" placeholder="Mot de passe"/>
                 <img src="../svg/oeil.svg" id="eye" onClick="changer('motdepasse', 'eye')"/>
-                <?php
+            </article>
+            <?php
                     erreur("motdepasse");
                 ?>
-            </article>
 
             <br>
             <button class="btn-compte" type="submit">Se connecter</button>
@@ -55,12 +55,13 @@
             <div class="rowcompte">
                 <p>Nouveau ici ?</p>
                 <a href="CreerCompte.html">Créer un compte</a> 
-                <a href="mdpOublierFront.php">Mot de passe oublié ?</a>
+                <a href="">Mot de passe oublié ?</a>
             </div>
         </article>
         </section>
     </main>
     <?php 
+        // appel du footer
         echo file_get_contents('../header-footer/footer.html');
     ?>
 </body>

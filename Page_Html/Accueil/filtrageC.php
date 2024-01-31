@@ -1,0 +1,26 @@
+<?php
+if ((isset($_POST['prix_min']))&&(isset($_POST['prix_max']))&&($_POST['prix_min']>$_POST['prix_max'])&&($_POST['prix_max']>0)){   
+    header("Location: ./accueil_client.php?erreur=supérieur");
+} else if((isset($_POST['prix_min']))&&(isset($_POST['prix_max']))&&($_POST['prix_min']>0)&&($_POST['prix_max']>0)){ // Filtre par les 2 bornes de prix remplies
+    $prix_min = urlencode($_POST['prix_min']);
+    $prix_max = urlencode($_POST['prix_max']);
+    header("Location: ./accueil_client.php?prixMin={$prix_min}&prixMax={$prix_max}");
+} else if((isset($_POST['prix_min']))&&($_POST['prix_min']>0)){ // Filtre de prix minimum jusqu'à l'infini
+    $prix_min = urlencode($_POST['prix_min']);
+    header("Location: ./accueil_client.php?prixMin={$prix_min}");
+} else if((isset($_POST['prix_max']))&&($_POST['prix_max']>0)){ // Filtre de 0 jusqu'à prix maximum
+    $prix_max = urlencode($_POST['prix_max']);
+    header("Location: ./accueil_client.php?prixMax={$prix_max}");
+} else if((isset($_POST['lieu']))&&($_POST['lieu']!='')){ // Filtre par lieu
+    $lieu = urlencode($_POST['lieu']);
+    header("Location: ./accueil_client.php?lieu={$lieu}");
+} else if((isset($_POST['proprietaire']))&&($_POST['proprietaire']!='')){ // Fitlre par nom de propriétaire
+    $proprietaire = urlencode($_POST['proprietaire']);
+    header("Location: ./accueil_client.php?proprio={$proprietaire}");
+} else if((isset($_POST['personne']))&&($_POST['personne']>0)){ // Filtre par nombre de voyageur
+    $voyageurs = urlencode($_POST['personne']);
+    header("Location: ./accueil_client.php?voyageurs={$voyageurs}");
+} else {
+    header("Location: ./accueil_client.php");
+}
+?>

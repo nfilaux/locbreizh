@@ -16,18 +16,21 @@ $stmt = $dbh->prepare("SELECT photo from locbreizh._compte where id_compte = {$_
 $stmt->execute();
 $photo = $stmt->fetch();
 $id_logement = $_GET['id_logement'];
-$erreur = $_SESSION["erreurs"];
+if(isset($_SESSION["erreurs"])){
+    $erreur = $_SESSION["erreurs"];
+}
+else{
+    $erreur = [];
+}
 $reqinfosLogement = $dbh->prepare("SELECT libelle_logement,tarif_base_ht,accroche_logement,descriptif_logement,nature_logement,type_logement,surface_logement,en_ligne,nb_chambre,nb_personnes_logement,lit_simple,lit_double,nb_salle_bain,jardin,balcon,terrasse,parking_public,parking_privee,sauna,hammam,piscine,climatisation,jacuzzi,television,wifi,lave_linge,lave_vaisselle,code_planning,id_proprietaire,id_adresse,photo_principale,taxe_sejour FROM locbreizh._logement WHERE id_logement = $id_logement");
 $reqinfosLogement->execute();
 $res = $reqinfosLogement->fetch();
-
+$principale = $res['photo_principale'];
 $id_ad = $res["id_adresse"];
 $taxe = $res["taxe_sejour"];
-
 $r_adresse = $dbh->prepare("SELECT ville, code_postal FROM locbreizh._adresse WHERE id_adresse = $id_ad");
 $r_adresse->execute();
 $adresse = $r_adresse->fetch();
-
 $r_taxe = $dbh->prepare("SELECT prix_journalier_adulte FROM locbreizh._taxe_sejour WHERE id_taxe = $taxe");
 $r_taxe->execute();
 $taxe = $r_taxe->fetchColumn();
@@ -35,9 +38,7 @@ $taxe = $r_taxe->fetchColumn();
 $r_services = $dbh->prepare("SELECT nom_service FROM locbreizh._services_compris WHERE logement = $id_logement");
 $r_services->execute();
 $services = $r_services->fetchAll();
-
     ?>
-    
     <!DOCTYPE html>
     <html lang="en">
     
@@ -45,9 +46,8 @@ $services = $r_services->fetchAll();
     <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Modifier logement</title>
-        <script src="../scriptPopup.js"></script>
-        <title>Modifier un logement</title>
         <link rel="stylesheet" href="../style.css">
+        <script src="../scriptPopupFeedback.js"></script>
     </head>
     
     <body>
@@ -61,12 +61,12 @@ $services = $r_services->fetchAll();
             <h1>La fiche de votre logement</h1>
         </div>
     
-        <form method='POST' action='modifier.php?id_logement=<?php echo $id_logement ?>' enctype="multipart/form-data">
+        <form method="post" action="modifier.php?id_logement=<?php echo $id_logement ?>" enctype="multipart/form-data">
                 <div class="logrow">  
                     <div class="logcolumn">     
                         <div class="logpc">  
                             <label for='nom'>Libellé logement</label>
-                            <input class="lognom" id='nom' type='text' name='nomP' value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
+                            <input maxlength="29" class="lognom" id='nom' type='text' name='nomP' value="<?php if ($erreur != []){if (!isset($erreur['libelle'])){echo $_SESSION['valeurs_complete']['libelle'];}} else { echo $res["libelle_logement"];} ?>" required>
                     <?php
                     if (isset($erreur['libelle'])){
                         echo '<p id="erreur">' . $erreur['libelle'] .  '</p>';
@@ -77,7 +77,7 @@ $services = $r_services->fetchAll();
                         <div class="logrowb"> 
                             <div class="log3vct">
                                 <label for='ville'>Ville</label>
-                                <input class="logvct" id='ville' type='text' name='villeP' value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
+                                <input maxlength="49" class="logvct" id='ville' type='text' name='villeP' value="<?php if ($erreur != []){if (!isset($erreur['ville'])){echo $_SESSION['valeurs_complete']['ville'];}} else { echo $adresse['ville'];} ?>" required>
                     <?php
                     if (isset($erreur['ville'])){
                         echo '<p id="erreur">' . $erreur['ville'] .  '</p>';
@@ -86,7 +86,7 @@ $services = $r_services->fetchAll();
                     </div>
                     <div class="log3vct">
                         <label for='code_postal'>Code postal</label>
-                        <input class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
+                        <input maxlength="5" class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' value="<?php if ($erreur != []){if (!isset($erreur['code_postal'])){echo $_SESSION['valeurs_complete']['code_postal'];}} else { echo $adresse["code_postal"];} ?>"required>
                     <?php
                     if (isset($erreur['code_postal'])){
                         echo '<p id="erreur">' . $erreur['code_postal'] .  '</p>';
@@ -95,7 +95,7 @@ $services = $r_services->fetchAll();
                     </div>
                             <div class="log3vct">
                                 <label for='tarif_de_base'>Tarif de base (en €)</label>
-                                <input class="logvct" id='tarif_de_base' type='number' name='tarif_de_baseP' min='0' max='2500' value="<?php if (!isset($erreur['tarif_base_ht'])){echo $res["tarif_base_ht"];} ?>" required>
+                                <input class="logvct" id='tarif_de_base' type='number' step="0.01" name='tarif_de_baseP' min='0' max='2500' value="<?php if (!isset($erreur['tarif_base_ht'])){echo $res["tarif_base_ht"];} ?>" required>
                     <?php
                     if (isset($erreur['tarif_base_ht'])){
                         echo '<p id="erreur">' . $erreur['tarif_base_ht'] .  '</p>';
@@ -106,7 +106,7 @@ $services = $r_services->fetchAll();
                         <div class="logpc">
                             <label for='phrase_daccroche' >Phrase d'accroche</label>
                             <input disabled class="logPAP" id='accroche' type='text' name='accrocheP' placeholder="Phrase d'accroche" maxlength="255" value="<?php echo $res["accroche_logement"]; ?>"required>
-                    </div>
+                        </div>
                         <div class="logrowb"> 
                                 <div class="log2vct">
                                     <label for='nature'>Nature</label>
@@ -152,7 +152,7 @@ $services = $r_services->fetchAll();
                         <div class="log4vct">
                     
                     <label for='nb_lit_double'>Nombre de lits doubles</label>
-                    <input id='nb_lit_double' disabled type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value=<?php echo $res["lit_double"] ?> required>
+                    <input class="logvct" id='nb_lit_double' disabled type='number' name='nb_lit_doubleP' min='0' max='15' step='1' value=<?php echo $res["lit_double"] ?> required>
     
                     </div>
                         <div class="log4vct">
@@ -187,7 +187,7 @@ $services = $r_services->fetchAll();
                     <div class="logcolumn">
                         <div class="description">
                             <label for='description'>Description</label>
-                            <textarea class="logPAP" id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement'])){echo $res["descriptif_logement"];} ?></textarea>
+                            <textarea maxlength="499" class="logPAP" id='description' name='descriptionP' placeholder='Description' required><?php if (!isset($erreur['descriptif_logement']) && isset($_SESSION['valeurs_complete']["descriptif_logement"])){echo $_SESSION['valeurs_complete']["descriptif_logement"];}else{ echo  $res['descriptif_logement'];} ?></textarea>
                             <?php
                             if (isset($erreur['descriptif_logement'])){
                                 echo '<p id="erreur">' . $erreur['descriptif_logement'] .  '</p>';
@@ -270,43 +270,151 @@ $services = $r_services->fetchAll();
                             </div>
                         </div>
                     </div>
-                            <div class="logpc">
-                                    <h4 class="titreAL">Images logement</h4>
-                                    <div class="logrow">
-                                        <div class="logpc">
-                    <label for='image1'>Image 1</label>
-                    <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg'>
-    
+                    <div class="logpc">
+                            <h4 class="titreAL">Images logement</h4>
+                            <div class="logrow">
+                                <div class="logpc">
+                                <label for='image1'>Image principale</label>
+                                <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg'>
+                                <img src="../Ressources/Images/<?php echo $principale ;?>" id="in_image1"  title="photo" alt="photo de profil" class="modif_log_img">
+
+
+                    <?php 
+                        $stmt = $dbh->prepare("SELECT photo
+                        FROM locbreizh._photos_secondaires 
+                        WHERE logement = $id_logement and numero = 2");
+                        $stmt->execute();
+                        $photo = $stmt->fetch();
+
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
+                            $src = $photo['photo'];
+                        }
+                        else{
+                            $src = 'image_vide_log.png';
+                        }
+                    
+                    ?>
                     <label for='image2'>Image 2</label>
+
+
                     <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
+                    <img src="../Ressources/Images/<?php echo $src;?>" id="in_image2" title="photo" alt="photo de profil" class="modif_log_img">
+
+                    <?php 
+                        $stmt = $dbh->prepare("SELECT photo
+                        FROM locbreizh._photos_secondaires 
+                        WHERE logement = $id_logement and numero = 3");
+                        $stmt->execute();
+                        $photo = $stmt->fetch();
+
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
+                            $src = $photo['photo'];
+                        }
+                        else{
+                            $src = 'image_vide_log.png';
+                        }
+                    
+                    ?>
                           
                     <label for='image3'>Image 3</label>
                     <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
+                    <img src="../Ressources/Images/<?php echo $src?>" id="in_image3"  title="photo" alt="photo de profil" class="modif_log_img">
                     </div>
+
+                    <?php 
+                        $stmt = $dbh->prepare("SELECT photo
+                        FROM locbreizh._photos_secondaires 
+                        WHERE logement = $id_logement and numero = 4");
+                        $stmt->execute();
+                        $photo = $stmt->fetch();
+
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
+                            $src = $photo['photo'];
+                        }
+                        else{
+                            $src = 'image_vide_log.png';
+                        }
+                    
+                    ?>
+
                     <div class="logpc">      
                     <label for='image4'>Image 4</label>
                     <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
+                    <img src="../Ressources/Images/<?php echo $src; ?>" id="in_image4"  title="photo" alt="photo de profil" class="modif_log_img">
     
+                    <?php 
+                        $stmt = $dbh->prepare("SELECT photo
+                        FROM locbreizh._photos_secondaires 
+                        WHERE logement = $id_logement and numero = 5");
+                        $stmt->execute();
+                        $photo = $stmt->fetch();
+
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
+                            $src = $photo['photo'];
+                        }
+                        else{
+                            $src = 'image_vide_log.png';
+                        }
+                    
+                    ?>
+
                     <label for='image5'>Image 5</label>
                     <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
+                    <img src="../Ressources/Images/<?PHP echo $src;?>" id="in_image5" title="photo" alt="photo de profil" class="modif_log_img">
     
+                    <?php 
+                        $stmt = $dbh->prepare("SELECT photo
+                        FROM locbreizh._photos_secondaires 
+                        WHERE logement = $id_logement and numero = 6");
+                        $stmt->execute();
+                        $photo = $stmt->fetch();
+
+                        if(isset($photo['photo']) && $photo['photo'] != ''){
+                            $src = $photo['photo'];
+                        }
+                        else{
+                            $src = 'image_vide_log.png';
+                        }
+                    
+                    ?>
+
                     <label for='image6'>Image 6</label>
                     <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
+                    <img src="../Ressources/Images/<?php echo $src; ?>" id="in_image6" title="photo" alt="photo de profil" class="modif_log_img">
     
                     </div>
+                        </div>
                         </div>            
                         <button class="btn-previsualiser" name='previsualiser' type='submit'>Modifier</button>
                     </div>
             </form>
-        
+            <div id="overlayModifierLogement" onclick="closePopupFeedback('popupFeedback', 'overlayModifierLogement')"></div>
+            <div id="popupFeedback" class="popupFeedback">
+                <p>Votre logement a bien été modifié !</p>
+                <a href="../Accueil/Tableau_de_bord.php" class="btn-accueil"></button>OK</a>
+            </div>
         </main>
     
-    <?php 
-    echo file_get_contents('../header-footer/footerP.html');
-?>
+        <?php
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
+        unset($_SESSION["erreurs"]);
+    ?>
 </body>
 
 </html>
-<script src="../scriptPopup.js"></script>
+
+<?php
+    if(isset($_GET['modif']) == '1'){
+        ?>
+        <script>
+            openPopupFeedback('popupFeedback', 'overlayModifierLogement');
+        </script>
+        <?php
+    }
+    
+?>
 
 
+
+<script src="./actualiserImage.js" defer></script>

@@ -1,45 +1,93 @@
 <?php 
     session_start();
-
     include('../parametre_connexion.php');
-
-    try {
-        $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-        $code = $dbh->prepare("SELECT code_planning FROM locbreizh._planning NATURAL JOIN locbreizh._logement WHERE id_logement = {$_POST['id_logement']};");
-
-        $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(debut_plage_ponctuelle, fin_plage_ponctuelle, prix_plage_ponctuelle, disponible, code_planning)
-        VALUES (:debut_plage_ponctuelle, :fin_plage_ponctuelle, :prix_plage_ponctuelle, :disponible, :code_planning);");
-
-
-    } catch (PDOException $e) {
-        print "Erreur !:" . $e->getMessage() . "<br/>";
-        die();
-    }
-
-    $code->execute();
-    
-    $variable = $code->fetch();
-
     $err = false;
-
-    if ($_POST['prix']<=0){
-        $_SESSION['erreurs'] = ["prix" => "Le prix doit être supérieur à 0\n"];
+    if (isset($_POST['prix'])){
+        if ($_POST['prix']<=0 && !isset($_POST['indisponible'])){
+            $_SESSION['erreurs'] = ["prix" => "Le prix doit être supérieur à 0\n"];
+            $err = true;
+        }
+    }
+    else if (isset($_POST['libelleIndispo']) && $_POST['libelleIndispo'] === ""){
+        $_SESSION['erreurs'] = ["libelleIndispo" => "Veuillez renseigner la raison de l'indisponibilitée\n"];
         $err = true;
     }
-
+    if ((isset($_POST['debut_plage_ponctuelle']) && $_POST['debut_plage_ponctuelle'] === "" )|| (isset($_POST['fin_plage_ponctuelle']) && $_POST['fin_plage_ponctuelle'] === "")){
+        $_SESSION['erreurs'] = ["plage" => "Veuillez sélectionner une plage\n"];
+        $err = true;
+    }
     if(!$err){
-        $stmt->bindValue(':debut_plage_ponctuelle', $_POST['dateDeb']);
-        $stmt->bindValue(':fin_plage_ponctuelle', $_POST['dateFin']);
-        $stmt->bindValue(':prix_plage_ponctuelle', $_POST['prix']);
-        $stmt->bindValue(':disponible', $indisponible);
-        $stmt->bindValue(':code_planning', $variable['code_planning']);
-        $stmt->execute();
+        $tabJours = [];
+        $dateDebut = $_POST['debut_plage_ponctuelle'];
+        $dateFin = $_POST['fin_plage_ponctuelle'];
+        $dateActuelle = $dateDebut;
+        while ($dateActuelle <= $dateFin){
+            $tabJours[] = $dateActuelle;
+            $dateActuelle = date("Y-m-d", strtotime($dateActuelle.'+ 1 days'));
+        }
+        try {
+            $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $code = $dbh->prepare("SELECT code_planning FROM locbreizh._planning NATURAL JOIN locbreizh._logement WHERE id_logement = :id_logement;");
+            $code->bindParam(':id_logement', $_POST['id_logement']);
+            $code->execute();
+            $variable = $code->fetch();
+            if (isset($_POST['indisponible'])) {
+                foreach ($tabJours as $key => $elem){
+                    $stmt = $dbh->prepare("SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE jour_plage_ponctuelle =  :jour_plage_ponctuelle;");
+                    $stmt->bindParam(':jour_plage_ponctuelle', $elem);
+                    $stmt->execute();
+                    $jour_existant = $stmt->fetchColumn();
+                    if (!empty($jour_existant)){
+                        $code = $dbh->prepare("DELETE FROM locbreizh._plage_ponctuelle WHERE id_plage_ponctuelle = :id_plage_ponctuelle;");
+                        $code->bindParam(':id_plage_ponctuelle', $jour_existant);
+                        $code->execute();
+                    }
+                    $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(jour_plage_ponctuelle, code_planning)
+                    VALUES (:jour_plage_ponctuelle, :code_planning);");
+                    $stmt->bindParam(':jour_plage_ponctuelle', $elem);
+                    $stmt->bindParam(':code_planning', $variable['code_planning']);
+                    $stmt->execute();
+                    $stmt = $dbh->prepare("SELECT currval('locbreizh._plage_ponctuelle_id_plage_ponctuelle_seq');");
+                    $stmt->execute();
+                    $id_plage = $stmt->fetchColumn();
+                    $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle_indisponible(id_plage_ponctuelle, libelle_indisponibilite)
+                    VALUES (:id_plage_ponctuelle, :libelle_indisponibilite);");
+                    $stmt->bindParam(':id_plage_ponctuelle', $id_plage);
+                    $stmt->bindParam(':libelle_indisponibilite', $_POST['libelleIndispo']);
+                    $stmt->execute();
+                }
+            } else {
+                foreach ($tabJours as $key => $elem){
+                    $stmt = $dbh->prepare("SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE jour_plage_ponctuelle =  :jour_plage_ponctuelle;");
+                    $stmt->bindParam(':jour_plage_ponctuelle', $elem);
+                    $stmt->execute();
+                    $jour_existant = $stmt->fetchColumn();
+                    if (!empty($jour_existant)){
+                        $code = $dbh->prepare("DELETE FROM locbreizh._plage_ponctuelle WHERE id_plage_ponctuelle = :id_plage_ponctuelle;");
+                        $code->bindParam(':id_plage_ponctuelle', $jour_existant);
+                        $code->execute();
+                    }
+                    $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(jour_plage_ponctuelle, code_planning)
+                    VALUES (:jour_plage_ponctuelle, :code_planning);");
+                    $stmt->bindParam(':jour_plage_ponctuelle', $elem);
+                    $stmt->bindParam(':code_planning', $variable['code_planning']);
+                    $stmt->execute();
+                    $stmt = $dbh->prepare("SELECT currval('locbreizh._plage_ponctuelle_id_plage_ponctuelle_seq');");
+                    $stmt->execute();
+                    $id_plage = $stmt->fetchColumn();
+                    $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle_disponible(id_plage_ponctuelle, prix_plage_ponctuelle)
+                    VALUES (:id_plage_ponctuelle, :prix_plage_ponctuelle);");
+                    $stmt->bindParam(':id_plage_ponctuelle', $id_plage);
+                    $stmt->bindParam(':prix_plage_ponctuelle', $_POST['prix']);
+                    $stmt->execute();
+                }
+            }
+        } catch (PDOException $e) {
+            print "Erreur !:" . $e->getMessage() . "<br/>";
+            die();
+        }
     }
     header("location: ../Accueil/Tableau_de_bord.php?popup={$_POST['nomPopUp']}&overlay={$_POST['overlayPopUp']}");
-    
-
-
 ?>

@@ -126,41 +126,41 @@
                     </div>
                     <?php erreur("date");?>
                     <!-- section pour les informations de l'adresse -->
-                    <div class="row-profil div-adresse">
-                        <p>Adresse</p>
-                        <div>
-                            <div class="row-adresse">
-                                <div>
-                                    <label for="no_rue">N° :</label>
-                                    <input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
-                                </div>
-                                    
-                                <div>
-                                    <label for="nom_rue">Rue :</label>
-                                    <input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
-                                    
-                                </div>
-                            </div>
-                            <?php erreur("numRue");?>
-                            <?php erreur("nomRue");?>
-                            <div class="row-adresse">
-                                <div>
-                                    <label for="codePostal">Code postal :</label>
-                                    <input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
-                                </div>
-                                <div>
-                                    <label for="ville">Ville :</label>
-                                    <input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
-                                </div>
-                            </div>
-                            <?php erreur("codePostal");?>
-                            <?php erreur("ville");?>
+                    
+                    <hr class="hr" style="margin: 2em 0 0.5em 0 ;">
+                    <h2 class="potitre" style="padding:0.75em;">Adresse</h2>
+                    <div class="ligne_adresse">
+                        <div class="numero_rue">
+                            <label for="no_rue">N°</label>
+                            <input type="text" id="no_rue" name="no_rue" maxlength="3" value="<?php echo $infos['numero_rue'];?>" required>
+                        </div>
+                        
+
+                        <div class="nom_rue">
+                            <label for="nom_rue">Rue</label>
+                            <input type="text" id="nom_rue" name="nom_rue" maxlength="30" value="<?php echo $infos['nom_rue'];?>" required>
+                        </div>
+                    </div> 
+                    <?php erreur("numRue");?>
+                    <?php erreur("nomRue");?>
+
+                    <div class="ligne_adresse">  
+                        <div class="code_postal">
+                            <label for="codePostal">Code postal</label>
+                            <input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php echo $infos['code_postal'];?>" required> 
+                        </div>
+                        <div class="adresse_ville">
+                            <label for="ville">Ville</label>
+                            <input type="text" id="ville" maxlength="50" name="ville" value="<?php echo $infos['ville'];?>" required>
                         </div>
                     </div>
+                    <?php erreur("codePostal");?>
+                    <?php erreur("ville");?>
+                    
                 </div>
                 <!-- affichage de la photo de profil + input pour la modifier -->
                 <div>
-                    <img src="../Ressources/Images/<?php echo $infos['photo']; ?>" title="photo" alt="photo de profil">
+                    <img src="../Ressources/Images/<?php echo $infos['photo']; ?>" id="avatar" title="photo" alt="photo de profil">
                     <label for="photo">Photo de profil</label>
                     <input type="file" id="photo" name="photo"/>
                     <?php erreur("photo"); ?>
@@ -175,18 +175,10 @@
             <!-- boutton pour ouvrir la popup -->
             <button class="btn-mdp" type="button" onclick="openMdpPopup()">Changer le mot de passe</button>
         </div>
-        <!-- section suppression du compte -->
-        <div class="suppr-compte">
-            <div>
-                <h2>Suppression du compte</h2>
-                <p>DISCLAIMER : La suppression du compte est définitive.</p>
-                <p class="condition-profil">Condition requise : aucun logement en ligne et aucune réservation prévue.</p>
-            </div>
-            <button disabled>Supprimer le compte</button>
-        </div>
     </main>
-    <?php 
-        echo file_get_contents('../header-footer/footer.html');
+    <?php
+        // appel du footer
+        include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 
@@ -196,3 +188,5 @@
         <script>openMdpPopup();</script>
     <?php } ?>
 </html>
+
+<script src="./actualiserPhoto.js" defer></script>
