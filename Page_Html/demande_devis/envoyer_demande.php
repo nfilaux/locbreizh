@@ -40,10 +40,10 @@
         }
     }
     if(!isset($_POST['animaux'])){
-        $_POST['animaux'] = '';
+        $_POST['animaux'] = false;
     }
     if(!isset($_POST['menage'])){
-        $_POST['menage'] = '';
+        $_POST['menage'] = false;
     }
     //test si date d'arrivée est avant date de depart
     if($_POST['dateArrivee'] > $_POST['dateDepart']){
@@ -151,17 +151,17 @@
         // cree une nouvelle page
         $pdf->AddPage();
         // on regarde les charges a mettre dans le pdf
-        if(isset($_POST['animaux'])){
+        if($_POST['animaux']){
             $animaux= 'nous aurons des animaux';
         }
         else{
             $animaux = 'nous n’aurons pas d’animaux';
         }
-        if(isset($_POST['menage'])){
+        if($_POST['menage']){
             $menage = 'Nous souhaitons ajouter la prestation pour le ménage';    
         }
         else{
-            $menage = 'Nous ne souhaitons pas rajouter la prestation pour le ménage';
+            $menage = 'Nous ne souhaitons pas ajouter la prestation pour le ménage';
         }
         //titre sur le document
         $pdf->SetFont('', 'B', 30);
@@ -187,8 +187,6 @@
         $pdf->Cell(0, 5,  $libelle_log['libelle_logement'] . '" pour la période du ' . $frdatearrive . ' au ' . $frdatedepart . '. Nous serons  ' . $_POST['nb_pers'] . ' personnes et ', 0, 'L');
         $pdf->Cell(0, 5,  $animaux . '.' . $menage, 0, 1);
         $pdf->Cell(0, 5,  'et ' . $_POST['nb_pers_supp'] . ' personne(s) supplémentaire(s).', 0, 'L');
-/*         $paragraphe= "Je me permets de vous contacter afin de solliciter un devis pour la réservation de votre logement :" . $libelle_log['libelle_logement'] . " pour la période du " . $frdatearrive . " au " . $frdatedepart . ". Je serai " . $_POST['nb_pers'] . " personne et $animaux . '.' . $menage" . 'et ' . $_POST['nb_pers_supp'] . ' personne(s) supplémentaire(s).';
-        $pdf->MultiCell(0, 10, $paragraphe, 0, 'J'); */
         $pdf->Cell(0, 15, '', 0, 1);
         $pdf->MultiCell(0, 10, "Je vous serais reconnaissant de bien vouloir nous fournir un devis détaillé, incluant le coût total du séjour, ainsi que les éventuels frais supplémentaires." , 0, 'L',false);
         $pdf->Cell(0, 15, '', 0, 1);

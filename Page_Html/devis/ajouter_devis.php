@@ -263,14 +263,14 @@
         foreach ($informationsDevis as $ligne) {
             for ($i = 0; $i < count($ligne); $i++) {
                 if ($i == 0) {
-                    $pdf->SetFont('', 'B', 12);
+                    $pdf->SetFont('', 'B', 12, 'C');
                 } elseif($premier){
-                    $pdf->SetFont('', 'B', 12);
+                    $pdf->SetFont('', 'B', 12, 'C');
                 }
                 else{
                     $pdf->SetFont('', '', 12);
                 }
-                $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0,'C');
+                $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0,'R');
             }
             $pdf->Ln();
             $premier = 0;
