@@ -65,7 +65,9 @@
 
         <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')" class=""></div>
         <div id="filtre" class="filtrage">
-            <span>Filtre</span>
+            <div>
+                
+            </div>
         </div>
         
         <!-- Champs de séléction des Tris -->
