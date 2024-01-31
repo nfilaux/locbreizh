@@ -304,11 +304,13 @@
             for ($i = 0; $i < count($ligne); $i++) {
                 if ($i == 0) {
                     $pdf->SetFont('', 'B', 12);
+                    $align = 'C';
                 }
                 else{
                     $pdf->SetFont('', '', 12);
+                    $align = 'R';
                 }
-                $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0,'C');
+                $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0, $align);
             }
             $pdf->Ln();
         }
