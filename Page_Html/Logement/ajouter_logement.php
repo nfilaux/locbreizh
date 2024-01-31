@@ -17,7 +17,7 @@
     $nb_personne_max = $_SESSION['post_logement']['nb_personne_maxP'];
     $surface_jardin = $_SESSION['post_logement']['surface_jardinP'];
     $taxe_sejour = $_SESSION['post_logement']['taxe_sejourP'];
-    $en_ligne = true;
+    $en_ligne = false;
     $id_proprietaire = $_SESSION['id'];
     $nom_image_principale = $_SESSION['post_logement']['image1P'];
     if (isset($_SESSION['post_logement']["image2P"])){
@@ -252,7 +252,7 @@
     $stmt->bindParam(':code_planning', $code_planning);
     $stmt->bindParam(':lave_linge', $lave_linge);
     $stmt->bindParam(':image1', $nom_image_principale);
-    $stmt->bindParam(':en_ligne', $en_ligne);
+    $stmt->bindParam(':en_ligne', $en_ligne, PDO::PARAM_BOOL);
     $stmt->bindParam(':id_proprietaire', $id_proprietaire);
     $stmt->bindParam(':id_adresse', $id_adresse);
 

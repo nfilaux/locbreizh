@@ -578,7 +578,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                 <div class="logrowb">
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $id_log ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
                                     <?php $id_un_logement = $id_log; ?>
-                                    <form action="ChangeEtat.php" method="post">
+                                    <form id="enligne<?php echo $id_un_logement ?>" action="ChangeEtat.php" method="post">
                                         <input type="hidden" name=<?php echo $id_un_logement ?> value="<?php echo htmlentities($bouton_desactiver) ?>">
                                         <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button>
                                     </form>
@@ -798,6 +798,11 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
                                     }
                                     afficherPlages(tabRes, "disponible", tabMotif, "D", numCalendrier);
+
+                                    if (!tabRes[0]){
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").disabled = true;
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").className = "btn-desactiveGris";
+                                    }
                                 </script>
                                             
                                 </div>  
