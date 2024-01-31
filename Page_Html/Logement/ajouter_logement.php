@@ -136,19 +136,19 @@
         $lave_vaiselle = 0;
     }
 
-    if (isset($_SESSION['post_logement']['menageP'])) {
+    if (isset($_SESSION['post_logement']['menage'])) {
         $menage_service = "menage";
     } else {
         $menage_service = "";
     }
 
-    if (isset($_SESSION['post_logement']['navetteP'])) {
+    if (isset($_SESSION['post_logement']['navette'])) {
         $navette = "navette";
     } else {
         $navette = "";
     }
 
-    if (isset($_SESSION['post_logement']['lingeP'])) {
+    if (isset($_SESSION['post_logement']['linge'])) {
         $linge = "linge";
     } else {
         $linge = "";

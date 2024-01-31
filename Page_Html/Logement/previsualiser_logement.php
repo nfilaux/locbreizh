@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+print_r($_SESSION);
 include('../parametre_connexion.php');
 try {
     $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -687,21 +689,21 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             $lave_linge = 0;
         }
 
-        if (isset($_POST['menageP'])) {
+        if (isset($_POST['menage'])) {
             $menage = 1;
             $_SESSION['post_logement']['menageP'] = 1;
         } else {
             $menage = 0;
         }
 
-        if (isset($_POST['navetteP'])) {
+        if (isset($_POST['navette'])) {
             $navette = 1;
             $_SESSION['post_logement']['navetteP'] = 1;
         } else {
             $navette = 0;
         }
 
-        if (isset($_POST['lingeP'])) {
+        if (isset($_POST['linge'])) {
             $linge = 1;
             $_SESSION['post_logement']['lingeP'] = 1;
         } else {
@@ -991,7 +993,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 
     <?php
         // appel du footer
-        include('../header-footer/choose_footer.php'); 
+        //include('../header-footer/choose_footer.php'); 
     ?>
 </body>
 
