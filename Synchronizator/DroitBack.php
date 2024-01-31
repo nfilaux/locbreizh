@@ -7,7 +7,6 @@
 
     session_start();
     //$_SESSION['id'] = 1;
-    print_r($_SESSION);
     include('../Page_Html/parametre_connexion.php');
 
     try {
@@ -34,21 +33,6 @@
         $stmt = $dbh->prepare("SELECT id_compte FROM locbreizh._compte where id_compte = $id_compte;");
         $stmt->execute();
         $idCompte = $stmt->fetch();
-?>
-<?php
-/*
-    include('../Page_Html/parametre_connexion.php');
-
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-    $stmt = $dbh->prepare(
-        "SELECT * FROM locbreizh._admin WHERE login_admin = $id_compte;"
-    );
-    $stmt->execute();
-    $cestUnAdmin = $stmt->fetch();
-    */
 ?>
 
 <!DOCTYPE html>
@@ -114,7 +98,6 @@
         <table id="droitsTable">
             <tr>
                 <th>Clef API</th>
-                <th>Consultation de tous les biens</th>
                 <th>Consultation des biens du propriétaire</th>
                 <th>Consultation du calendrier</th>
                 <th>Rendre indisponible</th>
@@ -123,7 +106,6 @@
             foreach ($droitClef as $clef => $value){ ?>
                     <tr>
                         <td> <?php echo $value['idclef']; ?> </td>
-                        <td> <input type="checkbox" name="droitGrandeConsultation" id="grandeConsultation" <?php if($value['droitgrandeconsultation'] == true){ echo "checked"; } ?>> </td>
                         <td> <input type="checkbox" name="droitPetiteConsultation" id="petiteConsultation" <?php if ($value['droitpetiteconsultation'] == true){ echo "checked"; } ?>> </td>
                         <td> <input type="checkbox" name="droitConsultationCalendrier" id="consultationCalendrier" <?php if ($value['droitconsultationcalendrier'] == true){ echo "checked"; }?>></td>
                         <td> <input type="checkbox" name="droitRendreIndisponible" id="droitRendreIndisponible" <?php if ($value['droitrendreindisponible'] == true){ echo "checked"; } ?>></td>
@@ -156,12 +138,9 @@
         
         function fonctionSauvegarder() {
 
-            print_r($_POST);
             echo "Fonction de sauvegarde exécutée avec succès!";
 
-            // lors de la connexion à la page des droits, vérifier si l'id est dans la table admin et si modifier la ligne estAdmin en conséquence 
-
-            $grandeConsultation = isset($_POST['grandeConsultation']) ? $_POST['grandeConsultation'] : false;
+            $grandeConsultation = false;
             $petiteConsultation = isset($_POST['petiteConsultation']) ? $_POST['petiteConsultation'] : false;
             $consultationCalendrier = isset($_POST['consultationCalendrier']) ? $_POST['consultationCalendrier'] : false;
             $rendreIndisponible = isset($_POST['rendreIndisponible']) ? $_POST['rendreIndisponible'] : false;

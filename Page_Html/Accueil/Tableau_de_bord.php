@@ -16,7 +16,7 @@
             unset($_SESSION["erreurs"][$nomErreur]);
         }
 }
-    
+   
 
 $plageIndispo = [];
 $plageDispo = []; 
@@ -334,6 +334,13 @@ function changerJour(elem, id) {
             else{
                 element.className = "normal";
             }
+            //remet les plages
+            if (tabDispo[id][0]){
+                afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+            }
+            if (tabIndispo[id][0]){
+                afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+            }
         }
         nbActif = document.getElementsByClassName("actif").length;
         if (nbActif == 0){
@@ -462,24 +469,18 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="../Logement/scriptCalendrier.js"></script>
     <script src="../scriptPopup.js"></script>
 </head>
 
 <body class="pageproprio">
     <?php 
         include('../header-footer/choose_header.php');
-<<<<<<< HEAD
-        // ici on récupère le cas du bouton supprimer à traiter
-        $cas_popup = $_GET["cs"];
-=======
         if(isset($_GET["cs"])){
             $cas_popup = $_GET["cs"];
         }
         else{
             $cas_popup = '';
         }
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
     ?>
 
     <main class="MainTablo">
@@ -512,13 +513,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 foreach ($liste_mes_logements as $key => $card) {
                     $id_log = $card['id_logement'];
 
-<<<<<<< HEAD
-                    //si le logement est actif la valeur du bouton est à désactivé sinon elle est à activé
-                    
-                    if ($infos_log["en_ligne"] == 1){
-=======
                     if ($infos_log[$id_log]["en_ligne"] == 1){
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
                         $bouton_desactiver = "METTRE HORS LIGNE";  
                     } else{
                         $bouton_desactiver = "METTRE EN LIGNE";
@@ -548,31 +543,23 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                 
                                 <div class="logrowb">
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $id_log ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
-                                    <!-- ici le formulaire en charge de hors/en ligne -->
+                                    <?php $id_un_logement = $id_log; ?>
                                     <form action="ChangeEtat.php" method="post">
-<<<<<<< HEAD
-                                        <!-- la valeur du bouton DESACTIVER ou ACTIVER et transmise via un champ fantôme le nom du boutonn reçoit l'id du logment à modifier -->
-                                        <input type="hidden" name="<?php echo $id_log ?>" value="<?php echo $bouton_desactiver ?>">
-                                        <button class="btn-desactive" name="bouton_changer_etat" type='submit'> <?php echo $bouton_desactiver; ?> </button>
-=======
                                         <input type="hidden" name=<?php echo $id_un_logement ?> value="<?php echo htmlentities($bouton_desactiver) ?>">
-                                        <button class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button>
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
+                                        <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button>
                                     </form>
-                                    <!-- ici le formulaire fantôme nous permet de pouvoir récupérer le cas à traiter en JavaScript -->
                                     <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $id_log ?>"><button class="btn-suppr">SUPPRIMER</button></a>
                                 </div>
                                 
                                 <div class="logrowb">
 
-                                    <!-- popup pour le cas 1 : lorsqu'un propriétaire veut supprimer un logement lié à une réservation -->
-                                
                                     <div class="overlay_plages" id="overlay_erreur" onclick="closePopup('erreur_suppr','overlay_erreur')"></div>
                                     <div id="erreur_suppr" class="plages" class="erreur" > <p> Impossible de supprimer un logement lié à une réservation ! <p> <button onclick="closePopup('erreur_suppr','overlay_erreur')" class="btn-ajoutlog">Ok</button></div>
 
-                                    <!-- popup pour le cas 2 : vérifier que le propriétaire veut bien supprimer ce logement -->
-
+                                    <div class="overlay_plages" id="overlay_confirm" onclick="closePopup('confirm','overlay_confirm')"></div>
+                                    <div id="confirm" class="plages"> <p class="valid"> Votre logement vient d'être supprimé avec succès ! <p> <button onclick="closePopup('confirm','overlay_confirm')" class="btn-ajoutlog">Ok</button></div>
+                                    
                                     <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
                                     <div id="validation" class="plages"> 
                                         <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log[$_GET["idlog"]]["libelle_logement"]; ?> ? 
@@ -582,13 +569,6 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                             <a href="../Logement/supprimer_logement.php?idc=<?php echo $_GET["idlog"]?>" ><button class="btn-suppr">Supprimer</button></a>
                                         </div>
                                     </div>
-
-                                    <!-- popup pour le cas 3 : feedback pour le propriétaire lorsqu'il a supprimé avec succès un logement -->
-
-                                    <div class="overlay_plages" id="overlay_confirm" onclick="closePopup('confirm','overlay_confirm')"></div>
-                                    <div id="confirm" class="plages"> <p class="valid"> Votre logement vient d'être supprimé avec succès ! <p> <button onclick="closePopup('confirm','overlay_confirm')" class="btn-ajoutlog">Ok</button></div>
-                                    
-                                    <!-- script JavaScript qui ouvre les différentes popup en fonction du cas 1 , 2 ou 3 -->
                                     
                                     <script>
                                         cas = document.getElementById("cas_bouton_suppr");

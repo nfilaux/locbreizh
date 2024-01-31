@@ -24,6 +24,7 @@ $photo = $stmt->fetch();
 
 <body>
     <?php 
+    $filtre='';
     include('../header-footer/choose_header.php');
     ?>
     <main class="MainTablo">
@@ -35,13 +36,13 @@ $photo = $stmt->fetch();
                 <div class="filR">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                            <label for="prix_min">min</label>
+                            <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12"></label>
                         </div>
                         <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])){echo $_GET['prixMin'];} else {echo 0;} ?>" min="0"/>
                     </div>  
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <label for="prix_max">max</label>
+                            <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12"></label>
                         </div>
                         <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])){echo $_GET['prixMax'];} else {echo 0;} ?>" min="0"/>
                     </div>
@@ -75,7 +76,7 @@ $photo = $stmt->fetch();
                     } else if (sizeof($_GET)>1){
                         $prix1 = $_GET['prixMin'];
                         $prix2 = $_GET['prixMax'];
-                        $filtre = "WHERE d.prix_total_devis>=$prix1 AND d.prix_total_devis<=$prix2";
+                        $filtre = "and d.prix_total_devis>=$prix1 AND d.prix_total_devis<=$prix2";
                     }
 
                     $stmt = $dbh->prepare("SELECT url_detail, l.photo_principale, libelle_logement, f.url_facture, l.id_logement, nom, prenom, c.photo

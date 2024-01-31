@@ -110,16 +110,16 @@ int main(int argc, char *argv[]){
 
     if (admin == true)
     {
-        printf("\t- Affichez la liste de tous les biens\n");
+        printf("\033[0;33m\t- Affichez la liste de tous les biens\n\033[0m");
     }
     else
     {
-        printf("\t- Affichez la liste de vos biens\n");
+        printf("\033[0;33m\t- Affichez la liste de vos biens\n\033[0m");
     }
 
-    printf("\t- Consulter la disponibilité d'un bien sur une période de votre choix\n");
-    printf("\t- Rendre un bien indisponible sur une période de votre choix\n");
-    printf("Pour la liste des commandes tappez --infos\n");
+    printf("\033[0;34m\t- Consulter la disponibilité d'un bien sur une période de votre choix\n\033[0m");
+    printf("\033[38;2;139;69;19m\t- Rendre un bien indisponible sur une période de votre choix\n\033[0m");
+    printf("Pour la liste des commandes tappez \033[32m--informations\n\033[0m");
     
     while(true){
         bool fin = false;
@@ -171,18 +171,8 @@ int main(int argc, char *argv[]){
     }
 
 } while (fin == false);
-
-
-
-
-
-
-
     }
-
     close(cnx);
-
     return 0;
-    
 }
 
