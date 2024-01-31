@@ -15,7 +15,6 @@
 #include <postgresql/libpq-fe.h>
 #include <time.h>
 
-char* enleverRetoursALaLigne(char *chaine);
 
 void envoyer_morceau(const char *morceau, int cnx) {
     write(cnx, morceau, strlen(morceau));
@@ -206,6 +205,10 @@ int main(int argc, char **argv){
                     snprintf(request, sizeof(request), "SELECT * FROM locbreizh._clefsapi WHERE idclef = '%s'", r_buffer);
                     infos_clef = PQexec(conn, request);
 
+                    printf("true? %c false?\n",PQgetvalue(infos_clef,0,1)[0]);
+                    printf("true? %c false?\n",PQgetvalue(infos_clef,0,2)[0]);
+                    printf("true? %c false?\n",PQgetvalue(infos_clef,0,3)[0]);
+                    printf("true? %c false?\n",PQgetvalue(infos_clef,0,4)[0]);
                     if (PQgetvalue(infos_clef,0,1)[0] == 't'){
                         droit_liste_biens = true;
                     }
@@ -419,8 +422,12 @@ int main(int argc, char **argv){
                         
                         // Affichage des lignes du résultat de la requête
                         for(int i = 0; i < nombres_lignes_req ;i++){
+                            
+                            printf("Nom: %s, Prix: %s, Description: %s, Chambres: %s, Salles de bains: %s, Superficie: %s m²\n",
+                            PQgetvalue(res, i, 1), PQgetvalue(res, i, 2), PQgetvalue(res, i, 3),
+                            PQgetvalue(res, i, 5), PQgetvalue(res, i, 6), PQgetvalue(res, i, 7));
 
-                            snprintf(chaine, sizeof(chaine), "%s -- %s € -- %s -- %s -- %s -- %s m²\n",PQgetvalue(res,i,1),PQgetvalue(res,i,2),(PQgetvalue(res,i,3)),PQgetvalue(res,i,5),PQgetvalue(res,i,6),PQgetvalue(res,i,7));
+                            snprintf(chaine, sizeof(chaine), "%s -- %s € -- %s -- %s -- %s -- %s m²\n",PQgetvalue(res,i,1),PQgetvalue(res,i,2),PQgetvalue(res,i,3),PQgetvalue(res,i,5),PQgetvalue(res,i,6),PQgetvalue(res,i,7));
                             write(cnx, chaine, strlen(chaine));
                             fflush(stdout);
                             strcpy(chaine,"");
@@ -701,30 +708,4 @@ int main(int argc, char **argv){
 
 return 0;
 
-}
-
-char* enleverRetoursALaLigne(char *chaine) {
-    int i, j;
-    char *nouvelleChaine;
-
-    // Allouer de la mémoire pour la nouvelle chaîne
-    nouvelleChaine = (char*)malloc(strlen(chaine) + 1);
-
-    if (nouvelleChaine == NULL) {
-        // Gestion de l'erreur d'allocation de mémoire
-        // Vous pouvez choisir d'afficher un message ou prendre d'autres mesures appropriées.
-        exit(EXIT_FAILURE);
-    }
-
-    // Copier les caractères de la chaîne originale dans la nouvelle chaîne, en ignorant les retours à la ligne
-    for (i = 0, j = 0; chaine[i] != '\0'; i++) {
-        if (chaine[i] != '\n' && chaine[i] != '\r') {
-            nouvelleChaine[j++] = chaine[i];
-        }
-    }
-
-    // Ajouter le caractère de fin de chaîne à la nouvelle position
-    nouvelleChaine[j] = '\0';
-
-    return nouvelleChaine;
 }
