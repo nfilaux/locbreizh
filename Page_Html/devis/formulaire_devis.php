@@ -185,29 +185,18 @@
             <h2 style="text-align:center;  font-family: 'Quicksand';">Charges aditionnelles</h2>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
-<<<<<<< HEAD
-                <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo 'checked';}else if ($menage !=''){echo 'checked';}; ?>>
-                <input type="hidden" name ="prix_animaux" id="prix_animaux" value=<?php echo $animaux; ?>>
-                <label for="animaux"> Animaux </label>
-=======
-                <input type="checkbox" id="animaux" name="animaux" <?php  if(isset($_SESSION['valeurs_complete']['menage'])){echo "checked";} else if (isset($menage2['prix_charges']) && $menage2['prix_charges'] !=''){echo 'checked';}; ?>>
-                 <label for="animaux"> Animaux </label>
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
+                <input type="checkbox" id="menage" name="menage" <?php  if(isset($_SESSION['valeurs_complete']['menage'])){echo "checked";} else if (isset($menage2['prix_charges']) && $menage2['prix_charges'] !=''){echo 'checked';}; ?>>
+                 <label for="menage"> Animaux </label>
                 </div>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
-                <input type="checkbox" id="menage" name="menage" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo "checked";} else if(isset($animaux2['prix_charges']) && $animaux2['prix_charges'] !=''){ echo 'checked';}; ?>>
-                <label for="menage"> Menage </label>
+                <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo "checked";} else if(isset($animaux2['prix_charges']) && $animaux2['prix_charges'] !=''){ echo 'checked';}; ?>>
+                <label for="animaux"> Menage </label>
                 </div>
                 <!--pre-remplie les infos si ils sont dans get-->
                 <div class="logpc">
-<<<<<<< HEAD
-                <label style="text-align:center;" for="vacanciers_sup">Vacanciers supplémentaires</label>
-                <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else{if ($vac_sup!=''){echo $nb_vac_sup;}}; ?>"/>
-=======
                 <label style="text-align:center;" for="nb_pers_supp">Vacanciers supplémentaires</label>
                 <input class="lognb" type="text" id="vacanciers_sup" name="vacanciers_sup" min="0" max="100" placeholder="0" value="<?php if(isset($_SESSION['valeurs_complete']['vacanciers_sup'])){echo $_SESSION['valeurs_complete']['vacanciers_sup'];}else if (isset($vac_sup2['nombre']) && $vac_sup2['nombre']!=''){echo $vac_sup2['nombre'];}; ?>"/>
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
                 </div>
             </div>
             </div>
@@ -224,13 +213,8 @@
             <div class="devisrow">
                 <p class="ren">Calculé grâce au planning : </p>
                 <div class="deviscol">
-<<<<<<< HEAD
-                <label for="charges">Charges additionnelles HT (en €) :</label>
-                <input class="logvct" type="number" id="charges" name="charges" value="<?php echo $prix_charges ?>" disabled />
-=======
                 <label for="tarif_loc">Tarif moyen HT par nuit(en €) :</label>
                 <input class="logvct" type="number" id="tarif_loc" name="tarif_loc" value="<?php if(isset($_SESSION['valeurs_complete']['tarif_loc'])){echo $_SESSION['valeurs_complete']['tarif_loc'];} ?>" required readonly/> 
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
                 </div>
             </div>
             
@@ -249,98 +233,16 @@
                             <input class="logvct" id="sousTotal_HT" name="sousTotal_HT" value="" readonly>
                         </div>
                         <div class="deviscolinput">
-<<<<<<< HEAD
-                            <p> Total TTC (en € ) </p>
-                            <input class="logvct" id="totalttc" name="totalttc" value="" disabled>
-                        </div>
-                        <div class="deviscolinput">
-                            <p> Taxe de séjour (en € ) </p>
-                            <input class="logvct" id="taxe_sejour" name="taxe_sejour" value="" disabled>
-=======
                             <p>Sous total TTC (en €) </p>
                             <input class="logvct" id="sousTotal_TTC" name="sousTotal_TTC" value="" readonly>
                         </div>
                         <div class="deviscolinput">
                             <p>Frais de service HT (en €) </p>
                             <input class="logvct" id="fraisService_HT" name="fraisService_HT" value="" readonly>
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
                         </div>
                     </div>
                     <div class="devisrow">
                     <div class="devisvct">
-<<<<<<< HEAD
-                            <p> Montant total du devis (en € ) </p>
-                            <input class="logvct" id="total" name="total" value=""  disabled>
-                        </div>
-                    <div class="devisvct">
-                            <p> Frais de plateforme HT (en € ) </p>
-                            <input class="logvct" id="platht" name="platht" value="" disabled>
-                        </div>
-                    <div class="devisvct">
-                        <p> Frais de plateforme TTC (en € ) </p>
-                            <input class="logvct" id="platttc" name="plattc" value="" disabled>
-                        </div>
-                    </div>
-            </div>
-            <script>
-                function roundDecimal(nombre, precision){
-                    var precision = precision || 2;
-                    var tmp = Math.pow(10, precision);
-                    return Math.round( nombre*tmp )/tmp;
-                }
-
-            let baliseprixcharges = document.getElementById("charges");
-            let prix_animaux = document.getElementById("prix_animaux");
-            let animaux = document.getElementById("animaux");
-            let tarif_loc = document.getElementById("tarif_loc");
-            animaux.addEventListener("change",gerer_charge);
-            //tarif_loc.addEventListener("focus",test);
-
-            function gerer_charge(){
-                //console.log("detecter");
-                //alert(1);
-                if (animaux.checked === true){
-                    /*let test = parseInt(baliseprixcharges.value) + parseInt(prix_animaux.value)
-                    console.log(test);*/
-                    //console.log(tarif_loc);
-                    baliseprixcharges.value = parseInt(baliseprixcharges.value) + parseInt(prix_animaux.value);
-                } /*else {
-                    baliseprixcharges.value = parseInt(baliseprixcharges.value) - parseInt(prix_animaux);
-                }*/
-            }
-
-            /*function test(){
-                alert(1);
-            }*/
-
-                function calcul() {
-                    let prix_loc = baliseprixloc.value
-                    let prix_charges = baliseprixcharges.value
-                    let html = "";
-                    total_HT = parseInt(prix_loc) + parseInt(prix_charges);
-                    total_TTC = roundDecimal(total_HT * 1.1,2)
-                    taxe_sejour = 120;
-                    total_montant_devis = roundDecimal(total_TTC + taxe_sejour,2)
-                    total_plateforme_HT = roundDecimal(total_montant_devis*1.01,2)
-                    total_plateforme_TTC = roundDecimal(total_plateforme_HT * 1.2,2)
-                    html += `<div class="deviscol">`;
-                    html += `<div class="devisrow">`;
-                    html += `<p class="ren">Calculer automatiquement</p>`;
-                    html += `<div class="deviscolinput"><p> Total HT (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_HT}€" disabled></div>`;
-                    html += `<div class="deviscolinput"><p> Total TTC (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${total_TTC}€" disabled></div>`;
-                    html += `<div class="deviscolinput"><p> Taxe de séjour (en € ) </p><input class="logvct" id="totalht" name="totalht" value="${taxe_sejour}€" disabled></div>`;
-                    html += '</div>';
-                    html += `<div class="devisrow">`;
-                    html += `<div class="devisvct"><p> Montant total du devis</p><input class="logvct" id="totalht" name="totalht" value="${total_montant_devis}€"  disabled></div>`;
-                    html += `<div class="devisvct"><p> Frais de plateforme HT</p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_HT}€" disabled></div>`;
-                    html += `<div class="devisvct"><p> Frais de plateforme TT</p><input class="logvct" id="totalht" name="totalht" value="${total_plateforme_TTC} €" disabled></div>`;
-                    html += '</div>';
-                    html += '</div>';
-                    document.getElementById("resultat").innerHTML = html;
-                    document.getElementById("envoyerDevisBtn").removeAttribute("disabled");
-                }
-            </script>
-=======
                             <p>Frais de service TTC (en €) </p>
                             <input class="logvct" id="fraisService_TTC" name="fraisService_TTC" value=""  readonly>
                         </div>
@@ -354,7 +256,6 @@
                         </div>
                     </div>
             </div>
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
             <br/>
             <input type="hidden" id="id_demande" name ="id_demande" value=<?php echo $_GET['demande'];?>>
             </fieldset>

@@ -212,7 +212,11 @@
         $stmt->execute();
         $libelle_log = $stmt->fetch();
         //cherche info proprio
-        $stmt = $dbh->prepare("SELECT nom,prenom,mail,telephone from locbreizh._compte natural join locbreizh._logement where id_compte = locbreizh._logement.id_proprietaire;");
+        $stmt = $dbh->prepare("SELECT nom,prenom,mail,telephone from locbreizh._compte 
+        natural join locbreizh._logement
+        JOIN locbreizh._demande_devis d ON  d.logement = locbreizh._logement.id_logement  
+        where id_compte = locbreizh._logement.id_proprietaire
+        AND num_demande_devis = {$_POST['id_demande']};");
         $stmt->execute();
         $proprioinfo = $stmt->fetch();
         // creation du pdf
@@ -278,13 +282,16 @@
             for ($i = 0; $i < count($ligne); $i++) {
                 if ($i == 0) {
                     $pdf->SetFont('', 'B', 12);
+                    $align = 'C';
                 } elseif($premier){
                     $pdf->SetFont('', 'B', 12);
+                    $align = 'C';
                 }
                 else{
                     $pdf->SetFont('', '', 12);
+                    $align = 'R';
                 }
-                $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0,'C');
+                $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0, $align);
             }
             $pdf->Ln();
             $premier = 0;
