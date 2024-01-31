@@ -251,10 +251,10 @@
         // Informations pour le devis
         $informationsDevis = array(
             array('Désignation', 'Prix HT', 'Prix TTC'), 
-            array('Logement', $nuitees_HT, $nuitees_HT*1.1),
-            array('Charges', $totalCharges_HT, $totalCharges_HT*1.1),
-            array('Taxe de séjour', $logement['taxe_sejour'], $logement['taxe_sejour']),
-            array('Frais de plateforme', $fraisService_HT, $fraisService_TTC)
+            array('Logement', number_format($nuitees_HT, 2, '.', '') . " €", number_format($nuitees_HT*1.10 , 2 , '.', ''). ' €'),
+            array('Charges', number_format($totalCharges_HT, 2, '.', ''). " €",  number_format($totalCharges_HT*1.10, 2, '.', ''). " €"),
+            array('Taxe de séjour', number_format($logement['taxe_sejour'], 2 , '.', '') . ' €', number_format($logement['taxe_sejour'], 2, '.', '') . ' €'),
+            array('Frais de plateforme', number_format($fraisService_HT, 2, '.', '') . ' €', number_format($fraisService_TTC, 2, '.', '') . ' €')
         );
         // Définir les largeurs des colonnes
         $colonneLargeurs = array(60, 40, 40, 40);
@@ -277,7 +277,7 @@
         }
         $pdf->Ln();
         $informationsPrix = array(
-            array('Prix Total', $nuitees_HT + $totalCharges_HT + $logement['taxe_sejour']+ $fraisService_HT, $prixTotal)
+            array('Prix Total', number_format($nuitees_HT + $totalCharges_HT + $logement['taxe_sejour']+ $fraisService_HT, 2, '.', '') . ' €', number_format($prixTotal, 2, '.', '') . ' €')
         );
         foreach ($informationsPrix as $ligne) {
             for ($i = 0; $i < count($ligne); $i++) {
