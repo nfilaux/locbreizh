@@ -633,6 +633,9 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     );
                     $stmt->execute();
                     $info = $stmt->fetch();
+
+                    $smt = $dbh->prepare("SELECT
+                    ")
                 ?>
                 <div class="logrow">
                     <div class="logcp">
@@ -666,6 +669,31 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                             ?><p><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
                         }
                         
+                        ?>
+                    </div>
+                    <hr class="hr">
+                    <div class="logcp">
+                        <h4 class="potitres">Installations</h4>
+                        <?php
+
+                        if ($info['climatisation'] == true) {
+                            ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
+                        }
+                        if ($info['piscine'] == true) {
+                            ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
+                        }
+
+                        if ($info['sauna'] == true) {
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
+                        }
+
+                        if ($info['hammam'] == true) {
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
+                        }
+
+                        if ($info['jacuzzi'] == true) {
+                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
+                        }
                         ?>
                     </div>
                     <hr class="hr">
