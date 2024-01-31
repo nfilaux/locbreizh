@@ -110,6 +110,22 @@
             $stmt->execute();
             $vac_sup2 = $stmt->fetch();
 
+
+            //si le client a notifié des vacanciers supplémentaires dans sa demande on regarde leur nombre
+            
+            if ($vac_sup != ''){
+
+                $stmt = $dbh->prepare("SELECT nombre from locbreizh._comporte_charges_associee_demande_devis where num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
+                $stmt->execute();
+                $nb_vac_sup = $stmt->fetchColumn(); 
+
+                // le prix des vacanciers supplémentaires est égal au nombres d'entre eux multiplié par le tarif unitaire d'un vacancier en plus
+                
+                $vac_sup = $vac_sup * $nb_vac_sup;
+            }
+
+            $prix_charges = $animaux + $menage + $vac_sup;
+
             // taxe de sejour
             $stmt = $dbh->prepare("SELECT prix_journalier_adulte 
             FROM locbreizh._demande_devis d 
@@ -332,7 +348,7 @@
 
         const sousTotal_HT = totalSum + total_charges;
         const sousTotal_TTC = sousTotal_HT * 1.1;
-        const fraisService_HT = 0.1 * sousTotal_HT;
+        const fraisService_HT = 0.01 * sousTotal_HT;
         const fraisService_TTC = fraisService_HT * 1.2;
         const total_taxe_sejour =  taxe_sejour.prix_journalier_adulte * (nb_pers_supp + nb_personnes);
         const prixTotal = sousTotal_TTC + fraisService_TTC + total_taxe_sejour;
