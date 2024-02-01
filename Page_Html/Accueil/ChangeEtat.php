@@ -28,6 +28,11 @@ function unable($id){
 }
 
 foreach($_POST as $id_log => $changer_vers_etat){
+    $code = $dbh->prepare("SELECT code_planning FROM locbreizh._planning NATURAL JOIN locbreizh._logement WHERE id_logement = :id_logement;");
+    $code->bindParam(':id_logement',  $id_log);
+    $code->execute();
+    $variable = $code->fetch();
+
     $plageDispo = $dbh->prepare("SELECT COUNT(*) FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
     ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = :code_planning ;");
     $plageDispo->bindParam(':code_planning', $variable['code_planning']);
