@@ -72,19 +72,10 @@
                                                                                                         echo 'Nom de propriétaire';
                                                                                                     } ?>" />
                         </div>
-<<<<<<< HEAD
                         <a class="btn-filtre">
                             <img src="../svg/filtre.svg" width="20" height="20" onclick="openPopup('filtre','ovFiltre')">
                         </a>
                         <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
-=======
-                        <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>           
-                    </div>
-                    <a class="btn-filtre" >
-                        <img src="../svg/filtre.svg" width="28" height="28" onclick="openPopup('filtre','ovFiltre')">
-                    </a>
-                    <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
->>>>>>> 52e664dc60a6e9822a3780f765f4cc76c93ce324
                     </div>
 
                     <?php if (isset($_GET['erreur'])) { ?>
@@ -98,11 +89,6 @@
 
         <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')" class=""></div>
         <div id="filtre" class="filtrage">
-<<<<<<< HEAD
-            <div>
-
-            </div>
-=======
             <span class="fltitre">Filtres</span><hr class="hr">
             <form action="filtrage.php" method="post">
                 <h3 class="flptitre">Par type de logement</h3>
@@ -251,7 +237,6 @@
                 </ul>
                 <hr class="hr">
             </form>
->>>>>>> 52e664dc60a6e9822a3780f765f4cc76c93ce324
         </div>
 
         <!-- Champs de séléction des Tris -->
