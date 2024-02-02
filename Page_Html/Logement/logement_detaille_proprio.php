@@ -909,7 +909,9 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <?php } ?>
             </div>
             <?php
-            
+            if($nb_avis == 0){ ?>
+                <p style="text-align : center">Aucun avis n'a encore été posté pour ce logement.</p>
+            <?php }
             if($nb_avis > 4){?>
                 <div class="div_plus_avis"><button id="afficher-plus-avis">Afficher tous les avis (<?php echo count($avis) - 4;?>)</button></div>
             <?php } ?>
