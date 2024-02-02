@@ -838,16 +838,45 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         <hr class="hr">
         <div class="logcarte">
             <h3 class="policetitre">Localisation</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1364671.57561899!2d-4.397375693978974!3d48.08372166501683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4811ca61ae7e8eaf%3A0x10ca5cd36df24b0!2sBretagne!5e0!3m2!1sfr!2sfr!4v1702909132704!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            <div id="map"></div>
-            <script>
-                // Initialiser la carte Leaflet
-                var mymap = L.map('map').setView([51.505, -0.09], 13);
+<!--             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1364671.57561899!2d-4.397375693978974!3d48.08372166501683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4811ca61ae7e8eaf%3A0x10ca5cd36df24b0!2sBretagne!5e0!3m2!1sfr!2sfr!4v1702909132704!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+ -->        <div id="map"></div>
+            <p id="message"></p>      
 
-                // Ajouter une couche de carte (par exemple, OpenStreetMap)
+
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js">
+
+            //ville à géocoder
+            var commune = "Ploumanach";
+
+            var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
+
+            fetch(opencageUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.results.length > 0) {
+
+                        console.log(data);
+                        afficherCommuneSurMap(data.results[0].geometry.lat, data.results[0].geometry.lng);
+                    } else {
+                        var messageElement = document.getElementById('message');
+                        messageElement.innerHTML = "La ville à afficher n'est pas valide.";
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la requête de géocodage:", error);
+                });
+            
+            function afficherCommuneSurMap(lat, lng) {
+                var map = L.map('map').setView([lat, lng], 9);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors'
-                }).addTo(mymap);
+                }).addTo(map);
+
+                L.marker([lat, lng]).addTo(map)
+                    .bindPopup('Le logement est ici !');
+            }
+        </script>
+        
             </script>
                 <?php
                 $stmt = $dbh->prepare(
