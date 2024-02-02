@@ -27,6 +27,7 @@ $_SESSION['valeurs_complete']['code_postal'] = $cdp;
 $_SESSION['valeurs_complete']['ville'] = $ville;
 $_SESSION['valeurs_complete']['descriptif_logement'] = $description;
 $_SESSION['valeurs_complete']['tarif_base_ht'] = $tarif;
+
 if ($_FILES["image1P"]["tmp_name"] != ""){
     // id_photo = 1 car c'est notre image principale de logement donc la première
     $id_photo = 1;

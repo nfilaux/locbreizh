@@ -3,7 +3,7 @@
 @font-face {
     font-family: 'PatuaOne';
     src: url('Ressources/polices/patuaone-regular-webfont.woff2') format('woff2'),
-         url('Ressources/polices/patuaone-regular-webfont.woff') format('woff');
+        url('Ressources/polices/patuaone-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -11,13 +11,13 @@
 @font-face {
     font-family: 'quicksandregular';
     src: url('Ressources/polices/quicksand-regular-webfont.woff2') format('woff2'),
-         url('Ressources/polices/quicksand-regular-webfont.woff') format('woff');
+        url('Ressources/polices/quicksand-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
 }
 
-html{
+html {
     height: 100%;
 }
 
@@ -106,19 +106,20 @@ body {
     z-index: 1000;
 }
 
-#tableProfil, #tableProfil td{
+#tableProfil,
+#tableProfil td {
     border-collapse: collapse;
     background-color: #fff;
     border: 1px solid #745086;
 }
 
-#deconnexion{
+#deconnexion {
     width: 8.5em;
     padding: 10px 40px;
     color: red;
 }
 
-#monprofil{
+#monprofil {
     width: 8.5em;
     padding: 10px 40px;
     color: #000;
@@ -153,7 +154,7 @@ body {
     border-radius: unset;
 }
 
-.overlay_plages{
+.overlay_plages {
     display: none;
     position: fixed;
     top: 0;
@@ -169,7 +170,7 @@ body {
     flex-wrap: nowrap;
 }
 
-.unePlage button{
+.unePlage button {
     background: none;
     color: inherit;
     border: none;
@@ -178,52 +179,55 @@ body {
     cursor: pointer;
     outline: inherit;
 }
+
 /*------------------------------------------------popup supprimer -----------------------------------------*/
-#erreur_suppr{
-    color:red;
-    font-weight : bold;
+#erreur_suppr {
+    color: red;
+    font-weight: bold;
     text-align: center;
-    padding : 1.5em;
+    padding: 1.5em;
 }
 
-.erreur{
-    color:red;
+.erreur {
+    color: red;
     font-weight: bold;
 }
 
-.valid{
-    color:green;
+.valid {
+    color: green;
     font-weight: bold;
 }
 
-#boutons{
+#boutons {
     display: flex;
     justify-content: space-around;
 }
 
 /*---------------------------------------------------------------- VOIR MDP ------------------------------------------------------------*/
 
-#mdp{
+#mdp {
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-#mdp img, .rowcompte img{
-    height : 50px;
-    margin-left : 20px;
+#mdp img,
+.rowcompte img {
+    height: 50px;
+    margin-left: 20px;
     cursor: pointer;
 }
+
 /*---------------------------------------------------------------- Filtres --------------------------------------------------------------*/
-.section-filters{
-    background: url("Ressources/Images/fond_catalogue.jpg") no-repeat ;
+.section-filters {
+    background: url("Ressources/Images/fond_catalogue.jpg") no-repeat;
     background-size: cover;
     padding: 10em;
     margin-bottom: 3em;
 }
 
-.menu-filtre{
+.menu-filtre {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -472,19 +476,19 @@ body {
   }
   /**********/
 
-.filR{
-    display:flex; 
-    flex-direction:row; 
-    justify-content:space-around;
+.filR {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
-.fil{
-    display:flex; 
-    flex-direction:row; 
-    justify-content:space-around;
+.fil {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
-.menu-filtreR{
+.menu-filtreR {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -503,12 +507,13 @@ body {
     border-radius: 10px;
     overflow: hidden;
     width: 10%;
+
     input {
-        
+
         &:focus {
-          outline: none;
+            outline: none;
         }
-      }
+    }
 }
 
 .input-group-ville {
@@ -517,11 +522,12 @@ body {
     border-radius: 10px;
     overflow: hidden;
     width: 20%;
+
     input {
         &:focus {
-          outline: none;
+            outline: none;
         }
-      }
+    }
 }
 
 .input-group-pers {
@@ -530,11 +536,12 @@ body {
     border-radius: 10px;
     overflow: hidden;
     width: 17%;
+
     input {
         &:focus {
-          outline: none;
+            outline: none;
         }
-      }
+    }
 }
 
 .input-group-proprio {
@@ -543,14 +550,18 @@ body {
     border-radius: 10px;
     overflow: hidden;
     width: 30%;
+
     input {
         &:focus {
-          outline: none;
+            outline: none;
         }
-      }
+    }
 }
 
-.input-group input, .input-group-proprio input , .input-group-pers input , .input-group-ville input {
+.input-group input,
+.input-group-proprio input,
+.input-group-pers input,
+.input-group-ville input {
     border: none;
     width: 100%;
     height: 2em;
@@ -562,11 +573,11 @@ body {
     margin-right: 5px;
 }
 
-.input-group-prepend label{
+.input-group-prepend label {
     margin: auto 0.5em;
 }
-  
-.acc-accroche{
+
+.acc-accroche {
     color: white;
     font-family: 'PatuaOne';
     font-weight: 600;
@@ -580,9 +591,9 @@ body {
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 0.5em;
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 1em;
     font-family: 'Quicksand';
@@ -593,19 +604,19 @@ body {
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 0.5em;
-    background-color: #274065; 
+    background-color: #274065;
     color: #fff;
-    border: 1px solid #274065; 
+    border: 1px solid #274065;
     border-radius: 5px;
     font-size: 1em;
     font-family: 'Quicksand';
     padding: 0.5em;
 }
 
-.triage{
-    color: #957BB0; 
+.triage {
+    color: #957BB0;
     border: 1px solid #957BB0;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 20%;
     height: 2em;
     text-align: center;
@@ -617,13 +628,13 @@ body {
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
 
-header{
+header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     color: #745086;
     box-sizing: border-box;
-    border-bottom: 1px solid #745086; 
+    border-bottom: 1px solid #745086;
     flex-wrap: nowrap;
     background-color: #fff;
     padding: 1em 2em;
@@ -635,12 +646,12 @@ header{
 }
 
 header h2 {
-    margin:auto 1em auto 1em;
+    margin: auto 1em auto 1em;
     color: #745086;
 }
 
-header h4{
-    color:#000;
+header h4 {
+    color: #000;
     margin-right: 2em;
 }
 
@@ -655,17 +666,17 @@ header a:first-child {
     flex-wrap: nowrap;
 }
 
-header input{
+header input {
     width: 100%;
 }
 
 .brecherche {
     display: flex;
     flex-wrap: nowrap;
-    margin:auto 3em auto 3em;
+    margin: auto 3em auto 3em;
 }
 
-.imghead{
+.imghead {
     margin-top: auto;
     margin-bottom: auto;
     display: flex;
@@ -693,7 +704,7 @@ header a:last-child {
     padding: none;
 }
 
-.headconn{
+.headconn {
     position: relative;
     background-color: #745086;
     color: #fff;
@@ -703,7 +714,7 @@ header a:last-child {
     margin-top: 5vw;
 }
 
-.headtablo{
+.headtablo {
     position: relative;
     background-color: #745086;
     color: #fff;
@@ -714,7 +725,7 @@ header a:last-child {
     width: 100%;
 }
 
-.headtabloP{
+.headtabloP {
     position: relative;
     background-color: #274065;
     color: #fff;
@@ -726,26 +737,30 @@ header a:last-child {
 }
 
 
-.headconn img , .headtablo img{
+.headconn img,
+.headtablo img {
     position: absolute;
     left: 3em;
     top: 1.5em;
 }
 
-.headconn h1 , .headtablo h1 {
+.headconn h1,
+.headtablo h1 {
     color: #fff;
     font-size: 3em;
     margin: 3px;
     font-family: 'PatuaOne';
 }
 
-.headconn img , .headtabloP img{
+.headconn img,
+.headtabloP img {
     position: absolute;
     left: 3em;
     top: 1.5em;
 }
 
-.headconn h1 , .headtabloP h1 {
+.headconn h1,
+.headtabloP h1 {
     color: #fff;
     font-size: 4em;
     margin: 3px;
@@ -817,75 +832,76 @@ header a:last-child {
 
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
 
-.MainTablo{
+.MainTablo {
     padding-top: 0vw;
     padding-left: 0%;
     padding-right: 0%;
 }
 
-.MainTableau{
+.MainTableau {
     padding-top: 0vw;
     padding-left: 0%;
     padding-right: 0%;
 }
 
-.mainacc{
+.mainacc {
     padding-top: 0;
     padding-left: 0;
     padding-right: 0;
 }
 
-main{
+main {
     padding-top: 5vw;
     padding-bottom: 5vw;
     padding-left: 2em;
     padding-right: 2em;
-    flex:1;
+    flex: 1;
 }
 
-main label, .Tablobord h2{
+main label,
+.Tablobord h2 {
     color: #274065;
 }
 
-main h1{
+main h1 {
     color: #020202;
     margin: auto;
     text-align: center;
 }
 
-.Tablobord{
+.Tablobord {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
 
-.Tablobord article{
+.Tablobord article {
     display: flex;
     flex-direction: column;
     text-align: center;
     width: 48%;
 }
 
-.hr{
+.hr {
     height: auto;
     border: none;
-    border: 1px solid #745086; 
+    border: 1px solid #745086;
     margin: 2em 0 1em 0;
 }
 
-.hr2{
+.hr2 {
     height: auto;
     border: none;
-    border: 1px solid #745086; 
+    border: 1px solid #745086;
     margin: 0;
     width: 90%;
 }
 
-.hrP{
+.hrP {
     height: auto;
     border: none;
-    border: 1px solid #274065; 
+    border: 1px solid #274065;
     margin: 1em 0 1em 0;
 }
 
@@ -895,26 +911,26 @@ main h1{
     justify-content: center;
 }
 
-.Maincompte section{
+.Maincompte section {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.Maincompte section article{
+.Maincompte section article {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: auto auto 1em auto;
 }
 
-.Maincompte section article div span{
+.Maincompte section article div span {
     margin-top: 2em;
     font-size: 1.5em;
 }
 
 
-.mdp{
+.mdp {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -927,23 +943,23 @@ main h1{
 
 /*----------------------------------------------------------------footer----------------------------------------------------------------*/
 
-footer{
+footer {
     padding-top: 1px;
     background-color: #745086;
     color: #F6E4FF;
     margin-bottom: 0;
     width: 100%;
-    height:5em;
+    height: 5em;
     position: relative;
     bottom: 0;
     display: table;
     box-sizing: border-box;
     border-top: 1px solid #F6E4FF;
-    
+
 }
 
 
-.footerP{
+.footerP {
     padding-top: 1px;
     background-color: #274065;
     color: #b8cded;
@@ -954,23 +970,24 @@ footer{
     box-sizing: border-box;
     border-top: 1px solid #b8cded;
     width: 100%;
-    height:5em;
- 
+    height: 5em;
+
 }
 
 
-.tfooter, .bfooter{
+.tfooter,
+.bfooter {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
 }
 
-.bfooter p:last-child{
+.bfooter p:last-child {
     visibility: visible;
 }
 
-footer>hr{
+footer>hr {
     border-width: 1px;
     border-color: #F6E4FF;
     width: 87%;
@@ -980,7 +997,7 @@ footer div p {
     padding: 0%;
 }
 
-.footerwrap{
+.footerwrap {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -992,35 +1009,40 @@ footer div p {
 
 /*----------------------------------------------------------------Link----------------------------------------------------------------*/
 
-a:link , a:visited , a:hover{
+a:link,
+a:visited,
+a:hover {
     color: #745086;
 }
 
-header a:link ,header a:visited, footer a:link, footer a:visited {
+header a:link,
+header a:visited,
+footer a:link,
+footer a:visited {
     margin-right: 0;
     font-size: 1.5em;
     color: #F6E4FF;
     text-decoration: none;
 }
 
-.margintb{
-    margin-top: auto;   
+.margintb {
+    margin-top: auto;
     margin-bottom: auto;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 }
 
-.linkreseau{
+.linkreseau {
     margin: auto;
 }
 
 /*----------------------------------------------------------------Bouton----------------------------------------------------------------*/
 
 .btn-compte {
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 20px;
     width: 20em;
     font-size: 2em;
@@ -1031,9 +1053,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-accueil {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 20px;
     font-size: 1em;
     font-family: 'Quicksand';
@@ -1043,9 +1065,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-previsualiser {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #345C99; 
+    background-color: #345C99;
     color: #fff;
-    border: 1px solid #345C99; 
+    border: 1px solid #345C99;
     border-radius: 20px;
     font-size: 1em;
     font-family: 'Quicksand';
@@ -1055,10 +1077,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 .btn-accueilins {
     margin-top: auto;
-    margin-bottom: auto; 
+    margin-bottom: auto;
     margin-left: 5em;
     color: #745086;
-    border: 1px solid #745086; 
+    border: 1px solid #745086;
     border-radius: 20px;
     font-size: 1em;
     font-family: 'Quicksand';
@@ -1069,15 +1091,16 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding: 0.5em 1em 0.5em 1em;
 }
 
-.btn-accueilins:visited{
+.btn-accueilins:visited {
     color: #745086;
 }
 
-.btn-accueilins:link{
+.btn-accueilins:link {
     color: #745086;
 }
 
-.btn-accueilins h5, .btn-accueil h5{
+.btn-accueilins h5,
+.btn-accueil h5 {
     margin: auto;
 }
 
@@ -1100,9 +1123,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-ajoutlog {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #345C99; 
+    background-color: #345C99;
     color: #fff;
-    border: 1px solid #345C99; 
+    border: 1px solid #345C99;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1113,9 +1136,22 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-desactive {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #fff; 
+    background-color: #fff;
     color: red;
-    border: 1px solid red; 
+    border: 1px solid red;
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+}
+
+.btn-desactiveGris {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #D3D3D3; 
+    color: #808080;
+    border: 1px solid #808080; 
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1126,9 +1162,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-consulter {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: #fff; 
+    background-color: #fff;
     color: #745086;
-    border: 1px solid #745086; 
+    border: 1px solid #745086;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1139,9 +1175,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .btn-suppr {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: red; 
+    background-color: red;
     color: #fff;
-    border: 1px solid red; 
+    border: 1px solid red;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1150,21 +1186,21 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-modif {
-    background-color: transparent; 
+    background-color: transparent;
     color: #345C99;
-    border: none; 
+    border: none;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
     font-family: 'Quicksand';
     font-weight: 900;
-    position:relative;
+    position: relative;
 }
 
 .btn-demlog {
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1173,9 +1209,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-demlogP {
-    background-color: #274065; 
+    background-color: #274065;
     color: #fff;
-    border: 1px solid #274065; 
+    border: 1px solid #274065;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1184,9 +1220,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-demlogno {
-    background-color: #cccccc; 
+    background-color: #cccccc;
     color: #745086;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1195,9 +1231,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-demlognoP {
-    background-color: #cccccc; 
+    background-color: #cccccc;
     color: #274065;
-    border: 1px solid #274065; 
+    border: 1px solid #274065;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1207,9 +1243,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 
 .btn-input {
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 20px;
     width: 20em;
     font-size: 2em;
@@ -1219,10 +1255,10 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .btn-envoidevis {
-    
-    background-color: #274065; 
+
+    background-color: #274065;
     color: #fff;
-    border: 1px solid #274065; 
+    border: 1px solid #274065;
     border-radius: 5px;
     font-size: 2em;
     padding: 0.5em;
@@ -1233,21 +1269,36 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     margin: 1em auto;
 }
 
-#Login::placeholder, #motdepasse::placeholder ,#prenom::placeholder, #nom::placeholder, #Pseudo::placeholder, #mail::placeholder, #langue::placeholder, #email::placeholder,
-#pseudo::placeholder, #ville::placeholder,#confirmationMDP::placeholder, #codePostal::placeholder,#numRue::placeholder,#nomRue::placeholder,#telephone::placeholder {
+#Login::placeholder,
+#motdepasse::placeholder,
+#prenom::placeholder,
+#nom::placeholder,
+#Pseudo::placeholder,
+#mail::placeholder,
+#langue::placeholder,
+#email::placeholder,
+#pseudo::placeholder,
+#ville::placeholder,
+#confirmationMDP::placeholder,
+#codePostal::placeholder,
+#numRue::placeholder,
+#nomRue::placeholder,
+#telephone::placeholder {
     color: #957BB0;
     opacity: 50%;
     text-align: center;
 }
 
-#charges_animaux, #charges_pers_sup, #charges_menage {
+#charges_animaux,
+#charges_pers_sup,
+#charges_menage {
     color: #957BB0;
     text-align: center;
 }
 
 /*----------------------------------------------------------------Accueil----------------------------------------------------------------*/
 
-.card{
+.card {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -1255,7 +1306,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     margin: auto;
 }
 
-.logementCard{
+.logementCard {
     width: 30%;
     background-color: #fff;
     border-radius: 8px;
@@ -1264,51 +1315,51 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.logementCard>a{
+.logementCard>a {
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    font-weight:549;
+    font-weight: 549;
 }
 
-.logementCard>a>img{
+.logementCard>a>img {
     height: 300px;
-    object-fit:cover;
+    object-fit: cover;
     border: 1px solid #5B3F69;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.infoContainer{
+.infoContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
 }
 
-.logementTitre{
+.logementTitre {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-.mainInfos{
+.mainInfos {
     display: flex;
     flex-direction: column;
 }
 
-.otherInfos{
+.otherInfos {
     display: flex;
     flex-direction: column;
 }
 
-.otherInfos div{
+.otherInfos div {
     display: flex;
     align-items: center;
 }
 
-.otherInfos img{
+.otherInfos img {
     margin-right: 10px;
 }
 
@@ -1345,7 +1396,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     width: 60%;
 }
 
-.colreverse{
+.colreverse {
     display: flex;
     flex-direction: column-reverse;
     flex-wrap: nowrap;
@@ -1360,6 +1411,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     border-radius: 10px;
     object-fit: cover;
 }
+
 .cardlogmainP section img {
     border: none;
     height: 5em;
@@ -1374,7 +1426,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 /*----------------------------------------------------------------Compte----------------------------------------------------------------*/
 
 .custom-input {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -1399,7 +1451,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     justify-content: space-between;
 }
 
-.rowcompte a{
+.rowcompte a {
     margin: auto 2em auto 2em;
 }
 
@@ -1421,7 +1473,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     align-items: center;
 }
 
-.cprow{
+.cprow {
     width: 50%;
     display: flex;
     justify-content: space-around;
@@ -1437,7 +1489,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .testinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -1447,18 +1499,18 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     font-family: 'Quicksand';
 }
 
-.rowcompte input[type='password']{
+.rowcompte input[type='password'] {
     width: 85%;
 
 }
 
-.rowcompte .messerr >div{
+.rowcompte .messerr>div {
     display: flex;
     align-items: end;
 }
 
 .nbrueinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -1469,7 +1521,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 .nomrueinput {
-    color: #957BB0; 
+    color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 3em;
@@ -1494,6 +1546,288 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 /*----------------------------------------------------------------Logement----------------------------------------------------------------*/
 
+/* form avis */
+
+/*  affichage des avis */
+
+.div_plus_avis{
+    display: flex;
+    justify-content: center;
+}
+
+#afficher-plus-avis{
+    background-color: #957BB0;
+    color: #F6E4FF;
+    border: 1px solid #957BB0;
+    border-radius: 20px;
+    width: 21vw;
+    font-size: 1.5em;
+    height: 2em;
+    font-family: 'Quicksand';
+}
+
+.titreAvis{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sousTitreAvis{
+    font-size: 1.5em;
+}
+
+.avis-box-space-between{
+    display: flex;
+    justify-content: space-between;
+}
+
+.all-avis{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.box-avis{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 35vw;
+    border: #f6e1ff 1px solid;
+    padding: 15px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.596);
+    margin-bottom: 40px;
+}
+
+.box-avis > p{
+    margin: 20px 25px;
+}
+
+.header-box{
+    display: flex;
+    align-items: baseline;
+}
+
+.header-box > div > p{
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.infoC{
+    align-items: center;
+}
+
+.header-box svg{
+    margin-right: 5px;
+}
+
+.header-box img{
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid #5B3F69;
+    border-radius: 50%;
+    padding: none;
+}
+
+.h3_avis {
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    font-size: 2.5em;
+    text-align: center;
+    margin-right: 20px;
+}
+
+/* note avis (etoiles) */
+
+.rating:not(:checked) > input {
+    position: absolute;
+    appearance: none;
+  }
+  
+  .rating:not(:checked) > label {
+    float: right;
+    cursor: pointer;
+    font-size: 30px;
+    fill: #43314d;
+  }
+  
+  .rating:not(:checked) > label > svg {
+    fill: #43314d; /* Set default color for SVG */
+    transition: fill 0.3s ease; /* Add a transition effect */
+  }
+  
+  .rating > input:checked + label:hover,
+  .rating > input:checked + label:hover ~ label,
+  .rating > input:checked ~ label:hover,
+  .rating > input:checked ~ label:hover ~ label,
+  .rating > label:hover ~ input:checked ~ label {
+    fill: #e58e09;
+  }
+  
+  .rating:not(:checked) > label:hover,
+  .rating:not(:checked) > label:hover ~ label {
+    fill: #ff9e0b;
+  }
+  
+  .rating > input:checked ~ label > svg {
+    fill: #ffa723; /* Set color for selected stars */
+  }
+
+  .note_moyenne{
+    fill: #ffa723;
+    width: 40px;
+    height: auto;
+  }
+
+/* contenu form*/
+
+
+.rediger-avis{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.rediger-avis > p{
+    font-size: 1.5em;
+    margin: 0 20px 0 0;
+}
+
+.rediger-avis > form{
+    margin: 0;
+}
+
+.hidden{
+    display: none;
+}
+
+.messageBox {
+    width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    background-color: #ebebeb;
+    padding: 0 15px;
+    border-radius: 10px;
+    border: 2px solid rgb(162, 102, 180);
+  }
+  .messageBox:focus-within {
+    border: 2px solid rgb(87, 33, 112);
+  }
+  .fileUploadWrapper {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  #file {
+    display: none;
+  }
+  .fileUploadWrapper label {
+    cursor: pointer;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .fileUploadWrapper label svg {
+    height: 18px;
+  }
+  .fileUploadWrapper label svg path {
+    transition: all 0.3s;
+  }
+  .fileUploadWrapper label svg circle {
+    transition: all 0.3s;
+  }
+  .fileUploadWrapper label:hover svg path {
+    stroke: #fff;
+  }
+  .fileUploadWrapper label:hover svg circle {
+    stroke: #fff;
+    fill: #3c3c3c;
+  }
+  .fileUploadWrapper label:hover .tooltip {
+    display: block;
+    opacity: 1;
+  }
+  .tooltip {
+    position: absolute;
+    top: -40px;
+    display: none;
+    opacity: 0;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    text-wrap: nowrap;
+    background-color: #420057;
+    padding: 6px 10px;
+    border: 1px solid #47138b;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.596);
+    transition: all 0.3s;
+  }
+
+  #messageInput {
+    margin-top: 20px;
+    width: 70%;
+    height: auto;
+    min-height: 40px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding-left: 10px;
+    color: rgb(58, 27, 66);
+    resize: none; /* Empêche le redimensionnement manuel par l'utilisateur */
+    overflow: hidden; /* Masque tout contenu qui dépasse la taille de l'input */
+}
+
+  #messageInput::placeholder{
+    color: rgb(93, 73, 107);
+  }
+  #messageInput:focus ~ #sendButton svg path,
+  #messageInput:valid ~ #sendButton svg path {
+    fill: #49275f;
+    stroke: #ebebeb;
+  }
+  
+  #sendButton {
+    width: fit-content;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  #sendButton svg {
+    height: 18px;
+    transition: all 0.3s;
+  }
+  #sendButton svg path {
+    transition: all 0.3s;
+  }
+  #sendButton:hover svg path {
+    fill: #3c3c3c;
+    stroke: white;
+  }
+  
+  .rediger-avis > form {
+    transition: height 0.3s ease;
+    }
 .modif_log_img{
     width: 150px;
     height: 150px;
@@ -1501,7 +1835,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 }
 
-.logcolumn{
+.logcolumn {
     display: flex;
     flex-direction: column;
     width: 48%;
@@ -1509,26 +1843,34 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     margin-top: 3%;
     justify-content: space-around;
 }
-.logcolumn > p{
+
+.logcolumn>p {
     margin: 4vw
 }
 
-.logpc{
+.logpc {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 
-.logcp{
+.logcp {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+<<<<<<< HEAD
+    align-self: flex-start;
+    padding: 2em;
     
+=======
+
+>>>>>>> 78d8d9d13929cbc1e2215c1583cbb886716f53fa
 }
 
 .logcp p {
     align-items: center;
     display: flex;
+    font-size : 140%;
 }
 
 .logcp img {
@@ -1536,22 +1878,22 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 }
 
 
-.logc{
+.logc {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 48%;
 }
 
-.logI{
+.logI {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 48%;
+    width: 60%;
     margin: 3em auto;
 }
 
-.logdem{
+.logdem {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1563,43 +1905,44 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.logcarte{
+.logcarte {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.logcarte p{
+.logcarte p {
     text-align: center;
 }
 
-.devis{
+.devis {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 
-.log2vct{
+.log2vct {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 48%;
 }
 
-.log3vct{
+.log3vct {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 28%;
 }
 
-.log4vct{
+.log4vct {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 23%;
 }
-.log5vct{
+
+.log5vct {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1663,9 +2006,9 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 .cardprixcharge {
     width: 30em;
     font-size: 1em;
-    color: #345C99; 
+    color: #345C99;
     border: 1px solid #345C99;
-    border-radius: 5px; 
+    border-radius: 5px;
     height: 2em;
     text-align: center;
     margin-bottom: 1em;
@@ -1703,105 +2046,129 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 fieldset {
     width: 82%;
-    margin: 1em 3.5em;
+    margin: 1em auto;
     padding: 1em;
     border: 1px solid #ccc;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-fieldset label{
+fieldset label {
     text-align: center;
 }
 
-.logPA{
-    color: #957BB0; 
+.logPA {
+    color: #957BB0;
     border: 1px solid #957BB0;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 100%;
     height: 8em;
     margin-top: 5px;
 }
 
-.logPAP{
-    color: #345C99; 
+.logPAP {
+    color: #345C99;
     border: 1px solid #345C99;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 100%;
     height: 4em;
     margin-top: 5px;
     padding: 5px;
 }
 
-.lognom{
-    color: #345C99; 
+.lognom {
+    color: #345C99;
     border: 1px solid #345C99;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 100%;
     height: 2em;
     padding: 5px;
     margin-top: 5px;
 }
 
-.logvct{
-    color: #345C99; 
+.logvct {
+    color: #345C99;
     border: 1px solid #345C99;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 100%;
     height: 2em;
     padding: 5px;
     margin-top: 5px;
 }
 
-.logvctC{
-    color: #745086; 
+.inputprix {
+    color: #345C99;
+    border: 1px solid #345C99;
+    border-radius: 5px;
+    height: 2em;
+    width: 20em;
+    padding: 5px;
+    margin-top: 5px;
+    text-align: end;
+}
+
+
+.valduree {
+    color: #345C99;
+    border: 1px solid #345C99;
+    border-radius: 5px;
+    width: 20%;
+    height: 2em;
+    padding: 5px;
+    margin: 5px auto;
+}
+
+.logvctC {
+    color: #745086;
     border: 1px solid #745086;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 100%;
     height: 2em;
     text-align: center;
 }
 
-.lognb{
-    color: #345C99; 
+.lognb {
+    color: #345C99;
     border: 1px solid #345C99;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 80%;
     height: 2em;
     text-align: center;
-    margin:auto auto 0.5em auto;
+    margin: auto auto 0.5em auto;
 }
 
-.lognbC{
-    color: #745086; 
+.lognbC {
+    color: #745086;
     border: 1px solid #745086;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 80%;
     height: 2em;
     text-align: center;
-    margin:auto auto 0.5em auto;
+    margin: auto auto 0.5em auto;
 }
 
-.logselect{
-    color: #345C99; 
+.logselect {
+    color: #345C99;
     border: 1px solid #345C99;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 104%;
     height: 2em;
     text-align: center;
     margin-top: 5px;
 }
-.devis{
+
+.devis {
     display: flex;
     align-items: center;
 }
 
-.MainTablo .logpc button, .MainTablo .devis input{
+.MainTablo .logpc button,
+.MainTablo .devis input {
     width: 25%;
     height: 2em;
     margin: 2em auto 0 auto;
 }
 
-.logtitre{
+.logtitre {
     font-family: 'PatuaOne';
     color: #745086;
     font-size: 2em;
@@ -1809,7 +2176,7 @@ fieldset label{
     margin-bottom: 0.2em;
 }
 
-.logtitreP{
+.logtitreP {
     font-family: 'PatuaOne';
     color: #274065;
     font-size: 2em;
@@ -1841,8 +2208,12 @@ fieldset label{
 .potitre {
     font-family: 'PatuaOne';
     font-weight: 600;
-    font-size: 1.5em;
+    font-size: 2.5em;
     margin: auto 0;
+}
+
+.potitres {
+    font-size: 200%;
 }
 
 iframe {
@@ -1859,7 +2230,7 @@ iframe {
     justify-content: space-between;
     border-radius: 15px;
     padding-top: 0.5em;
-    border: 1px solid #745086; 
+    border: 1px solid #745086;
     width: 45%;
     padding: 1em;
     margin: 0.5em auto;
@@ -1872,7 +2243,7 @@ iframe {
     justify-content: space-between;
     border-radius: 15px;
     padding-top: 0.5em;
-    border: 1px solid #274065; 
+    border: 1px solid #274065;
     width: 45%;
     padding: 1em;
     margin: 0.5em auto;
@@ -1923,9 +2294,9 @@ iframe {
 }
 
 .dateresa {
-    background-color: #957BB0; 
+    background-color: #957BB0;
     color: #F6E4FF;
-    border: 1px solid #957BB0; 
+    border: 1px solid #957BB0;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1935,10 +2306,10 @@ iframe {
     font-weight: 600;
 }
 
-.demresaP{
-    background-color: #274065; 
+.demresaP {
+    background-color: #274065;
     color: #fff;
-    border: 1px solid #274065; 
+    border: 1px solid #274065;
     border-radius: 5px;
     font-size: 1em;
     padding: 0.5em;
@@ -1958,64 +2329,63 @@ iframe {
 
 /*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
 
-.corpsCalendrier{
+.corpsCalendrier {
     display: flex;
-    align-items: center;
     justify-content: space-around;
 
 }
 
-.fond{
+.fond {
     background-color: #fff;
     border: 1px solid #745086;
     width: 60vh;
 }
 
-.fondP{
+.fondP {
     background-color: #fff;
     border: 1px solid #274065;
     width: 60vh;
 }
 
-.teteCalendrier{
+.teteCalendrier {
     display: flex;
     align-items: center;
     padding: 0vh 2vh;
     justify-content: space-between;
 }
 
-.date_actuelle{
+.date_actuelle {
     cursor: pointer;
     color: #745086;
     font-size: 1.5em;
     text-decoration: underline;
 }
 
-.date_actuelleP{
+.date_actuelleP {
     cursor: pointer;
     color: #345C99;
     font-size: 1.5em;
     text-decoration: underline;
 }
 
-.fleches svg{
+.fleches svg {
     width: 1.5em;
     height: 1.5em;
     border-radius: 50%;
     padding: 10px;
 }
 
-#suivant{
+#suivant {
     margin-left: 10px;
     transform: rotate(180deg);
 }
 
-.fleches svg:hover{
+.fleches svg:hover {
     cursor: pointer;
     background-color: #745086;
 }
 
-.fleches svg:hover{
+.fleches svg:hover {
     cursor: pointer;
     background-color: #274065;
 }
@@ -2024,37 +2394,45 @@ iframe {
     fill: #fff;
 }
 
-.calendrier{
+.calendrier {
     padding: 0px 20px;
 }
 
-.semaines{
+.semaines {
     font-weight: bold;
     color: #745086;
 }
 
-.semainesP{
+.semainesP {
     font-weight: bold;
     color: #274065;
 }
 
 
-.jours li{
+.jours li {
     z-index: 1;
     margin-top: 30px;
     font-weight: bold;
 }
 
-.normal{
+.normal {
     color: #000;
 }
 
-.disponible::before{
+.disponible::before {
     background-color: green;
 }
 
-.indisponible::before{
+.indisponible::before {
     background-color: red;
+}
+
+.reserver::before{
+    background-color: orange;
+}
+
+.reserver::before{
+    background-color: orange;
 }
 
 .calendrier ul{
@@ -2065,23 +2443,23 @@ iframe {
     padding: 0px;
 }
 
-.calendrier ul li{
+.calendrier ul li {
     position: relative;
     width: calc(100% / 7);
 }
 
-.inactif{
+.inactif {
     color: #A9A9A9;
 }
 
-.actif, .indisponible, .disponible{
+.actif, .indisponible, .disponible, .reserver{
     color: #fff;
 }
 
-.calendrier ul li::before{
+.calendrier ul li::before {
     position: absolute;
     content: "";
-    height: 45px;   
+    height: 45px;
     width: 45px;
     top: 50%;
     left: 50%;
@@ -2090,44 +2468,47 @@ iframe {
     transform: translate(-50%, -50%);
 }
 
-.entreDeux:hover::before, .normal:hover::before, .indisponible:hover::before, .disponible:hover::before{
+.entreDeux:hover::before,
+.normal:hover::before,
+.indisponible:hover::before,
+.disponible:hover::before {
     cursor: pointer;
     background-color: #D3D3D3;
 }
 
-.semainesP .jours ul li .actif{
+.semainesP .jours ul li .actif {
     background-color: #274065;
 }
 
-.actif::before{
+.actif::before {
     background-color: #745086;
 }
 
-.entreDeux{
+.entreDeux {
     background-color: rgba(130, 100, 170, 0.25);
     width: 100px;
 }
 
-.plages .logcolumn{
+.plages .logcolumn {
     display: flex;
     flex-direction: column;
     align-items: start;
 }
 
-.plages .logcolumn .fond{
+.plages .logcolumn .fond {
     width: 30vh;
 }
 
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
 
-.messcolumn{
+.messcolumn {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 65%;
 }
 
-.messcolumnconv{
+.messcolumnconv {
     display: flex;
     flex-direction: column;
     width: 30%;
@@ -2145,13 +2526,13 @@ iframe {
     justify-content: center;
 }
 
-.messcard a{
+.messcard a {
     background-color: #cccccc;
     display: flex;
     flex-direction: row;
 }
 
-.messcard img{
+.messcard img {
     width: 50%;
     height: 2%;
 }
@@ -2159,32 +2540,47 @@ iframe {
 
 /*----------------------------------------------------------------Devis----------------------------------------------------------------*/
 
-.devispc{
+.devispc {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 70%;
 }
 
-.deviscol{
+.deviscol {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     margin: 1em;
 }
 
-.deviscolinput{
+.deviscolinput {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    width: 15%;
-    margin: 1em;
+    margin: 0 1em;
 }
 
-.devisrow{
+.devisrow {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.deviscol {
+    display: flex;
+    flex-direction: column;
+}
+
+.devisrowp {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.deviscolinput p {
+    margin-bottom: 0;
 }
 
 .ren {
@@ -2193,39 +2589,41 @@ iframe {
 
 }
 
-.devisvct{
+.devisvct {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 25%;
 }
 
-.devis_select{
-    width: 30%;
+.devis_select {
+    width: 50%;
     border-radius: 5px;
     height: 30px;
     padding-left: 1vw;
     background-color: white;
     color: #345C99;
     border: #000 solid 1px;
+    margin: 10px auto;
 }
 
-.annulation{
+.annulation {
     display: flex;
     width: 40%;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     margin: auto;
 }
 
-.datedevis{
+.datedevis {
     display: flex;
     flex-direction: row;
     width: 60%;
     justify-content: space-around;
 }
 
-.demdevis{
+.demdevis {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -2235,7 +2633,7 @@ iframe {
 
 /*----------------------------------------------------------------Réservation----------------------------------------------------------------*/
 
-.MainReser{
+.MainReser {
     padding-top: 0vw;
     padding-left: 0%;
     padding-right: 0%;
@@ -2245,7 +2643,7 @@ iframe {
 
 #paypal-button-container {
     margin: auto;
-    width:45%;
+    width: 45%;
 }
 
 .cardresmain {
@@ -2306,18 +2704,18 @@ iframe {
     justify-content: space-around;
 }
 
-.resplustaille{
+.resplustaille {
     font-size: 1.2em;
 }
 
 /*----------------------------------------------------------------Autre----------------------------------------------------------------*/
 
-.spbt{
+.spbt {
     display: flex;
     justify-content: space-evenly;
 }
 
-.margl{
+.margl {
     margin-left: 1em;
 }
 
@@ -2326,11 +2724,12 @@ iframe {
     margin-right: auto;
 }
 
-.compteciv , .rib{
+.compteciv,
+.rib {
     margin: auto;
 }
 
-.tewt{
+.tewt {
     padding: auto;
 }
 
@@ -2358,15 +2757,16 @@ iframe {
     width: 80%;
 }
 
-.hrcard{
+.hrcard {
     width: 100%;
     margin-left: 0;
 }
 
-.colorviolet{
+.colorviolet {
     color: #745086;
 }
-.colorbleu{
+
+.colorbleu {
     color: #345C99;
 }
 
@@ -2380,20 +2780,20 @@ iframe {
     align-items: center;
 }
 
-.row-profil label{
+.row-profil label {
     font-weight: normal;
     color: #745086;
     text-transform: inherit;
 }
 
-.row-profil input{
+.row-profil input {
     width: 50%;
     height: 2.5vw;
     border-radius: 5px;
     padding-left: 1vw;
 }
 
-.row-profil select{
+.row-profil select {
     width: 52%;
     height: 2.5vw;
     border-radius: 5px;
@@ -2402,7 +2802,7 @@ iframe {
     color: #957BB0;
     font-size: 1.25em;
     border: #000 solid 2px;
-} 
+}
 
 .row-profil-mdp {
     display: flex;
@@ -2425,7 +2825,7 @@ iframe {
     margin-right: 2em;
 }
 
-.mdpeye{
+.mdpeye {
     width: 52%;
     display: flex;
     height: 2.5vw;
@@ -2439,22 +2839,23 @@ iframe {
     font-size: 1.5em;
 }
 
-.ligne_adresse{
+.ligne_adresse {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
 }
 
-.numero_rue{
+.numero_rue {
     width: 25%;
     display: flex;
     align-items: baseline;
     padding: 0.5em 0 0.5em 0;
 }
-.numero_rue input{
+
+.numero_rue input {
     width: 20%;
-    margin-left : 2em;
+    margin-left: 2em;
     height: 2.5vw;
     border-radius: 5px;
     text-align: center;
@@ -2468,14 +2869,15 @@ iframe {
     padding: 0.5em 0 0.5em 0;
 }
 
-.nom_rue input{
+.nom_rue input {
     width: 90%;
-    margin-left : 2em;
+    margin-left: 2em;
     height: 2.5vw;
     border-radius: 5px;
     padding-left: 1vw;
 }
-.nom_rue label{
+
+.nom_rue label {
     width: 10%;
 }
 
@@ -2487,7 +2889,7 @@ iframe {
 }
 
 
-.code_postal input{
+.code_postal input {
     margin-left: 2em;
     height: 2.5vw;
     border-radius: 5px;
@@ -2495,18 +2897,18 @@ iframe {
 }
 
 
-.adresse_ville{
+.adresse_ville {
     display: flex;
     align-items: baseline;
     width: 50%;
     padding: 0.5em 0 0.5em 0;
 }
 
-.adresse_ville label{
+.adresse_ville label {
     width: 20%;
 }
 
-.adresse_ville input{
+.adresse_ville input {
     width: 80%;
     margin-left: 2em;
     height: 2.5vw;
@@ -2514,7 +2916,8 @@ iframe {
     padding-left: 1vw;
 }
 
-.compte-infos label, .label {
+.compte-infos label,
+.label {
     color: #000;
     text-transform: uppercase;
     font-weight: bold;
@@ -2695,7 +3098,7 @@ iframe {
     justify-content: space-evenly;
     color: #000;
 
-    
+
 }
 
 .profil-form>div:last-of-type img {
@@ -2891,47 +3294,52 @@ iframe {
     z-index: 999;
 }
 
-.description-detail{
+.description-detail {
     max-width: 50vw;
 }
 
-.btn-modif-logement{
+.btn-modif-logement {
     text-align: center;
     margin-top: 3vw;
     margin-bottom: 3vw;
 }
-.btn-modif-logement button{
+
+.btn-modif-logement button {
     width: 30vw;
 }
 
 
 /*--------------------------------- GESTION DES DEVIS ------------------------------*/
 
-.gestion_devis{
+.gestion_devis {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 
 }
-.partie_demande > div, .partie_devis > div {
+
+.partie_demande>div,
+.partie_devis>div {
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
     align-items: center;
 }
 
-.partie_demande, .partie_devis{
+.partie_demande,
+.partie_devis {
     text-align: center;
     width: 45%;
 }
 
-.partie_devis > div > div > div, .partie_demande > div > div > div{
+.partie_devis>div>div>div,
+.partie_demande>div>div>div {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
-.img_devis{
+.img_devis {
     width: 20vw;
     height: 10vw;
     object-fit: cover;
@@ -2940,16 +3348,16 @@ iframe {
     border-radius: 10px;
 }
 
-.bouton_devis{
+.bouton_devis {
     display: flex;
     justify-content: space-evenly;
     margin: 1em;
 }
 
-.bouton_devis button{
-    background-color: red; 
+.bouton_devis button {
+    background-color: red;
     color: #fff;
-    border: 1px solid red; 
+    border: 1px solid red;
     border-radius: 5px;
     font-size: 1em;
     font-family: 'Quicksand';
@@ -2961,13 +3369,13 @@ iframe {
     align-self: center;
 }
 
-#devis_accepter{
+#devis_accepter {
     background-color: green;
-    border: 1px solid green; 
+    border: 1px solid green;
 }
 
 
-.card_devis{
+.card_devis {
     border: 2px solid #745086;
     margin: 1em auto;
     background-color: #FCF0E2;
@@ -2976,12 +3384,12 @@ iframe {
     flex-direction: column;
 }
 
-.card_devis  > div p{
+.card_devis>div p {
     color: #5B3F69;
 }
 
-.card_devis > button{
-    align-self:flex-end;
+.card_devis>button {
+    align-self: flex-end;
     background-color: red;
     border: red;
     border-radius: 5px;
@@ -2992,18 +3400,18 @@ iframe {
     font-weight: 900;
 }
 
-.bouton_devis{
+.bouton_devis {
     display: flex;
     justify-content: space-evenly;
     margin: 1em;
 }
 
-.reponse_devis{
+.reponse_devis {
     font-weight: bold;
     color: red;
 }
 
-.popup_devis{
+.popup_devis {
     padding: 10px;
     font-size: 1em;
     display: none;
@@ -3019,28 +3427,28 @@ iframe {
     text-align: center;
 }
 
-.btn_ferm_oui{
-    background-color: red; 
+.btn_ferm_oui {
+    background-color: red;
     color: #fff;
-    border: 1px solid red; 
+    border: 1px solid red;
     border-radius: 5px;
     width: 50px;
     height: 30px;
 }
 
-.btn_ferm_annulerP{
-    background-color: #274065; 
+.btn_ferm_annulerP {
+    background-color: #274065;
     color: #ffffff;
-    border: 1px solid #274065; 
+    border: 1px solid #274065;
     border-radius: 5px;
     width: 100px;
     height: 30px;
 }
 
-.btn_ferm_annuler{
-    background-color: #745086; 
+.btn_ferm_annuler {
+    background-color: #745086;
     color: #ffffff;
-    border: 1px solid #745086; 
+    border: 1px solid #745086;
     border-radius: 5px;
     width: 100px;
     height: 30px;
@@ -3051,23 +3459,29 @@ iframe {
         height: 3em;
         width: 3em;
     }
-    header input{
+
+    header input {
         width: 100%;
     }
+
     header h2 {
-        margin:auto 0.5em auto 0.5em;
+        margin: auto 0.5em auto 0.5em;
     }
-    header h4{
+
+    header h4 {
         margin-right: 0.5em;
     }
+
     .brecherche {
-        margin:auto 1em auto 1em;
+        margin: auto 1em auto 1em;
     }
+
     /*-------------------------------Accueil-------------------------------*/
-    .fil{
+    .fil {
         flex-direction: column;
     }
-    .filR{
+
+    .filR {
         flex-direction: column;
     }
 
@@ -3075,17 +3489,17 @@ iframe {
         width: 80%;
         margin: 0.5em auto;
     }
-    
+
     .input-group-ville {
         width: 80%;
         margin: 0.5em auto;
     }
-    
+
     .input-group-pers {
         width: 80%;
         margin: 0.5em auto;
     }
-    
+
     .input-group-proprio {
         width: 80%;
         margin: 0.5em auto;
@@ -3095,76 +3509,85 @@ iframe {
         width: 50%;
         margin: 0.5em auto;
     }
+
     .btn-fillP {
         width: 50%;
         margin: 0.5em auto;
     }
-    .menu-filtre{
+
+    .menu-filtre {
         text-align: center;
     }
 
-    .card{
+    .card {
         font-size: 0.6em;
     }
 
-    .logementCard>a>img{
+    .logementCard>a>img {
         margin: 0;
         border-radius: 0px;
-        width:50%;
+        width: 50%;
         border: 5px solid #745086;
         height: 200px;
     }
-    .mainInfos span:last-child{
+
+    .mainInfos span:last-child {
         font-size: 2em;
     }
-    .logementCard>a{
-        width:100%;
+
+    .logementCard>a {
+        width: 100%;
         flex-direction: row;
     }
 
-    .cardtel{
+    .cardtel {
         display: flex;
         flex-direction: row;
         width: 80%;
         margin: 2em auto;
     }
-    .cardtel div:first-child{
+
+    .cardtel div:first-child {
         margin-right: 0.5em;
     }
-    .cardtel div:first-child img{
+
+    .cardtel div:first-child img {
         height: 95%;
         object-fit: cover;
         border-top-right-radius: 0%;
     }
 
-    .infoContainer{
+    .infoContainer {
         padding: 0;
         justify-content: flex-start;
         margin: 0;
     }
 
-    .mainInfos:first-child{
+    .mainInfos:first-child {
         flex-direction: column;
         background-color: #745086;
         width: 100%;
         color: #fff;
         width: 100%;
     }
-    .otherInfos div{
+
+    .otherInfos div {
         margin-top: 1em;
         margin-left: 2%;
         font-size: 2em;
     }
-    .cardphone{
+
+    .cardphone {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
-    .card section article h3{
+
+    .card section article h3 {
         color: #fff;
         padding-left: 1em;
     }
-    
+
     .card div:last-child {
         flex-direction: column;
         width: 100%;
@@ -3184,19 +3607,23 @@ iframe {
         height: 1.5em;
         width: 1.5em;
     }
+
     header h2 {
-        margin:auto 0em auto 0em;
+        margin: auto 0em auto 0em;
         font-size: 1.5em;
     }
-    header h4{
+
+    header h4 {
         margin-right: 0em;
         font-size: 0.7em;
     }
+
     .brecherche {
-       visibility: hidden;
-       width: 0%;
-       margin: 0;
+        visibility: hidden;
+        width: 0%;
+        margin: 0;
     }
+
     header a:last-child {
         margin-left: 0.5em;
     }
@@ -3205,14 +3632,17 @@ iframe {
         margin-left: 0;
     }
 
-    .headconn h1, .headtabloP h1{
+    .headconn h1,
+    .headtabloP h1 {
         font-size: 2em;
     }
 
-    .headconn img, .headtabloP img{
+    .headconn img,
+    .headtabloP img {
         left: 1.5em;
         top: 1em;
     }
+
     /*-------------------------------FOOTER-------------------------------*/
     .tfooter {
         display: flex;
@@ -3226,19 +3656,22 @@ iframe {
     .bfooter {
         flex-direction: row;
         justify-content: center;
-        font-size: 0.5em;   
+        font-size: 0.5em;
     }
-    .bfooter p:first-child{
+
+    .bfooter p:first-child {
         margin-right: 2em;
     }
 
-    .bfooter p:last-child{
+    .bfooter p:last-child {
         visibility: hidden;
         width: 0px;
     }
-    .margintb img{
+
+    .margintb img {
         width: 20px;
     }
+
     /*-------------------------------Accueil-------------------------------*/
 
     .card section article .accicone {
@@ -3254,7 +3687,7 @@ iframe {
         width: auto;
     }
 
-    .card section{
+    .card section {
         display: flex;
         flex-direction: column;
         background-color: #fff;
@@ -3265,47 +3698,54 @@ iframe {
         object-fit: cover;
         padding: 0px;
     }
-    
-    .card section article h3,.card section article h4{
+
+    .card section article h3,
+    .card section article h4 {
         color: #745086;
     }
 
-    .card section article img{
+    .card section article img {
         margin: 0;
         border-radius: 15px;
-        width:50%;
+        width: 50%;
         border: 5px solid #745086;
         object-fit: cover;
     }
-    .cardtel{
+
+    .cardtel {
         display: flex;
         flex-direction: row;
         width: 80%;
         margin: 2em auto;
     }
-    .cardtel article:first-child{
+
+    .cardtel article:first-child {
         margin-right: 0.5em;
     }
-    .cardtel article:first-child img{
+
+    .cardtel article:first-child img {
         height: 95%;
         object-fit: cover;
         border-top-right-radius: 0%;
     }
-    .cardphone{
+
+    .cardphone {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
-    .card section article h3{
+
+    .card section article h3 {
         color: #fff;
         padding-left: 1em;
     }
+
     .cardphone article:first-child {
         background-color: #745086;
         width: 100%;
         border-top-right-radius: 12px;
     }
-    
+
     .card section article:last-child {
         flex-direction: column;
         margin: auto 0.5em;
@@ -3313,19 +3753,19 @@ iframe {
 
     .card section article img {
         margin: auto;
-        width: 100%; 
+        width: 100%;
         object-fit: cover;
     }
 
-    .section-filters{
+    .section-filters {
         padding: 5em;
     }
 
-    .fil{
+    .fil {
         flex-direction: column;
     }
 
-    .filR{
+    .filR {
         flex-direction: column;
     }
 
@@ -3333,22 +3773,23 @@ iframe {
         width: 80%;
         margin: 0.5em auto;
     }
-    
+
     .input-group-ville {
         width: 80%;
         margin: 0.5em auto;
     }
-    
+
     .input-group-pers {
         width: 80%;
         margin: 0.5em auto;
     }
-    
+
     .input-group-proprio {
         width: 80%;
         margin: 0.5em auto;
     }
-    .menu-filtre{
+
+    .menu-filtre {
         text-align: center;
     }
 
@@ -3362,68 +3803,75 @@ iframe {
         margin: 0.5em auto;
     }
 
-    .card{
+    .card {
         font-size: 0.6em;
     }
 
-    .logementCard>a>img{
+    .logementCard>a>img {
         margin: 0;
         border-radius: 0px;
-        width:50%;
+        width: 50%;
         border: 5px solid #745086;
         height: 200px;
     }
-    .mainInfos span:last-child{
+
+    .mainInfos span:last-child {
         font-size: 2em;
     }
-    .logementCard>a{
-        width:100%;
+
+    .logementCard>a {
+        width: 100%;
         flex-direction: row;
     }
 
-    .cardtel{
+    .cardtel {
         display: flex;
         flex-direction: row;
         width: 80%;
         margin: 2em auto;
     }
-    .cardtel div:first-child{
+
+    .cardtel div:first-child {
         margin-right: 0.5em;
     }
-    .cardtel div:first-child img{
+
+    .cardtel div:first-child img {
         height: 95%;
         object-fit: cover;
         border-top-right-radius: 0%;
     }
 
-    .infoContainer{
+    .infoContainer {
         padding: 0;
         justify-content: flex-start;
         margin: 0;
     }
 
-    .mainInfos:first-child{
+    .mainInfos:first-child {
         flex-direction: column;
         background-color: #745086;
         width: 100%;
         color: #fff;
         width: 100%;
     }
-    .otherInfos div{
+
+    .otherInfos div {
         margin-top: 1em;
         margin-left: 2%;
         font-size: 2em;
     }
-    .cardphone{
+
+    .cardphone {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
-    .card section article h3{
+
+    .card section article h3 {
         color: #fff;
         padding-left: 1em;
     }
-    
+
     .card div:last-child {
         flex-direction: column;
         width: 100%;
@@ -3439,12 +3887,12 @@ iframe {
         flex-direction: column;
     }
 
-    .logcolumn{
+    .logcolumn {
         width: 96%;
         margin: auto;
     }
 
-    .logdem{
+    .logdem {
         width: 60%;
         margin: 2em auto;
     }
@@ -3452,6 +3900,7 @@ iframe {
     .logrow {
         flex-direction: column;
     }
+
     .logrowcal {
         flex-direction: column-reverse;
     }
@@ -3469,43 +3918,46 @@ iframe {
         width: 100%;
     }
 
-    .logrowb{
+    .logrowb {
         flex-direction: column;
     }
 
-    .logI{
+    .logI {
         align-items: center;
         text-align: center;
     }
 
-    /*-------------------------------Conexion-------------------------------*/
+    /*-------------------------------Connexion-------------------------------*/
 
-    .custom-input{
+    .custom-input {
         font-size: 2em;
         width: 100%;
     }
 
-    #mdp img, .rowcompte img{
+    #mdp img,
+    .rowcompte img {
         height: 40px;
         margin-left: 10px;
     }
-    .Maincompte section{
+
+    .Maincompte section {
         width: 80%;
     }
-    .btn-compte{
+
+    .btn-compte {
         width: 100%;
         font-size: 1.5em;
     }
 
-    .rowcompte{
+    .rowcompte {
         flex-direction: column;
     }
 
-    .rowcompte:first-child{
+    .rowcompte:first-child {
         text-align: center;
     }
 
-    .rowcompte a + a {
+    .rowcompte a+a {
         margin-top: 1em;
     }
 
@@ -3521,15 +3973,15 @@ iframe {
         margin: auto;
     }
 
-    .rescol .logrowb{
+    .rescol .logrowb {
         flex-direction: column;
     }
 
-    .rescol{
+    .rescol {
         width: 100%;
     }
 
-    .resrow{
+    .resrow {
         margin: auto;
     }
 
@@ -3538,12 +3990,13 @@ iframe {
         justify-content: space-around;
     }
 
-    .rescrow a{
+    .rescrow a {
         display: flex;
         justify-content: center;
         text-decoration: none;
     }
-    .rescrow a button{
+
+    .rescrow a button {
         width: 100%;
         margin-top: 2em;
     }
@@ -3551,76 +4004,86 @@ iframe {
 
     /*-------------------------------Demande de devis-------------------------------*/
 
-    .datedevis{
+    .datedevis {
         margin: 1em auto;
     }
 
-    .log5vct{
+    .log5vct {
         margin: 1em auto;
         width: 40%;
     }
 
-    .datedevis{
+    .datedevis {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
     }
-    .cardSupplements{
+
+    .cardSupplements {
         margin: 1em auto;
         width: 50%;
     }
 
     /*--------------------------------- GESTION DES DEVIS ------------------------------*/
 
-    .gestion_devis{
+    .gestion_devis {
         flex-direction: column;
     }
-    .partie_demande, .partie_devis {
+
+    .partie_demande,
+    .partie_devis {
         width: 80%;
         margin: auto;
     }
 }
 
 /*-------------------------------------------------------TELEPHONE------------------------------------------------------------------------*/
-@media screen and (max-width: 599px)   {
+@media screen and (max-width: 599px) {
 
     /*-------------------------------Header-------------------------------*/
     .logot {
         height: 1.5em;
         width: 1.5em;
     }
+
     header h2 {
-        margin:auto 0em auto 0em;
+        margin: auto 0em auto 0em;
         font-size: 1em;
     }
-    header h4{
+
+    header h4 {
         margin-right: 0em;
-        width: 0 ;
+        width: 0;
         visibility: hidden;
     }
 
-    .btn-accueilins h5, .btn-accueil h5{
+    .btn-accueilins h5,
+    .btn-accueil h5 {
         font-size: 0.5em;
     }
+
     .btn-accueilins {
         margin-left: 0;
     }
 
     .brecherche {
-       visibility: hidden;
-       width: 0%;
-       margin: 0;
+        visibility: hidden;
+        width: 0%;
+        margin: 0;
     }
+
     header a:last-child {
         margin-left: 0.5em;
     }
 
 
     .brecherche {
-       visibility: hidden;
-       width: 0%;
+        visibility: hidden;
+        width: 0%;
     }
-    .tfooter, .bfooter {
+
+    .tfooter,
+    .bfooter {
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
@@ -3628,21 +4091,23 @@ iframe {
         align-items: center;
     }
 
-    .headconn h1, .headtabloP h1{
+    .headconn h1,
+    .headtabloP h1 {
         font-size: 1.5em;
     }
 
-    .headconn img, .headtabloP img{
+    .headconn img,
+    .headtabloP img {
         left: 1em;
         top: 0.6em;
     }
 
     /*-------------------------------FOOTER-------------------------------*/
-    footer{
+    footer {
         height: auto;
         padding-top: 0.5em;
     }
-    
+
     .tfooter {
         display: flex;
         flex-direction: row;
@@ -3655,83 +4120,93 @@ iframe {
     .bfooter {
         flex-direction: row;
         justify-content: center;
-        font-size: 0.3em;   
+        font-size: 0.3em;
     }
-    .bfooter p:first-child{
+
+    .bfooter p:first-child {
         margin-right: 2em;
     }
 
-    .bfooter p:last-child{
+    .bfooter p:last-child {
         visibility: hidden;
         width: 0px;
     }
-    .margintb img{
+
+    .margintb img {
         width: 20px;
     }
+
     /*-------------------------------Accueil-------------------------------*/
 
-    .card{
+    .card {
         font-size: 0.6em;
     }
 
-    .logementCard>a>img{
+    .logementCard>a>img {
         margin: 0;
         border-radius: 0px;
-        width:50%;
+        width: 50%;
         border: 5px solid #745086;
         height: 200px;
     }
-    .mainInfos span:last-child{
+
+    .mainInfos span:last-child {
         font-size: 2em;
     }
-    .logementCard>a{
-        width:100%;
+
+    .logementCard>a {
+        width: 100%;
         flex-direction: row;
     }
 
-    .cardtel{
+    .cardtel {
         display: flex;
         flex-direction: row;
         width: 80%;
         margin: 2em auto;
     }
-    .cardtel div:first-child{
+
+    .cardtel div:first-child {
         margin-right: 0.5em;
     }
-    .cardtel div:first-child img{
+
+    .cardtel div:first-child img {
         height: 95%;
         object-fit: cover;
         border-top-right-radius: 0%;
     }
 
-    .infoContainer{
+    .infoContainer {
         padding: 0;
         justify-content: flex-start;
         margin: 0;
     }
 
-    .mainInfos:first-child{
+    .mainInfos:first-child {
         flex-direction: column;
         background-color: #745086;
         width: 100%;
         color: #fff;
         width: 100%;
     }
-    .otherInfos div{
+
+    .otherInfos div {
         margin-top: 1em;
         margin-left: 2%;
         font-size: 2em;
     }
-    .cardphone{
+
+    .cardphone {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
-    .card section article h3{
+
+    .card section article h3 {
         color: #fff;
         padding-left: 1em;
     }
-    
+
     .card div:last-child {
         flex-direction: column;
         width: 100%;
@@ -3743,15 +4218,15 @@ iframe {
     }
 
 
-    .section-filters{
+    .section-filters {
         padding: 2em;
     }
 
-    .fil{
+    .fil {
         flex-direction: column;
     }
 
-    .filR{
+    .filR {
         flex-direction: column;
     }
 
@@ -3759,17 +4234,17 @@ iframe {
         width: 80%;
         margin: 0.5em auto;
     }
-    
+
     .input-group-ville {
         width: 80%;
         margin: 0.5em auto;
     }
-    
+
     .input-group-pers {
         width: 80%;
         margin: 0.5em auto;
     }
-    
+
     .input-group-proprio {
         width: 80%;
         margin: 0.5em auto;
@@ -3779,6 +4254,7 @@ iframe {
         width: 50%;
         margin: 0.5em auto;
     }
+
     .btn-fillP {
         width: 50%;
         margin: 0.5em auto;
@@ -3786,32 +4262,35 @@ iframe {
 
     /*-------------------------------Conexion-------------------------------*/
 
-    .custom-input{
+    .custom-input {
         font-size: 2em;
         width: 100%;
     }
 
-    #mdp img, .rowcompte img{
+    #mdp img,
+    .rowcompte img {
         height: 40px;
         margin-left: 10px;
     }
-    .Maincompte section{
+
+    .Maincompte section {
         width: 80%;
     }
-    .btn-compte{
+
+    .btn-compte {
         width: 100%;
         font-size: 1.5em;
     }
 
-    .rowcompte{
+    .rowcompte {
         flex-direction: column;
     }
 
-    .rowcompte:first-child{
+    .rowcompte:first-child {
         text-align: center;
     }
 
-    .rowcompte a + a {
+    .rowcompte a+a {
         margin-top: 1em;
     }
 
@@ -3828,15 +4307,15 @@ iframe {
         margin: auto;
     }
 
-    .rescol .logrowb{
+    .rescol .logrowb {
         flex-direction: column;
     }
 
-    .rescol{
+    .rescol {
         width: 100%;
     }
 
-    .resrow{
+    .resrow {
         margin: auto;
     }
 
@@ -3845,12 +4324,13 @@ iframe {
         margin: auto;
     }
 
-    .rescrow a{
+    .rescrow a {
         display: flex;
         justify-content: center;
         text-decoration: none;
     }
-    .rescrow a button{
+
+    .rescrow a button {
         width: 100%;
         margin-top: 2em;
     }
@@ -3858,73 +4338,94 @@ iframe {
 
     /*-------------------------------Demande de devis-------------------------------*/
 
-    .datedevis{
+    .datedevis {
         margin: 1em auto;
     }
 
-    .log5vct{
+    .log5vct {
         margin: 1em auto;
         width: 40%;
     }
 
-    .datedevis{
+    .datedevis {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
     }
-    .cardSupplements{
+
+    .cardSupplements {
         margin: 1em auto;
         width: 50%;
     }
 
     /*--------------------------------- GESTION DES DEVIS ------------------------------*/
 
-    .gestion_devis{
+    .gestion_devis {
         flex-direction: column;
     }
-    .partie_demande, .partie_devis {
+
+    .partie_demande,
+    .partie_devis {
         width: 60%;
         margin: auto;
     }
-   
-   /*-------------------------------Logement-------------------------------*/
-   .logrowt {
+
+    /*-------------------------------Logement-------------------------------*/
+    .logrowt {
+        flex-direction: column;
+    }
+
+    .logcolumn {
+        width: 96%;
+        margin: auto;
+    }
+
+    .logdem {
+        width: 60%;
+        margin: 2em auto;
+    }
+
+    .logrow {
+        flex-direction: column;
+    }
+
+    .logrowcal {
+        flex-direction: column-reverse;
+    }
+
+
+    .cardcondition {
+        width: 80%;
+    }
+
+    main div .logrow {
+        flex-direction: column-reverse;
+    }
+
+    .cardlogmainP {
+        width: 100%;
+    }
+
+    .logrowb {
+        flex-direction: column;
+
+    }
+}
+
+/*-------------------------------Carte interactive-------------------------------*/
+#containerMap {
+    display: flex;
     flex-direction: column;
-}
-
-.logcolumn{
-    width: 96%;
-    margin: auto;
-}
-
-.logdem{
-    width: 60%;
-    margin: 2em auto;
-}
-
-.logrow {
-    flex-direction: column;
-}
-.logrowcal {
-    flex-direction: column-reverse;
-}
-
-
-.cardcondition {
-    width: 80%;
-}
-
-main div .logrow {
-    flex-direction: column-reverse;
-}
-
-.cardlogmainP {
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
     width: 100%;
+    height: 100%;
+
 }
 
-.logrowb{
-    flex-direction: column;
-    
-}
-
+#map {
+    height: 500px;
+    width: 1000px;
+    border: solid black 1px;
 }

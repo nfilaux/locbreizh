@@ -389,7 +389,7 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length; i++){
+            for (i=0; i<listeActif.length-1; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -460,6 +460,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     <title>Page détaillé d'un logement</title>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
+    <script src="plusAvis.js"></script>
 </head>
 
 <body>
@@ -486,7 +487,8 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             $stmt = $dbh->prepare(
                 "SELECT photo
                 from locbreizh._photos_secondaires 
-                WHERE logement = {$_GET['logement']};"
+                WHERE logement = {$_GET['logement']}
+                ORDER BY numero ASC;"
             );
             $stmt->execute();
             $photos_secondaires = $stmt->fetchAll();
@@ -528,20 +530,6 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
-<<<<<<< HEAD
-                    <div class="logdem">
-                        <div class="logrowb" id="datesPlage">
-                            <p class="dateresa"></p>
-                            <p class="dateresa"></p>
-                        </div>
-                        <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                            <input type='hidden' name="arrive" id="arrive" value="">
-                            <input type='hidden' name="depart" id="depart" value="">
-                            <button class="btn-demlog" type="submit">Demander un devis</button>
-                        </form>
-                    </div>
-=======
->>>>>>> b8e73fe6f0f3d67f2aeed0add6269d2c9c686efd
                 </div>
         
             <div class="logrowb">
@@ -646,63 +634,115 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     );
                     $stmt->execute();
                     $info = $stmt->fetch();
+
+                    try {
+                        $Reqservices = $dbh->prepare("SELECT nom_service from locbreizh._services_compris where logement = {$_GET['logement']}");
+                        $Reqservices->execute();
+                        $services = $Reqservices->fetchAll();
+                    } catch (PDOException $e) {
+                        print "Erreur !:" . $e->getMessage() . "<br/>";
+                        die();
+                    }
                 ?>
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p><img src="../svg/tree-fill.svg"> jardin <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p class="equipements"><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
+                        $equip = false;
                         if ($info['balcon'] == true) {
-                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            ?><p class="equipements">><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            $equip = true;
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p class="equipements">><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['parking_privee'] == true) {
-                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            $equip = true;
                         }
 
                         if ($info['parking_public'] == true) {
-                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['television'] == true) {
-                            ?><p><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['wifi'] == true) {
-                            ?><p><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['lave_linge'] == true) {
-                            ?><p><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['lave_vaisselle'] == true) {
-                            ?><p><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            $equip = true;
                         }
-                        
+                        if (!$equip){
+                            ?><p>Aucuns équipements</p><?php
+                        }
                         ?>
                     </div>
                     <hr class="hr">
                     <div class="logcp">
                         <h4 class="potitres">Installations</h4>
                         <?php
-
+                        $install = false;
                         if ($info['climatisation'] == true) {
                             ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
+                            $install = true;
                         }
                         if ($info['piscine'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
+                            $install = true;
                         }
 
                         if ($info['sauna'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
+                            $install = true;
                         }
 
                         if ($info['hammam'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
+                            $install = true;
                         }
 
                         if ($info['jacuzzi'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
+                            $install = true;
+                        }
+                        if (!$install){
+                            ?><p>Aucunes installations.</p><?php
+                        }
+                        ?>
+                    </div>
+                    <hr class="hr">
+                    <div class="logcp">
+                        <h4 class="potitres">Services</h4>
+                        <?php
+                        if ($services[0]['nom_service']){
+
+                            foreach ($services as $key => $value){
+
+                                if ($value['nom_service'] == "navette") {
+                                    ?><p><img src="../svg/taxi-fill.svg" width="48" height ="48"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                }
+                                if ($value['nom_service'] == "menage") {
+                                    ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php  echo 'Menage'; ?></p><?php
+                                }
+                                if ($value['nom_service'] == "linge") {
+                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height ="48"><?php  echo 'Linge'; ?></p><?php
+                                }
+                            }
+                        
+                        } else {
+                            ?><p>Pas de services.</p><?php
                         }
                         ?>
                     </div>
@@ -835,6 +875,123 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>   
             
         </div>
+        <hr class="hr">
+        <!--Les avis-->
+        <?php 
+            
+            $stmt = $dbh->prepare('SELECT moyenne_avis
+            from locbreizh._logement
+            where id_logement = :logement;');
+            $stmt->bindParam(':logement', $_GET['logement']);
+            $stmt->execute();
+            $moyenne = $stmt->fetch();
+
+            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo
+            from locbreizh._avis a
+            join locbreizh._compte c on a.auteur = c.id_compte
+            where a.logement = :logement
+            ORDER BY a.id_avis DESC;');
+            $stmt->bindParam(':logement', $_GET['logement']);
+            $stmt->execute();
+            $avis = $stmt->fetchAll();
+
+            $stmt = $dbh->prepare('SELECT client
+            from locbreizh._reservation
+            where client = :idC and logement = :logement;');
+            $stmt->bindParam(':idC', $_SESSION['id']);
+            $stmt->bindParam(':logement', $_GET['logement']);
+            $stmt->execute();
+            $peutA = $stmt->fetch();
+
+            $form = false;
+            if(isset($peutA['client'])){
+                $form = true;
+            }?>
+            <div class="titreAvis">
+                <h3 class="h3_avis">Avis</h3>
+                <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="note_moyenne">
+                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></label>
+                <p class="sousTitreAvis"><?php echo $moyenne['moyenne_avis'];?> ⏺ <?php echo count($avis); ?> avis</p>
+            </div>
+
+            <?php
+            if($form){ ?>
+            <div class="rediger-avis">
+                <p>Vous aussi donnez votre avis sur ce logement !</p>
+                <form class="messageBox" action="envoyer_avis.php" method="post" id="avis_box">
+                    <input type="hidden" id="logement_avis" name="logement" value="<?php echo $_GET['logement'];?>">
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rate" value="5" />
+                        <label for="star5" title="text">
+                        <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
+                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></label>
+                        <input type="radio" id="star4" name="rate" value="4" />
+                        <label for="star4" title="text">
+                        <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
+                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></label>
+                        <input checked="" type="radio" id="star3" name="rate" value="3" />
+                        <label for="star3" title="text">
+                        <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
+                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></label>
+                        <input type="radio" id="star2" name="rate" value="2" />
+                        <label for="star2" title="text">
+                        <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
+                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></label>
+                        <input type="radio" id="star1" name="rate" value="1" />
+                        <label for="star1" title="text">
+                        <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
+                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></label>
+                    </div>
+
+                    <textarea maxlength="499" placeholder="Rediger votre avis..." type="text" id="messageInput" name="contenu"></textarea>
+                    <button id="sendButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                        <path fill="none" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                        <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                        </svg>
+                    </button>
+
+                </form>
+            </div>
+            <?php } ?>
+
+            <div class="all-avis">
+
+            <?php
+            $nb_avis = 0;
+            foreach($avis as $avi){
+                $nb_avis++;
+                ?>
+                <div class="box-avis <?php if($nb_avis > 4){echo 'hidden';}?>">
+                    <div class="avis-box-space-between">
+                        <div class="header-box infoC">
+                            <img src="../Ressources/Images/<?php echo $avi['photo'];?>" alt="Image de profil" title="Photo">
+                            <div>
+                                <p><?php echo $avi['prenom'] . ' ' . $avi['nom'];?></p>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="header-box">
+                            <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid" fill="#ffa723">
+                            <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg>
+                            <p><?php echo $avi['note_avis'];?>/5</p>
+                        </div>
+                    </div>
+                    <p><?php echo $avi['contenu_avis'];?></p>
+                    <div class="avis-box-space-between">
+                        <a href="">Répondre au commentaire</a>
+                        <a href="">Signaler</a>
+                    </div>
+                </div>
+            <?php } ?>
+            </div>
+            <?php
+            if($nb_avis == 0){ ?>
+                <p style="text-align : center">Aucun avis n'a encore été posté pour ce logement.</p>
+            <?php }
+            if($nb_avis > 4){?>
+                <div class="div_plus_avis"><button id="afficher-plus-avis">Afficher tous les avis (<?php echo count($avis) - 4;?>)</button></div>
+            <?php } ?>
     </main>
     
     <?php
@@ -845,3 +1002,23 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 </html>
 
 <script src="caroussel.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Fonction pour ajuster la hauteur de la zone de texte et du formulaire en fonction du contenu
+    function ajusterHauteurTextarea() {
+        var textarea = $(this);
+        textarea.css('height', 'auto');
+        textarea.css('height', (this.scrollHeight) + 'px');
+
+        // Ajuster la hauteur du formulaire en fonction de la hauteur de la zone de texte
+        var formulaire = textarea.closest('form');
+        formulaire.css('height', 'auto');
+        formulaire.css('height', formulaire.prop('scrollHeight') + 'px');
+    }
+
+    // Attacher la fonction ajusterHauteurTextarea à l'événement input
+    $('#messageInput').on('input', ajusterHauteurTextarea);
+});
+</script>

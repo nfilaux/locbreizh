@@ -29,14 +29,15 @@
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $code = $dbh->prepare("SELECT code_planning FROM locbreizh._planning NATURAL JOIN locbreizh._logement WHERE id_logement = :id_logement;");
+            $code = $dbh->prepare("SELECT code_planning FROM locbreizh._logement WHERE id_logement = :id_logement;");
             $code->bindParam(':id_logement', $_POST['id_logement']);
             $code->execute();
             $variable = $code->fetch();
             if (isset($_POST['indisponible'])) {
                 foreach ($tabJours as $key => $elem){
-                    $stmt = $dbh->prepare("SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE jour_plage_ponctuelle =  :jour_plage_ponctuelle;");
+                    $stmt = $dbh->prepare("SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE jour_plage_ponctuelle =  :jour_plage_ponctuelle AND code_planning = :code_planning;");
                     $stmt->bindParam(':jour_plage_ponctuelle', $elem);
+                    $stmt->bindParam(':code_planning', $variable['code_planning']);
                     $stmt->execute();
                     $jour_existant = $stmt->fetchColumn();
                     if (!empty($jour_existant)){
@@ -60,8 +61,9 @@
                 }
             } else {
                 foreach ($tabJours as $key => $elem){
-                    $stmt = $dbh->prepare("SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE jour_plage_ponctuelle =  :jour_plage_ponctuelle;");
+                    $stmt = $dbh->prepare("SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE jour_plage_ponctuelle =  :jour_plage_ponctuelle  AND code_planning = :code_planning;");
                     $stmt->bindParam(':jour_plage_ponctuelle', $elem);
+                    $stmt->bindParam(':code_planning', $variable['code_planning']);
                     $stmt->execute();
                     $jour_existant = $stmt->fetchColumn();
                     if (!empty($jour_existant)){
@@ -84,6 +86,19 @@
                     $stmt->execute();
                 }
             }
+            $plageDispo = $dbh->prepare("SELECT COUNT(*) FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
+            ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = :code_planning ;");
+            $plageDispo->bindParam(':code_planning', $variable['code_planning']);
+            $plageDispo->execute();
+            $plageDispo = $plageDispo->fetchColumn();
+            if ($plageDispo == 0){
+                $enLigne = false;
+                $stmt = $dbh->prepare("UPDATE locbreizh._logement SET en_ligne = :enLigne WHERE id_logement = :id_logement;");
+                $stmt->bindParam(':enLigne', $enLigne, PDO::PARAM_BOOL);
+                $stmt->bindParam(':id_logement', $_POST['id_logement']);
+                $stmt->execute();
+            }
+            
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
