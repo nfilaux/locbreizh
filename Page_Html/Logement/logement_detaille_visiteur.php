@@ -671,59 +671,78 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p class="equipements"><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
+                        $equip = false;
                         if ($info['balcon'] == true) {
-                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            ?><p class="equipements">><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            $equip = true;
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p class="equipements">><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['parking_privee'] == true) {
-                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            $equip = true;
                         }
 
                         if ($info['parking_public'] == true) {
-                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['television'] == true) {
-                            ?><p><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['wifi'] == true) {
-                            ?><p><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['lave_linge'] == true) {
-                            ?><p><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['lave_vaisselle'] == true) {
-                            ?><p><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            $equip = true;
                         }
-                        
+                        if (!$equip){
+                            ?><p>Aucuns équipements</p><?php
+                        }
                         ?>
                     </div>
                     <hr class="hr">
                     <div class="logcp">
                         <h4 class="potitres">Installations</h4>
                         <?php
-
+                        $install = false;
                         if ($info['climatisation'] == true) {
                             ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
+                            $install = true;
                         }
                         if ($info['piscine'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
+                            $install = true;
                         }
 
                         if ($info['sauna'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
+                            $install = true;
                         }
 
                         if ($info['hammam'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
+                            $install = true;
                         }
 
                         if ($info['jacuzzi'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
+                            $install = true;
+                        }
+                        if (!$install){
+                            ?><p>Aucunes installations.</p><?php
                         }
                         ?>
                     </div>
@@ -731,17 +750,23 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     <div class="logcp">
                         <h4 class="potitres">Services</h4>
                         <?php
-                        foreach ($services as $key => $value){
+                        if ($services[0]['nom_service']){
 
-                            if ($value['nom_service'] == "navette") {
-                                ?><p><img src="../svg/taxi-fill.svg" width="24" height ="24"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                            foreach ($services as $key => $value){
+
+                                if ($value['nom_service'] == "navette") {
+                                    ?><p><img src="../svg/taxi-fill.svg" width="48" height ="48"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                }
+                                if ($value['nom_service'] == "menage") {
+                                    ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php  echo 'Menage'; ?></p><?php
+                                }
+                                if ($value['nom_service'] == "linge") {
+                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height ="48"><?php  echo 'Linge'; ?></p><?php
+                                }
                             }
-                            if ($value['nom_service'] == "menage") {
-                                ?><p><img src="../svg/nettoyage.svg" width="24" height="24"> <?php  echo 'Menage'; ?></p><?php
-                            }
-                            if ($value['nom_service'] == "linge") {
-                                ?><p><img src="../svg/t-shirt-air-line.svg" width="24" height ="24"><?php  echo 'Linge'; ?></p><?php
-                            }
+                        
+                        } else {
+                            ?><p>Pas de services.</p><?php
                         }
                         ?>
                     </div>

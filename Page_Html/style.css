@@ -1478,12 +1478,15 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-self: flex-start;
+    padding: 2em;
     
 }
 
 .logcp p {
     align-items: center;
     display: flex;
+    font-size : 140%;
 }
 
 .logcp img {
@@ -1502,7 +1505,7 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 48%;
+    width: 60%;
     margin: 3em auto;
 }
 
@@ -1796,8 +1799,12 @@ fieldset label{
 .potitre {
     font-family: 'PatuaOne';
     font-weight: 600;
-    font-size: 1.5em;
+    font-size: 2.5em;
     margin: auto 0;
+}
+
+.potitres {
+    font-size: 200%;
 }
 
 iframe {
@@ -3432,7 +3439,7 @@ iframe {
         text-align: center;
     }
 
-    /*-------------------------------Conexion-------------------------------*/
+    /*-------------------------------Connexion-------------------------------*/
 
     .custom-input{
         font-size: 2em;
