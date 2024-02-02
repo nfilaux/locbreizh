@@ -274,7 +274,7 @@ CREATE TABLE
 CREATE TABLE
     _avis (
         id_avis SERIAL NOT NULL,
-        contenu_avis VARCHAR(255) NOT NULL,
+        contenu_avis VARCHAR(500) NOT NULL,
         note_avis NUMERIC(1) NOT NULL,
         auteur INTEGER NOT NULL,
         logement INTEGER NOT NULL,
