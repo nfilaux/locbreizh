@@ -16,7 +16,7 @@
             unset($_SESSION["erreurs"][$nomErreur]);
         }
 }
-    
+   
 
 $plageIndispo = [];
 $plageDispo = []; 
@@ -229,7 +229,7 @@ function changerJour(elem, id) {
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
-            if (nbActif == 0) {
+            if (premierID[id] == '' && dernierID[id] == '') {
                 premierID[id] = element.id;
                 dernierID[id] = element.id;
                 element.className = "actif";
@@ -242,7 +242,7 @@ function changerJour(elem, id) {
                 milieu = (dateDernier + datePremier) / 2;
                 //détermine si le nouveau jour seras le début ou la fin de la plage
                 if (dateElem < milieu) {
-                    if (nbActif > 1) {
+                    if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(premierID[id]) ){
                             document.getElementById(premierID[id]).className = classeDispo[id];
                         }
@@ -250,14 +250,16 @@ function changerJour(elem, id) {
                             document.getElementById(premierID[id]).className = classeIndispo[id];
                         }
                         else{
-                            document.getElementById(premierID[id]).className = "normal";
+                            if (document.getElementById(premierID[id])){
+                                document.getElementById(premierID[id]).className = "normal";
+                            }
                         }
                     }
                     premierID[id] = element.id;
                     element.className = "actif";
                 }
                 else {
-                    if (nbActif > 1) {
+                    if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(dernierID[id]) ){
                             document.getElementById(dernierID[id]).className = classeDispo[id];
                         }
@@ -265,7 +267,9 @@ function changerJour(elem, id) {
                             document.getElementById(dernierID[id]).className = classeIndispo[id];
                         }
                         else{
-                            document.getElementById(dernierID[id]).className = "normal";
+                            if (document.getElementById(dernierID[id])){
+                                document.getElementById(dernierID[id]).className = "normal";
+                            }
                         }
                     }
                     dernierID[id] = element.id;
@@ -317,13 +321,17 @@ function changerJour(elem, id) {
         }
         //désactive le jour si on clique dessus
         else if (element.className === "actif") {
-            if (nbActif == 2) {
+            if (premierID[id] !== dernierID[id]) {
                 if (element.id === premierID[id]) {
                     premierID[id] = dernierID[id];
                 }
                 else {
                     dernierID[id] = premierID[id];
                 }
+            }
+            else{
+                premierID[id] = "";
+                dernierID[id] = "";
             }
             if (tabDispo[id].includes(element.id) ){
                 element.className = classeDispo[id];
@@ -342,12 +350,38 @@ function changerJour(elem, id) {
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
             }
         }
-        nbActif = document.getElementsByClassName("actif").length;
-        if (nbActif == 0){
-            premierID[id] = "";
-            dernierID[id] = "";
-        }
         changerDates(id);
+    }
+    else if ( premierID[id] !== ""){
+        //active la zone de selection entre les deux dates
+        datePremier = new Date(premierID[id].split(',')[1]).getTime();
+        dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
+        listeJours = calendrier[id].querySelectorAll(".jours li");
+        inactif = false;
+        fini = false;
+        loop = 0;
+        while (!inactif && !fini){
+            jour = listeJours[loop];
+            if (!jour){
+                fini = true;
+            }
+            if (!fini){
+                let dateJour = new Date(jour.id.split(',')[1]).getTime();
+                if (dateJour < dateDernier && dateJour > datePremier) {
+                    if (jour.className !== "inactif"){
+                        jour.className = "entreDeux";
+                    }
+                    else{
+                        inactif = true;
+                    }
+                    
+                }
+                else if (dateJour === dateDernier){
+                    fini = true;
+                }
+            }
+            loop++;
+        }
     }
 }
 
@@ -400,7 +434,7 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length; i++){
+            for (i=0; i<listeActif.length-1; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -492,7 +526,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 <?php
                     
                     $stmt = $dbh->prepare(
-                        "SELECT * from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
+                        "SELECT * from locbreizh._logement where id_proprietaire = {$_SESSION['id']} ORDER BY id_logement ASC;"
                     );
 
                     function formatDate($start, $end)
@@ -544,7 +578,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                 <div class="logrowb">
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $id_log ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
                                     <?php $id_un_logement = $id_log; ?>
-                                    <form action="ChangeEtat.php" method="post">
+                                    <form id="enligne<?php echo $id_un_logement ?>" action="ChangeEtat.php" method="post">
                                         <input type="hidden" name=<?php echo $id_un_logement ?> value="<?php echo htmlentities($bouton_desactiver) ?>">
                                         <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button>
                                     </form>
@@ -713,6 +747,11 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         $plageDispo->execute();
                                         $plageDispo = $plageDispo->fetchAll();
 
+                                        $devis = $dbh->prepare("SELECT date_arrivee, date_depart FROM locbreizh._devis INNER JOIN locbreizh._demande_devis
+                                        ON _devis.num_demande_devis = _demande_devis.num_demande_devis WHERE logement = {$card['id_logement']};");
+                                        $devis->execute();
+                                        $devis = $devis->fetchAll();
+
                                     } catch (PDOException $e) {
                                         print "Erreur !:" . $e->getMessage() . "<br/>";
                                         die();
@@ -764,6 +803,11 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
                                     }
                                     afficherPlages(tabRes, "disponible", tabMotif, "D", numCalendrier);
+
+                                    if (!tabRes[0]){
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").disabled = true;
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").className = "btn-desactiveGris";
+                                    }
                                 </script>
                                             
                                 </div>  

@@ -84,6 +84,19 @@
                     $stmt->execute();
                 }
             }
+            $plageDispo = $dbh->prepare("SELECT COUNT(*) FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
+            ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = :code_planning ;");
+            $plageDispo->bindParam(':code_planning', $variable['code_planning']);
+            $plageDispo->execute();
+            $plageDispo = $plageDispo->fetchColumn();
+            if ($plageDispo == 0){
+                $enLigne = false;
+                $stmt = $dbh->prepare("UPDATE locbreizh._logement SET en_ligne = :enLigne WHERE id_logement = :id_logement;");
+                $stmt->bindParam(':enLigne', $enLigne, PDO::PARAM_BOOL);
+                $stmt->bindParam(':id_logement', $_POST['id_logement']);
+                $stmt->execute();
+            }
+            
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
