@@ -939,25 +939,66 @@ $plageDispo = [];
         </div>
 
         <hr>
-        <h3 class="policetitre">Localisation</h3>
-        <section id="containerMap">
-            <div id="map">
+        <div class="logcarte">
+            <h3 class="policetitre">Localisation</h3>
+            <div id = "containerMap">
+                <div id="map">
+                    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+                </div>
+                <p id="message"></p>   
+                <p id="adresse"></p>   
 
-                <?php
-                $stmt = $dbh->prepare(
-                    'SELECT ville, nom_rue, numero_rue, code_postal, pays
-                        from locbreizh._logement
-                        natural JOIN locbreizh._adresse
-                        where id_logement = :id'
-                );
-                $stmt->bindParam(':id', $_GET['logement']);
+                
+                <script>
+                    <?php
+                        $stmt = $dbh->prepare(
+                            'SELECT ville, nom_rue, numero_rue
+                            from locbreizh._logement
+                            natural JOIN locbreizh._adresse
+                            where id_logement = :id'
+                        );
+                        $stmt->bindParam(':id', $_GET['logement']);
 
+                        $stmt->execute();
+                        $info = $stmt->fetch();
+                    ?>
 
-            $stmt->execute();
-            $info = $stmt->fetch();
-            ?>
-            <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>  
-            
+                    //ville à géocoder
+                    var commune = "<?php echo $info['ville'];?>";
+                    console.log(commune);
+
+                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
+
+                    fetch(opencageUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            var adresse = document.getElementById('adresse');
+                            if (data.results.length > 0) {
+                                console.log(data);
+                                var communeAdresse = `Adresse : ${data.results[0].formatted}.<br>`;
+                                afficherCommuneSurMap(data.results[0].geometry.lat, data.results[0].geometry.lng);
+                                adresse.innerHTML = communeAdresse;
+                            } else {
+                                var messageElement = document.getElementById('message');
+                                messageElement.innerHTML = "La ville à afficher n'est pas valide.";
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Erreur lors de la requête de géocodage:", error);
+                        });
+                    
+                    function afficherCommuneSurMap(lat, lng) {
+                        var map = L.map('map').setView([lat, lng], 9);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        L.marker([lat, lng]).addTo(map)
+                            .bindPopup('Le logement est ici !');
+                    }
+                
+                </script>
+            </div>
         </div>
         <hr class="hr">
         <!--Les avis-->
