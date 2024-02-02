@@ -637,6 +637,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     );
                     $stmt->execute();
                     $info = $stmt->fetch();
+
+                    try {
+                        $Reqservices = $dbh->prepare("SELECT nom_service from locbreizh._services_compris where logement = {$_GET['logement']}");
+                        $Reqservices->execute();
+                        $services = $Reqservices->fetchAll();
+                    } catch (PDOException $e) {
+                        print "Erreur !:" . $e->getMessage() . "<br/>";
+                        die();
+                    }
                 ?>
                 <div class="logrow">
                     <div class="logcp">
@@ -694,6 +703,24 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 
                         if ($info['jacuzzi'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
+                        }
+                        ?>
+                    </div>
+                    <hr class="hr">
+                    <div class="logcp">
+                        <h4 class="potitres">Services</h4>
+                        <?php
+                        foreach ($services as $key => $value){
+
+                            if ($value['nom_service'] == "navette") {
+                                ?><p><img src="../svg/taxi-fill.svg" width="24" height ="24"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                            }
+                            if ($value['nom_service'] == "menage") {
+                                ?><p><img src="../svg/nettoyage.svg" width="24" height="24"> <?php  echo 'Menage'; ?></p><?php
+                            }
+                            if ($value['nom_service'] == "linge") {
+                                ?><p><img src="../svg/t-shirt-air-line.svg" width="24" height ="24"><?php  echo 'Linge'; ?></p><?php
+                            }
                         }
                         ?>
                     </div>
