@@ -24,6 +24,9 @@ function ajouterOuRemplacerParametresUrl(url, parametres) {
             urlObj.searchParams.delete(parametre);
         }
     }
+    if (Object.entries(parametres) == ''){
+        urlObj.searchParams.delete("filtre");
+    }
     return urlObj.toString();
 }
 
@@ -38,7 +41,10 @@ function obtenirFiltres() {
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function(event) {
         let filtres = obtenirFiltres();
-        filtres = filtres[0].split(',');
+        console.log(filtres);
+        if (filtres[0]){
+            filtres = filtres[0].split(',');
+        }
         const filtre = checkbox.value;
         const filtrePresent = filtres.includes(filtre);
 
