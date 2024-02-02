@@ -167,11 +167,11 @@
                 <div class="logrow">
                     <div class="log2vct"> 
                         <label for="date_val">Durée de validité du devis (en jour)</label>
-                        <input class="logvct" step="1" type="number" id="date_val" name="date_val" min="1" max="999" value="<?php if(isset($_SESSION['valeurs_complete']['date_val'])){echo $_SESSION['valeurs_complete']['date_val'];} ?>" required /> 
+                        <input class="valduree" step="1" type="number" id="date_val" name="date_val" min="1" max="999" value="<?php if(isset($_SESSION['valeurs_complete']['date_val'])){echo $_SESSION['valeurs_complete']['date_val'];} ?>" required /> 
                     </div>
 
                     <div class="annulation">
-                        <label for="annulation">Condition annulation :</label>
+                        <label for="annulation">Condition annulation</label>
                         <select id="annulation" name="annulation" class="devis_select">
                             <option value="stricte" <?php if(isset($_SESSION['valeurs_complete']['annulation'])) {if($_SESSION['valeurs_complete']['annulation'] == 'stricte') { ?> selected <?php }}?>>Stricte</option>
                             <option value="flexible" <?php if(isset($_SESSION['valeurs_complete']['annulation'])) {if($_SESSION['valeurs_complete']['annulation'] == 'flexible') { ?> selected <?php }}?>>Flexible</option>
@@ -226,36 +226,53 @@
             <input type="hidden" id="prixCharges" name="prixCharges" value="" readonly>
 
 
-                    <div class="devisrow">
+                <div class="devisrow">
                     <p class="ren">Prix :</p>
+                </div>
+
+                <div class="devisrow">
+                    <div class="deviscol">
                         <div class="deviscolinput">
                             <p>Sous total HT (en €) </p>
-                            <input class="logvct" id="sousTotal_HT" name="sousTotal_HT" value="" readonly>
-                        </div>
-                        <div class="deviscolinput">
-                            <p>Sous total TTC (en €) </p>
-                            <input class="logvct" id="sousTotal_TTC" name="sousTotal_TTC" value="" readonly>
+                            <input class="inputprix" id="sousTotal_HT" name="sousTotal_HT" value="" readonly>
                         </div>
                         <div class="deviscolinput">
                             <p>Frais de service HT (en €) </p>
-                            <input class="logvct" id="fraisService_HT" name="fraisService_HT" value="" readonly>
+                            <input class="inputprix" id="fraisService_HT" name="fraisService_HT" value="" readonly>
+                        </div> 
+                    </div> 
+
+                    <div class="deviscol">    
+                        <div class="devisrowp">
+                            
+                            <div class="deviscolinput">
+                                <p>Sous total TTC (en €) </p>
+                                <input class="inputprix" id="sousTotal_TTC" name="sousTotal_TTC" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="devisrowp">
+                            
+                            <div class="deviscolinput">
+                                <p>Frais de service TTC (en €) </p>
+                                <input class="inputprix" id="fraisService_TTC" name="fraisService_TTC" value="" readonly>
+                            </div>
+                        </div>
+
+                        <div class="devisrowp">
+                            <div class="deviscolinput">
+                                <p>Total taxe_sejour (en €) </p>
+                                <input class="inputprix" id="taxe_sejour" name="taxe_sejour" value="" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="devisrowp">
+                            <div class="deviscolinput">
+                                <p>Prix total (en €) </p>
+                                <input class="inputprix" id="prixTotal" name="prixTotal" value="" readonly>
+                            </div>
                         </div>
                     </div>
-                    <div class="devisrow">
-                    <div class="devisvct">
-                            <p>Frais de service TTC (en €) </p>
-                            <input class="logvct" id="fraisService_TTC" name="fraisService_TTC" value=""  readonly>
-                        </div>
-                    <div class="devisvct">
-                            <p>Total taxe_sejour (en €) </p>
-                            <input class="logvct" id="taxe_sejour" name="taxe_sejour" value="" readonly>
-                        </div>
-                    <div class="devisvct">
-                        <p>Prix total (en €) </p>
-                            <input class="logvct" id="prixTotal" name="prixTotal" value="" readonly>
-                        </div>
-                    </div>
-            </div>
+                </div>
             <br/>
             <input type="hidden" id="id_demande" name ="id_demande" value=<?php echo $_GET['demande'];?>>
             </fieldset>
