@@ -113,7 +113,7 @@
 
             //si le client a notifié des vacanciers supplémentaires dans sa demande on regarde leur nombre
             
-            if ($vac_sup != ''){
+            if (isset($vac_sup != '')){
 
                 $stmt = $dbh->prepare("SELECT nombre from locbreizh._comporte_charges_associee_demande_devis where num_demande_devis = $num_demande and nom_charges = 'personnes_supplementaires';");
                 $stmt->execute();
