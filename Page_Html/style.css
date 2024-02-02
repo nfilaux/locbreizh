@@ -1304,7 +1304,79 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 /*  affichage des avis */
 
+.titreAvis{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.sousTitreAvis{
+    font-size: 1.5em;
+}
+
+.avis-box-space-between{
+    display: flex;
+    justify-content: space-between;
+}
+
+.all-avis{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.box-avis{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 35vw;
+    border: #f6e1ff 1px solid;
+    padding: 15px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.596);
+    margin-bottom: 40px;
+}
+
+.box-avis > p{
+    margin: 20px 25px;
+}
+
+.header-box{
+    display: flex;
+    align-items: baseline;
+}
+
+.header-box > div > p{
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.infoC{
+    align-items: center;
+}
+
+.header-box svg{
+    margin-right: 5px;
+}
+
+.header-box img{
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid #5B3F69;
+    border-radius: 50%;
+    padding: none;
+}
+
+.h3_avis {
+    font-family: 'PatuaOne';
+    font-weight: 600;
+    font-size: 2.5em;
+    text-align: center;
+    margin-right: 20px;
+}
 
 /* note avis (etoiles) */
 
@@ -1317,11 +1389,11 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     float: right;
     cursor: pointer;
     font-size: 30px;
-    fill: #666;
+    fill: #43314d;
   }
   
   .rating:not(:checked) > label > svg {
-    fill: #666; /* Set default color for SVG */
+    fill: #43314d; /* Set default color for SVG */
     transition: fill 0.3s ease; /* Add a transition effect */
   }
   
@@ -1342,25 +1414,48 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     fill: #ffa723; /* Set color for selected stars */
   }
 
+  .note_moyenne{
+    fill: #ffa723;
+    width: 40px;
+    height: auto;
+  }
+
 /* contenu form*/
+
+
+.rediger-avis{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.rediger-avis > p{
+    font-size: 1.5em;
+    margin: 0 20px 0 0;
+}
+
+.rediger-avis > form{
+    margin: 0;
+}
 
 .hidden{
     display: none;
 }
 
 .messageBox {
-    width: fit-content;
+    width: 35vw;
     height: 40px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: #2d2d2d;
+    justify-content: space-between;
+    background-color: #745086;
     padding: 0 15px;
     border-radius: 10px;
-    border: 1px solid rgb(63, 63, 63);
+    border: 1px solid rgb(81, 12, 102);
   }
   .messageBox:focus-within {
-    border: 1px solid rgb(110, 110, 110);
+    border: 1px solid rgb(130, 0, 190);
   }
   .fileUploadWrapper {
     width: fit-content;
@@ -1411,15 +1506,15 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     color: white;
     font-size: 10px;
     text-wrap: nowrap;
-    background-color: #000;
+    background-color: #420057;
     padding: 6px 10px;
-    border: 1px solid #3c3c3c;
+    border: 1px solid #47138b;
     border-radius: 5px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.596);
     transition: all 0.3s;
   }
   #messageInput {
-    width: 200px;
+    width: 60%;
     height: 100%;
     background-color: transparent;
     outline: none;
@@ -1427,9 +1522,13 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
     padding-left: 10px;
     color: white;
   }
+
+  #messageInput::placeholder{
+    color: rgb(232, 198, 255);
+  }
   #messageInput:focus ~ #sendButton svg path,
   #messageInput:valid ~ #sendButton svg path {
-    fill: #3c3c3c;
+    fill: #49275f;
     stroke: white;
   }
   
