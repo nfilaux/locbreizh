@@ -37,7 +37,8 @@ function obtenirFiltres() {
 // Ajout d'un écouteur d'événement change à chaque case à cocher
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function(event) {
-        const filtres = obtenirFiltres();
+        let filtres = obtenirFiltres();
+        filtres = filtres[0].split(',');
         const filtre = checkbox.value;
         const filtrePresent = filtres.includes(filtre);
 
