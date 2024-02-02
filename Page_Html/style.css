@@ -2084,11 +2084,6 @@ iframe {
     color: #274065;
 }
 
-#map {
-    height: 400px;
-    width: auto;
-    margin: auto;
-}
 /*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
 
 .corpsCalendrier {
@@ -4181,13 +4176,13 @@ iframe {
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    width: 100%;
+    width: 80%;
     height: 100%;
 
 }
 
 #map {
-    height: 500px;
-    width: 1000px;
-    border: solid black 1px;
+    height: 350px;
+    width: 100%;
+    border: solid #745086 1px;
 }
