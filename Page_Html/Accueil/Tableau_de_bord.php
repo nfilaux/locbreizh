@@ -434,7 +434,7 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length; i++){
+            for (i=0; i<listeActif.length-1; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -526,7 +526,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 <?php
                     
                     $stmt = $dbh->prepare(
-                        "SELECT * from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
+                        "SELECT * from locbreizh._logement where id_proprietaire = {$_SESSION['id']} ORDER BY id_logement ASC;"
                     );
 
                     function formatDate($start, $end)
@@ -746,6 +746,11 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
                                         $plageDispo->execute();
                                         $plageDispo = $plageDispo->fetchAll();
+
+                                        $devis = $dbh->prepare("SELECT date_arrivee, date_depart FROM locbreizh._devis INNER JOIN locbreizh._demande_devis
+                                        ON _devis.num_demande_devis = _demande_devis.num_demande_devis WHERE logement = {$card['id_logement']};");
+                                        $devis->execute();
+                                        $devis = $devis->fetchAll();
 
                                     } catch (PDOException $e) {
                                         print "Erreur !:" . $e->getMessage() . "<br/>";
