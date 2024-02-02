@@ -1,43 +1,42 @@
 <?php 
-    session_start();
-    include('../parametre_connexion.php');
-    try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        print "Erreur !:" . $e->getMessage() . "<br/>";
-        die();
+session_start();
+include('../parametre_connexion.php');
+try {
+$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    print "Erreur !:" . $e->getMessage() . "<br/>";
+    die();
+}
+// fontion pour afficher les erreurs de modification
+function erreur($nomErreur){
+    if(isset($_SESSION["erreurs"][$nomErreur])){
+        ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+        unset($_SESSION["erreurs"][$nomErreur]);
     }
-    // fontion pour afficher les erreurs de modification
-    function erreur($nomErreur){
-        if(isset($_SESSION["erreurs"][$nomErreur])){
-            ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
-            unset($_SESSION["erreurs"][$nomErreur]);
-        }
 }
    
-
 $plageIndispo = [];
 $plageDispo = []; 
 ?>
 
 <script>
     //recupération des element du html qu'on vas remplir d'information
-dateActuelle = [];
-baliseJour =[];
-precedentSuivant = [];
-datesPlage = [];
-boutonsDates = [];
-prixSejour = [];
+var dateActuelle = [];
+var baliseJour =[];
+var precedentSuivant = [];
+var datesPlage = [];
+var boutonsDates = [];
+var prixSejour = [];
 
 //création de dates qui vont êtres utilisé pour le premier et deuxieme calendrier
-date = [];
-anneeActuelle = [];
-moisActuel = [];
-date2 = [];
-anneeActuelle2 = [];
-moisActuel2 = [];
+var date = [];
+var anneeActuelle = [];
+var moisActuel = [];
+var date2 = [];
+var anneeActuelle2 = [];
+var moisActuel2 = [];
 
 //constante pour les mois de l'année
 const tabMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -51,17 +50,27 @@ var tabRaison = [];
 var classeIndispo = [];
 
 //tableau des calendriers du code HTML
-calendrier = [];
+var calendrier = [];
 
 //instanciation du debut et de la fin de la plage
-premierID = [];
-dernierID = [];
+var premierID = [];
+var dernierID = [];
 
 //classe des jours normaux
-classeNormale = [];
+var classeNormale = [];
 
 //prix des plages sélectionner
-prixPlage = [];
+var prixPlage = [];
+
+//tableaux des reservations
+var tabDebReser = [];
+var tabFinReser = [];
+var classeReser = [];
+
+//tableaux des devis en attente
+var tabDebDevis = [];
+var tabFinDevis = [];
+var classeDevis = [];
 
 function instancier(id, nbCache){
     //recupération des element du html qu'on vas remplir d'information
@@ -123,6 +132,12 @@ function instancier(id, nbCache){
             }
             if (classeIndispo[id]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+            }
+            if (tabDebReser[id][0]){
+                afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
+            }
+            if (tabDebDevis[id][0]){
+                afficherDevis(tabDebDevis[id], tabFinDevis[id], classeDevis[id], "DEVIS", id);
             }
             if (premierID[id] !== ""){
                 selection(premierID[id], dernierID[id], id);
@@ -219,13 +234,6 @@ function changerJour(elem, id) {
         for (i = 0; i < nbEntreDeux; i++) {
             entreDeux[0].className = "normal";
         }
-        //remet les plages
-        if (tabDispo[id][0]){
-            afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
-        }
-        if (tabIndispo[id][0]){
-            afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
-        }
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
@@ -245,6 +253,9 @@ function changerJour(elem, id) {
                     if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(premierID[id]) ){
                             document.getElementById(premierID[id]).className = classeDispo[id];
+                        }
+                        else if(tabIndispo[id].includes(premierID[id])){
+                            document.getElementById(premierID[id]).className = classeIndispo[id];
                         }
                         else if(tabIndispo[id].includes(premierID[id])){
                             document.getElementById(premierID[id]).className = classeIndispo[id];
@@ -274,6 +285,19 @@ function changerJour(elem, id) {
                     }
                     dernierID[id] = element.id;
                     element.className = "actif";
+                }
+                //remet les plages
+                if (tabDispo[id][0]){
+                    afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+                }
+                if (tabIndispo[id][0]){
+                    afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+                }
+                if (tabDebReser[id][0]){
+                    afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
+                }
+                if (tabDebDevis[id][0]){
+                    afficherDevis(tabDebDevis[id], tabFinDevis[id], classeDevis[id], "DEVIS", id);
                 }
                 //active la zone de selection entre les deux dates
                 datePremier = new Date(premierID[id].split(',')[1]).getTime();
@@ -348,6 +372,12 @@ function changerJour(elem, id) {
             }
             if (tabIndispo[id][0]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+            }
+            if (tabDebReser[id][0]){
+                afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
+            }
+            if (tabDebDevis[id][0]){
+                afficherDevis(tabDebDevis[id], tabFinDevis[id], classeDevis[id], "DEVIS", id);
             }
         }
         changerDates(id);
@@ -495,7 +525,41 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 }
 
 function afficherDevis(tabDebut, tabFin, classe, type, id){
-
+    if (type == "RESERV"){
+        tabDebReser[id] = tabDebut;
+        tabFinReser[id] = tabFin;
+        classeReser[id] = classe;
+    }
+    else{
+        tabDebDevis[id] = tabDebut;
+        tabFinDevis[id] = tabFin;
+        classeDevis[id] = classe;
+    }
+    for (i=0; i < tabDebut.length; i++){
+        dateFin = new Date(tabFin[i]);
+        dateFin.setHours(00);
+        dateDebut = new Date(tabDebut[i]);
+        dateDebut.setHours(00);
+        listeJours = calendrier[id].querySelectorAll(".jours li");
+        fini = false;
+        loop = 0;
+        while (!fini){
+            jour = listeJours[loop];
+            if (!jour){
+                fini = true;
+            }
+            if (!fini){
+                let dateJour = new Date(jour.id.split(',')[1]);
+                if (dateJour <= dateFin && dateJour >= dateDebut) {
+                    jour.className = classe;
+                }
+                else  if (dateJour === dateFin){
+                    fini = true;
+                }
+            }
+            loop++;
+        }
+    }
 }
 
 numCalendrier = -1;
@@ -821,8 +885,17 @@ numCalendrier = -1;
                                         tabDebut[i] = tab[i]["date_arrivee"];
                                         tabFin[i] = tab[i]["date_depart"];
                                     }
-                                    console.log(tabDebut);
-                                    afficherDevis(tabDebut, tabFin, "normal", "R", numCalendrier)
+                                    afficherDevis(tabDebut, tabFin, "reserver", "RESERV", numCalendrier);
+
+                                    var tab = <?php echo json_encode($devis); ?>;
+                                    var tabDebut = [];
+                                    var tabFin = [];
+                                    for (i=0 ; i < tab.length; i++){
+                                        tabDebut[i] = tab[i]["date_arrivee"];
+                                        tabFin[i] = tab[i]["date_depart"];
+                                    }
+                                    afficherDevis(tabDebut, tabFin, "devis", "DEVIS", numCalendrier)
+
 
                                     if (!tabRes[0]){
                                         document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").disabled = true;

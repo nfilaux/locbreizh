@@ -2011,6 +2011,10 @@ iframe {
     background-color: red;
 }
 
+.reserver::before{
+    background-color: orange;
+}
+
 .calendrier ul{
     display: flex;
     list-style: none;
@@ -2028,7 +2032,7 @@ iframe {
     color: #A9A9A9;
 }
 
-.actif, .indisponible, .disponible{
+.actif, .indisponible, .disponible, .reserver{
     color: #fff;
 }
 
