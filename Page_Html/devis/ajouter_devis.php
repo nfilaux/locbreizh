@@ -28,10 +28,24 @@
     $stmt->bindParam(':num_demande', $_POST['id_demande']);
     $stmt->execute();
     $resDates = $stmt->fetchAll();
+
     $err = 0;
     // Converti les dates donne en paramètre
     $date_arrive = new DateTime($_POST["date_arrivee"]);
     $date_depart = new DateTime($_POST["date_depart"]);
+
+    $stmt = $dbh->prepare("SELECT prix_plage_ponctuelle
+    FROM locbreizh._demande_devis d
+    JOIN locbreizh._logement l ON d.logement = l.id_logement
+    JOIN locbreizh._planning p ON p.code_planning = l.code_planning
+    JOIN locbreizh._plage_ponctuelle p1 ON p1.code_planning = p.code_planning
+    JOIN locbreizh._plage_ponctuelle_disponible p2 ON p2.id_plage_ponctuelle = p1.id_plage_ponctuelle
+    WHERE num_demande_devis = :num_demande
+    AND jour_plage_ponctuelle >= '{$_POST["date_arrivee"]}'
+    AND jour_plage_ponctuelle < '{$_POST["date_depart"]}'");
+    $stmt->bindParam(':num_demande', $_POST['id_demande']);
+    $stmt->execute();
+    $prixnuitunite = $stmt->fetchAll();
     // parcours tous les jours de la periode de reservation
     for($date = clone $date_arrive; $date <= $date_depart; $date->modify('+1 day')) {
         $date_formate = $date->format('Y-m-d');
@@ -236,6 +250,7 @@
         if($vac_supp == ''){
             $vac_supp= 0;
         }
+
         $pdf->Cell(0, 8, $proprioinfo['nom'] . ' ' . $proprioinfo['prenom'], 0, 1);
         $pdf->Cell(0, 8, $proprioinfo['mail'], 0, 1);
         $pdf->Cell(0, 8, $proprioinfo['telephone'], 0, 1);
@@ -245,27 +260,42 @@
         $pdf->Cell(0, 8, 'Le ' . $date_devis, 0, 1, 'R');
         $pdf->Cell(0, 10, "Séjour du ".$frdatearrive . ' au ' . $frdatedepart . '.', 0, 1);
         $pdf->Cell(0, 8, 'Logement demandé : ' . $libelle_log['libelle_logement'], 0, 1);
-        $pdf->Cell(0, 8, 'Prix à la nuité : ' . $prix_par_nuit . '€', 0, 1);
+        $pdf->Cell(0, 8, 'Prix à la nuité moyen : ' . number_format($prix_par_nuit , 2, ',', ' ') . '€', 0, 1);
         $pdf->Cell(0, 8, 'Nombre de personnes : ' . $nb_personnes, 0, 1);
         $pdf->Cell(0, 8, 'Nombre de personnes supplémentaires : ' . $vac_supp, 0, 1);
+        $pdf->Cell(0, 8, "Condition d'annulation : " . $_POST["annulation"], 0, 1);
         $pdf->Cell(0, 8, $menage, 0, 1);
         $pdf->Cell(0, 8, $animaux, 0, 1);
+
         $pdf->Ln();
         $pdf->Ln();
         // Informations pour le devis
-        $informationsDevis = array(
-            array('Désignation', 'Prix HT', 'Prix TTC'), 
-            array('Logement', number_format($nuitees_HT, 2, '.', '') . " €", number_format($nuitees_HT*1.10 , 2 , '.', ''). ' €'),
+        $informationsDevis1 = array(
+            array('Désignation', 'Prix HT', 'Prix TTC')
+        );
+        $informationsDevis2 = array();
+        $loop = 1;
+        foreach ($prixnuitunite as $valeur => $key) {
+            array_push($informationsDevis2,array("Nuit $loop", number_format($key["prix_plage_ponctuelle"] , 2, ',', ' '). " €", number_format($key["prix_plage_ponctuelle"]  * 1.1 , 2, ',', ' '). " €"));
+            $loop++;
+        } 
+        $informationsDevis3 = array(
+            array('Logement total', number_format($nuitees_HT, 2, '.', '') . " €", number_format($nuitees_HT*1.10 , 2 , '.', ''). ' €'),
+        );
+        $informationsDevis4 = array(
             array('Charges', number_format($totalCharges_HT, 2, '.', ''). " €",  number_format($totalCharges_HT*1.10, 2, '.', ''). " €"),
             array('Taxe de séjour', number_format($logement['taxe_sejour'], 2 , '.', '') . ' €', number_format($logement['taxe_sejour'], 2, '.', '') . ' €'),
-            array('Frais de plateforme', number_format($fraisService_HT, 2, '.', '') . ' €', number_format($fraisService_TTC, 2, '.', '') . ' €')
+            array('Frais de plateforme', number_format($fraisService_HT, 2, '.', '') . ' €', number_format($fraisService_TTC, 2, '.', '') . ' €')    
         );
+
+        $informationsDevis_nuit = array_merge($informationsDevis1,$informationsDevis2,$informationsDevis3);
+        $informationsDevis_frais = array_merge($informationsDevis1,$informationsDevis4);
         // Définir les largeurs des colonnes
         $colonneLargeurs = array(60, 40, 40, 40);
         // Boucle pour créer le tableau
         $premier = 1;
-        foreach ($informationsDevis as $ligne) {
-            for ($i = 0; $i < count($ligne); $i++) {
+        foreach ($informationsDevis_nuit as $ligne) {
+            for ($i = 0; $i < 3; $i++) {
                 if ($i == 0) {
                     $pdf->SetFont('', 'B', 12);
                     $align = 'C';
@@ -283,6 +313,28 @@
             $premier = 0;
         }
         $pdf->Ln();
+
+        $premier = 1;
+        foreach ($informationsDevis_frais as $ligne) {
+            for ($i = 0; $i < 3; $i++) {
+                if ($i == 0) {
+                    $pdf->SetFont('', 'B', 12);
+                    $align = 'C';
+                } elseif($premier){
+                    $pdf->SetFont('', 'B', 12);
+                    $align = 'C';
+                }
+                else{
+                    $pdf->SetFont('', '', 12);
+                    $align = 'R';
+                }
+                $pdf->Cell($colonneLargeurs[$i], 10, $ligne[$i], 1, 0, $align);
+            }
+            $pdf->Ln();
+            $premier = 0;
+        }
+        $pdf->Ln();
+
         $informationsPrix = array(
             array('Prix Total', number_format($nuitees_HT + $totalCharges_HT + $logement['taxe_sejour']+ $fraisService_HT, 2, '.', '') . ' €', number_format($prixTotal, 2, '.', '') . ' €')
         );
@@ -300,6 +352,8 @@
             }
             $pdf->Ln();
         }
+
+          
         // genere le contenu PDF
         $contenu_pdf = $pdf->Output('devis.pdf', 'S'); // 'S' pour obtenir le contenu du PDF
         // enregistre le PDF dans un dossier
