@@ -526,7 +526,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 <?php
                     
                     $stmt = $dbh->prepare(
-                        "SELECT * from locbreizh._logement where id_proprietaire = {$_SESSION['id']};"
+                        "SELECT * from locbreizh._logement where id_proprietaire = {$_SESSION['id']} ORDER BY id_logement ASC;"
                     );
 
                     function formatDate($start, $end)
