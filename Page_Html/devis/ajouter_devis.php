@@ -260,8 +260,9 @@
         $pdf->Cell(0, 8, 'Le ' . $date_devis, 0, 1, 'R');
         $pdf->Cell(0, 10, "Séjour du ".$frdatearrive . ' au ' . $frdatedepart . '.', 0, 1);
         $pdf->Cell(0, 8, 'Logement demandé : ' . $libelle_log['libelle_logement'], 0, 1);
-        $pdf->Cell(0, 8, 'Prix à la nuité moyen : ' . number_format($prix_par_nuit , 2, ',', ' ') . '€', 0, 1);
+        $pdf->Cell(0, 8, 'Prix moyen à la nuité : ' . number_format($prix_par_nuit , 2, ',', ' ') . '€', 0, 1);
         $pdf->Cell(0, 8, 'Nombre de personnes : ' . $nb_personnes, 0, 1);
+        $pdf->Cell(0, 8, 'Durée de validité du devis en jours : ' . $_POST['date_val'], 0, 1);
         $pdf->Cell(0, 8, 'Nombre de personnes supplémentaires : ' . $vac_supp, 0, 1);
         $pdf->Cell(0, 8, "Condition d'annulation : " . $_POST["annulation"], 0, 1);
         $pdf->Cell(0, 8, $menage, 0, 1);

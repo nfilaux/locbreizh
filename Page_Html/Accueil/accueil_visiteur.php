@@ -72,10 +72,19 @@
                                                                                                         echo 'Nom de propriétaire';
                                                                                                     } ?>" />
                         </div>
+<<<<<<< HEAD
                         <a class="btn-filtre">
                             <img src="../svg/filtre.svg" width="20" height="20" onclick="openPopup('filtre','ovFiltre')">
                         </a>
                         <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
+=======
+                        <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])){echo $_GET['proprio'];} else {echo 'Nom de propriétaire';} ?>"/>           
+                    </div>
+                    <a class="btn-filtre" >
+                        <img src="../svg/filtre.svg" width="28" height="28" onclick="openPopup('filtre','ovFiltre')">
+                    </a>
+                    <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
+>>>>>>> 52e664dc60a6e9822a3780f765f4cc76c93ce324
                     </div>
 
                     <?php if (isset($_GET['erreur'])) { ?>
@@ -89,9 +98,160 @@
 
         <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')" class=""></div>
         <div id="filtre" class="filtrage">
+<<<<<<< HEAD
             <div>
 
             </div>
+=======
+            <span class="fltitre">Filtres</span><hr class="hr">
+            <form action="filtrage.php" method="post">
+                <h3 class="flptitre">Par type de logement</h3>
+                <div class="radio-inputs">
+                        <label>
+                            <input class="radio-input" type="radio" name="typeH" value="maison">
+                                <span class="radio-tile">
+                                    <span class="radio-icon">
+                                        <img src="../svg/house.svg" width="25" height="25">
+                                    </span>
+                                    <span class="radio-label">Maison</span>
+                                </span>
+                        </label>
+                        <label>
+                            <input checked="" class="radio-input" type="radio" name="typeH" value="appartement">
+                            <span class="radio-tile">
+                                <span class="radio-icon">
+                                    <img src="../svg/appartement.svg" width="25" height="25">
+                                </span>
+                                <span class="radio-label">Appartement</span>
+                            </span>
+                        </label>
+                        <label>
+                            <input class="radio-input" type="radio" name="typeH" value="chateau">
+                            <span class="radio-tile">
+                                <span class="radio-icon">
+                                    <img src="../svg/castle.svg" width="25" height="25">
+                                </span>
+                                <span class="radio-label">Château</span>
+                            </span>
+                        </label>
+                        <label>
+                            <input class="radio-input" type="radio" name="typeH" value="manoir">
+                            <span class="radio-tile">
+                                <span class="radio-icon">
+                                    <img src="../svg/manoir.svg" width="25" height="25">
+                                </span>
+                                <span class="radio-label">Manoir</span>
+                            </span>
+                        </label>
+                        <label style="display: none;">
+                            <input class="radio-input" type="radio" name="typeH" value="" checked>
+                        </label>
+                </div>
+
+                <hr class="hr"><h3 class="flptitre">Par équipement</h3>
+                <ul class="liste-filtre">
+                    <div>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="balcon" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'balcon')!==false){echo 'checked';}?>>
+                                Balcon
+                            </label>         
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="Terrasse" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'Terrasse')!==false){echo 'checked';}?>>
+                                Terrasse
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="piscine" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'piscine')!==false){echo 'checked';}?>>
+                                Piscine
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="clim" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'clim')!==false){echo 'checked';}?>>
+                                Climatisation
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="jacuzzi" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'jacuzzi')!==false){echo 'checked';}?>>
+                                Jacuzzi
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="sauna" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'sauna')!==false){echo 'checked';}?>>
+                                Sauna
+                            </label>        
+                        </li>
+                    </div>
+                    <div>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="parkPrive" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'parkPrive')!==false){echo 'checked';}?>>
+                                Parking privé
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="parkPublic" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'parkPublic')!==false){echo 'checked';}?>>
+                                Parking public
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="television" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'television')!==false){echo 'checked';}?>>
+                                Télévision 
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="wifi" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'wifi')!==false){echo 'checked';}?>>
+                                Wifi
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="laveLinge" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'laveLinge')!==false){echo 'checked';}?>>
+                                Lave linge
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="laveVaisselle" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'laveVaisselle')!==false){echo 'checked';}?>>
+                                Lave vaisselle
+                            </label>        
+                        </li>
+                    </div>
+                </ul>
+
+                <hr class="hr"><h3 class="flptitre">Par service</h3>
+                <ul class="liste-filtre-s">
+                    <li>
+                        <label class="cyberpunk-checkbox-label">
+                            <input type="checkbox" name="service[]" value="menage" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
+                            Ménage
+                        </label>         
+                    </li>
+                    <li>
+                        <label class="cyberpunk-checkbox-label">
+                            <input type="checkbox" name="service[]" value="navette" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
+                            Navette
+                        </label>         
+                    </li>
+                    <li>
+                        <label class="cyberpunk-checkbox-label">
+                            <input type="checkbox" name="service[]" value="linge" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
+                            Linge
+                        </label>         
+                    </li>
+                </ul>
+                <hr class="hr">
+            </form>
+>>>>>>> 52e664dc60a6e9822a3780f765f4cc76c93ce324
         </div>
 
         <!-- Champs de séléction des Tris -->
@@ -239,6 +399,11 @@
 </body>
 
 </html>
+
+<?php
+    if (isset($_GET['filtre'])) {?>
+        <script> openPopup('filtre','ovFiltre'); </script>
+<?php } ?>
 
 <script src="../scriptPopup.js" defer></script>
 <script src="./actualiserTri.js" defer></script>
