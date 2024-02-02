@@ -1302,7 +1302,11 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
 
 /* form avis */
 
-/* note avis */
+/*  affichage des avis */
+
+
+
+/* note avis (etoiles) */
 
 .rating:not(:checked) > input {
     position: absolute;
@@ -1339,6 +1343,11 @@ header a:link ,header a:visited, footer a:link, footer a:visited {
   }
 
 /* contenu form*/
+
+.hidden{
+    display: none;
+}
+
 .messageBox {
     width: fit-content;
     height: 40px;
