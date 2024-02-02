@@ -2184,7 +2184,15 @@ iframe {
     background-color: red;
 }
 
-.calendrier ul {
+.reserver::before{
+    background-color: orange;
+}
+
+.reserver::before{
+    background-color: orange;
+}
+
+.calendrier ul{
     display: flex;
     list-style: none;
     flex-wrap: wrap;
@@ -2201,9 +2209,7 @@ iframe {
     color: #A9A9A9;
 }
 
-.actif,
-.indisponible,
-.disponible {
+.actif, .indisponible, .disponible, .reserver{
     color: #fff;
 }
 
