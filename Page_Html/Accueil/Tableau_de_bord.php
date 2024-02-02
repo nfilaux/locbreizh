@@ -493,7 +493,12 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     }
     
 }
-    numCalendrier = -1;
+
+function afficherDevis(tabDebut, tabFin, classe, type, id){
+
+}
+
+numCalendrier = -1;
 </script>
 
 
@@ -747,10 +752,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         $plageDispo->execute();
                                         $plageDispo = $plageDispo->fetchAll();
 
-                                        $devis = $dbh->prepare("SELECT date_arrivee, date_depart FROM locbreizh._devis INNER JOIN locbreizh._demande_devis
-                                        ON _devis.num_demande_devis = _demande_devis.num_demande_devis WHERE logement = {$card['id_logement']};");
+                                        $devis = $dbh->prepare("SELECT * FROM locbreizh._devis INNER JOIN locbreizh._demande_devis
+                                        ON _devis.num_demande_devis = _demande_devis.num_demande_devis WHERE logement = {$card['id_logement']} AND _devis.accepte is false AND _devis.annule is false;");
                                         $devis->execute();
                                         $devis = $devis->fetchAll();
+
+                                        $reservation = $dbh->prepare("SELECT * FROM locbreizh._devis INNER JOIN locbreizh._demande_devis
+                                        ON _devis.num_demande_devis = _demande_devis.num_demande_devis WHERE logement = {$card['id_logement']} AND _devis.accepte is true AND _devis.annule is false;");
+                                        $reservation->execute();
+                                        $reservation = $reservation->fetchAll();
 
                                     } catch (PDOException $e) {
                                         print "Erreur !:" . $e->getMessage() . "<br/>";
@@ -782,7 +792,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                             part2 = part2[1];
                                         }
                                         tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
-                                        tabMotif[i] = tab[i]["libelle_indisponibilite"];
+                                        tabMotif[i] = "raison personnelle";
                                     }
                                     afficherPlages(tabRes, "indisponible", tabMotif, "I", numCalendrier);
 
@@ -803,6 +813,16 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
                                     }
                                     afficherPlages(tabRes, "disponible", tabMotif, "D", numCalendrier);
+
+                                    var tab = <?php echo json_encode($reservation); ?>;
+                                    var tabDebut = [];
+                                    var tabFin = [];
+                                    for (i=0 ; i < tab.length; i++){
+                                        tabDebut[i] = tab[i]["date_arrivee"];
+                                        tabFin[i] = tab[i]["date_depart"];
+                                    }
+                                    console.log(tabDebut);
+                                    afficherDevis(tabDebut, tabFin, "normal", "R", numCalendrier)
 
                                     if (!tabRes[0]){
                                         document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").disabled = true;
