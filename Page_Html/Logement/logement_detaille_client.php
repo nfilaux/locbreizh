@@ -1052,22 +1052,75 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 
 <script src="caroussel.js" defer></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script>
 $(document).ready(function() {
-    // Fonction pour ajuster la hauteur de la zone de texte et du formulaire en fonction du contenu
+    function createInput() {
+        // Create an input element with a maxlength of 254
+        var input = $('<input>', {
+            'type': 'text',
+            'id': 'messageInput',
+            'placeholder': 'Donnez votre avis...',
+            'name' : 'contenu',
+            'maxlength': 499
+        });
+
+        // Replace the textarea with the input
+        $('#messageInput').replaceWith(input);
+
+        // Attach the event handler to the new input
+        input.on('input', ajusterHauteurInput);
+    }
+
+    function createTextarea() {
+        // Create a textarea element with a maxlength of 254
+        var textarea = $('<textarea>', {
+            'id': 'messageInput',
+            'name' : 'contenu',
+            'placeholder': 'Donnez votre avis...',
+            'maxlength': 499
+        });
+
+        // Replace the input with the textarea
+        $('#messageInput').replaceWith(textarea);
+
+        // Attach the event handler to the new textarea
+        textarea.on('input', ajusterHauteurTextarea);
+    }
+
+    function ajusterHauteurInput() {
+        var input = $(this);
+        input.css('height', 'auto');
+        input.css('height', (this.scrollHeight) + 'px');
+
+        var formulaire = input.closest('form');
+        formulaire.css('height', 'auto');
+        formulaire.css('height', formulaire.prop('scrollHeight') + 'px');
+    }
+
     function ajusterHauteurTextarea() {
         var textarea = $(this);
         textarea.css('height', 'auto');
         textarea.css('height', (this.scrollHeight) + 'px');
 
-        // Ajuster la hauteur du formulaire en fonction de la hauteur de la zone de texte
         var formulaire = textarea.closest('form');
         formulaire.css('height', 'auto');
         formulaire.css('height', formulaire.prop('scrollHeight') + 'px');
     }
 
-    // Attacher la fonction ajusterHauteurTextarea à l'événement input
-    $('#messageInput').on('input', ajusterHauteurTextarea);
+    // Initial setup based on screen width
+    if ($(window).width() > 700) {
+        createTextarea();
+    } else {
+        createInput();
+    }
+
+    // Update the element when the window is resized
+    $(window).resize(function() {
+        if ($(window).width() > 700) {
+            createTextarea();
+        } else {
+            createInput();
+        }
+    });
 });
 </script>
