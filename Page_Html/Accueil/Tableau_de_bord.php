@@ -477,8 +477,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         }
         for (i=0; i < tabPlage.length; i++){
             if (document.getElementById(id + "," + tabPlage[i]) && document.getElementById(id + "," + tabPlage[i]).className !== "actif") {
-                
-                document.getElementById(id + "," + tabPlage[i]).className = classe;
+                if (tabMotif[i] == "Réservation"){
+                    document.getElementById(id + "," + tabPlage[i]).className = "reserver";
+                }
+                else if (tabMotif[i] == "Demande devis"){
+                    document.getElementById(id + "," + tabPlage[i]).className = "devis";
+                }
+                else{
+                    document.getElementById(id + "," + tabPlage[i]).className = classe;
+                }
                 if (classe === "disponible"){
                     document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
                 }
@@ -786,7 +793,7 @@ numCalendrier = -1;
                                             part2 = part2[1];
                                         }
                                         tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
-                                        tabMotif[i] = "raison personnelle";
+                                        tabMotif[i] = tab[i]["libelle_indisponibilite"];
                                     }
                                     afficherPlages(tabRes, "indisponible", tabMotif, "I", numCalendrier);
 
