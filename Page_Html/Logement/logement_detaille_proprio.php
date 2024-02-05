@@ -997,10 +997,6 @@ $plageDispo = [];
                             <?php }
                         }
                     ?>
-
-                    
-
-
                 </div>
                 <div class="overlay_plages" id="<?php echo $avi['id_avis'].'ov';?>"></div>
                 <form id="<?php echo $avi['id_avis']; ?>" class="popup_avis" action="envoyer_reponse.php" method="post">
