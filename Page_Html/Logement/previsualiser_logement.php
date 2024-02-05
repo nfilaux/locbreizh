@@ -766,10 +766,10 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         </div>
 
         <div class="logpc">
-                        <h3 class="logtitre"><?php echo $logement_data['accroche'];;?></h3>
-                        <div class="logrowb">
+                        <h3 class="logtitre" style="margin-left:1em;"><?php echo $logement_data['accroche'];;?></h3>
+                        <div class="logrowb" >
                             <div class="logrowt">
-                                <h3 class="policetitre"><?php echo $logement_data['nom']; ?></h3>
+                                <h3 class="policetitre" style="margin-left:1em;"><?php echo $logement_data['nom']; ?></h3>
                             </div>
                         </div>
 
@@ -804,7 +804,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 
 
                         <div class="logrowb">
-                    <div class="logcolumn">
+                    <div class="logcolumn" >
                         <h3 class="policetitres">Calendrier</h3>
                         <div class="corpsCalendrier" id="">
                             <div class="fondP">
@@ -977,15 +977,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         <?php
                             $services = false;
                             if (isset($navette) && $navette == true) {
-                                ?><p><img src="../svg/taxi-fill.svg" width="48" height ="48"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                ?><p><img src="../svg/taxi-fill.svg" width="35" height ="35"><?php  echo 'Navette ou Taxi'; ?></p><?php
                                 $services = true;
                             }
                             if (isset($menage) && $menage == true) {
-                                ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php  echo 'Menage'; ?></p><?php
+                                ?><p><img src="../svg/nettoyage.svg" width="35" height="35"> <?php  echo 'Menage'; ?></p><?php
                                 $services = true;
                             }
                             if (isset($linge) && $linge == true) {
-                                ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height ="48"><?php  echo 'Linge'; ?></p><?php
+                                ?><p><img src="../svg/t-shirt-air-line.svg" width="35" height ="35"><?php  echo 'Linge'; ?></p><?php
                                 $services = true;
                             }
                             if (!$services){
@@ -1034,6 +1034,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         $info = $stmt->fetch();
                     ?>
 
+                    // Image du marqueur
+                    var ownIcon = L.icon({
+                        iconUrl: '../svg/map-pin-fill (2).svg',
+
+                        iconSize: [48, 48],
+                        iconAnchor: [22, 48],
+                        popupAnchor: [3, -24]
+                    });
+
                     //ville à géocoder
                     var commune = "<?php echo $ville;?>";
                     console.log(commune);
@@ -1064,8 +1073,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                             attribution: '© OpenStreetMap contributors'
                         }).addTo(map);
 
-                        L.marker([lat, lng]).addTo(map)
-                            .bindPopup('Le logement est ici !');
+                        L.marker([lat, lng], {icon: ownIcon}).addTo(map).bindPopup('Le logement est ici !');
                     }
                 
                 </script>
