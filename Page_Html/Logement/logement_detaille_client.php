@@ -1038,7 +1038,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     </div>
                     <p><?php echo $avi['contenu_avis'];?></p>
                     <div class="avis-box-space-between">
-                        <a href="">Répondre au commentaire</a>
+                        <a href=""></a>
                         <a href="">Signaler</a>
                     </div>
                 </div>
