@@ -62,16 +62,6 @@ var classeNormale = [];
 //prix des plages sélectionner
 var prixPlage = [];
 
-//tableaux des reservations
-var tabDebReser = [];
-var tabFinReser = [];
-var classeReser = [];
-
-//tableaux des devis en attente
-var tabDebDevis = [];
-var tabFinDevis = [];
-var classeDevis = [];
-
 function instancier(id, nbCache){
     //recupération des element du html qu'on vas remplir d'information
     calendrier[id] = document.getElementById("calendrier" + id);
@@ -135,12 +125,6 @@ function instancier(id, nbCache){
             }
             if (tabDebReser[id][0]){
                 afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
-            }
-            if (tabDebDevis[id][0]){
-                afficherDevis(tabDebDevis[id], tabFinDevis[id], classeDevis[id], "DEVIS", id);
-            }
-            if (premierID[id] !== ""){
-                selection(premierID[id], dernierID[id], id);
             }
         })
     });
@@ -293,12 +277,6 @@ function changerJour(elem, id) {
                 if (tabIndispo[id][0]){
                     afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
                 }
-                if (tabDebReser[id][0]){
-                    afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
-                }
-                if (tabDebDevis[id][0]){
-                    afficherDevis(tabDebDevis[id], tabFinDevis[id], classeDevis[id], "DEVIS", id);
-                }
                 //active la zone de selection entre les deux dates
                 datePremier = new Date(premierID[id].split(',')[1]).getTime();
                 dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
@@ -372,12 +350,6 @@ function changerJour(elem, id) {
             }
             if (tabIndispo[id][0]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
-            }
-            if (tabDebReser[id][0]){
-                afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
-            }
-            if (tabDebDevis[id][0]){
-                afficherDevis(tabDebDevis[id], tabFinDevis[id], classeDevis[id], "DEVIS", id);
             }
         }
         changerDates(id);
@@ -522,44 +494,6 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         classeIndispo[id] = [];
     }
     
-}
-
-function afficherDevis(tabDebut, tabFin, classe, type, id){
-    if (type == "RESERV"){
-        tabDebReser[id] = tabDebut;
-        tabFinReser[id] = tabFin;
-        classeReser[id] = classe;
-    }
-    else{
-        tabDebDevis[id] = tabDebut;
-        tabFinDevis[id] = tabFin;
-        classeDevis[id] = classe;
-    }
-    for (i=0; i < tabDebut.length; i++){
-        dateFin = new Date(tabFin[i]);
-        dateFin.setHours(00);
-        dateDebut = new Date(tabDebut[i]);
-        dateDebut.setHours(00);
-        listeJours = calendrier[id].querySelectorAll(".jours li");
-        fini = false;
-        loop = 0;
-        while (!fini){
-            jour = listeJours[loop];
-            if (!jour){
-                fini = true;
-            }
-            if (!fini){
-                let dateJour = new Date(jour.id.split(',')[1]);
-                if (dateJour <= dateFin && dateJour >= dateDebut) {
-                    jour.className = classe;
-                }
-                else  if (dateJour === dateFin){
-                    fini = true;
-                }
-            }
-            loop++;
-        }
-    }
 }
 
 numCalendrier = -1;
@@ -816,16 +750,6 @@ numCalendrier = -1;
                                         $plageDispo->execute();
                                         $plageDispo = $plageDispo->fetchAll();
 
-                                        $devis = $dbh->prepare("SELECT * FROM locbreizh._devis INNER JOIN locbreizh._demande_devis
-                                        ON _devis.num_demande_devis = _demande_devis.num_demande_devis WHERE logement = {$card['id_logement']} AND _devis.accepte is false AND _devis.annule is false;");
-                                        $devis->execute();
-                                        $devis = $devis->fetchAll();
-
-                                        $reservation = $dbh->prepare("SELECT * FROM locbreizh._devis INNER JOIN locbreizh._demande_devis
-                                        ON _devis.num_demande_devis = _demande_devis.num_demande_devis WHERE logement = {$card['id_logement']} AND _devis.accepte is true AND _devis.annule is false;");
-                                        $reservation->execute();
-                                        $reservation = $reservation->fetchAll();
-
                                     } catch (PDOException $e) {
                                         print "Erreur !:" . $e->getMessage() . "<br/>";
                                         die();
@@ -877,25 +801,6 @@ numCalendrier = -1;
                                         tabMotif[i] = tab[i]["prix_plage_ponctuelle"];
                                     }
                                     afficherPlages(tabRes, "disponible", tabMotif, "D", numCalendrier);
-
-                                    var tab = <?php echo json_encode($reservation); ?>;
-                                    var tabDebut = [];
-                                    var tabFin = [];
-                                    for (i=0 ; i < tab.length; i++){
-                                        tabDebut[i] = tab[i]["date_arrivee"];
-                                        tabFin[i] = tab[i]["date_depart"];
-                                    }
-                                    afficherDevis(tabDebut, tabFin, "reserver", "RESERV", numCalendrier);
-
-                                    var tab = <?php echo json_encode($devis); ?>;
-                                    var tabDebut = [];
-                                    var tabFin = [];
-                                    for (i=0 ; i < tab.length; i++){
-                                        tabDebut[i] = tab[i]["date_arrivee"];
-                                        tabFin[i] = tab[i]["date_depart"];
-                                    }
-                                    afficherDevis(tabDebut, tabFin, "devis", "DEVIS", numCalendrier)
-
 
                                     if (!tabRes[0]){
                                         document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").disabled = true;
