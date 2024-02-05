@@ -1858,13 +1858,8 @@ footer a:visited {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-<<<<<<< HEAD
     align-self: flex-start;
     padding: 2em;
-    
-=======
-
->>>>>>> 78d8d9d13929cbc1e2215c1583cbb886716f53fa
 }
 
 .logcp p {
