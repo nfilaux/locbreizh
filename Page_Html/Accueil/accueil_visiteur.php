@@ -94,7 +94,7 @@
                 <h3 class="flptitre">Par type de logement</h3>
                 <div class="radio-inputs">
                         <label>
-                            <input class="radio-input" type="radio" name="typeH" value="maison">
+                            <input class="radio-input" type="checkbox" name="typeH" value="maison" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'maison')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
                                         <img src="../svg/house.svg" width="25" height="25">
@@ -103,7 +103,7 @@
                                 </span>
                         </label>
                         <label>
-                            <input checked="" class="radio-input" type="radio" name="typeH" value="appartement">
+                            <input class="radio-input" type="checkbox" name="typeH" value="appartement" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'appartement')!==false){echo 'checked';}?>>
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="../svg/appartement.svg" width="25" height="25">
@@ -112,7 +112,7 @@
                             </span>
                         </label>
                         <label>
-                            <input class="radio-input" type="radio" name="typeH" value="chateau">
+                            <input class="radio-input" type="checkbox" name="typeH" value="chateau" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'chateau')!==false){echo 'checked';}?>>
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="../svg/castle.svg" width="25" height="25">
@@ -121,16 +121,13 @@
                             </span>
                         </label>
                         <label>
-                            <input class="radio-input" type="radio" name="typeH" value="manoir">
+                            <input class="radio-input" type="checkbox" name="typeH" value="manoir" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'manoir')!==false){echo 'checked';}?>>
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="../svg/manoir.svg" width="25" height="25">
                                 </span>
                                 <span class="radio-label">Manoir</span>
                             </span>
-                        </label>
-                        <label style="display: none;">
-                            <input class="radio-input" type="radio" name="typeH" value="" checked>
                         </label>
                 </div>
 
