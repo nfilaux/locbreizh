@@ -1353,7 +1353,7 @@ footer a:visited {
     color: #F6E4FF;
     border: 1px solid #957BB0;
     border-radius: 20px;
-    width: 21vw;
+    width: fit-content;
     font-size: 1.5em;
     height: 2em;
     font-family: 'Quicksand';
@@ -1378,6 +1378,10 @@ footer a:visited {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+}
+
+.tel-avis-form{
+    display: flex;
 }
 
 .box-avis{
@@ -1434,6 +1438,13 @@ footer a:visited {
 }
 
 /* note avis (etoiles) */
+
+.rating{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+}
 
 .rating:not(:checked) > input {
     position: absolute;
@@ -3380,7 +3391,15 @@ iframe {
         width: 100%;
     }
 }
+@media screen and (max-width: 899px) {
+    .box-avis{
+        width: 70vw;
+    }
 
+    .messageBox{
+        width: 70vw;
+    }
+}
 
 @media screen and (min-width: 600px) and (max-width: 899px) {
 
@@ -3821,6 +3840,23 @@ iframe {
 
 /*-------------------------------------------------------TELEPHONE------------------------------------------------------------------------*/
 @media screen and (max-width: 599px) {
+    /* avis */
+
+    .messageBox{
+        flex-direction: column;
+        height: fit-content;
+        padding-top: 20px;
+    }
+
+    #sendButton{
+        position: relative;
+        bottom: 20px;
+        right: -100px;
+    }
+
+    #messageInput{
+        width: 70vw;
+    }
 
     /*-------------------------------Header-------------------------------*/
     .logot {
