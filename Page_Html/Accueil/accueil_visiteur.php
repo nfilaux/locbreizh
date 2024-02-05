@@ -139,37 +139,37 @@
                     <div>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="balcon" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'balcon')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="balcon" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'balcon')!==false){echo 'checked';}?>>
                                 Balcon
                             </label>         
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="Terrasse" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'Terrasse')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="Terrasse" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'Terrasse')!==false){echo 'checked';}?>>
                                 Terrasse
                             </label>        
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="piscine" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'piscine')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="piscine" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'piscine')!==false){echo 'checked';}?>>
                                 Piscine
                             </label>        
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="clim" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'clim')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="clim" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'clim')!==false){echo 'checked';}?>>
                                 Climatisation
                             </label>        
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="jacuzzi" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'jacuzzi')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="jacuzzi" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'jacuzzi')!==false){echo 'checked';}?>>
                                 Jacuzzi
                             </label>        
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="sauna" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'sauna')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="sauna" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'sauna')!==false){echo 'checked';}?>>
                                 Sauna
                             </label>        
                         </li>
@@ -177,37 +177,37 @@
                     <div>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="parkPrive" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'parkPrive')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="parkPrive" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'parkPrive')!==false){echo 'checked';}?>>
                                 Parking privé
                             </label>        
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="parkPublic" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'parkPublic')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="parkPublic" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'parkPublic')!==false){echo 'checked';}?>>
                                 Parking public
                             </label>        
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="television" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'television')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="television" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'television')!==false){echo 'checked';}?>>
                                 Télévision 
                             </label>        
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="wifi" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'wifi')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="wifi" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'wifi')!==false){echo 'checked';}?>>
                                 Wifi
                             </label>        
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="laveLinge" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'laveLinge')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="laveLinge" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'laveLinge')!==false){echo 'checked';}?>>
                                 Lave linge
                             </label>        
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="laveVaisselle" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'laveVaisselle')!==false){echo 'checked';}?>>
+                                <input type="checkbox" name="equipement[]" value="laveVaisselle" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'laveVaisselle')!==false){echo 'checked';}?>>
                                 Lave vaisselle
                             </label>        
                         </li>
@@ -218,19 +218,19 @@
                 <ul class="liste-filtre-s">
                     <li>
                         <label class="cyberpunk-checkbox-label">
-                            <input type="checkbox" name="service[]" value="menage" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
+                            <input type="checkbox" name="service[]" value="menage" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
                             Ménage
                         </label>         
                     </li>
                     <li>
                         <label class="cyberpunk-checkbox-label">
-                            <input type="checkbox" name="service[]" value="navette" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
+                            <input type="checkbox" name="service[]" value="navette" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
                             Navette
                         </label>         
                     </li>
                     <li>
                         <label class="cyberpunk-checkbox-label">
-                            <input type="checkbox" name="service[]" value="linge" class="cyberpunk-checkbox" <?php if(strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
+                            <input type="checkbox" name="service[]" value="linge" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
                             Linge
                         </label>         
                     </li>

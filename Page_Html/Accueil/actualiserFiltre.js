@@ -46,7 +46,7 @@ checkboxes.forEach(checkbox => {
             filtres = filtres[0].split(',');
         }
         const filtre = checkbox.value;
-        const filtrePresent = filtres.includes(filtre);
+        const filtrePresent = filtres.includes(filtre); //tgl timéo
 
         // Si la case est cochée et le filtre n'est pas déjà présent dans l'URL
         if (checkbox.checked && !filtrePresent) {
