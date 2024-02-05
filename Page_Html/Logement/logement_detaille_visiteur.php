@@ -776,12 +776,12 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
-                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
+                        <p><img src="../svg/ruler.svg" width="48px" height="48px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
-                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
+                        <p><img src="../svg/group.svg" width="48px" height="48px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
         </div>
