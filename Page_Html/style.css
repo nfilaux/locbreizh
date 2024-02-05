@@ -1146,6 +1146,19 @@ footer a:visited {
     font-weight: 900;
 }
 
+.btn-active {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #fff;
+    color: green;
+    border: 1px solid green;
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+}
+
 .btn-desactiveGris {
     margin-top: auto;
     margin-bottom: auto;
@@ -1555,7 +1568,63 @@ footer a:visited {
 
 /*----------------------------------------------------------------Logement----------------------------------------------------------------*/
 
-/* form avis */
+/* repondre avis */
+
+.avis-a-repondre{
+    border: #47138b 1px solid;
+    width: 40vw;
+    padding: 20px;
+    margin: auto;
+}
+
+#reponseAvis:focus ~ #sendButton svg path,
+#reponseAvis:valid ~ #sendButton svg path {
+  fill: #49275f;
+  stroke: #ffffff;
+
+}
+
+.noteRep{
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.noteRep svg{
+    width: 25px;
+}
+
+#reponseAvis ~ #sendButton svg{
+    width: 30px;
+    height: auto;
+}
+
+.redigerRep{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: end;
+}
+
+#reponseAvis{
+    width: 40vw;
+    height: 12vw;
+}
+
+.popup_avis{
+    min-width: 50vw;
+    padding: 30px;
+    font-size: 1em;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #745086;
+    box-shadow: none;
+    z-index: 1000;
+    text-align: center;
+}
 
 /*  affichage des avis */
 
@@ -1569,7 +1638,7 @@ footer a:visited {
     color: #F6E4FF;
     border: 1px solid #957BB0;
     border-radius: 20px;
-    width: 21vw;
+    width: fit-content;
     font-size: 1.5em;
     height: 2em;
     font-family: 'Quicksand';
@@ -1585,6 +1654,11 @@ footer a:visited {
     font-size: 1.5em;
 }
 
+.avis-box-space-between a:first-of-type{
+    text-decoration: underline;
+    color: #745086;
+}
+
 .avis-box-space-between{
     display: flex;
     justify-content: space-between;
@@ -1594,6 +1668,10 @@ footer a:visited {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+}
+
+.tel-avis-form{
+    display: flex;
 }
 
 .box-avis{
@@ -1651,6 +1729,13 @@ footer a:visited {
 
 /* note avis (etoiles) */
 
+.rating{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+}
+
 .rating:not(:checked) > input {
     position: absolute;
     appearance: none;
@@ -1701,6 +1786,7 @@ footer a:visited {
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 50px;
+    text-align: center;
 }
 
 .rediger-avis > p{
@@ -1788,7 +1874,7 @@ footer a:visited {
   }
 
   #messageInput {
-    margin-top: 20px;
+    margin-top: 25px;
     width: 70%;
     height: auto;
     min-height: 40px;
@@ -1837,6 +1923,7 @@ footer a:visited {
   .rediger-avis > form {
     transition: height 0.3s ease;
     }
+    
 .modif_log_img{
     width: 150px;
     height: 150px;
@@ -1867,13 +1954,8 @@ footer a:visited {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-<<<<<<< HEAD
     align-self: flex-start;
     padding: 2em;
-    
-=======
-
->>>>>>> 78d8d9d13929cbc1e2215c1583cbb886716f53fa
 }
 
 .logcp p {
@@ -2336,12 +2418,18 @@ iframe {
     color: #274065;
 }
 
+.equipements{
+    /*background-color: red;*/
+    display: flex;
+    flex-direction: row;
+}
+
 /*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
 
 .corpsCalendrier {
     display: flex;
     justify-content: space-around;
-
+    margin-left: 1em;
 }
 
 .fond {
@@ -2433,14 +2521,14 @@ iframe {
 }
 
 .indisponible::before {
+    background-color: yellow;
+}
+
+.reserver::before {
     background-color: red;
 }
 
-.reserver::before{
-    background-color: orange;
-}
-
-.reserver::before{
+.devis::before{
     background-color: orange;
 }
 
@@ -2461,7 +2549,7 @@ iframe {
     color: #A9A9A9;
 }
 
-.actif, .indisponible, .disponible, .reserver{
+.actif, .indisponible, .disponible, .reserver, devis{
     color: #fff;
 }
 
@@ -2480,7 +2568,9 @@ iframe {
 .entreDeux:hover::before,
 .normal:hover::before,
 .indisponible:hover::before,
-.disponible:hover::before {
+.disponible:hover::before,
+.devis:hover::before,
+.reserver:hover::before {
     cursor: pointer;
     background-color: #D3D3D3;
 }
@@ -3268,7 +3358,7 @@ iframe {
     width: 20vw;
 }
 
-.mdp-popup>.mdpCroix {
+.mdpCroix {
     text-align: end;
 }
 
@@ -3607,7 +3697,23 @@ iframe {
         width: 100%;
     }
 }
+@media screen and (max-width: 700px) {
+    .box-avis{
+        width: 80vw;
+    }
 
+    .messageBox{
+        width: 80vw;
+    }
+
+    #messageInput{
+        margin-top: 0;
+    }
+
+    .rediger-avis{
+        margin-bottom: 0;
+    }
+}
 
 @media screen and (min-width: 600px) and (max-width: 899px) {
 

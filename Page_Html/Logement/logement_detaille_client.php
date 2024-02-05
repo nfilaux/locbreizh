@@ -653,41 +653,41 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p class="equipements"><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
                         $equip = false;
                         if ($info['balcon'] == true) {
-                            ?><p class="equipements">><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
                             $equip = true;
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p class="equipements">><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p ><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['parking_privee'] == true) {
-                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p ><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
                             $equip = true;
                         }
 
                         if ($info['parking_public'] == true) {
-                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            ?><p ><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['television'] == true) {
-                            ?><p class="equipements"><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            ?><p ><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['wifi'] == true) {
-                            ?><p class="equipements"><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            ?><p ><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['lave_linge'] == true) {
-                            ?><p class="equipements"><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p ><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['lave_vaisselle'] == true) {
-                            ?><p class="equipements"><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p ><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
                             $equip = true;
                         }
                         if (!$equip){
@@ -737,13 +737,13 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                             foreach ($services as $key => $value){
 
                                 if ($value['nom_service'] == "navette") {
-                                    ?><p><img src="../svg/taxi-fill.svg" width="48" height ="48"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                    ?><p><img src="../svg/taxi-fill.svg" width="35" height ="35"><?php  echo 'Navette ou Taxi'; ?></p><?php
                                 }
                                 if ($value['nom_service'] == "menage") {
-                                    ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php  echo 'Menage'; ?></p><?php
+                                    ?><p><img src="../svg/nettoyage.svg" width="35" height="35"> <?php  echo 'Menage'; ?></p><?php
                                 }
                                 if ($value['nom_service'] == "linge") {
-                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height ="48"><?php  echo 'Linge'; ?></p><?php
+                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="35" height ="35"><?php  echo 'Linge'; ?></p><?php
                                 }
                             }
                         
@@ -758,14 +758,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
-                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
+                        <p><img src="../svg/ruler.svg" width="35px" height="35px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
-                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
+                        <p><img src="../svg/group.svg" width="35px" height="35px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
+            </div>
         </div>
 
         <script src="./scriptCalendrier.js"></script>
@@ -886,6 +887,16 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         $info = $stmt->fetch();
                     ?>
 
+                    // Image du marqueur
+                    var ownIcon = L.icon({
+                        iconUrl: '../svg/map-pin-fill.svg',
+
+                        iconSize: [48, 48],
+                        iconAnchor: [22, 48],
+                        popupAnchor: [3, -24]
+                    });
+
+
                     //ville à géocoder
                     var commune = "<?php echo $info['ville'];?>";
                     console.log(commune);
@@ -916,8 +927,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                             attribution: '© OpenStreetMap contributors'
                         }).addTo(map);
 
-                        L.marker([lat, lng]).addTo(map)
-                            .bindPopup('Le logement est ici !');
+                        L.marker([lat, lng], {icon: ownIcon}).addTo(map).bindPopup('Le logement est ici !');
                     }
                 
                 </script>
@@ -928,6 +938,16 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         <hr class="hr">
         <!--Les avis-->
         <?php 
+
+            $stmt = $dbh->prepare('SELECT contenu_reponse, nom, prenom, photo, id_avis, id_compte
+            from locbreizh._reponse r
+            join locbreizh._avis a on r.avis = a.id_avis
+            join locbreizh._compte c on r.auteur = c.id_compte
+            where a.logement = :logement
+            ORDER BY a.id_avis DESC;');
+            $stmt->bindParam(':logement', $_GET['logement']);
+            $stmt->execute();
+            $reponses = $stmt->fetchAll();
             
             $stmt = $dbh->prepare('SELECT moyenne_avis
             from locbreizh._logement
@@ -936,7 +956,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             $stmt->execute();
             $moyenne = $stmt->fetch();
 
-            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo
+            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo, id_avis
             from locbreizh._avis a
             join locbreizh._compte c on a.auteur = c.id_compte
             where a.logement = :logement
@@ -992,7 +1012,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid">
                         <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></label>
                     </div>
-
+                    
                     <textarea maxlength="499" placeholder="Rediger votre avis..." type="text" id="messageInput" name="contenu"></textarea>
                     <button id="sendButton">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
@@ -1000,17 +1020,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
                         </svg>
                     </button>
-
                 </form>
             </div>
             <?php } ?>
 
             <div class="all-avis">
-
-            <?php
-            $nb_avis = 0;
-            foreach($avis as $avi){
-                $nb_avis++;
+                <?php
+                $nb_avis = 0;
+                foreach ($avis as $avi) {
+                    $nb_avis++;
                 ?>
                 <div class="box-avis <?php if($nb_avis > 4){echo 'hidden';}?>">
                     <div class="avis-box-space-between">
@@ -1029,13 +1047,34 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     </div>
                     <p><?php echo $avi['contenu_avis'];?></p>
                     <div class="avis-box-space-between">
-                        <a href="">Répondre au commentaire</a>
+                        <a></a>
                         <a href="">Signaler</a>
                     </div>
+                    <?php
+                        foreach($reponses as $reponse){
+                            if($reponse['id_avis'] === $avi['id_avis']){ ?>
+                                <hr class="hr">
+                                <div class="avis-box-space-between">
+                                    <div class="header-box infoC">
+                                        <img src="../Ressources/Images/<?php echo $reponse['photo'];?>" alt="Image de profil" title="Photo">
+                                        <div>
+                                            <p><?php echo $reponse['prenom'] . ' ' . $reponse['nom'];?></p>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><?php echo $reponse['contenu_reponse'];?></p>
+                                <div class="avis-box-space-between">
+                                    <a></a>
+                                    <a href="">Signaler</a>
+                                </div>
+                            <?php }
+                        }
+                    ?>
                 </div>
             <?php } ?>
             </div>
-            <?php
+            <?php 
             if($nb_avis == 0){ ?>
                 <p style="text-align : center">Aucun avis n'a encore été posté pour ce logement.</p>
             <?php }
@@ -1053,22 +1092,75 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 
 <script src="caroussel.js" defer></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script>
 $(document).ready(function() {
-    // Fonction pour ajuster la hauteur de la zone de texte et du formulaire en fonction du contenu
+    function createInput() {
+        // Create an input element with a maxlength of 254
+        var input = $('<input>', {
+            'type': 'text',
+            'id': 'messageInput',
+            'placeholder': 'Donnez votre avis...',
+            'name' : 'contenu',
+            'maxlength': 499
+        });
+
+        // Replace the textarea with the input
+        $('#messageInput').replaceWith(input);
+
+        // Attach the event handler to the new input
+        input.on('input', ajusterHauteurInput);
+    }
+
+    function createTextarea() {
+        // Create a textarea element with a maxlength of 254
+        var textarea = $('<textarea>', {
+            'id': 'messageInput',
+            'name' : 'contenu',
+            'placeholder': 'Donnez votre avis...',
+            'maxlength': 499
+        });
+
+        // Replace the input with the textarea
+        $('#messageInput').replaceWith(textarea);
+
+        // Attach the event handler to the new textarea
+        textarea.on('input', ajusterHauteurTextarea);
+    }
+
+    function ajusterHauteurInput() {
+        var input = $(this);
+        input.css('height', 'auto');
+        input.css('height', (this.scrollHeight) + 'px');
+
+        var formulaire = input.closest('form');
+        formulaire.css('height', 'auto');
+        formulaire.css('height', formulaire.prop('scrollHeight') + 'px');
+    }
+
     function ajusterHauteurTextarea() {
         var textarea = $(this);
         textarea.css('height', 'auto');
         textarea.css('height', (this.scrollHeight) + 'px');
 
-        // Ajuster la hauteur du formulaire en fonction de la hauteur de la zone de texte
         var formulaire = textarea.closest('form');
         formulaire.css('height', 'auto');
         formulaire.css('height', formulaire.prop('scrollHeight') + 'px');
     }
 
-    // Attacher la fonction ajusterHauteurTextarea à l'événement input
-    $('#messageInput').on('input', ajusterHauteurTextarea);
+    // Initial setup based on screen width
+    if ($(window).width() > 700) {
+        createTextarea();
+    } else {
+        createInput();
+    }
+
+    // Update the element when the window is resized
+    $(window).resize(function() {
+        if ($(window).width() > 700) {
+            createTextarea();
+        } else {
+            createInput();
+        }
+    });
 });
 </script>
