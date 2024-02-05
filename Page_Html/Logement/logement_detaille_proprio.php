@@ -461,6 +461,8 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
     <script src="plusAvis.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 
 <body>
@@ -535,7 +537,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     </div>
                     <div class="logcolumn logdem">
                         <h3 class="policetitre">Description</h3>
-                        <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
+                        <<p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                         <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?> 
                     </div>
                 </div>
@@ -651,59 +653,78 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p class="equipements"><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
+                        $equip = false;
                         if ($info['balcon'] == true) {
-                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            ?><p class="equipements">><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            $equip = true;
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p class="equipements">><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['parking_privee'] == true) {
-                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            $equip = true;
                         }
 
                         if ($info['parking_public'] == true) {
-                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['television'] == true) {
-                            ?><p><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['wifi'] == true) {
-                            ?><p><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['lave_linge'] == true) {
-                            ?><p><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            $equip = true;
                         }
                         if ($info['lave_vaisselle'] == true) {
-                            ?><p><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            $equip = true;
                         }
-                        
+                        if (!$equip){
+                            ?><p>Aucuns équipements</p><?php
+                        }
                         ?>
                     </div>
                     <hr class="hr">
                     <div class="logcp">
                         <h4 class="potitres">Installations</h4>
                         <?php
-
+                        $install = false;
                         if ($info['climatisation'] == true) {
                             ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
+                            $install = true;
                         }
                         if ($info['piscine'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
+                            $install = true;
                         }
 
                         if ($info['sauna'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
+                            $install = true;
                         }
 
                         if ($info['hammam'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
+                            $install = true;
                         }
 
                         if ($info['jacuzzi'] == true) {
                             ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
+                            $install = true;
+                        }
+                        if (!$install){
+                            ?><p>Aucunes installations.</p><?php
                         }
                         ?>
                     </div>
@@ -711,17 +732,23 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     <div class="logcp">
                         <h4 class="potitres">Services</h4>
                         <?php
-                        foreach ($services as $key => $value){
+                        if ($services[0]['nom_service']){
 
-                            if ($value['nom_service'] == "navette") {
-                                ?><p><img src="../svg/taxi-fill.svg" width="24" height ="24"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                            foreach ($services as $key => $value){
+
+                                if ($value['nom_service'] == "navette") {
+                                    ?><p><img src="../svg/taxi-fill.svg" width="48" height ="48"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                }
+                                if ($value['nom_service'] == "menage") {
+                                    ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php  echo 'Menage'; ?></p><?php
+                                }
+                                if ($value['nom_service'] == "linge") {
+                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height ="48"><?php  echo 'Linge'; ?></p><?php
+                                }
                             }
-                            if ($value['nom_service'] == "menage") {
-                                ?><p><img src="../svg/nettoyage.svg" width="24" height="24"> <?php  echo 'Menage'; ?></p><?php
-                            }
-                            if ($value['nom_service'] == "linge") {
-                                ?><p><img src="../svg/t-shirt-air-line.svg" width="24" height ="24"><?php  echo 'Linge'; ?></p><?php
-                            }
+                        
+                        } else {
+                            ?><p>Pas de services.</p><?php
                         }
                         ?>
                     </div>
@@ -731,12 +758,12 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
-                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
+                        <p><img src="../svg/ruler.svg" width="48px" height="48px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
-                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
+                        <p><img src="../svg/group.svg" width="48px" height="48px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
         </div>      
@@ -833,23 +860,68 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         </div>
 
         <hr class="hr">
+
         <div class="logcarte">
-            <h3 class="policetitre">Localisation</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1364671.57561899!2d-4.397375693978974!3d48.08372166501683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4811ca61ae7e8eaf%3A0x10ca5cd36df24b0!2sBretagne!5e0!3m2!1sfr!2sfr!4v1702909132704!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                <?php
-                $stmt = $dbh->prepare(
-                    'SELECT ville, nom_rue, numero_rue
-                    from locbreizh._logement
-                    natural JOIN locbreizh._adresse
-                    where id_logement = :id'
-                );
-                $stmt->bindParam(':id', $_GET['logement']);
+        <h3 class="policetitre">Localisation</h3>
+            <div id = "containerMap">
+                <div id="map">
+                    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+                </div>
+                <p id="message"></p>   
+                <p id="adresse"></p>   
 
+                
+                <script>
+                    <?php
+                        $stmt = $dbh->prepare(
+                            'SELECT ville, nom_rue, numero_rue
+                            from locbreizh._logement
+                            natural JOIN locbreizh._adresse
+                            where id_logement = :id'
+                        );
+                        $stmt->bindParam(':id', $_GET['logement']);
 
-            $stmt->execute();
-            $info = $stmt->fetch();
-            ?>
-            <p><?php echo 'Adresse : ' . $info['numero_rue'] . ' ' . $info['nom_rue'] . ' ' . $info['ville'] ?></p>   
+                        $stmt->execute();
+                        $info = $stmt->fetch();
+                    ?>
+
+                    //ville à géocoder
+                    var commune = "<?php echo $info['ville'];?>";
+                    console.log(commune);
+
+                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
+
+                    fetch(opencageUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            var adresse = document.getElementById('adresse');
+                            if (data.results.length > 0) {
+                                console.log(data);
+                                var communeAdresse = `Adresse : ${data.results[0].formatted}.<br>`;
+                                afficherCommuneSurMap(data.results[0].geometry.lat, data.results[0].geometry.lng);
+                                adresse.innerHTML = communeAdresse;
+                            } else {
+                                var messageElement = document.getElementById('message');
+                                messageElement.innerHTML = "La ville à afficher n'est pas valide.";
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Erreur lors de la requête de géocodage:", error);
+                        });
+                    
+                    function afficherCommuneSurMap(lat, lng) {
+                        var map = L.map('map').setView([lat, lng], 9);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        L.marker([lat, lng]).addTo(map)
+                            .bindPopup('Le logement est ici !');
+                    }
+                
+                </script>
+            </div>
+        </div>
             
         </div>
         <hr class="hr">
