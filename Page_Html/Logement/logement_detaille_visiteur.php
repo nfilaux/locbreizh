@@ -644,41 +644,41 @@ $plageDispo = [];
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p class="equipements"><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
                         $equip = false;
                         if ($info['balcon'] == true) {
-                            ?><p class="equipements">><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
                             $equip = true;
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p class="equipements">><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p ><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['parking_privee'] == true) {
-                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p ><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
                             $equip = true;
                         }
 
                         if ($info['parking_public'] == true) {
-                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            ?><p ><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['television'] == true) {
-                            ?><p class="equipements"><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            ?><p ><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['wifi'] == true) {
-                            ?><p class="equipements"><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            ?><p ><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['lave_linge'] == true) {
-                            ?><p class="equipements"><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p ><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['lave_vaisselle'] == true) {
-                            ?><p class="equipements"><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p ><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
                             $equip = true;
                         }
                         if (!$equip){
@@ -728,13 +728,13 @@ $plageDispo = [];
                             foreach ($services as $key => $value){
 
                                 if ($value['nom_service'] == "navette") {
-                                    ?><p><img src="../svg/taxi-fill.svg" width="48" height ="48"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                    ?><p><img src="../svg/taxi-fill.svg" width="35" height ="35"><?php  echo 'Navette ou Taxi'; ?></p><?php
                                 }
                                 if ($value['nom_service'] == "menage") {
-                                    ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php  echo 'Menage'; ?></p><?php
+                                    ?><p><img src="../svg/nettoyage.svg" width="35" height="35"> <?php  echo 'Menage'; ?></p><?php
                                 }
                                 if ($value['nom_service'] == "linge") {
-                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height ="48"><?php  echo 'Linge'; ?></p><?php
+                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="35" height ="35"><?php  echo 'Linge'; ?></p><?php
                                 }
                             }
                         
@@ -749,12 +749,12 @@ $plageDispo = [];
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
-                        <p><img src="../svg/ruler.svg" width="48px" height="48px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
+                        <p><img src="../svg/ruler.svg" width="35px" height="35px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
-                        <p><img src="../svg/group.svg" width="48px" height="48px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
+                        <p><img src="../svg/group.svg" width="35px" height="35px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
             </div>

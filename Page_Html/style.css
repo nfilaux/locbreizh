@@ -2335,6 +2335,12 @@ iframe {
     color: #274065;
 }
 
+.equipements{
+    /*background-color: red;*/
+    display: flex;
+    flex-direction: row;
+}
+
 /*----------------------------------------------------------------Calendrier----------------------------------------------------------------*/
 
 .corpsCalendrier {
@@ -4055,28 +4061,6 @@ iframe {
 
 /*-------------------------------------------------------TELEPHONE------------------------------------------------------------------------*/
 @media screen and (max-width: 599px) {
-    /* avis */
-
-    .rediger-avis{
-        width: 95vw;
-    }
-
-    .messageBox{
-        flex-direction: column;
-        height: fit-content;
-        padding-top: 20px;
-        width: 85%;
-    }
-
-    #sendButton{
-        position: relative;
-        bottom: 20px;
-        right: -100px;
-    }
-
-    #messageInput{
-        width: 70vw;
-    }
 
     /*-------------------------------Header-------------------------------*/
     .logot {
