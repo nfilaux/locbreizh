@@ -1146,6 +1146,19 @@ footer a:visited {
     font-weight: 900;
 }
 
+.btn-active {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #fff;
+    color: green;
+    border: 1px solid green;
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+}
+
 .btn-desactiveGris {
     margin-top: auto;
     margin-bottom: auto;
