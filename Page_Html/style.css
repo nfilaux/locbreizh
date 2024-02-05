@@ -1703,6 +1703,7 @@ footer a:visited {
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 50px;
+    text-align: center;
 }
 
 .rediger-avis > p{
@@ -1839,6 +1840,7 @@ footer a:visited {
   .rediger-avis > form {
     transition: height 0.3s ease;
     }
+    
 .modif_log_img{
     width: 150px;
     height: 150px;
@@ -1869,13 +1871,8 @@ footer a:visited {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-<<<<<<< HEAD
     align-self: flex-start;
     padding: 2em;
-    
-=======
-
->>>>>>> 78d8d9d13929cbc1e2215c1583cbb886716f53fa
 }
 
 .logcp p {
@@ -4060,10 +4057,15 @@ iframe {
 @media screen and (max-width: 599px) {
     /* avis */
 
+    .rediger-avis{
+        width: 95vw;
+    }
+
     .messageBox{
         flex-direction: column;
         height: fit-content;
         padding-top: 20px;
+        width: 85%;
     }
 
     #sendButton{
