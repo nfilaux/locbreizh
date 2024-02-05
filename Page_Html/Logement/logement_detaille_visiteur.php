@@ -745,60 +745,17 @@ $plageDispo = [];
                     </div>
                 </div>
                 <hr class="hr">
-                <div class="logcp">
-                    <h4 class="potitres">Installations</h4>
-                    <?php
-
-                    if ($info['climatisation'] == true) {
-                    ?><p><img src="../svg/windy-line.svg"><?php echo 'Climatisation'; ?></p><?php
-                                                                                        }
-                                                                                        if ($info['piscine'] == true) {
-                                                                                            ?><p><img src="../svg/PISCINE.svg"> <?php echo 'Piscine'; ?></p><?php
-                                                                                                                                                                    }
-
-                                                                                                                                                                    if ($info['sauna'] == true) {
-                                                                                                                                                                        ?><p><img src="../svg/PISCINE.svg"><?php echo 'Sauna'; ?></p><?php
-                                                                                                                                                                    }
-
-                                                                                                                                                                    if ($info['hammam'] == true) {
-                                                                                                                                                                ?><p><img src="../svg/PISCINE.svg"><?php echo 'Hammam'; ?></p><?php
-                                                                                                                                                                    }
-
-                                                                                                                                                                    if ($info['jacuzzi'] == true) {
-                                                                                                                                                            ?><p><img src="../svg/PISCINE.svg"><?php echo 'Jacuzzi'; ?></p><?php
-                                                                                                                                                                    }
-                                                                                                                                                            ?>
-                </div>
-                <hr class="hr">
-                <div class="logcp">
-                    <h4 class="potitres">Services</h4>
-                    <?php
-                    foreach ($services as $key => $value) {
-
-                        if ($value['nom_service'] == "navette") {
-                    ?><p><img src="../svg/taxi-fill.svg" width="24" height="24"><?php echo 'Navette ou Taxi'; ?></p><?php
-                                                                                                                }
-                                                                                                                if ($value['nom_service'] == "menage") {
-                                                                                                                    ?><p><img src="../svg/nettoyage.svg" width="24" height="24"> <?php echo 'Menage'; ?></p><?php
-                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                        if ($value['nom_service'] == "linge") {
-                                                                                                                                                                                                                            ?><p><img src="../svg/t-shirt-air-line.svg" width="24" height="24"><?php echo 'Linge'; ?></p><?php
-                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                            ?>
-                </div>
-            </div>
-            <hr class="hr">
-            <div class="logrow">
-                <div class="logcp">
-                    <p><img src="../svg/CHAMBRE.svg"> <?php echo $info['lit_simple'] ?> lit(s) simple(s)</p>
-                    <p><img src="../svg/CHAMBRE.svg"><?php echo $info['lit_double'] ?> lit(s) double(s)</p>
-                    <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement']; ?>m<sup>2<sup></p>
-                </div>
-                <div class="logcp">
-                    <p><img src="../svg/CHAMBRE.svg"><?php echo $info['nb_chambre'] ?> chambre(s)</p>
-                    <p><img src="../svg/SALLE_DE_BAIN.svg"><?php echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
-                    <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement']; ?> personnes </p>
+                <div class="logrow">
+                    <div class="logcp">
+                        <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
+                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
+                        <p><img src="../svg/ruler.svg" width="48px" height="48px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
+                    </div>
+                    <div class="logcp">
+                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
+                        <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
+                        <p><img src="../svg/group.svg" width="48px" height="48px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
+                    </div>
                 </div>
             </div>
         </div>

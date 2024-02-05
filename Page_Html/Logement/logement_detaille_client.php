@@ -657,12 +657,12 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         <?php
                         $equip = false;
                         if ($info['balcon'] == true) {
-                            ?><p class="equipements">><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
                             $equip = true;
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p class="equipements">><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p class="equipements"><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['parking_privee'] == true) {
@@ -691,7 +691,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                             $equip = true;
                         }
                         if (!$equip){
-                            ?><p>Aucuns équipements</p><?php
+                            ?><p>Aucuns équipements.</p><?php
                         }
                         ?>
                     </div>
@@ -758,12 +758,12 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
-                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
+                        <p><img src="../svg/ruler.svg" width="48px" height="48px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
-                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
+                        <p><img src="../svg/group.svg" width="48px" height="48px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
         </div>
