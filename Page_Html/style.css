@@ -1791,7 +1791,7 @@ footer a:visited {
   }
 
   #messageInput {
-    margin-top: 20px;
+    margin-top: 25px;
     width: 70%;
     height: auto;
     min-height: 40px;
@@ -3606,13 +3606,21 @@ iframe {
         width: 100%;
     }
 }
-@media screen and (max-width: 899px) {
+@media screen and (max-width: 700px) {
     .box-avis{
-        width: 70vw;
+        width: 80vw;
     }
 
     .messageBox{
-        width: 70vw;
+        width: 80vw;
+    }
+
+    #messageInput{
+        margin-top: 0;
+    }
+
+    .rediger-avis{
+        margin-bottom: 0;
     }
 }
 
@@ -4055,28 +4063,6 @@ iframe {
 
 /*-------------------------------------------------------TELEPHONE------------------------------------------------------------------------*/
 @media screen and (max-width: 599px) {
-    /* avis */
-
-    .rediger-avis{
-        width: 95vw;
-    }
-
-    .messageBox{
-        flex-direction: column;
-        height: fit-content;
-        padding-top: 20px;
-        width: 85%;
-    }
-
-    #sendButton{
-        position: relative;
-        bottom: 20px;
-        right: -100px;
-    }
-
-    #messageInput{
-        width: 70vw;
-    }
 
     /*-------------------------------Header-------------------------------*/
     .logot {
