@@ -2512,14 +2512,14 @@ iframe {
 }
 
 .indisponible::before {
+    background-color: yellow;
+}
+
+.reserver::before {
     background-color: red;
 }
 
-.reserver::before{
-    background-color: orange;
-}
-
-.reserver::before{
+.devis::before{
     background-color: orange;
 }
 
@@ -2540,7 +2540,7 @@ iframe {
     color: #A9A9A9;
 }
 
-.actif, .indisponible, .disponible, .reserver{
+.actif, .indisponible, .disponible, .reserver, devis{
     color: #fff;
 }
 
@@ -2559,7 +2559,9 @@ iframe {
 .entreDeux:hover::before,
 .normal:hover::before,
 .indisponible:hover::before,
-.disponible:hover::before {
+.disponible:hover::before,
+.devis:hover::before,
+.reserver:hover::before {
     cursor: pointer;
     background-color: #D3D3D3;
 }
