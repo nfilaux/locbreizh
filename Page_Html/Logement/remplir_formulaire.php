@@ -40,7 +40,7 @@
 
 
         <div class="column">
-            <form method='POST' action='previsualiser_logement.php' enctype="multipart/form-data">
+            <form method='POST' id="creation_logement" action='previsualiser_logement.php' enctype="multipart/form-data">
                 <div class="logrow">  
                     <div class="logcolumn">  
                     
@@ -58,12 +58,87 @@
                             <div class="log3vct">
                                 <label for='ville'>Ville : </label>
                                 <input maxlength="49" class="logvct" id='villeP' type='text' name='villeP' placeholder='Ville' required>
+                                <p id="erreurVille"></p>
+                                <p id="villeValide"></p>
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['ville'])){
                                 echo "<p>" . $_SESSION['erreurs']['ville'] . "<p>";
                             };
                             ?>
+                            
+                            <script>
+                                var communeInput = document.getElementById('villeP');
+                                var communeValide = false;
+                                var form = document.getElementById('creation_logement');
+                                communeInput.addEventListener('input', verifCommune);
+                                communeInput.addEventListener('change', verifCommune);
+
+                                form.addEventListener('submit', function(event) {
+                                    if (!communeValide) {
+                                        event.preventDefault();
+                                        document.getElementById('erreurVille').innerHTML = "Veuillez entrer une ville Bretonne valide.";
+                                    }
+                                });
+                                function verifCommune(event) {
+                                    var commune = communeInput.value;
+                                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
+
+                                    fetch(opencageUrl)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (event.type == "change" || event.type == "input"){
+                                                if ((data.results.length > 0)&& ((data.results[0].components._type == 'city')||(data.results[0].components._type == 'village'))) {
+                                                    if (estEnBretagne(data.results[0])) {
+                                                        communeValide = true;
+                                                        // La commune existe
+                                                        communeInput.style.backgroundColor = "#B2FF9F";
+                                                        communeInput.style.borderColor = "green";
+                                                        communeValide = true;
+                                                        document.getElementById('erreurVille').innerHTML = "";
+                                                        document.getElementById('villeValide').innerHTML = data.results[0].components.city || data.results[0].components.village || data.results[0].components.town;
+                                                    } else {
+                                                        document.getElementById('erreurVille').innerHTML = "La ville doit se situer en Bretagne.";
+                                                        communeValide = false;
+                                                        communeInput.style.backgroundColor = "#FF9F9F";
+                                                        communeInput.style.borderColor = "red";
+                                                    }
+                                                
+                                                } else {
+                                                    // La commune n'existe pas
+                                                    document.getElementById('erreurVille').innerHTML = "Entrer une ville valide.";
+                                                    communeInput.style.backgroundColor = "#FF9F9F";
+                                                    communeInput.style.borderColor = "red";
+                                                    communeValide = false;
+                                                }
+                                            }
+                                            
+                                        })
+                                        .catch(error => {
+                                            console.error("Erreur lors de la requête de géocodage avec OpenCage Data:", error);
+                                        });
+                                }
+                                function estEnBretagne(detailsVille) {
+                                    // Vous pouvez ajuster ces coordonnées pour définir la zone géographique de la Bretagne
+                                    var coordBretagne = {
+                                        minLat: 47.08,
+                                        maxLat: 48.85,
+                                        minLng: -5.5,
+                                        maxLng: -1.2
+                                    };
+
+                                    var villeLat = detailsVille.geometry.lat;
+                                    var villeLng = detailsVille.geometry.lng;
+
+                                    return (
+                                        villeLat >= coordBretagne.minLat &&
+                                        villeLat <= coordBretagne.maxLat &&
+                                        villeLng >= coordBretagne.minLng &&
+                                        villeLng <= coordBretagne.maxLng
+                                    );
+                                }
+
+                            </script>
 
                             <div class="log3vct">
                                 <label for='code_postal'>Code postal : </label>

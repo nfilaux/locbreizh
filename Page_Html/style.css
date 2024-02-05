@@ -1543,6 +1543,15 @@ footer a:visited {
     color: red;
 }
 
+#erreurVille {
+    color:red;
+    font-size: small;
+}
+
+#villeValide {
+    color:greenyellow;
+    font-size: small;
+}
 
 /*----------------------------------------------------------------Logement----------------------------------------------------------------*/
 
