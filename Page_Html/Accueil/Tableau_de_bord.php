@@ -616,11 +616,7 @@ numCalendrier = -1;
                 foreach ($liste_mes_logements as $key => $card) {
                     $id_log = $card['id_logement'];
 
-                    if ($infos_log[$id_log]["en_ligne"] == 1){
-                        $bouton_desactiver = "METTRE HORS LIGNE";  
-                    } else{
-                        $bouton_desactiver = "METTRE EN LIGNE";
-                    }
+                    
                     $nomPlage = 'plage' . $key; 
                     $overlayPlage = 'overlay' . $key
                     
@@ -648,8 +644,18 @@ numCalendrier = -1;
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $id_log ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
                                     <?php $id_un_logement = $id_log; ?>
                                     <form id="enligne<?php echo $id_un_logement ?>" action="ChangeEtat.php" method="post">
+                                    <?php
+                                    if ($infos_log[$id_log]["en_ligne"] == 1){
+                                        $bouton_desactiver = "METTRE HORS LIGNE";?>
                                         <input type="hidden" name=<?php echo $id_un_logement ?> value="<?php echo htmlentities($bouton_desactiver) ?>">
-                                        <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button>
+                                        <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button> <?php
+                                    } else{
+                                        $bouton_desactiver = "METTRE EN LIGNE";?>
+                                        <input type="hidden" name=<?php echo $id_un_logement ?> value="<?php echo htmlentities($bouton_desactiver) ?>">
+                                        <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-active" type='submit'> <?php echo $bouton_desactiver; ?> </button> <?php
+                                    }
+                                    ?>
+                                        
                                     </form>
                                     <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $id_log ?>"><button class="btn-suppr">SUPPRIMER</button></a>

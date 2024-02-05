@@ -1146,6 +1146,19 @@ footer a:visited {
     font-weight: 900;
 }
 
+.btn-active {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #fff;
+    color: green;
+    border: 1px solid green;
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+}
+
 .btn-desactiveGris {
     margin-top: auto;
     margin-bottom: auto;
@@ -1791,7 +1804,7 @@ footer a:visited {
   }
 
   #messageInput {
-    margin-top: 20px;
+    margin-top: 25px;
     width: 70%;
     height: auto;
     min-height: 40px;
@@ -2346,7 +2359,7 @@ iframe {
 .corpsCalendrier {
     display: flex;
     justify-content: space-around;
-
+    margin-left: 1em;
 }
 
 .fond {
@@ -3612,13 +3625,21 @@ iframe {
         width: 100%;
     }
 }
-@media screen and (max-width: 899px) {
+@media screen and (max-width: 700px) {
     .box-avis{
-        width: 70vw;
+        width: 80vw;
     }
 
     .messageBox{
-        width: 70vw;
+        width: 80vw;
+    }
+
+    #messageInput{
+        margin-top: 0;
+    }
+
+    .rediger-avis{
+        margin-bottom: 0;
     }
 }
 
