@@ -740,7 +740,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             'jacuzzi' => $jacuzzi,
             'television' => $television,
             'wifi' => $wifi,
-            'lave_vaiselle' => $lave_vaiselle,
+            'lave_vaisselle' => $lave_vaisselle,
             'lave_linge' => $lave_linge,
             'menage' => $menage,
             'navette' => $navette,
