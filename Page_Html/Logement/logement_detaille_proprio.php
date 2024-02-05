@@ -935,7 +935,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             $stmt->execute();
             $moyenne = $stmt->fetch();
 
-            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo
+            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo, id_avis
             from locbreizh._avis a
             join locbreizh._compte c on a.auteur = c.id_compte
             where a.logement = :logement
@@ -974,9 +974,29 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     </div>
                     <p><?php echo $avi['contenu_avis'];?></p>
                     <div class="avis-box-space-between">
-                        <a href="">Répondre au commentaire</a>
+                        <a onclick="openPopup('<?php echo $avi['id_avis'] ?>', '<?php echo $avi['id_avis'].'ov' ?>')">Répondre au commentaire</a>
                         <a href="">Signaler</a>
                     </div>
+                </div>
+                <div class="overlay_plages" id="<?php echo $avi['id_avis'].'ov';?>"></div>
+                <div id="<?php echo $avi['id_avis']; ?>" class="popup_avis"> 
+                    <h4>L'Avis du client :</h4>
+                    <p><?php if($avi['contenu_avis'] != ''){echo $avi['contenu_avis'];}else{echo 'L\'utilisateur n\'a laissé aucun message';}?></p>
+                    <div class="noteRep">
+                        <p class="sousTitreAvis"><?php echo $avi['note_avis'];?>/5</p>
+                        <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="note_moyenne">
+                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></label>
+                    </div>
+                    <h4>Rédigez votre réponse !</h4>
+                    <div class="redigerRep">
+                        <textarea maxlength="499" id="reponseAvis" name="repAvis"></textarea>
+                        <button id="sendButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                            <path fill="none" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                            </svg>
+                        </button>
+                    </div> 
                 </div>
             <?php } ?>
             </div>
