@@ -886,6 +886,16 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         $info = $stmt->fetch();
                     ?>
 
+                    // Image du marqueur
+                    var ownIcon = L.icon({
+                        iconUrl: '../svg/map-pin-fill.svg',
+
+                        iconSize: [48, 48],
+                        iconAnchor: [22, 48],
+                        popupAnchor: [3, -24]
+                    });
+
+
                     //ville à géocoder
                     var commune = "<?php echo $info['ville'];?>";
                     console.log(commune);
@@ -916,8 +926,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                             attribution: '© OpenStreetMap contributors'
                         }).addTo(map);
 
-                        L.marker([lat, lng]).addTo(map)
-                            .bindPopup('Le logement est ici !');
+                        L.marker([lat, lng], {icon: ownIcon}).addTo(map).bindPopup('Le logement est ici !');
                     }
                 
                 </script>

@@ -632,175 +632,174 @@ $plageDispo = [];
             $stmt->execute();
             $info = $stmt->fetch();
 
-                    try {
-                        $Reqservices = $dbh->prepare("SELECT nom_service from locbreizh._services_compris where logement = {$_GET['logement']}");
-                        $Reqservices->execute();
-                        $services = $Reqservices->fetchAll();
-                    } catch (PDOException $e) {
-                        print "Erreur !:" . $e->getMessage() . "<br/>";
-                        die();
-                    }
-                ?>
-                <div class="logrow">
-                    <div class="logcp">
-                        <h4 class="potitres">Equipements</h4>
-                        <p class="equipements"><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
-                        <?php
-                        $equip = false;
-                        if ($info['balcon'] == true) {
-                            ?><p class="equipements">><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
-                            $equip = true;
-                        }
+            try {
+                $Reqservices = $dbh->prepare("SELECT nom_service from locbreizh._services_compris where logement = {$_GET['logement']}");
+                $Reqservices->execute();
+                $services = $Reqservices->fetchAll();
+            } catch (PDOException $e) {
+                print "Erreur !:" . $e->getMessage() . "<br/>";
+                die();
+            }
+            ?>
+            <div class="logrow">
+                <div class="logcp">
+                    <h4 class="potitres">Equipements</h4>
+                    <p class="equipements"><img src="../svg/tree-fill.svg"> jardin <?php echo $info['jardin']; ?> m<sup>2</sup></p>
+                    <?php
+                    $equip = false;
+                    if ($info['balcon'] == true) {
+                    ?><p class="equipements">><img src="../svg/balcon.svg"><?php echo 'Balcon'; ?></p><?php
+                                                                                                        $equip = true;
+                                                                                                    }
 
-                        if ($info['terrasse'] == true) {
-                            ?><p class="equipements">><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
-                            $equip = true;
-                        }
-                        if ($info['parking_privee'] == true) {
-                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
-                            $equip = true;
-                        }
+                                                                                                    if ($info['terrasse'] == true) {
+                                                                                                        ?><p class="equipements">><img src="../svg/terasse.svg"><?php echo 'Terrasse'; ?></p><?php
+                                                                                                                                                                                                $equip = true;
+                                                                                                                                                                                            }
+                                                                                                                                                                                            if ($info['parking_privee'] == true) {
+                                                                                                                                                                                                ?><p class="equipements"><img src="../svg/PARKING.svg"><?php echo 'Parking privée'; ?></p><?php
+                                                                                                                                                                                                                                                                                            $equip = true;
+                                                                                                                                                                                                                                                                                        }
 
-                        if ($info['parking_public'] == true) {
-                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
-                            $equip = true;
-                        }
-                        if ($info['television'] == true) {
-                            ?><p class="equipements"><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
-                            $equip = true;
-                        }
-                        if ($info['wifi'] == true) {
-                            ?><p class="equipements"><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
-                            $equip = true;
-                        }
-                        if ($info['lave_linge'] == true) {
-                            ?><p class="equipements"><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
-                            $equip = true;
-                        }
-                        if ($info['lave_vaisselle'] == true) {
-                            ?><p class="equipements"><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
-                            $equip = true;
-                        }
-                        if (!$equip){
-                            ?><p>Aucuns équipements</p><?php
-                        }
-                        ?>
-                    </div>
-                    <hr class="hr">
-                    <div class="logcp">
-                        <h4 class="potitres">Installations</h4>
-                        <?php
-                        $install = false;
-                        if ($info['climatisation'] == true) {
-                            ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
-                            $install = true;
-                        }
-                        if ($info['piscine'] == true) {
-                            ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
-                            $install = true;
-                        }
-
-                        if ($info['sauna'] == true) {
-                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
-                            $install = true;
-                        }
-
-                        if ($info['hammam'] == true) {
-                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
-                            $install = true;
-                        }
-
-                        if ($info['jacuzzi'] == true) {
-                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
-                            $install = true;
-                        }
-                        if (!$install){
-                            ?><p>Aucunes installations.</p><?php
-                        }
-                        ?>
-                    </div>
-                    <hr class="hr">
-                    <div class="logcp">
-                        <h4 class="potitres">Services</h4>
-                        <?php
-                        if ($services[0]['nom_service']){
-
-                            foreach ($services as $key => $value){
-
-                                if ($value['nom_service'] == "navette") {
-                                    ?><p><img src="../svg/taxi-fill.svg" width="48" height ="48"><?php  echo 'Navette ou Taxi'; ?></p><?php
-                                }
-                                if ($value['nom_service'] == "menage") {
-                                    ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php  echo 'Menage'; ?></p><?php
-                                }
-                                if ($value['nom_service'] == "linge") {
-                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height ="48"><?php  echo 'Linge'; ?></p><?php
-                                }
-                            }
-                        
-                        } else {
-                            ?><p>Pas de services.</p><?php
-                        }
-                        ?>
-                    </div>
+                                                                                                                                                                                                                                                                                        if ($info['parking_public'] == true) {
+                                                                                                                                                                                                                                                                                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php echo 'Parking public'; ?></p><?php
+                                                                                                                                                                                                                                                                                                                                                                                        $equip = true;
+                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                    if ($info['television'] == true) {
+                                                                                                                                                                                                                                                                                                                                                                                        ?><p class="equipements"><img src="../svg/TELEVISION.svg"><?php echo 'Television'; ?></p><?php
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    $equip = true;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                if ($info['wifi'] == true) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ?><p class="equipements"><img src="../svg/WIFI.svg"><?php echo 'Wifi'; ?></p><?php
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    $equip = true;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                if ($info['lave_linge'] == true) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ?><p class="equipements"><img src="../svg/contrast-drop-2-fill.svg"><?php echo 'Lave-linge'; ?></p><?php
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        $equip = true;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    if ($info['lave_vaisselle'] == true) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?><p class="equipements"><img src="../svg/CUISINE.svg"><?php echo 'Cuisine équipée'; ?></p><?php
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    $equip = true;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                if (!$equip) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ?><p>Aucuns équipements</p><?php
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>
                 </div>
                 <hr class="hr">
                 <div class="logcp">
                     <h4 class="potitres">Installations</h4>
                     <?php
-
+                    $install = false;
                     if ($info['climatisation'] == true) {
                     ?><p><img src="../svg/windy-line.svg"><?php echo 'Climatisation'; ?></p><?php
+                                                                                            $install = true;
                                                                                         }
                                                                                         if ($info['piscine'] == true) {
                                                                                             ?><p><img src="../svg/PISCINE.svg"> <?php echo 'Piscine'; ?></p><?php
-                                                                                                                                                                    }
+                                                                                                                                                            $install = true;
+                                                                                                                                                        }
 
-                                                                                                                                                                    if ($info['sauna'] == true) {
-                                                                                                                                                                        ?><p><img src="../svg/PISCINE.svg"><?php echo 'Sauna'; ?></p><?php
-                                                                                                                                                                    }
+                                                                                                                                                        if ($info['sauna'] == true) {
+                                                                                                                                                            ?><p><img src="../svg/PISCINE.svg"><?php echo 'Sauna'; ?></p><?php
+                                                                                                                                                                                                                            $install = true;
+                                                                                                                                                                                                                        }
 
-                                                                                                                                                                    if ($info['hammam'] == true) {
-                                                                                                                                                                ?><p><img src="../svg/PISCINE.svg"><?php echo 'Hammam'; ?></p><?php
-                                                                                                                                                                    }
+                                                                                                                                                                                                                        if ($info['hammam'] == true) {
+                                                                                                                                                                                                                            ?><p><img src="../svg/PISCINE.svg"><?php echo 'Hammam'; ?></p><?php
+                                                                                                                                                                                                                                                                                            $install = true;
+                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                    if ($info['jacuzzi'] == true) {
-                                                                                                                                                            ?><p><img src="../svg/PISCINE.svg"><?php echo 'Jacuzzi'; ?></p><?php
-                                                                                                                                                                    }
-                                                                                                                                                            ?>
+                                                                                                                                                                                                                                                                                        if ($info['jacuzzi'] == true) {
+                                                                                                                                                                                                                                                                                            ?><p><img src="../svg/PISCINE.svg"><?php echo 'Jacuzzi'; ?></p><?php
+                                                                                                                                                                                                                                                                                                                                                            $install = true;
+                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                        if (!$install) {
+                                                                                                                                                                                                                                                                                                                                                            ?><p>Aucunes installations.</p><?php
+                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                            ?>
                 </div>
                 <hr class="hr">
                 <div class="logcp">
                     <h4 class="potitres">Services</h4>
                     <?php
-                    foreach ($services as $key => $value) {
+                    if ($services[0]['nom_service']) {
 
-                        if ($value['nom_service'] == "navette") {
-                    ?><p><img src="../svg/taxi-fill.svg" width="24" height="24"><?php echo 'Navette ou Taxi'; ?></p><?php
+                        foreach ($services as $key => $value) {
+
+                            if ($value['nom_service'] == "navette") {
+                    ?><p><img src="../svg/taxi-fill.svg" width="48" height="48"><?php echo 'Navette ou Taxi'; ?></p><?php
                                                                                                                 }
                                                                                                                 if ($value['nom_service'] == "menage") {
-                                                                                                                    ?><p><img src="../svg/nettoyage.svg" width="24" height="24"> <?php echo 'Menage'; ?></p><?php
-                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                        if ($value['nom_service'] == "linge") {
-                                                                                                                                                                                                                            ?><p><img src="../svg/t-shirt-air-line.svg" width="24" height="24"><?php echo 'Linge'; ?></p><?php
-                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                            ?>
+                                                                                                                    ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php echo 'Menage'; ?></p><?php
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                        if ($value['nom_service'] == "linge") {
+                                                                                                                                                                                                            ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height="48"><?php echo 'Linge'; ?></p><?php
+                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                } else {
+                                                                                                                                                                                                                                                                                                            ?><p>Pas de services.</p><?php
+                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                        ?>
                 </div>
             </div>
             <hr class="hr">
-            <div class="logrow">
-                <div class="logcp">
-                    <p><img src="../svg/CHAMBRE.svg"> <?php echo $info['lit_simple'] ?> lit(s) simple(s)</p>
-                    <p><img src="../svg/CHAMBRE.svg"><?php echo $info['lit_double'] ?> lit(s) double(s)</p>
-                    <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement']; ?>m<sup>2<sup></p>
-                </div>
-                <div class="logcp">
-                    <p><img src="../svg/CHAMBRE.svg"><?php echo $info['nb_chambre'] ?> chambre(s)</p>
-                    <p><img src="../svg/SALLE_DE_BAIN.svg"><?php echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
-                    <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement']; ?> personnes </p>
-                </div>
+            <div class="logcp">
+                <h4 class="potitres">Installations</h4>
+                <?php
+
+                if ($info['climatisation'] == true) {
+                ?><p><img src="../svg/windy-line.svg"><?php echo 'Climatisation'; ?></p><?php
+                                                                                    }
+                                                                                    if ($info['piscine'] == true) {
+                                                                                        ?><p><img src="../svg/PISCINE.svg"> <?php echo 'Piscine'; ?></p><?php
+                                                                                                                                                    }
+
+                                                                                                                                                    if ($info['sauna'] == true) {
+                                                                                                                                                        ?><p><img src="../svg/PISCINE.svg"><?php echo 'Sauna'; ?></p><?php
+                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                    if ($info['hammam'] == true) {
+                                                                                                                                                                                                                        ?><p><img src="../svg/PISCINE.svg"><?php echo 'Hammam'; ?></p><?php
+                                                                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                                                                    if ($info['jacuzzi'] == true) {
+                                                                                                                                                                                                                                                                                        ?><p><img src="../svg/PISCINE.svg"><?php echo 'Jacuzzi'; ?></p><?php
+                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                        ?>
             </div>
+            <hr class="hr">
+            <div class="logcp">
+                <h4 class="potitres">Services</h4>
+                <?php
+                foreach ($services as $key => $value) {
+
+                    if ($value['nom_service'] == "navette") {
+                ?><p><img src="../svg/taxi-fill.svg" width="24" height="24"><?php echo 'Navette ou Taxi'; ?></p><?php
+                                                                                                            }
+                                                                                                            if ($value['nom_service'] == "menage") {
+                                                                                                                ?><p><img src="../svg/nettoyage.svg" width="24" height="24"> <?php echo 'Menage'; ?></p><?php
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                    if ($value['nom_service'] == "linge") {
+                                                                                                                                                                                                        ?><p><img src="../svg/t-shirt-air-line.svg" width="24" height="24"><?php echo 'Linge'; ?></p><?php
+                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                        ?>
+            </div>
+        </div>
+        <hr class="hr">
+        <div class="logrow">
+            <div class="logcp">
+                <p><img src="../svg/CHAMBRE.svg"> <?php echo $info['lit_simple'] ?> lit(s) simple(s)</p>
+                <p><img src="../svg/CHAMBRE.svg"><?php echo $info['lit_double'] ?> lit(s) double(s)</p>
+                <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $info['surface_logement']; ?>m<sup>2<sup></p>
+            </div>
+            <div class="logcp">
+                <p><img src="../svg/CHAMBRE.svg"><?php echo $info['nb_chambre'] ?> chambre(s)</p>
+                <p><img src="../svg/SALLE_DE_BAIN.svg"><?php echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
+                <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $info['nb_personnes_logement']; ?> personnes </p>
+            </div>
+        </div>
         </div>
 
         <script src="./scriptCalendrier.js"></script>
@@ -941,30 +940,40 @@ $plageDispo = [];
         <hr>
         <div class="logcarte">
             <h3 class="policetitre">Localisation</h3>
-            <div id = "containerMap">
+            <div id="containerMap">
                 <div id="map">
                     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
                 </div>
-                <p id="message"></p>   
-                <p id="adresse"></p>   
+                <p id="message"></p>
+                <p id="adresse"></p>
 
-                
+
                 <script>
                     <?php
-                        $stmt = $dbh->prepare(
-                            'SELECT ville, nom_rue, numero_rue
+                    $stmt = $dbh->prepare(
+                        'SELECT ville, nom_rue, numero_rue
                             from locbreizh._logement
                             natural JOIN locbreizh._adresse
                             where id_logement = :id'
-                        );
-                        $stmt->bindParam(':id', $_GET['logement']);
+                    );
+                    $stmt->bindParam(':id', $_GET['logement']);
 
-                        $stmt->execute();
-                        $info = $stmt->fetch();
+                    $stmt->execute();
+                    $info = $stmt->fetch();
                     ?>
 
+                   // Image du marqueur
+                   var ownIcon = L.icon({
+                        iconUrl: '../svg/map-pin-fill.svg',
+
+                        iconSize: [48, 48],
+                        iconAnchor: [22, 48],
+                        popupAnchor: [3, -24]
+                    });
+
+
                     //ville à géocoder
-                    var commune = "<?php echo $info['ville'];?>";
+                    var commune = "<?php echo $info['ville']; ?>";
                     console.log(commune);
 
                     var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
@@ -986,83 +995,85 @@ $plageDispo = [];
                         .catch(error => {
                             console.error("Erreur lors de la requête de géocodage:", error);
                         });
-                    
+
                     function afficherCommuneSurMap(lat, lng) {
                         var map = L.map('map').setView([lat, lng], 9);
                         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             attribution: '© OpenStreetMap contributors'
                         }).addTo(map);
 
-                        L.marker([lat, lng]).addTo(map)
-                            .bindPopup('Le logement est ici !');
+                        L.marker([lat, lng], {icon: ownIcon}).addTo(map).bindPopup('Le logement est ici !');
                     }
-                
                 </script>
             </div>
         </div>
         <hr class="hr">
         <!--Les avis-->
-        <?php 
-            
-            $stmt = $dbh->prepare('SELECT moyenne_avis
+        <?php
+
+        $stmt = $dbh->prepare('SELECT moyenne_avis
             from locbreizh._logement
             where id_logement = :logement;');
-            $stmt->bindParam(':logement', $_GET['logement']);
-            $stmt->execute();
-            $moyenne = $stmt->fetch();
+        $stmt->bindParam(':logement', $_GET['logement']);
+        $stmt->execute();
+        $moyenne = $stmt->fetch();
 
-            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo
+        $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo
             from locbreizh._avis a
             join locbreizh._compte c on a.auteur = c.id_compte
             where a.logement = :logement
             ORDER BY a.id_avis DESC;');
-            $stmt->bindParam(':logement', $_GET['logement']);
-            $stmt->execute();
-            $avis = $stmt->fetchAll();
-            ?>
-            <div class="titreAvis">
-                <h3 class="h3_avis">Avis</h3>
-                <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="note_moyenne">
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></label>
-                <p class="sousTitreAvis"><?php echo $moyenne['moyenne_avis'];?> ⏺ <?php echo count($avis); ?> avis</p>
-            </div>
+        $stmt->bindParam(':logement', $_GET['logement']);
+        $stmt->execute();
+        $avis = $stmt->fetchAll();
+        ?>
+        <div class="titreAvis">
+            <h3 class="h3_avis">Avis</h3>
+            <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="note_moyenne">
+                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path>
+            </svg></label>
+            <p class="sousTitreAvis"><?php echo $moyenne['moyenne_avis']; ?> ⏺ <?php echo count($avis); ?> avis</p>
+        </div>
 
-            <div class="all-avis">
+        <div class="all-avis">
             <?php
             $nb_avis = 0;
-            foreach($avis as $avi){
+            foreach ($avis as $avi) {
                 $nb_avis++;
-                ?>
-                <div class="box-avis <?php if($nb_avis > 4){echo 'hidden';}?>">
+            ?>
+                <div class="box-avis <?php if ($nb_avis > 4) {
+                                            echo 'hidden';
+                                        } ?>">
                     <div class="avis-box-space-between">
                         <div class="header-box infoC">
-                            <img src="../Ressources/Images/<?php echo $avi['photo'];?>" alt="Image de profil" title="Photo">
+                            <img src="../Ressources/Images/<?php echo $avi['photo']; ?>" alt="Image de profil" title="Photo">
                             <div>
-                                <p><?php echo $avi['prenom'] . ' ' . $avi['nom'];?></p>
+                                <p><?php echo $avi['prenom'] . ' ' . $avi['nom']; ?></p>
                                 <hr>
                             </div>
                         </div>
                         <div class="header-box">
                             <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid" fill="#ffa723">
-                            <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg>
-                            <p><?php echo $avi['note_avis'];?>/5</p>
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path>
+                            </svg>
+                            <p><?php echo $avi['note_avis']; ?>/5</p>
                         </div>
                     </div>
-                    <p><?php echo $avi['contenu_avis'];?></p>
+                    <p><?php echo $avi['contenu_avis']; ?></p>
                     <div class="avis-box-space-between">
                         <a href="">Répondre au commentaire</a>
                         <a href="">Signaler</a>
                     </div>
                 </div>
             <?php } ?>
-            </div>
-            <?php
-            if($nb_avis == 0){ ?>
-                <p style="text-align : center">Aucun avis n'a encore été posté pour ce logement.</p>
-            <?php }
-            if($nb_avis > 4){?>
-                <div class="div_plus_avis"><button id="afficher-plus-avis">Afficher tous les avis (<?php echo count($avis) - 4;?>)</button></div>
-            <?php } ?>
+        </div>
+        <?php
+        if ($nb_avis == 0) { ?>
+            <p style="text-align : center">Aucun avis n'a encore été posté pour ce logement.</p>
+        <?php }
+        if ($nb_avis > 4) { ?>
+            <div class="div_plus_avis"><button id="afficher-plus-avis">Afficher tous les avis (<?php echo count($avis) - 4; ?>)</button></div>
+        <?php } ?>
     </main>
     <?php
     // appel du footer
