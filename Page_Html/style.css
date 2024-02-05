@@ -1146,6 +1146,19 @@ footer a:visited {
     font-weight: 900;
 }
 
+.btn-active {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #fff;
+    color: green;
+    border: 1px solid green;
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 0.5em;
+    font-family: 'Quicksand';
+    font-weight: 900;
+}
+
 .btn-desactiveGris {
     margin-top: auto;
     margin-bottom: auto;
@@ -1560,7 +1573,7 @@ footer a:visited {
     color: #F6E4FF;
     border: 1px solid #957BB0;
     border-radius: 20px;
-    width: 21vw;
+    width: fit-content;
     font-size: 1.5em;
     height: 2em;
     font-family: 'Quicksand';
@@ -1585,6 +1598,10 @@ footer a:visited {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+}
+
+.tel-avis-form{
+    display: flex;
 }
 
 .box-avis{
@@ -1642,6 +1659,13 @@ footer a:visited {
 
 /* note avis (etoiles) */
 
+.rating{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+}
+
 .rating:not(:checked) > input {
     position: absolute;
     appearance: none;
@@ -1692,6 +1716,7 @@ footer a:visited {
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 50px;
+    text-align: center;
 }
 
 .rediger-avis > p{
@@ -1779,7 +1804,7 @@ footer a:visited {
   }
 
   #messageInput {
-    margin-top: 20px;
+    margin-top: 25px;
     width: 70%;
     height: auto;
     min-height: 40px;
@@ -1828,6 +1853,7 @@ footer a:visited {
   .rediger-avis > form {
     transition: height 0.3s ease;
     }
+    
 .modif_log_img{
     width: 150px;
     height: 150px;
@@ -1858,13 +1884,8 @@ footer a:visited {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-<<<<<<< HEAD
     align-self: flex-start;
     padding: 2em;
-    
-=======
-
->>>>>>> 78d8d9d13929cbc1e2215c1583cbb886716f53fa
 }
 
 .logcp p {
@@ -2332,7 +2353,7 @@ iframe {
 .corpsCalendrier {
     display: flex;
     justify-content: space-around;
-
+    margin-left: 1em;
 }
 
 .fond {
@@ -3598,7 +3619,23 @@ iframe {
         width: 100%;
     }
 }
+@media screen and (max-width: 700px) {
+    .box-avis{
+        width: 80vw;
+    }
 
+    .messageBox{
+        width: 80vw;
+    }
+
+    #messageInput{
+        margin-top: 0;
+    }
+
+    .rediger-avis{
+        margin-bottom: 0;
+    }
+}
 
 @media screen and (min-width: 600px) and (max-width: 899px) {
 
