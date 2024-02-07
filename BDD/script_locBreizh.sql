@@ -284,7 +284,7 @@ CREATE TABLE
 CREATE TABLE
     _reponse (
         id_reponse SERIAL NOT NULL,
-        contenu_reponse VARCHAR(499) NOT NULL,
+        contenu_reponse VARCHAR(500) NOT NULL,
         avis INTEGER NOT NULL,
         auteur INTEGER NOT NULL,
         CONSTRAINT reponse_pk PRIMARY KEY (id_reponse),
@@ -326,6 +326,17 @@ CREATE TABLE
         CONSTRAINT signalement_avis_fk_id FOREIGN KEY (id_signalement) REFERENCES _signalement (id_signalement),
         CONSTRAINT ecrit_signalement_fk_avis FOREIGN KEY (avis) REFERENCES _avis (id_avis),
         CONSTRAINT ecrit_signalement_fk_auteur FOREIGN KEY (auteur) REFERENCES _compte (id_compte)
+    );
+
+CREATE TABLE
+    _signalement_reponse (
+        id_signalement INTEGER NOT NULL,
+        auteur INTEGER NOT NULL,
+        reponse INTEGER NOT NULL,
+        CONSTRAINT signalement_reponse_pk PRIMARY KEY (id_signalement),
+        CONSTRAINT signalement_reponse_fk_id FOREIGN KEY (id_signalement) REFERENCES _signalement (id_signalement),
+        CONSTRAINT ecrit_signalement_fk_reponse FOREIGN KEY (reponse) REFERENCES _reponse (id_reponse),
+        CONSTRAINT ecrit_signalement_r_fk_auteur FOREIGN KEY (auteur) REFERENCES _compte (id_compte)
     );
 
 /*   table signalement_compte : est utilisée pour rendre compte d'un signalement d'un compte   */
