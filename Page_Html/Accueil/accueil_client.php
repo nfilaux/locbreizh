@@ -43,7 +43,7 @@ $photo = $stmt->fetch();
     <div class="section-filters">
         <!--<p class="acc-accroche">Rechercher votre logement selon votre critère</p>-->
         <div class="filters">
-            <form action="filtrage.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
+            <div class="menu-filtre" >
                 <div class="fil">
                     <div class="input-group" style="width: 10%;">
                         <div class="input-group-prepend">
@@ -116,7 +116,7 @@ $photo = $stmt->fetch();
                     <?php } ?>
                 </div>
                 
-            </form>
+            </div>
 
         </div>
     </div>
