@@ -141,6 +141,11 @@ body {
     border: 1px solid #745086;
     box-shadow: none;
     z-index: 1000;
+    width : 70%;
+}
+
+.plages .logcolumn {
+    width : 100%;
 }
 
 .plages .btn-ajt {
@@ -1925,10 +1930,10 @@ footer a:visited {
 .logcolumn {
     display: flex;
     flex-direction: column;
-    width: 48%;
+    width: 100%;
     margin-bottom: 3%;
     margin-top: 3%;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .logcolumn>p {
@@ -2419,20 +2424,21 @@ iframe {
 
 .corpsCalendrier {
     display: flex;
-    justify-content: space-around;
-    margin-left: 1em;
+    justify-content: center;
+    width: 100%;
+    font-size: 1.5em;
 }
 
 .fond {
     background-color: #fff;
     border: 1px solid #745086;
-    width: 60vh;
+    width: 40%;
 }
 
 .fondP {
     background-color: #fff;
     border: 1px solid #274065;
-    width: 60vh;
+    width: 40%;
 }
 
 .teteCalendrier {
@@ -2442,15 +2448,18 @@ iframe {
     justify-content: space-between;
 }
 
+.teteCalendrier .date_actuelle{
+    justify-content: center;
+}
+
 .date_actuelle {
-    cursor: pointer;
     color: #745086;
     font-size: 1.5em;
     text-decoration: underline;
+    justify-content: center;
 }
 
 .date_actuelleP {
-    cursor: pointer;
     color: #345C99;
     font-size: 1.5em;
     text-decoration: underline;
@@ -2499,8 +2508,9 @@ iframe {
 
 .jours li {
     z-index: 1;
-    margin-top: 30px;
+    margin-top: 1em;
     font-weight: bold;
+    font-size: 1.3em;
 }
 
 .normal {
@@ -2508,19 +2518,19 @@ iframe {
 }
 
 .disponible::before {
-    background-color: green;
+    background-color: #136F63;
 }
 
 .indisponible::before {
-    background-color: yellow;
+    background-color: #B10F2E;
 }
 
 .reserver::before {
-    background-color: red;
+    background-color: #FF8C42;
 }
 
 .devis::before{
-    background-color: orange;
+    background-color: #F1D302;
 }
 
 .calendrier ul{
@@ -2540,19 +2550,18 @@ iframe {
     color: #A9A9A9;
 }
 
-.actif, .indisponible, .disponible, .reserver, devis{
+.actif, .disponible, .reserver, .indisponible{
     color: #fff;
 }
 
 .calendrier ul li::before {
     position: absolute;
     content: "";
-    height: 45px;
-    width: 45px;
-    top: 50%;
-    left: 50%;
+    height: 1.6em;
+    width: 1.6em;
+    top: 40%;
+    left: 51%;
     z-index: -1;
-    border-radius: 50%;
     transform: translate(-50%, -50%);
 }
 
@@ -2577,16 +2586,6 @@ iframe {
 .entreDeux {
     background-color: rgba(130, 100, 170, 0.25);
     width: 100px;
-}
-
-.plages .logcolumn {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-
-.plages .logcolumn .fond {
-    width: 30vh;
 }
 
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
@@ -3995,7 +3994,20 @@ iframe {
 
     .logcolumn {
         width: 96%;
-        margin: auto;
+        margin-bottom: 3%;
+        margin-top: 3%;
+    }
+
+    .plages{
+        width : 80%
+    }
+
+    .fond {
+        width: 70%;
+    }
+    
+    .fondP {
+        width: 70%;
     }
 
     .logdem {
@@ -4483,7 +4495,25 @@ iframe {
 
     .logcolumn {
         width: 96%;
-        margin: auto;
+        margin-bottom: 3%;
+        margin-top: 3%;
+    }
+
+    .plages{
+        width : 90%
+    }
+
+    .fond {
+        width: 90%;
+    }
+    
+    .fondP {
+        width: 90%;
+    }
+
+    .corpsCalendrier{
+        flex-direction: column;
+        align-items: center;
     }
 
     .logdem {
