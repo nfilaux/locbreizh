@@ -123,9 +123,6 @@ function instancier(id, nbCache){
             if (classeIndispo[id]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
             }
-            if (tabDebReser[id][0]){
-                afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
-            }
         })
     });
 }
