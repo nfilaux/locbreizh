@@ -1133,7 +1133,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         <div id="overlaySignalement" onclick="closePopupFeedback('popupFeedback', 'overlaySignalement')"></div>
                                         <div id="popupFeedback" class="popupFeedback">
                                             <p>Le signalement a bien été envoyé.</p>
-                                        <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" class="btnEnvoyer"></button>OK</a>
+                                        <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" ><button class="btnEnvoyer"></button>OK</a>
                                     </div> 
                                 </form>
                             <?php }
@@ -1143,7 +1143,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <?php } ?>
             </div>
             <?php 
-
+                print_r($_GET['erreur']);
                 if(isset($_GET['erreur']) && $_GET['erreur'] === '0'){
                     ?>
                     <script>
