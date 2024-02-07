@@ -60,6 +60,7 @@
         $stmt->bindParam(':id_plage_ponctuelle', $id_jour);
         $stmt->execute();
     }
+
+    header("Location: liste_reservations.php");
     
-    header("Location: reussite_payement.html");
-?>
+    ?>
