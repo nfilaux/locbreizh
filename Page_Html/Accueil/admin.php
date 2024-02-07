@@ -1,3 +1,22 @@
+<?php
+    include('../parametre_connexion.php');
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+    $stmt = $dbh->prepare("SELECT * 
+        from locbreizh._signalement s
+        join locbreizh._signalement_avis sa on s.id_signalement = sa.id_signalement");
+    $stmt->execute();
+    $signalementAvis = $stmt->fetch();
+    print_r($signalementAvis);
+    $stmt = $dbh->prepare("SELECT * 
+        from locbreizh._signalement s
+        join locbreizh._signalement_reponse sr on s.id_signalement = sr.id_signalement");
+    $stmt->execute();
+    $signalementReponse = $stmt->fetch();
+    print_r($signalementReponse);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,15 +28,14 @@
 <body>
 <header>
     <a href="../Accueil/accueil_visiteur.php">
-        <img class="logot" src="../svg/logo.svg">
-        <h2>Loc'Breizh</h2>
+        <img class="logot" src="../svg/logobleu.svg">
+        <h2 style="color:#274065;">Loc'Breizh</h2>
     </a>
-    <div style="display: flex;flex-direction: row;">
-        <h2>Vous êtes connecté en tant qu'admin</h2>
-    </div>
-    
+    <div style="display : flex; align-items : center">
+        <img style="width : 80px; height : 80px" src="../Ressources/Images/admin.gif">
+        <h2 style="color:#274065;">Connecté en tant qu'admin</h2>
+    </diV>
 </header>
-
     <main>
         <h1>Liste des signalements</h1>
     </main>
