@@ -104,49 +104,6 @@ inputs.forEach(input => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionner les champs date1 et date2
-    var date1 = document.getElementById('date1');
-    var date2 = document.getElementById('date2');
-
-    // Récupérer la date actuelle
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    var yyyy = today.getFullYear();
-
-    today = yyyy + '-' + mm + '-' + dd;
-
-    // Définir la date minimale pour les champs date1 et date2
-    date1.min = today;
-    date2.min = today;
-
-    // Désactiver le champ date2 au chargement de la page
-    date2.disabled = true;
-
-    // Activer le champ date2 lorsque date1 est complété
-    date1.addEventListener('change', function() {
-        if (date1.value !== '') {
-            date2.disabled = false;
-        } else {
-            date2.disabled = true;
-        }
-    });
-
-    // Empêcher la saisie de dates antérieures dans les champs date1 et date2
-    date1.addEventListener('input', function() {
-        if (date1.value < today) {
-            date1.value = today;
-        }
-    });
-
-    date2.addEventListener('input', function() {
-        if (date2.value < today) {
-            date2.value = today;
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
     // Sélectionner le champ personne
     var personne = document.getElementById('personne');
 
