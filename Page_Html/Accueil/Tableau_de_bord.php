@@ -475,19 +475,19 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         }
         for (i=0; i < tabPlage.length; i++){
             if (document.getElementById(id + "," + tabPlage[i]) && document.getElementById(id + "," + tabPlage[i]).className !== "actif") {
-                if (tabMotif[i] == "Réservation"){
+                if (tabMotif[i][0] == "Réservation"){
                     document.getElementById(id + "," + tabPlage[i]).className = "reserver";
                 }
-                else if (tabMotif[i] == "Demande devis"){
+                else if (tabMotif[i][0] == "Demande devis"){
                     document.getElementById(id + "," + tabPlage[i]).className = "devis";
                 }
                 else{
                     document.getElementById(id + "," + tabPlage[i]).className = classe;
                 }
-                if (classe === "disponible"){
+                if (classe == "disponible"){
                     document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
                 }
-                else if (classe === "indisponible"){
+                else if (classe == "indisponible"){
                     document.getElementById(id + "," + tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i];
                 }
             }
@@ -751,7 +751,7 @@ numCalendrier = -1;
                                         
                                         $lesPlages->execute();
 
-                                        $plageIndispo = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
+                                        $plageIndispo = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle, prix_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
                                         ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_indisponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
                                         $plageIndispo->execute();
                                         $plageIndispo = $plageIndispo->fetchAll();
@@ -780,7 +780,7 @@ numCalendrier = -1;
                                     var tab = <?php echo json_encode($plageIndispo); ?>;
                                     var tabRes = [];
                                     var tabMotif = [];
-                                    for (i=0 ; i < tab.length; i++){
+                                    for (i=1 ; i < tab.length; i++){
                                         split = tab[i]["jour_plage_ponctuelle"];
                                         part1 = split.split('-')[1];
                                         if (part1[0] == '0'){
@@ -791,8 +791,10 @@ numCalendrier = -1;
                                             part2 = part2[1];
                                         }
                                         tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
-                                        tabMotif[i] = tab[i]["libelle_indisponibilite"];
+                                        tabMotif[i] = [tab[i]["libelle_indisponibilite"], ''];
+                                        tabMotif[i][1] = tab[i]["prix_plage_ponctuelle"];
                                     }
+                                    console.log(tabMotif);
                                     afficherPlages(tabRes, "indisponible", tabMotif, "I", numCalendrier);
 
                                     var tab = <?php echo json_encode($plageDispo); ?>;
