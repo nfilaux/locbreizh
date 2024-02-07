@@ -1552,7 +1552,7 @@ footer a:visited {
 .avis-a-repondre{
     border: #47138b 1px solid;
     width: 40vw;
-    padding: 20px;
+    padding: 1vw;
     margin: auto;
 }
 
@@ -1576,6 +1576,9 @@ footer a:visited {
 #motif ~ #sendButton svg{
     width: 30px;
     height: auto;
+    position: absolute;
+    right: 30px;
+    bottom: 50px;
 }
 
 .redigerRep{
@@ -1585,7 +1588,7 @@ footer a:visited {
 }
 
 #reponseAvis, #motif{
-    width: 43vw;
+    width: 42vw;
     height: 12vw;
     margin-left: 40px;
 }
