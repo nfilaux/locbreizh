@@ -170,12 +170,12 @@
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
                 <input type="checkbox" id="menage" name="menage" <?php  if(isset($_SESSION['valeurs_complete']['menage'])){echo "checked";} else if (isset($menage2['prix_charges']) && $menage2['prix_charges'] !=''){echo 'checked';}; ?>>
-                 <label for="menage"> Animaux </label>
+                 <label for="menage"> Ménage </label>
                 </div>
                 <div class="logcheckbox">
                 <!--pre-remplie les infos si ils sont dans get-->
                 <input type="checkbox" id="animaux" name="animaux" <?php if(isset($_SESSION['valeurs_complete']['animaux'])){echo "checked";} else if(isset($animaux2['prix_charges']) && $animaux2['prix_charges'] !=''){ echo 'checked';}; ?>>
-                <label for="animaux"> Menage </label>
+                <label for="animaux"> Animaux </label>
                 </div>
                 <!--pre-remplie les infos si ils sont dans get-->
                 <div class="logpc">

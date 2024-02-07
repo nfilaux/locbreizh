@@ -467,6 +467,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
     <script src="plusAvis.js"></script>
+    <script scr="../scriptPopupFeedback.js"></script>
 </head>
 
 <body>
@@ -939,7 +940,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         <!--Les avis-->
         <?php 
 
-            $stmt = $dbh->prepare('SELECT contenu_reponse, nom, prenom, photo, id_avis, id_compte
+            $stmt = $dbh->prepare('SELECT id_reponse, contenu_reponse, nom, prenom, photo, id_avis, id_compte
             from locbreizh._reponse r
             join locbreizh._avis a on r.avis = a.id_avis
             join locbreizh._compte c on r.auteur = c.id_compte
@@ -1048,8 +1049,42 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     <p><?php echo $avi['contenu_avis'];?></p>
                     <div class="avis-box-space-between">
                         <a></a>
-                        <a href="">Signaler</a>
+                        <a onclick="openPopup('<?php echo $avi['id_avis'].'Sig' ?>', '<?php echo $avi['id_avis'].'SigOv' ?>')">Signaler</a>
                     </div>
+                    <div class="overlay_plages" id="<?php echo $avi['id_avis'].'SigOv';?>"></div>
+                    <form id="<?php echo $avi['id_avis'].'Sig'; ?>" class="popup_avis" action="envoyerSignalementAvis.php" method="post">
+                        <input type="hidden" name="avis" value="<?php echo $avi['id_avis']; ?>">
+                        <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
+                        <div class="mdpCroix" onclick="closePopup('<?php echo $avi['id_avis'].'Sig'; ?>', '<?php echo $avi['id_avis'].'SigOv';?>')"><img src="../svg/croix.svg" alt="croix"></div> 
+                        <h4>L'Avis du client :</h4>
+                        <div class="avis-a-repondre">
+                            <div class="avis-box-space-between">
+                                <div class="header-box infoC">
+                                    <img src="../Ressources/Images/<?php echo $avi['photo'];?>" alt="Image de profil" title="Photo">
+                                    <div>
+                                        <p><?php echo $avi['prenom'] . ' ' . $avi['nom'];?></p>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="header-box">
+                                    <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid" fill="#ffa723">
+                                    <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg>
+                                    <p><?php echo $avi['note_avis'];?>/5</p>
+                                </div>
+                            </div>
+                            <p><?php echo $avi['contenu_avis'];?></p>
+                        </div>
+                        <h4>Rédigez le motif de signalement</h4>
+                        <div class="redigerRep">
+                            <textarea maxlength="499" id="motif" name="motif"></textarea>
+                            <button id="sendButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                                <path fill="none" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                                </svg>
+                            </button>
+                        </div> 
+                    </form>
                     <?php
                         foreach($reponses as $reponse){
                             if($reponse['id_avis'] === $avi['id_avis']){ ?>
@@ -1066,8 +1101,41 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                 <p><?php echo $reponse['contenu_reponse'];?></p>
                                 <div class="avis-box-space-between">
                                     <a></a>
-                                    <a href="">Signaler</a>
+                                    <a onclick="openPopup('<?php echo $reponse['id_reponse']; ?>', '<?php echo $reponse['id_reponse'].'RepOv' ?>')">Signaler</a>
                                 </div>
+                                <div class="overlay_plages" id="<?php echo $reponse['id_reponse'].'RepOv';?>"></div>
+                                <form id="<?php echo $reponse['id_reponse']; ?>" class="popup_avis" action="envoyerSignalementReponse.php" method="post">
+                                    <input type="hidden" name="reponse" value="<?php echo $reponse['id_reponse']; ?>">
+                                    <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
+                                    <div class="mdpCroix" onclick="closePopup('<?php echo $reponse['id_reponse']; ?>', '<?php echo $reponse['id_reponse'].'RepOv';?>')"><img src="../svg/croix.svg" alt="croix"></div> 
+                                    <h4>La réponse du propriétaire :</h4>
+                                    <div class="avis-a-repondre">
+                                        <div class="avis-box-space-between">
+                                            <div class="header-box infoC">
+                                                <img src="../Ressources/Images/<?php echo $reponse['photo'];?>" alt="Image de profil" title="Photo">
+                                                <div>
+                                                    <p><?php echo $reponse['prenom'] . ' ' . $reponse['nom'];?></p>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p><?php echo $reponse['contenu_reponse'];?></p>
+                                    </div>
+                                    <h4>Rédigez le motif de signalement</h4>
+                                    <div class="redigerRep">
+                                        <textarea maxlength="499" id="motif" name="motif"></textarea>
+                                        <button id="sendButton" class="btnEnvoyer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                                            <path fill="none" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                                            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                                            </svg>
+                                        </button>
+                                        <div id="overlaySignalement" onclick="closePopupFeedback('popupFeedback', 'overlaySignalement')"></div>
+                                        <div id="popupFeedback" class="popupFeedback">
+                                            <p>Le signalement a bien été envoyé.</p>
+                                        <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" ><button class="btnEnvoyer"></button>OK</a>
+                                    </div> 
+                                </form>
                             <?php }
                         }
                     ?>
@@ -1075,6 +1143,14 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <?php } ?>
             </div>
             <?php 
+                print_r($_GET['erreur']);
+                if(isset($_GET['erreur']) && $_GET['erreur'] === '0'){
+                    ?>
+                    <script>
+                        openPopupFeedback('popupFeedback', 'overlaySignalement');
+                    </script>
+                    <?php
+                }
             if($nb_avis == 0){ ?>
                 <p style="text-align : center">Aucun avis n'a encore été posté pour ce logement.</p>
             <?php }
