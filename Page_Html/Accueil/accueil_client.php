@@ -29,6 +29,7 @@ $photo = $stmt->fetch();
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../svg/logobleu.svg">
     <script src="../scriptPopup.js"></script>
 </head>
 

@@ -1,20 +1,20 @@
 <?php 
-session_start();
-include('../parametre_connexion.php');
-try {
-$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    print "Erreur !:" . $e->getMessage() . "<br/>";
-    die();
-}
-// fontion pour afficher les erreurs de modification
-function erreur($nomErreur){
-    if(isset($_SESSION["erreurs"][$nomErreur])){
-        ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
-        unset($_SESSION["erreurs"][$nomErreur]);
+    session_start();
+    include('../parametre_connexion.php');
+    try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !:" . $e->getMessage() . "<br/>";
+        die();
     }
+    // fontion pour afficher les erreurs de modification
+    function erreur($nomErreur){
+        if(isset($_SESSION["erreurs"][$nomErreur])){
+            ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+            unset($_SESSION["erreurs"][$nomErreur]);
+        }
 }
    
 $plageIndispo = [];
@@ -23,20 +23,20 @@ $plageDispo = [];
 
 <script>
     //recupération des element du html qu'on vas remplir d'information
-var dateActuelle = [];
-var baliseJour =[];
-var precedentSuivant = [];
-var datesPlage = [];
-var boutonsDates = [];
-var prixSejour = [];
+dateActuelle = [];
+baliseJour =[];
+precedentSuivant = [];
+datesPlage = [];
+boutonsDates = [];
+prixSejour = [];
 
 //création de dates qui vont êtres utilisé pour le premier et deuxieme calendrier
-var date = [];
-var anneeActuelle = [];
-var moisActuel = [];
-var date2 = [];
-var anneeActuelle2 = [];
-var moisActuel2 = [];
+date = [];
+anneeActuelle = [];
+moisActuel = [];
+date2 = [];
+anneeActuelle2 = [];
+moisActuel2 = [];
 
 //constante pour les mois de l'année
 const tabMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -50,27 +50,17 @@ var tabRaison = [];
 var classeIndispo = [];
 
 //tableau des calendriers du code HTML
-var calendrier = [];
+calendrier = [];
 
 //instanciation du debut et de la fin de la plage
-var premierID = [];
-var dernierID = [];
+premierID = [];
+dernierID = [];
 
 //classe des jours normaux
-var classeNormale = [];
+classeNormale = [];
 
 //prix des plages sélectionner
-var prixPlage = [];
-
-//tableaux des reservations
-var tabDebReser = [];
-var tabFinReser = [];
-var classeReser = [];
-
-//tableaux des devis en attente
-var tabDebDevis = [];
-var tabFinDevis = [];
-var classeDevis = [];
+prixPlage = [];
 
 function instancier(id, nbCache){
     //recupération des element du html qu'on vas remplir d'information
@@ -132,12 +122,6 @@ function instancier(id, nbCache){
             }
             if (classeIndispo[id]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
-            }
-            if (tabDebReser[id][0]){
-                afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
-            }
-            if (tabDebDevis[id][0]){
-                afficherDevis(tabDebDevis[id], tabFinDevis[id], classeDevis[id], "DEVIS", id);
             }
             if (premierID[id] !== ""){
                 selection(premierID[id], dernierID[id], id);
@@ -234,6 +218,13 @@ function changerJour(elem, id) {
         for (i = 0; i < nbEntreDeux; i++) {
             entreDeux[0].className = "normal";
         }
+        //remet les plages
+        if (tabDispo[id][0]){
+            afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+        }
+        if (tabIndispo[id][0]){
+            afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+        }
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
@@ -253,9 +244,6 @@ function changerJour(elem, id) {
                     if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(premierID[id]) ){
                             document.getElementById(premierID[id]).className = classeDispo[id];
-                        }
-                        else if(tabIndispo[id].includes(premierID[id])){
-                            document.getElementById(premierID[id]).className = classeIndispo[id];
                         }
                         else if(tabIndispo[id].includes(premierID[id])){
                             document.getElementById(premierID[id]).className = classeIndispo[id];
@@ -285,19 +273,6 @@ function changerJour(elem, id) {
                     }
                     dernierID[id] = element.id;
                     element.className = "actif";
-                }
-                //remet les plages
-                if (tabDispo[id][0]){
-                    afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
-                }
-                if (tabIndispo[id][0]){
-                    afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
-                }
-                if (tabDebReser[id][0]){
-                    afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
-                }
-                if (tabDebDevis[id][0]){
-                    afficherDevis(tabDebDevis[id], tabFinDevis[id], classeDevis[id], "DEVIS", id);
                 }
                 //active la zone de selection entre les deux dates
                 datePremier = new Date(premierID[id].split(',')[1]).getTime();
@@ -372,12 +347,6 @@ function changerJour(elem, id) {
             }
             if (tabIndispo[id][0]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
-            }
-            if (tabDebReser[id][0]){
-                afficherDevis(tabDebReser[id], tabFinReser[id], classeReser[id], "RESERV", id);
-            }
-            if (tabDebDevis[id][0]){
-                afficherDevis(tabDebDevis[id], tabFinDevis[id], classeDevis[id], "DEVIS", id);
             }
         }
         changerDates(id);
@@ -464,7 +433,7 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length-1; i++){
+            for (i=0; i<listeActif.length; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -523,47 +492,9 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     }
     
 }
-
-function afficherDevis(tabDebut, tabFin, classe, type, id){
-    if (type == "RESERV"){
-        tabDebReser[id] = tabDebut;
-        tabFinReser[id] = tabFin;
-        classeReser[id] = classe;
-    }
-    else{
-        tabDebDevis[id] = tabDebut;
-        tabFinDevis[id] = tabFin;
-        classeDevis[id] = classe;
-    }
-    for (i=0; i < tabDebut.length; i++){
-        dateFin = new Date(tabFin[i]);
-        dateFin.setHours(00);
-        dateDebut = new Date(tabDebut[i]);
-        dateDebut.setHours(00);
-        listeJours = calendrier[id].querySelectorAll(".jours li");
-        fini = false;
-        loop = 0;
-        while (!fini){
-            jour = listeJours[loop];
-            if (!jour){
-                fini = true;
-            }
-            if (!fini){
-                let dateJour = new Date(jour.id.split(',')[1]);
-                if (dateJour <= dateFin && dateJour >= dateDebut) {
-                    jour.className = classe;
-                }
-                else  if (dateJour === dateFin){
-                    fini = true;
-                }
-            }
-            loop++;
-        }
-    }
-}
-
-numCalendrier = -1;
+    numCalendrier = -1;
 </script>
+
 
 
 <!doctype html>
@@ -616,11 +547,7 @@ numCalendrier = -1;
                 foreach ($liste_mes_logements as $key => $card) {
                     $id_log = $card['id_logement'];
 
-                    if ($infos_log[$id_log]["en_ligne"] == 1){
-                        $bouton_desactiver = "METTRE HORS LIGNE";  
-                    } else{
-                        $bouton_desactiver = "METTRE EN LIGNE";
-                    }
+                    
                     $nomPlage = 'plage' . $key; 
                     $overlayPlage = 'overlay' . $key
                     
@@ -648,8 +575,18 @@ numCalendrier = -1;
                                     <a href="../Logement/logement_detaille_proprio.php?logement=<?php echo $id_log ?>"><button class="btn-ajoutlog">CONSULTER</button></a>
                                     <?php $id_un_logement = $id_log; ?>
                                     <form id="enligne<?php echo $id_un_logement ?>" action="ChangeEtat.php" method="post">
+                                    <?php
+                                    if ($infos_log[$id_log]["en_ligne"] == 1){
+                                        $bouton_desactiver = "METTRE HORS LIGNE";?>
                                         <input type="hidden" name=<?php echo $id_un_logement ?> value="<?php echo htmlentities($bouton_desactiver) ?>">
-                                        <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button>
+                                        <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-desactive" type='submit'> <?php echo $bouton_desactiver; ?> </button> <?php
+                                    } else{
+                                        $bouton_desactiver = "METTRE EN LIGNE";?>
+                                        <input type="hidden" name=<?php echo $id_un_logement ?> value="<?php echo htmlentities($bouton_desactiver) ?>">
+                                        <button style="margin-top : 15px; margin-right : 10px; margin-left: 10px;" class="btn-active" type='submit'> <?php echo $bouton_desactiver; ?> </button> <?php
+                                    }
+                                    ?>
+                                        
                                     </form>
                                     <input type="hidden" id="cas_bouton_suppr" value=<?php echo $cas_popup ?>>
                                     <a href="../Logement/supprimer_logement.php?id=<?php echo $id_log ?>"><button class="btn-suppr">SUPPRIMER</button></a>
@@ -816,16 +753,6 @@ numCalendrier = -1;
                                         $plageDispo->execute();
                                         $plageDispo = $plageDispo->fetchAll();
 
-                                        $devis = $dbh->prepare("SELECT * FROM locbreizh._devis INNER JOIN locbreizh._demande_devis
-                                        ON _devis.num_demande_devis = _demande_devis.num_demande_devis WHERE logement = {$card['id_logement']} AND _devis.accepte is false AND _devis.annule is false;");
-                                        $devis->execute();
-                                        $devis = $devis->fetchAll();
-
-                                        $reservation = $dbh->prepare("SELECT * FROM locbreizh._devis INNER JOIN locbreizh._demande_devis
-                                        ON _devis.num_demande_devis = _demande_devis.num_demande_devis WHERE logement = {$card['id_logement']} AND _devis.accepte is true AND _devis.annule is false;");
-                                        $reservation->execute();
-                                        $reservation = $reservation->fetchAll();
-
                                     } catch (PDOException $e) {
                                         print "Erreur !:" . $e->getMessage() . "<br/>";
                                         die();
@@ -856,7 +783,7 @@ numCalendrier = -1;
                                             part2 = part2[1];
                                         }
                                         tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
-                                        tabMotif[i] = "raison personnelle";
+                                        tabMotif[i] = tab[i]["libelle_indisponibilite"];
                                     }
                                     afficherPlages(tabRes, "indisponible", tabMotif, "I", numCalendrier);
 
@@ -878,28 +805,9 @@ numCalendrier = -1;
                                     }
                                     afficherPlages(tabRes, "disponible", tabMotif, "D", numCalendrier);
 
-                                    var tab = <?php echo json_encode($reservation); ?>;
-                                    var tabDebut = [];
-                                    var tabFin = [];
-                                    for (i=0 ; i < tab.length; i++){
-                                        tabDebut[i] = tab[i]["date_arrivee"];
-                                        tabFin[i] = tab[i]["date_depart"];
-                                    }
-                                    afficherDevis(tabDebut, tabFin, "reserver", "RESERV", numCalendrier);
-
-                                    var tab = <?php echo json_encode($devis); ?>;
-                                    var tabDebut = [];
-                                    var tabFin = [];
-                                    for (i=0 ; i < tab.length; i++){
-                                        tabDebut[i] = tab[i]["date_arrivee"];
-                                        tabFin[i] = tab[i]["date_depart"];
-                                    }
-                                    afficherDevis(tabDebut, tabFin, "devis", "DEVIS", numCalendrier)
-
-
                                     if (!tabRes[0]){
-                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").disabled = true;
-                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").className = "btn-desactiveGris";
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-active").disabled = true;
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-active").className = "btn-desactiveGris";
                                     }
                                 </script>
                                             
