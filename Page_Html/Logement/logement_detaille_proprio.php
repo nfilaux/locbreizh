@@ -460,17 +460,6 @@ $plageDispo = [];
                     WHERE id_logement = {$_GET['logement']};"
             );
 
-            /*$stmt = $dbh->prepare(
-                    "SELECT libelle_logement, nb_personnes_logement, surface_logement, tarif_base_ht, note_avis, photo_principale, photo, accroche_logement, descriptif_logement, debut_plage_ponctuelle, fin_plage_ponctuelle
-                    from locbreizh._logement 
-                        INNER JOIN locbreizh._avis ON logement = id_logement
-                        INNER JOIN locbreizh._photos_secondaires p ON p.logement = id_logement
-                        INNER JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
-                        INNER JOIN locbreizh._plage_ponctuelle ON _planning.code_planning = _plage_ponctuelle.code_planning
-                        WHERE id_logement = {$_GET['logement']};"
-                );*/
-
-
             $stmt->execute();
             $info = $stmt->fetch();
             $stmt = $dbh->prepare(
@@ -517,7 +506,7 @@ $plageDispo = [];
                     </div>
                     <div class="logcolumn logdem">
                         <h3 class="policetitre">Description</h3>
-                        <<p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
+                        <p class="description-detail"><?php echo $info['descriptif_logement']; ?></p>
                             <?php /*<p>Arrivée echo $info['debut_plage_ponctuelle'] Départ echo $info['fin_plage_ponctuelle'] </p>*/ ?>
                     </div>
                 </div>
