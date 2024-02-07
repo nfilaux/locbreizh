@@ -3200,11 +3200,19 @@ iframe {
     background-color: #745086;
     border: 1px solid #745086;
 }
-
 @media screen and (min-width: 900px) and (max-width: 1280px) {
     .logot {
         height: 3em;
         width: 3em;
+    }
+
+    #motif{
+        margin-left: 25px;
+    }
+
+    #reponseAvis ~ #sendButton svg,
+    #motif ~ #sendButton svg{
+        right: 20px;
     }
 
     header input {
@@ -3336,6 +3344,16 @@ iframe {
 }
 
 @media screen and (min-width: 600px) and (max-width: 899px) {
+
+    /* avis popup */
+    #reponseAvis ~ #sendButton svg,
+    #motif ~ #sendButton svg{
+        right: 10px;
+    }
+
+    #motif{
+        margin-left: 20px;
+    }
 
     /*-------------------------------Header-------------------------------*/
     .logot {
@@ -3741,6 +3759,17 @@ iframe {
 /*-------------------------------------------------------TELEPHONE------------------------------------------------------------------------*/
 @media screen and (max-width: 599px) {
 
+    /* avis popup */
+
+    #reponseAvis ~ #sendButton svg,
+    #motif ~ #sendButton svg{
+        right: 10px;
+        bottom: 40px;
+    }
+
+    #motif{
+        margin-left: 15px;
+    }
     /*-------------------------------Header-------------------------------*/
     .logot {
         height: 1.5em;
