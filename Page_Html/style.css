@@ -1832,7 +1832,7 @@ footer a:visited {
     width: 15%;
 }
 
-.logrow,.logrowcal,.logrowt,.logrowc.logrowb,.logcheckbox {
+.logrow,.logrowcal,.logrowt,.logrowc,.logrowb,.logcheckbox {
     display: flex;
     flex-direction: row;
 }
