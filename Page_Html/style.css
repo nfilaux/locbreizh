@@ -513,24 +513,15 @@ body {
     overflow: hidden;
 }
 
-.input-group {
-    width: 10%;
-}
-
 .input-group-ville {
     width: 20%;
 }
 
 .input-group-pers {
-    width: 17%;
-}
-
-.input-group-proprio {
-    width: 30%;
+    width: 13%;
 }
 
 .input-group input,
-.input-group-proprio input,
 .input-group-pers input,
 .input-group-ville input {
     border: none;
