@@ -1124,7 +1124,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                     <h4>Rédigez le motif de signalement</h4>
                                     <div class="redigerRep">
                                         <textarea maxlength="499" id="motif" name="motif"></textarea>
-                                        <button id="sendButton">
+                                        <button id="sendButton" class="btnEnvoyer">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
                                             <path fill="none" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
                                             <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
@@ -1133,7 +1133,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         <div id="overlaySignalement" onclick="closePopupFeedback('popupFeedback', 'overlaySignalement')"></div>
                                         <div id="popupFeedback" class="popupFeedback">
                                             <p>Le signalement a bien été envoyé.</p>
-                                        <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" class="btn-accueil" ></button>OK</a>
+                                        <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" class="btnEnvoyer"></button>OK</a>
                                     </div> 
                                 </form>
                             <?php }
