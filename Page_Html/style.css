@@ -797,6 +797,10 @@ main {
     flex: 1;
 }
 
+.column{
+    padding: 1em;
+}
+
 main label,
 .Tablobord h2 {
     color: #274065;
@@ -1756,7 +1760,6 @@ footer a:visited {
     width: 100%;
     margin-bottom: 3%;
     margin-top: 3%;
-    justify-content: center;
 }
 
 .logcolumn>p {
@@ -3653,7 +3656,7 @@ iframe {
         margin: 2em auto;
     }
 
-    .logrowcal ,main div .logrow{
+    .logrowcal ,main div>.logrow{
         flex-direction: column-reverse;
     }
 
