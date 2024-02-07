@@ -288,7 +288,7 @@ CREATE TABLE
 CREATE TABLE
     _reponse (
         id_reponse SERIAL NOT NULL,
-        contenu_reponse VARCHAR(255) NOT NULL,
+        contenu_reponse VARCHAR(500) NOT NULL,
         avis INTEGER NOT NULL,
         auteur INTEGER NOT NULL,
         CONSTRAINT reponse_pk PRIMARY KEY (id_reponse),
