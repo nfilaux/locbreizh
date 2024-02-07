@@ -1634,7 +1634,7 @@ footer a:visited {
     font-size: 1.5em;
 }
 
-.avis-box-space-between a:first-of-type{
+.avis-box-space-between a {
     text-decoration: underline;
     color: #745086;
 }
