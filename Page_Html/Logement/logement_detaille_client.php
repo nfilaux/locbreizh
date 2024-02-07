@@ -1130,8 +1130,8 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                             <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
                                             </svg>
                                         </button>
-                                        <div id="overlaySignalement" onclick="closePopupFeedback('popuFeedback', 'overlaySignalement')"></div>
-                                        <div id="signalementFeedback" class="popupFeedback">
+                                        <div id="overlaySignalement" onclick="closePopupFeedback('popupFeedback', 'overlaySignalement')"></div>
+                                        <div id="popupFeedback" class="popupFeedback">
                                             <p>Le signalement a bien été envoyé.</p>
                                         <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" class="btn-accueil" ></button>OK</a>
                                     </div> 
