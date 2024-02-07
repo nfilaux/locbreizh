@@ -58,72 +58,93 @@
                             <div class="log3vct">
                                 <label for='ville'>Ville : </label>
                                 <input maxlength="49" class="logvct" id='villeP' type='text' name='villeP' placeholder='Ville' required>
-                                <p id="erreurValideVille"></p>
+                                <p id="erreurVille"></p>
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['ville'])){
-                                echo "<p>" . $_SESSION['erreurs']['ville'] . "<p>";
+                                echo "<p>" . $_SESSION['erreurs']['ville'] . "</p>";
                             };
                             ?>
                             
                             <script>
                                 var communeInput = document.getElementById('villeP');
-                                var message = document.getElementById('erreurValideVille');
                                 var communeValide = false;
+                                var communeBretonne = false;
+                                var communeCorrecte;
                                 var form = document.getElementById('creation_logement');
-                                communeInput.addEventListener('input', verifCommune);
+                                //communeInput.addEventListener('input', verifCommune);
                                 communeInput.addEventListener('change', verifCommune);
+                                communeInput.addEventListener('input', verifCommune);
+                                communeInput.addEventListener('blur', verifCommune);
+
 
                                 form.addEventListener('submit', function(event) {
                                     if (!communeValide) {
                                         event.preventDefault();
-                                        message.id = "erreurVille";
                                         document.getElementById('erreurVille').innerHTML = "Veuillez entrer une ville Bretonne valide.";
                                     }
                                 });
+
                                 function verifCommune(event) {
                                     var commune = communeInput.value;
-                                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
+                                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=90a3f846aa9e490d927a787facf78c7e";
 
                                     fetch(opencageUrl)
                                         .then(response => response.json())
                                         .then(data => {
                                             if (event.type == "change" || event.type == "input"){
-                                                if ((data.results.length > 0)&& ((data.results[0].components._type == 'city')||(data.results[0].components._type == 'village'))) {
-                                                    if (estEnBretagne(data.results[0])) {
-                                                        communeValide = true;
-                                                        // La commune existe
-                                                        communeInput.style.backgroundColor = "#B2FF9F";
-                                                        communeInput.style.borderColor = "green";
-                                                        communeValide = true;
-                                                        message.id = "villeValide";
-                                                        document.getElementById('villeValide').innerHTML = data.results[0].components.city || data.results[0].components.village || data.results[0].components.town;
+                                                if (data.results.length > 0) {
+                                                    // La commune existe
+                                                    console.log("commune existante");
+                                                    communeValide = true;
+                                                    communeInput.style.backgroundColor = "#B2FF9F";
+                                                    communeInput.style.borderColor = "green";
+                                                    document.getElementById('erreurVille').innerHTML = "";
+                                                }else {
+                                                    // La commune n'existe pas
+                                                    communeValide = false;
+                                                    document.getElementById('erreurVille').innerHTML = "Entrer une ville valide.";
+                                                    communeInput.style.backgroundColor = "#FF9F9F";
+                                                    communeInput.style.borderColor = "red";
+                                                    console.log("commune inexistante");
+                                                }
+                                            }                                             
+                                        
+                                            else if (event.type == "blur"){
+                                                console.log("affichage bonne commune")
+                                                document.getElementById("villeP").value = communeCorrecte;  
+                                                if (estEnBretagne(data.results[0])) {
+                                                        //la commune est en Bretagne
+                                                        communeBretonne = true;
+                                                        
                                                         if ("postcode" in data.results[0].components){
                                                             document.getElementById('code_postal').value = data.results[0].components.postcode;
+                                                            document.getElementById("code_postal").disabled = true;
+                                                        }else {
+                                                            document.getElementById('code_postal').value = "";
+                                                            document.getElementById("code_postal").disabled = false;
                                                         }
-                                                    } else {
-                                                        message.id = "erreurVille";
+                                                        communeCorrecte = data.results[0].components.city || data.results[0].components.village || data.results[0].components.town;
+                                                        console.log("commune valide");
+                                                        communeValide = true;
+                                                } else {
+                                                        //la commune n'est pas en Bretagne
+                                                        communeBretonne = false;
                                                         document.getElementById('erreurVille').innerHTML = "La ville doit se situer en Bretagne.";
                                                         communeValide = false;
                                                         communeInput.style.backgroundColor = "#FF9F9F";
                                                         communeInput.style.borderColor = "red";
-                                                    }
-                                                
-                                                } else {
-                                                    // La commune n'existe pas
-                                                    message.id = "erreurVille";
-                                                    document.getElementById('erreurVille').innerHTML = "Entrer une ville valide.";
-                                                    communeInput.style.backgroundColor = "#FF9F9F";
-                                                    communeInput.style.borderColor = "red";
-                                                    communeValide = false;
+                                                        console.log("commune non bretonne");
                                                 }
-                                            }
-                                            
+                                                console.log(communeCorrecte);
+
+                                            }                                      
                                         })
                                         .catch(error => {
                                             console.error("Erreur lors de la requête de géocodage avec OpenCage Data:", error);
-                                        });
+                                        });                                    
                                 }
+                              
                                 function estEnBretagne(detailsVille) {
                                     // Vous pouvez ajuster ces coordonnées pour définir la zone géographique de la Bretagne
                                     var coordBretagne = {
@@ -149,19 +170,20 @@
                             <div class="log3vct">
                                 <label for='code_postal'>Code postal : </label>
                                 <input maxlength="5" class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' title="Le code postal est incorrect" required>
-                                <p id="erreurVille"></p>
+                                <p id="erreurCP"></p>
                                 <script>
                                     var codePostalInput = document.getElementById("code_postal");
+                                    document.getElementById("erreurCP").textContent = "";
                                     codePostalInput.addEventListener('change', verifCP);
                                     codePostalInput.addEventListener('input', verifCP);
                                     function verifCP(event){
                                         var regex = /^(29|35|22|56)\d{3}$/;
                                         if (event.type == "change" || event.type == "input"){
                                             if (!regex.test(codePostalInput.value)) {
-                                                document.getElementById("erreurVille").textContent = "Saisissez un code postal breton valide.";
+                                                document.getElementById("erreurCP").textContent = "Saisissez un code postal breton valide.";
                                             }
                                             else{
-                                                document.getElementById("erreurVille").textContent = "";
+                                                document.getElementById("erreurCP").textContent = "";
                                             }
                                         }
                                     }
@@ -169,7 +191,7 @@
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['code_postal'])){
-                                echo "<p>" . $_SESSION['erreurs']['code_postal'] . "<p>";
+                                echo "<p>" . $_SESSION['erreurs']['code_postal'] . "</p>";
                             };
                             ?>
 
