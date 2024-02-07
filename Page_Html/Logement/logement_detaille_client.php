@@ -938,6 +938,16 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         <hr class="hr">
         <!--Les avis-->
         <?php 
+
+            $stmt = $dbh->prepare('SELECT contenu_reponse, nom, prenom, photo, id_avis, id_compte
+            from locbreizh._reponse r
+            join locbreizh._avis a on r.avis = a.id_avis
+            join locbreizh._compte c on r.auteur = c.id_compte
+            where a.logement = :logement
+            ORDER BY a.id_avis DESC;');
+            $stmt->bindParam(':logement', $_GET['logement']);
+            $stmt->execute();
+            $reponses = $stmt->fetchAll();
             
             $stmt = $dbh->prepare('SELECT moyenne_avis
             from locbreizh._logement
@@ -946,7 +956,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             $stmt->execute();
             $moyenne = $stmt->fetch();
 
-            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo
+            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo, id_avis
             from locbreizh._avis a
             join locbreizh._compte c on a.auteur = c.id_compte
             where a.logement = :logement
@@ -1015,11 +1025,10 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <?php } ?>
 
             <div class="all-avis">
-
-            <?php
-            $nb_avis = 0;
-            foreach($avis as $avi){
-                $nb_avis++;
+                <?php
+                $nb_avis = 0;
+                foreach ($avis as $avi) {
+                    $nb_avis++;
                 ?>
                 <div class="box-avis <?php if($nb_avis > 4){echo 'hidden';}?>">
                     <div class="avis-box-space-between">
@@ -1038,9 +1047,30 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     </div>
                     <p><?php echo $avi['contenu_avis'];?></p>
                     <div class="avis-box-space-between">
-                        <a href="">Répondre au commentaire</a>
+                        <a></a>
                         <a href="">Signaler</a>
                     </div>
+                    <?php
+                        foreach($reponses as $reponse){
+                            if($reponse['id_avis'] === $avi['id_avis']){ ?>
+                                <hr class="hr">
+                                <div class="avis-box-space-between">
+                                    <div class="header-box infoC">
+                                        <img src="../Ressources/Images/<?php echo $reponse['photo'];?>" alt="Image de profil" title="Photo">
+                                        <div>
+                                            <p><?php echo $reponse['prenom'] . ' ' . $reponse['nom'];?></p>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><?php echo $reponse['contenu_reponse'];?></p>
+                                <div class="avis-box-space-between">
+                                    <a></a>
+                                    <a href="">Signaler</a>
+                                </div>
+                            <?php }
+                        }
+                    ?>
                 </div>
             <?php } ?>
             </div>

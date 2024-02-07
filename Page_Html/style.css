@@ -1548,6 +1548,14 @@ footer a:visited {
 /*----------------------------------------------------------------Logement----------------------------------------------------------------*/
 
 /* repondre avis */
+
+.avis-a-repondre{
+    border: #47138b 1px solid;
+    width: 40vw;
+    padding: 20px;
+    margin: auto;
+}
+
 #reponseAvis:focus ~ #sendButton svg path,
 #reponseAvis:valid ~ #sendButton svg path {
   fill: #49275f;
@@ -1580,12 +1588,7 @@ footer a:visited {
     width: 40vw;
     height: 12vw;
 }
-.popup_avis > p{
-    padding: 10px;
-    border: #47138b 1px solid;
-    width: fit-content;
-    margin: auto;
-}
+
 .popup_avis{
     min-width: 50vw;
     padding: 30px;
@@ -1628,6 +1631,11 @@ footer a:visited {
 
 .sousTitreAvis{
     font-size: 1.5em;
+}
+
+.avis-box-space-between a:first-of-type{
+    text-decoration: underline;
+    color: #745086;
 }
 
 .avis-box-space-between{
@@ -2492,14 +2500,14 @@ iframe {
 }
 
 .indisponible::before {
+    background-color: yellow;
+}
+
+.reserver::before {
     background-color: red;
 }
 
-.reserver::before{
-    background-color: orange;
-}
-
-.reserver::before{
+.devis::before{
     background-color: orange;
 }
 
@@ -2520,7 +2528,7 @@ iframe {
     color: #A9A9A9;
 }
 
-.actif, .indisponible, .disponible, .reserver{
+.actif, .indisponible, .disponible, .reserver, devis{
     color: #fff;
 }
 
@@ -2539,7 +2547,9 @@ iframe {
 .entreDeux:hover::before,
 .normal:hover::before,
 .indisponible:hover::before,
-.disponible:hover::before {
+.disponible:hover::before,
+.devis:hover::before,
+.reserver:hover::before {
     cursor: pointer;
     background-color: #D3D3D3;
 }
@@ -3322,7 +3332,7 @@ iframe {
     width: 20vw;
 }
 
-.mdp-popup>.mdpCroix {
+.mdpCroix {
     text-align: end;
 }
 
