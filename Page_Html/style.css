@@ -832,22 +832,10 @@ header a:last-child {
 
 /*----------------------------------------------------------------Main----------------------------------------------------------------*/
 
-.MainTablo {
+.MainTablo, .MainTableau ,.mainacc{
     padding-top: 0vw;
     padding-left: 0%;
     padding-right: 0%;
-}
-
-.MainTableau {
-    padding-top: 0vw;
-    padding-left: 0%;
-    padding-right: 0%;
-}
-
-.mainacc {
-    padding-top: 0;
-    padding-left: 0;
-    padding-right: 0;
 }
 
 main {
@@ -2647,11 +2635,6 @@ iframe {
     width: 100%;
 }
 
-.deviscol {
-    display: flex;
-    flex-direction: column;
-}
-
 .devisrowp {
     display: flex;
     flex-direction: row;
@@ -2723,7 +2706,7 @@ iframe {
 
 #paypal-button-container {
     margin: auto;
-    width: 45%;
+    width: 40%;
 }
 
 .cardresmain {
@@ -3565,22 +3548,7 @@ iframe {
         flex-direction: column;
     }
 
-    .input-group {
-        width: 80%;
-        margin: 0.5em auto;
-    }
-
-    .input-group-ville {
-        width: 80%;
-        margin: 0.5em auto;
-    }
-
-    .input-group-pers {
-        width: 80%;
-        margin: 0.5em auto;
-    }
-
-    .input-group-proprio {
+    .input-group,.input-group-ville,.input-group-pers ,.input-group-proprio {
         width: 80%;
         margin: 0.5em auto;
     }

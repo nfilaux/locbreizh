@@ -33,6 +33,7 @@
     // ajout reservation
     $stmt = $dbh->prepare("INSERT into locbreizh._reservation(reservation_annulee, client, logement, facture) values(False, {$_SESSION['id']}, {$logement['id_logement']}, {$id_facture});");
     $stmt->execute();
+
+    header("Location: liste_reservations.php");
     
-    header("Location: reussite_payement.html");
-?>
+    ?>
