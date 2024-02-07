@@ -275,28 +275,28 @@
                     <div class="logrow">
                         <div class="logpc">
                             <label for='image1'>Image 1</label>
-                            <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
+                            <input id='image1' type='file' name='image1P' accept='.jpg , .jpeg, .png'  required onchange="validateImage(this, 'in_image1')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image1" title="photo" alt="photo de profil" class="modif_log_img">
 
                             <label for='image2'>Image 2</label>
-                            <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
+                            <input id='image2' type='file' name='image2P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image2')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image2" title="photo" alt="photo de profil" class="modif_log_img">
 
                             <label for='image3'>Image 3</label>
-                            <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
+                            <input id='image3' type='file' name='image3P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image3')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image3" title="photo" alt="photo de profil" class="modif_log_img">
                         </div>
                         <div class="logpc">
                             <label for='image4'>Image 4</label>
-                            <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
+                            <input id='image4' type='file' name='image4P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image4')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image4" title="photo" alt="photo de profil" class="modif_log_img">
 
                             <label for='image5'>Image 5</label>
-                            <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
+                            <input id='image5' type='file' name='image5P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image5')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image5" title="photo" alt="photo de profil" class="modif_log_img">
 
                             <label for='image6'>Image 6</label>
-                            <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
+                            <input id='image6' type='file' name='image6P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image6')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image6" title="photo" alt="photo de profil" class="modif_log_img">
                         </div>
                     </div>
@@ -317,4 +317,34 @@
 <?php 
     unset($_SESSION['erreurs']);
 ?>
+<script>
+    function validateImage(input, imgId) {
+        var file = input.files[0];
+        var img = document.getElementById(imgId);
+
+        if (file) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var image = new Image();
+                image.src = e.target.result;
+
+                image.onload = function () {
+                    // Vérifier si l'image n'est pas un GIF
+                    if (file.type !== "image/gif" && !file.type.includes("image/webp")) {
+                        // Fichier non-GIF, chargement de l'image
+                        img.src = e.target.result;  
+                    } else {
+                        // Fichier GIF, affichage d'une alerte et réinitialisation de l'input
+                        alert("Veuillez sélectionner un fichier de type png jpeg jpg.");
+                        input.value = "";
+                        img.src = "../Ressources/Images/image_vide_log.png";
+                    }
+                };
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 <script src="./actualiserImage.js" defer></script>
