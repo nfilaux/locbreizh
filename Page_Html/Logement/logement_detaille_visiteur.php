@@ -1025,10 +1025,6 @@ $plageDispo = [];
                         </div>
                     </div>
                     <p><?php echo $avi['contenu_avis'];?></p>
-                    <div class="avis-box-space-between">
-                        <a></a>
-                        <a href="">Signaler</a>
-                    </div>
                     <?php
                         foreach($reponses as $reponse){
                             if($reponse['id_avis'] === $avi['id_avis']){ ?>
@@ -1043,10 +1039,6 @@ $plageDispo = [];
                                     </div>
                                 </div>
                                 <p><?php echo $reponse['contenu_reponse'];?></p>
-                                <div class="avis-box-space-between">
-                                    <a></a>
-                                    <a href="">Signaler</a>
-                                </div>
                             <?php }
                         }
                     ?>

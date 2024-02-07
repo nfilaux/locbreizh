@@ -1568,8 +1568,7 @@ footer a:visited {
     margin: auto;
 }
 
-#reponseAvis:focus ~ #sendButton svg path,
-#reponseAvis:valid ~ #sendButton svg path {
+#sendButton svg path{
   fill: #49275f;
   stroke: #ffffff;
 
@@ -1585,7 +1584,8 @@ footer a:visited {
     width: 25px;
 }
 
-#reponseAvis ~ #sendButton svg{
+#reponseAvis ~ #sendButton svg,
+#motif ~ #sendButton svg{
     width: 30px;
     height: auto;
 }
@@ -1596,9 +1596,10 @@ footer a:visited {
     align-items: end;
 }
 
-#reponseAvis{
-    width: 40vw;
+#reponseAvis, #motif{
+    width: 43vw;
     height: 12vw;
+    margin-left: 40px;
 }
 
 .popup_avis{
