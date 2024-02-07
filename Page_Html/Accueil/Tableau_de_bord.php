@@ -1,20 +1,20 @@
 <?php 
-session_start();
-include('../parametre_connexion.php');
-try {
-$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    print "Erreur !:" . $e->getMessage() . "<br/>";
-    die();
-}
-// fontion pour afficher les erreurs de modification
-function erreur($nomErreur){
-    if(isset($_SESSION["erreurs"][$nomErreur])){
-        ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
-        unset($_SESSION["erreurs"][$nomErreur]);
+    session_start();
+    include('../parametre_connexion.php');
+    try {
+    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        print "Erreur !:" . $e->getMessage() . "<br/>";
+        die();
     }
+    // fontion pour afficher les erreurs de modification
+    function erreur($nomErreur){
+        if(isset($_SESSION["erreurs"][$nomErreur])){
+            ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+            unset($_SESSION["erreurs"][$nomErreur]);
+        }
 }
    
 $plageIndispo = [];
@@ -23,20 +23,20 @@ $plageDispo = [];
 
 <script>
     //recupération des element du html qu'on vas remplir d'information
-var dateActuelle = [];
-var baliseJour =[];
-var precedentSuivant = [];
-var datesPlage = [];
-var boutonsDates = [];
-var prixSejour = [];
+dateActuelle = [];
+baliseJour =[];
+precedentSuivant = [];
+datesPlage = [];
+boutonsDates = [];
+prixSejour = [];
 
 //création de dates qui vont êtres utilisé pour le premier et deuxieme calendrier
-var date = [];
-var anneeActuelle = [];
-var moisActuel = [];
-var date2 = [];
-var anneeActuelle2 = [];
-var moisActuel2 = [];
+date = [];
+anneeActuelle = [];
+moisActuel = [];
+date2 = [];
+anneeActuelle2 = [];
+moisActuel2 = [];
 
 //constante pour les mois de l'année
 const tabMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -50,17 +50,17 @@ var tabRaison = [];
 var classeIndispo = [];
 
 //tableau des calendriers du code HTML
-var calendrier = [];
+calendrier = [];
 
 //instanciation du debut et de la fin de la plage
-var premierID = [];
-var dernierID = [];
+premierID = [];
+dernierID = [];
 
 //classe des jours normaux
-var classeNormale = [];
+classeNormale = [];
 
 //prix des plages sélectionner
-var prixPlage = [];
+prixPlage = [];
 
 function instancier(id, nbCache){
     //recupération des element du html qu'on vas remplir d'information
@@ -122,6 +122,9 @@ function instancier(id, nbCache){
             }
             if (classeIndispo[id]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+            }
+            if (premierID[id] !== ""){
+                selection(premierID[id], dernierID[id], id);
             }
         })
     });
@@ -215,6 +218,13 @@ function changerJour(elem, id) {
         for (i = 0; i < nbEntreDeux; i++) {
             entreDeux[0].className = "normal";
         }
+        //remet les plages
+        if (tabDispo[id][0]){
+            afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+        }
+        if (tabIndispo[id][0]){
+            afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+        }
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
@@ -234,9 +244,6 @@ function changerJour(elem, id) {
                     if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(premierID[id]) ){
                             document.getElementById(premierID[id]).className = classeDispo[id];
-                        }
-                        else if(tabIndispo[id].includes(premierID[id])){
-                            document.getElementById(premierID[id]).className = classeIndispo[id];
                         }
                         else if(tabIndispo[id].includes(premierID[id])){
                             document.getElementById(premierID[id]).className = classeIndispo[id];
@@ -266,13 +273,6 @@ function changerJour(elem, id) {
                     }
                     dernierID[id] = element.id;
                     element.className = "actif";
-                }
-                //remet les plages
-                if (tabDispo[id][0]){
-                    afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
-                }
-                if (tabIndispo[id][0]){
-                    afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
                 }
                 //active la zone de selection entre les deux dates
                 datePremier = new Date(premierID[id].split(',')[1]).getTime();
@@ -433,7 +433,7 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length-1; i++){
+            for (i=0; i<listeActif.length; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -474,15 +474,8 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         }
         for (i=0; i < tabPlage.length; i++){
             if (document.getElementById(id + "," + tabPlage[i]) && document.getElementById(id + "," + tabPlage[i]).className !== "actif") {
-                if (tabMotif[i] == "Réservation"){
-                    document.getElementById(id + "," + tabPlage[i]).className = "reserver";
-                }
-                else if (tabMotif[i] == "Demande devis"){
-                    document.getElementById(id + "," + tabPlage[i]).className = "devis";
-                }
-                else{
-                    document.getElementById(id + "," + tabPlage[i]).className = classe;
-                }
+                
+                document.getElementById(id + "," + tabPlage[i]).className = classe;
                 if (classe === "disponible"){
                     document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
                 }
@@ -499,9 +492,9 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     }
     
 }
-
-numCalendrier = -1;
+    numCalendrier = -1;
 </script>
+
 
 
 <!doctype html>
@@ -813,8 +806,8 @@ numCalendrier = -1;
                                     afficherPlages(tabRes, "disponible", tabMotif, "D", numCalendrier);
 
                                     if (!tabRes[0]){
-                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").disabled = true;
-                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").className = "btn-desactiveGris";
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-active").disabled = true;
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-active").className = "btn-desactiveGris";
                                     }
                                 </script>
                                             
