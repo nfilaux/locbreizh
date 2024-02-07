@@ -462,7 +462,7 @@
         $stmt->execute();
         ?>
 
-        <div class="card"> <?php
+        <section class="card"> <?php
         $res = $stmt->fetchAll();
 
         // affichage des données de logement
@@ -494,7 +494,7 @@
             <?php   }
                             }
             ?>
-        </div>
+        </section>
         <section id="containerMap">
             <div id="map"></div>
         </section>
