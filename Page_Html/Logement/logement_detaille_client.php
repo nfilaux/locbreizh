@@ -1143,7 +1143,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <?php } ?>
             </div>
             <?php 
-                print_r($_GET['erreur']);
+                
                 if(isset($_GET['erreur']) && $_GET['erreur'] === '0'){
                     ?>
                     <script>
