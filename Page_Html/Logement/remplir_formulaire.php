@@ -54,12 +54,11 @@
                         };
                         ?>
 
-                        <div class="logrowb"> 
+                        <div class="logrowb" id="villeEtPrix"> 
                             <div class="log3vct">
                                 <label for='ville'>Ville : </label>
                                 <input maxlength="49" class="logvct" id='villeP' type='text' name='villeP' placeholder='Ville' required>
-                                <p id="erreurVille"></p>
-                                <p id="villeValide"></p>
+                                <p id="erreurValideVille"></p>
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['ville'])){
@@ -69,6 +68,7 @@
                             
                             <script>
                                 var communeInput = document.getElementById('villeP');
+                                var message = document.getElementById('erreurValideVille');
                                 var communeValide = false;
                                 var form = document.getElementById('creation_logement');
                                 communeInput.addEventListener('input', verifCommune);
@@ -77,6 +77,7 @@
                                 form.addEventListener('submit', function(event) {
                                     if (!communeValide) {
                                         event.preventDefault();
+                                        message.id = "erreurVille";
                                         document.getElementById('erreurVille').innerHTML = "Veuillez entrer une ville Bretonne valide.";
                                     }
                                 });
@@ -95,9 +96,13 @@
                                                         communeInput.style.backgroundColor = "#B2FF9F";
                                                         communeInput.style.borderColor = "green";
                                                         communeValide = true;
-                                                        document.getElementById('erreurVille').innerHTML = "";
+                                                        message.id = "villeValide";
                                                         document.getElementById('villeValide').innerHTML = data.results[0].components.city || data.results[0].components.village || data.results[0].components.town;
+                                                        if ("postcode" in data.results[0].components){
+                                                            document.getElementById('code_postal').value = data.results[0].components.postcode;
+                                                        }
                                                     } else {
+                                                        message.id = "erreurVille";
                                                         document.getElementById('erreurVille').innerHTML = "La ville doit se situer en Bretagne.";
                                                         communeValide = false;
                                                         communeInput.style.backgroundColor = "#FF9F9F";
@@ -106,6 +111,7 @@
                                                 
                                                 } else {
                                                     // La commune n'existe pas
+                                                    message.id = "erreurVille";
                                                     document.getElementById('erreurVille').innerHTML = "Entrer une ville valide.";
                                                     communeInput.style.backgroundColor = "#FF9F9F";
                                                     communeInput.style.borderColor = "red";
@@ -142,7 +148,24 @@
 
                             <div class="log3vct">
                                 <label for='code_postal'>Code postal : </label>
-                                <input maxlength="5" class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
+                                <input maxlength="5" class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' title="Le code postal est incorrect" required>
+                                <p id="erreurVille"></p>
+                                <script>
+                                    var codePostalInput = document.getElementById("code_postal");
+                                    codePostalInput.addEventListener('change', verifCP);
+                                    codePostalInput.addEventListener('input', verifCP);
+                                    function verifCP(event){
+                                        var regex = /^(29|35|22|56)\d{3}$/;
+                                        if (event.type == "change" || event.type == "input"){
+                                            if (!regex.test(codePostalInput.value)) {
+                                                document.getElementById("erreurVille").textContent = "Saisissez un code postal breton valide.";
+                                            }
+                                            else{
+                                                document.getElementById("erreurVille").textContent = "";
+                                            }
+                                        }
+                                    }
+                                </script>
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['code_postal'])){

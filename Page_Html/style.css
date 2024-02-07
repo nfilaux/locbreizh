@@ -1562,7 +1562,7 @@ footer a:visited {
 }
 
 #villeValide {
-    color:greenyellow;
+    color:green;
     font-size: small;
 }
 
@@ -2072,6 +2072,9 @@ footer a:visited {
     align-items: center;
 }
 
+#villeEtPrix{
+    align-items: baseline;
+}
 .cardSupplements {
     border: 1px solid #957BB0;
     width: 15%;
