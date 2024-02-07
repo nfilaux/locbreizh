@@ -123,6 +123,9 @@ function instancier(id, nbCache){
             if (classeIndispo[id]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
             }
+            if (premierID[id] !== ""){
+                selection(premierID[id], dernierID[id], id);
+            }
         })
     });
 }
@@ -215,6 +218,13 @@ function changerJour(elem, id) {
         for (i = 0; i < nbEntreDeux; i++) {
             entreDeux[0].className = "normal";
         }
+        //remet les plages
+        if (tabDispo[id][0]){
+            afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+        }
+        if (tabIndispo[id][0]){
+            afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+        }
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
@@ -234,9 +244,6 @@ function changerJour(elem, id) {
                     if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(premierID[id]) ){
                             document.getElementById(premierID[id]).className = classeDispo[id];
-                        }
-                        else if(tabIndispo[id].includes(premierID[id])){
-                            document.getElementById(premierID[id]).className = classeIndispo[id];
                         }
                         else if(tabIndispo[id].includes(premierID[id])){
                             document.getElementById(premierID[id]).className = classeIndispo[id];
@@ -266,13 +273,6 @@ function changerJour(elem, id) {
                     }
                     dernierID[id] = element.id;
                     element.className = "actif";
-                }
-                //remet les plages
-                if (tabDispo[id][0]){
-                    afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
-                }
-                if (tabIndispo[id][0]){
-                    afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
                 }
                 //active la zone de selection entre les deux dates
                 datePremier = new Date(premierID[id].split(',')[1]).getTime();
@@ -433,7 +433,7 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length-1; i++){
+            for (i=0; i<listeActif.length; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -458,6 +458,7 @@ function changerDates(id) {
         }
     }
 }
+
 
 //fonction qui affiche les plages
 function afficherPlages(tabPlage, classe, tabMotif, type, id){
@@ -813,8 +814,8 @@ numCalendrier = -1;
                                     afficherPlages(tabRes, "disponible", tabMotif, "D", numCalendrier);
 
                                     if (!tabRes[0]){
-                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").disabled = true;
-                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").className = "btn-desactiveGris";
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-active").disabled = true;
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-active").className = "btn-desactiveGris";
                                     }
                                 </script>
                                             

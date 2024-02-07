@@ -40,7 +40,7 @@
 
 
         <div class="column">
-            <form method='POST' action='previsualiser_logement.php' enctype="multipart/form-data">
+            <form method='POST' id="creation_logement" action='previsualiser_logement.php' enctype="multipart/form-data">
                 <div class="logrow">  
                     <div class="logcolumn">  
                     
@@ -54,24 +54,144 @@
                         };
                         ?>
 
-                        <div class="logrowb"> 
+                        <div class="logrowb" id="villeEtPrix"> 
                             <div class="log3vct">
                                 <label for='ville'>Ville : </label>
                                 <input maxlength="49" class="logvct" id='villeP' type='text' name='villeP' placeholder='Ville' required>
+                                <p id="erreurVille"></p>
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['ville'])){
-                                echo "<p>" . $_SESSION['erreurs']['ville'] . "<p>";
+                                echo "<p>" . $_SESSION['erreurs']['ville'] . "</p>";
                             };
                             ?>
+                            
+                            <script>
+                                var communeInput = document.getElementById('villeP');
+                                var communeValide = false;
+                                var communeBretonne = false;
+                                var communeCorrecte;
+                                var form = document.getElementById('creation_logement');
+                                //communeInput.addEventListener('input', verifCommune);
+                                communeInput.addEventListener('change', verifCommune);
+                                communeInput.addEventListener('input', verifCommune);
+                                communeInput.addEventListener('blur', verifCommune);
+
+
+                                form.addEventListener('submit', function(event) {
+                                    if (!communeValide) {
+                                        event.preventDefault();
+                                        document.getElementById('erreurVille').innerHTML = "Veuillez entrer une ville Bretonne valide.";
+                                    }
+                                });
+
+                                function verifCommune(event) {
+                                    var commune = communeInput.value;
+                                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=90a3f846aa9e490d927a787facf78c7e";
+
+                                    fetch(opencageUrl)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (event.type == "change" || event.type == "input"){
+                                                if (data.results.length > 0) {
+                                                    // La commune existe
+                                                    console.log("commune existante");
+                                                    communeValide = true;
+                                                    communeInput.style.backgroundColor = "#B2FF9F";
+                                                    communeInput.style.borderColor = "green";
+                                                    document.getElementById('erreurVille').innerHTML = "";
+                                                }else {
+                                                    // La commune n'existe pas
+                                                    communeValide = false;
+                                                    document.getElementById('erreurVille').innerHTML = "Entrer une ville valide.";
+                                                    communeInput.style.backgroundColor = "#FF9F9F";
+                                                    communeInput.style.borderColor = "red";
+                                                    console.log("commune inexistante");
+                                                }
+                                            }                                             
+                                        
+                                            else if (event.type == "blur"){
+                                                console.log("affichage bonne commune")
+                                                document.getElementById("villeP").value = communeCorrecte;  
+                                                if (estEnBretagne(data.results[0])) {
+                                                        //la commune est en Bretagne
+                                                        communeBretonne = true;
+                                                        
+                                                        if ("postcode" in data.results[0].components){
+                                                            document.getElementById('code_postal').value = data.results[0].components.postcode;
+                                                            document.getElementById("code_postal").disabled = true;
+                                                        }else {
+                                                            document.getElementById('code_postal').value = "";
+                                                            document.getElementById("code_postal").disabled = false;
+                                                        }
+                                                        communeCorrecte = data.results[0].components.city || data.results[0].components.village || data.results[0].components.town;
+                                                        console.log("commune valide");
+                                                        communeValide = true;
+                                                } else {
+                                                        //la commune n'est pas en Bretagne
+                                                        communeBretonne = false;
+                                                        document.getElementById('erreurVille').innerHTML = "La ville doit se situer en Bretagne.";
+                                                        communeValide = false;
+                                                        communeInput.style.backgroundColor = "#FF9F9F";
+                                                        communeInput.style.borderColor = "red";
+                                                        console.log("commune non bretonne");
+                                                }
+                                                console.log(communeCorrecte);
+
+                                            }                                      
+                                        })
+                                        .catch(error => {
+                                            console.error("Erreur lors de la requête de géocodage avec OpenCage Data:", error);
+                                        });                                    
+                                }
+                              
+                                function estEnBretagne(detailsVille) {
+                                    // Vous pouvez ajuster ces coordonnées pour définir la zone géographique de la Bretagne
+                                    var coordBretagne = {
+                                        minLat: 47.08,
+                                        maxLat: 48.85,
+                                        minLng: -5.5,
+                                        maxLng: -1.2
+                                    };
+
+                                    var villeLat = detailsVille.geometry.lat;
+                                    var villeLng = detailsVille.geometry.lng;
+
+                                    return (
+                                        villeLat >= coordBretagne.minLat &&
+                                        villeLat <= coordBretagne.maxLat &&
+                                        villeLng >= coordBretagne.minLng &&
+                                        villeLng <= coordBretagne.maxLng
+                                    );
+                                }
+
+                            </script>
 
                             <div class="log3vct">
                                 <label for='code_postal'>Code postal : </label>
-                                <input maxlength="5" class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' required>
+                                <input maxlength="5" class="logvct" id='code_postal' type='text' name='code_postalP' placeholder='Code postal' title="Le code postal est incorrect" required>
+                                <p id="erreurCP"></p>
+                                <script>
+                                    var codePostalInput = document.getElementById("code_postal");
+                                    document.getElementById("erreurCP").textContent = "";
+                                    codePostalInput.addEventListener('change', verifCP);
+                                    codePostalInput.addEventListener('input', verifCP);
+                                    function verifCP(event){
+                                        var regex = /^(29|35|22|56)\d{3}$/;
+                                        if (event.type == "change" || event.type == "input"){
+                                            if (!regex.test(codePostalInput.value)) {
+                                                document.getElementById("erreurCP").textContent = "Saisissez un code postal breton valide.";
+                                            }
+                                            else{
+                                                document.getElementById("erreurCP").textContent = "";
+                                            }
+                                        }
+                                    }
+                                </script>
                             </div>
 
                             <?php if(isset($_SESSION['erreurs']['code_postal'])){
-                                echo "<p>" . $_SESSION['erreurs']['code_postal'] . "<p>";
+                                echo "<p>" . $_SESSION['erreurs']['code_postal'] . "</p>";
                             };
                             ?>
 
@@ -275,28 +395,28 @@
                     <div class="logrow">
                         <div class="logpc">
                             <label for='image1'>Image 1</label>
-                            <input id='image1' type='file' name='image1P' accept='image/png, image/jpeg' required>
+                            <input id='image1' type='file' name='image1P' accept='.jpg , .jpeg, .png'  required onchange="validateImage(this, 'in_image1')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image1" title="photo" alt="photo de profil" class="modif_log_img">
 
                             <label for='image2'>Image 2</label>
-                            <input id='image2' type='file' name='image2P' accept='image/png, image/jpeg'>
+                            <input id='image2' type='file' name='image2P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image2')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image2" title="photo" alt="photo de profil" class="modif_log_img">
 
                             <label for='image3'>Image 3</label>
-                            <input id='image3' type='file' name='image3P' accept='image/png, image/jpeg'>
+                            <input id='image3' type='file' name='image3P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image3')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image3" title="photo" alt="photo de profil" class="modif_log_img">
                         </div>
                         <div class="logpc">
                             <label for='image4'>Image 4</label>
-                            <input id='image4' type='file' name='image4P' accept='image/png, image/jpeg'>
+                            <input id='image4' type='file' name='image4P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image4')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image4" title="photo" alt="photo de profil" class="modif_log_img">
 
                             <label for='image5'>Image 5</label>
-                            <input id='image5' type='file' name='image5P' accept='image/png, image/jpeg'>
+                            <input id='image5' type='file' name='image5P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image5')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image5" title="photo" alt="photo de profil" class="modif_log_img">
 
                             <label for='image6'>Image 6</label>
-                            <input id='image6' type='file' name='image6P' accept='image/png, image/jpeg'>
+                            <input id='image6' type='file' name='image6P' accept='.jpg , .jpeg, .png' onchange="validateImage(this, 'in_image6')">
                             <img src="../Ressources/Images/image_vide_log.png" id="in_image6" title="photo" alt="photo de profil" class="modif_log_img">
                         </div>
                     </div>
@@ -317,4 +437,34 @@
 <?php 
     unset($_SESSION['erreurs']);
 ?>
+<script>
+    function validateImage(input, imgId) {
+        var file = input.files[0];
+        var img = document.getElementById(imgId);
+
+        if (file) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var image = new Image();
+                image.src = e.target.result;
+
+                image.onload = function () {
+                    // Vérifier si l'image n'est pas un GIF
+                    if (file.type !== "image/gif" && !file.type.includes("image/webp")) {
+                        // Fichier non-GIF, chargement de l'image
+                        img.src = e.target.result;  
+                    } else {
+                        // Fichier GIF, affichage d'une alerte et réinitialisation de l'input
+                        alert("Veuillez sélectionner un fichier de type png jpeg jpg.");
+                        input.value = "";
+                        img.src = "../Ressources/Images/image_vide_log.png";
+                    }
+                };
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 <script src="./actualiserImage.js" defer></script>

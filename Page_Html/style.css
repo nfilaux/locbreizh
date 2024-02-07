@@ -518,24 +518,15 @@ body {
     overflow: hidden;
 }
 
-.input-group {
-    width: 10%;
-}
-
 .input-group-ville {
     width: 20%;
 }
 
 .input-group-pers {
-    width: 17%;
-}
-
-.input-group-proprio {
-    width: 30%;
+    width: 13%;
 }
 
 .input-group input,
-.input-group-proprio input,
 .input-group-pers input,
 .input-group-ville input {
     border: none;
@@ -816,6 +807,10 @@ main {
     padding-left: 2em;
     padding-right: 2em;
     flex: 1;
+}
+
+.column{
+    padding: 1em;
 }
 
 main label,
@@ -1431,6 +1426,12 @@ footer a:visited {
     color: red;
 }
 
+#erreurVille, #erreurCP{
+    color:red;
+    font-size: small;
+}
+
+
 /*----------------------------------------------------------------Logement----------------------------------------------------------------*/
 
 /* repondre avis */
@@ -1828,7 +1829,6 @@ footer a:visited {
     width: 100%;
     margin-bottom: 3%;
     margin-top: 3%;
-    justify-content: center;
 }
 
 .logcolumn>p {
@@ -1955,6 +1955,9 @@ footer a:visited {
     width: 15%;
 }
 
+#villeEtPrix{
+    align-items: baseline;
+}
 .cardSupplements {
     border: 1px solid #957BB0;
     color: #745086;
@@ -3799,8 +3802,7 @@ iframe {
         margin: 2em auto;
     }
 
-    .logrowcal,
-    main div .logrow {
+    .logrowcal ,main div>.logrow{
         flex-direction: column-reverse;
     }
 

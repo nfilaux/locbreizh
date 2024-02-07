@@ -20,20 +20,20 @@ $plageDispo = [];
 
 <script>
     //recupération des element du html qu'on vas remplir d'information
-dateActuelle = [];
-baliseJour =[];
-precedentSuivant = [];
-datesPlage = [];
-boutonsDates = [];
-prixSejour = [];
+var dateActuelle = [];
+var baliseJour =[];
+var precedentSuivant = [];
+var datesPlage = [];
+var boutonsDates = [];
+var prixSejour = [];
 
 //création de dates qui vont êtres utilisé pour le premier et deuxieme calendrier
-date = [];
-anneeActuelle = [];
-moisActuel = [];
-date2 = [];
-anneeActuelle2 = [];
-moisActuel2 = [];
+var date = [];
+var anneeActuelle = [];
+var moisActuel = [];
+var date2 = [];
+var anneeActuelle2 = [];
+var moisActuel2 = [];
 
 //constante pour les mois de l'année
 const tabMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -47,17 +47,17 @@ var tabRaison = [];
 var classeIndispo = [];
 
 //tableau des calendriers du code HTML
-calendrier = [];
+var calendrier = [];
 
 //instanciation du debut et de la fin de la plage
-premierID = [];
-dernierID = [];
+var premierID = [];
+var dernierID = [];
 
 //classe des jours normaux
-classeNormale = [];
+var classeNormale = [];
 
 //prix des plages sélectionner
-prixPlage = [];
+var prixPlage = [];
 
 function instancier(id, nbCache){
     //recupération des element du html qu'on vas remplir d'information
@@ -225,7 +225,7 @@ function changerJour(elem, id) {
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
-            if (nbActif == 0) {
+            if (premierID[id] == '' && dernierID[id] == '') {
                 premierID[id] = element.id;
                 dernierID[id] = element.id;
                 element.className = "actif";
@@ -238,7 +238,7 @@ function changerJour(elem, id) {
                 milieu = (dateDernier + datePremier) / 2;
                 //détermine si le nouveau jour seras le début ou la fin de la plage
                 if (dateElem < milieu) {
-                    if (nbActif > 1) {
+                    if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(premierID[id]) ){
                             document.getElementById(premierID[id]).className = classeDispo[id];
                         }
@@ -246,14 +246,16 @@ function changerJour(elem, id) {
                             document.getElementById(premierID[id]).className = classeIndispo[id];
                         }
                         else{
-                            document.getElementById(premierID[id]).className = "normal";
+                            if (document.getElementById(premierID[id])){
+                                document.getElementById(premierID[id]).className = "normal";
+                            }
                         }
                     }
                     premierID[id] = element.id;
                     element.className = "actif";
                 }
                 else {
-                    if (nbActif > 1) {
+                    if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(dernierID[id]) ){
                             document.getElementById(dernierID[id]).className = classeDispo[id];
                         }
@@ -261,7 +263,9 @@ function changerJour(elem, id) {
                             document.getElementById(dernierID[id]).className = classeIndispo[id];
                         }
                         else{
-                            document.getElementById(dernierID[id]).className = "normal";
+                            if (document.getElementById(dernierID[id])){
+                                document.getElementById(dernierID[id]).className = "normal";
+                            }
                         }
                     }
                     dernierID[id] = element.id;
@@ -313,13 +317,17 @@ function changerJour(elem, id) {
         }
         //désactive le jour si on clique dessus
         else if (element.className === "actif") {
-            if (nbActif == 2) {
+            if (premierID[id] !== dernierID[id]) {
                 if (element.id === premierID[id]) {
                     premierID[id] = dernierID[id];
                 }
                 else {
                     dernierID[id] = premierID[id];
                 }
+            }
+            else{
+                premierID[id] = "";
+                dernierID[id] = "";
             }
             if (tabDispo[id].includes(element.id) ){
                 element.className = classeDispo[id];
@@ -330,13 +338,46 @@ function changerJour(elem, id) {
             else{
                 element.className = "normal";
             }
-        }
-        nbActif = document.getElementsByClassName("actif").length;
-        if (nbActif == 0){
-            premierID[id] = "";
-            dernierID[id] = "";
+            //remet les plages
+            if (tabDispo[id][0]){
+                afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+            }
+            if (tabIndispo[id][0]){
+                afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+            }
         }
         changerDates(id);
+    }
+    else if ( premierID[id] !== ""){
+        //active la zone de selection entre les deux dates
+        datePremier = new Date(premierID[id].split(',')[1]).getTime();
+        dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
+        listeJours = calendrier[id].querySelectorAll(".jours li");
+        inactif = false;
+        fini = false;
+        loop = 0;
+        while (!inactif && !fini){
+            jour = listeJours[loop];
+            if (!jour){
+                fini = true;
+            }
+            if (!fini){
+                let dateJour = new Date(jour.id.split(',')[1]).getTime();
+                if (dateJour < dateDernier && dateJour > datePremier) {
+                    if (jour.className !== "inactif"){
+                        jour.className = "entreDeux";
+                    }
+                    else{
+                        inactif = true;
+                    }
+                    
+                }
+                else if (dateJour === dateDernier){
+                    fini = true;
+                }
+            }
+            loop++;
+        }
     }
 }
 
@@ -389,7 +430,7 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length-1; i++){
+            for (i=0; i<listeActif.length; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -415,6 +456,7 @@ function changerDates(id) {
     }
 }
 
+
 //fonction qui affiche les plages
 function afficherPlages(tabPlage, classe, tabMotif, type, id){
     if (type !== "NI"){
@@ -430,8 +472,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         }
         for (i=0; i < tabPlage.length; i++){
             if (document.getElementById(id + "," + tabPlage[i]) && document.getElementById(id + "," + tabPlage[i]).className !== "actif") {
-                
-                document.getElementById(id + "," + tabPlage[i]).className = classe;
+                if (tabMotif[i] == "Réservation"){
+                    document.getElementById(id + "," + tabPlage[i]).className = "reserver";
+                }
+                else if (tabMotif[i] == "Demande devis"){
+                    document.getElementById(id + "," + tabPlage[i]).className = "devis";
+                }
+                else{
+                    document.getElementById(id + "," + tabPlage[i]).className = classe;
+                }
                 if (classe === "disponible"){
                     document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
                 }
@@ -448,7 +497,8 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     }
     
 }
-    numCalendrier = -1;
+
+numCalendrier = -1;
 </script>
 
 <!DOCTYPE html>
