@@ -653,45 +653,45 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p class="equipements"><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
                         $equip = false;
                         if ($info['balcon'] == true) {
-                            ?><p class="equipements"><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
                             $equip = true;
                         }
 
                         if ($info['terrasse'] == true) {
-                            ?><p class="equipements"><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p ><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['parking_privee'] == true) {
-                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p ><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
                             $equip = true;
                         }
 
                         if ($info['parking_public'] == true) {
-                            ?><p class="equipements"><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            ?><p ><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['television'] == true) {
-                            ?><p class="equipements"><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            ?><p ><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['wifi'] == true) {
-                            ?><p class="equipements"><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            ?><p ><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['lave_linge'] == true) {
-                            ?><p class="equipements"><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p ><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['lave_vaisselle'] == true) {
-                            ?><p class="equipements"><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p ><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
                             $equip = true;
                         }
                         if (!$equip){
-                            ?><p>Aucuns équipements.</p><?php
+                            ?><p>Aucuns équipements</p><?php
                         }
                         ?>
                     </div>
@@ -737,13 +737,13 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                             foreach ($services as $key => $value){
 
                                 if ($value['nom_service'] == "navette") {
-                                    ?><p><img src="../svg/taxi-fill.svg" width="48" height ="48"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                    ?><p><img src="../svg/taxi-fill.svg" width="35" height ="35"><?php  echo 'Navette ou Taxi'; ?></p><?php
                                 }
                                 if ($value['nom_service'] == "menage") {
-                                    ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php  echo 'Menage'; ?></p><?php
+                                    ?><p><img src="../svg/nettoyage.svg" width="35" height="35"> <?php  echo 'Menage'; ?></p><?php
                                 }
                                 if ($value['nom_service'] == "linge") {
-                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height ="48"><?php  echo 'Linge'; ?></p><?php
+                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="35" height ="35"><?php  echo 'Linge'; ?></p><?php
                                 }
                             }
                         
@@ -758,14 +758,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
-                        <p><img src="../svg/ruler.svg" width="48px" height="48px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
+                        <p><img src="../svg/ruler.svg" width="35px" height="35px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
                         <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
                         <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
-                        <p><img src="../svg/group.svg" width="48px" height="48px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
+                        <p><img src="../svg/group.svg" width="35px" height="35px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
+            </div>
         </div>
 
         <script src="./scriptCalendrier.js"></script>
@@ -937,6 +938,16 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         <hr class="hr">
         <!--Les avis-->
         <?php 
+
+            $stmt = $dbh->prepare('SELECT contenu_reponse, nom, prenom, photo, id_avis, id_compte
+            from locbreizh._reponse r
+            join locbreizh._avis a on r.avis = a.id_avis
+            join locbreizh._compte c on r.auteur = c.id_compte
+            where a.logement = :logement
+            ORDER BY a.id_avis DESC;');
+            $stmt->bindParam(':logement', $_GET['logement']);
+            $stmt->execute();
+            $reponses = $stmt->fetchAll();
             
             $stmt = $dbh->prepare('SELECT moyenne_avis
             from locbreizh._logement
@@ -945,7 +956,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             $stmt->execute();
             $moyenne = $stmt->fetch();
 
-            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo
+            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo, id_avis
             from locbreizh._avis a
             join locbreizh._compte c on a.auteur = c.id_compte
             where a.logement = :logement
@@ -1014,11 +1025,10 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <?php } ?>
 
             <div class="all-avis">
-
-            <?php
-            $nb_avis = 0;
-            foreach($avis as $avi){
-                $nb_avis++;
+                <?php
+                $nb_avis = 0;
+                foreach ($avis as $avi) {
+                    $nb_avis++;
                 ?>
                 <div class="box-avis <?php if($nb_avis > 4){echo 'hidden';}?>">
                     <div class="avis-box-space-between">
@@ -1037,9 +1047,30 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     </div>
                     <p><?php echo $avi['contenu_avis'];?></p>
                     <div class="avis-box-space-between">
-                        <a href="">Répondre au commentaire</a>
+                        <a></a>
                         <a href="">Signaler</a>
                     </div>
+                    <?php
+                        foreach($reponses as $reponse){
+                            if($reponse['id_avis'] === $avi['id_avis']){ ?>
+                                <hr class="hr">
+                                <div class="avis-box-space-between">
+                                    <div class="header-box infoC">
+                                        <img src="../Ressources/Images/<?php echo $reponse['photo'];?>" alt="Image de profil" title="Photo">
+                                        <div>
+                                            <p><?php echo $reponse['prenom'] . ' ' . $reponse['nom'];?></p>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><?php echo $reponse['contenu_reponse'];?></p>
+                                <div class="avis-box-space-between">
+                                    <a></a>
+                                    <a href="">Signaler</a>
+                                </div>
+                            <?php }
+                        }
+                    ?>
                 </div>
             <?php } ?>
             </div>

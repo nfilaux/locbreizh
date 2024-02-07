@@ -190,15 +190,11 @@ CREATE TABLE
 /*   table  plage_recurrente : est utilisée pour renseigner des plages récurrente   */
 
 CREATE TABLE
-    _plage_recurrente (
-        id_plage_recurrente SERIAL NOT NULL,
-        disponible BOOLEAN NOT NULL,
-        code_planning INTEGER NOT NULL,
-        libelle_indisponibilite  VARCHAR(255),
-        jour_plage_recurrente VARCHAR(8) NOT NULL,
-        type_plage VARCHAR(25) NOT NULL,
-        CONSTRAINT plage_recurrente_pk PRIMARY KEY (id_plage_recurrente),
-        CONSTRAINT plage_recurrente_fk_code_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
+    _plage_devis (
+        id_plage_ponctuelle INTEGER,
+        prix_plage_ponctuelle FLOAT NOT NULL,
+        CONSTRAINT _plage_devis_pk PRIMARY KEY (id_plage_ponctuelle),
+        CONSTRAINT _plage_devis_fk FOREIGN KEY (id_plage_ponctuelle) REFERENCES _plage_ponctuelle (id_plage_ponctuelle) ON DELETE CASCADE
     );
 
 /*   table taxe_sejour : est utilisée pour stocker les possible différentes taxes de séjour   */

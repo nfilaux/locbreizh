@@ -740,7 +740,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             'jacuzzi' => $jacuzzi,
             'television' => $television,
             'wifi' => $wifi,
-            'lave_vaiselle' => $lave_vaiselle,
+            'lave_vaisselle' => $lave_vaisselle,
             'lave_linge' => $lave_linge,
             'menage' => $menage,
             'navette' => $navette,
@@ -977,15 +977,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         <?php
                             $services = false;
                             if (isset($navette) && $navette == true) {
-                                ?><p><img src="../svg/taxi-fill.svg" width="48" height ="48"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                ?><p><img src="../svg/taxi-fill.svg" width="35" height ="35"><?php  echo 'Navette ou Taxi'; ?></p><?php
                                 $services = true;
                             }
                             if (isset($menage) && $menage == true) {
-                                ?><p><img src="../svg/nettoyage.svg" width="48" height="48"> <?php  echo 'Menage'; ?></p><?php
+                                ?><p><img src="../svg/nettoyage.svg" width="35" height="35"> <?php  echo 'Menage'; ?></p><?php
                                 $services = true;
                             }
                             if (isset($linge) && $linge == true) {
-                                ?><p><img src="../svg/t-shirt-air-line.svg" width="48" height ="48"><?php  echo 'Linge'; ?></p><?php
+                                ?><p><img src="../svg/t-shirt-air-line.svg" width="35" height ="35"><?php  echo 'Linge'; ?></p><?php
                                 $services = true;
                             }
                             if (!$services){
