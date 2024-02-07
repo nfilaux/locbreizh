@@ -130,7 +130,8 @@
                                                             communeValide = false;
                                                     }
                                                 }
-                                            }                                      
+                                            }     
+                                            console.log(nomCommuneCorrect);                                 
                                         })
                                         .catch(error => {
                                             console.error("Erreur lors de la requête de géocodage avec OpenCage Data:", error);
@@ -160,10 +161,10 @@
                                 function trouveCP(infoCommuneCorrecte){
                                     if (("postcode" in infoCommuneCorrecte.components) && (communeBretonne)){
                                         document.getElementById('code_postal').value = infoCommuneCorrecte.components.postcode;
-                                        document.getElementById("code_postal").disabled = true;
+                                        //document.getElementById("code_postal").disabled = true;
                                     }else {
                                         document.getElementById('code_postal').value = "";
-                                        document.getElementById("code_postal").disabled = false;
+                                        //document.getElementById("code_postal").disabled = false;
                                     }
                                 }
 
@@ -178,6 +179,7 @@
                                     document.getElementById("erreurCP").textContent = "";
                                     codePostalInput.addEventListener('change', verifCP);
                                     codePostalInput.addEventListener('input', verifCP);
+
                                     function verifCP(event){
                                         var regex = /^(29|35|22|56)\d{3}$/;
                                         if (event.type == "change" || event.type == "input"){
