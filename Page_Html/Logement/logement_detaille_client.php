@@ -467,6 +467,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
     <script src="plusAvis.js"></script>
+    <script scr="../scriptPopupFeedback.js"></script>
 </head>
 
 <body>
@@ -1129,6 +1130,10 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                             <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
                                             </svg>
                                         </button>
+                                        <div id="overlaySignalement" onclick="closePopupFeedback('popuFeedback', 'overlaySignalement')"></div>
+                                        <div id="signalementFeedback" class="popupFeedback">
+                                            <p>Le signalement a bien été envoyé.</p>
+                                        <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" class="btn-accueil" ></button>OK</a>
                                     </div> 
                                 </form>
                             <?php }
@@ -1138,6 +1143,14 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <?php } ?>
             </div>
             <?php 
+
+                if(isset($_GET['erreur']) && $_GET['erreur'] === '0'){
+                    ?>
+                    <script>
+                        openPopupFeedback('popupFeedback', 'overlaySignalement');
+                    </script>
+                    <?php
+                }
             if($nb_avis == 0){ ?>
                 <p style="text-align : center">Aucun avis n'a encore été posté pour ce logement.</p>
             <?php }
