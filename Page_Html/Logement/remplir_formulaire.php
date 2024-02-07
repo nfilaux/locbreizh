@@ -69,10 +69,10 @@
                             <script>
                                 var communeInput = document.getElementById('villeP');
                                 var communeValide = false;
+                                var infoCommuneCorrecte;
+                                var nomCommuneCorrect;
                                 var communeBretonne = false;
-                                var communeCorrecte;
                                 var form = document.getElementById('creation_logement');
-                                //communeInput.addEventListener('input', verifCommune);
                                 communeInput.addEventListener('change', verifCommune);
                                 communeInput.addEventListener('input', verifCommune);
                                 communeInput.addEventListener('blur', verifCommune);
@@ -86,8 +86,7 @@
                                 });
 
                                 function verifCommune(event) {
-                                    var commune = communeInput.value;
-                                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=90a3f846aa9e490d927a787facf78c7e";
+                                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(communeInput.value) + "&key=90a3f846aa9e490d927a787facf78c7e";
 
                                     fetch(opencageUrl)
                                         .then(response => response.json())
@@ -95,49 +94,42 @@
                                             if (event.type == "change" || event.type == "input"){
                                                 if (data.results.length > 0) {
                                                     // La commune existe
-                                                    console.log("commune existante");
                                                     communeValide = true;
                                                     communeInput.style.backgroundColor = "#B2FF9F";
                                                     communeInput.style.borderColor = "green";
                                                     document.getElementById('erreurVille').innerHTML = "";
+                                                    infoCommuneCorrecte = data.results[0];
+                                                    nomCommuneCorrect = data.results[0].components.city || data.results[0].components.village || data.results[0].components.town;
                                                 }else {
                                                     // La commune n'existe pas
                                                     communeValide = false;
                                                     document.getElementById('erreurVille').innerHTML = "Entrer une ville valide.";
                                                     communeInput.style.backgroundColor = "#FF9F9F";
                                                     communeInput.style.borderColor = "red";
-                                                    console.log("commune inexistante");
                                                 }
                                             }                                             
                                         
-                                            else if (event.type == "blur"){
-                                                console.log("affichage bonne commune")
-                                                document.getElementById("villeP").value = communeCorrecte;  
-                                                if (estEnBretagne(data.results[0])) {
-                                                        //la commune est en Bretagne
-                                                        communeBretonne = true;
-                                                        
-                                                        if ("postcode" in data.results[0].components){
-                                                            document.getElementById('code_postal').value = data.results[0].components.postcode;
-                                                            document.getElementById("code_postal").disabled = true;
-                                                        }else {
-                                                            document.getElementById('code_postal').value = "";
-                                                            document.getElementById("code_postal").disabled = false;
-                                                        }
-                                                        communeCorrecte = data.results[0].components.city || data.results[0].components.village || data.results[0].components.town;
-                                                        console.log("commune valide");
-                                                        communeValide = true;
-                                                } else {
-                                                        //la commune n'est pas en Bretagne
-                                                        communeBretonne = false;
-                                                        document.getElementById('erreurVille').innerHTML = "La ville doit se situer en Bretagne.";
-                                                        communeValide = false;
-                                                        communeInput.style.backgroundColor = "#FF9F9F";
-                                                        communeInput.style.borderColor = "red";
-                                                        console.log("commune non bretonne");
+                                            if (event.type == "blur"){                                                                                          
+                                                if (communeValide){                 
+                                                    document.getElementById("villeP").value = nomCommuneCorrect;                                 
+                                                    if (estEnBretagne(infoCommuneCorrecte)) {
+                                                            //la commune est en Bretagne
+                                                            communeBretonne = true;        
+                                                            communeInput.style.backgroundColor = "#B2FF9F";
+                                                            communeInput.style.borderColor = "green"; 
+                                                            document.getElementById('erreurVille').innerHTML = "";                                                                                                                       
+                                                            trouveCP(infoCommuneCorrecte);
+                                                            communeValide = true;
+                                                    } else {
+                                                            //la commune n'est pas en Bretagne
+                                                            communeBretonne = false;
+                                                            communeInput.style.backgroundColor = "#FF9F9F";
+                                                            communeInput.style.borderColor = "red";
+                                                            document.getElementById('erreurVille').innerHTML = "La ville doit se situer en Bretagne.";
+                                                            trouveCP(infoCommuneCorrecte);
+                                                            communeValide = false;
+                                                    }
                                                 }
-                                                console.log(communeCorrecte);
-
                                             }                                      
                                         })
                                         .catch(error => {
@@ -145,7 +137,7 @@
                                         });                                    
                                 }
                               
-                                function estEnBretagne(detailsVille) {
+                                function estEnBretagne(infoCommuneCorrecte) {
                                     // Vous pouvez ajuster ces coordonnées pour définir la zone géographique de la Bretagne
                                     var coordBretagne = {
                                         minLat: 47.08,
@@ -154,8 +146,8 @@
                                         maxLng: -1.2
                                     };
 
-                                    var villeLat = detailsVille.geometry.lat;
-                                    var villeLng = detailsVille.geometry.lng;
+                                    var villeLat = infoCommuneCorrecte.geometry.lat;
+                                    var villeLng = infoCommuneCorrecte.geometry.lng;
 
                                     return (
                                         villeLat >= coordBretagne.minLat &&
@@ -163,6 +155,16 @@
                                         villeLng >= coordBretagne.minLng &&
                                         villeLng <= coordBretagne.maxLng
                                     );
+                                }
+
+                                function trouveCP(infoCommuneCorrecte){
+                                    if (("postcode" in infoCommuneCorrecte.components) && (communeBretonne)){
+                                        document.getElementById('code_postal').value = infoCommuneCorrecte.components.postcode;
+                                        document.getElementById("code_postal").disabled = true;
+                                    }else {
+                                        document.getElementById('code_postal').value = "";
+                                        document.getElementById("code_postal").disabled = false;
+                                    }
                                 }
 
                             </script>
