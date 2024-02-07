@@ -1,20 +1,20 @@
 <?php 
-    session_start();
-    include('../parametre_connexion.php');
-    try {
-    $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        print "Erreur !:" . $e->getMessage() . "<br/>";
-        die();
+session_start();
+include('../parametre_connexion.php');
+try {
+$dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    print "Erreur !:" . $e->getMessage() . "<br/>";
+    die();
+}
+// fontion pour afficher les erreurs de modification
+function erreur($nomErreur){
+    if(isset($_SESSION["erreurs"][$nomErreur])){
+        ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
+        unset($_SESSION["erreurs"][$nomErreur]);
     }
-    // fontion pour afficher les erreurs de modification
-    function erreur($nomErreur){
-        if(isset($_SESSION["erreurs"][$nomErreur])){
-            ?><p class="profil-erreurs"><?php echo $_SESSION["erreurs"][$nomErreur]?></p><?php
-            unset($_SESSION["erreurs"][$nomErreur]);
-        }
 }
    
 $plageIndispo = [];
@@ -23,20 +23,20 @@ $plageDispo = [];
 
 <script>
     //recupération des element du html qu'on vas remplir d'information
-dateActuelle = [];
-baliseJour =[];
-precedentSuivant = [];
-datesPlage = [];
-boutonsDates = [];
-prixSejour = [];
+var dateActuelle = [];
+var baliseJour =[];
+var precedentSuivant = [];
+var datesPlage = [];
+var boutonsDates = [];
+var prixSejour = [];
 
 //création de dates qui vont êtres utilisé pour le premier et deuxieme calendrier
-date = [];
-anneeActuelle = [];
-moisActuel = [];
-date2 = [];
-anneeActuelle2 = [];
-moisActuel2 = [];
+var date = [];
+var anneeActuelle = [];
+var moisActuel = [];
+var date2 = [];
+var anneeActuelle2 = [];
+var moisActuel2 = [];
 
 //constante pour les mois de l'année
 const tabMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -50,17 +50,17 @@ var tabRaison = [];
 var classeIndispo = [];
 
 //tableau des calendriers du code HTML
-calendrier = [];
+var calendrier = [];
 
 //instanciation du debut et de la fin de la plage
-premierID = [];
-dernierID = [];
+var premierID = [];
+var dernierID = [];
 
 //classe des jours normaux
-classeNormale = [];
+var classeNormale = [];
 
 //prix des plages sélectionner
-prixPlage = [];
+var prixPlage = [];
 
 function instancier(id, nbCache){
     //recupération des element du html qu'on vas remplir d'information
@@ -459,6 +459,7 @@ function changerDates(id) {
     }
 }
 
+
 //fonction qui affiche les plages
 function afficherPlages(tabPlage, classe, tabMotif, type, id){
     if (type !== "NI"){
@@ -474,8 +475,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         }
         for (i=0; i < tabPlage.length; i++){
             if (document.getElementById(id + "," + tabPlage[i]) && document.getElementById(id + "," + tabPlage[i]).className !== "actif") {
-                
-                document.getElementById(id + "," + tabPlage[i]).className = classe;
+                if (tabMotif[i] == "Réservation"){
+                    document.getElementById(id + "," + tabPlage[i]).className = "reserver";
+                }
+                else if (tabMotif[i] == "Demande devis"){
+                    document.getElementById(id + "," + tabPlage[i]).className = "devis";
+                }
+                else{
+                    document.getElementById(id + "," + tabPlage[i]).className = classe;
+                }
                 if (classe === "disponible"){
                     document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
                 }
@@ -492,9 +500,9 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     }
     
 }
-    numCalendrier = -1;
-</script>
 
+numCalendrier = -1;
+</script>
 
 
 <!doctype html>
