@@ -1,6 +1,7 @@
 // Sélection de tous les éléments de type radio avec le nom "options"
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-const inputs = document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], input[type="radio"]');
+const inputs = document.querySelectorAll('input[type="number"], input[type="text"], input[type="radio"]');
+const inputsDate = document.querySelectorAll('input[type="date"]');
     
 // Fonction pour ajouter des paramètres à une URL
 function ajouterParametreUrl(url, parametre, valeur) {
@@ -70,38 +71,38 @@ checkboxes.forEach(checkbox => {
 
 // Stockage des valeurs des champs de saisie dans un tableau 'filtresInput'
 var filtresInput = {};
-var timeoutId;
 
-// Ajout d'un écouteur d'événement input à chaque champ filtrant
-inputs.forEach(input => {
-    input.addEventListener('change', function(event) {
-        let date = new Date().toLocaleDateString();
-        let tabDate = date.split("/");
-        let dateFormat = tabDate[2] + "-" + tabDate[1] + "-" + tabDate[0];
-        if (!(input.value=="") && !(input.value==0) && !(input.value==dateFormat)){
-            let parametres = obtenirFiltres();
+// Ajout d'un écouteur d'événement change à chaque champ filtrant autre que les dates dans la barre de recherche
+inputs.forEach(input => {input.addEventListener('change', () => {ajouterFiltreURL(input);});});
 
-            // Traitement des champs de saisie
-            let valeur = input.value;
-            let parametre = input.name;
+// Ajout d'un écouteur d'événement blur à chaque champ date filtrant dans la barre de recherche
+inputsDate.forEach(input => {input.addEventListener('blur', () => {ajouterFiltreURL(input);});});
 
-            if (valeur) {
-                parametres[parametre] = valeur;
-            } else {
-                delete parametres[parametre];
-            }
+function ajouterFiltreURL(input){
+    let date = new Date().toLocaleDateString();
+    let tabDate = date.split("/");
+    let dateFormat = tabDate[2] + "-" + tabDate[1] + "-" + tabDate[0];
+    if (!(input.value=="") && !(input.value==0) && !(input.value==dateFormat)){
+        let parametres = obtenirFiltres();
 
-            // Reconstruire l'URL avec les paramètres mis à jour
-            let nouvelleUrl = ajouterOuRemplacerParametresUrl(window.location.href, parametres);
-            // Redirection vers la nouvelle URL
-            redirigerVersNouvelleUrl(nouvelleUrl);
+        // Traitement des champs de saisie
+        let valeur = input.value;
+        let parametre = input.name;
+
+        if (valeur) {
+            parametres[parametre] = valeur;
         } else {
-            return "AHAH YA RIEN";
+            delete parametres[parametre];
         }
-            
-        
-    });
-});
+
+        // Reconstruire l'URL avec les paramètres mis à jour
+        let nouvelleUrl = ajouterOuRemplacerParametresUrl(window.location.href, parametres);
+        // Redirection vers la nouvelle URL
+        redirigerVersNouvelleUrl(nouvelleUrl);
+    } else {
+        return "AHAH YA RIEN";
+    }
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     // Sélectionner le champ personne
@@ -119,5 +120,52 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Sélection des boutons de suppression de filtres
+const btns_supF = document.querySelectorAll(".btn-supF");
 
+// Fonction pour supprimer un paramètre spécifique de l'URL tout en conservant les autres paramètres
+function supprimerParametreUrl(parametre) {
+    let url = window.location.href;
+    let urlObj = new URL(url);
+    let params = new URLSearchParams(urlObj.search);
 
+    // Suppression du paramètre spécifique au filtre en question
+    params.delete(parametre);
+
+    // Reconstruction de l'URL avec les paramètres mis à jour
+    urlObj.search = params.toString();
+
+    return urlObj.toString();
+}
+
+// Ajout d'un écouteur d'événement à chaque bouton de suppression de filtre
+btns_supF.forEach(btn => {
+    btn.addEventListener("click", function() {
+        let params = new URLSearchParams(window.location.search);
+        // Récupération du nom du filtre à supprimer
+        let filterName = btn.querySelector("span:first-child").getAttribute("id");
+
+        let nouvelleUrl = null;
+        //Cas exceptionnel pour les prix et les dates
+        if (filterName === 'prix') {
+            if (params.has('prix_min') || params.has('prix_max')) {
+                params.delete('prix_min');
+                params.delete('prix_max');
+                nouvelleUrl = window.location.pathname + '?' + params.toString();
+            }
+        } else if (filterName === 'date') {
+            if (params.has('date1') || params.has('date2')) {
+                params.delete('date1');
+                params.delete('date2');
+                nouvelleUrl = window.location.pathname + '?' + params.toString();
+            }
+        } else {
+            // Suppression du paramètre correspondant de l'URL
+            params.delete(filterName);
+            nouvelleUrl = window.location.pathname + '?' + params.toString();
+        }
+
+        // Redirection vers la nouvelle URL sans le paramètre supprimé
+        window.location.href = nouvelleUrl;
+    });
+});
