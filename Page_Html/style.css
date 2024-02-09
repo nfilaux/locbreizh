@@ -1851,7 +1851,7 @@ ard
     padding: 2em;
 }
 
-.logcp p {
+.logcp > p {
     align-items: center;
     display: flex;
     font-size: 140%;
@@ -2289,7 +2289,7 @@ iframe {
 .fondP {
     background-color: #fff;
     border: 1px solid #745086;
-    width: 40%;
+    width: 50%;
 }
 
 .fond {
@@ -2370,7 +2370,7 @@ iframe {
 
 .jours li {
     z-index: 1;
-    margin-top: 1em;
+    margin-top: 0.7em;
     font-weight: bold;
     font-size: 1.3em;
 }
@@ -2422,9 +2422,9 @@ iframe {
 .calendrier ul li::before {
     position: absolute;
     content: "";
-    height: 1.6em;
+    height: 2em;
     width: 1.6em;
-    top: 40%;
+    top: 45%;
     left: 51%;
     z-index: -1;
     transform: translate(-50%, -50%);
@@ -2450,7 +2450,12 @@ iframe {
 
 .entreDeux {
     background-color: rgba(130, 100, 170, 0.25);
-    width: 100px;
+}
+
+.prixPlanning{
+    margin : 0px;
+    padding : 0px;
+    font-size: 0.5em;
 }
 
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
@@ -3786,7 +3791,7 @@ iframe {
     }
 
     .plages {
-        width: 80%
+        width: 90%
     }
 
     .fond {

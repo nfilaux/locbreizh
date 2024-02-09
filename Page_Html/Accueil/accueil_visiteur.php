@@ -516,7 +516,7 @@
 </html>
 
 <?php
-    if (isset($_GET['filtre'])) {?>
+    if (isset($_GET['filtre']) || isset($_GET['typeH'])) {?>
         <script> openPopup('filtre','ovFiltre'); </script>
 <?php } ?>
 

@@ -1,5 +1,15 @@
 <?php
 session_start();
+//print_r($_POST);
+$_SESSION["erreurs"] = [];
+$_SESSION["valeurs_complete"] = $_POST;
+
+if ($_POST['nb_chambresP'] > 0 ){
+    if ($_POST['nb_lit_simpleP'] <= 0 && $_POST['nb_lit_doubleP'] <= 0){
+        $_SESSION["erreurs"]["chambre"] = "Une chambre doit posséder au minimum un lit !";
+        header("Location: http://localhost:8888/Logement/remplir_formulaire.php");
+    }
+}
 
 include('../parametre_connexion.php');
 try {

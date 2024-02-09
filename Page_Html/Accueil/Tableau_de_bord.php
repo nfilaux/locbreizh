@@ -153,20 +153,20 @@ function afficherCalendrier(classe, id) {
 
     //création du calendrier de gauche
     for (i = premierJourMois - 1; i >= 0; i--) {
-        texteListe += '<li class="inactif">' + (derniereDateMoisAvant - i) + '</li>';
+        texteListe += '<li class="inactif">' + (derniereDateMoisAvant - i) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
         nbJours++;
     }
 
     for (i = 1; i <= derniereDateMois; i++) {
         idJour = (moisActuel[id]+ 1) + '/' + (k + 1) + '/' + anneeActuelle[id];
-        texteListe += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '</li>';
+        texteListe += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
         k++;
         nbJours++;
     }
 
 
     for (i = derniereJourMois; nbJours < 42; i++) {
-        texteListe += '<li class="inactif">' + (i - derniereJourMois + 1) + '</li>';
+        texteListe += '<li class="inactif">' + (i - derniereJourMois + 1) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
         nbJours++;
     }
 
@@ -174,19 +174,19 @@ function afficherCalendrier(classe, id) {
     if (dateActuelle[id].length == 2){
         //création du calendrier de droite
         for (i = premierJourMois2 - 1; i >= 0; i--) {
-            texteListe2 += '<li class="inactif">' + (derniereDateMoisAvant2 - i) + '</li>';
+            texteListe2 += '<li class="inactif">' + (derniereDateMoisAvant2 - i) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
             nbJours++;
         }
 
         for (i = 1; i <= derniereDateMois2; i++) {
             idJour = (moisActuel2[id] + 1) + '/' + (k + 1 - derniereDateMois) + '/' + anneeActuelle2[id];
-            texteListe2 += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '</li>';
+            texteListe2 += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
             k++;
             nbJours++;
         }
 
         for (i = derniereJourMois2; nbJours < 84; i++) {
-            texteListe2 += '<li class="inactif">' + (i - derniereJourMois2 + 1) + '</li>';
+            texteListe2 += '<li class="inactif">' + (i - derniereJourMois2 + 1) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
             nbJours++;
         }
         baliseJour[id][1].innerHTML = texteListe2;
@@ -273,6 +273,13 @@ function changerJour(elem, id) {
                     }
                     dernierID[id] = element.id;
                     element.className = "actif";
+                }
+                //remet les plages
+                if (tabDispo[id][0]){
+                    afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+                }
+                if (tabIndispo[id][0]){
+                    afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
                 }
                 //active la zone de selection entre les deux dates
                 datePremier = new Date(premierID[id].split(',')[1]).getTime();
@@ -384,6 +391,7 @@ function changerJour(elem, id) {
     }
 }
 
+
 //change les dates se trouvant à coté du calendrier et dans le formulaire pour demander un devis
 function changerDates(id) {
     listeActif = calendrier[id].getElementsByClassName("actif");
@@ -485,10 +493,12 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     document.getElementById(id + "," + tabPlage[i]).className = classe;
                 }
                 if (classe == "disponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
+                    document.getElementById(id + "," + tabPlage[i]).innerHTML = tabPlage[i].split("/")[1] + '<p class="prixPlanning">' + tabMotif[i] + "€</p>";
                 }
                 else if (classe == "indisponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i];
+                    if (tabMotif[i][1]){
+                        document.getElementById(id + "," + tabPlage[i]).innerHTML = tabPlage[i].split("/")[1] + '<p class="prixPlanning">' + tabMotif[i][1] + "€</p>";
+                    }
                 }
             }
         }
@@ -692,12 +702,8 @@ numCalendrier = -1;
                                         <br><?php erreur("prix") ?><br>
 
                                         <label for="indisponible"> Indisponible : </label>
-                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false" onchange="changer(this.checked, <?php echo $key; ?>)"/>
+                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false"/>
                                         <br><br>
-
-                                        <label for="libelleIndispo"> Raison d'indisponibilité : </label>
-                                        <input type="text" class="libelleIndisponibilite" id="libelleIndispo" name="libelleIndispo" disabled=true/>
-                                        <br><?php erreur("libelleIndispo") ?><br>
 
                                         <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
 
@@ -720,20 +726,6 @@ numCalendrier = -1;
 
                                         <button type="submit" class="btn-ajt">Supprimer plage</button>
                                     </form>
-
-                                
-                                    <script type="text/javascript">
-                                        function changer(etat, key){
-                                            if (etat){
-                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = true;
-                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = false;
-                                            }
-                                            else{
-                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = false;
-                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = true;
-                                            }
-                                        }
-                                    </script>
 
                                     <?php
                                     try {
@@ -780,7 +772,7 @@ numCalendrier = -1;
                                     var tab = <?php echo json_encode($plageIndispo); ?>;
                                     var tabRes = [];
                                     var tabMotif = [];
-                                    for (i=1 ; i < tab.length; i++){
+                                    for (i=0 ; i < tab.length; i++){
                                         split = tab[i]["jour_plage_ponctuelle"];
                                         part1 = split.split('-')[1];
                                         if (part1[0] == '0'){
