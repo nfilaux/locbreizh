@@ -8,10 +8,6 @@
             $err = true;
         }
     }
-    else if (isset($_POST['libelleIndispo']) && $_POST['libelleIndispo'] === ""){
-        $_SESSION['erreurs'] = ["libelleIndispo" => "Veuillez renseigner la raison de l'indisponibilitée\n"];
-        $err = true;
-    }
     if ((isset($_POST['debut_plage_ponctuelle']) && $_POST['debut_plage_ponctuelle'] === "" )|| (isset($_POST['fin_plage_ponctuelle']) && $_POST['fin_plage_ponctuelle'] === "")){
         $_SESSION['erreurs'] = ["plage" => "Veuillez sélectionner une plage\n"];
         $err = true;
@@ -34,6 +30,7 @@
             $code->execute();
             $variable = $code->fetch();
             if (isset($_POST['indisponible'])) {
+                $motif = "motif personnel";
                 foreach ($tabJours as $key => $elem){
                     $stmt = $dbh->prepare("SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE jour_plage_ponctuelle =  :jour_plage_ponctuelle AND code_planning = :code_planning;");
                     $stmt->bindParam(':jour_plage_ponctuelle', $elem);
@@ -56,7 +53,7 @@
                     $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle_indisponible(id_plage_ponctuelle, libelle_indisponibilite)
                     VALUES (:id_plage_ponctuelle, :libelle_indisponibilite);");
                     $stmt->bindParam(':id_plage_ponctuelle', $id_plage);
-                    $stmt->bindParam(':libelle_indisponibilite', $_POST['libelleIndispo']);
+                    $stmt->bindParam(':libelle_indisponibilite', $motif);
                     $stmt->execute();
                 }
             } else {

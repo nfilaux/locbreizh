@@ -475,20 +475,20 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         }
         for (i=0; i < tabPlage.length; i++){
             if (document.getElementById(id + "," + tabPlage[i]) && document.getElementById(id + "," + tabPlage[i]).className !== "actif") {
-                if (tabMotif[i] == "Réservation"){
+                if (tabMotif[i][0] == "Réservation"){
                     document.getElementById(id + "," + tabPlage[i]).className = "reserver";
                 }
-                else if (tabMotif[i] == "Demande devis"){
+                else if (tabMotif[i][0] == "Demande devis"){
                     document.getElementById(id + "," + tabPlage[i]).className = "devis";
                 }
                 else{
                     document.getElementById(id + "," + tabPlage[i]).className = classe;
                 }
-                if (classe === "disponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
+                if (classe == "disponible"){
+                    document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i][0] + "€";
                 }
-                else if (classe === "indisponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i];
+                else if (classe == "indisponible"){
+                    document.getElementById(id + "," + tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i][0];
                 }
             }
         }
@@ -517,12 +517,12 @@ numCalendrier = -1;
 <body class="pageproprio">
     <?php 
         include('../header-footer/choose_header.php');
-        if(isset($_GET["cs"])){
+        /*if(isset($_GET["cs"])){
             $cas_popup = $_GET["cs"];
         }
         else{
             $cas_popup = '';
-        }
+        }*/
     ?>
 
     <main class="MainTablo">
@@ -692,12 +692,8 @@ numCalendrier = -1;
                                         <br><?php erreur("prix") ?><br>
 
                                         <label for="indisponible"> Indisponible : </label>
-                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false" onchange="changer(this.checked, <?php echo $key; ?>)"/>
+                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false"/>
                                         <br><br>
-
-                                        <label for="libelleIndispo"> Raison d'indisponibilité : </label>
-                                        <input type="text" class="libelleIndisponibilite" id="libelleIndispo" name="libelleIndispo" disabled=true/>
-                                        <br><?php erreur("libelleIndispo") ?><br>
 
                                         <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
 
@@ -721,20 +717,6 @@ numCalendrier = -1;
                                         <button type="submit" class="btn-ajt">Supprimer plage</button>
                                     </form>
 
-                                
-                                    <script type="text/javascript">
-                                        function changer(etat, key){
-                                            if (etat){
-                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = true;
-                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = false;
-                                            }
-                                            else{
-                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = false;
-                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = true;
-                                            }
-                                        }
-                                    </script>
-
                                     <?php
                                     try {
                                         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -751,7 +733,7 @@ numCalendrier = -1;
                                         
                                         $lesPlages->execute();
 
-                                        $plageIndispo = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
+                                        $plageIndispo = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle, prix_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
                                         ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_indisponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
                                         $plageIndispo->execute();
                                         $plageIndispo = $plageIndispo->fetchAll();
@@ -791,8 +773,10 @@ numCalendrier = -1;
                                             part2 = part2[1];
                                         }
                                         tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
-                                        tabMotif[i] = tab[i]["libelle_indisponibilite"];
+                                        tabMotif[i] = [tab[i]["libelle_indisponibilite"], ''];
+                                        tabMotif[i][1] = tab[i]["prix_plage_ponctuelle"];
                                     }
+                                    console.log(tabMotif);
                                     afficherPlages(tabRes, "indisponible", tabMotif, "I", numCalendrier);
 
                                     var tab = <?php echo json_encode($plageDispo); ?>;

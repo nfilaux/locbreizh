@@ -1,5 +1,17 @@
 <?php
 session_start();
+//print_r($_POST);
+$_SESSION["erreurs"] = [];
+$_SESSION["valeurs_complete"] = $_POST;
+//print_r($_SESSION["valeurs_complete"]);
+//echo 222222;
+
+if ($_POST['nb_chambresP'] > 0 ){
+    if ($_POST['nb_lit_simpleP'] <= 0 && $_POST['nb_lit_doubleP'] <= 0){
+        $_SESSION["erreurs"]["chambre"] = "Une chambre doit posséder au minimum un lit !";
+        header("Location: http://localhost:8888/Logement/remplir_formulaire.php");
+    }
+}
 
 include('../parametre_connexion.php');
 try {
@@ -1047,7 +1059,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     var commune = "<?php echo $ville;?>";
                     console.log(commune);
 
-                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
+                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=90a3f846aa9e490d927a787facf78c7e";
 
                     fetch(opencageUrl)
                         .then(response => response.json())
