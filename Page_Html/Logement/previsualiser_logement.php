@@ -7,7 +7,7 @@ $_SESSION["valeurs_complete"] = $_POST;
 //echo 222222;
 
 if ($_POST['nb_chambresP'] > 0 ){
-    if ($_POST['nb_lit_simple'] <= 0 && $_POST['nb_lit_simple'] <= 0){
+    if ($_POST['nb_lit_simpleP'] <= 0 && $_POST['nb_lit_doubleP'] <= 0){
         $_SESSION["erreurs"]["chambre"] = "Une chambre doit posséder au minimum un lit !";
         header("Location: http://localhost:8888/Logement/remplir_formulaire.php");
     }
