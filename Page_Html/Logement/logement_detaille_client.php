@@ -1190,7 +1190,7 @@ numCalendrier = -1;
                                         <div id="overlaySignalement" onclick="closePopupFeedback('popupFeedback', 'overlaySignalement')"></div>
                                         <div id="popupFeedback" class="popupFeedback">
                                             <p>Le signalement a bien été envoyé.</p>
-                                        <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" ><button class="btnEnvoyer"></button>OK</a>
+                                            <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>"><button class="btnEnvoyer"></button>OK</a>
                                     </div> 
                                 </form>
                             <?php }

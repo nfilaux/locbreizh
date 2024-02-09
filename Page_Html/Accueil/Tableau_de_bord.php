@@ -620,11 +620,11 @@ numCalendrier = -1;
                                     
                                     <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
                                     <div id="validation" class="plages"> 
-                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log[$_GET["idlog"]]["libelle_logement"]; ?> ? 
+                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $id_log ?> ? 
                                         <p class="erreur">Cette action est irreversible !</p> 
                                         <div id='boutons'>
                                             <button onclick="closePopup('validation','overlay_validation')" class="btn-ajoutlog">Annuler</button> 
-                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $_GET["idlog"]?>" ><button class="btn-suppr">Supprimer</button></a>
+                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $id_log ?>" ><button class="btn-suppr">Supprimer</button></a>
                                         </div>
                                     </div>
                                     
