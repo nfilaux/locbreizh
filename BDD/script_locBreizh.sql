@@ -172,6 +172,7 @@ CREATE TABLE
     _plage_ponctuelle_indisponible (
         id_plage_ponctuelle INTEGER,
         libelle_indisponibilite  VARCHAR(255),
+        prix_plage_ponctuelle FLOAT,
         CONSTRAINT _plage_ponctuelle_indisponible_pk PRIMARY KEY (id_plage_ponctuelle),
         CONSTRAINT _plage_ponctuelle_indisponible_fk FOREIGN KEY (id_plage_ponctuelle) REFERENCES _plage_ponctuelle (id_plage_ponctuelle) ON DELETE CASCADE
     );
@@ -185,16 +186,6 @@ CREATE TABLE
         code_planning INTEGER NOT NULL,
         CONSTRAINT contrainte_pk PRIMARY KEY (num_contrainte),
         CONSTRAINT contrainte_fk_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
-    );
-
-/*   table  plage_recurrente : est utilisée pour renseigner des plages récurrente   */
-
-CREATE TABLE
-    _plage_devis (
-        id_plage_ponctuelle INTEGER,
-        prix_plage_ponctuelle FLOAT NOT NULL,
-        CONSTRAINT _plage_devis_pk PRIMARY KEY (id_plage_ponctuelle),
-        CONSTRAINT _plage_devis_fk FOREIGN KEY (id_plage_ponctuelle) REFERENCES _plage_ponctuelle (id_plage_ponctuelle) ON DELETE CASCADE
     );
 
 /*   table taxe_sejour : est utilisée pour stocker les possible différentes taxes de séjour   */

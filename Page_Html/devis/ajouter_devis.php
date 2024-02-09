@@ -217,21 +217,6 @@
             $stmt->execute();
             $jour_existant = $stmt->fetch();
 
-            $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(jour_plage_ponctuelle, code_planning)
-            VALUES (:jour_plage_ponctuelle, :code_planning);");
-            $stmt->bindParam(':jour_plage_ponctuelle', $elem);
-            $stmt->bindParam(':code_planning', $variable['code_planning']);
-            $stmt->execute();
-            $stmt = $dbh->prepare("SELECT currval('locbreizh._plage_ponctuelle_id_plage_ponctuelle_seq');");
-            $stmt->execute();
-            $id_plage = $stmt->fetchColumn();
-
-            $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_devis(id_plage_ponctuelle, prix_plage_ponctuelle)
-            VALUES (:id_plage_ponctuelle, :prix_plage_ponctuelle);");
-            $stmt->bindParam(':id_plage_ponctuelle', $id_plage);
-            $stmt->bindParam(':prix_plage_ponctuelle', $jour_existant['prix_plage_ponctuelle']);
-            $stmt->execute();
-
             $code = $dbh->prepare("DELETE FROM locbreizh._plage_ponctuelle WHERE id_plage_ponctuelle = :id_plage_ponctuelle;");
             $code->bindParam(':id_plage_ponctuelle', $jour_existant['id_plage_ponctuelle']);
             $code->execute();
@@ -245,10 +230,11 @@
             $stmt->execute();
             $id_plage = $stmt->fetchColumn();
 
-            $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle_indisponible(id_plage_ponctuelle, libelle_indisponibilite)
-            VALUES (:id_plage_ponctuelle, :libelle_indisponibilite);");
+            $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle_indisponible(id_plage_ponctuelle, libelle_indisponibilite, prix_plage_ponctuelle)
+            VALUES (:id_plage_ponctuelle, :libelle_indisponibilite, :prix_plage_ponctuelle);");
             $stmt->bindParam(':id_plage_ponctuelle', $id_plage);
             $stmt->bindParam(':libelle_indisponibilite', $raison);
+            $stmt->bindParam(':prix_plage_ponctuelle', $jour_existant['prix_plage_ponctuelle']);
             $stmt->execute();
         }
         // accepte la demande pour informer le client
