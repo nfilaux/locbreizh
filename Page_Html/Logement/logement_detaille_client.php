@@ -835,7 +835,7 @@ numCalendrier = -1;
                 $code = $code->fetch()['code_planning'];
 
                 $plageDispo = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
-                ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
+                ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} AND jour_plage_ponctuelle > NOW();");
                 $plageDispo->execute();
                 $plageDispo = $plageDispo->fetchAll();
 
@@ -952,7 +952,7 @@ numCalendrier = -1;
                     var commune = "<?php echo $info['ville'];?>";
                     console.log(commune);
 
-                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
+                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=90a3f846aa9e490d927a787facf78c7e";
 
                     fetch(opencageUrl)
                         .then(response => response.json())
@@ -1183,7 +1183,7 @@ numCalendrier = -1;
                                         <div id="overlaySignalement" onclick="closePopupFeedback('popupFeedback', 'overlaySignalement')"></div>
                                         <div id="popupFeedback" class="popupFeedback">
                                             <p>Le signalement a bien été envoyé.</p>
-                                        <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" ><button class="btnEnvoyer"></button>OK</a>
+                                            <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>"><button class="btnEnvoyer"></button>OK</a>
                                     </div> 
                                 </form>
                             <?php }
