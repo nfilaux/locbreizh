@@ -1200,8 +1200,8 @@ footer a:visited {
     opacity: 50%;
     text-align: center;
 }
-ard
-#charges_animaux,
+
+ard #charges_animaux,
 #charges_pers_sup,
 #charges_menage {
     color: #957BB0;
@@ -1211,7 +1211,7 @@ ard
 /*----------------------------------------------------------------Accueil----------------------------------------------------------------*/
 
 /* style pour titre signalement admin */
-#titre-signalement{
+#titre-signalement {
     margin-bottom: 50px;
     color: #274065;
 }
@@ -1223,6 +1223,7 @@ ard
     justify-content: space-evenly;
     margin: 0 auto;
     height: 58vh;
+    text-align: center;
     overflow-x: auto;
 }
 
@@ -1276,8 +1277,9 @@ ard
     flex-direction: column;
 }
 
-.acc-with-map{
+.acc-with-map {
     align-items: center;
+    width: 40%;
 }
 
 .otherInfos div {
@@ -1857,7 +1859,7 @@ ard
     padding: 2em;
 }
 
-.logcp > p {
+.logcp>p {
     align-items: center;
     display: flex;
     font-size: 140%;
@@ -2458,9 +2460,9 @@ iframe {
     background-color: rgba(130, 100, 170, 0.25);
 }
 
-.prixPlanning{
-    margin : 0px;
-    padding : 0px;
+.prixPlanning {
+    margin: 0px;
+    padding: 0px;
     font-size: 0.5em;
 }
 
@@ -3371,7 +3373,7 @@ iframe {
 
 /* admib --> signalement */
 
-.sign-h4{
+.sign-h4 {
     text-align: center;
 }
 
@@ -3819,7 +3821,8 @@ iframe {
         margin: 2em auto;
     }
 
-    .logrowcal ,main div .logrow{
+    .logrowcal,
+    main div .logrow {
         flex-direction: column-reverse;
     }
 

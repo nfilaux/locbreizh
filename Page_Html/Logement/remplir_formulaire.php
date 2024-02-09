@@ -77,13 +77,7 @@
                                 communeInput.addEventListener('input', verifCommune);
                                 communeInput.addEventListener('blur', verifCommune);
 
-
-                                form.addEventListener('submit', function(event) {
-                                    if (!communeValide) {
-                                        event.preventDefault();
-                                        document.getElementById('erreurVille').innerHTML = "Veuillez entrer une ville Bretonne valide.";
-                                    }
-                                });
+                                
 
                                 function verifCommune(event) {
                                     var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(communeInput.value) + "&key=90a3f846aa9e490d927a787facf78c7e";
@@ -111,8 +105,8 @@
                                         
                                             if (event.type == "blur"){                                                                                          
                                                 if (communeValide){                 
-                                                    document.getElementById("villeP").value = nomCommuneCorrect;                                 
                                                     if (estEnBretagne(infoCommuneCorrecte)) {
+                                                            document.getElementById("villeP").value = nomCommuneCorrect;                                 
                                                             //la commune est en Bretagne
                                                             communeBretonne = true;        
                                                             communeInput.style.backgroundColor = "#B2FF9F";
@@ -130,13 +124,25 @@
                                                             communeValide = false;
                                                     }
                                                 }
-                                            }     
-                                            console.log(nomCommuneCorrect);                                 
+                                            }                                                                    
                                         })
                                         .catch(error => {
                                             console.error("Erreur lors de la requête de géocodage avec OpenCage Data:", error);
                                         });                                    
                                 }
+
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    if (communeInput.value.trim() !== "") {
+                                        communeValide = true;
+                                    }
+                                });
+
+                                form.addEventListener('submit', function(event) {
+                                    if (!communeValide) {
+                                        event.preventDefault();
+                                        document.getElementById('erreurVille').innerHTML = "Veuillez entrer une ville Bretonne valide.";
+                                    }
+                                });
                               
                                 function estEnBretagne(infoCommuneCorrecte) {
                                     // Vous pouvez ajuster ces coordonnées pour définir la zone géographique de la Bretagne
@@ -191,6 +197,7 @@
                                             }
                                         }
                                     }
+
                                 </script>
                             </div>
 
