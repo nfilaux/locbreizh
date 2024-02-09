@@ -274,6 +274,13 @@ function changerJour(elem, id) {
                     dernierID[id] = element.id;
                     element.className = "actif";
                 }
+                //remet les plages
+                if (tabDispo[id][0]){
+                    afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+                }
+                if (tabIndispo[id][0]){
+                    afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+                }
                 //active la zone de selection entre les deux dates
                 datePremier = new Date(premierID[id].split(',')[1]).getTime();
                 dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
@@ -383,6 +390,7 @@ function changerJour(elem, id) {
         }
     }
 }
+
 
 //change les dates se trouvant à coté du calendrier et dans le formulaire pour demander un devis
 function changerDates(id) {
@@ -612,11 +620,11 @@ numCalendrier = -1;
                                     
                                     <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
                                     <div id="validation" class="plages"> 
-                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $infos_log[$_GET["idlog"]]["libelle_logement"]; ?> ? 
+                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $id_log ?> ? 
                                         <p class="erreur">Cette action est irreversible !</p> 
                                         <div id='boutons'>
                                             <button onclick="closePopup('validation','overlay_validation')" class="btn-ajoutlog">Annuler</button> 
-                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $_GET["idlog"]?>" ><button class="btn-suppr">Supprimer</button></a>
+                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $id_log ?>" ><button class="btn-suppr">Supprimer</button></a>
                                         </div>
                                     </div>
                                     

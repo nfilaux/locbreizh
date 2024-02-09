@@ -24,7 +24,7 @@
         try {
             $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            /*test si admin
+
             $verifAdmin = $dbh->prepare("SELECT * FROM locbreizh._admin;");
             $verifAdmin->execute();
             $admin = $verifAdmin->fetch();
@@ -32,7 +32,6 @@
                 header("Location: ../Accueil/admin.php");
                 exit();
             }
-            */
 
             $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
             $verifPseudo->execute();
