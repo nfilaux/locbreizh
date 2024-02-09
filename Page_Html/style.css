@@ -1210,6 +1210,12 @@ ard
 
 /*----------------------------------------------------------------Accueil----------------------------------------------------------------*/
 
+/* style pour titre signalement admin */
+#titre-signalement{
+    margin-bottom: 50px;
+    color: #274065;
+}
+
 .card {
     display: flex;
     flex-direction: column;
@@ -3362,6 +3368,12 @@ iframe {
 .btn_ferm_annuler {
     background-color: #745086;
     border: 1px solid #745086;
+}
+
+/* admib --> signalement */
+
+.sign-h4{
+    text-align: center;
 }
 
 @media screen and (min-width: 900px) and (max-width: 1280px) {

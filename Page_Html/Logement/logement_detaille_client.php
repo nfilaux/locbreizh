@@ -1007,7 +1007,7 @@ numCalendrier = -1;
             $stmt->execute();
             $moyenne = $stmt->fetch();
 
-            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo, id_avis
+            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo, id_compte, id_avis
             from locbreizh._avis a
             join locbreizh._compte c on a.auteur = c.id_compte
             where a.logement = :logement
@@ -1015,6 +1015,13 @@ numCalendrier = -1;
             $stmt->bindParam(':logement', $_GET['logement']);
             $stmt->execute();
             $avis = $stmt->fetchAll();
+
+            $dejaEcrit = false;
+            foreach($avis as $avi){
+                if($avi['id_compte'] == $_SESSION['id']){
+                    $dejaEcrit = true;
+                }
+            }
 
             $stmt = $dbh->prepare('SELECT client
             from locbreizh._reservation
@@ -1036,7 +1043,7 @@ numCalendrier = -1;
             </div>
 
             <?php
-            if($form){ ?>
+            if($form && !$dejaEcrit){ ?>
             <div class="rediger-avis">
                 <p>Vous aussi donnez votre avis sur ce logement !</p>
                 <form class="messageBox" action="envoyer_avis.php" method="post" id="avis_box">
@@ -1099,7 +1106,7 @@ numCalendrier = -1;
                     <p><?php echo $avi['contenu_avis'];?></p>
                     <div class="avis-box-space-between">
                         <a></a>
-                        <a onclick="openPopup('<?php echo $avi['id_avis'].'Sig' ?>', '<?php echo $avi['id_avis'].'SigOv' ?>')">Signaler</a>
+                        <a onclick="<?php if($avi['id_compte'] != $_SESSION['id']){ ?>openPopup('<?php echo $avi['id_avis'].'Sig' ?>', '<?php echo $avi['id_avis'].'SigOv' ?>')<?php }?>">Signaler</a>
                     </div>
                     <div class="overlay_plages" id="<?php echo $avi['id_avis'].'SigOv';?>"></div>
                     <form id="<?php echo $avi['id_avis'].'Sig'; ?>" class="popup_avis" action="envoyerSignalementAvis.php" method="post">
