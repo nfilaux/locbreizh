@@ -48,10 +48,7 @@
                         $res = $code->execute();
                     }
                     if ($res){
-                        echo $jour_existant;
-                        echo $res;
-                        echo ";";
-                        /*
+                    
                         $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(jour_plage_ponctuelle, code_planning)
                         VALUES (:jour_plage_ponctuelle, :code_planning);");
                         $stmt->bindParam(':jour_plage_ponctuelle', $elem);
@@ -64,7 +61,7 @@
                         VALUES (:id_plage_ponctuelle, :libelle_indisponibilite);");
                         $stmt->bindParam(':id_plage_ponctuelle', $id_plage);
                         $stmt->bindParam(':libelle_indisponibilite', $motif);
-                        $stmt->execute();*/
+                        $stmt->execute();
                     }
                 }
             } else {
@@ -84,9 +81,6 @@
                         $res = $code->execute();
                     }
                     if ($res){
-                        echo $res;
-                        echo ";";
-                        /*
                         $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(jour_plage_ponctuelle, code_planning)
                         VALUES (:jour_plage_ponctuelle, :code_planning);");
                         $stmt->bindParam(':jour_plage_ponctuelle', $elem);
@@ -99,7 +93,7 @@
                         VALUES (:id_plage_ponctuelle, :prix_plage_ponctuelle);");
                         $stmt->bindParam(':id_plage_ponctuelle', $id_plage);
                         $stmt->bindParam(':prix_plage_ponctuelle', $_POST['prix']);
-                        $stmt->execute();*/
+                        $stmt->execute();
                     }
                 }
             }
@@ -121,5 +115,5 @@
             die();
         }
     }
-    //header("location: ../Accueil/Tableau_de_bord.php?popup={$_POST['nomPopUp']}&overlay={$_POST['overlayPopUp']}");
+    header("location: ../Accueil/Tableau_de_bord.php?popup={$_POST['nomPopUp']}&overlay={$_POST['overlayPopUp']}");
 ?>
