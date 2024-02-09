@@ -3346,6 +3346,12 @@ iframe {
     border: 1px solid #745086;
 }
 
+/* admib --> signalement */
+
+.sign-h4{
+    text-align: center;
+}
+
 @media screen and (min-width: 900px) and (max-width: 1280px) {
     .logot {
         height: 3em;
