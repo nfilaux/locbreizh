@@ -1217,6 +1217,7 @@ ard
     justify-content: space-evenly;
     margin: 0 auto;
     height: 58vh;
+    text-align: center;
     overflow-x: auto;
 }
 
