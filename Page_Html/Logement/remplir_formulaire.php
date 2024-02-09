@@ -77,13 +77,7 @@
                                 communeInput.addEventListener('input', verifCommune);
                                 communeInput.addEventListener('blur', verifCommune);
 
-
-                                form.addEventListener('submit', function(event) {
-                                    if (!communeValide) {
-                                        event.preventDefault();
-                                        document.getElementById('erreurVille').innerHTML = "Veuillez entrer une ville Bretonne valide.";
-                                    }
-                                });
+                                
 
                                 function verifCommune(event) {
                                     var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(communeInput.value) + "&key=90a3f846aa9e490d927a787facf78c7e";
@@ -111,8 +105,8 @@
                                         
                                             if (event.type == "blur"){                                                                                          
                                                 if (communeValide){                 
-                                                    document.getElementById("villeP").value = nomCommuneCorrect;                                 
                                                     if (estEnBretagne(infoCommuneCorrecte)) {
+                                                            document.getElementById("villeP").value = nomCommuneCorrect;                                 
                                                             //la commune est en Bretagne
                                                             communeBretonne = true;        
                                                             communeInput.style.backgroundColor = "#B2FF9F";
@@ -130,13 +124,25 @@
                                                             communeValide = false;
                                                     }
                                                 }
-                                            }     
-                                            console.log(nomCommuneCorrect);                                 
+                                            }                                                                    
                                         })
                                         .catch(error => {
                                             console.error("Erreur lors de la requête de géocodage avec OpenCage Data:", error);
                                         });                                    
                                 }
+
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    if (communeInput.value.trim() !== "") {
+                                        communeValide = true;
+                                    }
+                                });
+
+                                form.addEventListener('submit', function(event) {
+                                    if (!communeValide) {
+                                        event.preventDefault();
+                                        document.getElementById('erreurVille').innerHTML = "Veuillez entrer une ville Bretonne valide.";
+                                    }
+                                });
                               
                                 function estEnBretagne(infoCommuneCorrecte) {
                                     // Vous pouvez ajuster ces coordonnées pour définir la zone géographique de la Bretagne
@@ -191,6 +197,7 @@
                                             }
                                         }
                                     }
+
                                 </script>
                             </div>
 
@@ -293,7 +300,7 @@
                                                 <input id='equipement' type='checkbox' name='balconP' <?php if(isset($_SESSION["valeurs_complete"]["balconP"])) { echo "checked";};?>>Balcon
                                             </div>
                                             <div class="logcheckbox">
-                                                <input id='equipement' type='checkbox' name='terrasseP' <?php if(isset($_SESSION["valeurs_complete"]["terasseP"])) { echo "checked";};?>>Terrasse
+                                                <input id='equipement' type='checkbox' name='terrasseP' <?php if(isset($_SESSION["valeurs_complete"]["terrasseP"])) { echo "checked";};?>>Terrasse
                                             </div>
                                             <div class="logcheckbox">
                                                 <input id='equipement' type='checkbox' name='piscineP' <?php if(isset($_SESSION["valeurs_complete"]["piscineP"])) { echo "checked";};?>>Piscine
@@ -313,7 +320,7 @@
                                         </div>
                                         <div class="logcolumn">
                                             <div class="logcheckbox">
-                                                <input id='equipement' type='checkbox' name='parking_publicP' <?php if(isset($_SESSION["valeurs_complete"]["parking_pblicP"])) { echo "checked";};?>>Parking public
+                                                <input id='equipement' type='checkbox' name='parking_publicP' <?php if(isset($_SESSION["valeurs_complete"]["parking_publicP"])) { echo "checked";};?>>Parking public
                                             </div>
                                             <div class="logcheckbox">
                                                 <input id='equipement' type='checkbox' name='parking_priveP' <?php if(isset($_SESSION["valeurs_complete"]["parking_priveP"])) { echo "checked";};?>>Parking privé

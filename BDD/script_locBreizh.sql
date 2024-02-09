@@ -544,3 +544,5 @@ INSERT INTO _charge_additionnelles VALUES ( 'animaux' );
 INSERT INTO
     _charge_additionnelles
 VALUES ('personnes_supplementaires');
+
+INSERT INTO _admin VALUES ( 'admin', 'admin');

@@ -30,7 +30,10 @@
                 $stmt->execute();
                 $jour_existant = $stmt->fetchColumn();
                 if (!empty($jour_existant)){
-                    $code = $dbh->prepare("DELETE FROM locbreizh._plage_ponctuelle WHERE id_plage_ponctuelle = :id_plage_ponctuelle;");
+                    $code = $dbh->prepare("DELETE FROM locbreizh._plage_ponctuelle WHERE id_plage_ponctuelle = :id_plage_ponctuelle AND id_plage_ponctuelle NOT IN (
+                    SELECT p.id_plage_ponctuelle FROM locbreizh._plage_ponctuelle p INNER JOIN locbreizh._plage_ponctuelle_indisponible i
+                    ON p.id_plage_ponctuelle = i.id_plage_ponctuelle
+                    AND (i.libelle_indisponibilite = 'Réservation' OR i.libelle_indisponibilite = 'Demande devis'));");
                     $code->bindParam(':id_plage_ponctuelle', $jour_existant);
                     $code->execute();
                 }

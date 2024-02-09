@@ -1015,6 +1015,12 @@ numCalendrier = -1;
                 $nb_avis = 0;
                 foreach ($avis as $avi) {
                     $nb_avis++;
+                    $dejaRepondu = false;
+                    foreach($reponses as $reponse){
+                        if($reponse['id_avis'] == $avi['id_avis']){
+                            $dejaRepondu = true;
+                        }
+                    }
                 ?>
                 <div class="box-avis <?php if($nb_avis > 4){echo 'hidden';}?>">
                     <div class="avis-box-space-between">
@@ -1033,7 +1039,7 @@ numCalendrier = -1;
                     </div>
                     <p><?php echo $avi['contenu_avis'];?></p>
                     <div class="avis-box-space-between">
-                        <a onclick="openPopup('<?php echo $avi['id_avis'] ?>', '<?php echo $avi['id_avis'].'ov' ?>')">Répondre au commentaire</a>
+                        <a onclick="openPopup('<?php echo $avi['id_avis'] ?>', '<?php echo $avi['id_avis'].'ov' ?>')"><?php if(!$dejaRepondu){echo 'Répondre au commentaire'; }?></a>
                         <a onclick="openPopup('<?php echo $avi['id_avis'].'Sig' ?>', '<?php echo $avi['id_avis'].'SigOv' ?>')">Signaler</a>
                     </div>
                     <div class="overlay_plages" id="<?php echo $avi['id_avis'].'SigOv';?>"></div>

@@ -198,6 +198,11 @@ body {
     font-weight: bold;
 }
 
+#erreurCP, #erreurVille {
+    color : red;
+    font-size: small;
+}
+
 .valid {
     color: green;
     font-weight: bold;
@@ -226,10 +231,10 @@ body {
 
 /*---------------------------------------------------------------- Filtres --------------------------------------------------------------*/
 .section-filters {
-    background: url("Ressources/Images/fond_catalogue.jpg") no-repeat;
-    background-size: cover;
-    padding: 10em;
-    margin-bottom: 3em;
+    width: 90%;
+    position: absolute;
+    left: 5%;
+    z-index: 100000;
 }
 
 .menu-filtre {
@@ -241,7 +246,7 @@ body {
     background-color: white;
     padding: 1.25em;
     border-radius: 0.5em;
-    box-shadow: 10px 5px 5px black;
+    box-shadow: 10px 5px 5px gray;
 
 }
 
@@ -655,13 +660,12 @@ body {
     color: #957BB0;
     border: 1px solid #957BB0;
     border-radius: 5px;
-    width: 20%;
+    width: 50%;
     height: 2em;
     text-align: center;
     margin-top: 5px;
     position: relative;
-    left: 78%;
-    margin-bottom: 2em;
+    margin: 8em auto 0 auto;
 }
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
@@ -873,6 +877,7 @@ header a:last-child {
     padding-top: 0vw;
     padding-left: 0%;
     padding-right: 0%;
+    padding-bottom: 0vw;
 }
 
 main {
@@ -1275,21 +1280,31 @@ footer a:visited {
 
 /*----------------------------------------------------------------Accueil----------------------------------------------------------------*/
 
+/* style pour titre signalement admin */
+#titre-signalement {
+    margin-bottom: 50px;
+    color: #274065;
+}
+
 .card {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+    flex-wrap: nowrap;
     justify-content: space-evenly;
-    margin: auto;
+    margin: 0 auto;
+    height: 58vh;
+    text-align: center;
+    overflow-x: auto;
 }
 
 .logementCard {
-    width: 30%;
+    width: 80%;
     background-color: #fff;
     border-radius: 8px;
     margin: 15px;
     border: 4px solid #5B3F69;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    margin: 1em auto;
 }
 
 .logementCard>a {
@@ -1308,6 +1323,10 @@ footer a:visited {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
+.logementCard:first-child {
+    margin-top: 25em;
+}
+
 .infoContainer {
     display: flex;
     flex-direction: row;
@@ -1322,9 +1341,15 @@ footer a:visited {
 }
 
 .mainInfos,
-.otherInfos {
+.otherInfos,
+.acc-with-map {
     display: flex;
     flex-direction: column;
+}
+
+.acc-with-map {
+    align-items: center;
+    width: 40%;
 }
 
 .otherInfos div {
@@ -1893,7 +1918,6 @@ footer a:visited {
     width: 100%;
     margin-bottom: 3%;
     margin-top: 3%;
-    justify-content: center;
 }
 
 .logcolumn>p {
@@ -1905,7 +1929,7 @@ footer a:visited {
     padding: 2em;
 }
 
-.logcp > p {
+.logcp>p {
     align-items: center;
     display: flex;
     font-size: 140%;
@@ -1991,6 +2015,7 @@ footer a:visited {
 
 .logrow {
     justify-content: space-around;
+    padding: 1em;
 }
 
 .logrowcal {
@@ -2009,6 +2034,10 @@ footer a:visited {
 .logrowb {
     justify-content: space-between;
     align-items: center;
+}
+
+#villeEtPrix{
+    align-items: baseline;
 }
 
 .cardSupplements,
@@ -2073,7 +2102,7 @@ footer a:visited {
 
 fieldset {
     width: 82%;
-    margin: 1em auto;
+    margin: 1em 7%;
     padding: 1em;
     border: 1px solid #ccc;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
@@ -2505,9 +2534,9 @@ iframe {
     background-color: rgba(130, 100, 170, 0.25);
 }
 
-.prixPlanning{
-    margin : 0px;
-    padding : 0px;
+.prixPlanning {
+    margin: 0px;
+    padding: 0px;
     font-size: 0.5em;
 }
 
@@ -3416,6 +3445,12 @@ iframe {
     border: 1px solid #745086;
 }
 
+/* admib --> signalement */
+
+.sign-h4 {
+    text-align: center;
+}
+
 @media screen and (min-width: 900px) and (max-width: 1280px) {
     .logot {
         height: 3em;
@@ -3448,10 +3483,6 @@ iframe {
     }
 
     /*-------------------------------Accueil-------------------------------*/
-    .fil,
-    .filR {
-        flex-direction: column;
-    }
 
     .input-group,
     .input-group-ville,
@@ -3738,11 +3769,6 @@ iframe {
         padding: 5em;
     }
 
-    .fil,
-    .filR {
-        flex-direction: column;
-    }
-
     .input-group,
     .input-group-ville,
     .input-group-pers,
@@ -3869,7 +3895,8 @@ iframe {
         margin: 2em auto;
     }
 
-    .logrowcal ,main div .logrow{
+    .logrowcal,
+    main div .logrow {
         flex-direction: column-reverse;
     }
 
@@ -4185,11 +4212,6 @@ iframe {
         padding: 2em;
     }
 
-    .fil,
-    .filR {
-        flex-direction: column;
-    }
-
     .input-group,
     .input-group-ville,
     .input-group-pers,
@@ -4378,7 +4400,7 @@ iframe {
 }
 
 #map {
-    height: 350px;
     width: 100%;
+    height: 80vh;
     border: solid #745086 1px;
 }
