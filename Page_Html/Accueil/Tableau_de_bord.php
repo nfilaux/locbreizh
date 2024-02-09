@@ -485,10 +485,10 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     document.getElementById(id + "," + tabPlage[i]).className = classe;
                 }
                 if (classe == "disponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
+                    document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i][0] + "€";
                 }
                 else if (classe == "indisponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i];
+                    document.getElementById(id + "," + tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i][0];
                 }
             }
         }
@@ -692,12 +692,8 @@ numCalendrier = -1;
                                         <br><?php erreur("prix") ?><br>
 
                                         <label for="indisponible"> Indisponible : </label>
-                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false" onchange="changer(this.checked, <?php echo $key; ?>)"/>
+                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false"/>
                                         <br><br>
-
-                                        <label for="libelleIndispo"> Raison d'indisponibilité : </label>
-                                        <input type="text" class="libelleIndisponibilite" id="libelleIndispo" name="libelleIndispo" disabled=true/>
-                                        <br><?php erreur("libelleIndispo") ?><br>
 
                                         <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
 
@@ -720,20 +716,6 @@ numCalendrier = -1;
 
                                         <button type="submit" class="btn-ajt">Supprimer plage</button>
                                     </form>
-
-                                
-                                    <script type="text/javascript">
-                                        function changer(etat, key){
-                                            if (etat){
-                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = true;
-                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = false;
-                                            }
-                                            else{
-                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = false;
-                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = true;
-                                            }
-                                        }
-                                    </script>
 
                                     <?php
                                     try {
@@ -780,7 +762,7 @@ numCalendrier = -1;
                                     var tab = <?php echo json_encode($plageIndispo); ?>;
                                     var tabRes = [];
                                     var tabMotif = [];
-                                    for (i=1 ; i < tab.length; i++){
+                                    for (i=0 ; i < tab.length; i++){
                                         split = tab[i]["jour_plage_ponctuelle"];
                                         part1 = split.split('-')[1];
                                         if (part1[0] == '0'){

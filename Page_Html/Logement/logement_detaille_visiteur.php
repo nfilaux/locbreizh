@@ -845,7 +845,7 @@ numCalendrier = -1;
             $code = $code->fetch()['code_planning'];
 
             $plageDispo = $dbh->prepare("SELECT prix_plage_ponctuelle, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
-                ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
+            ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = {$code} AND jour_plage_ponctuelle > NOW();");
             $plageDispo->execute();
             $plageDispo = $plageDispo->fetchAll();
         } catch (PDOException $e) {
