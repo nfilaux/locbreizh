@@ -1211,7 +1211,7 @@ footer a:visited {
 /*----------------------------------------------------------------Accueil----------------------------------------------------------------*/
 
 /* style pour titre signalement admin */
-#titre-signalement{
+#titre-signalement {
     margin-bottom: 50px;
     color: #274065;
 }
@@ -1277,8 +1277,9 @@ footer a:visited {
     flex-direction: column;
 }
 
-.acc-with-map{
+.acc-with-map {
     align-items: center;
+    width: 40%;
 }
 
 .otherInfos div {
@@ -1858,7 +1859,7 @@ footer a:visited {
     padding: 2em;
 }
 
-.logcp > p {
+.logcp>p {
     align-items: center;
     display: flex;
     font-size: 140%;
@@ -2459,9 +2460,9 @@ iframe {
     background-color: rgba(130, 100, 170, 0.25);
 }
 
-.prixPlanning{
-    margin : 0px;
-    padding : 0px;
+.prixPlanning {
+    margin: 0px;
+    padding: 0px;
     font-size: 0.5em;
 }
 
@@ -3372,7 +3373,7 @@ iframe {
 
 /* admib --> signalement */
 
-.sign-h4{
+.sign-h4 {
     text-align: center;
 }
 
@@ -3820,7 +3821,8 @@ iframe {
         margin: 2em auto;
     }
 
-    .logrowcal ,main div .logrow{
+    .logrowcal,
+    main div .logrow {
         flex-direction: column-reverse;
     }
 
