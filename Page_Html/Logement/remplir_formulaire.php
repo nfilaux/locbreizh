@@ -293,7 +293,7 @@
                                                 <input id='equipement' type='checkbox' name='balconP' <?php if(isset($_SESSION["valeurs_complete"]["balconP"])) { echo "checked";};?>>Balcon
                                             </div>
                                             <div class="logcheckbox">
-                                                <input id='equipement' type='checkbox' name='terrasseP' <?php if(isset($_SESSION["valeurs_complete"]["terasseP"])) { echo "checked";};?>>Terrasse
+                                                <input id='equipement' type='checkbox' name='terrasseP' <?php if(isset($_SESSION["valeurs_complete"]["terrasseP"])) { echo "checked";};?>>Terrasse
                                             </div>
                                             <div class="logcheckbox">
                                                 <input id='equipement' type='checkbox' name='piscineP' <?php if(isset($_SESSION["valeurs_complete"]["piscineP"])) { echo "checked";};?>>Piscine
@@ -313,7 +313,7 @@
                                         </div>
                                         <div class="logcolumn">
                                             <div class="logcheckbox">
-                                                <input id='equipement' type='checkbox' name='parking_publicP' <?php if(isset($_SESSION["valeurs_complete"]["parking_pblicP"])) { echo "checked";};?>>Parking public
+                                                <input id='equipement' type='checkbox' name='parking_publicP' <?php if(isset($_SESSION["valeurs_complete"]["parking_publicP"])) { echo "checked";};?>>Parking public
                                             </div>
                                             <div class="logcheckbox">
                                                 <input id='equipement' type='checkbox' name='parking_priveP' <?php if(isset($_SESSION["valeurs_complete"]["parking_priveP"])) { echo "checked";};?>>Parking privé
