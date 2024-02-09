@@ -330,7 +330,7 @@ $photo = $stmt->fetch();
                     <?php   } foreach ($res as $card) {
                     if ($card['en_ligne'] == true) { ?>
                             <article class="logementCard cardtel">
-                                <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
+                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>">
                                     <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
                                     <div class="infoContainer">
                                         <div class="mainInfos">
