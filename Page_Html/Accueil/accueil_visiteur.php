@@ -18,31 +18,31 @@
     ?>
     <main class="mainacc">
         <div class="section-filters">
-            <p class="acc-accroche">Rechercher votre logement selon votre critère</p>
+            <!--<p class="acc-accroche">Rechercher votre logement selon votre critère</p>-->
             <div class="filters">
                 <form action="filtrage.php" method="post" class="menu-filtre" onsubmit="return verifierChamps()">
                     <div class="fil">
-                        <div class="input-group">
+                        <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
                                 <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12"></label>
                             </div>
-                            <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prixMin'])) {
-                                                                                                echo $_GET['prixMin'];
+                            <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prix_min'])) {
+                                                                                                echo $_GET['prix_min'];
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
                         </div>
-                        <div class="input-group">
+                        <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
                                 <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12"></label>
                             </div>
-                            <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prixMax'])) {
-                                                                                                echo $_GET['prixMax'];
+                            <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prix_max'])) {
+                                                                                                echo $_GET['prix_max'];
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
                         </div>
-                        <div class="input-group-ville">
+                        <div class="input-group input-group-ville">
                             <div class="input-group-prepend">
                                 <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25"></label>
                             </div>
@@ -52,35 +52,47 @@
                                                                                         echo 'Ville';
                                                                                     } ?>" />
                         </div>
-                        <div class="input-group-pers">
+                        <div class="input-group input-group-pers">
                             <div class="input-group-prepend">
                                 <label for="personne"><img src="../svg/group.svg" width="25" height="25"></label>
                             </div>
-                            <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['voyageurs'])) {
-                                                                                                echo $_GET['voyageurs'];
+                            <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['personne'])) {
+                                                                                                echo $_GET['personne'];
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" />
                         </div>
-                        <div class="input-group-proprio">
+                        <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="proprietaire"><img src="../svg/home-office-fill.svg" width="25" height="25"></label>
+                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14"></label>
                             </div>
-                            <input type="text" id="proprietaire" name="proprietaire" placeholder="<?php if (isset($_GET['proprio'])) {
-                                                                                                        echo $_GET['proprio'];
-                                                                                                    } else {
-                                                                                                        echo 'Nom de propriétaire';
-                                                                                                    } ?>" />
+                            <input type="date" id="date1" name="date1" value="<?php if (isset($_GET['date1'])) {echo $_GET['date1']; }else {echo date('Y-m-d');}?>" />
                         </div>
+                        <div class="input-group" style="width: 15%;">
+                            <div class="input-group-prepend">
+                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14"></label>
+                            </div>
+                            <input type="date" id="date2" name="date2" value="<?php if (isset($_GET['date2'])) {echo $_GET['date2']; } else {echo date('Y-m-d');}?>" />
+                        </div>
+                        <hr style="margin: 5px;">
                         <a class="btn-filtre">
                             <img src="../svg/filtre.svg" width="20" height="20" onclick="openPopup('filtre','ovFiltre')">
                         </a>
-                        <button class="btn-fill" type="submit" id="filtrage">Filtrer</button>
+                        
                     </div>
 
-                    <?php if (isset($_GET['erreur'])) { ?>
-                        <p class='err'>Le prix min doit être inférieur au prix max</p>
-                    <?php } ?>
+                    <div style="display: flex; justify-content: space-evenly;">
+                        <?php if ((isset($_GET['prix_min'])) && (isset($_GET['prix_max']))&&($_GET['prix_min']>$_GET['prix_max'])){?>
+                            <p class='err'>Le prix min doit être inférieur au prix max.</p>
+                        <?php } ?>
+                        <?php if ((isset($_GET['personne'])&&($_GET['personne']<0))){?>
+                            <p class='err'>Le nombre de voyageurs doit être positif.</p>
+                        <?php } ?>
+                        <?php if ((isset($_GET['date1']))&&(isset($_GET['date2']))&&(strtotime($_GET['date1'])>strtotime($_GET['date2']))){ ?>
+                            <p class='err'>La date de début doit être inférieur à la date de fin.</p>
+                        <?php } ?>
+                    </div>
+                    
                 </form>
 
             </div>
@@ -90,11 +102,11 @@
         <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')" class=""></div>
         <div id="filtre" class="filtrage">
             <span class="fltitre">Filtres</span><hr class="hr">
-            <form action="filtrage.php" method="post">
+            <div>
                 <h3 class="flptitre">Par type de logement</h3>
                 <div class="radio-inputs">
                         <label>
-                            <input class="radio-input" type="radio" name="typeH" value="maison">
+                            <input class="radio-input" type="radio" name="typeH" value="maison" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'maison')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
                                         <img src="../svg/house.svg" width="25" height="25">
@@ -103,7 +115,7 @@
                                 </span>
                         </label>
                         <label>
-                            <input checked="" class="radio-input" type="radio" name="typeH" value="appartement">
+                            <input class="radio-input" type="radio" name="typeH" value="appartement" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'appartement')!==false){echo 'checked';}?>>
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="../svg/appartement.svg" width="25" height="25">
@@ -112,7 +124,7 @@
                             </span>
                         </label>
                         <label>
-                            <input class="radio-input" type="radio" name="typeH" value="chateau">
+                            <input class="radio-input" type="radio" name="typeH" value="chateau" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'chateau')!==false){echo 'checked';}?>>
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="../svg/castle.svg" width="25" height="25">
@@ -121,16 +133,13 @@
                             </span>
                         </label>
                         <label>
-                            <input class="radio-input" type="radio" name="typeH" value="manoir">
+                            <input class="radio-input" type="radio" name="typeH" value="manoir" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'manoir')!==false){echo 'checked';}?>>
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="../svg/manoir.svg" width="25" height="25">
                                 </span>
                                 <span class="radio-label">Manoir</span>
                             </span>
-                        </label>
-                        <label style="display: none;">
-                            <input class="radio-input" type="radio" name="typeH" value="" checked>
                         </label>
                 </div>
 
@@ -157,8 +166,8 @@
                         </li>
                         <li>
                             <label class="cyberpunk-checkbox-label">
-                                <input type="checkbox" name="equipement[]" value="clim" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'clim')!==false){echo 'checked';}?>>
-                                Climatisation
+                                <input type="checkbox" name="equipement[]" value="jardin" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'jardin')!==false){echo 'checked';}?>>
+                                Jardin
                             </label>        
                         </li>
                         <li>
@@ -171,6 +180,12 @@
                             <label class="cyberpunk-checkbox-label">
                                 <input type="checkbox" name="equipement[]" value="sauna" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'sauna')!==false){echo 'checked';}?>>
                                 Sauna
+                            </label>        
+                        </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="climatisation" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'climatisation')!==false){echo 'checked';}?>>
+                                Climatisation
                             </label>        
                         </li>
                     </div>
@@ -211,32 +226,49 @@
                                 Lave vaisselle
                             </label>        
                         </li>
+                        <li>
+                            <label class="cyberpunk-checkbox-label">
+                                <input type="checkbox" name="equipement[]" value="hammam" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'hammam')!==false){echo 'checked';}?>>
+                                Hammam
+                            </label>        
+                        </li>
                     </div>
+                    
                 </ul>
 
                 <hr class="hr"><h3 class="flptitre">Par service</h3>
-                <ul class="liste-filtre-s">
-                    <li>
-                        <label class="cyberpunk-checkbox-label">
-                            <input type="checkbox" name="service[]" value="menage" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
-                            Ménage
-                        </label>         
-                    </li>
-                    <li>
-                        <label class="cyberpunk-checkbox-label">
-                            <input type="checkbox" name="service[]" value="navette" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
-                            Navette
-                        </label>         
-                    </li>
-                    <li>
-                        <label class="cyberpunk-checkbox-label">
-                            <input type="checkbox" name="service[]" value="linge" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
-                            Linge
-                        </label>         
-                    </li>
-                </ul>
+                <div class="radio-inputs">
+                    <label>
+                        <input class="radio-input" type="checkbox" name="typeH" value="menage" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
+                            <span class="radio-tile">
+                                <span class="radio-icon">
+                                    <img src="../svg/nettoyage.svg" width="25" height="25">
+                                </span>
+                                <span class="radio-label">Ménage</span>
+                            </span>
+                    </label>
+                    <label>
+                        <input class="radio-input" type="checkbox" name="typeH" value="navette" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
+                            <span class="radio-tile">
+                                <span class="radio-icon">
+                                    <img src="../svg/taxi-fill.svg" width="25" height="25">
+                                </span>
+                                <span class="radio-label">Navette</span>
+                            </span>
+                    </label>
+                    <label>
+                        <input class="radio-input" type="checkbox" name="typeH" value="linge" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
+                            <span class="radio-tile">
+                                <span class="radio-icon">
+                                    <img src="../svg/t-shirt-air-line.svg" width="25" height="25">
+                                </span>
+                                <span class="radio-label">Linge</span>
+                            </span>
+                    </label>
+                </div>
                 <hr class="hr">
-            </form>
+                <a class="center btn-accueil" style="text-decoration: none; color:white;" href="./accueil_visiteur.php"> Réinitialiser </a>
+            </div>
         </div>
 
         <!-- Champs de séléction des Tris -->
@@ -255,71 +287,171 @@
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-            if (isset($_GET['tri'])) {
-                switch ($_GET['tri']) {
-                    case 'prix_c':
-                        $tri = "tarif_base_ht ASC";
-                        break;
-                    case 'prix_d':
-                        $tri = "tarif_base_ht DESC";
-                        break;
-                }
+            
+            if(isset($_GET['filtre'])){
+                $mesFiltres = explode(",",$_GET['filtre']);
+            }
+            if(isset($_GET['tri'])){
+                $monTri = $_GET['tri'];
+            }
 
-                // récupération des données de logement dans la base de donnée avec le tri
-                $stmt = $dbh->prepare(
-                    "SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
-                    from locbreizh._logement l JOIN locbreizh._adresse ON l.id_adresse = _adresse.id_adresse
-                    ORDER BY $tri;"
-                );
-            } else if (sizeof($_GET) > 0) {
-                if (sizeof($_GET) == 1) {
-                    foreach ($_GET as $NomFiltre => $choix) {
-                        switch ($NomFiltre) {
-                            case 'prixMin':
-                                $filtre = "WHERE tarif_base_ht>=$choix;";
-                                break;
-                            case 'prixMax':
-                                $filtre = "WHERE tarif_base_ht<=$choix;";
-                                break;
-                            case 'lieu':
-                                $filtre = "WHERE a.ville='$choix';";
-                                break;
-                            case 'proprio':
-                                $filtre = "JOIN locbreizh._proprietaire p ON l.id_proprietaire = p.id_proprietaire JOIN locbreizh._compte c ON p.id_proprietaire = c.id_compte WHERE LOWER(c.nom) = LOWER('$choix');";
-                                break;
-                            case 'voyageurs':
-                                $filtre = "WHERE nb_personnes_logement=$choix;";
-                                break;
+            $filtrage="";
+            $join="";
+            $tri="";
+
+            if(isset($mesFiltres)||(isset($monTri))){
+                // Traitement de l'argument de tri
+                if (isset($monTri)) {
+                    switch ($monTri) {
+                        case 'prix_c':
+                            $tri = " ORDER BY tarif_base_ht ASC";
+                            break;
+                        case 'prix_d':
+                            $tri = " ORDER BY tarif_base_ht DESC";
+                            break;
+                    }
+                } 
+
+                // Traitement des arguments de filtres                
+                if (isset($mesFiltres)){
+                    foreach($mesFiltres as $filtre){
+                        switch($filtre){
+                            // Equipements
+                            case 'balcon':
+                                $filtrage .= " AND l.balcon = true"; break;
+                            case 'terrasse':
+                                $filtrage .= " AND l.terrasse = true"; break;
+                            case 'piscine':
+                                $filtrage .= " AND l.piscine = true"; break;
+                            case 'jardin':
+                                $filtrage .= " AND l.jardin > 0"; break;
+                            case 'jacuzzi':
+                                $filtrage .= " AND l.jacuzzi = true"; break;
+                            case 'sauna':
+                                $filtrage .= " AND l.sauna = true"; break;
+                            case 'parkPrive':
+                                $filtrage .= " AND l.parking_privee = true"; break;
+                            case 'parkPublic':
+                                $filtrage .= " AND l.parking_public = true"; break;
+                            case 'television':
+                                $filtrage .= " AND l.television = true"; break;
+                            case 'laveLinge':
+                                $filtrage .= " AND l.lave_linge = true"; break;
+                            case 'laveVaisselle':
+                                $filtrage .= " AND l.lave_vaisselle = true"; break;
+                            case 'climatisation':
+                                $filtrage .= " AND l.climatisation = true"; break;
+                            case 'hammam':
+                                $filtrage .= " AND l.hammam = true"; break;
+                            // Services
+                            /*
+                            case 'menage':
+                                $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='menage'"; break;
+                            case 'navette':
+                                $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='navette'"; break;
+                            case 'linge':
+                                $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='linge'"; break;
+                            */
                         }
                     }
-                } else {
-                    $prix1 = $_GET['prixMin'];
-                    $prix2 = $_GET['prixMax'];
-                    $filtre = "WHERE tarif_base_ht>=$prix1 AND tarif_base_ht<=$prix2";
                 }
-
-                // récupération des données de logement dans la base de donnée avec le filtre
-                $stmt = $dbh->prepare(
-                    "SELECT
-                    l.photo_principale,
-                    l.libelle_logement,
-                    l.tarif_base_ht,
-                    l.nb_personnes_logement,
-                    l.id_logement,
-                    l.en_ligne,
-                    a.ville,
-                    a.code_postal
-                    FROM locbreizh._logement l
-                    JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse $filtre"
-                );
-            } else {
-                // récupération des données de logement dans la base de donné
-                $stmt = $dbh->prepare(
-                    'SELECT photo_principale, libelle_logement, tarif_base_ht, nb_personnes_logement, id_logement, en_ligne, ville, code_postal
-                    FROM locbreizh._logement l
-                    JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse ;'
-                );
             }
+
+            // Filtres : INPUT (barre de recherche)
+            
+            // -- LES PRIX
+            if ((isset($_GET['prix_min'])) && (isset($_GET['prix_max']))){
+                $prixMin = $_GET['prix_min'];
+                $prixMax = $_GET['prix_max'];   
+                $filtrage .= " AND tarif_base_ht >= $prixMin AND tarif_base_ht <= $prixMax";
+            } else if (isset($_GET['prix_min'])){
+                $prixMin = $_GET['prix_min'];
+                $filtrage .= " AND tarif_base_ht >= $prixMin ";
+            } else if (isset($_GET['prix_max'])){
+                $prixMax = $_GET['prix_max'];   
+                $filtrage .= " AND tarif_base_ht <= $prixMax ";
+            }
+
+            // -- LIEU 
+            
+            // Voir pour vérifier ou changer à la ville la plus ressemblante à l'input comme sur AJOUTER LOGEMENT
+            if (isset($_GET['lieu'])) {
+                $lieu = $dbh->quote($_GET['lieu']);
+                $filtrage .= "AND a.ville=$lieu ";
+            }
+            
+
+            // -- VOYAGEURS
+            if ((isset($_GET['personne']))){
+                $voyageurs = $_GET['personne'];
+                $filtrage .= "AND nb_personnes_logement >= $voyageurs";
+            }
+
+            // -- DATES
+            if ((isset($_GET['date1']))&&(isset($_GET['date2']))){
+                $dateDeb = new DateTime($_GET['date1']);
+                $dateFin = new DateTime($_GET['date2']);
+                $nbJours = ($dateFin->diff($dateDeb))->days +1;
+                $filtrage .= " AND id_logement IN (
+                    SELECT DISTINCT id_logement
+                    FROM locbreizh._plage_ponctuelle p 
+                    JOIN locbreizh._plage_ponctuelle_disponible pd ON p.id_plage_ponctuelle = pd.id_plage_ponctuelle
+                    JOIN locbreizh._logement l ON l.code_planning = p.code_planning
+                    WHERE p.jour_plage_ponctuelle BETWEEN :date_debut AND :date_fin GROUP BY id_logement
+                    HAVING COUNT(*) >= $nbJours 
+                )";
+            } else if (isset($_GET['date1'])){
+                $dateDeb = new DateTime($_GET['date1']);
+                $dateDeb = $dateDeb->format('Y-m-d'); // Formatage de la date si nécessaire
+
+                $filtrage .= " AND id_logement IN (
+                                SELECT DISTINCT id_logement
+                                FROM locbreizh._plage_ponctuelle p 
+                                JOIN locbreizh._plage_ponctuelle_disponible pd ON p.id_plage_ponctuelle = pd.id_plage_ponctuelle
+                                JOIN locbreizh._logement l ON l.code_planning = p.code_planning
+                                WHERE p.jour_plage_ponctuelle = :date_debut 
+                            )";
+            }
+
+            // -- Type d'hébergement
+            if (isset($_GET['typeH'])){
+                switch($_GET['typeH']){
+                    // Types d'hébergement
+                    case 'maison':
+                        $filtrage .= " AND l.nature_logement = '1'"; break;
+                    case 'appartement':
+                        $filtrage .= " AND l.nature_logement = '2'"; break;
+                    case 'manoir':
+                        $filtrage .= " AND l.nature_logement = '3'"; break;
+                    case 'chateau':
+                        $filtrage .= " AND l.nature_logement = '4'"; break;
+                }
+                
+            }
+
+            // récupération des données de logement dans la base de donnée avec le filtre
+            $stmt = $dbh->prepare(
+                "SELECT
+                l.photo_principale,
+                l.libelle_logement,
+                l.tarif_base_ht,
+                l.nb_personnes_logement,
+                l.id_logement,
+                l.en_ligne,
+                a.ville,
+                a.code_postal
+                FROM locbreizh._logement l
+                JOIN locbreizh._adresse a ON l.id_adresse = a.id_adresse $join WHERE l.en_ligne=true $filtrage $tri ;"
+            );
+
+            if ((isset($_GET['date1']))&&(isset($_GET['date2']))){
+                $stmt->bindParam(':date_debut', $dateDeb->format('Y-m-d'));
+                $stmt->bindParam(':date_fin', $dateFin->format('Y-m-d'));
+            } else if (isset($_GET['date1'])){
+                $stmt->bindParam(':date_debut', $dateDeb);
+            }
+
+        
         } catch (PDOException $e) {
             print "Erreur !:" . $e->getMessage() . "<br/>";
             die();
@@ -338,15 +470,14 @@
         $stmt->execute();
         ?>
 
-        <div class="card"> <?php
-                            $res = $stmt->fetchAll();
+        <section class="card"> <?php
+        $res = $stmt->fetchAll();
 
-                            // affichage des données de logement
-                            if (count($res) <= 0) { ?>
-                <p class="center" style="font-size: 1.5em;">Aucun logement trouvé</p>
-                <?php   }
-                            foreach ($res as $card) {
-                                if ($card['en_ligne'] == true) { ?>
+        // affichage des données de logement
+        if (count($res) <= 0) { ?>
+            <p class="center" style="font-size: 1.5em;">Aucun logement trouvé</p>
+<?php   } foreach ($res as $card) {
+            if ($card['en_ligne'] == true) { ?>
                     <article class="logementCard cardtel">
                         <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
                             <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
@@ -371,7 +502,8 @@
             <?php   }
                             }
             ?>
-        </div>
+        </section>
+
         <section id="containerMap">
             <div id="map"></div>
         </section>
@@ -386,7 +518,7 @@
 </html>
 
 <?php
-    if (isset($_GET['filtre'])) {?>
+    if (isset($_GET['filtre']) || isset($_GET['typeH'])) {?>
         <script> openPopup('filtre','ovFiltre'); </script>
 <?php } ?>
 

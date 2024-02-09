@@ -1,10 +1,10 @@
 // Sélection de tous les éléments de type radio avec le nom "options"
-const radios = document.querySelectorAll('input[type="radio"][name="typeH"]');
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const inputs = document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], input[type="radio"]');
     
 // Fonction pour ajouter des paramètres à une URL
 function ajouterParametreUrl(url, parametre, valeur) {
-    const separateur = (url.indexOf('?') !== -1) ? '&' : '?';
+    let separateur = (url.indexOf('?') !== -1) ? '&' : '?';
     return url + separateur + parametre + '=' + encodeURIComponent(valeur);
 }
 
@@ -14,8 +14,8 @@ function redirigerVersNouvelleUrl(url) {
 }
 
 function ajouterOuRemplacerParametresUrl(url, parametres) {
-    const urlObj = new URL(url);
-    for (const [parametre, valeur] of Object.entries(parametres)) {
+    let urlObj = new URL(url);
+    for (let [parametre, valeur] of Object.entries(parametres)) {
         // Vérifie si la valeur du paramètre n'est pas vide
         if (valeur) {
             urlObj.searchParams.set(parametre, valeur);
@@ -33,7 +33,7 @@ function ajouterOuRemplacerParametresUrl(url, parametres) {
 
 // Fonction pour récupérer tous les filtres à partir de l'URL
 function obtenirFiltres() {
-    const urlParams = new URLSearchParams(window.location.search);
+    let urlParams = new URLSearchParams(window.location.search);
     return urlParams.getAll('filtre');
 }
 
@@ -45,21 +45,21 @@ checkboxes.forEach(checkbox => {
         if (filtres[0]){
             filtres = filtres[0].split(',');
         }
-        const filtre = checkbox.value;
-        const filtrePresent = filtres.includes(filtre); //tgl timéo
+        let filtre = checkbox.value;
+        let filtrePresent = filtres.includes(filtre); //tgl timéo
 
         // Si la case est cochée et le filtre n'est pas déjà présent dans l'URL
         if (checkbox.checked && !filtrePresent) {
             filtres.push(filtre);
         // Si la case est décochée et le filtre est présent dans l'URL
         } else if (!checkbox.checked && filtrePresent) {
-            const index = filtres.indexOf(filtre);
+            let index = filtres.indexOf(filtre);
             filtres.splice(index, 1);
         }
 
         // Si aucun filtre n'est présent, retirez le paramètre 'filtre' de l'URL
-        const parametres = filtres.length > 0 ? {'filtre': filtres.join(',')} : {};
-        const nouvelleUrl = ajouterOuRemplacerParametresUrl(window.location.href, parametres);
+        let parametres = filtres.length > 0 ? {'filtre': filtres.join(',')} : {};
+        let nouvelleUrl = ajouterOuRemplacerParametresUrl(window.location.href, parametres);
         // Redirection vers la nouvelle URL
         redirigerVersNouvelleUrl(nouvelleUrl);
     });
@@ -68,13 +68,56 @@ checkboxes.forEach(checkbox => {
 
 
 
-// Ajout d'un écouteur d'événement change à chaque bouton radio
-radios.forEach(radio => {
-    radio.addEventListener('change', function(event) {
-        const parametres = {
-            'filtre': radio.value
-        };
-        const nouvelleUrl = ajouterOuRemplacerParametresUrl(window.location.href, parametres);
-        redirigerVersNouvelleUrl(nouvelleUrl);
+// Stockage des valeurs des champs de saisie dans un tableau 'filtresInput'
+var filtresInput = {};
+var timeoutId;
+
+// Ajout d'un écouteur d'événement input à chaque champ filtrant
+inputs.forEach(input => {
+    input.addEventListener('change', function(event) {
+        let date = new Date().toLocaleDateString();
+        let tabDate = date.split("/");
+        let dateFormat = tabDate[2] + "-" + tabDate[1] + "-" + tabDate[0];
+        if (!(input.value=="") && !(input.value==0) && !(input.value==dateFormat)){
+            let parametres = obtenirFiltres();
+
+            // Traitement des champs de saisie
+            let valeur = input.value;
+            let parametre = input.name;
+
+            if (valeur) {
+                parametres[parametre] = valeur;
+            } else {
+                delete parametres[parametre];
+            }
+
+            // Reconstruire l'URL avec les paramètres mis à jour
+            let nouvelleUrl = ajouterOuRemplacerParametresUrl(window.location.href, parametres);
+            // Redirection vers la nouvelle URL
+            redirigerVersNouvelleUrl(nouvelleUrl);
+        } else {
+            return "AHAH YA RIEN";
+        }
+            
+        
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionner le champ personne
+    var personne = document.getElementById('personne');
+
+    // Limiter le nombre de personnes à une valeur minimale de 0
+    personne.min = 0;
+
+    // Empêcher la saisie de nombres négatifs dans le champ personne
+    personne.addEventListener('input', function() {
+        if (personne.value < 0) {
+            personne.value = 0;
+        }
+    });
+});
+
+
+
+

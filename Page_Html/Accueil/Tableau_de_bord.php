@@ -123,6 +123,9 @@ function instancier(id, nbCache){
             if (classeIndispo[id]){
                 afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
             }
+            if (premierID[id] !== ""){
+                selection(premierID[id], dernierID[id], id);
+            }
         })
     });
 }
@@ -150,20 +153,20 @@ function afficherCalendrier(classe, id) {
 
     //création du calendrier de gauche
     for (i = premierJourMois - 1; i >= 0; i--) {
-        texteListe += '<li class="inactif">' + (derniereDateMoisAvant - i) + '</li>';
+        texteListe += '<li class="inactif">' + (derniereDateMoisAvant - i) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
         nbJours++;
     }
 
     for (i = 1; i <= derniereDateMois; i++) {
         idJour = (moisActuel[id]+ 1) + '/' + (k + 1) + '/' + anneeActuelle[id];
-        texteListe += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '</li>';
+        texteListe += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
         k++;
         nbJours++;
     }
 
 
     for (i = derniereJourMois; nbJours < 42; i++) {
-        texteListe += '<li class="inactif">' + (i - derniereJourMois + 1) + '</li>';
+        texteListe += '<li class="inactif">' + (i - derniereJourMois + 1) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
         nbJours++;
     }
 
@@ -171,19 +174,19 @@ function afficherCalendrier(classe, id) {
     if (dateActuelle[id].length == 2){
         //création du calendrier de droite
         for (i = premierJourMois2 - 1; i >= 0; i--) {
-            texteListe2 += '<li class="inactif">' + (derniereDateMoisAvant2 - i) + '</li>';
+            texteListe2 += '<li class="inactif">' + (derniereDateMoisAvant2 - i) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
             nbJours++;
         }
 
         for (i = 1; i <= derniereDateMois2; i++) {
             idJour = (moisActuel2[id] + 1) + '/' + (k + 1 - derniereDateMois) + '/' + anneeActuelle2[id];
-            texteListe2 += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '</li>';
+            texteListe2 += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
             k++;
             nbJours++;
         }
 
         for (i = derniereJourMois2; nbJours < 84; i++) {
-            texteListe2 += '<li class="inactif">' + (i - derniereJourMois2 + 1) + '</li>';
+            texteListe2 += '<li class="inactif">' + (i - derniereJourMois2 + 1) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
             nbJours++;
         }
         baliseJour[id][1].innerHTML = texteListe2;
@@ -215,6 +218,13 @@ function changerJour(elem, id) {
         for (i = 0; i < nbEntreDeux; i++) {
             entreDeux[0].className = "normal";
         }
+        //remet les plages
+        if (tabDispo[id][0]){
+            afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+        }
+        if (tabIndispo[id][0]){
+            afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+        }
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
@@ -234,9 +244,6 @@ function changerJour(elem, id) {
                     if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(premierID[id]) ){
                             document.getElementById(premierID[id]).className = classeDispo[id];
-                        }
-                        else if(tabIndispo[id].includes(premierID[id])){
-                            document.getElementById(premierID[id]).className = classeIndispo[id];
                         }
                         else if(tabIndispo[id].includes(premierID[id])){
                             document.getElementById(premierID[id]).className = classeIndispo[id];
@@ -384,6 +391,7 @@ function changerJour(elem, id) {
     }
 }
 
+
 //change les dates se trouvant à coté du calendrier et dans le formulaire pour demander un devis
 function changerDates(id) {
     listeActif = calendrier[id].getElementsByClassName("actif");
@@ -433,7 +441,7 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length-1; i++){
+            for (i=0; i<listeActif.length; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -459,6 +467,7 @@ function changerDates(id) {
     }
 }
 
+
 //fonction qui affiche les plages
 function afficherPlages(tabPlage, classe, tabMotif, type, id){
     if (type !== "NI"){
@@ -474,20 +483,22 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         }
         for (i=0; i < tabPlage.length; i++){
             if (document.getElementById(id + "," + tabPlage[i]) && document.getElementById(id + "," + tabPlage[i]).className !== "actif") {
-                if (tabMotif[i] == "Réservation"){
+                if (tabMotif[i][0] == "Réservation"){
                     document.getElementById(id + "," + tabPlage[i]).className = "reserver";
                 }
-                else if (tabMotif[i] == "Demande devis"){
+                else if (tabMotif[i][0] == "Demande devis"){
                     document.getElementById(id + "," + tabPlage[i]).className = "devis";
                 }
                 else{
                     document.getElementById(id + "," + tabPlage[i]).className = classe;
                 }
-                if (classe === "disponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
+                if (classe == "disponible"){
+                    document.getElementById(id + "," + tabPlage[i]).innerHTML = tabPlage[i].split("/")[1] + '<p class="prixPlanning">' + tabMotif[i] + "€</p>";
                 }
-                else if (classe === "indisponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i];
+                else if (classe == "indisponible"){
+                    if (tabMotif[i][1]){
+                        document.getElementById(id + "," + tabPlage[i]).innerHTML = tabPlage[i].split("/")[1] + '<p class="prixPlanning">' + tabMotif[i][1] + "€</p>";
+                    }
                 }
             }
         }
@@ -691,12 +702,8 @@ numCalendrier = -1;
                                         <br><?php erreur("prix") ?><br>
 
                                         <label for="indisponible"> Indisponible : </label>
-                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false" onchange="changer(this.checked, <?php echo $key; ?>)"/>
+                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false"/>
                                         <br><br>
-
-                                        <label for="libelleIndispo"> Raison d'indisponibilité : </label>
-                                        <input type="text" class="libelleIndisponibilite" id="libelleIndispo" name="libelleIndispo" disabled=true/>
-                                        <br><?php erreur("libelleIndispo") ?><br>
 
                                         <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
 
@@ -720,20 +727,6 @@ numCalendrier = -1;
                                         <button type="submit" class="btn-ajt">Supprimer plage</button>
                                     </form>
 
-                                
-                                    <script type="text/javascript">
-                                        function changer(etat, key){
-                                            if (etat){
-                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = true;
-                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = false;
-                                            }
-                                            else{
-                                                document.querySelectorAll(".prix_plage_ponctu")[key].disabled = false;
-                                                document.querySelectorAll(".libelleIndisponibilite")[key].disabled = true;
-                                            }
-                                        }
-                                    </script>
-
                                     <?php
                                     try {
                                         $dbh = new PDO("$driver:host=$server;dbname=$dbname", $user, $pass);
@@ -750,7 +743,7 @@ numCalendrier = -1;
                                         
                                         $lesPlages->execute();
 
-                                        $plageIndispo = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
+                                        $plageIndispo = $dbh->prepare("SELECT libelle_indisponibilite, jour_plage_ponctuelle, prix_plage_ponctuelle FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_indisponible
                                         ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_indisponible.id_plage_ponctuelle WHERE code_planning = {$code} ;");
                                         $plageIndispo->execute();
                                         $plageIndispo = $plageIndispo->fetchAll();
@@ -790,8 +783,10 @@ numCalendrier = -1;
                                             part2 = part2[1];
                                         }
                                         tabRes[i] = part1 + "/" + part2 + "/" + split.split('-')[0];
-                                        tabMotif[i] = tab[i]["libelle_indisponibilite"];
+                                        tabMotif[i] = [tab[i]["libelle_indisponibilite"], ''];
+                                        tabMotif[i][1] = tab[i]["prix_plage_ponctuelle"];
                                     }
+                                    console.log(tabMotif);
                                     afficherPlages(tabRes, "indisponible", tabMotif, "I", numCalendrier);
 
                                     var tab = <?php echo json_encode($plageDispo); ?>;
@@ -813,8 +808,8 @@ numCalendrier = -1;
                                     afficherPlages(tabRes, "disponible", tabMotif, "D", numCalendrier);
 
                                     if (!tabRes[0]){
-                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").disabled = true;
-                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-desactive").className = "btn-desactiveGris";
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-active").disabled = true;
+                                        document.querySelector("#enligne<?php echo json_encode($id_un_logement); ?> .btn-active").className = "btn-desactiveGris";
                                     }
                                 </script>
                                             
