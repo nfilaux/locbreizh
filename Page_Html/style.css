@@ -198,6 +198,11 @@ body {
     font-weight: bold;
 }
 
+#erreurVille {
+    color : red;
+    font-size: small;
+}
+
 .valid {
     color: green;
     font-weight: bold;
@@ -1964,6 +1969,10 @@ footer a:visited {
 .logrowb {
     justify-content: space-between;
     align-items: center;
+}
+
+#villeEtPrix{
+    align-items: baseline;
 }
 
 .cardSupplements,
