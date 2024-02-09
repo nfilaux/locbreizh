@@ -274,6 +274,13 @@ function changerJour(elem, id) {
                     dernierID[id] = element.id;
                     element.className = "actif";
                 }
+                //remet les plages
+                if (tabDispo[id][0]){
+                    afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+                }
+                if (tabIndispo[id][0]){
+                    afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+                }
                 //active la zone de selection entre les deux dates
                 datePremier = new Date(premierID[id].split(',')[1]).getTime();
                 dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
@@ -383,6 +390,7 @@ function changerJour(elem, id) {
         }
     }
 }
+
 
 //change les dates se trouvant à coté du calendrier et dans le formulaire pour demander un devis
 function changerDates(id) {
