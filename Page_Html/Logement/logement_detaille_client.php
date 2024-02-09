@@ -20,20 +20,20 @@ $plageDispo = [];
 
 <script>
     //recupération des element du html qu'on vas remplir d'information
-dateActuelle = [];
-baliseJour =[];
-precedentSuivant = [];
-datesPlage = [];
-boutonsDates = [];
-prixSejour = [];
+var dateActuelle = [];
+var baliseJour =[];
+var precedentSuivant = [];
+var datesPlage = [];
+var boutonsDates = [];
+var prixSejour = [];
 
 //création de dates qui vont êtres utilisé pour le premier et deuxieme calendrier
-date = [];
-anneeActuelle = [];
-moisActuel = [];
-date2 = [];
-anneeActuelle2 = [];
-moisActuel2 = [];
+var date = [];
+var anneeActuelle = [];
+var moisActuel = [];
+var date2 = [];
+var anneeActuelle2 = [];
+var moisActuel2 = [];
 
 //constante pour les mois de l'année
 const tabMois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -47,17 +47,17 @@ var tabRaison = [];
 var classeIndispo = [];
 
 //tableau des calendriers du code HTML
-calendrier = [];
+var calendrier = [];
 
 //instanciation du debut et de la fin de la plage
-premierID = [];
-dernierID = [];
+var premierID = [];
+var dernierID = [];
 
 //classe des jours normaux
-classeNormale = [];
+var classeNormale = [];
 
 //prix des plages sélectionner
-prixPlage = [];
+var prixPlage = [];
 
 function instancier(id, nbCache){
     //recupération des element du html qu'on vas remplir d'information
@@ -225,7 +225,7 @@ function changerJour(elem, id) {
         //cas où l'élément n'est pas une date de début ou de fin de palge
         if (element.className !== "actif") {
             //cas ou il n'y as aucune dates de sélectionner
-            if (nbActif == 0) {
+            if (premierID[id] == '' && dernierID[id] == '') {
                 premierID[id] = element.id;
                 dernierID[id] = element.id;
                 element.className = "actif";
@@ -238,7 +238,7 @@ function changerJour(elem, id) {
                 milieu = (dateDernier + datePremier) / 2;
                 //détermine si le nouveau jour seras le début ou la fin de la plage
                 if (dateElem < milieu) {
-                    if (nbActif > 1) {
+                    if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(premierID[id]) ){
                             document.getElementById(premierID[id]).className = classeDispo[id];
                         }
@@ -246,14 +246,16 @@ function changerJour(elem, id) {
                             document.getElementById(premierID[id]).className = classeIndispo[id];
                         }
                         else{
-                            document.getElementById(premierID[id]).className = "normal";
+                            if (document.getElementById(premierID[id])){
+                                document.getElementById(premierID[id]).className = "normal";
+                            }
                         }
                     }
                     premierID[id] = element.id;
                     element.className = "actif";
                 }
                 else {
-                    if (nbActif > 1) {
+                    if (premierID[id] !== dernierID[id]) {
                         if (tabDispo[id].includes(dernierID[id]) ){
                             document.getElementById(dernierID[id]).className = classeDispo[id];
                         }
@@ -261,7 +263,9 @@ function changerJour(elem, id) {
                             document.getElementById(dernierID[id]).className = classeIndispo[id];
                         }
                         else{
-                            document.getElementById(dernierID[id]).className = "normal";
+                            if (document.getElementById(dernierID[id])){
+                                document.getElementById(dernierID[id]).className = "normal";
+                            }
                         }
                     }
                     dernierID[id] = element.id;
@@ -313,13 +317,17 @@ function changerJour(elem, id) {
         }
         //désactive le jour si on clique dessus
         else if (element.className === "actif") {
-            if (nbActif == 2) {
+            if (premierID[id] !== dernierID[id]) {
                 if (element.id === premierID[id]) {
                     premierID[id] = dernierID[id];
                 }
                 else {
                     dernierID[id] = premierID[id];
                 }
+            }
+            else{
+                premierID[id] = "";
+                dernierID[id] = "";
             }
             if (tabDispo[id].includes(element.id) ){
                 element.className = classeDispo[id];
@@ -330,13 +338,46 @@ function changerJour(elem, id) {
             else{
                 element.className = "normal";
             }
-        }
-        nbActif = document.getElementsByClassName("actif").length;
-        if (nbActif == 0){
-            premierID[id] = "";
-            dernierID[id] = "";
+            //remet les plages
+            if (tabDispo[id][0]){
+                afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+            }
+            if (tabIndispo[id][0]){
+                afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
+            }
         }
         changerDates(id);
+    }
+    else if ( premierID[id] !== ""){
+        //active la zone de selection entre les deux dates
+        datePremier = new Date(premierID[id].split(',')[1]).getTime();
+        dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
+        listeJours = calendrier[id].querySelectorAll(".jours li");
+        inactif = false;
+        fini = false;
+        loop = 0;
+        while (!inactif && !fini){
+            jour = listeJours[loop];
+            if (!jour){
+                fini = true;
+            }
+            if (!fini){
+                let dateJour = new Date(jour.id.split(',')[1]).getTime();
+                if (dateJour < dateDernier && dateJour > datePremier) {
+                    if (jour.className !== "inactif"){
+                        jour.className = "entreDeux";
+                    }
+                    else{
+                        inactif = true;
+                    }
+                    
+                }
+                else if (dateJour === dateDernier){
+                    fini = true;
+                }
+            }
+            loop++;
+        }
     }
 }
 
@@ -389,7 +430,7 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length-1; i++){
+            for (i=0; i<listeActif.length; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
@@ -415,6 +456,7 @@ function changerDates(id) {
     }
 }
 
+
 //fonction qui affiche les plages
 function afficherPlages(tabPlage, classe, tabMotif, type, id){
     if (type !== "NI"){
@@ -430,8 +472,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         }
         for (i=0; i < tabPlage.length; i++){
             if (document.getElementById(id + "," + tabPlage[i]) && document.getElementById(id + "," + tabPlage[i]).className !== "actif") {
-                
-                document.getElementById(id + "," + tabPlage[i]).className = classe;
+                if (tabMotif[i] == "Réservation"){
+                    document.getElementById(id + "," + tabPlage[i]).className = "reserver";
+                }
+                else if (tabMotif[i] == "Demande devis"){
+                    document.getElementById(id + "," + tabPlage[i]).className = "devis";
+                }
+                else{
+                    document.getElementById(id + "," + tabPlage[i]).className = classe;
+                }
                 if (classe === "disponible"){
                     document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i] + "€";
                 }
@@ -448,7 +497,8 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     }
     
 }
-    numCalendrier = -1;
+
+numCalendrier = -1;
 </script>
 
 <!DOCTYPE html>
@@ -467,6 +517,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
     <script src="plusAvis.js"></script>
+    <script scr="../scriptPopupFeedback.js"></script>
 </head>
 
 <body>
@@ -901,7 +952,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     var commune = "<?php echo $info['ville'];?>";
                     console.log(commune);
 
-                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
+                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=90a3f846aa9e490d927a787facf78c7e";
 
                     fetch(opencageUrl)
                         .then(response => response.json())
@@ -938,6 +989,16 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
         <hr class="hr">
         <!--Les avis-->
         <?php 
+
+            $stmt = $dbh->prepare('SELECT id_reponse, contenu_reponse, nom, prenom, photo, id_avis, id_compte
+            from locbreizh._reponse r
+            join locbreizh._avis a on r.avis = a.id_avis
+            join locbreizh._compte c on r.auteur = c.id_compte
+            where a.logement = :logement
+            ORDER BY a.id_avis DESC;');
+            $stmt->bindParam(':logement', $_GET['logement']);
+            $stmt->execute();
+            $reponses = $stmt->fetchAll();
             
             $stmt = $dbh->prepare('SELECT moyenne_avis
             from locbreizh._logement
@@ -946,7 +1007,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             $stmt->execute();
             $moyenne = $stmt->fetch();
 
-            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo
+            $stmt = $dbh->prepare('SELECT contenu_avis, note_avis, nom, prenom, photo, id_avis
             from locbreizh._avis a
             join locbreizh._compte c on a.auteur = c.id_compte
             where a.logement = :logement
@@ -1015,11 +1076,10 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
             <?php } ?>
 
             <div class="all-avis">
-
-            <?php
-            $nb_avis = 0;
-            foreach($avis as $avi){
-                $nb_avis++;
+                <?php
+                $nb_avis = 0;
+                foreach ($avis as $avi) {
+                    $nb_avis++;
                 ?>
                 <div class="box-avis <?php if($nb_avis > 4){echo 'hidden';}?>">
                     <div class="avis-box-space-between">
@@ -1038,13 +1098,109 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     </div>
                     <p><?php echo $avi['contenu_avis'];?></p>
                     <div class="avis-box-space-between">
-                        <a href="">Répondre au commentaire</a>
-                        <a href="">Signaler</a>
+                        <a></a>
+                        <a onclick="openPopup('<?php echo $avi['id_avis'].'Sig' ?>', '<?php echo $avi['id_avis'].'SigOv' ?>')">Signaler</a>
                     </div>
+                    <div class="overlay_plages" id="<?php echo $avi['id_avis'].'SigOv';?>"></div>
+                    <form id="<?php echo $avi['id_avis'].'Sig'; ?>" class="popup_avis" action="envoyerSignalementAvis.php" method="post">
+                        <input type="hidden" name="avis" value="<?php echo $avi['id_avis']; ?>">
+                        <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
+                        <div class="mdpCroix" onclick="closePopup('<?php echo $avi['id_avis'].'Sig'; ?>', '<?php echo $avi['id_avis'].'SigOv';?>')"><img src="../svg/croix.svg" alt="croix"></div> 
+                        <h4>L'Avis du client :</h4>
+                        <div class="avis-a-repondre">
+                            <div class="avis-box-space-between">
+                                <div class="header-box infoC">
+                                    <img src="../Ressources/Images/<?php echo $avi['photo'];?>" alt="Image de profil" title="Photo">
+                                    <div>
+                                        <p><?php echo $avi['prenom'] . ' ' . $avi['nom'];?></p>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="header-box">
+                                    <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="star-solid" fill="#ffa723">
+                                    <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg>
+                                    <p><?php echo $avi['note_avis'];?>/5</p>
+                                </div>
+                            </div>
+                            <p><?php echo $avi['contenu_avis'];?></p>
+                        </div>
+                        <h4>Rédigez le motif de signalement</h4>
+                        <div class="redigerRep">
+                            <textarea maxlength="499" id="motif" name="motif"></textarea>
+                            <button id="sendButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                                <path fill="none" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                                </svg>
+                            </button>
+                        </div> 
+                    </form>
+                    <?php
+                        foreach($reponses as $reponse){
+                            if($reponse['id_avis'] === $avi['id_avis']){ ?>
+                                <hr class="hr">
+                                <div class="avis-box-space-between">
+                                    <div class="header-box infoC">
+                                        <img src="../Ressources/Images/<?php echo $reponse['photo'];?>" alt="Image de profil" title="Photo">
+                                        <div>
+                                            <p><?php echo $reponse['prenom'] . ' ' . $reponse['nom'];?></p>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><?php echo $reponse['contenu_reponse'];?></p>
+                                <div class="avis-box-space-between">
+                                    <a></a>
+                                    <a onclick="openPopup('<?php echo $reponse['id_reponse']; ?>', '<?php echo $reponse['id_reponse'].'RepOv' ?>')">Signaler</a>
+                                </div>
+                                <div class="overlay_plages" id="<?php echo $reponse['id_reponse'].'RepOv';?>"></div>
+                                <form id="<?php echo $reponse['id_reponse']; ?>" class="popup_avis" action="envoyerSignalementReponse.php" method="post">
+                                    <input type="hidden" name="reponse" value="<?php echo $reponse['id_reponse']; ?>">
+                                    <input type="hidden" name="logement" value="<?php echo $_GET['logement']; ?>">
+                                    <div class="mdpCroix" onclick="closePopup('<?php echo $reponse['id_reponse']; ?>', '<?php echo $reponse['id_reponse'].'RepOv';?>')"><img src="../svg/croix.svg" alt="croix"></div> 
+                                    <h4>La réponse du propriétaire :</h4>
+                                    <div class="avis-a-repondre">
+                                        <div class="avis-box-space-between">
+                                            <div class="header-box infoC">
+                                                <img src="../Ressources/Images/<?php echo $reponse['photo'];?>" alt="Image de profil" title="Photo">
+                                                <div>
+                                                    <p><?php echo $reponse['prenom'] . ' ' . $reponse['nom'];?></p>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p><?php echo $reponse['contenu_reponse'];?></p>
+                                    </div>
+                                    <h4>Rédigez le motif de signalement</h4>
+                                    <div class="redigerRep">
+                                        <textarea maxlength="499" id="motif" name="motif"></textarea>
+                                        <button id="sendButton" class="btnEnvoyer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                                            <path fill="none" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                                            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                                            </svg>
+                                        </button>
+                                        <div id="overlaySignalement" onclick="closePopupFeedback('popupFeedback', 'overlaySignalement')"></div>
+                                        <div id="popupFeedback" class="popupFeedback">
+                                            <p>Le signalement a bien été envoyé.</p>
+                                        <a href="logement_detaille_client.php?logement=<?php echo $_GET['logement'];?>" ><button class="btnEnvoyer"></button>OK</a>
+                                    </div> 
+                                </form>
+                            <?php }
+                        }
+                    ?>
                 </div>
             <?php } ?>
             </div>
             <?php 
+                
+                if(isset($_GET['erreur']) && $_GET['erreur'] === '0'){
+                    ?>
+                    <script>
+                        openPopupFeedback('popupFeedback', 'overlaySignalement');
+                    </script>
+                    <?php
+                }
             if($nb_avis == 0){ ?>
                 <p style="text-align : center">Aucun avis n'a encore été posté pour ce logement.</p>
             <?php }

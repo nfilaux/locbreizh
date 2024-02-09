@@ -172,6 +172,7 @@ CREATE TABLE
     _plage_ponctuelle_indisponible (
         id_plage_ponctuelle INTEGER,
         libelle_indisponibilite  VARCHAR(255),
+        prix_plage_ponctuelle FLOAT,
         CONSTRAINT _plage_ponctuelle_indisponible_pk PRIMARY KEY (id_plage_ponctuelle),
         CONSTRAINT _plage_ponctuelle_indisponible_fk FOREIGN KEY (id_plage_ponctuelle) REFERENCES _plage_ponctuelle (id_plage_ponctuelle) ON DELETE CASCADE
     );
@@ -185,20 +186,6 @@ CREATE TABLE
         code_planning INTEGER NOT NULL,
         CONSTRAINT contrainte_pk PRIMARY KEY (num_contrainte),
         CONSTRAINT contrainte_fk_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
-    );
-
-/*   table  plage_recurrente : est utilisée pour renseigner des plages récurrente   */
-
-CREATE TABLE
-    _plage_recurrente (
-        id_plage_recurrente SERIAL NOT NULL,
-        disponible BOOLEAN NOT NULL,
-        code_planning INTEGER NOT NULL,
-        libelle_indisponibilite  VARCHAR(255),
-        jour_plage_recurrente VARCHAR(8) NOT NULL,
-        type_plage VARCHAR(25) NOT NULL,
-        CONSTRAINT plage_recurrente_pk PRIMARY KEY (id_plage_recurrente),
-        CONSTRAINT plage_recurrente_fk_code_planning FOREIGN KEY (code_planning) REFERENCES _planning (code_planning)
     );
 
 /*   table taxe_sejour : est utilisée pour stocker les possible différentes taxes de séjour   */
@@ -288,7 +275,7 @@ CREATE TABLE
 CREATE TABLE
     _reponse (
         id_reponse SERIAL NOT NULL,
-        contenu_reponse VARCHAR(255) NOT NULL,
+        contenu_reponse VARCHAR(500) NOT NULL,
         avis INTEGER NOT NULL,
         auteur INTEGER NOT NULL,
         CONSTRAINT reponse_pk PRIMARY KEY (id_reponse),
@@ -330,6 +317,17 @@ CREATE TABLE
         CONSTRAINT signalement_avis_fk_id FOREIGN KEY (id_signalement) REFERENCES _signalement (id_signalement),
         CONSTRAINT ecrit_signalement_fk_avis FOREIGN KEY (avis) REFERENCES _avis (id_avis),
         CONSTRAINT ecrit_signalement_fk_auteur FOREIGN KEY (auteur) REFERENCES _compte (id_compte)
+    );
+
+CREATE TABLE
+    _signalement_reponse (
+        id_signalement INTEGER NOT NULL,
+        auteur INTEGER NOT NULL,
+        reponse INTEGER NOT NULL,
+        CONSTRAINT signalement_reponse_pk PRIMARY KEY (id_signalement),
+        CONSTRAINT signalement_reponse_fk_id FOREIGN KEY (id_signalement) REFERENCES _signalement (id_signalement),
+        CONSTRAINT ecrit_signalement_fk_reponse FOREIGN KEY (reponse) REFERENCES _reponse (id_reponse),
+        CONSTRAINT ecrit_signalement_r_fk_auteur FOREIGN KEY (auteur) REFERENCES _compte (id_compte)
     );
 
 /*   table signalement_compte : est utilisée pour rendre compte d'un signalement d'un compte   */

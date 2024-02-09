@@ -1059,7 +1059,7 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     var commune = "<?php echo $ville;?>";
                     console.log(commune);
 
-                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=12bc147a3311473d8a17e2e4a611fbe0";
+                    var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(commune) + "&key=90a3f846aa9e490d927a787facf78c7e";
 
                     fetch(opencageUrl)
                         .then(response => response.json())
