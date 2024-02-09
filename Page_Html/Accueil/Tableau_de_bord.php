@@ -517,12 +517,12 @@ numCalendrier = -1;
 <body class="pageproprio">
     <?php 
         include('../header-footer/choose_header.php');
-        if(isset($_GET["cs"])){
+        /*if(isset($_GET["cs"])){
             $cas_popup = $_GET["cs"];
         }
         else{
             $cas_popup = '';
-        }
+        }*/
     ?>
 
     <main class="MainTablo">
