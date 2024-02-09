@@ -3,8 +3,6 @@ session_start();
 //print_r($_POST);
 $_SESSION["erreurs"] = [];
 $_SESSION["valeurs_complete"] = $_POST;
-//print_r($_SESSION["valeurs_complete"]);
-//echo 222222;
 
 if ($_POST['nb_chambresP'] > 0 ){
     if ($_POST['nb_lit_simpleP'] <= 0 && $_POST['nb_lit_doubleP'] <= 0){

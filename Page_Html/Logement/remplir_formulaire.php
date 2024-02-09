@@ -447,6 +447,7 @@
 </html>
 <?php 
     unset($_SESSION['erreurs']);
+    unset($_SESSION["valeurs_complete"]);
 ?>
 <script>
     function validateImage(input, imgId) {

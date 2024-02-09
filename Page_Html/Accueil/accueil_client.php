@@ -465,7 +465,7 @@ $photo = $stmt->fetch();
         } else if (isset($_GET['date1'])){
             $stmt->bindParam(':date_debut', $dateDeb);
         }
-
+        $stmt->execute();
     
     } catch (PDOException $e) {
         print "Erreur !:" . $e->getMessage() . "<br/>";
