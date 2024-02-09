@@ -1971,7 +1971,7 @@ footer a:visited {
     align-items: center;
 }
 
-#villeEtPrix{
+#erreurCP, #villeEtPrix{
     align-items: baseline;
 }
 
