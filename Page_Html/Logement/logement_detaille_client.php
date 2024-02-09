@@ -1019,7 +1019,7 @@ numCalendrier = -1;
             $dejaEcrit = false;
             foreach($avis as $avi){
                 if($avi['id_compte'] == $_SESSION['id']){
-                    $dejaEcrit == true;
+                    $dejaEcrit = true;
                 }
             }
 

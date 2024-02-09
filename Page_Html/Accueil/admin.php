@@ -43,9 +43,13 @@
     </diV>
 </header>
     <main>
-        <h1>Liste des signalements avis/reponse</h1>
+        <h1 id="titre-signalement">Liste des signalements avis/reponse</h1>
         <div class="all-avis">
                 <?php
+                if($signalementAvis === []){ ?>
+                    <h4>Aucun signalement en cours</h4>
+                <?php
+                }
                 foreach ($signalementAvis as $avi) {
                 ?>
                 <div class="box-avis">
