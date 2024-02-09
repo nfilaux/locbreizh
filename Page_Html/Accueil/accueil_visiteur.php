@@ -301,7 +301,6 @@
 
             if(isset($mesFiltres)||(isset($monTri))){
                 // Traitement de l'argument de tri
-                
                 if (isset($monTri)) {
                     switch ($monTri) {
                         case 'prix_c':
@@ -345,12 +344,14 @@
                             case 'hammam':
                                 $filtrage .= " AND l.hammam = true"; break;
                             // Services
+                            /*
                             case 'menage':
                                 $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='menage'"; break;
                             case 'navette':
                                 $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='navette'"; break;
                             case 'linge':
                                 $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='linge'"; break;
+                            */
                         }
                     }
                 }

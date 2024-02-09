@@ -153,20 +153,20 @@ function afficherCalendrier(classe, id) {
 
     //création du calendrier de gauche
     for (i = premierJourMois - 1; i >= 0; i--) {
-        texteListe += '<li class="inactif">' + (derniereDateMoisAvant - i) + '</li>';
+        texteListe += '<li class="inactif">' + (derniereDateMoisAvant - i) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
         nbJours++;
     }
 
     for (i = 1; i <= derniereDateMois; i++) {
         idJour = (moisActuel[id]+ 1) + '/' + (k + 1) + '/' + anneeActuelle[id];
-        texteListe += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '</li>';
+        texteListe += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
         k++;
         nbJours++;
     }
 
 
     for (i = derniereJourMois; nbJours < 42; i++) {
-        texteListe += '<li class="inactif">' + (i - derniereJourMois + 1) + '</li>';
+        texteListe += '<li class="inactif">' + (i - derniereJourMois + 1) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
         nbJours++;
     }
 
@@ -174,19 +174,19 @@ function afficherCalendrier(classe, id) {
     if (dateActuelle[id].length == 2){
         //création du calendrier de droite
         for (i = premierJourMois2 - 1; i >= 0; i--) {
-            texteListe2 += '<li class="inactif">' + (derniereDateMoisAvant2 - i) + '</li>';
+            texteListe2 += '<li class="inactif">' + (derniereDateMoisAvant2 - i) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
             nbJours++;
         }
 
         for (i = 1; i <= derniereDateMois2; i++) {
             idJour = (moisActuel2[id] + 1) + '/' + (k + 1 - derniereDateMois) + '/' + anneeActuelle2[id];
-            texteListe2 += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '</li>';
+            texteListe2 += '<li onclick="changerJour(this.id, ' + id + ')" id=' + id + "," + idJour + ' class="' + classe + '">' + i + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
             k++;
             nbJours++;
         }
 
         for (i = derniereJourMois2; nbJours < 84; i++) {
-            texteListe2 += '<li class="inactif">' + (i - derniereJourMois2 + 1) + '</li>';
+            texteListe2 += '<li class="inactif">' + (i - derniereJourMois2 + 1) + '<p style="margin-top : 3px;" class="prixPlanning">&zwnj;</p></li>';
             nbJours++;
         }
         baliseJour[id][1].innerHTML = texteListe2;
@@ -273,6 +273,13 @@ function changerJour(elem, id) {
                     }
                     dernierID[id] = element.id;
                     element.className = "actif";
+                }
+                //remet les plages
+                if (tabDispo[id][0]){
+                    afficherPlages(tabDispo[id], classeDispo[id], tabPrix[id], "D", id);
+                }
+                if (tabIndispo[id][0]){
+                    afficherPlages(tabIndispo[id], classeIndispo[id], tabRaison[id], "I", id);
                 }
                 //active la zone de selection entre les deux dates
                 datePremier = new Date(premierID[id].split(',')[1]).getTime();
@@ -384,6 +391,7 @@ function changerJour(elem, id) {
     }
 }
 
+
 //change les dates se trouvant à coté du calendrier et dans le formulaire pour demander un devis
 function changerDates(id) {
     listeActif = calendrier[id].getElementsByClassName("actif");
@@ -485,10 +493,12 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                     document.getElementById(id + "," + tabPlage[i]).className = classe;
                 }
                 if (classe == "disponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "prix de la plage : " + tabMotif[i][0] + "€";
+                    document.getElementById(id + "," + tabPlage[i]).innerHTML = tabPlage[i].split("/")[1] + '<p class="prixPlanning">' + tabMotif[i] + "€</p>";
                 }
                 else if (classe == "indisponible"){
-                    document.getElementById(id + "," + tabPlage[i]).title = "motif d'indisponibilité : " + tabMotif[i][0];
+                    if (tabMotif[i][1]){
+                        document.getElementById(id + "," + tabPlage[i]).innerHTML = tabPlage[i].split("/")[1] + '<p class="prixPlanning">' + tabMotif[i][1] + "€</p>";
+                    }
                 }
             }
         }
@@ -517,12 +527,12 @@ numCalendrier = -1;
 <body class="pageproprio">
     <?php 
         include('../header-footer/choose_header.php');
-        /*if(isset($_GET["cs"])){
+        if(isset($_GET["cs"])){
             $cas_popup = $_GET["cs"];
         }
         else{
             $cas_popup = '';
-        }*/
+        }
     ?>
 
     <main class="MainTablo">
