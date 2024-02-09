@@ -1,6 +1,6 @@
 // Sélection de tous les éléments de type radio avec le nom "options"
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-const inputs = document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"]');
+const inputs = document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], input[type="radio"]');
     
 // Fonction pour ajouter des paramètres à une URL
 function ajouterParametreUrl(url, parametre, valeur) {
@@ -74,7 +74,7 @@ var timeoutId;
 
 // Ajout d'un écouteur d'événement input à chaque champ filtrant
 inputs.forEach(input => {
-    input.addEventListener('blur', function(event) {
+    input.addEventListener('change', function(event) {
         let date = new Date().toLocaleDateString();
         let tabDate = date.split("/");
         let dateFormat = tabDate[2] + "-" + tabDate[1] + "-" + tabDate[0];
