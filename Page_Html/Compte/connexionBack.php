@@ -31,8 +31,8 @@
             if($pseudo == $admin['login'] && $mdp == $admin['mdp_admin']){
                 header("Location: ../Accueil/admin.php");
                 exit();
-            }
-            */
+            }*/
+            
 
             $verifPseudo = $dbh->prepare("SELECT count(*) FROM locbreizh._compte WHERE pseudo = '{$pseudo}';");
             $verifPseudo->execute();
