@@ -1,6 +1,6 @@
 // Sélection de tous les éléments de type radio avec le nom "options"
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-const inputs = document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"]');
+const inputs = document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], input[type="radio"]');
     
 // Fonction pour ajouter des paramètres à une URL
 function ajouterParametreUrl(url, parametre, valeur) {
@@ -74,7 +74,7 @@ var timeoutId;
 
 // Ajout d'un écouteur d'événement input à chaque champ filtrant
 inputs.forEach(input => {
-    input.addEventListener('blur', function(event) {
+    input.addEventListener('change', function(event) {
         let date = new Date().toLocaleDateString();
         let tabDate = date.split("/");
         let dateFormat = tabDate[2] + "-" + tabDate[1] + "-" + tabDate[0];
@@ -100,49 +100,6 @@ inputs.forEach(input => {
         }
             
         
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionner les champs date1 et date2
-    var date1 = document.getElementById('date1');
-    var date2 = document.getElementById('date2');
-
-    // Récupérer la date actuelle
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    var yyyy = today.getFullYear();
-
-    today = yyyy + '-' + mm + '-' + dd;
-
-    // Définir la date minimale pour les champs date1 et date2
-    date1.min = today;
-    date2.min = today;
-
-    // Désactiver le champ date2 au chargement de la page
-    date2.disabled = true;
-
-    // Activer le champ date2 lorsque date1 est complété
-    date1.addEventListener('change', function() {
-        if (date1.value !== '') {
-            date2.disabled = false;
-        } else {
-            date2.disabled = true;
-        }
-    });
-
-    // Empêcher la saisie de dates antérieures dans les champs date1 et date2
-    date1.addEventListener('input', function() {
-        if (date1.value < today) {
-            date1.value = today;
-        }
-    });
-
-    date2.addEventListener('input', function() {
-        if (date2.value < today) {
-            date2.value = today;
-        }
     });
 });
 
