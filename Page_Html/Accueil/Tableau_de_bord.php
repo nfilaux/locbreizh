@@ -517,12 +517,12 @@ numCalendrier = -1;
 <body class="pageproprio">
     <?php 
         include('../header-footer/choose_header.php');
-        if(isset($_GET["cs"])){
+        /*if(isset($_GET["cs"])){
             $cas_popup = $_GET["cs"];
         }
         else{
             $cas_popup = '';
-        }
+        }*/
     ?>
 
     <main class="MainTablo">
@@ -780,7 +780,7 @@ numCalendrier = -1;
                                     var tab = <?php echo json_encode($plageIndispo); ?>;
                                     var tabRes = [];
                                     var tabMotif = [];
-                                    for (i=1 ; i < tab.length; i++){
+                                    for (i=0 ; i < tab.length; i++){
                                         split = tab[i]["jour_plage_ponctuelle"];
                                         part1 = split.split('-')[1];
                                         if (part1[0] == '0'){
