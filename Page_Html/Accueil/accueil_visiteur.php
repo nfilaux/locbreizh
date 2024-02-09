@@ -106,7 +106,7 @@
                 <h3 class="flptitre">Par type de logement</h3>
                 <div class="radio-inputs">
                         <label>
-                            <input class="radio-input" type="checkbox" name="typeH" value="maison" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'maison')!==false){echo 'checked';}?>>
+                            <input class="radio-input" type="radio" name="typeH" value="maison" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'maison')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
                                         <img src="../svg/house.svg" width="25" height="25">
@@ -115,7 +115,7 @@
                                 </span>
                         </label>
                         <label>
-                            <input class="radio-input" type="checkbox" name="typeH" value="appartement" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'appartement')!==false){echo 'checked';}?>>
+                            <input class="radio-input" type="radio" name="typeH" value="appartement" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'appartement')!==false){echo 'checked';}?>>
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="../svg/appartement.svg" width="25" height="25">
@@ -124,7 +124,7 @@
                             </span>
                         </label>
                         <label>
-                            <input class="radio-input" type="checkbox" name="typeH" value="chateau" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'chateau')!==false){echo 'checked';}?>>
+                            <input class="radio-input" type="radio" name="typeH" value="chateau" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'chateau')!==false){echo 'checked';}?>>
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="../svg/castle.svg" width="25" height="25">
@@ -133,7 +133,7 @@
                             </span>
                         </label>
                         <label>
-                            <input class="radio-input" type="checkbox" name="typeH" value="manoir" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'manoir')!==false){echo 'checked';}?>>
+                            <input class="radio-input" type="radio" name="typeH" value="manoir" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'manoir')!==false){echo 'checked';}?>>
                             <span class="radio-tile">
                                 <span class="radio-icon">
                                     <img src="../svg/manoir.svg" width="25" height="25">
@@ -344,15 +344,6 @@
                                 $filtrage .= " AND l.climatisation = true"; break;
                             case 'hammam':
                                 $filtrage .= " AND l.hammam = true"; break;
-                            // Types d'hébergement
-                            case 'maison':
-                                $filtrage .= " AND l.nature_logement = 'maison'"; break;
-                            case 'appartement':
-                                $filtrage .= " AND l.nature_logement = 'appartement'"; break;
-                            case 'manoir':
-                                $filtrage .= " AND l.nature_logement = 'manoir'"; break;
-                            case 'chateau':
-                                $filtrage .= " AND l.nature_logement = 'chateau'"; break;
                             // Services
                             case 'menage':
                                 $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='menage'"; break;
@@ -419,6 +410,22 @@
                                 JOIN locbreizh._logement l ON l.code_planning = p.code_planning
                                 WHERE p.jour_plage_ponctuelle = :date_debut 
                             )";
+            }
+
+            // -- Type d'hébergement
+            if (isset($_GET['typeH'])){
+                switch($_GET['typeH']){
+                    // Types d'hébergement
+                    case 'maison':
+                        $filtrage .= " AND l.nature_logement = '1'"; break;
+                    case 'appartement':
+                        $filtrage .= " AND l.nature_logement = '2'"; break;
+                    case 'manoir':
+                        $filtrage .= " AND l.nature_logement = '3'"; break;
+                    case 'chateau':
+                        $filtrage .= " AND l.nature_logement = '4'"; break;
+                }
+                
             }
 
             // récupération des données de logement dans la base de donnée avec le filtre
@@ -495,6 +502,7 @@
                             }
             ?>
         </section>
+
         <section id="containerMap">
             <div id="map"></div>
         </section>
@@ -509,7 +517,7 @@
 </html>
 
 <?php
-    if (isset($_GET['filtre'])) {?>
+    if (isset($_GET['filtre']) || isset($_GET['typeH'])) {?>
         <script> openPopup('filtre','ovFiltre'); </script>
 <?php } ?>
 
