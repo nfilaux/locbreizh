@@ -4404,3 +4404,10 @@ iframe {
     height: 80vh;
     border: solid #745086 1px;
 }
+
+/* -------------------------- Calendrier ----------------------------*/
+
+.calendar_date{
+    display: flex;
+    gap: 15px;
+}
