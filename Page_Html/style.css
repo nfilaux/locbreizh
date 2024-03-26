@@ -272,7 +272,7 @@ body {
     transform: translate(-50%, -50%);*/
     overflow: auto;
 
-    width: 42%;
+    width: 25%;
     height: 80vh;
 }
 
@@ -1306,6 +1306,7 @@ footer a:visited {
     text-align: center;
     overflow: auto;
     height: 100%;
+    width: 100%;
 }
 
 .logementCard {
