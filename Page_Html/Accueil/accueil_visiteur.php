@@ -140,61 +140,61 @@
                         <?php } ?>
                         
                         <?php
-                        // -- Les équipements
-                        foreach(explode(",",$_GET['filtre']) as $equipement){
-                            switch($equipement){
-                                // Equipements
-                                case 'balcon':
-                                    $textBtn = "Balcon"; break;
-                                case 'Terrasse':
-                                    $textBtn = "Terrasse"; break;
-                                case 'piscine':
-                                    $textBtn = "Piscine"; break;
-                                case 'jardin':
-                                    $textBtn = "Jardin"; break;
-                                case 'jacuzzi':
-                                    $textBtn = "Jacuzzi"; break;
-                                case 'sauna':
-                                    $textBtn = "Sauna"; break;
-                                case 'parkPrive':
-                                    $textBtn = "Parking privé"; break;
-                                case 'parkPublic':
-                                    $textBtn = "Parking public"; break;
-                                case 'television':
-                                    $textBtn = "Télévision"; break;
-                                case 'wifi':
-                                    $textBtn = "Wifi"; break;
-                                case 'laveLinge':
-                                    $textBtn = "Lave-linge"; break;
-                                case 'laveVaisselle':
-                                    $textBtn = "Lave-vaisselle"; break;
-                                case 'climatisation':
-                                    $textBtn = "Climatisation"; break;
-                                case 'hammam':
-                                    $textBtn = "Hammam"; break;
-                                // Services
-                                case 'menage':
-                                    $textBtn = "Service - ménage"; break;
-                                case 'navette':
-                                    $textBtn = "Service - navette"; break;
-                                case 'linge':
-                                    $textBtn = "Service - linge"; break;
-                                default :
-                                    $textBtn = "no_eq_filtre";
-                            }?>
+                        if (isset($_GET['filtre'])){
+                            // -- Les équipements
+                            foreach(explode(",",$_GET['filtre']) as $equipement){
+                                switch($equipement){
+                                    // Equipements
+                                    case 'balcon':
+                                        $textBtn = "Balcon"; break;
+                                    case 'Terrasse':
+                                        $textBtn = "Terrasse"; break;
+                                    case 'piscine':
+                                        $textBtn = "Piscine"; break;
+                                    case 'jardin':
+                                        $textBtn = "Jardin"; break;
+                                    case 'jacuzzi':
+                                        $textBtn = "Jacuzzi"; break;
+                                    case 'sauna':
+                                        $textBtn = "Sauna"; break;
+                                    case 'parkPrive':
+                                        $textBtn = "Parking privé"; break;
+                                    case 'parkPublic':
+                                        $textBtn = "Parking public"; break;
+                                    case 'television':
+                                        $textBtn = "Télévision"; break;
+                                    case 'wifi':
+                                        $textBtn = "Wifi"; break;
+                                    case 'laveLinge':
+                                        $textBtn = "Lave-linge"; break;
+                                    case 'laveVaisselle':
+                                        $textBtn = "Lave-vaisselle"; break;
+                                    case 'climatisation':
+                                        $textBtn = "Climatisation"; break;
+                                    case 'hammam':
+                                        $textBtn = "Hammam"; break;
+                                    // Services
+                                    case 'menage':
+                                        $textBtn = "Service - ménage"; break;
+                                    case 'navette':
+                                        $textBtn = "Service - navette"; break;
+                                    case 'linge':
+                                        $textBtn = "Service - linge"; break;
+                                    default :
+                                        $textBtn = "no_eq_filtre";
+                                }?>
 
-                            <?php if($textBtn!="no_eq_filtre"){?>
-                                <button class="btn-sup-checkboxes" id="<?php echo $equipement . "BIS"; ?>">
-                                    <span><?php echo $textBtn; ?></span>
-                                    <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-miterlimit="2" stroke-linejoin="round" fill-rule="evenodd" clip-rule="evenodd"><path fill-rule="nonzero" d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 7.425 2.717-2.718c.146-.146.339-.219.531-.219.404 0 .75.325.75.75 0 .193-.073.384-.219.531l-2.717 2.717 2.727 2.728c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.384-.073-.53-.219l-2.729-2.728-2.728 2.728c-.146.146-.338.219-.53.219-.401 0-.751-.323-.751-.75 0-.192.073-.384.22-.531l2.728-2.728-2.722-2.722c-.146-.147-.219-.338-.219-.531 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"></path></svg>
-                                    </span>
-                                </button>
-                            <?php }
-                        }
-                        ?>
-
+                                <?php if($textBtn!="no_eq_filtre"){?>
+                                    <button class="btn-sup-checkboxes" id="<?php echo $equipement . "BIS"; ?>">
+                                        <span><?php echo $textBtn; ?></span>
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-miterlimit="2" stroke-linejoin="round" fill-rule="evenodd" clip-rule="evenodd"><path fill-rule="nonzero" d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 7.425 2.717-2.718c.146-.146.339-.219.531-.219.404 0 .75.325.75.75 0 .193-.073.384-.219.531l-2.717 2.717 2.727 2.728c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.384-.073-.53-.219l-2.729-2.728-2.728 2.728c-.146.146-.338.219-.53.219-.401 0-.751-.323-.751-.75 0-.192.073-.384.22-.531l2.728-2.728-2.722-2.722c-.146-.147-.219-.338-.219-.531 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"></path></svg>
+                                        </span>
+                                    </button>
+                                <?php }
+                            }
                         
+                        }?>
 
                     </div>
 
@@ -221,7 +221,7 @@
             </div>
         </div>
 
-    <div style="display:flex; flex-direction:row;">
+    <div class="maincatalog">
 
     <?php
             $filtre = '';
@@ -400,19 +400,19 @@
             ?>
 
         <div class="acc-with-map">
-        <!-- Champs de séléction des Tris -->
-        <select class="triage" id="tri" name="tri">
-            <option value="none" hidden> Trier par : choisir tri</option>
-            <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
-            <option value="prix_c">Prix (croissant)</option>
-            <option value="prix_d">Prix (décroissant)</option>
-        </select> 
-        <hr class="hr" style="width:100%;">
-            
-        <section class="card">
+            <!-- Champs de séléction des Tris -->
+            <select class="triage" id="tri" name="tri">
+                <option value="none" hidden> Trier par : choisir tri</option>
+                <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
+                <option value="prix_c">Prix (croissant)</option>
+                <option value="prix_d">Prix (décroissant)</option>
+            </select> 
+            <hr class="hr" style="width:100%;">
                 
-                <?php
-                $res = $stmt->fetchAll();
+            <section class="card">
+                    
+                    <?php
+                    $res = $stmt->fetchAll();
 
                 // affichage des données de logement
                 if (count($res) <= 0) { ?>
@@ -495,14 +495,14 @@
                 </div>
             </div>  
 
-            <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')" class=""></div>
-            <div id="filtre" class="filtrage" style="display:none;">
+        
+            <div class="filtrage">
                 <span class="fltitre">Filtres</span><hr class="hr">
                 <div>
                     <h3 class="flptitre">Par type de logement</h3>
-                    <div class="radio-inputs">
+                    <div class="radio-inputs" style="flex-wrap: wrap;">
                             <label>
-                                <input class="radio-input" type="radio" name="typeH" value="maison" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'maison')!==false){echo 'checked';}?>>
+                                <input class="radio-input" type="radio" name="typeH" value="maison"<?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'maison')!==false){echo 'checked';}?>>
                                     <span class="radio-tile">
                                         <span class="radio-icon">
                                             <img src="../svg/house.svg" width="25" height="25">
@@ -632,7 +632,7 @@
                         
                     </ul>
 
-                    <hr class="hr"><h3 class="flptitre">Par service</h3>
+                    <h3 class="flptitre">Par service</h3>
                     <div class="radio-inputs">
                         <label>
                             <input class="radio-input" type="checkbox" name="typeH" value="menage" id="menage" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
@@ -676,11 +676,6 @@
 
 </html>
 
-<?php
-    if (isset($_GET['filtre']) || isset($_GET['typeH'])) {?>
-        <script> openPopup('filtre','ovFiltre'); </script>
-<?php } ?>
 
-<script src="../scriptPopup.js" defer></script>
 <script src="./actualiserTri.js" defer></script>
 <script src="./actualiserFiltre.js" defer></script>
