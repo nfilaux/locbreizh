@@ -248,7 +248,7 @@ body {
     flex-wrap: wrap;
     margin: 10px;
     background-color: white;
-    padding: 1.25em;
+    padding: 1em;
     border-radius: 0.5em;
     box-shadow: 10px 5px 5px gray;
 
@@ -259,23 +259,25 @@ body {
 }
 
 .filtrage {
+    display: flex;
+    flex-direction: column;
     font-size: 0.9em;
 
-    display: none;
-    position: absolute;
+    /*display: none;
+    position: absolute;*/
     background-color: white;
 
-
     border: 0.1px solid #5B3F69;
-    padding: 20px;
+    padding: 0 20px;
     z-index: 1000;
 
-    top: 50%;
+    /*top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);*/
+    overflow: auto;
 
-    width: fit-content;
-    height: fit-content;
+    width: 25%;
+    height: 80vh;
 }
 
 #ovFiltre {
@@ -294,6 +296,7 @@ body {
     font-size: 2em;
     display: block;
     text-align: center;
+    margin-top: 4em;
 }
 
 .flptitre {
@@ -304,6 +307,7 @@ body {
 .liste-filtre {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -348,6 +352,7 @@ body {
     -ms-user-select: none;
     user-select: none;
     padding: 10px;
+    flex-wrap: wrap;
 }
 
 .radio-inputs>* {
@@ -494,10 +499,10 @@ body {
 /* SUPPRIMER FILTRE */
 .contain-supF{
     display: flex;
-
+    flex-wrap: wrap;
 }
 
-.btn-supF {
+.btn-supF, .btn-sup-checkboxes {
     position: relative;
     display: flex;
     align-items: center;
@@ -518,7 +523,7 @@ body {
     margin: 15px 5px 5px;  
 }
 
-.btn-supF span {
+.btn-supF span, .btn-sup-checkboxes span {
     position: relative;
     margin: 0 2px;
     z-index: 2;
@@ -526,7 +531,7 @@ body {
     align-items: center;
 }
 
-.btn-supF::before {
+.btn-supF::before, .btn-sup-checkboxes::before {
     position: absolute;
     content: '';
     width: 100%;
@@ -536,22 +541,22 @@ body {
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.btn-supF svg {
+.btn-supF svg, .btn-sup-checkboxes svg {
     width: 16px; 
     height: 16px; 
     fill: #745086;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.btn-supF:hover::before {
+.btn-supF:hover::before, .btn-sup-checkboxes:hover::before {
     transform: translateY(0); 
 }
 
-.btn-supF:hover svg {
+.btn-supF:hover svg, .btn-sup-checkboxes:hover svg {
     fill: #e8e8e8;
 }
 
-.btn-supF:hover span {
+.btn-supF:hover span, .btn-sup-checkboxes:hover span {
     color: #e8e8e8;
     margin: 0 2px;
 }
@@ -576,7 +581,7 @@ body {
     flex-wrap: wrap;
     margin: auto 10%;
     background-color: white;
-    padding: 1.25em;
+    padding: 0.5em;
     border-radius: 0.5em;
     box-shadow: 10px 5px 5px black;
 
@@ -669,7 +674,7 @@ body {
     text-align: center;
     margin-top: 5px;
     position: relative;
-    margin: 8em auto 0 auto;
+    margin: 12em auto 0 auto;
 }
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
@@ -683,12 +688,12 @@ header {
     border-bottom: 1px solid #745086;
     flex-wrap: nowrap;
     background-color: #fff;
-    padding: 1em 2em;
+    padding: 0.5em 2em;
 }
 
 .logot {
-    height: 5em;
-    width: 5em;
+    height: 2.5em;
+    width: 2.5em;
 }
 
 header h2 {
@@ -926,7 +931,7 @@ main h1 {
 
 .hr {
     border: 1px solid #745086;
-    margin: 2em 0 1em 0;
+    margin: 2em 0 0 0;
 }
 
 .hr2 {
@@ -1065,6 +1070,11 @@ footer a:visited {
 }
 
 /*----------------------------------------------------------------Bouton----------------------------------------------------------------*/
+
+.maincatalog{
+    display:flex; 
+    flex-direction:row;
+}
 
 .btn_visi {
     padding: 0.5em 1em 0.5em 1em;
@@ -1294,11 +1304,13 @@ footer a:visited {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
+    /*justify-content: space-evenly;*/
     margin: 0 auto;
-    height: 58vh;
+    padding-top: 1em;
     text-align: center;
-    overflow-x: auto;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
 }
 
 .logementCard {
@@ -1327,9 +1339,9 @@ footer a:visited {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.logementCard:first-child {
+/* .logementCard:first-child {
     margin-top: 25em;
-}
+} */
 
 .infoContainer {
     display: flex;
@@ -1353,7 +1365,8 @@ footer a:visited {
 
 .acc-with-map {
     align-items: center;
-    width: 40%;
+    width: 30%;
+    height: 80vh;
 }
 
 .otherInfos div {
@@ -1421,6 +1434,21 @@ footer a:visited {
     font-family: 'PatuaOne';
     margin-bottom: 0;
 }
+
+.scale-up-center:hover {
+	animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@keyframes scale-up-center {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+    100% {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.5);
+    }
+  }
 
 /*----------------------------------------------------------------Compte----------------------------------------------------------------*/
 
@@ -3542,6 +3570,15 @@ iframe {
         text-align: center;
     }
 
+    .maincatalog{
+        display:flex; 
+        flex-direction:column;
+    }
+
+    .acc-with-map{
+        width: 80%;
+    }
+
     .card {
         font-size: 0.6em;
     }
@@ -3721,7 +3758,7 @@ iframe {
     }
 
     /*-------------------------------Accueil-------------------------------*/
-
+    
     .card section article .accicone {
         display: flex;
         flex-direction: row;
@@ -3803,11 +3840,7 @@ iframe {
         margin: auto;
         width: 100%;
         object-fit: cover;
-    }
-
-    .section-filters {
-        padding: 5em;
-    }
+    }   
 
     .input-group,
     .input-group-ville,
@@ -4245,11 +4278,6 @@ iframe {
     .card .cardphone div:last-child {
         flex-direction: row;
         width: 100%;
-    }
-
-
-    .section-filters {
-        padding: 2em;
     }
 
     .input-group,

@@ -42,12 +42,12 @@ function obtenirFiltres() {
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function(event) {
         let filtres = obtenirFiltres();
-        console.log(filtres);
+        
         if (filtres[0]){
             filtres = filtres[0].split(',');
         }
         let filtre = checkbox.value;
-        let filtrePresent = filtres.includes(filtre); //tgl timéo
+        let filtrePresent = filtres.includes(filtre);
 
         // Si la case est cochée et le filtre n'est pas déjà présent dans l'URL
         if (checkbox.checked && !filtrePresent) {
@@ -169,3 +169,40 @@ btns_supF.forEach(btn => {
         window.location.href = nouvelleUrl;
     });
 });
+
+// Sélection des boutons de suppression de filtres
+const btns_sup_checkboxes = document.querySelectorAll(".btn-sup-checkboxes");
+
+// Ajout d'un écouteur d'événement à chaque bouton de suppression de filtre
+btns_sup_checkboxes.forEach(btn => {
+    btn.addEventListener("click", function() {
+        let id = (btn.id).replace("BIS", "");
+        let checkbox = document.getElementById(id);
+        checkbox.checked = false;
+
+        let filtres = obtenirFiltres();
+        
+        if (filtres[0]){
+            filtres = filtres[0].split(',');
+        }
+        let filtre = checkbox.value;
+        let filtrePresent = filtres.includes(filtre);
+
+        // Si la case est cochée et le filtre n'est pas déjà présent dans l'URL
+        if (checkbox.checked && !filtrePresent) {
+            filtres.push(filtre);
+        // Si la case est décochée et le filtre est présent dans l'URL
+        } else if (!checkbox.checked && filtrePresent) {
+            let index = filtres.indexOf(filtre);
+            filtres.splice(index, 1);
+        }
+
+        // Si aucun filtre n'est présent, retirez le paramètre 'filtre' de l'URL
+        let parametres = filtres.length > 0 ? {'filtre': filtres.join(',')} : {};
+        let nouvelleUrl = ajouterOuRemplacerParametresUrl(window.location.href, parametres);
+        
+        // Redirection vers la nouvelle URL
+        redirigerVersNouvelleUrl(nouvelleUrl);
+    });
+});
+
