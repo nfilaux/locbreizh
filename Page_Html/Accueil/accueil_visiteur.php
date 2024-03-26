@@ -161,7 +161,7 @@
             </div>
         </div>
 
-    <div style="display:flex; flex-direction:row;">
+    <div class="maincatalog">
 
     <?php
             $filtre = '';
@@ -338,63 +338,64 @@
             ?>
 
         <div class="acc-with-map">
-        <!-- Champs de séléction des Tris -->
-        <select class="triage" id="tri" name="tri">
-            <option value="none" hidden> Trier par : choisir tri</option>
-            <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
-            <option value="prix_c">Prix (croissant)</option>
-            <option value="prix_d">Prix (décroissant)</option>
-        </select> 
-        <hr class="hr" style="width:100%;">
-            
-        <section class="card">
+            <!-- Champs de séléction des Tris -->
+            <select class="triage" id="tri" name="tri">
+                <option value="none" hidden> Trier par : choisir tri</option>
+                <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
+                <option value="prix_c">Prix (croissant)</option>
+                <option value="prix_d">Prix (décroissant)</option>
+            </select> 
+            <hr class="hr" style="width:100%;">
                 
-                <?php
-                $res = $stmt->fetchAll();
+            <section class="card">
+                    
+                    <?php
+                    $res = $stmt->fetchAll();
 
-                // affichage des données de logement
-                if (count($res) <= 0) { ?>
-                    <p style="font-size: 1.5em;">Aucun logement trouvé</p>
-                    <?php   } foreach ($res as $card) {
-                    if ($card['en_ligne'] == true) { ?>
-                            <article class="logementCard cardtel">
-                                <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
-                                    <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
-                                    <div class="infoContainer">
-                                        <div class="mainInfos">
-                                            <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
-                                            <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
-                                        </div>
-                                        <div class="otherInfos cardphone">
-                                            <div>
-                                                <img src="../svg/money.svg" width="25" height="25">
-                                                <span><?php echo $card['tarif_base_ht']; ?> € </span>
+                    // affichage des données de logement
+                    if (count($res) <= 0) { ?>
+                        <p style="font-size: 1.5em;">Aucun logement trouvé</p>
+                        <?php   } foreach ($res as $card) {
+                        if ($card['en_ligne'] == true) { ?>
+                                <article class="logementCard cardtel scale-up-center">
+                                    <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
+                                        <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
+                                        <div class="infoContainer">
+                                            <div class="mainInfos">
+                                                <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
+                                                <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
                                             </div>
-                                            <div>
-                                                <img src="../svg/group.svg" width="25" height="25">
-                                                </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
+                                            <div class="otherInfos cardphone">
+                                                <div>
+                                                    <img src="../svg/money.svg" width="25" height="25">
+                                                    <span><?php echo $card['tarif_base_ht']; ?> € </span>
+                                                </div>
+                                                <div>
+                                                    <img src="../svg/group.svg" width="25" height="25">
+                                                    </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </article>
-                    <?php   }
-                                    }
-                    ?>
+                                    </a>
+                                </article>
+                        <?php   }
+                                        }
+                        ?>
                 </section>
             </div>
             <section id="containerMap">
                 <div id="map"></div>
             </section>  
 
-            <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')" class=""></div>
-            <div id="filtre" class="filtrage" style="display:none;">
+            <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')"></div>
+            <!-- <div id="filtre" class="filtrage" style="display="none"> -->
+            <div class="filtrage">
                 <span class="fltitre">Filtres</span><hr class="hr">
                 <div>
                     <h3 class="flptitre">Par type de logement</h3>
-                    <div class="radio-inputs">
+                    <div class="radio-inputs" style="flex-wrap: wrap;">
                             <label>
-                                <input class="radio-input" type="radio" name="typeH" value="maison" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'maison')!==false){echo 'checked';}?>>
+                                <input class="radio-input" type="radio" name="typeH" value="maison"<?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'maison')!==false){echo 'checked';}?>>
                                     <span class="radio-tile">
                                         <span class="radio-icon">
                                             <img src="../svg/house.svg" width="25" height="25">
@@ -524,7 +525,7 @@
                         
                     </ul>
 
-                    <hr class="hr"><h3 class="flptitre">Par service</h3>
+                    <h3 class="flptitre">Par service</h3>
                     <div class="radio-inputs">
                         <label>
                             <input class="radio-input" type="checkbox" name="typeH" value="menage" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
