@@ -430,8 +430,8 @@ function changerDates(id) {
         }
         if (prixSejour[id]){
             prixPlage[id] = 0;
-            for (i=0; i<listeActif.length; i++){
-                prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[i].id.split(',')[1])]);
+            if (listeActif.length > 1){
+                prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeActif[0].id.split(',')[1])]);
             }
             for (i=0; i<listeEntreDeux.length; i++){
                 prixPlage[id] += parseInt(tabPrix[id][tabDispo[id].indexOf(listeEntreDeux[i].id.split(',')[1])]);
