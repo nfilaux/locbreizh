@@ -202,8 +202,9 @@ body {
     font-weight: bold;
 }
 
-#erreurCP, #erreurVille {
-    color : red;
+#erreurCP,
+#erreurVille {
+    color: red;
     font-size: small;
 }
 
@@ -497,7 +498,7 @@ body {
 
 /**********/
 /* SUPPRIMER FILTRE */
-.contain-supF{
+.contain-supF {
     display: flex;
     flex-wrap: wrap;
 }
@@ -507,20 +508,24 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 15px; /* Ajustement du padding pour maintenir la taille du contenu */
+    padding: 10px 15px;
+    /* Ajustement du padding pour maintenir la taille du contenu */
     background-color: white;
     border: 1px solid #745086;
     color: #745086;
-    font-size: 14px; /* Réduction de la taille de la police */
+    font-size: 14px;
+    /* Réduction de la taille de la police */
     font-weight: 600;
     cursor: pointer;
     overflow: hidden;
-    width: fit-content; /* Réduction de la largeur */
-    height: 20px; /* Réduction de la hauteur */
+    width: fit-content;
+    /* Réduction de la largeur */
+    height: 20px;
+    /* Réduction de la hauteur */
     transition: all 0.3s ease cubic-bezier(0.23, 1, 0.320, 1);
     border-radius: 5px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
-    margin: 15px 5px 5px;  
+    margin: 15px 5px 5px;
 }
 
 .btn-supF span, .btn-sup-checkboxes span {
@@ -536,7 +541,8 @@ body {
     content: '';
     width: 100%;
     height: 100%;
-    transform: translateY(105%); /* Correction de la propriété transform */
+    transform: translateY(105%);
+    /* Correction de la propriété transform */
     background-color: #F53844;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
@@ -560,6 +566,7 @@ body {
     color: #e8e8e8;
     margin: 0 2px;
 }
+
 /*****************/
 
 .filR {
@@ -618,7 +625,7 @@ body {
 .input-group-pers input,
 .input-group-ville input {
     border: none;
-    width: 100%;
+    width: 80%;
     height: 2em;
 }
 
@@ -631,6 +638,27 @@ body {
 .input-group-prepend label {
     margin: auto 0.5em;
 }
+
+#prix_min,
+#prix_max {
+    padding: 1px 5px 0px 0px;
+    padding-left: 25%;
+}
+
+#lieu,
+#personne {
+    padding: 1px 5px 0px 0px;
+    padding-left: 35%;
+}
+
+#date1,
+#date2 {
+    padding: 1px 5px 0px 0px;
+    padding-left: 10%;
+    ;
+}
+
+
 
 .acc-accroche {
     color: white;
@@ -899,7 +927,7 @@ main {
 
 main label,
 .Tablobord h2 {
-    color: #274065;
+    color: #745086;
 }
 
 main h1 {
@@ -2068,7 +2096,7 @@ footer a:visited {
     align-items: center;
 }
 
-#villeEtPrix{
+#villeEtPrix {
     align-items: baseline;
 }
 
@@ -4475,7 +4503,7 @@ iframe {
 
 /* -------------------------- Calendrier ----------------------------*/
 
-.calendar_date{
+.calendar_date {
     display: flex;
     gap: 15px;
 }

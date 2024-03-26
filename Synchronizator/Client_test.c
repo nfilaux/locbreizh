@@ -118,6 +118,7 @@ int main(int argc, char *argv[]){
     }
 
     printf("\033[0;34m\t- Consulter la disponibilité d'un bien sur une période de votre choix\n\033[0m");
+    printf("\033[38;2;255;165;0m\t- Rendre un bien disponible sur une période de votre choix\n\033[0m");
     printf("\033[38;2;139;69;19m\t- Rendre un bien indisponible sur une période de votre choix\n\033[0m");
     printf("Pour la liste des commandes tappez \033[32m--informations\n\033[0m");
     
@@ -141,37 +142,76 @@ int main(int argc, char *argv[]){
             break;
         }
 
-    char server_response[200];
-    ssize_t bytes_read;
-    
-    do {
-    ssize_t bytes_read = read(cnx, server_response, sizeof(server_response));
+        char server_response[200];
+        ssize_t bytes_read;
 
-    if (bytes_read < 0) {
-        perror("Erreur lors de la lecture de la réponse du serveur ou connexion fermée !\n");
-        break;
-    } else if (bytes_read == 0) {
-        printf("La connexion a été fermée par le serveur.\n");
-        break;
+        //boucle de lecture des données venant d'une commande du serveur
+        
+        do {
+
+            //si la fonctionnalité a envoyé son signal de fin on arrête la lecture
+            
+            if(fin){
+                break;
+            }
+
+            ssize_t bytes_read = read(cnx, server_response, sizeof(server_response));
+
+            if (bytes_read < 0) {
+                perror("Erreur lors de la lecture de la réponse du serveur ou connexion fermée !\n");
+                break;
+            } else if (bytes_read == 0) {
+                printf("La connexion a été fermée par le serveur.\n");
+                break;
+            }
+
+            server_response[bytes_read] = '\0';
+
+            // on formate le buffer afin qu'on puisse afficher les données
+            char *line = strtok(server_response, "\n");
+            while (line != NULL) {
+                // vérifie si une saisie est demandé au clavier par une commande
+                //saisie sera affiché avant la saisie au clavier nous n'avons malheuresement pas pu l'afficher
+                if (strcmp(line, "saisie") == 0) {
+                    printf("\nEntrez votre prix : ");
+                    // Lecture de la saisie
+                    fgets(user_input, sizeof(user_input), stdin);
+
+                    // Supprime le saut de ligne à la fin de la saisie
+                    size_t input_length = strlen(user_input);
+                    if (input_length > 0 && user_input[input_length - 1] == '\n') {
+                        user_input[input_length - 1] = '\0';
+                    }
+
+                    // Envoie ce qui a été lu au serveur
+                    ssize_t bytes_written = write(cnx, user_input, strlen(user_input));
+                    if (bytes_written == -1) {
+                        perror("Erreur lors de l'envoi du message au serveur");
+                        return -1;
+                    }
+                }
+
+                // vérifie si le signal de fin a été envoyé
+                    
+                if (strcmp(line, "fin") == 0) {
+                    fin = true;
+                    break;
+                }
+
+                //affiche la ligne en lecture dans le while
+
+                printf("%s\n", line);
+
+                //on reset la ligne en lecture dans le while afin d'éviter les problèmes de concaténation avec les prochaines lignes
+
+                line = strtok(NULL, "\n");
+            }
+
+            memset(0,line,0);
+
+        } while (true);
     }
-
-    server_response[bytes_read] = '\0';
-
-    // Utiliser fgets pour lire une ligne complète
-    char *line = strtok(server_response, "\n");
-    while (line != NULL) {
-
-        if (strcmp(line, "fin") == 0) {
-            fin = true;
-            break;
-        }
-
-        printf("%s\n", line);
-        line = strtok(NULL, "\n");
-    }
-
-} while (fin == false);
-    }
+        
     close(cnx);
     return 0;
 }

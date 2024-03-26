@@ -6,7 +6,7 @@
         unlink("../Ressources/Images/{$_SESSION['post_logement']['image2P']}");
     }
 
-    if ($_SESSION['post_logement']['image3P'] != "") {
+    if (isset($_SESSION['post_logement']['image3P'])) {
         unlink("../Ressources/Images/{$_SESSION['post_logement']['image3P']}");
     }
 
