@@ -21,7 +21,8 @@
     $ics .= "DESCRIPTION:".$details."\n";
     $ics .= "END:VEVENT\n";
     $ics .= "END:VCALENDAR\n";
+    
     $file = 'calendar_ics/test.ics';
     file_put_contents($file, $ics);
-    header('./calendar_ics/test.ics');
+    header('Location: ./calendar_ics/test.ics');
 ?>
