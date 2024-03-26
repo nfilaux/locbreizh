@@ -1,5 +1,11 @@
 <?php
 
+
+    // n°1 -> check si token déja existant & créer si besoin (dans BDD)
+    // n°2 -> la page d'admin avec les paramètre du calendar change quels event choisir
+    // n°3 -> le token.ics doit automatiquement se mettre à jour quand on y accède
+
+
     //Variables
     $date_debut = mktime(14, 30, 00, 03, 26, 2024);
     $date_fin = mktime(15, 45, 00, 03, 26, 2024);
@@ -27,5 +33,5 @@
 
     $file = 'calendar_ics/test.ics';
     file_put_contents($file, $ics);
-
+    header('./calendar_ics/test.ics')
 ?>
