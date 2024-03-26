@@ -1323,9 +1323,9 @@ footer a:visited {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.logementCard:first-child {
+/* .logementCard:first-child {
     margin-top: 25em;
-}
+} */
 
 .infoContainer {
     display: flex;
