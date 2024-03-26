@@ -288,7 +288,7 @@
                     <div class="logcolumn">
                         <div class="description">
                             <label for='description'>Description : </label>
-                            <textarea class="logPAP" id='description' maxlength="499"name='descriptionP' placeholder='Description' required><?php if(isset($_SESSION["valeurs_complete"]["descriptionP"])) { echo $_SESSION["valeurs_complete"]["descriptionP"];} else { echo '0';};?></textarea>
+                            <textarea class="logPAP" id='description' maxlength="499"name='descriptionP' placeholder='Description' required><?php if(isset($_SESSION["valeurs_complete"]["descriptionP"])) { echo $_SESSION["valeurs_complete"]["descriptionP"];}?></textarea>
                         </div>
                         <fieldset>
                             <div class="logrow">
