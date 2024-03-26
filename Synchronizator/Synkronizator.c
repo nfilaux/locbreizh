@@ -137,9 +137,9 @@ int main(int argc, char **argv){
         exit(1);
     }
 
-    int h, min, s, day, mois, an;
+    int h, min, s, day, mois, an,max_id;
     time_t now;
-    bool cle_valide = false,droit_liste_biens = false ,droit_liste_proprio = false ,droit_consult = false,droit_indispo = false;
+    bool cle_valide = false,droit_liste_biens = false ,droit_liste_proprio = false ,droit_consult = false,droit_indispo = false,droit_dispo = false,prix_saisi = false;
         
     // Renvoie l'heure actuelle
     time(&now);
@@ -153,6 +153,8 @@ int main(int argc, char **argv){
     mois = local->tm_mon + 1;     
     an = local->tm_year + 1900;
 
+    char commande_en_cours[500];
+
     // Boucle de lecture de la clé
     while(cle_valide == false) {
         memset(r_buffer, 0, sizeof(r_buffer));
@@ -163,7 +165,7 @@ int main(int argc, char **argv){
         r = read(cnx, r_buffer, sizeof(r_buffer));
 
         // Vérifification des caractères spéciaux ou des espaces dans la clé lue
-        for (size_t i = 0; i < strlen(r_buffer); i++) {
+        /*for (size_t i = 0; i < strlen(r_buffer); i++) {
             if (!isalnum(r_buffer[i])) {
                 printf("Caractère non-alphanumérique détecté dans la clé.\n");
                 strcpy(validation, "false");
@@ -175,7 +177,7 @@ int main(int argc, char **argv){
         // Si la clé n'est pas valide, on passe à la prochaine itération de la boucle
         if (strcmp(validation, "") != 0) {
             continue;
-        }
+        }*/
 
         char request[10000] =""; // Requête sur la BDD
 
@@ -221,8 +223,11 @@ int main(int argc, char **argv){
                     if (PQgetvalue(infos_clef,0,4)[0] == 't'){
                         droit_indispo = true;
                     }
+                    if (PQgetvalue(infos_clef,0,7)[0] == 't'){
+                        droit_dispo = true;
+                    }
 
-                    printf("test : %d %d %d %d\n",droit_liste_biens,droit_liste_proprio,droit_consult,droit_indispo);
+                    printf("test : %d %d %d %d %d\n",droit_liste_biens,droit_liste_proprio,droit_consult,droit_indispo,droit_dispo);
                     
 
                     if (PQntuples(res) == 1){
@@ -252,6 +257,7 @@ int main(int argc, char **argv){
 
     // Récupération de l'id du propriétaire
     char id_prop[10000] = "";
+    int prix;
     if (admin == false){
 
         snprintf(id_prop, sizeof(id_prop), "SELECT id_proprio FROM locbreizh._clefsapi WHERE idclef = '%s'", r_buffer);
@@ -265,6 +271,8 @@ int main(int argc, char **argv){
         // Réinitialisation le buffer à chaque itération
         memset(r_buffer, 0, sizeof(r_buffer));
         r = read(cnx, r_buffer, sizeof(r_buffer));
+
+        strcpy(commande_en_cours,r_buffer);
         
         if (r <= 0) {
             perror("Erreur lors de la lecture du socket ou connexion fermée !\n");
@@ -274,7 +282,18 @@ int main(int argc, char **argv){
         ssize_t bytes_sent;
 
         if (r > 0) {
-            r_buffer[r] = '\0';
+
+            r_buffer[r] = '\0'; // Assurez-vous que la chaîne est terminée par un caractère nul
+            printf("buffer : %s\n",r_buffer);
+            // Vérifiez si toute la chaîne ne contient que des chiffres
+            int estNombre = 1; // Supposons d'abord que la chaîne est un nombre
+            for (int i = 0; r_buffer[i] != '\0'; i++) {
+                if (!isdigit(r_buffer[i])) {
+                    estNombre = 0; // La chaîne ne contient pas seulement des chiffres
+                    break;
+                }
+            }
+
             char chaine[3000] = "";
             char chaine1[1000] = "";
             char chaine2[1000] = "";
@@ -283,7 +302,14 @@ int main(int argc, char **argv){
             memset(chaine2, 0, sizeof(chaine2));
             memset(chaine3, 0, sizeof(chaine3));
 
-            if (strncmp(r_buffer, "--informations", strlen("--informations")) == 0) {
+            // Si la chaîne est un nombre, convertissez-la en entier
+            if (estNombre) {
+                prix = atoi(r_buffer);
+                prix_saisi = true;
+                printf("le prix est de : %d\n",prix);
+            }
+
+            else if (strncmp(r_buffer, "--informations", strlen("--informations")) == 0) {
 
                 if(droit_liste_biens){
                     printf("damien dort\n");
@@ -356,94 +382,94 @@ int main(int argc, char **argv){
 
             } else if (strncmp(r_buffer, "--MesLogements", strlen("--MesLogements")) == 0) {
                     
-                    if(droit_liste_proprio){
-                    
-                        if (verbose == 1){
-                            printf("%02d:%02d:%d %02d:%02d:%02d reçu du client la commande --MesLogements\n",day, mois, an,h, min, s);
-                        }
-                        char requete[1000] = "SELECT * from locbreizh._logement where id_proprietaire ="; // Requete sur la bdd
-                        strcat(requete,id_proprio);
-                        res = PQexec(conn,requete);
-
-                        if (PQresultStatus(res) != PGRES_TUPLES_OK)
-                        {
-                            fprintf(stderr, "BEGIN command failed: %s\n", PQerrorMessage(conn));
-                            PQclear(res);
-                        }
-
-                        int nombres_lignes_req = PQntuples(res);
-                        printf("nombre de comptes : %d\n",nombres_lignes_req);
-                        
-                        snprintf(chaine, sizeof(chaine), "\033[1m\nListe de vos biens :\n\033[0m");
-                        write(cnx, chaine, strlen(chaine));
-                        fflush(stdout);
-                        
-                        // Affichage des lignes du résultat de la requête
-                        for(int i = 0; i < nombres_lignes_req ;i++){
-                            snprintf(chaine, sizeof(chaine), "\t%s -- %s € -- %s -- %s -- %s -- %s m²\n",PQgetvalue(res,i,1),PQgetvalue(res,i,2),PQgetvalue(res,i,3),PQgetvalue(res,i,5),PQgetvalue(res,i,6),PQgetvalue(res,i,7));
-                            write(cnx, chaine, strlen(chaine));
-                            fflush(stdout);  
-                        }
-
-                        if (verbose == 1){
-                            printf("%02d:%02d:%d %02d:%02d:%02d affichage des logements du propriétaire d'id %s\n",day, mois, an,h, min, s,id_proprio);
-                        }
-
-                        const char *fin_message = "\nfin\n";
-                        bytes_sent = write(cnx, fin_message, strlen(fin_message));
-                    } else {
-                        snprintf(chaine,sizeof(chaine),"\033[31m\nVotre clef ne vous octroie pas les droits pour cette commande !\033[0m");
-                        write(cnx,chaine,sizeof(chaine));
-                        write(cnx,"fin",sizeof("fin"));
+                if(droit_liste_proprio){
+                
+                    if (verbose == 1){
+                        printf("%02d:%02d:%d %02d:%02d:%02d reçu du client la commande --MesLogements\n",day, mois, an,h, min, s);
                     }
+                    char requete[1000] = "SELECT * from locbreizh._logement where id_proprietaire ="; // Requete sur la bdd
+                    strcat(requete,id_proprio);
+                    res = PQexec(conn,requete);
+
+                    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+                    {
+                        fprintf(stderr, "BEGIN command failed: %s\n", PQerrorMessage(conn));
+                        PQclear(res);
+                    }
+
+                    int nombres_lignes_req = PQntuples(res);
+                    printf("nombre de comptes : %d\n",nombres_lignes_req);
+                    
+                    snprintf(chaine, sizeof(chaine), "\033[1m\nListe de vos biens :\n\033[0m");
+                    write(cnx, chaine, strlen(chaine));
+                    fflush(stdout);
+                    
+                    // Affichage des lignes du résultat de la requête
+                    for(int i = 0; i < nombres_lignes_req ;i++){
+                        snprintf(chaine, sizeof(chaine), "\t%s -- %s € -- %s -- %s -- %s -- %s m²\n",PQgetvalue(res,i,1),PQgetvalue(res,i,2),PQgetvalue(res,i,3),PQgetvalue(res,i,5),PQgetvalue(res,i,6),PQgetvalue(res,i,7));
+                        write(cnx, chaine, strlen(chaine));
+                        fflush(stdout);  
+                    }
+
+                    if (verbose == 1){
+                        printf("%02d:%02d:%d %02d:%02d:%02d affichage des logements du propriétaire d'id %s\n",day, mois, an,h, min, s,id_proprio);
+                    }
+
+                    const char *fin_message = "\nfin\n";
+                    bytes_sent = write(cnx, fin_message, strlen(fin_message));
+                } else {
+                    snprintf(chaine,sizeof(chaine),"\033[31m\nVotre clef ne vous octroie pas les droits pour cette commande !\033[0m");
+                    write(cnx,chaine,sizeof(chaine));
+                    write(cnx,"fin",sizeof("fin"));
+                }
 
             } else if (strncmp(r_buffer, "--ListeLogements", strlen("--ListeLogements")) == 0) {
             
-                    if (droit_liste_biens == 1){
-                    
-                        if (verbose == 1){
-                            printf("%02d:%02d:%d %02d:%02d:%02d reçu du client un --ListeLogements \n",day, mois, an,h, min, s);
-                        }
-
-                        char requete[1000] = "SELECT * from locbreizh._logement"; // Requete sur la bdd
-                        res = PQexec(conn,requete);
-
-                        if (PQresultStatus(res) != PGRES_TUPLES_OK)
-                        {
-                            fprintf(stderr, "BEGIN command failed: %s\n", PQerrorMessage(conn));
-                            PQclear(res);
-                        }
-
-                        int nombres_lignes_req = PQntuples(res);
-
-                        if (verbose == 1){
-                            printf("%02d:%02d:%d %02d:%02d:%02d envoi de la liste des logements au client \n",day, mois, an,h, min, s);
-                        }
-                        
-                        // Affichage des lignes du résultat de la requête
-                        for(int i = 0; i < nombres_lignes_req ;i++){
-                            
-                            printf("Nom: %s, Prix: %s, Description: %s, Chambres: %s, Salles de bains: %s, Superficie: %s m²\n",
-                            PQgetvalue(res, i, 1), PQgetvalue(res, i, 2), PQgetvalue(res, i, 3),
-                            PQgetvalue(res, i, 5), PQgetvalue(res, i, 6), PQgetvalue(res, i, 7));
-
-                            snprintf(chaine, sizeof(chaine), "%s -- %s € -- %s -- %s -- %s -- %s m²\n",PQgetvalue(res,i,1),PQgetvalue(res,i,2),PQgetvalue(res,i,3),PQgetvalue(res,i,5),PQgetvalue(res,i,6),PQgetvalue(res,i,7));
-                            write(cnx, chaine, strlen(chaine));
-                            fflush(stdout);
-                            strcpy(chaine,"");
-                        }
-
-                        write(cnx,"fin",sizeof("fin"));
-
-                    } else {
-                        snprintf(chaine,sizeof(chaine),"\033[31m\nVotre clef ne vous octroie pas les droits pour cette commande !\033[0m");
-                        write(cnx,chaine,sizeof(chaine));
-                        write(cnx,"fin",sizeof("fin"));
+                if (droit_liste_biens == 1){
+                
+                    if (verbose == 1){
+                        printf("%02d:%02d:%d %02d:%02d:%02d reçu du client un --ListeLogements \n",day, mois, an,h, min, s);
                     }
+
+                    char requete[1000] = "SELECT * from locbreizh._logement"; // Requete sur la bdd
+                    res = PQexec(conn,requete);
+
+                    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+                    {
+                        fprintf(stderr, "BEGIN command failed: %s\n", PQerrorMessage(conn));
+                        PQclear(res);
+                    }
+
+                    int nombres_lignes_req = PQntuples(res);
+
+                    if (verbose == 1){
+                        printf("%02d:%02d:%d %02d:%02d:%02d envoi de la liste des logements au client \n",day, mois, an,h, min, s);
+                    }
+                    
+                    // Affichage des lignes du résultat de la requête
+                    for(int i = 0; i < nombres_lignes_req ;i++){
+                        
+                        printf("Nom: %s, Prix: %s, Description: %s, Chambres: %s, Salles de bains: %s, Superficie: %s m²\n",
+                        PQgetvalue(res, i, 1), PQgetvalue(res, i, 2), PQgetvalue(res, i, 3),
+                        PQgetvalue(res, i, 5), PQgetvalue(res, i, 6), PQgetvalue(res, i, 7));
+
+                        snprintf(chaine, sizeof(chaine), "%s -- %s € -- %s -- %s -- %s -- %s m²\n",PQgetvalue(res,i,1),PQgetvalue(res,i,2),PQgetvalue(res,i,3),PQgetvalue(res,i,5),PQgetvalue(res,i,6),PQgetvalue(res,i,7));
+                        write(cnx, chaine, strlen(chaine));
+                        fflush(stdout);
+                        strcpy(chaine,"");
+                    }
+
+                    write(cnx,"fin",sizeof("fin"));
+
+                } else {
+                    snprintf(chaine,sizeof(chaine),"\033[31m\nVotre clef ne vous octroie pas les droits pour cette commande !\033[0m");
+                    write(cnx,chaine,sizeof(chaine));
+                    write(cnx,"fin",sizeof("fin"));
+                }
 
             } else if (strncmp(r_buffer, "--ConsulterPlage", sizeof(200)) == 0) {
             
-                if (droit_consult){
+                if (droit_consult == 1){
                 
                     if (verbose == 1){
                         printf("%02d:%02d:%d %02d:%02d:%02d reçu du client un --ConsulterPlage \n",day, mois, an,h, min, s);
@@ -515,41 +541,41 @@ int main(int argc, char **argv){
 
                     for(int i = 0; i < nombres_lignes_req ;i++){
                     
-                    snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle_indisponible WHERE id_plage_ponctuelle = '%s'",PQgetvalue(res,i,0));
-                    printf("la requete : %s\n",requete);
-                    resultat = PQexec(conn,requete);
+                        snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle_indisponible WHERE id_plage_ponctuelle = '%s'",PQgetvalue(res,i,0));
+                        printf("la requete : %s\n",requete);
+                        resultat = PQexec(conn,requete);
 
-                    int nombres_lignes_req_result = PQntuples(resultat);
+                        int nombres_lignes_req_result = PQntuples(resultat);
 
-                    if (nombres_lignes_req_result != 0){
-                    
-                    printf("la plage indispinable : %s\n",PQgetvalue(res,i,1));
+                        if (nombres_lignes_req_result != 0){
+                        
+                        printf("la plage indispinable : %s\n",PQgetvalue(res,i,1));
 
-                    strcpy(chaine, "");
-                    snprintf(chaine,sizeof(chaine),"\033[38;2;0;0;139m%s :\033[0m \033[31mindisponible\033[0m\n",PQgetvalue(res,i,1));
-                    write(cnx,chaine,sizeof(chaine));
-                    fflush(stdout);
-                    }
+                        strcpy(chaine, "");
+                        snprintf(chaine,sizeof(chaine),"\033[38;2;0;0;139m%s :\033[0m \033[31mindisponible\033[0m\n",PQgetvalue(res,i,1));
+                        write(cnx,chaine,sizeof(chaine));
+                        fflush(stdout);
+                        }
 
-                    if (i==nombres_lignes_req-1){
-                            if (verbose == 1){
-                                printf("%02d:%02d:%d %02d:%02d:%02d fin du planning de disponibilité : %s du %s au %s \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
-                            }
-                            write(cnx,"fin",sizeof("fin"));
-                            fflush(stdout);
-                    }
+                        if (i==nombres_lignes_req-1){
+                                if (verbose == 1){
+                                    printf("%02d:%02d:%d %02d:%02d:%02d fin du planning de disponibilité : %s du %s au %s \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
+                                }
+                                write(cnx,"fin",sizeof("fin"));
+                                fflush(stdout);
+                        }
 
                     }
                 } else {
-                        snprintf(chaine,sizeof(chaine),"\033[31m\nVotre clef ne vous octroie pas les droits pour cette commande !\033[0m");
+                        snprintf(chaine,sizeof(chaine),"\033[31m\nVotre clef ne vous octroie pas les droits de consultation !\033[0m");
                         write(cnx,chaine,sizeof(chaine));
                         write(cnx,"fin",sizeof("fin"));
-                    }
+                }
                 
             }
 
-            else if (strncmp(r_buffer, "--RendrePlageIndisponible", sizeof(200)) == 0) {
-
+            else if (strncmp(r_buffer, "--RendrePlageIndisponible", strlen("--RendrePlageIndisponible")) == 0) {
+                printf("c moi le buffer : %s\n",r_buffer);
                 if (droit_indispo){
                 
                     if (verbose == 1){
@@ -681,16 +707,243 @@ int main(int argc, char **argv){
                         }
                     }
 
-                    if (verbose == 1){
+                    if (verbose == 1) {
                         printf("%02d:%02d:%d %02d:%02d:%02d fin de la mise en indisponibilité du logement %s du %s au %s : \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
                     }
-                    snprintf(chaine, sizeof(chaine), "\033[32mla mise en indisponibilité de votre logement %s du %s au %s est bien effective\033[0m",elements[1],elements[2],elements[3]);
-                    write(cnx,chaine,sizeof(chaine));
 
+                    snprintf(chaine, sizeof(chaine), "\033[32mla mise en indisponibilité de votre logement %s du %s au %s est bien effective\033[0m",elements[1],elements[2],elements[3]);
+                    write(cnx, chaine, sizeof(chaine));
+
+                    ssize_t bytes_written = write(cnx, chaine, sizeof(chaine));
+                    
+                    // Vérifier si l'écriture précédente s'est bien passée
+                    if (bytes_written == -1) {
+                        perror("Erreur lors de l'envoi du message 'mise en indisponibilité' au client");
+                        // Gérer l'erreur ici
+                    } else {
+                        // Envoyer le message "fin" uniquement si tout s'est bien passé précédemment
+                        ssize_t bytes_written_fin = write(cnx, "fin", sizeof("fin"));
+                        if (bytes_written_fin == -1) {
+                            perror("Erreur lors de l'envoi du message 'fin' au client");
+                            // Gérer l'erreur ici
+                        }
+                    }
+
+                
+                } else {
+                        snprintf(chaine,sizeof(chaine),"\033[31m\nVotre clef ne vous octroie pas les droits d'indispo pour cette commande !\033[0m");
+                        write(cnx,chaine,sizeof(chaine));
+                        write(cnx,"fin",sizeof("fin"));
+                }
+            }
+
+            else if (strncmp(r_buffer, "--RendrePlageDisponible", sizeof(200)) == 0 || strncmp(r_buffer, "--RendrePlageDisponible", sizeof(200)) == 0) {
+                printf("droits dispo : %d\n",droit_dispo);
+                if (droit_dispo){
+
+                    char saisie[8];
+                    snprintf(saisie, sizeof(saisie), "saisie\n");
+                    write(cnx,saisie,sizeof(saisie));
+
+                    //int prix_saisie = 20;
+
+                    char user_input[500]; // Adapter la taille selon vos besoins
+                    ssize_t bytes_read = read(cnx, user_input, sizeof(user_input));
+                    if (bytes_read == -1) {
+                        perror("Erreur lors de la lecture de la saisie de l'utilisateur");
+                        return EXIT_FAILURE;
+                    }
+
+                    // Convertir la saisie en entier
+                    int prix_saisi = atoi(user_input);
+                    printf("Prix saisi par l'utilisateur : %d\n", prix_saisi);
+
+                    // Mettre à jour la variable prix avec le prix saisi
+                    prix = prix_saisi;
+                
+                    if (verbose == 1){
+                        printf("%02d:%02d:%d %02d:%02d:%02d reçu du client un --RendreDisponible : \n",day, mois, an,h, min, s);
+                    }
+                
+                    char elements[5][100];
+                    int i = 0;
+
+                    const char *separators = "|";
+
+                    // On cherche à récupérer, un à un, tous les mots (token) de la phrase et on commence par le premier.
+                    char *strToken = strtok(commande_en_cours, separators);
+                    while (strToken != NULL && i < 4) {
+                        printf("%s\n", strToken);
+
+                        strcpy(elements[i], strToken);
+                        
+                        // On demande le token suivant.
+                        strToken = strtok(NULL, separators);
+                        i++;
+                    }
+
+                    for (int j = 0; j < i; j++) {
+                        printf("Element %d : %s\n", j, elements[j]);
+                    }
+
+                    char requete[1000];
+                    snprintf(requete, sizeof(requete), "SELECT code_planning FROM locbreizh._logement WHERE libelle_logement='%s'", elements[1]);
+                    res = PQexec(conn,requete);
+
+                    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+                    {
+                        fprintf(stderr, "BEGIN command failed: %s\n", PQerrorMessage(conn));
+                        PQclear(res);
+                    }
+
+                    char code_planning[100] = "";
+                    strcpy(code_planning,PQgetvalue(res,0,0));
+
+                    printf("id du planning du logement : %s\n",PQgetvalue(res,0,0));
+
+                    snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle WHERE code_planning='%s' and jour_plage_ponctuelle >= '%s' and jour_plage_ponctuelle <= '%s'",code_planning,elements[2],elements[3]);
+                    printf("la requete : %s\n",requete);
+                    res = PQexec(conn,requete);
+
+                    int nombres_lignes_req = PQntuples(res);
+                    printf("nombres de plages : %d\n",nombres_lignes_req);
+
+                    struct tm tm_start, tm_end;
+                    memset(&tm_start, 0, sizeof(struct tm));
+                    memset(&tm_end, 0, sizeof(struct tm));
+
+                    // Convertir les chaînes de date en structures tm
+                    strptime(elements[2], "%Y-%m-%d", &tm_start);
+                    strptime(elements[3], "%Y-%m-%d", &tm_end);
+
+                    // Convertir en timestamps
+                    time_t start_timestamp = mktime(&tm_start);
+                    time_t end_timestamp = mktime(&tm_end);
+
+                    // Vérifier si les dates sont valides
+                    if (start_timestamp == -1 || end_timestamp == -1) {
+                        fprintf(stderr, "Dates invalides.\n");
+                        return EXIT_FAILURE;
+                    }
+
+                    snprintf(requete, sizeof(requete), "SELECT MAX(id_plage_ponctuelle) FROM locbreizh._plage_ponctuelle;");
+                    printf("la requete : %s\n",requete);
+                    res = PQexec(conn,requete);
+
+                    // Exécuter la requête SQL
+                    // Vérifier si la requête a réussi
+                    if (PQresultStatus(res) == PGRES_TUPLES_OK) {
+                        // Vérifier s'il y a au moins une ligne retournée
+                        if (PQntuples(res) > 0) {
+                        // Récupérer la valeur maximale de l'ID de plage
+                        char *max_id_str = PQgetvalue(res, 0, 0);
+
+                        // Convertir la valeur en entier
+                        max_id = atoi(max_id_str);
+
+                        // Utiliser max_id comme valeur maximale de l'ID de plage
+                        printf("Valeur maximale de l'ID de plage : %d\n", max_id);
+                        } else {
+                            printf("Aucun résultat retourné.\n");
+                        }
+                    } else {
+                        printf("Erreur lors de l'exécution de la requête : %s\n", PQerrorMessage(conn));
+                    }
+
+                    snprintf(requete, sizeof(requete), "SELECT MAX(jour_plage_ponctuelle) FROM locbreizh._plage_ponctuelle where code_planning = %s ;",code_planning);
+                    printf("la requete : %s\n",requete);
+                    res = PQexec(conn,requete);
+
+                    // Exécuter la requête SQL
+                    // Vérifier si la requête a réussi
+                    if (PQresultStatus(res) == PGRES_TUPLES_OK) {
+                        // Vérifier s'il y a au moins une ligne retournée
+                        if (PQntuples(res) > 0) {
+                        // Récupérer la valeur maximale de l'ID de plage
+                        char *max_id_str = PQgetvalue(res, 0, 0);
+
+                        // Convertir la valeur en entier
+                        max_id = atoi(max_id_str);
+
+                        // Utiliser max_id comme valeur maximale de l'ID de plage
+                        printf("Valeur maximale date : %d\n", max_id);
+                        } else {
+                            printf("Aucun résultat retourné.\n");
+                        }
+                    } else {
+                        printf("Erreur lors de l'exécution de la requête : %s\n", PQerrorMessage(conn));
+                    }
+
+
+                    if (verbose == 1){
+                        printf("%02d:%02d:%d %02d:%02d:%02d début de la mise en disponibilité du logement %s du %s au %s: \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
+                    }
+                    
+                    // Boucle pour chaque jour entre les deux dates
+                    for (time_t current_timestamp = start_timestamp; current_timestamp <= end_timestamp; current_timestamp += 86400) {
+                        struct tm *current_tm = localtime(&current_timestamp);
+
+                        // Afficher la date au format YYYY-MM-DD
+                        char formatted_date[11];
+                        strftime(formatted_date, sizeof(formatted_date), "%Y-%m-%d", current_tm);
+                        printf("%s\n", formatted_date);
+
+                        //on recup l'id de la plage associé au jour et au planning du logement sélectionné dans la commande
+                        snprintf(requete, sizeof(requete), "SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE code_planning='%s' and jour_plage_ponctuelle = '%s'",code_planning,formatted_date);
+                        //printf("la requete : %s\n",requete);
+                        res = PQexec(conn,requete);
+
+                        int nombres_lignes_req = PQntuples(res);
+                        
+                        char id_plage[100] = "";
+                        
+                        if (nombres_lignes_req == 1 ){
+                            strcpy(id_plage,PQgetvalue(res,0,0));
+                        }
+                        
+                        //si la plage n'existe pas on la créer
+                        if(nombres_lignes_req < 1){
+                            max_id++;
+                            snprintf(requete, sizeof(requete), "INSERT INTO locbreizh._plage_ponctuelle(id_plage_ponctuelle,jour_plage_ponctuelle,code_planning) VALUES (%d,'%s',%s)",max_id+1,formatted_date,code_planning);
+                            //printf("la requete : %s\n",requete);
+                            res = PQexec(conn,requete);
+
+                            snprintf(requete, sizeof(requete), "INSERT INTO locbreizh._plage_ponctuelle_disponible(id_plage_ponctuelle,prix_plage_ponctuelle) Values(%d,'%d')",max_id+1,prix_saisi);
+                            printf("la requete : %s\n",requete);
+                            res = PQexec(conn,requete);
+                        } else if(nombres_lignes_req == 1){
+                            snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle_disponible WHERE id_plage_ponctuelle = '%s'",id_plage);
+                            //printf("la requete : %s\n",requete);
+                            res = PQexec(conn,requete);
+
+                            int plage_indisponible = PQntuples(res);
+
+                            if (plage_indisponible != 1){
+
+                                snprintf(requete, sizeof(requete), "DELETE from locbreizh._plage_ponctuelle_indisponible where id_plage_ponctuelle = '%s'",id_plage);
+                                //printf("la requete : %s\n",requete);
+                                res = PQexec(conn,requete);
+
+                                snprintf(requete, sizeof(requete), "INSERT INTO locbreizh._plage_ponctuelle_disponible(id_plage_ponctuelle,prix_plage_ponctuelle) Values(%s,'%d')",id_plage,prix_saisi);
+                                //printf("la requete : %s\n",requete);
+                                res = PQexec(conn,requete);
+                                
+                            }
+                        }
+                    }
+
+                    if (verbose == 1){
+                        printf("%02d:%02d:%d %02d:%02d:%02d fin de la mise en disponibilité du logement %s du %s au %s : \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
+                    }
+                    snprintf(chaine, sizeof(chaine), "\033[32mla mise en disponibilité de votre logement %s du %s au %s est bien effective\033[0m",elements[1],elements[2],elements[3]);
+                    write(cnx,chaine,sizeof(chaine));
+                    memset(0,chaine,0);
                     write(cnx,"fin",sizeof("fin"));
                 
                 } else {
-                        snprintf(chaine,sizeof(chaine),"\033[31m\nVotre clef ne vous octroie pas les droits pour cette commande !\033[0m");
+                        snprintf(chaine,sizeof(chaine),"\033[31m\nVotre clef ne vous octroie pas les droits pour la commande rendre disponible !\033[0m");
+                        write(cnx,chaine,sizeof(chaine));
+                        snprintf(chaine,sizeof(chaine),"droit rendre disponible: %d",droit_dispo);
                         write(cnx,chaine,sizeof(chaine));
                         write(cnx,"fin",sizeof("fin"));
                 }
@@ -708,4 +961,4 @@ int main(int argc, char **argv){
 
 return 0;
 
-}
+};

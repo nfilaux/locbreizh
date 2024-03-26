@@ -61,7 +61,7 @@
                 $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
                 $stmt = $dbh->prepare(
-                    "SELECT IdClef, droitGrandeConsultation, droitPetiteConsultation, droitConsultationCalendrier, droitRendreIndisponible
+                    "SELECT IdClef, droitGrandeConsultation, droitPetiteConsultation, droitConsultationCalendrier, droitRendreIndisponible, droitRendreDisponible
                     FROM locbreizh._clefsapi;"
                 );
 
@@ -71,7 +71,7 @@
                 $droitPetiteConsultation = $stmt->fetch();
                 $droitConsultationCalendrier = $stmt->fetch();
                 $droitRendreIndisponible = $stmt->fetch();
-
+                $droitRendreDisponible = $stmt->fetch();
             } catch (PDOException $e) {
                 print "Erreur !:" . $e->getMessage() . "<br/>";
                 die();
@@ -87,7 +87,7 @@
             $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
             $stmt = $dbh->prepare(
-                "SELECT idclef,droitgrandeconsultation,droitpetiteconsultation,droitconsultationcalendrier,droitrendreindisponible, estAdmin FROM locbreizh._clefsapi where id_proprio = {$_SESSION['id']};"
+                "SELECT idclef,droitgrandeconsultation,droitpetiteconsultation,droitconsultationcalendrier,droitrendreindisponible,estAdmin,droitrendredisponible FROM locbreizh._clefsapi where id_proprio = {$_SESSION['id']};"
             );
 
             $stmt->execute();
@@ -101,6 +101,7 @@
                 <th>Consultation des biens du propriétaire</th>
                 <th>Consultation du calendrier</th>
                 <th>Rendre indisponible</th>
+                <th>Rendre disponible</th>
             </tr>
             <?php
             foreach ($droitClef as $clef => $value){ ?>
@@ -109,6 +110,7 @@
                         <td> <input type="checkbox" name="droitPetiteConsultation" id="petiteConsultation" <?php if ($value['droitpetiteconsultation'] == true){ echo "checked"; } ?>> </td>
                         <td> <input type="checkbox" name="droitConsultationCalendrier" id="consultationCalendrier" <?php if ($value['droitconsultationcalendrier'] == true){ echo "checked"; }?>></td>
                         <td> <input type="checkbox" name="droitRendreIndisponible" id="droitRendreIndisponible" <?php if ($value['droitrendreindisponible'] == true){ echo "checked"; } ?>></td>
+                        <td> <input type="checkbox" name="droitRendredisponible" id="droitRendredisponible" <?php if ($value['droitrendredisponible'] == true){ echo "checked"; } ?>></td>
                     </tr>
                 <?php
             };
@@ -119,16 +121,16 @@
         <button id="nouvelleClefAPI" >Nouvelle Clef API</button>
         <button id="boutonSauvegarder">Sauvegarder</button>
     </main>
-        <script src="script.js"></script>
+        <script src="script4.js"></script>
         <?php 
 
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+        /*if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
             // C'est une requête AJAX
             echo "bonjour :"  . print_r($_POST);
         } else {
             // Ce n'est pas une requête AJAX
             exit;
-        }
+        }*/
         
         if (isset($_POST['action']) && $_POST['action'] == 'fonctionSauvegarder') {
             fonctionSauvegarder();
@@ -144,6 +146,7 @@
             $petiteConsultation = isset($_POST['petiteConsultation']) ? $_POST['petiteConsultation'] : false;
             $consultationCalendrier = isset($_POST['consultationCalendrier']) ? $_POST['consultationCalendrier'] : false;
             $rendreIndisponible = isset($_POST['rendreIndisponible']) ? $_POST['rendreIndisponible'] : false;
+            $rendreDisponible = isset($_POST['rendreDisponible']) ? $_POST['rendreDisponible'] : false;
             $estAdmin = false;
 
             $id_clef = $_POST['derniereClefId'];
@@ -175,7 +178,7 @@
 
                     $stmt = $dbh->prepare(
                         "UPDATE locbreizh._clefsapi
-                        SET droitGrandeConsultation = :grandeConsultation, droitPetiteConsultation = :petiteConsultation, droitConsultationCalendrier = :consultationCalendrier, droitRendreIndisponible = :rendreIndisponible
+                        SET droitGrandeConsultation = :grandeConsultation, droitPetiteConsultation = :petiteConsultation, droitConsultationCalendrier = :consultationCalendrier, droitRendreIndisponible = :rendreIndisponible, droitRendreDisponible = :rendreDisponible
                         WHERE IdClef = :id_clef;"
                     );
 
@@ -184,6 +187,7 @@
                     $stmt->bindParam(':petiteConsultation', $petiteConsultation, PDO::PARAM_BOOL);
                     $stmt->bindParam(':consultationCalendrier', $consultationCalendrier, PDO::PARAM_BOOL);
                     $stmt->bindParam(':rendreIndisponible', $rendreIndisponible, PDO::PARAM_BOOL);
+                    $stmt->bindParam(':rendreDisponible', $rendreDisponible, PDO::PARAM_BOOL);
                     $stmt->execute();
 
                 } catch (PDOException $e) {
@@ -200,8 +204,8 @@
                     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     
                     $stmt = $dbh->prepare(
-                        "INSERT INTO locbreizh._clefsapi (IdClef, droitGrandeConsultation, droitPetiteConsultation, droitConsultationCalendrier, droitRendreIndisponible, estadmin, id_proprio)
-                        VALUES (:IdClef, :grandeConsultation, :petiteConsultation, :consultationCalendrier, :rendreIndisponible, :estAdmin, :id_proprio);"
+                        "INSERT INTO locbreizh._clefsapi (IdClef, droitGrandeConsultation, droitPetiteConsultation, droitConsultationCalendrier, droitRendreIndisponible, estadmin, id_proprio, droitRendreDisponible)
+                        VALUES (:IdClef, :grandeConsultation, :petiteConsultation, :consultationCalendrier, :rendreIndisponible, :estAdmin, :id_proprio, :rendreDisponible);"
                     );
                     
                     $stmt->bindParam(':IdClef', $id_clef);
@@ -211,6 +215,7 @@
                     $stmt->bindParam(':rendreIndisponible', $rendreIndisponible, PDO::PARAM_BOOL);
                     $stmt->bindParam(':estAdmin', $estAdmin, PDO::PARAM_BOOL);
                     $stmt->bindParam(':id_proprio', $_SESSION['id']);
+                    $stmt->bindParam(':rendreDisponible', $rendreDisponible, PDO::PARAM_BOOL);
                     $stmt->execute();                
     
                 } catch (PDOException $e) {
