@@ -12,7 +12,7 @@
     <script src="../scriptPopup.js"></script>
 </head>
 
-<body onload="init()">
+<body> <!--  onload="init()" -->
     <?php
     $filtre = '';
     include('../header-footer/choose_header.php');
@@ -357,6 +357,42 @@
                     <p style="font-size: 1.5em;">Aucun logement trouvé</p>
                     <?php   } foreach ($res as $card) {
                     if ($card['en_ligne'] == true) { ?>
+                        <script>
+                            <?php foreach ($res as $ville) { ?>
+                                var ville = "<?php echo $ville['ville']; ?>";
+                                var libelle_logement = "<?php echo $ville['libelle_logement']; ?>";
+                                geocodeAndAddMarkersForCity(ville, libelle_logement);
+                            <?php } ?>
+                            function geocodeAndAddMarkersForCity(ville, libelle_logement) {
+                                var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=90a3f846aa9e490d927a787facf78c7e";
+
+                                fetch(opencageUrl)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.results.length > 0) {
+                                            var latitude = data.results[0].geometry.lat;
+                                            var longitude = data.results[0].geometry.lng;
+
+                                            // Création du marqueur pour cette ville
+                                            var marker = L.marker([latitude, longitude], {icon: ownIcon}).addTo(map);
+                                            marker.bindPopup(libelle_logement);
+                                        } else {
+                                            console.log("Impossible de géocoder la ville:", ville);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error("Erreur lors de la requête de géocodage:", error);
+                                    });
+                            }
+
+                            // Image du marqueur
+                            var ownIcon = L.icon({
+                                iconUrl: '../svg/map-pin-fill (2).svg',
+                                iconSize: [48, 48],
+                                iconAnchor: [22, 48],
+                                popupAnchor: [3, -24]
+                            });
+                        </script>
                             <article class="logementCard cardtel">
                                 <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
                                     <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
@@ -384,7 +420,17 @@
                 </section>
             </div>
             <section id="containerMap">
-                <div id="map"></div>
+                <div id="map">
+                <script>
+                            // Création de la carte Leaflet
+                            var map = L.map('map').setView([48.2020, -2.9326], 8);
+
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                maxZoom: 19,
+                                attribution: '© OpenStreetMap contributors'
+                            }).addTo(map);
+                    </script>
+                </div>
             </section>  
 
             <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')" class=""></div>
