@@ -25,7 +25,7 @@
                     <div class="fil">
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12"></label>
+                                <label for="prix_min">Min<!--<img src="../svg/money.svg" width="12" height="12">--></label>
                             </div>
                             <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prix_min'])) {
                                                                                                 echo $_GET['prix_min'];
@@ -35,7 +35,7 @@
                         </div>
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12"></label>
+                                <label for="prix_max">Max<!--<img src="../svg/money.svg" width="12" height="12">--></label>
                             </div>
                             <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prix_max'])) {
                                                                                                 echo $_GET['prix_max'];
@@ -65,13 +65,13 @@
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14"></label>
+                                <label for="date1">Début<!--<img src="../svg/calendar.svg" width="14" height="14">--></label>
                             </div>
                             <input type="date" id="date1" name="date1" value="<?php if (isset($_GET['date1'])) {echo $_GET['date1']; }else {echo date('Y-m-d');}?>" />
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14"></label>
+                                <label for="date2">Fin<!--<img src="../svg/calendar.svg" width="14" height="14">--></label>
                             </div>
                             <input type="date" id="date2" name="date2" value="<?php if (isset($_GET['date2'])) {echo $_GET['date2']; } else {echo date('Y-m-d');}?>" />
                         </div>
@@ -399,14 +399,16 @@
 
         <div class="acc-with-map">
             <!-- Champs de séléction des Tris -->
+            
+            <hr class="hr" style="margin-top:15em; width:100%;">
+            
             <select class="triage" id="tri" name="tri">
                 <option value="none" hidden> Trier par : choisir tri</option>
                 <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
                 <option value="prix_c">Prix (croissant)</option>
                 <option value="prix_d">Prix (décroissant)</option>
             </select> 
-            <hr class="hr" style="width:100%;">
-                
+
             <section class="card">
                     
                     <?php
@@ -537,7 +539,8 @@
                             </label>
                     </div>
 
-                    <hr class="hr"><h3 class="flptitre">Par équipement</h3>
+                    <hr class="hr">
+                    <h3 class="flptitre">Par équipement</h3>
                     <ul class="liste-filtre">
                         <div>
                             <li>
@@ -659,9 +662,12 @@
                                     <span class="radio-label">Linge</span>
                                 </span>
                         </label>
+                        
                     </div>
-                    <hr class="hr">
-                    <a class="center btn-accueil" style="text-decoration: none; color:white;" href="./accueil_visiteur.php"> Réinitialiser </a>
+                    <div class="fil-res">
+                        <a class="btn-accueil" style="text-decoration: none; color:white;" href="./accueil_visiteur.php"> Réinitialiser </a>
+                    </div>
+                    
                 </div>
             </div>
         </div>
