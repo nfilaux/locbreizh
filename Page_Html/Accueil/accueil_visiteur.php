@@ -399,14 +399,16 @@
 
         <div class="acc-with-map">
             <!-- Champs de séléction des Tris -->
+            
+            <hr class="hr" style="margin-top:15em; width:100%;">
+            
             <select class="triage" id="tri" name="tri">
                 <option value="none" hidden> Trier par : choisir tri</option>
                 <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
                 <option value="prix_c">Prix (croissant)</option>
                 <option value="prix_d">Prix (décroissant)</option>
             </select> 
-            <hr class="hr" style="width:100%;">
-                
+
             <section class="card">
                     
                     <?php
@@ -538,7 +540,8 @@
                             </label>
                     </div>
 
-                    <hr class="hr"><h3 class="flptitre">Par équipement</h3>
+                    <hr class="hr">
+                    <h3 class="flptitre">Par équipement</h3>
                     <ul class="liste-filtre">
                         <div>
                             <li>
@@ -660,9 +663,12 @@
                                     <span class="radio-label">Linge</span>
                                 </span>
                         </label>
+                        
                     </div>
-                    <hr class="hr">
-                    <a class="center btn-accueil" style="text-decoration: none; color:white;" href="./accueil_visiteur.php"> Réinitialiser </a>
+                    <div class="fil-res">
+                        <a class="btn-accueil" style="text-decoration: none; color:white;" href="./accueil_visiteur.php"> Réinitialiser </a>
+                    </div>
+                    
                 </div>
             </div>
         </div>

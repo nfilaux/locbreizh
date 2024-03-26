@@ -257,6 +257,8 @@ body {
 .filtrage {
     display: flex;
     flex-direction: column;
+    position: absolute;
+    right: 0;
     font-size: 0.9em;
 
     /*display: none;
@@ -272,7 +274,7 @@ body {
     transform: translate(-50%, -50%);*/
     overflow: auto;
 
-    width: 25%;
+    width: 20%;
     height: 80vh;
 }
 
@@ -292,7 +294,7 @@ body {
     font-size: 2em;
     display: block;
     text-align: center;
-    margin-top: 4em;
+    margin-top: 7em;
 }
 
 .flptitre {
@@ -347,13 +349,26 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    padding: 10px;
     flex-wrap: wrap;
 }
 
 .radio-inputs>* {
     margin: 6px;
 }
+
+.filtrage div .fil-res {
+    display: flex;
+    margin: 1em auto;
+    border-radius: 5px;
+    justify-content: center;
+}
+
+.filtrage div .fil-res a {
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+}
+
 
 .radio-input:checked+.radio-tile {
     border-color: #5B3F69;
@@ -496,6 +511,7 @@ body {
 .contain-supF{
     display: flex;
     flex-wrap: wrap;
+    margin-top: 5px;
 }
 
 .btn-supF, .btn-sup-checkboxes {
@@ -503,11 +519,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 15px; /* Ajustement du padding pour maintenir la taille du contenu */
+    padding: 5px 10px; /* Ajustement du padding pour maintenir la taille du contenu */
     background-color: white;
     border: 1px solid #745086;
     color: #745086;
-    font-size: 14px; /* Réduction de la taille de la police */
+    font-size: 0.8em; /* Réduction de la taille de la police */
     font-weight: 600;
     cursor: pointer;
     overflow: hidden;
@@ -516,7 +532,7 @@ body {
     transition: all 0.3s ease cubic-bezier(0.23, 1, 0.320, 1);
     border-radius: 5px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
-    margin: 15px 5px 5px;  
+    margin: 2px 5px 5px;  
 }
 
 .btn-supF span, .btn-sup-checkboxes span {
@@ -670,7 +686,7 @@ body {
     text-align: center;
     margin-top: 5px;
     position: relative;
-    margin: 12em auto 0 auto;
+    margin: 1em auto 0 auto;
 }
 
 /*----------------------------------------------------------------Header----------------------------------------------------------------*/
@@ -883,6 +899,10 @@ header a:last-child {
     padding-left: 0%;
     padding-right: 0%;
     padding-bottom: 0vw;
+}
+
+.mainacc {
+    max-height: 80vh;
 }
 
 main {
@@ -3539,8 +3559,14 @@ iframe {
         width: 80%;
     }
 
+    #map{
+        height: 0;
+        display: none;
+    }
+
     .card {
         font-size: 0.6em;
+        overflow: unset;
     }
 
     .logementCard>a>img {
