@@ -170,8 +170,8 @@ body {
     z-index: 999;
 }
 
-.plages h1{
-    font-size : 1.5em;
+.plages h1 {
+    font-size: 1.5em;
 }
 
 .unePlage {
@@ -503,7 +503,8 @@ body {
     flex-wrap: wrap;
 }
 
-.btn-supF, .btn-sup-checkboxes {
+.btn-supF,
+.btn-sup-checkboxes {
     position: relative;
     display: flex;
     align-items: center;
@@ -528,7 +529,8 @@ body {
     margin: 15px 5px 5px;
 }
 
-.btn-supF span, .btn-sup-checkboxes span {
+.btn-supF span,
+.btn-sup-checkboxes span {
     position: relative;
     margin: 0 2px;
     z-index: 2;
@@ -536,7 +538,8 @@ body {
     align-items: center;
 }
 
-.btn-supF::before, .btn-sup-checkboxes::before {
+.btn-supF::before,
+.btn-sup-checkboxes::before {
     position: absolute;
     content: '';
     width: 100%;
@@ -547,22 +550,26 @@ body {
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.btn-supF svg, .btn-sup-checkboxes svg {
-    width: 16px; 
-    height: 16px; 
+.btn-supF svg,
+.btn-sup-checkboxes svg {
+    width: 16px;
+    height: 16px;
     fill: #745086;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.btn-supF:hover::before, .btn-sup-checkboxes:hover::before {
-    transform: translateY(0); 
+.btn-supF:hover::before,
+.btn-sup-checkboxes:hover::before {
+    transform: translateY(0);
 }
 
-.btn-supF:hover svg, .btn-sup-checkboxes:hover svg {
+.btn-supF:hover svg,
+.btn-sup-checkboxes:hover svg {
     fill: #e8e8e8;
 }
 
-.btn-supF:hover span, .btn-sup-checkboxes:hover span {
+.btn-supF:hover span,
+.btn-sup-checkboxes:hover span {
     color: #e8e8e8;
     margin: 0 2px;
 }
@@ -627,12 +634,14 @@ body {
     border: none;
     width: 80%;
     height: 2em;
+
 }
 
 .input-group-prepend {
     display: flex;
     border-right: 1px solid #ddd;
     margin-right: 5px;
+    font-weight: 600;
 }
 
 .input-group-prepend label {
@@ -1009,6 +1018,7 @@ main h1 {
 
 .footer,
 .footerP {
+    margin-top: 50px;
     padding-top: 1px;
     margin-bottom: 0;
     display: table;
@@ -1097,9 +1107,9 @@ footer a:visited {
 
 /*----------------------------------------------------------------Bouton----------------------------------------------------------------*/
 
-.maincatalog{
-    display:flex; 
-    flex-direction:row;
+.maincatalog {
+    display: flex;
+    flex-direction: row;
 }
 
 .btn_visi {
@@ -1123,8 +1133,8 @@ footer a:visited {
 }
 
 .btn-accueilins:hover {
-    background-color: #745086;
-    color: #FAE3C6;
+    background-color: #FAE3C6;
+    color: #745086;
 }
 
 .btn-compte,
@@ -1158,7 +1168,12 @@ footer a:visited {
     background-color: #957BB0;
     color: #F6E4FF;
     border: 1px solid #957BB0;
+}
 
+.btn-accueil:hover {
+    background-color: #745086;
+    color: #F6E4FF;
+    border: 1px solid #745086;
 }
 
 .btn-previsualiser {
@@ -1192,16 +1207,37 @@ footer a:visited {
 
 }
 
+.btn-ajoutlog:hover,
+.btn-previsualiser:hover {
+    background-color: #274065;
+    color: #fff;
+    border: 1px solid #274065;
+}
+
 .btn-desactive {
     background-color: #fff;
     color: red;
     border: 1px solid red;
 }
 
+.btn-desactive:hover {
+    background-color: #FCF0E2;
+    color: red;
+    border: 1px solid red;
+
+}
+
 .btn-active {
     background-color: #fff;
     color: green;
     border: 1px solid green;
+}
+
+.btn-active:hover {
+    background-color: #FCF0E2;
+    color: green;
+    border: 1px solid green;
+
 }
 
 .btn-desactiveGris {
@@ -1220,6 +1256,13 @@ footer a:visited {
     background-color: red;
     color: #fff;
     border: 1px solid red;
+}
+
+.btn-suppr:hover {
+    background-color: darkred;
+    color: #F6E4FF;
+    border: 1px solid darkred;
+
 }
 
 .btn-modif {
@@ -1244,11 +1287,12 @@ footer a:visited {
     margin: 1em auto;
 }
 
+
 .btn-demlog,
 .btn-demlogP,
 .btn-demlogno,
 .btn-demlognoP {
-    border-radius: 5px;
+    border-radius: 15px;
     font-size: 1em;
     padding: 0.5em;
     font-family: 'Quicksand';
@@ -1259,6 +1303,12 @@ footer a:visited {
     background-color: #957BB0;
     color: #F6E4FF;
     border: 1px solid #957BB0;
+}
+
+.btn-demlog:hover {
+    background-color: #745086;
+    color: #fff;
+    border: 1px solid #745086;
 }
 
 .btn-demlogP {
@@ -1462,19 +1512,20 @@ footer a:visited {
 }
 
 .scale-up-center:hover {
-	animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
 @keyframes scale-up-center {
     0% {
-      transform: scale(1);
-      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
     }
+
     100% {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.5);
+        transform: scale(1.1);
+        box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.5);
     }
-  }
+}
 
 /*----------------------------------------------------------------Compte----------------------------------------------------------------*/
 
@@ -2598,8 +2649,8 @@ iframe {
     font-size: 0.5em;
 }
 
-.legendeCalendrier{
-    display : flex;
+.legendeCalendrier {
+    display: flex;
     align-items: center;
     justify-content: space-around;
     list-style: none;
@@ -2607,7 +2658,7 @@ iframe {
     padding-left: 0px;
 }
 
-.legendeCalendrier p::before{
+.legendeCalendrier p::before {
     position: absolute;
     content: "";
     height: 0.9em;
@@ -3596,12 +3647,12 @@ iframe {
         text-align: center;
     }
 
-    .maincatalog{
-        display:flex; 
-        flex-direction:column;
+    .maincatalog {
+        display: flex;
+        flex-direction: column;
     }
 
-    .acc-with-map{
+    .acc-with-map {
         width: 80%;
     }
 
@@ -3784,7 +3835,7 @@ iframe {
     }
 
     /*-------------------------------Accueil-------------------------------*/
-    
+
     .card section article .accicone {
         display: flex;
         flex-direction: row;
@@ -3866,7 +3917,7 @@ iframe {
         margin: auto;
         width: 100%;
         object-fit: cover;
-    }   
+    }
 
     .input-group,
     .input-group-ville,
