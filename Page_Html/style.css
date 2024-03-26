@@ -495,10 +495,10 @@ body {
 /* SUPPRIMER FILTRE */
 .contain-supF{
     display: flex;
-
+    flex-wrap: wrap;
 }
 
-.btn-supF {
+.btn-supF, .btn-sup-checkboxes {
     position: relative;
     display: flex;
     align-items: center;
@@ -519,7 +519,7 @@ body {
     margin: 15px 5px 5px;  
 }
 
-.btn-supF span {
+.btn-supF span, .btn-sup-checkboxes span {
     position: relative;
     margin: 0 2px;
     z-index: 2;
@@ -527,7 +527,7 @@ body {
     align-items: center;
 }
 
-.btn-supF::before {
+.btn-supF::before, .btn-sup-checkboxes::before {
     position: absolute;
     content: '';
     width: 100%;
@@ -537,22 +537,22 @@ body {
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.btn-supF svg {
+.btn-supF svg, .btn-sup-checkboxes svg {
     width: 16px; 
     height: 16px; 
     fill: #745086;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.btn-supF:hover::before {
+.btn-supF:hover::before, .btn-sup-checkboxes:hover::before {
     transform: translateY(0); 
 }
 
-.btn-supF:hover svg {
+.btn-supF:hover svg, .btn-sup-checkboxes:hover svg {
     fill: #e8e8e8;
 }
 
-.btn-supF:hover span {
+.btn-supF:hover span, .btn-sup-checkboxes:hover span {
     color: #e8e8e8;
     margin: 0 2px;
 }
@@ -1333,6 +1333,10 @@ footer a:visited {
     border-top-left-radius: 8px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
+
+/* .logementCard:first-child {
+    margin-top: 25em;
+} */
 
 .infoContainer {
     display: flex;
@@ -4426,4 +4430,11 @@ iframe {
     width: 100%;
     height: 80vh;
     border: solid #745086 1px;
+}
+
+/* -------------------------- Calendrier ----------------------------*/
+
+.calendar_date{
+    display: flex;
+    gap: 15px;
 }

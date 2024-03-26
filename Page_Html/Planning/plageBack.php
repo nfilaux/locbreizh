@@ -39,16 +39,34 @@
                     $stmt->execute();
                     $jour_existant = $stmt->fetchColumn();
                     if (!empty($jour_existant)){
-                        $code = $dbh->prepare("DELETE FROM locbreizh._plage_ponctuelle WHERE id_plage_ponctuelle = :id_plage_ponctuelle AND id_plage_ponctuelle NOT IN (
-                        SELECT p.id_plage_ponctuelle FROM locbreizh._plage_ponctuelle p INNER JOIN locbreizh._plage_ponctuelle_indisponible i
-                        ON p.id_plage_ponctuelle = i.id_plage_ponctuelle
-                        AND (i.libelle_indisponibilite = 'Réservation' OR i.libelle_indisponibilite = 'Demande devis'));");
-                        $code->bindParam(':id_plage_ponctuelle', $jour_existant);
-                        $code->execute();
-                        $res = $code->execute();
+                        $code = $dbh->prepare("SELECT p.id_plage_ponctuelle FROM locbreizh._plage_ponctuelle p WHERE id_plage_ponctuelle = :id_plage_ponctuelle AND id_plage_ponctuelle NOT IN (
+                            SELECT p.id_plage_ponctuelle FROM locbreizh._plage_ponctuelle p INNER JOIN locbreizh._plage_ponctuelle_indisponible i
+                            ON p.id_plage_ponctuelle = i.id_plage_ponctuelle
+                            AND (i.libelle_indisponibilite = 'Réservation' OR i.libelle_indisponibilite = 'Demande devis'));");
+                            $code->bindParam(':id_plage_ponctuelle', $jour_existant);
+                            $code->execute();
+                            $res = $code->fetchColumn();
+                            if (!empty($res)){
+                                $code = $dbh->prepare("DELETE FROM locbreizh._plage_ponctuelle WHERE id_plage_ponctuelle = :id_plage_ponctuelle;");
+                                $code->bindParam(':id_plage_ponctuelle', $jour_existant);
+                                $res = $code->execute();
+
+                                $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(jour_plage_ponctuelle, code_planning)
+                                VALUES (:jour_plage_ponctuelle, :code_planning);");
+                                $stmt->bindParam(':jour_plage_ponctuelle', $elem);
+                                $stmt->bindParam(':code_planning', $variable['code_planning']);
+                                $stmt->execute();
+                                $stmt = $dbh->prepare("SELECT currval('locbreizh._plage_ponctuelle_id_plage_ponctuelle_seq');");
+                                $stmt->execute();
+                                $id_plage = $stmt->fetchColumn();
+                                $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle_indisponible(id_plage_ponctuelle, libelle_indisponibilite)
+                                VALUES (:id_plage_ponctuelle, :libelle_indisponibilite);");
+                                $stmt->bindParam(':id_plage_ponctuelle', $id_plage);
+                                $stmt->bindParam(':libelle_indisponibilite', $motif);
+                                $stmt->execute();
+                            }
                     }
-                    if ($res){
-                    
+                    else {
                         $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(jour_plage_ponctuelle, code_planning)
                         VALUES (:jour_plage_ponctuelle, :code_planning);");
                         $stmt->bindParam(':jour_plage_ponctuelle', $elem);
@@ -67,20 +85,40 @@
             } else {
                 foreach ($tabJours as $key => $elem){
                     $res = true;
-                    $stmt = $dbh->prepare("SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE jour_plage_ponctuelle =  :jour_plage_ponctuelle  AND code_planning = :code_planning;");
+                    $stmt = $dbh->prepare("SELECT id_plage_ponctuelle FROM locbreizh._plage_ponctuelle WHERE jour_plage_ponctuelle = :jour_plage_ponctuelle  AND code_planning = :code_planning;");
                     $stmt->bindParam(':jour_plage_ponctuelle', $elem);
                     $stmt->bindParam(':code_planning', $variable['code_planning']);
                     $stmt->execute();
                     $jour_existant = $stmt->fetchColumn();
                     if (!empty($jour_existant)){
-                        $code = $dbh->prepare("DELETE FROM locbreizh._plage_ponctuelle WHERE id_plage_ponctuelle = :id_plage_ponctuelle AND id_plage_ponctuelle NOT IN (
+                        $code = $dbh->prepare("SELECT p.id_plage_ponctuelle FROM locbreizh._plage_ponctuelle p WHERE id_plage_ponctuelle = :id_plage_ponctuelle AND id_plage_ponctuelle NOT IN (
                         SELECT p.id_plage_ponctuelle FROM locbreizh._plage_ponctuelle p INNER JOIN locbreizh._plage_ponctuelle_indisponible i
                         ON p.id_plage_ponctuelle = i.id_plage_ponctuelle
                         AND (i.libelle_indisponibilite = 'Réservation' OR i.libelle_indisponibilite = 'Demande devis'));");
                         $code->bindParam(':id_plage_ponctuelle', $jour_existant);
-                        $res = $code->execute();
+                        $code->execute();
+                        $res = $code->fetchColumn();
+                        if (!empty($res)){
+                            $code = $dbh->prepare("DELETE FROM locbreizh._plage_ponctuelle WHERE id_plage_ponctuelle = :id_plage_ponctuelle;");
+                            $code->bindParam(':id_plage_ponctuelle', $jour_existant);
+                            $res = $code->execute();
+
+                            $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(jour_plage_ponctuelle, code_planning)
+                            VALUES (:jour_plage_ponctuelle, :code_planning);");
+                            $stmt->bindParam(':jour_plage_ponctuelle', $elem);
+                            $stmt->bindParam(':code_planning', $variable['code_planning']);
+                            $stmt->execute();
+                            $stmt = $dbh->prepare("SELECT currval('locbreizh._plage_ponctuelle_id_plage_ponctuelle_seq');");
+                            $stmt->execute();
+                            $id_plage = $stmt->fetchColumn();
+                            $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle_disponible(id_plage_ponctuelle, prix_plage_ponctuelle)
+                            VALUES (:id_plage_ponctuelle, :prix_plage_ponctuelle);");
+                            $stmt->bindParam(':id_plage_ponctuelle', $id_plage);
+                            $stmt->bindParam(':prix_plage_ponctuelle', $_POST['prix']);
+                            $stmt->execute();
+                        }
                     }
-                    if ($res){
+                    else{
                         $stmt = $dbh->prepare("INSERT INTO locbreizh._plage_ponctuelle(jour_plage_ponctuelle, code_planning)
                         VALUES (:jour_plage_ponctuelle, :code_planning);");
                         $stmt->bindParam(':jour_plage_ponctuelle', $elem);

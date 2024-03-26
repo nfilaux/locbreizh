@@ -12,7 +12,7 @@
     <script src="../scriptPopup.js"></script>
 </head>
 
-<body onload="init()">
+<body> <!--  onload="init()" -->
     <?php
     $filtre = '';
     include('../header-footer/choose_header.php');
@@ -129,13 +129,71 @@
 
                         // -- Type d'hébergement
                         if (isset($_GET['typeH'])){ ?>
-                            <button class="btn-supF" id="btn-supF">
+                            <button class="btn-supF" id="btn-sup-checkboxes">
                                 <span id="typeH">Type d'hébergement</span>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-miterlimit="2" stroke-linejoin="round" fill-rule="evenodd" clip-rule="evenodd"><path fill-rule="nonzero" d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 7.425 2.717-2.718c.146-.146.339-.219.531-.219.404 0 .75.325.75.75 0 .193-.073.384-.219.531l-2.717 2.717 2.727 2.728c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.384-.073-.53-.219l-2.729-2.728-2.728 2.728c-.146.146-.338.219-.53.219-.401 0-.751-.323-.751-.75 0-.192.073-.384.22-.531l2.728-2.728-2.722-2.722c-.146-.147-.219-.338-.219-.531 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"></path></svg>
                                 </span>
                             </button>
                         <?php } ?>
+                        
+                        <?php
+                        // -- Les équipements
+                        foreach(explode(",",$_GET['filtre']) as $equipement){
+                            switch($equipement){
+                                // Equipements
+                                case 'balcon':
+                                    $textBtn = "Balcon"; break;
+                                case 'Terrasse':
+                                    $textBtn = "Terrasse"; break;
+                                case 'piscine':
+                                    $textBtn = "Piscine"; break;
+                                case 'jardin':
+                                    $textBtn = "Jardin"; break;
+                                case 'jacuzzi':
+                                    $textBtn = "Jacuzzi"; break;
+                                case 'sauna':
+                                    $textBtn = "Sauna"; break;
+                                case 'parkPrive':
+                                    $textBtn = "Parking privé"; break;
+                                case 'parkPublic':
+                                    $textBtn = "Parking public"; break;
+                                case 'television':
+                                    $textBtn = "Télévision"; break;
+                                case 'wifi':
+                                    $textBtn = "Wifi"; break;
+                                case 'laveLinge':
+                                    $textBtn = "Lave-linge"; break;
+                                case 'laveVaisselle':
+                                    $textBtn = "Lave-vaisselle"; break;
+                                case 'climatisation':
+                                    $textBtn = "Climatisation"; break;
+                                case 'hammam':
+                                    $textBtn = "Hammam"; break;
+                                // Services
+                                case 'menage':
+                                    $textBtn = "Service - ménage"; break;
+                                case 'navette':
+                                    $textBtn = "Service - navette"; break;
+                                case 'linge':
+                                    $textBtn = "Service - linge"; break;
+                                default :
+                                    $textBtn = "no_eq_filtre";
+                            }?>
+
+                            <?php if($textBtn!="no_eq_filtre"){?>
+                                <button class="btn-sup-checkboxes" id="<?php echo $equipement . "BIS"; ?>">
+                                    <span><?php echo $textBtn; ?></span>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-miterlimit="2" stroke-linejoin="round" fill-rule="evenodd" clip-rule="evenodd"><path fill-rule="nonzero" d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 7.425 2.717-2.718c.146-.146.339-.219.531-.219.404 0 .75.325.75.75 0 .193-.073.384-.219.531l-2.717 2.717 2.727 2.728c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.384-.073-.53-.219l-2.729-2.728-2.728 2.728c-.146.146-.338.219-.53.219-.401 0-.751-.323-.751-.75 0-.192.073-.384.22-.531l2.728-2.728-2.722-2.722c-.146-.147-.219-.338-.219-.531 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"></path></svg>
+                                    </span>
+                                </button>
+                            <?php }
+                        }
+                        ?>
+
+                        
+
                     </div>
 
                     <div style="display: flex; justify-content: space-evenly;">
@@ -204,7 +262,7 @@
                                 // Equipements
                                 case 'balcon':
                                     $filtrage .= " AND l.balcon = true"; break;
-                                case 'terrasse':
+                                case 'Terrasse':
                                     $filtrage .= " AND l.terrasse = true"; break;
                                 case 'piscine':
                                     $filtrage .= " AND l.piscine = true"; break;
@@ -220,6 +278,8 @@
                                     $filtrage .= " AND l.parking_public = true"; break;
                                 case 'television':
                                     $filtrage .= " AND l.television = true"; break;
+                                case 'wifi':
+                                    $filtrage .= " AND l.lave_vaisselle = true"; break;
                                 case 'laveLinge':
                                     $filtrage .= " AND l.lave_linge = true"; break;
                                 case 'laveVaisselle':
@@ -235,7 +295,7 @@
                                     $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='navette'"; break;
                                 case 'linge':
                                     $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='linge'"; break;*/
-                            }
+                            }   
                         }
                     }
                 }
@@ -352,40 +412,86 @@
                     <?php
                     $res = $stmt->fetchAll();
 
-                    // affichage des données de logement
-                    if (count($res) <= 0) { ?>
-                        <p style="font-size: 1.5em;">Aucun logement trouvé</p>
-                        <?php   } foreach ($res as $card) {
-                        if ($card['en_ligne'] == true) { ?>
-                                <article class="logementCard cardtel scale-up-center">
-                                    <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
-                                        <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
-                                        <div class="infoContainer">
-                                            <div class="mainInfos">
-                                                <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
-                                                <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
-                                            </div>
-                                            <div class="otherInfos cardphone">
-                                                <div>
-                                                    <img src="../svg/money.svg" width="25" height="25">
-                                                    <span><?php echo $card['tarif_base_ht']; ?> € </span>
-                                                </div>
-                                                <div>
-                                                    <img src="../svg/group.svg" width="25" height="25">
-                                                    </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </article>
-                        <?php   }
+                // affichage des données de logement
+                if (count($res) <= 0) { ?>
+                    <p style="font-size: 1.5em;">Aucun logement trouvé</p>
+                    <?php   } foreach ($res as $card) {
+                    if ($card['en_ligne'] == true) { ?>
+                        <script>
+                            <?php foreach ($res as $ville) { ?>
+                                var ville = "<?php echo $ville['ville']; ?>";
+                                var libelle_logement = "<?php echo $ville['libelle_logement']; ?>";
+                                geocodeAndAddMarkersForCity(ville, libelle_logement);
+                            <?php } ?>
+                            function geocodeAndAddMarkersForCity(ville, libelle_logement) {
+                                var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=90a3f846aa9e490d927a787facf78c7e";
+
+                                fetch(opencageUrl)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.results.length > 0) {
+                                            var latitude = data.results[0].geometry.lat;
+                                            var longitude = data.results[0].geometry.lng;
+
+                                            // Création du marqueur pour cette ville
+                                            var marker = L.marker([latitude, longitude], {icon: ownIcon}).addTo(map);
+                                            marker.bindPopup(libelle_logement);
+                                        } else {
+                                            console.log("Impossible de géocoder la ville:", ville);
                                         }
-                        ?>
+                                    })
+                                    .catch(error => {
+                                        console.error("Erreur lors de la requête de géocodage:", error);
+                                    });
+                            }
+
+                            // Image du marqueur
+                            var ownIcon = L.icon({
+                                iconUrl: '../svg/map-pin-fill (2).svg',
+                                iconSize: [48, 48],
+                                iconAnchor: [22, 48],
+                                popupAnchor: [3, -24]
+                            });
+                        </script>
+                        <article class="logementCard cardtel">
+                            <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
+                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
+                                <div class="infoContainer">
+                                    <div class="mainInfos">
+                                        <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
+                                        <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
+                                    </div>
+                                    <div class="otherInfos cardphone">
+                                        <div>
+                                            <img src="../svg/money.svg" width="25" height="25">
+                                            <span><?php echo $card['tarif_base_ht']; ?> € </span>
+                                        </div>
+                                        <div>
+                                            <img src="../svg/group.svg" width="25" height="25">
+                                            </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                    <?php   }
+                                    }
+                    ?>
                 </section>
             </div>
-            <section id="containerMap">
-                <div id="map"></div>
-            </section>  
+            <div id="containerMap">
+                <div id="map">
+                <script>
+                            // Création de la carte Leaflet
+                            var map = L.map('map').setView([48.2020, -2.9326], 8);
+
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                maxZoom: 19,
+                                attribution: '© OpenStreetMap contributors'
+                            }).addTo(map);
+                    </script>
+                </div>
+            </div>  
 
             <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')"></div>
             <!-- <div id="filtre" class="filtrage" style="display="none"> -->
@@ -437,43 +543,43 @@
                         <div>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="balcon" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'balcon')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="balcon" id="balcon" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'balcon')!==false){echo 'checked';}?>>
                                     Balcon
                                 </label>         
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="Terrasse" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'Terrasse')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="Terrasse" id="Terrasse" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'Terrasse')!==false){echo 'checked';}?>>
                                     Terrasse
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="piscine" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'piscine')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="piscine" id="piscine" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'piscine')!==false){echo 'checked';}?>>
                                     Piscine
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="jardin" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'jardin')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="jardin" id="jardin" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'jardin')!==false){echo 'checked';}?>>
                                     Jardin
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="jacuzzi" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'jacuzzi')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="jacuzzi" id="jacuzzi" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'jacuzzi')!==false){echo 'checked';}?>>
                                     Jacuzzi
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="sauna" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'sauna')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="sauna" id="sauna" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'sauna')!==false){echo 'checked';}?>>
                                     Sauna
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="climatisation" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'climatisation')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="climatisation" id="climatisation" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'climatisation')!==false){echo 'checked';}?>>
                                     Climatisation
                                 </label>        
                             </li>
@@ -481,43 +587,43 @@
                         <div>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="parkPrive" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'parkPrive')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="parkPrive" id="parkPrive" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'parkPrive')!==false){echo 'checked';}?>>
                                     Parking privé
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="parkPublic" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'parkPublic')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="parkPublic" id="parkPublic" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'parkPublic')!==false){echo 'checked';}?>>
                                     Parking public
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="television" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'television')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="television" id="television" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'television')!==false){echo 'checked';}?>>
                                     Télévision 
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="wifi" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'wifi')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="wifi" id="wifi" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'wifi')!==false){echo 'checked';}?>>
                                     Wifi
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="laveLinge" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'laveLinge')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="laveLinge" id="laveLinge" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'laveLinge')!==false){echo 'checked';}?>>
                                     Lave linge
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="laveVaisselle" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'laveVaisselle')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="laveVaisselle" id="laveVaisselle" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'laveVaisselle')!==false){echo 'checked';}?>>
                                     Lave vaisselle
                                 </label>        
                             </li>
                             <li>
                                 <label class="cyberpunk-checkbox-label">
-                                    <input type="checkbox" name="equipement[]" value="hammam" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'hammam')!==false){echo 'checked';}?>>
+                                    <input type="checkbox" name="equipement[]" value="hammam" id="hammam" class="cyberpunk-checkbox" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'hammam')!==false){echo 'checked';}?>>
                                     Hammam
                                 </label>        
                             </li>
@@ -528,7 +634,7 @@
                     <h3 class="flptitre">Par service</h3>
                     <div class="radio-inputs">
                         <label>
-                            <input class="radio-input" type="checkbox" name="typeH" value="menage" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
+                            <input class="radio-input" type="checkbox" name="typeH" value="menage" id="menage" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
                                         <img src="../svg/nettoyage.svg" width="25" height="25">
@@ -537,7 +643,7 @@
                                 </span>
                         </label>
                         <label>
-                            <input class="radio-input" type="checkbox" name="typeH" value="navette" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
+                            <input class="radio-input" type="checkbox" name="typeH" value="navette" id="navette" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
                                         <img src="../svg/taxi-fill.svg" width="25" height="25">
@@ -546,7 +652,7 @@
                                 </span>
                         </label>
                         <label>
-                            <input class="radio-input" type="checkbox" name="typeH" value="linge" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
+                            <input class="radio-input" type="checkbox" name="typeH" value="linge" id="linge" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
                                         <img src="../svg/t-shirt-air-line.svg" width="25" height="25">
