@@ -453,33 +453,33 @@
                                 popupAnchor: [3, -24]
                             });
                         </script>
-                            <article class="logementCard cardtel">
-                                <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
-                                    <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
-                                    <div class="infoContainer">
-                                        <div class="mainInfos">
-                                            <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
-                                            <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
+                        <article class="logementCard cardtel">
+                            <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
+                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
+                                <div class="infoContainer">
+                                    <div class="mainInfos">
+                                        <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
+                                        <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
+                                    </div>
+                                    <div class="otherInfos cardphone">
+                                        <div>
+                                            <img src="../svg/money.svg" width="25" height="25">
+                                            <span><?php echo $card['tarif_base_ht']; ?> € </span>
                                         </div>
-                                        <div class="otherInfos cardphone">
-                                            <div>
-                                                <img src="../svg/money.svg" width="25" height="25">
-                                                <span><?php echo $card['tarif_base_ht']; ?> € </span>
-                                            </div>
-                                            <div>
-                                                <img src="../svg/group.svg" width="25" height="25">
-                                                </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
-                                            </div>
+                                        <div>
+                                            <img src="../svg/group.svg" width="25" height="25">
+                                            </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
                                         </div>
                                     </div>
-                                </a>
-                            </article>
+                                </div>
+                            </a>
+                        </article>
                     <?php   }
                                     }
                     ?>
                 </section>
             </div>
-            <section id="containerMap">
+            <div id="containerMap">
                 <div id="map">
                 <script>
                             // Création de la carte Leaflet
@@ -491,7 +491,7 @@
                             }).addTo(map);
                     </script>
                 </div>
-            </section>  
+            </div>  
 
             <div id="ovFiltre" onclick="closePopup('filtre', 'ovFiltre')" class=""></div>
             <div id="filtre" class="filtrage" style="display:none;">
