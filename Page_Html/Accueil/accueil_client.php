@@ -50,7 +50,7 @@ $photo = $stmt->fetch();
                     <div class="fil">
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12"></label>
+                                <label for="prix_min">Min <!--<img src="../svg/money.svg" width="12" height="12">--></label>
                             </div>
                             <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prix_min'])) {
                                                                                                 echo $_GET['prix_min'];
@@ -60,7 +60,7 @@ $photo = $stmt->fetch();
                         </div>
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12"></label>
+                                <label for="prix_max">Max <!--<img src="../svg/money.svg" width="12" height="12">--></label>
                             </div>
                             <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prix_max'])) {
                                                                                                 echo $_GET['prix_max'];
@@ -90,13 +90,13 @@ $photo = $stmt->fetch();
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14"></label>
+                                <label for="date1">Début<!--<img src="../svg/calendar.svg" width="14" height="14">--></label>
                             </div>
                             <input type="date" id="date1" name="date1" value="<?php if (isset($_GET['date1'])) {echo $_GET['date1']; }else {echo date('Y-m-d');}?>" />
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14"></label>
+                                <label for="date2">Fin<!--<img src="../svg/calendar.svg" width="14" height="14">--></label>
                             </div>
                             <input type="date" id="date2" name="date2" value="<?php if (isset($_GET['date2'])) {echo $_GET['date2']; } else {echo date('Y-m-d');}?>" />
                         </div>
