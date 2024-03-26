@@ -77,7 +77,7 @@
                         </div>
                         <hr style="margin: 5px;">
                         <a class="btn-filtre">
-                            <img src="../svg/filtre.svg" width="20" height="20" onclick="openPopup('filtre','ovFiltre')">
+                            <img src="../svg/filtre.svg" width="20" height="20" id="carte">
                         </a>
                         
                     </div>
@@ -481,6 +481,7 @@
                     ?>
                 </section>
             </div>
+
             <div id="containerMap">
                 <div id="map">
                 <script>
@@ -680,6 +681,6 @@
 
 </html>
 
-
+<script src="./cacherCarte.js" defer></script>
 <script src="./actualiserTri.js" defer></script>
 <script src="./actualiserFiltre.js" defer></script>
