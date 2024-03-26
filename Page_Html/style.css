@@ -170,6 +170,10 @@ body {
     z-index: 999;
 }
 
+.plages h1{
+    font-size : 1.5em;
+}
+
 .unePlage {
     display: flex;
     flex-wrap: nowrap;
@@ -2539,6 +2543,42 @@ iframe {
     padding: 0px;
     font-size: 0.5em;
 }
+
+.legendeCalendrier{
+    display : flex;
+    align-items: center;
+    justify-content: space-around;
+    list-style: none;
+    font-size: 1.2em;
+    padding-left: 0px;
+}
+
+.legendeCalendrier p::before{
+    position: absolute;
+    content: "";
+    height: 0.9em;
+    width: 0.9em;
+    z-index: -1;
+    transform: translate(-110%, 0%);
+}
+
+
+.legendeLibre::before {
+    background-color: #136F63;
+}
+
+.legendeDemande::before {
+    background-color: #F1D302;
+}
+
+.legendeRéserver::before {
+    background-color: #FF8C42;
+}
+
+.legendeIndisponible::before {
+    background-color: #B10F2E;
+}
+
 
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
 
