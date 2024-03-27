@@ -637,10 +637,16 @@ body {
     width: 30%;
 }
 
+.input-group-date {
+    width: 20%;
+}
+
+
 .input-group input,
 .input-group-proprio input,
 .input-group-pers input,
-.input-group-ville input {
+.input-group-ville input,
+.input-group-date input {
     border: none;
     width: 80%;
     height: 2em;
@@ -677,7 +683,7 @@ body {
 #date1,
 #date2 {
     padding: 0px 15px 0px 0px;
-    padding-left: 10%;
+    padding-left: 23%;
 }
 
 #money1 {
@@ -1480,11 +1486,11 @@ footer a:visited {
     flex-direction: column;
 }
 
-.mainInfos{
+.mainInfos {
     width: 60%;
 }
 
-.otherInfos{
+.otherInfos {
     justify-content: space-evenly;
 }
 
@@ -3729,9 +3735,32 @@ iframe {
     .input-group-ville,
     .input-group-pers,
     .input-group-proprio {
-        width: 80%;
+        width: 20%;
         margin: 0.5em auto;
     }
+
+    .input-group-pers {
+        width: 10%;
+    }
+
+    #personne {
+        padding-left: 15%;
+    }
+
+
+    #lieu {
+        padding-left: 25%;
+    }
+
+    .input-group-date {
+        width: 20%;
+    }
+
+    #date1,
+    #date2 {
+        padding-left: 5%;
+    }
+
 
     .btn-fill,
     .btn-fillP {
@@ -3773,16 +3802,20 @@ iframe {
         width: 40%;
         height: 300px;
     }
-    .otherInfos div{
+
+    .otherInfos div {
         font-size: 1.5em;
     }
-    .infoContainer{
+
+    .infoContainer {
         height: 80px;
     }
-    .logementTitre{
+
+    .logementTitre {
         font-size: 2em;
     }
-    .mainInfos span:last-child{
+
+    .mainInfos span:last-child {
         font-size: 2em;
     }
 }
@@ -3993,8 +4026,16 @@ iframe {
     .input-group-ville,
     .input-group-pers,
     .input-group-proprio {
-        width: 80%;
+        width: 20%;
         margin: 0.5em auto;
+    }
+
+    .input-group-date {
+        width: 20%;
+    }
+
+    .input-group-pers {
+        width: 5%;
     }
 
     .menu-filtre {

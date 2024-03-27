@@ -69,13 +69,13 @@
                                                                                                 echo 0;
                                                                                             } ?>" />
                         </div>
-                        <div class="input-group" style="width: 15%;">
+                        <div class="input-group input-group-date">
                             <div class="input-group-prepend">
                                 <label for="date1">Début <!--<img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier">--></label>
                             </div>
                             <input type="date" id="date1" name="date1" value="<?php if (isset($_GET['date1'])) {echo $_GET['date1']; }else {echo date('Y-m-d');}?>" />
                         </div>
-                        <div class="input-group" style="width: 15%;">
+                        <div class="input-group input-group-date">
                             <div class="input-group-prepend">
                                 <label for="date2">Fin<!--<img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier">--></label>
                             </div>
