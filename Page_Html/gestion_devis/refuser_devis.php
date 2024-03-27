@@ -75,5 +75,11 @@
         $stmt->execute();
     }
 
+    $enLigne = true;
+    $stmt = $dbh->prepare("UPDATE locbreizh._logement SET en_ligne = :enLigne WHERE id_logement = :id_logement;");
+    $stmt->bindParam(':enLigne', $enLigne, PDO::PARAM_BOOL);
+    $stmt->bindParam(':id_logement', $logement['id_logement']);
+    $stmt->execute();
+
     header("Location: gestion_des_devis_client.php");
 ?>

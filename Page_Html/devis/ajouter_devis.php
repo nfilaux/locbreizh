@@ -397,6 +397,22 @@
         $nom_fichier = "devis$id_devis.pdf";
         $chemin_complet = $chemin_dossier . $nom_fichier;
         file_put_contents($chemin_complet, $contenu_pdf);
+
+        // met hors ligne le logement si il n'as plus de plages disponibles
+        $plageDispo = $dbh->prepare("SELECT COUNT(*) FROM locbreizh._plage_ponctuelle INNER JOIN locbreizh._plage_ponctuelle_disponible
+        ON _plage_ponctuelle.id_plage_ponctuelle = _plage_ponctuelle_disponible.id_plage_ponctuelle WHERE code_planning = :code_planning ;");
+        $plageDispo->bindParam(':code_planning', $variable['code_planning']);
+        $plageDispo->execute();
+        $plageDispo = $plageDispo->fetchColumn();
+        print_r($plageDispo);
+        if ($plageDispo == 0){
+            $enLigne = false;
+            $stmt = $dbh->prepare("UPDATE locbreizh._logement SET en_ligne = :enLigne WHERE id_logement = :id_logement;");
+            $stmt->bindParam(':enLigne', $enLigne, PDO::PARAM_BOOL);
+            $stmt->bindParam(':id_logement', $logement['id_logement']);
+            $stmt->execute();
+        }
+
         header("Location: ./formulaire_devis.php?demande={$_POST['id_demande']}&erreur=0");
     }
 ?>
