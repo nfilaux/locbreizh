@@ -10,6 +10,7 @@ function toggleCarte() {
         map.style.display = "none";
         var mesLogs = document.getElementsByClassName("acc-with-map")[0];
         mesLogs.style.width = "80%";
+
     }
 }
 
