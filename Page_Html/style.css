@@ -625,16 +625,12 @@ body {
     overflow: hidden;
 }
 
-.input-group {
-    width: 10%;
-}
-
 .input-group-ville {
     width: 20%;
 }
 
 .input-group-pers {
-    width: 17%;
+    width: 10%;
 }
 
 .input-group-proprio {
@@ -654,7 +650,7 @@ body {
 .input-group-prepend {
     display: flex;
     border-right: 1px solid #ddd;
-    margin-right: 5px;
+    margin-right: 10px;
     font-weight: 600;
 }
 
@@ -664,21 +660,28 @@ body {
 
 #prix_min,
 #prix_max {
+    padding: 1px 2px 0px 0px;
+    padding-left: 20%;
+}
+
+#lieu {
+    padding: 1px 5px 0px 0px;
+    padding-left: 32%;
+}
+
+#personne {
     padding: 1px 5px 0px 0px;
     padding-left: 25%;
 }
 
-#lieu,
-#personne {
-    padding: 1px 5px 0px 0px;
-    padding-left: 35%;
-}
-
 #date1,
 #date2 {
-    padding: 1px 5px 0px 0px;
+    padding: 0px 15px 0px 0px;
     padding-left: 10%;
-    ;
+}
+
+#money1 {
+    margin: 4px 8px 0px 0px;
 }
 
 .acc-accroche {
@@ -2503,7 +2506,7 @@ iframe {
     justify-content: center;
     width: 100%;
     font-size: 1.5em;
-    margin-bottom : 10px;
+    margin-bottom: 10px;
 }
 
 .fond,
@@ -2722,7 +2725,7 @@ iframe {
     background-color: #797676;
 }
 
-.ajoutSelection{
+.ajoutSelection {
     font-size: 1.2em;
     display: none;
     position: fixed;
@@ -2738,24 +2741,24 @@ iframe {
     border-radius: 15px;
 }
 
-.formulaire_selection{
+.formulaire_selection {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.formulaire_selection form{
-    margin : 0px;
+.formulaire_selection form {
+    margin: 0px;
     padding: 20px;
     display: inline;
 }
 
-.formSupprPlage{
+.formSupprPlage {
     border-left: 1px solid #745086;
     height: 100%;
 }
 
-.inputPrixCal{
+.inputPrixCal {
     display: inline-flex;
 }
 
