@@ -23,7 +23,7 @@
         if(!isset($est_proprio['id_compte'])){
             header('Location: ../Accueil/accueil_client.php');
         }
-    } 
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -39,29 +39,32 @@
         include('../header-footer/choose_header.php');
     ?>
     <main>
-        <h1>Gestion des abonnment de votre calendrier iCalendar</h1>
+        <h1>Gestion des abonnements de votre calendrier iCalendar</h1>
         <h2>Les abonnements auquels vous souhaités souscrire</h2>
-        
-        <input type="checkbox" id="reservations_confirmees" name="Réservations confirmées"/>
-        <label for="reservations_confirmees">Réservations confirmées</label>
-        <br>
-        <input type="checkbox" id="demandes_de_reservation" name="Demandes de réservation"/>
-        <label for="demandes_de_reservation">Demandes de réservation</label>
-        <br>
-        <input type="checkbox" id="indisponibilites" name="Indisponibilités"/>
-        <label for="indisponibilites">Indisponibilités</label>
-        <br>
-        <h2>Période du calendrier</h2>
-        <div class="calendar_date">
-            <p>Du</p>
-            <input type="date" id="date_debut"/>
-            <p>au</p>
-            <input type="date" id="date_fin"/>
-        </div>
+        <form name="formulaire" action="generate_calendar.php" method="post">
+            <input type="checkbox" id="reservations_confirmees" name="reservations_confirmees"/>
+            <label for="reservations_confirmees">Réservations confirmées</label>
+            <br>
+            <input type="checkbox" id="demandes_de_reservation" name="demandes_de_reservation"/>
+            <label for="demandes_de_reservation">Demandes de réservation</label>
+            <br>
+            <input type="checkbox" id="indisponibilites" name="indisponibilites"/>
+            <label for="indisponibilites">Indisponibilités</label>
+            <br>
+            <h2>Période du calendrier</h2>
+            <div class="calendar_date">
+                <label for="date_debut">Du</label>
+                <input type="date" id="date_debut" name="date_debut" required/>
+                <label for="date_fin">au</label>
+                <input type="date" id="date_fin" name="date_fin" required/>
+            </div>
+            <!-- seulement visible si calendrier jamais genere -->
+            <input type="submit" value="Générer le calendrier" name="submit"></input>
+        </form>
+
     </main>
     <?php
-        $token = bin2hex(random_bytes(20));
-        echo $token;
+    echo  bin2hex(random_bytes(20));
         // appel du footer
         include('../header-footer/choose_footer.php'); 
     ?>

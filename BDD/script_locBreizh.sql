@@ -67,6 +67,24 @@ CREATE TABLE
         CONSTRAINT proprietaire_fk_id FOREIGN KEY (id_proprietaire) REFERENCES _compte (id_compte)
     );
 
+CREATE TABLE _icalendar(
+    token VARCHAR(41) NOT NULL,
+    debut DATE NOT NULL,
+    fin DATE NOT NULL,
+    reservations boolean NOT NULL,
+    demandes boolean NOT NULL,
+    indisponibilites boolean NOT NULL,
+    CONSTRAINT icalendar_pk PRIMARY KEY (token)
+);
+
+CREATE TABLE _proprio_possede_token(
+    token VARCHAR(41) NOT NULL, 
+    proprio INTEGER NOT NULL,
+    CONSTRAINT proprio_possede_token_pk PRIMARY KEY (proprio),
+    CONSTRAINT proprio_possede_token_fk_token FOREIGN KEY (token) REFERENCES _icalendar (token),
+    CONSTRAINT proprio_possede_token_fk_proprio FOREIGN KEY (proprio) REFERENCES _proprietaire (id_proprietaire)
+);
+
 /*   table client : est utilisée pour designer un client   */
 
 CREATE TABLE
