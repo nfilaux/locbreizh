@@ -25,7 +25,7 @@
                     <div class="fil">
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12"></label>
+                                <label for="prix_min">Min<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
                             <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prix_min'])) {
                                                                                                 echo $_GET['prix_min'];
@@ -35,7 +35,7 @@
                         </div>
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12"></label>
+                                <label for="prix_max">Max<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
                             <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prix_max'])) {
                                                                                                 echo $_GET['prix_max'];
@@ -45,7 +45,7 @@
                         </div>
                         <div class="input-group input-group-ville">
                             <div class="input-group-prepend">
-                                <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25"></label>
+                                <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25" alt="ping de map"></label>
                             </div>
                             <input type="text" id="lieu" name="lieu" placeholder="<?php if (isset($_GET['lieu'])) {
                                                                                         echo $_GET['lieu'];
@@ -55,7 +55,7 @@
                         </div>
                         <div class="input-group input-group-pers">
                             <div class="input-group-prepend">
-                                <label for="personne"><img src="../svg/group.svg" width="25" height="25"></label>
+                                <label for="personne"><img src="../svg/group.svg" width="25" height="25" alt="nombre de personnes"></label>
                             </div>
                             <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['personne'])) {
                                                                                                 echo $_GET['personne'];
@@ -65,19 +65,19 @@
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14"></label>
+                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
                             </div>
                             <input type="date" id="date1" name="date1" value="<?php if (isset($_GET['date1'])) {echo $_GET['date1']; }else {echo date('Y-m-d');}?>" />
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14"></label>
+                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
                             </div>
                             <input type="date" id="date2" name="date2" value="<?php if (isset($_GET['date2'])) {echo $_GET['date2']; } else {echo date('Y-m-d');}?>" />
                         </div>
                         <hr style="margin: 5px;">
                         <a class="btn-filtre">
-                            <img src="../svg/filtre.svg" width="20" height="20" onclick="openPopup('filtre','ovFiltre')">
+                            <img src="../svg/filtre.svg" width="20" height="20" alt="icon pour les filtres" onclick="openPopup('filtre','ovFiltre')">
                         </a>
                         
                     </div>
@@ -399,14 +399,16 @@
 
         <div class="acc-with-map">
             <!-- Champs de séléction des Tris -->
+            
+            <hr class="hr" style="margin-top:15em; width:100%;">
+            
             <select class="triage" id="tri" name="tri">
                 <option value="none" hidden> Trier par : choisir tri</option>
                 <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
                 <option value="prix_c">Prix (croissant)</option>
                 <option value="prix_d">Prix (décroissant)</option>
             </select> 
-            <hr class="hr" style="width:100%;">
-                
+
             <section class="card">
                     
                     <?php
@@ -455,7 +457,7 @@
                         </script>
                         <article class="logementCard cardtel">
                             <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
-                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
+                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" alt="photo principale du logement">
                                 <div class="infoContainer">
                                     <div class="mainInfos">
                                         <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
@@ -463,11 +465,11 @@
                                     </div>
                                     <div class="otherInfos cardphone">
                                         <div>
-                                            <img src="../svg/money.svg" width="25" height="25">
+                                            <img src="../svg/money.svg" width="25" height="25" alt="euro">
                                             <span><?php echo $card['tarif_base_ht']; ?> € </span>
                                         </div>
                                         <div>
-                                            <img src="../svg/group.svg" width="25" height="25">
+                                            <img src="../svg/group.svg" width="25" height="25" alt="icone nombre de personnes">
                                             </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
                                         </div>
                                     </div>
@@ -503,7 +505,7 @@
                                 <input class="radio-input" type="radio" name="typeH" value="maison"<?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'maison')!==false){echo 'checked';}?>>
                                     <span class="radio-tile">
                                         <span class="radio-icon">
-                                            <img src="../svg/house.svg" width="25" height="25">
+                                            <img src="../svg/house.svg" width="25" height="25" alt="icon de maison">
                                         </span>
                                         <span class="radio-label">Maison</span>
                                     </span>
@@ -512,7 +514,7 @@
                                 <input class="radio-input" type="radio" name="typeH" value="appartement" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'appartement')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/appartement.svg" width="25" height="25">
+                                        <img src="../svg/appartement.svg" width="25" height="25" alt="icone d'appartement">
                                     </span>
                                     <span class="radio-label">Appartement</span>
                                 </span>
@@ -521,7 +523,7 @@
                                 <input class="radio-input" type="radio" name="typeH" value="chateau" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'chateau')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/castle.svg" width="25" height="25">
+                                        <img src="../svg/castle.svg" width="25" height="25" alt="icone de chateau">
                                     </span>
                                     <span class="radio-label">Château</span>
                                 </span>
@@ -530,14 +532,15 @@
                                 <input class="radio-input" type="radio" name="typeH" value="manoir" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'manoir')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/manoir.svg" width="25" height="25">
+                                        <img src="../svg/manoir.svg" width="25" height="25" alt="icone de manoir">
                                     </span>
                                     <span class="radio-label">Manoir</span>
                                 </span>
                             </label>
                     </div>
 
-                    <hr class="hr"><h3 class="flptitre">Par équipement</h3>
+                    <hr class="hr">
+                    <h3 class="flptitre">Par équipement</h3>
                     <ul class="liste-filtre">
                         <div>
                             <li>
@@ -636,7 +639,7 @@
                             <input class="radio-input" type="checkbox" name="typeH" value="menage" id="menage" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/nettoyage.svg" width="25" height="25">
+                                        <img src="../svg/nettoyage.svg" width="25" height="25" alt="icone de nettoyage">
                                     </span>
                                     <span class="radio-label">Ménage</span>
                                 </span>
@@ -645,7 +648,7 @@
                             <input class="radio-input" type="checkbox" name="typeH" value="navette" id="navette" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/taxi-fill.svg" width="25" height="25">
+                                        <img src="../svg/taxi-fill.svg" width="25" height="25" alt="icone de navette">
                                     </span>
                                     <span class="radio-label">Navette</span>
                                 </span>
@@ -654,14 +657,17 @@
                             <input class="radio-input" type="checkbox" name="typeH" value="linge" id="linge" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/t-shirt-air-line.svg" width="25" height="25">
+                                        <img src="../svg/t-shirt-air-line.svg" width="25" height="25" alt="icone de linge">
                                     </span>
                                     <span class="radio-label">Linge</span>
                                 </span>
                         </label>
+                        
                     </div>
-                    <hr class="hr">
-                    <a class="center btn-accueil" style="text-decoration: none; color:white;" href="./accueil_visiteur.php"> Réinitialiser </a>
+                    <div class="fil-res">
+                        <a class="btn-accueil" style="text-decoration: none; color:white;" href="./accueil_visiteur.php"> Réinitialiser </a>
+                    </div>
+                    
                 </div>
             </div>
         </div>
