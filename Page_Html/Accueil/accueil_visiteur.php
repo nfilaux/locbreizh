@@ -36,6 +36,7 @@
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
+                            <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
@@ -46,6 +47,7 @@
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
+                                <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
                         <div class="input-group input-group-ville">
                             <div class="input-group-prepend">
@@ -69,13 +71,13 @@
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
+                                <label for="date1">Début <!--<img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier">--></label>
                             </div>
                             <input type="date" id="date1" name="date1" value="<?php if (isset($_GET['date1'])) {echo $_GET['date1']; }else {echo date('Y-m-d');}?>" />
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
+                                <label for="date2">Fin<!--<img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier">--></label>
                             </div>
                             <input type="date" id="date2" name="date2" value="<?php if (isset($_GET['date2'])) {echo $_GET['date2']; } else {echo date('Y-m-d');}?>" />
                         </div>
