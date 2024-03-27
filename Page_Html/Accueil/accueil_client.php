@@ -315,13 +315,18 @@ $photo = $stmt->fetch();
                                 case 'chateau':
                                     $filtrage .= " AND l.nature_logement = 'chateau'"; break;
                                 // Services
-                                case 'menage':
+                                /*case 'menage':
                                     $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='menage'"; break;
                                 case 'navette':
                                     $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='navette'"; break;
                                 case 'linge':
                                     $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='linge'"; break;
-                            }
+                            
+                                */
+                                }
+
+
+
                         }
                     }
                 }
@@ -398,10 +403,13 @@ $photo = $stmt->fetch();
                 );
 
                 if ((isset($_GET['date1']))&&(isset($_GET['date2']))){
-                    $stmt->bindParam(':date_debut', $dateDeb->format('Y-m-d'));
-                    $stmt->bindParam(':date_fin', $dateFin->format('Y-m-d'));
+                    $dtdb = $dateDeb->format('Y-m-d');
+                    $dtfn = $dateFin->format('Y-m-d');
+                    $stmt->bindParam(':date_debut', $dtdb);
+                    $stmt->bindParam(':date_fin', $dtfn);
                 } else if (isset($_GET['date1'])){
-                    $stmt->bindParam(':date_debut', $dateDeb);
+                    $dtdb = $dateDeb->format('Y-m-d');
+                    $stmt->bindParam(':date_debut', $dtdb);
                 }
 
             

@@ -25,7 +25,7 @@
                     <div class="fil">
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12" alt="euro"></label>
+                                <label for="prix_min">Min<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
                             <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prix_min'])) {
                                                                                                 echo $_GET['prix_min'];
@@ -35,7 +35,7 @@
                         </div>
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12" alt="euro"></label>
+                                <label for="prix_max">Max<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
                             <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prix_max'])) {
                                                                                                 echo $_GET['prix_max'];
