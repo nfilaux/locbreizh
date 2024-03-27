@@ -403,15 +403,14 @@
 
         <div class="acc-with-map">
             <!-- Champs de séléction des Tris -->
-            
-            <hr class="hr" style="margin-top:15em; width:100%;">
-            
             <select class="triage" id="tri" name="tri">
                 <option value="none" hidden> Trier par : choisir tri</option>
                 <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
                 <option value="prix_c">Prix (croissant)</option>
                 <option value="prix_d">Prix (décroissant)</option>
             </select> 
+
+            <hr class="hr" style="width:100%;">
 
             <section class="card">
                     
