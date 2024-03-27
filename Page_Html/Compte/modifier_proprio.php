@@ -142,23 +142,6 @@
     else{
         $i2_present = false;
     }
-
-    // test extension de la carte d'identié + si une nouvelle a été donné
-    $arrayNom3 = explode('.', $_FILES['carteIdentite']['name']);
-    if($arrayNom3[0] != ''){
-        $extension3 = $arrayNom3[sizeof($arrayNom3)-1];
-        if(!($extension3 == "png" or $extension3 == "gif" or $extension3 == "jpg" or $extension3 == "jpeg" or $extension3 == "pdf")){
-            if (!empty($extension3)){
-                $_SESSION['erreurs'] += ["carteIdentite" => "Mauvaise extension de fichiers"];
-            }
-            $erreur = true;
-
-        }
-        $i3_present = true;
-    }
-    else{
-        $i3_present = false;
-    }
     
     // si aucune erreur n'a été trouvé ont fait les modifications
     if (!$erreur){
