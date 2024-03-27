@@ -39,20 +39,20 @@
                     <div class="row-profil">
                         <label for="prenom">Prénom</label>
                         <!-- input pour pouvoir modifier l'information + pré-replissage -->
-                        <input type="text" id="prenom" name="prenom" maxlength="20" placeholder="Prénom" value="<?php if(isset($_GET['prenom'])) { echo htmlentities($_GET['prenom']);}?>" required>
+                        <input type="text" id="prenom" name="prenom" maxlength="20" placeholder="Prénom" value="<?php if(isset($_GET['prenom'])) { echo htmlentities($_GET['prenom']);}?>" title="Votre prénom" required>
                         <!-- affichage des possibles erreurs (même chose pour les prochains appels de la fonction) -->
                     </div>
                     <?php erreur("prenom");?>
 
                     <div class="row-profil">
                         <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" maxlength="20" placeholder="Nom" value="<?php if(isset($_GET['nom'])) { echo htmlentities($_GET['nom']);}?>" required>
+                        <input type="text" id="nom" name="nom" maxlength="20" placeholder="Nom" value="<?php if(isset($_GET['nom'])) { echo htmlentities($_GET['nom']);}?>" title="Votre nom" required>
                     </div>
                     <?php erreur("nom");?>
 
                     <div class="row-profil">
                         <label for="pseudo">Pseudo</label>
-                        <input type="text"  id="pseudo" name="pseudo" maxlength="20" placeholder="Pseudo" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>" required>
+                        <input type="text"  id="pseudo" name="pseudo" maxlength="20" placeholder="Pseudo" value="<?php if(isset($_GET['pseudo'])) { echo htmlentities($_GET['pseudo']);}?>" title="Le pseudo désiré que vous aurez sur l'application" required>
                     </div>
                     <?php erreur("pseudo");?>
 
@@ -72,14 +72,14 @@
 
                     <div class="row-profil">
                         <label for="email">E-mail</label>
-                        <input type="email" id="email" maxlength="50" name="email" placeholder="E-Mail" value="<?php if(isset($_GET['email'])) { echo htmlentities($_GET['email']);}?>" required>
+                        <input type="email" id="email" maxlength="50" name="email" placeholder="E-Mail" value="<?php if(isset($_GET['email'])) { echo htmlentities($_GET['email']);}?>" title="Email devant contenir au moins un @ et un ." required>
                     </div>
                     <?php erreur("email");?>
                     
 
                     <div class="row-profil">
                         <label for="telephone">Téléphone</label>
-                        <input type="tel" id="telephone" name="telephone" placeholder="XX XX XX XX XX" value="<?php if(isset($_GET['telephone'])) { echo htmlentities($_GET['telephone']);}?>" required>
+                        <input type="tel" id="telephone" name="telephone" placeholder="XX XX XX XX XX" value="<?php if(isset($_GET['telephone'])) { echo htmlentities($_GET['telephone']);}?>" title="Numéro de téléphone en 10 chiffres" required>
                     </div>
                     <?php erreur("telephone");?>
 
@@ -115,13 +115,13 @@
                     <div class="ligne_adresse">
                         <div class="numero_rue">
                             <label for="numRue">N° :</label>
-                            <input type="text" id="numRue" name="numRue" maxlength="3" value="<?php if(isset($_GET['numRue'])) { echo htmlentities($_GET['numRue']);}?>" required>
+                            <input type="text" id="numRue" name="numRue" maxlength="3" value="<?php if(isset($_GET['numRue'])) { echo htmlentities($_GET['numRue']);}?>" title="Numéro de votre rue" required>
                         </div>
                         
 
                         <div class="nom_rue">
                             <label for="nomRue">Rue :</label>
-                            <input type="text" id="nomRue" name="nomRue" maxlength="30" value="<?php if(isset($_GET['nomRue'])) { echo htmlentities($_GET['nomRue']);}?>" required>
+                            <input type="text" id="nomRue" name="nomRue" maxlength="30" value="<?php if(isset($_GET['nomRue'])) { echo htmlentities($_GET['nomRue']);}?>" title="Nom de votre rue" required>
                         </div>
                     </div> 
                     <?php erreur("numRue");?>
@@ -130,11 +130,11 @@
                     <div class="ligne_adresse">  
                         <div class="code_postal">
                             <label for="codePostal">Code postal :</label>
-                            <input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php if(isset($_GET['codePostal'])) { echo htmlentities($_GET['codePostal']);}?>" required> 
+                            <input type="text" maxlength="5" id="codePostal" name="codePostal" value="<?php if(isset($_GET['codePostal'])) { echo htmlentities($_GET['codePostal']);}?>" title="Code postal de votre ville en 5 chiffres" required> 
                         </div>
                         <div class="adresse_ville">
                             <label for="ville">Ville :</label>
-                            <input type="text" id="ville" maxlength="50" name="ville" value="<?php if(isset($_GET['ville'])) { echo htmlentities($_GET['ville']);}?>" required>
+                            <input type="text" id="ville" maxlength="50" name="ville" value="<?php if(isset($_GET['ville'])) { echo htmlentities($_GET['ville']);}?>" title="Nom de votre ville" required>
                         </div>
                     </div>
                     <?php erreur("codePostal");?>
@@ -145,7 +145,7 @@
                 <!-- photo de profil -->
                 <div>
                     
-                    <label for="photo">  <img src="../svg/anonyme.svg" id="avatar" class=".photo-avatar" title="photo" alt="photo de profil"> Photo de profil</label>
+                    <label for="photo">  <img src="../svg/anonyme.svg" id="avatar" class=".photo-avatar" title="photo de profil" alt="photo de profil"> Photo de profil</label>
                     <input type="file" id="photo" name="photo" required/>
                     
                     <?php erreur("photo"); ?>

@@ -27,7 +27,7 @@
             <div class="filters">
                 <div class="menu-filtre">
                     <div class="fil">
-                        <div class="input-group" style="width: 10%;">
+                        <div class="input-group input-top" style="width: 10%;">
                             <div class="input-group-prepend">
                                 <label for="prix_min">Min<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
@@ -36,8 +36,9 @@
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
+                            <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
-                        <div class="input-group" style="width: 10%;">
+                        <div class="input-group input-top" style="width: 10%;">
                             <div class="input-group-prepend">
                                 <label for="prix_max">Max<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
@@ -46,8 +47,9 @@
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
+                                <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
-                        <div class="input-group input-group-ville">
+                        <div class="input-group input-group-ville input-top">
                             <div class="input-group-prepend">
                                 <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25" alt="ping de map"></label>
                             </div>
@@ -57,7 +59,7 @@
                                                                                         echo 'Ville';
                                                                                     } ?>" />
                         </div>
-                        <div class="input-group input-group-pers">
+                        <div class="input-group input-group-pers input-bottom">
                             <div class="input-group-prepend">
                                 <label for="personne"><img src="../svg/group.svg" width="25" height="25" alt="nombre de personnes"></label>
                             </div>
@@ -67,15 +69,15 @@
                                                                                                 echo 0;
                                                                                             } ?>" />
                         </div>
-                        <div class="input-group" style="width: 15%;">
+                        <div class="input-group input-group-date input-bottom">
                             <div class="input-group-prepend">
-                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
+                                <label for="date1">Début <!--<img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier">--></label>
                             </div>
                             <input type="date" id="date1" name="date1" value="<?php if (isset($_GET['date1'])) {echo $_GET['date1']; }else {echo date('Y-m-d');}?>" />
                         </div>
-                        <div class="input-group" style="width: 15%;">
+                        <div class="input-group input-group-date input-bottom">
                             <div class="input-group-prepend">
-                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
+                                <label for="date2">Fin<!--<img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier">--></label>
                             </div>
                             <input type="date" id="date2" name="date2" value="<?php if (isset($_GET['date2'])) {echo $_GET['date2']; } else {echo date('Y-m-d');}?>" />
                         </div>
@@ -403,15 +405,14 @@
 
         <div class="acc-with-map">
             <!-- Champs de séléction des Tris -->
-            
-            <hr class="hr" style="margin-top:15em; width:100%;">
-            
             <select class="triage" id="tri" name="tri">
                 <option value="none" hidden> Trier par : choisir tri</option>
                 <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
                 <option value="prix_c">Prix (croissant)</option>
                 <option value="prix_d">Prix (décroissant)</option>
             </select> 
+
+            <hr class="hr" style="width:100%;">
 
             <section class="card">
                     
