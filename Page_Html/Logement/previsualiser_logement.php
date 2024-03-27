@@ -792,16 +792,16 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                                         for ($i = 1; $i <= 6; $i++) {
                                             if (isset($_SESSION['post_logement']['image' .$i . 'P'] )){?>
                                                 <div class="slide">
-                                                    <img src="../Ressources/Images/<?php echo $_SESSION['post_logement']['image' . $i . 'P'] ;?>">
+                                                    <img src="../Ressources/Images/<?php echo $_SESSION['post_logement']['image' . $i . 'P'] ;?>" alt="Image d'un logement">
                                                 </div><?php
                                             }
                                         };?>
                                     </div>
 
                                     <div class="controls">
-                                        <button class="left"><img src="../svg/arrow-left.svg"></button>
+                                        <button class="left"><img src="../svg/arrow-left.svg" alt="Flèche de gauche"></button>
                                         <ul></ul>
-                                        <button class="right"><img src="../svg/arrow-right.svg"></button>
+                                        <button class="right"><img src="../svg/arrow-right.svg" alt="Flèche de droite"></button>
                                     </div>
                                 </div>
                             </div>
@@ -906,41 +906,41 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $surface_jardin; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg" alt="Jardin"> jardin   <?php  echo $surface_jardin; ?> m<sup>2</sup></p>
                         <?php
                         $equip = false;
                         if (isset($balcon) && $balcon == true) {
-                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            ?><p><img src="../svg/balcon.svg" alt="Balcon"><?php  echo 'Balcon'; ?></p><?php
                             $equip = true;
                         }
 
                         if (isset($terrasse) && $terrasse == true) {
-                            ?><p><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p><img src="../svg/terasse.svg" alt="Terasse"><?php  echo 'Terrasse'; ?></p><?php
                             $equip = true;
                         }
                         if (isset($parking_privee) && $parking_privee == true) {
-                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p><img src="../svg/PARKING.svg" alt="Parking privée"><?php  echo 'Parking privée'; ?></p><?php
                             $equip = true;
                         }
 
                         if (isset($parking_public) && $parking_public == true) {
-                            ?><p><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            ?><p><img src="../svg/PARKING.svg" alt="Parking public"><?php  echo 'Parking public'; ?></p><?php
                             $equip = true;
                         }
                         if (isset($television) && $television == true) {
-                            ?><p><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            ?><p><img src="../svg/TELEVISION.svg" alt="Télévision"><?php  echo 'Television'; ?></p><?php
                             $equip = true;
                         }
                         if (isset($wifi) && $wifi == true) {
-                            ?><p><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            ?><p><img src="../svg/WIFI.svg" alt="Wifi"><?php  echo 'Wifi'; ?></p><?php
                             $equip = true;
                         }
                         if (isset($lave_linge) &&  $lave_linge == true) {
-                            ?><p><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p><img src="../svg/contrast-drop-2-fill.svg" alt="Lave-linge"><?php  echo 'Lave-linge'; ?></p><?php
                             $equip = true;
                         }
                         if (isset($lave_vaisselle) &&  $lave_vaisselle == true) {
-                            ?><p><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p><img src="../svg/CUISINE.svg" alt="Cuisine équipée"><?php  echo 'Cuisine équipée'; ?></p><?php
                             $equip = true;
                         }
                         if (!$equip){
@@ -954,26 +954,26 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         <?php
                         $install = false;
                         if (isset($climatisation) && $climatisation == true) {
-                            ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
+                            ?><p><img src="../svg/windy-line.svg" alt="Climatisation"><?php  echo 'Climatisation'; ?></p><?php
                             $install = true;
                         }
                         if (isset($piscine) && $piscine == true) {
-                            ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg" alt="Piscine"> <?php  echo 'Piscine'; ?></p><?php
                             $install = true;
                         }
 
                         if (isset($sauna) &&  $sauna == true) {
-                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg" alt="Sauna"><?php  echo 'Sauna'; ?></p><?php
                             $install = true;
                         }
 
                         if (isset($hammam) &&  $hammam == true) {
-                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg" alt="Hammam"><?php  echo 'Hammam'; ?></p><?php
                             $install = true;
                         }
 
                         if (isset($jacuzzi) && $jacuzzi == true) {
-                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg" alt="Jacuzzi"><?php  echo 'Jacuzzi'; ?></p><?php
                             $install = true;
                         }
                         if (!$install){
@@ -987,15 +987,15 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                         <?php
                             $services = false;
                             if (isset($navette) && $navette == true) {
-                                ?><p><img src="../svg/taxi-fill.svg" width="35" height ="35"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                ?><p><img src="../svg/taxi-fill.svg" width="35" height ="35" alt="Taxi"><?php  echo 'Navette ou Taxi'; ?></p><?php
                                 $services = true;
                             }
                             if (isset($menage) && $menage == true) {
-                                ?><p><img src="../svg/nettoyage.svg" width="35" height="35"> <?php  echo 'Menage'; ?></p><?php
+                                ?><p><img src="../svg/nettoyage.svg" width="35" height="35" alt="Ménage"> <?php  echo 'Menage'; ?></p><?php
                                 $services = true;
                             }
                             if (isset($linge) && $linge == true) {
-                                ?><p><img src="../svg/t-shirt-air-line.svg" width="35" height ="35"><?php  echo 'Linge'; ?></p><?php
+                                ?><p><img src="../svg/t-shirt-air-line.svg" width="35" height ="35" alt="Linge"><?php  echo 'Linge'; ?></p><?php
                                 $services = true;
                             }
                             if (!$services){
@@ -1007,14 +1007,14 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
                 <hr class="hr">
                 <div class="logrow">
                     <div class="logcp">
-                        <p><img src="../svg/CHAMBRE.svg"> <?php  echo $logement_data['nb_lit_simple'] ?> lit(s) simple(s)</p>
-                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $logement_data['nb_lit_double'] ?> lit(s) double(s)</p>
-                        <p><img src="../svg/ruler.svg" width="24px" height="24px"><?php echo $logement_data['surface_maison'];?>m<sup>2<sup></p>
+                        <p><img src="../svg/CHAMBRE.svg" alt="Lit simple"> <?php  echo $logement_data['nb_lit_simple'] ?> lit(s) simple(s)</p>
+                        <p><img src="../svg/CHAMBRE.svg" alt="Lit double"><?php  echo $logement_data['nb_lit_double'] ?> lit(s) double(s)</p>
+                        <p><img src="../svg/ruler.svg" width="24px" height="24px" alt="Surface"><?php echo $logement_data['surface_maison'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
-                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $logement_data['nb_chambres'] ?> chambre(s)</p>
-                        <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $logement_data['nb_sdb'] ?> salle(s) de bain</p>
-                        <p><img src="../svg/group.svg" width="24px" height="24px"><?php echo $logement_data['nb_personne_max'];?> personnes  </p>
+                        <p><img src="../svg/CHAMBRE.svg" alt="Chambre"><?php  echo $logement_data['nb_chambres'] ?> chambre(s)</p>
+                        <p><img src="../svg/SALLE_DE_BAIN.svg" alt="Salle de bain"><?php  echo $logement_data['nb_sdb'] ?> salle(s) de bain</p>
+                        <p><img src="../svg/group.svg" width="24px" height="24px" alt="Nombre de personnes"><?php echo $logement_data['nb_personne_max'];?> personnes  </p>
                     </div>
                 </div>
         </div>

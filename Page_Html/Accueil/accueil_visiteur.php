@@ -81,7 +81,7 @@
                         </div>
                         <hr style="margin: 5px;">
                         <a class="btn-filtre">
-                            <img src="../svg/filtre.svg" width="20" height="20" alt="icon pour les filtres" onclick="openPopup('filtre','ovFiltre')">
+                            <img src="../svg/filtre.svg" width="20" height="20" alt="icon pour désactiver la carte" id="carte">
                         </a>
                         
                     </div>
@@ -446,10 +446,10 @@
                     <?php   }
                                     }
                     ?>
-            </section>
-        </div>
-        <div id="containerMap">
-            <div id="map">
+                </section>
+            </div>
+            <div id="containerMap">
+                <div id="map">
                 <script>
                     // Image du marqueur
                     var ownIcon = L.icon({
@@ -726,6 +726,6 @@
 
 </html>
 
-
+<script src="./cacherCarte.js" defer></script>
 <script src="./actualiserTri.js" defer></script>
 <script src="./actualiserFiltre.js" defer></script>
