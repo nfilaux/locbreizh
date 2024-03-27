@@ -571,7 +571,7 @@ numCalendrier = -1;
                     
                     ?>
                         <div class="cardlogmainP">
-                            <img src="../Ressources/Images/<?php echo $card['photo_principale']?>">
+                            <img src="../Ressources/Images/<?php echo $card['photo_principale']?>" alt="photo principale du logement">
                             <section class="logcp">
                                 <div class="logrowb">
                                     <div>
