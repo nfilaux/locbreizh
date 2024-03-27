@@ -30,12 +30,13 @@ $photo = $stmt->fetch();
     <title>Accueil</title>
     <link rel="icon" href="../svg/logo.svg">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="../style.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
-    <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
 </head>
 
@@ -505,7 +506,7 @@ $photo = $stmt->fetch();
                     
                 
                     function geocodeAndAddMarkersForCity(ville, libelle_logement) {
-                        var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=424b7bd39a4f476f85ef509d2ffd957d";
+                        var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=90a3f846aa9e490d927a787facf78c7e";
 
                         fetch(opencageUrl)
                             .then(response => response.json())
@@ -546,29 +547,13 @@ $photo = $stmt->fetch();
                 
                         // Création de la carte Leaflet
                         var map = L.map('map').setView([48.2020, -2.9326], 8);
-                        var markers = new L.MarkerClusterGroup();
+                        
 
                         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             maxZoom: 19,
                             attribution: '© OpenStreetMap contributors'
                         }).addTo(map);
 
-                        for (var city in markersByCity) {
-                            if (markersByCity.hasOwnProperty(city)) {
-                                // Si la ville a plus d'un marqueur alors on fait un cluster
-                                if (markersByCity[city].length > 1) {
-                                    var cityMarkerCluster = L.markerClusterGroup();
-
-                                    // on ajoute marqueurs au cluster
-                                    markersByCity[city].forEach(function (marker) {
-                                        cityMarkerCluster.addLayer(marker);
-                                    });
-
-                                    // on ajoute  le cluster à la carte
-                                    map.addLayer(cityMarkerCluster);
-                                }
-                            }
-                        }
                 </script>
             </div>
         </div>  
