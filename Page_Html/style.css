@@ -2492,6 +2492,7 @@ iframe {
     justify-content: center;
     width: 100%;
     font-size: 1.5em;
+    margin-bottom : 10px;
 }
 
 .fond,
@@ -2618,7 +2619,7 @@ iframe {
 }
 
 .inactif {
-    color: #A9A9A9;
+    color: #797676;
 }
 
 .actif,
@@ -2682,7 +2683,7 @@ iframe {
     height: 0.9em;
     width: 0.9em;
     z-index: -1;
-    transform: translate(-110%, 0%);
+    transform: translate(-120%, 0%);
 }
 
 
@@ -2702,6 +2703,50 @@ iframe {
     background-color: #B10F2E;
 }
 
+.legendeDispo::before {
+    background-color: #000;
+}
+
+.legendePasDispo::before {
+    background-color: #797676;
+}
+
+.ajoutSelection{
+    font-size: 1.2em;
+    display: none;
+    position: fixed;
+    text-align: start;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #745086;
+    box-shadow: none;
+    z-index: 2000;
+    width: auto;
+    border-radius: 15px;
+}
+
+.formulaire_selection{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formulaire_selection form{
+    margin : 0px;
+    padding: 20px;
+    display: inline;
+}
+
+.formSupprPlage{
+    border-left: 1px solid #745086;
+    height: 100%;
+}
+
+.inputPrixCal{
+    display: inline-flex;
+}
 
 /*----------------------------------------------------------------Messagerie----------------------------------------------------------------*/
 

@@ -60,7 +60,7 @@
 
     <main class="MainTablo">
     <div class="headtablo">
-        <a href="../Logement/logement_detaille_client.php?logement=<?php echo $_GET['logement']; ?>"><img src="../svg/flecheRetour.svg"/></a>
+        <a href="../Logement/logement_detaille_client.php?logement=<?php echo $_GET['logement']; ?>"><img src="../svg/flecheRetour.svg" alt="fleche de retour"/></a>
             <h1>Faire ma demande de devis</h1>
     </div>
  

@@ -447,100 +447,100 @@
                     <?php   }
                                     }
                     ?>
-                </section>
-            </div>
-            <div id="containerMap">
-                <div id="map">
-                    <script>
-                        // Image du marqueur
-                        var ownIcon = L.icon({
-                                        iconUrl: '../svg/map-pin-fill (2).svg',
-                                        iconSize: [48, 48],
-                                        iconAnchor: [22, 48],
-                                        popupAnchor: [3, -24]
-                        });
+            </section>
+        </div>
+        <div id="containerMap">
+            <div id="map">
+                <script>
+                    // Image du marqueur
+                    var ownIcon = L.icon({
+                                    iconUrl: '../svg/map-pin-fill (2).svg',
+                                    iconSize: [48, 48],
+                                    iconAnchor: [22, 48],
+                                    popupAnchor: [3, -24]
+                    });
 
-                        var markersByCity = {};
+                    var markersByCity = {};
 
-                        <?php if (count($res) <= 0) { ?>
-                            <?php   } foreach ($res as $ville) {
-                                if ($ville['en_ligne'] == true) { ?> 
-                                        var ville = "<?php echo $ville['ville']; ?>";
-                                        var libelle_logement = "<?php echo $ville['libelle_logement']; ?>";
-                                        geocodeAndAddMarkersForCity(ville, libelle_logement);
-                                        
-                            <?php   } ?>
+                    <?php if (count($res) <= 0) { ?>
+                        <?php   } foreach ($res as $ville) {
+                            if ($ville['en_ligne'] == true) { ?> 
+                                    var ville = "<?php echo $ville['ville']; ?>";
+                                    var libelle_logement = "<?php echo $ville['libelle_logement']; ?>";
+                                    geocodeAndAddMarkersForCity(ville, libelle_logement);
+                                    
                         <?php   } ?>
-                        
+                    <?php   } ?>
                     
-                        function geocodeAndAddMarkersForCity(ville, libelle_logement) {
-                            var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=424b7bd39a4f476f85ef509d2ffd957d";
+                
+                    function geocodeAndAddMarkersForCity(ville, libelle_logement) {
+                        var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=424b7bd39a4f476f85ef509d2ffd957d";
 
-                            fetch(opencageUrl)
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.results.length > 0) {
-                                        var latitude = data.results[0].geometry.lat;
-                                        var longitude = data.results[0].geometry.lng;
+                        fetch(opencageUrl)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.results.length > 0) {
+                                    var latitude = data.results[0].geometry.lat;
+                                    var longitude = data.results[0].geometry.lng;
 
-                                        // Création du marqueur pour cette ville
-                                        var marker = L.marker([latitude, longitude], {icon: ownIcon}).addTo(map);
-                                        // Vérifier si la clé pour cette ville existe déjà dans le tableau
-                                        if (markersByCity[ville] === undefined) {
-                                            // Si la clé n'existe pas, créer un nouveau tableau pour cette ville
-                                            markersByCity[ville] = [];
-                                        }
-
-                                        
-                                        markersByCity[ville].push(marker);
-
-                                        if (markersByCity[ville].length > 1) {
-                                            var cityMarkerCluster = L.markerClusterGroup();
-                                            markersByCity[ville].forEach(function (marker) {
-                                                cityMarkerCluster.addLayer(marker);
-                                            });
-                                            map.addLayer(cityMarkerCluster);
-                                        } else {
-                                            map.addLayer(marker);
-                                        }
-                                        marker.bindPopup(libelle_logement);
-                                    } else {
-                                        console.log("Impossible de géocoder la ville:", ville);
+                                    // Création du marqueur pour cette ville
+                                    var marker = L.marker([latitude, longitude], {icon: ownIcon}).addTo(map);
+                                    // Vérifier si la clé pour cette ville existe déjà dans le tableau
+                                    if (markersByCity[ville] === undefined) {
+                                        // Si la clé n'existe pas, créer un nouveau tableau pour cette ville
+                                        markersByCity[ville] = [];
                                     }
-                                })
-                                .catch(error => {
-                                    console.error("Erreur lors de la requête de géocodage:", error);
-                                });
-                        }
-                   
-                            // Création de la carte Leaflet
-                            var map = L.map('map').setView([48.2020, -2.9326], 8);
-                            var markers = new L.MarkerClusterGroup();
 
-                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                maxZoom: 19,
-                                attribution: '© OpenStreetMap contributors'
-                            }).addTo(map);
+                                    
+                                    markersByCity[ville].push(marker);
 
-                            for (var city in markersByCity) {
-                                if (markersByCity.hasOwnProperty(city)) {
-                                    // Si la ville a plus d'un marqueur alors on fait un cluster
-                                    if (markersByCity[city].length > 1) {
+                                    if (markersByCity[ville].length > 1) {
                                         var cityMarkerCluster = L.markerClusterGroup();
-
-                                        // on ajoute marqueurs au cluster
-                                        markersByCity[city].forEach(function (marker) {
+                                        markersByCity[ville].forEach(function (marker) {
                                             cityMarkerCluster.addLayer(marker);
                                         });
-
-                                        // on ajoute  le cluster à la carte
                                         map.addLayer(cityMarkerCluster);
+                                    } else {
+                                        map.addLayer(marker);
                                     }
+                                    marker.bindPopup(libelle_logement);
+                                } else {
+                                    console.log("Impossible de géocoder la ville:", ville);
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Erreur lors de la requête de géocodage:", error);
+                            });
+                    }
+                
+                        // Création de la carte Leaflet
+                        var map = L.map('map').setView([48.2020, -2.9326], 8);
+                        var markers = new L.MarkerClusterGroup();
+
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        for (var city in markersByCity) {
+                            if (markersByCity.hasOwnProperty(city)) {
+                                // Si la ville a plus d'un marqueur alors on fait un cluster
+                                if (markersByCity[city].length > 1) {
+                                    var cityMarkerCluster = L.markerClusterGroup();
+
+                                    // on ajoute marqueurs au cluster
+                                    markersByCity[city].forEach(function (marker) {
+                                        cityMarkerCluster.addLayer(marker);
+                                    });
+
+                                    // on ajoute  le cluster à la carte
+                                    map.addLayer(cityMarkerCluster);
                                 }
                             }
-                    </script>
-                </div>
-            </div>  
+                        }
+                </script>
+            </div>
+        </div>  
 
         
             <div class="filtrage">
