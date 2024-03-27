@@ -60,6 +60,7 @@ $photo = $stmt->fetch();
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
+                            <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
@@ -70,6 +71,7 @@ $photo = $stmt->fetch();
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
+                            <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
                         <div class="input-group input-group-ville">
                             <div class="input-group-prepend">
