@@ -279,7 +279,7 @@ body {
     transform: translate(-50%, -50%);*/
     overflow: auto;
 
-    width:15%;
+    width: 15%;
     height: 80vh;
 }
 
@@ -525,11 +525,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px 10px; /* Ajustement du padding pour maintenir la taille du contenu */
+    padding: 5px 10px;
+    /* Ajustement du padding pour maintenir la taille du contenu */
     background-color: white;
     border: 1px solid #745086;
     color: #745086;
-    font-size: 14px; /* Réduction de la taille de la police */
+    font-size: 14px;
+    /* Réduction de la taille de la police */
     font-weight: 600;
     cursor: pointer;
     overflow: hidden;
@@ -540,7 +542,7 @@ body {
     transition: all 0.3s ease cubic-bezier(0.23, 1, 0.320, 1);
     border-radius: 5px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
-    margin: 15px 5px 5px;  
+    margin: 15px 5px 5px;
 }
 
 .btn-supF span,
@@ -1336,13 +1338,13 @@ footer a:visited {
 }
 
 .btn-demlogno {
-    background-color: #cccccc;
+    background-color: #d9d9d9;
     color: #745086;
     border: 1px solid #957BB0;
 }
 
 .btn-demlognoP {
-    background-color: #cccccc;
+    background-color: #d9d9d9;
     color: #274065;
     border: 1px solid #274065;
 }
@@ -3665,12 +3667,12 @@ iframe {
         text-align: center;
     }
 
-    .maincatalog{
-        display:flex; 
-        flex-direction:column;
+    .maincatalog {
+        display: flex;
+        flex-direction: column;
     }
-    
-    #map{
+
+    #map {
         height: 0;
         display: none;
     }
@@ -3678,7 +3680,7 @@ iframe {
     .acc-with-map {
         width: 80%;
     }
-    
+
     .card {
         font-size: 0.6em;
         overflow: auto;
@@ -3795,13 +3797,13 @@ iframe {
     }
 
     /*-------------------------------Accueil-------------------------------*/
-    
-    #map{
+
+    #map {
         display: none;
         height: 0;
     }
 
-    .acc-with-map{
+    .acc-with-map {
         width: 80%;
     }
 

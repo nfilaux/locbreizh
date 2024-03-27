@@ -572,21 +572,21 @@ numCalendrier = -1;
                 <div class="slider-container">
                     <div class="slider">
                         <div class="slide">
-                            <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale']; ?> ">
+                            <img class="photosecondaireP" src="../Ressources/Images/<?php echo $info['photo_principale']; ?> " alt="Photo secondaire">
                         </div><?php
                                 for ($i = 0; $i < 5; $i++) {
                                     if (isset($photos_secondaires[$i]['photo'])) { ?>
                                 <div class="slide">
-                                    <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo']; ?>">
+                                    <img src="../Ressources/Images/<?php echo $photos_secondaires[$i]['photo']; ?>" alt="Photo secondaire">
                                 </div><?php
                                     }
                                 }; ?>
                     </div>
 
                     <div class="controls">
-                        <button class="left"><img src="../svg/arrow-left.svg"></button>
+                        <button class="left"><img src="../svg/arrow-left.svg" alt="Flèche de gauche"></button>
                         <ul></ul>
-                        <button class="right"><img src="../svg/arrow-right.svg"></button>
+                        <button class="right"><img src="../svg/arrow-right.svg" alt="Flèche de droite" ></button>
                     </div>
                 </div>
             </div>
@@ -716,39 +716,39 @@ numCalendrier = -1;
                 <div class="logrow">
                     <div class="logcp">
                         <h4 class="potitres">Equipements</h4>
-                        <p><img src="../svg/tree-fill.svg"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
+                        <p><img src="../svg/tree-fill.svg" alt="Jardin"> jardin   <?php  echo $info['jardin']; ?> m<sup>2</sup></p>
                         <?php
                         $equip = false;
                         if ($info['balcon'] == true) {
-                            ?><p><img src="../svg/balcon.svg"><?php  echo 'Balcon'; ?></p><?php
+                            ?><p><img src="../svg/balcon.svg" alt="Balcon"><?php  echo 'Balcon'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['terrasse'] == true) {
-                            ?><p ><img src="../svg/terasse.svg"><?php  echo 'Terrasse'; ?></p><?php
+                            ?><p ><img src="../svg/terasse.svg" alt="Terrasse"><?php  echo 'Terrasse'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['parking_privee'] == true) {
-                            ?><p ><img src="../svg/PARKING.svg"><?php  echo 'Parking privée'; ?></p><?php
+                            ?><p ><img src="../svg/PARKING.svg" alt="Parking privée"><?php  echo 'Parking privée'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['parking_public'] == true) {
-                            ?><p ><img src="../svg/PARKING.svg"><?php  echo 'Parking public'; ?></p><?php
+                            ?><p ><img src="../svg/PARKING.svg" alt="Parking public"><?php  echo 'Parking public'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['television'] == true) {
-                            ?><p ><img src="../svg/TELEVISION.svg"><?php  echo 'Television'; ?></p><?php
+                            ?><p ><img src="../svg/TELEVISION.svg" alt="Television"><?php  echo 'Television'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['wifi'] == true) {
-                            ?><p ><img src="../svg/WIFI.svg"><?php  echo 'Wifi'; ?></p><?php
+                            ?><p ><img src="../svg/WIFI.svg" alt="Wifi"><?php  echo 'Wifi'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['lave_linge'] == true) {
-                            ?><p ><img src="../svg/contrast-drop-2-fill.svg"><?php  echo 'Lave-linge'; ?></p><?php
+                            ?><p ><img src="../svg/contrast-drop-2-fill.svg" alt="Lave-linge"><?php  echo 'Lave-linge'; ?></p><?php
                             $equip = true;
                         }
                         if ($info['lave_vaisselle'] == true) {
-                            ?><p ><img src="../svg/CUISINE.svg"><?php  echo 'Cuisine équipée'; ?></p><?php
+                            ?><p ><img src="../svg/CUISINE.svg" alt="Lave vaisselle"><?php  echo 'Cuisine équipée'; ?></p><?php
                             $equip = true;
                         }
                         if (!$equip){
@@ -762,26 +762,26 @@ numCalendrier = -1;
                         <?php
                         $install = false;
                         if ($info['climatisation'] == true) {
-                            ?><p><img src="../svg/windy-line.svg"><?php  echo 'Climatisation'; ?></p><?php
+                            ?><p><img src="../svg/windy-line.svg" alt="Climatisation"><?php  echo 'Climatisation'; ?></p><?php
                             $install = true;
                         }
                         if ($info['piscine'] == true) {
-                            ?><p><img src="../svg/PISCINE.svg"> <?php  echo 'Piscine'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg" alt="Piscine"> <?php  echo 'Piscine'; ?></p><?php
                             $install = true;
                         }
 
                         if ($info['sauna'] == true) {
-                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Sauna'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg" alt="Sauna"><?php  echo 'Sauna'; ?></p><?php
                             $install = true;
                         }
 
                         if ($info['hammam'] == true) {
-                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Hammam'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg" alt="Hammam"><?php  echo 'Hammam'; ?></p><?php
                             $install = true;
                         }
 
                         if ($info['jacuzzi'] == true) {
-                            ?><p><img src="../svg/PISCINE.svg"><?php  echo 'Jacuzzi'; ?></p><?php
+                            ?><p><img src="../svg/PISCINE.svg" alt="Jacuzzi"><?php  echo 'Jacuzzi'; ?></p><?php
                             $install = true;
                         }
                         if (!$install){
@@ -798,13 +798,13 @@ numCalendrier = -1;
                             foreach ($services as $key => $value){
 
                                 if ($value['nom_service'] == "navette") {
-                                    ?><p><img src="../svg/taxi-fill.svg" width="35" height ="35"><?php  echo 'Navette ou Taxi'; ?></p><?php
+                                    ?><p><img src="../svg/taxi-fill.svg" width="35" height ="35" alt="Taxi"><?php  echo 'Navette ou Taxi'; ?></p><?php
                                 }
                                 if ($value['nom_service'] == "menage") {
-                                    ?><p><img src="../svg/nettoyage.svg" width="35" height="35"> <?php  echo 'Menage'; ?></p><?php
+                                    ?><p><img src="../svg/nettoyage.svg" width="35" height="35" alt="Ménage"> <?php  echo 'Menage'; ?></p><?php
                                 }
                                 if ($value['nom_service'] == "linge") {
-                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="35" height ="35"><?php  echo 'Linge'; ?></p><?php
+                                    ?><p><img src="../svg/t-shirt-air-line.svg" width="35" height ="35" alt="Linge"><?php  echo 'Linge'; ?></p><?php
                                 }
                             }
                         
@@ -817,14 +817,14 @@ numCalendrier = -1;
                 <hr class="hr">
                 <div class="logrow">
                     <div class="logcp">
-                        <p><img src="../svg/CHAMBRE.svg"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
-                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
-                        <p><img src="../svg/ruler.svg" width="35px" height="35px"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
+                        <p><img src="../svg/CHAMBRE.svg" alt="Lit simple"> <?php  echo $info['lit_simple'] ?> lit(s) simple(s)</p>
+                        <p><img src="../svg/CHAMBRE.svg" alt="Lit Double"><?php  echo $info['lit_double'] ?> lit(s) double(s)</p>
+                        <p><img src="../svg/ruler.svg" width="35px" height="35px" alt="Surface du logement"><?php echo $info['surface_logement'];?>m<sup>2<sup></p>
                     </div>
                     <div class="logcp">
-                        <p><img src="../svg/CHAMBRE.svg"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
-                        <p><img src="../svg/SALLE_DE_BAIN.svg"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
-                        <p><img src="../svg/group.svg" width="35px" height="35px"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
+                        <p><img src="../svg/CHAMBRE.svg" alt="Nombre de chambre"><?php  echo $info['nb_chambre'] ?> chambre(s)</p>
+                        <p><img src="../svg/SALLE_DE_BAIN.svg" alt="Nombre de salle de bain"><?php  echo $info['nb_salle_bain'] ?> salle(s) de bain</p>
+                        <p><img src="../svg/group.svg" width="35px" height="35px" alt="Nombre de personnes"><?php echo $info['nb_personnes_logement'];?> personnes  </p>
                     </div>
                 </div>
             </div>
@@ -911,9 +911,9 @@ numCalendrier = -1;
             $photo_proprio = $stmt->fetch();
             //$info = $stmt->fetch();
             foreach ($stmt->fetchAll() as $info) {
-                echo '<img src="/Ressources/Images/compte.svg>';
+                echo '<img src="/Ressources/Images/compte.svg> alt="Compte propriétaire"';
                 echo '<h4>' . $info['nom'] . ' ' . $info['prenom'] . '</h4>';
-                echo '<img src="/Ressources/Images/star-fill 2.svg">' . '<h4>' .  $info['note_avis'] . ',0</p>';
+                echo '<img src="/Ressources/Images/star-fill 2.svg" alt="Etoile">' . '<h4>' .  $info['note_avis'] . ',0</p>';
                 echo '<p>' . $info['contenu_avis'] . '</p>';
             }
 
