@@ -639,25 +639,27 @@ numCalendrier = -1;
                                 </div>
                             </div>
                         </div>
-                    </div>      
-
-
-                        <div class="logdem">
-                            <div class="logrowb" id="datesPlage">
-                                <p class="dateresa"></p>
-                                <p class="dateresa"></p>
-                            </div>
-                            <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
-                                <input class="jesuiscache" type='hidden' name="arrive" id="arrive" value="">
-                                <input class="jesuiscache" type='hidden' name="depart" id="depart" value="">
-                                <button class="btn-demlog" type="submit" >Demander un devis</button>
-                                <div class="logrowt">
-                                    <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
-                                </div>
-                            </form>
+                        <h1>Légende</h1>
+                        <div class="legendeCalendrier">
+                            <p class="legendeDispo">Disponible</p>
+                            <p class="legendePasDispo">Indisponible</p>
                         </div>
+                    </div>
 
-
+                    <div class="logdem">
+                        <div class="logrowb" id="datesPlage">
+                            <p class="dateresa"></p>
+                            <p class="dateresa"></p>
+                        </div>
+                        <form action="../demande_devis/demande_devis.php?logement=<?php echo $_GET['logement']; ?>" method="post">
+                            <input class="jesuiscache" type='hidden' name="arrive" id="arrive" value="">
+                            <input class="jesuiscache" type='hidden' name="depart" id="depart" value="">
+                            <button class="btn-demlog" type="submit" >Demander un devis</button>
+                            <div class="logrowt">
+                                <p class="nuit"><?php echo $info['tarif_base_ht'];?> €/nuit</p>
+                            </div>
+                        </form>
+                    </div>
                     
                 </div>
 

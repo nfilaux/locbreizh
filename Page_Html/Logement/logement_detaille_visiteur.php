@@ -647,6 +647,11 @@ numCalendrier = -1;
                         </div>
                     </div>
                 </div>
+                <h1>Légende</h1>
+                <div class="legendeCalendrier">
+                    <p class="legendeDispo">Disponible</p>
+                    <p class="legendePasDispo">Indisponible</p>
+                </div>
             </div>
 
 
