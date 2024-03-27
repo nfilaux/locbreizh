@@ -94,7 +94,7 @@
                     <div class="row-profil-mdp">
                         <label for="motdepasse">Mot de passe</label>
                         <div class="mdpeye">
-                            <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required/>
+                            <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" title="Votre mot de passe doit contenir au moins : une majuscule,une minuscule, un chiffre et caractère spécial" required/>
                             <img id="eye1" src="../svg/oeil.svg" alt="voir le mot de passe" onClick="changer('motdepasse', 'eye1')"/>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                     <div class="row-profil-mdp">
                         <label for="confirmationMDP">Confirmation du mot de passe</label>
                         <div class="mdpeye">
-                            <input type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation mot de passe " required/>
+                            <input type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation mot de passe " title="Votre mot de passe doit contenir au moins : une majuscule,une minuscule, un chiffre et caractère spécial" required/>
                             <img id="eye2" src="../svg/oeil.svg" alt="voir le mot de passe" onClick="changer('confirmationMDP', 'eye2')"/>
                         </div>
                     </div>
