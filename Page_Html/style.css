@@ -1067,6 +1067,7 @@ footer {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
+    align-items:center;
 }
 
 .bfooter p:last-child {
@@ -1081,6 +1082,7 @@ footer>hr {
 
 footer div p {
     padding: 0%;
+    padding-left: 1em;
 }
 
 .footerwrap {
@@ -4257,39 +4259,6 @@ iframe {
         top: 0.6em;
     }
 
-    /*-------------------------------FOOTER-------------------------------*/
-    footer {
-        height: auto;
-        padding-top: 0.5em;
-    }
-
-    .tfooter {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-around;
-        align-items: center;
-        font-size: 0.3em;
-    }
-
-    .bfooter {
-        flex-direction: row;
-        justify-content: center;
-        font-size: 0.3em;
-    }
-
-    .bfooter p:first-child {
-        margin-right: 2em;
-    }
-
-    .bfooter p:last-child {
-        visibility: hidden;
-        width: 0px;
-    }
-
-    .margintb img {
-        width: 20px;
-    }
-
     /*-------------------------------Accueil-------------------------------*/
 
     .card {
@@ -4569,4 +4538,44 @@ iframe {
 .calendar_date {
     display: flex;
     gap: 15px;
+}
+
+/* -------------------------Nouveu footer aéré ---------------------------*/
+
+@media screen and (min-width: 900px) and (max-width: 1050px) {
+
+
+    /*-------------------------------FOOTER-------------------------------*/
+    footer {
+        height: auto;
+        padding-top: 0.5em;
+    }
+
+    .tfooter {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 0.8em;
+    }
+
+    .bfooter {
+        flex-direction: row;
+        justify-content: center;
+        font-size: 0.8em;
+    }
+
+    .bfooter p:first-child {
+        margin-right: 2em;
+    }
+
+    .bfooter p:last-child {
+        visibility: hidden;
+        width: 0px;
+    }
+
+    .margintb img {
+        width: 20px;
+    }
+
 }
