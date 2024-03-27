@@ -571,7 +571,7 @@ numCalendrier = -1;
                     
                     ?>
                         <div class="cardlogmainP">
-                            <img src="../Ressources/Images/<?php echo $card['photo_principale']?>">
+                            <img src="../Ressources/Images/<?php echo $card['photo_principale']?>" alt="photo principale du logement">
                             <section class="logcp">
                                 <div class="logrowb">
                                     <div>
@@ -691,6 +691,14 @@ numCalendrier = -1;
                                         </div>
                                     </div>
 
+                                    <h1>Légende</h1>
+                                    <div class="legendeCalendrier">
+                                        <p class="legendeLibre">Libre</p>
+                                        <p class="legendeDemande">Demande de devis</p>
+                                        <p class="legendeRéserver">Réserver</p>
+                                        <p class="legendeIndisponible">Indisponible</p>
+                                    </div>
+
                                     <form action="../Planning/plageBack.php" method="post">
                                         
                                         <?php erreur("plage") ?>
@@ -786,7 +794,6 @@ numCalendrier = -1;
                                         tabMotif[i] = [tab[i]["libelle_indisponibilite"], ''];
                                         tabMotif[i][1] = tab[i]["prix_plage_ponctuelle"];
                                     }
-                                    console.log(tabMotif);
                                     afficherPlages(tabRes, "indisponible", tabMotif, "I", numCalendrier);
 
                                     var tab = <?php echo json_encode($plageDispo); ?>;

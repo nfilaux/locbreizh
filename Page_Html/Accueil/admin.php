@@ -24,7 +24,7 @@
     
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,11 +34,11 @@
 <body>
 <header>
     <a href="../Accueil/accueil_visiteur.php">
-        <img class="logot" src="../svg/logobleu.svg">
+        <img class="logot" src="../svg/logobleu.svg" alt="logo de Loc'Breizh">
         <h2 style="color:#274065;">Loc'Breizh</h2>
     </a>
     <div style="display : flex; align-items : center">
-        <img style="width : 80px; height : 80px" src="../Ressources/Images/admin.gif">
+        <img style="width : 80px; height : 80px" src="../Ressources/Images/admin.gif" alt="administration">
         <h2 style="color:#274065;">Connecté en tant qu'admin</h2>
     </diV>
 </header>
@@ -145,8 +145,8 @@
     <div class="tfooter">
         <p><a href="mailto:locbreizh@alaizbreizh.com">locbreizh@alaizbreizh.com</a></p>
         <p><a href="tel:+33623455689">(+33) 6 23 45 56 89</a></p>
-        <a class="margintb" href=""><img src="../svg/instagrambleu.svg">  <p>@LocBreizh</p></a>
-        <a  class="margintb" href=""><img src="../svg/facebookbleu.svg">  <p>@LocBreizh</p></a>
+        <a class="margintb" href=""><img src="../svg/instagrambleu.svg" alt="instagram">  <p>@LocBreizh</p></a>
+        <a  class="margintb" href=""><img src="../svg/facebookbleu.svg" alt="Facebook">  <p>@LocBreizh</p></a>
     </div>
     <hr>  
     <div class="bfooter">
