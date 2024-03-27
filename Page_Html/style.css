@@ -237,9 +237,7 @@ body {
 /*---------------------------------------------------------------- Filtres --------------------------------------------------------------*/
 .section-filters {
     width: 90%;
-    position: absolute;
-    left: 5%;
-    z-index: 100000;
+    margin: auto;
 }
 
 .menu-filtre {
@@ -251,7 +249,7 @@ body {
     background-color: white;
     padding: 1em;
     border-radius: 0.5em;
-    box-shadow: 10px 5px 5px gray;
+    box-shadow: 10px 5px 5px #5b3f69;
 
 }
 
@@ -299,7 +297,7 @@ body {
     font-size: 2em;
     display: block;
     text-align: center;
-    margin-top: 7em;
+    margin-top: 1em;
 }
 
 .flptitre {
@@ -944,7 +942,7 @@ header a:last-child {
 }
 
 .mainacc {
-    max-height: 80vh;
+    background-color: #745086;
 }
 
 main {
@@ -989,7 +987,7 @@ main h1 {
 
 .hr {
     border: 1px solid #745086;
-    margin: 2em 0 0 0;
+    margin: 1em 0 0 0;
 }
 
 .hr2 {
@@ -1405,8 +1403,8 @@ footer a:visited {
     flex-wrap: nowrap;
     /*justify-content: space-evenly;*/
     margin: 0 auto;
-    padding-top: 1em;
     text-align: center;
+    padding-top: 1em;
     overflow: auto;
     height: 100%;
     width: 100%;
@@ -1447,6 +1445,7 @@ footer a:visited {
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
+    text-align: start;
 }
 
 .logementTitre {
@@ -1462,10 +1461,20 @@ footer a:visited {
     flex-direction: column;
 }
 
+.mainInfos{
+    width: 60%;
+}
+
+.otherInfos{
+    justify-content: space-evenly;
+}
+
 .acc-with-map {
     align-items: center;
     width: 30%;
     height: 80vh;
+    background-color: white;
+    border-top: #745086 1px solid;
 }
 
 .otherInfos div {
