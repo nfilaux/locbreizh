@@ -156,7 +156,7 @@
                     </div>
                     <!-- affichage de la photo de profil + input pour la modifier -->
                     <div>
-                        <label for="photo">  <img src="../svg/anonyme.svg" id="avatar" class=".photo-avatar" title="photo" alt="photo de profil"> Photo de profil</label>
+                        <label for="photo">  <img src="../svg/anonyme.svg" id="avatar" class=".photo-avatar" title="photo de profil" alt="photo de profil"> Photo de profil</label>
                         <input type="file" id="photo" name="photo" required/>
                         <?php erreur("photo"); ?>
                         <hr class="hr2">
