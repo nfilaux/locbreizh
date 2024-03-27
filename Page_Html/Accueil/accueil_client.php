@@ -70,7 +70,7 @@ $photo = $stmt->fetch();
                         </div>
                         <div class="input-group input-group-ville">
                             <div class="input-group-prepend">
-                                <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25"></label>
+                                <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25" alt="icone de ping de map"></label>
                             </div>
                             <input type="text" id="lieu" name="lieu" placeholder="<?php if (isset($_GET['lieu'])) {
                                                                                         echo $_GET['lieu'];
@@ -80,7 +80,7 @@ $photo = $stmt->fetch();
                         </div>
                         <div class="input-group input-group-pers">
                             <div class="input-group-prepend">
-                                <label for="personne"><img src="../svg/group.svg" width="25" height="25"></label>
+                                <label for="personne"><img src="../svg/group.svg" width="25" height="25" alt="icone du nombre de personnes"></label>
                             </div>
                             <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['personne'])) {
                                                                                                 echo $_GET['personne'];
@@ -102,7 +102,7 @@ $photo = $stmt->fetch();
                         </div>
                         <hr style="margin: 5px;">
                         <a class="btn-filtre">
-                            <img src="../svg/filtre.svg" width="20" height="20" onclick="openPopup('filtre','ovFiltre')">
+                            <img src="../svg/filtre.svg" width="20" height="20" alt="icoen de filtre" onclick="openPopup('filtre','ovFiltre')">
                         </a>
                         
                     </div>
@@ -489,7 +489,7 @@ $photo = $stmt->fetch();
                         </script>
                         <article class="logementCard cardtel">
                             <a href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>">
-                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
+                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" alt="photo pricipale du logement">
                                 <div class="infoContainer">
                                     <div class="mainInfos">
                                         <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
@@ -497,11 +497,11 @@ $photo = $stmt->fetch();
                                     </div>
                                     <div class="otherInfos cardphone">
                                         <div>
-                                            <img src="../svg/money.svg" width="25" height="25">
+                                            <img src="../svg/money.svg" width="25" height="25" alt="icone d'euro">
                                             <span><?php echo $card['tarif_base_ht']; ?> € </span>
                                         </div>
                                         <div>
-                                            <img src="../svg/group.svg" width="25" height="25">
+                                            <img src="../svg/group.svg" width="25" height="25" alt="icone du nombres  de personnes">
                                             </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
                                         </div>
                                     </div>
@@ -536,7 +536,7 @@ $photo = $stmt->fetch();
                                 <input class="radio-input" type="radio" name="typeH" value="maison" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'maison')!==false){echo 'checked';}?>>
                                     <span class="radio-tile">
                                         <span class="radio-icon">
-                                            <img src="../svg/house.svg" width="25" height="25">
+                                            <img src="../svg/house.svg" width="25" height="25" alt="icone de maison">
                                         </span>
                                         <span class="radio-label">Maison</span>
                                     </span>
@@ -545,7 +545,7 @@ $photo = $stmt->fetch();
                                 <input class="radio-input" type="radio" name="typeH" value="appartement" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'appartement')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/appartement.svg" width="25" height="25">
+                                        <img src="../svg/appartement.svg" width="25" height="25" alt="icone d'appartement">
                                     </span>
                                     <span class="radio-label">Appartement</span>
                                 </span>
@@ -554,7 +554,7 @@ $photo = $stmt->fetch();
                                 <input class="radio-input" type="radio" name="typeH" value="chateau" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'chateau')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/castle.svg" width="25" height="25">
+                                        <img src="../svg/castle.svg" width="25" height="25" alt="icone de chateau">
                                     </span>
                                     <span class="radio-label">Château</span>
                                 </span>
@@ -563,7 +563,7 @@ $photo = $stmt->fetch();
                                 <input class="radio-input" type="radio" name="typeH" value="manoir" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'manoir')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/manoir.svg" width="25" height="25">
+                                        <img src="../svg/manoir.svg" width="25" height="25" alt="icone de manoir">
                                     </span>
                                     <span class="radio-label">Manoir</span>
                                 </span>
@@ -669,7 +669,7 @@ $photo = $stmt->fetch();
                             <input class="radio-input" type="checkbox" name="typeH" value="menage" id="menage" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/nettoyage.svg" width="25" height="25">
+                                        <img src="../svg/nettoyage.svg" width="25" height="25" alt="icone de ménage">
                                     </span>
                                     <span class="radio-label">Ménage</span>
                                 </span>
@@ -678,7 +678,7 @@ $photo = $stmt->fetch();
                             <input class="radio-input" type="checkbox" name="typeH" value="navette" id="navette" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/taxi-fill.svg" width="25" height="25">
+                                        <img src="../svg/taxi-fill.svg" width="25" height="25" alt="icone de navette">
                                     </span>
                                     <span class="radio-label">Navette</span>
                                 </span>
@@ -687,7 +687,7 @@ $photo = $stmt->fetch();
                             <input class="radio-input" type="checkbox" name="typeH" value="linge" id="linge" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/t-shirt-air-line.svg" width="25" height="25">
+                                        <img src="../svg/t-shirt-air-line.svg" width="25" height="25" alt="icone de linge">
                                     </span>
                                     <span class="radio-label">Linge</span>
                                 </span>
