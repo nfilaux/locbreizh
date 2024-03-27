@@ -1076,7 +1076,7 @@ footer {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
-    align-items:center;
+    align-items: center;
 }
 
 .bfooter p:last-child {
@@ -3926,12 +3926,12 @@ iframe {
         width: 0;
     }
 
-    #containerMap{
+    #containerMap {
         display: none;
         width: 0;
     }
 
-    .filtrage{
+    .filtrage {
         width: 20%;
     }
 
@@ -4040,7 +4040,20 @@ iframe {
 
     .menu-filtre {
         text-align: center;
+        display: flex;
     }
+
+    .fil {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-top,
+    .input-bottom {
+        display: flex;
+        flex-direction: row;
+    }
+
 
     .btn-fill,
     .btn-fillP {
