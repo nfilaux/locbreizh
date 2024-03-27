@@ -3739,6 +3739,7 @@ iframe {
         font-size: 0.6em;
         overflow: auto;
         flex-wrap: wrap;
+        flex-direction: row;
     }
 
     .logementCard>a>img {
@@ -3749,6 +3750,18 @@ iframe {
     .logementCard {
         width: 40%;
         height: 300px;
+    }
+    .otherInfos div{
+        font-size: 1.5em;
+    }
+    .infoContainer{
+        height: 80px;
+    }
+    .logementTitre{
+        font-size: 2em;
+    }
+    .mainInfos span:last-child{
+        font-size: 2em;
     }
 }
 
