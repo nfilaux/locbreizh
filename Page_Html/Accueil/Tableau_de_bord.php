@@ -323,6 +323,7 @@ function changerJour(elem, id) {
                         dernierID[id] = premierID[id];
                     }
                 }
+                openPopup('selection' + id, 'overlayCal' + id);
             }
         }
         //désactive le jour si on clique dessus
@@ -567,7 +568,9 @@ numCalendrier = -1;
 
                     
                     $nomPlage = 'plage' . $key; 
-                    $overlayPlage = 'overlay' . $key
+                    $overlayPlage = 'overlay' . $key;
+                    $overlayCal = 'overlayCal' . $key;
+                    $nomSelection = 'selection' . $key;
                     
                     ?>
                         <div class="cardlogmainP">
@@ -640,7 +643,47 @@ numCalendrier = -1;
                                     </script>
                             
                             <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
-                            <div id="<?php echo $nomPlage; ?>" class='plages'> 
+                            <div id="<?php echo $nomPlage; ?>" class='plages'>
+                                    <div class="overlay_plages" id='<?php echo $overlayCal; ?>' onclick="closePopup('<?php echo $nomSelection; ?>', '<?php echo $overlayCal; ?>')"></div>
+                                    <div id="<?php echo $nomSelection; ?>" class='ajoutSelection'>
+                                        <div class="formulaire_selection">
+                                            <form action="../Planning/plageBack.php" method="post">
+                                                
+                                                <?php erreur("plage") ?>
+                                                <input class="jesuiscache" type='hidden' name="debut_plage_ponctuelle" id="debut_plage_ponctuelle" value="" required>
+                                                <input class="jesuiscache" type='hidden' name="fin_plage_ponctuelle" id="fin_plage_ponctuelle" value="" required>
+
+                                                <label for="prix_plage_ponctuelle"> Prix : </label>
+                                                <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>" value="<?php echo $card['tarif_base_ht'] ?>" required/>
+                                                <br><?php erreur("prix") ?><br>
+
+                                                <label for="indisponible"> Indisponible : </label>
+                                                <input type="checkbox"  id="indisponible" name="indisponible" value="false"/>
+                                                <br><br>
+
+                                                <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
+
+                                                <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
+                                                <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
+
+                            
+                                                <button type="submit" class="btn-ajoutlog">Ajouter plage</button>
+                                            </form>
+
+                                            <form class="formSupprPlage" action="../Planning/supprimerPlage.php" method="post">
+                                                
+                                                <input class="jesuiscache" type='hidden' name="debut_plage_suppr" id="debut_plage_suppr" value="" required>
+                                                <input class="jesuiscache" type='hidden' name="fin_plage_suppr" id="fin_plage_suppr" value="" required>
+                                                
+                                                <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
+
+                                                <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
+                                                <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
+
+                                                <button type="submit" class="btn-suppr">Supprimer plage</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                     <h1>Ajouter une plage ponctuelle</h1><br>
                                     <div class="logcolumn">
                                         <div class="corpsCalendrier" id="">
@@ -698,42 +741,6 @@ numCalendrier = -1;
                                         <p class="legendeRéserver">Réserver</p>
                                         <p class="legendeIndisponible">Indisponible</p>
                                     </div>
-
-                                    <form action="../Planning/plageBack.php" method="post">
-                                        
-                                        <?php erreur("plage") ?>
-                                        <input class="jesuiscache" type='hidden' name="debut_plage_ponctuelle" id="debut_plage_ponctuelle" value="" required>
-                                        <input class="jesuiscache" type='hidden' name="fin_plage_ponctuelle" id="fin_plage_ponctuelle" value="" required>
-
-                                        <label for="prix_plage_ponctuelle"> Prix : </label>
-                                        <input type="text" class="prix_plage_ponctu" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>" value="<?php echo $card['tarif_base_ht'] ?>" required/>
-                                        <br><?php erreur("prix") ?><br>
-
-                                        <label for="indisponible"> Indisponible : </label>
-                                        <input type="checkbox"  id="indisponible" name="indisponible" value="false"/>
-                                        <br><br>
-
-                                        <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
-
-                                        <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
-                                        <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
-
-                    
-                                        <button type="submit" class="btn-ajt">Ajouter plage</button>
-                                    </form>
-
-                                    <form action="../Planning/supprimerPlage.php" method="post">
-                                        
-                                        <input class="jesuiscache" type='hidden' name="debut_plage_suppr" id="debut_plage_suppr" value="" required>
-                                        <input class="jesuiscache" type='hidden' name="fin_plage_suppr" id="fin_plage_suppr" value="" required>
-                                        
-                                        <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
-
-                                        <input type="hidden" name="overlayPopUp" value="<?php echo $overlayPlage ?>"/>
-                                        <input type="hidden" name="nomPopUp" value="<?php echo $nomPlage ?>"/>
-
-                                        <button type="submit" class="btn-ajt">Supprimer plage</button>
-                                    </form>
 
                                     <?php
                                     try {
@@ -824,10 +831,10 @@ numCalendrier = -1;
                             </div>
                         
                     </section>
-</div>
+                </div>
                     <?php
-                }
-                ?>
+                    }
+                    ?>
                 </div>
             <a href="../Logement/remplir_formulaire.php"><button class="btn-ajoutlog" >AJOUTER UN LOGEMENT</button></a>
 

@@ -10,7 +10,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
 </head>
 <body  class="pagecompte">
     <header class="headconn">
-            <a href="CreerCompte.html"><img src="../svg/flecheRetour.svg"/></a>
+            <a href="CreerCompte.html"><img src="../svg/flecheRetour.svg" alt="fleche de retour"/></a>
             <h1>Créer mon compte propriétaire  !</h1>
     </header>
     <main>
@@ -90,7 +90,7 @@
                             <label for="motdepasse">Mot de passe</label>
                             <div class="mdpeye">
                                 <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required/>
-                                <img id="eye1" src="../svg/oeil.svg"  onClick="changer('motdepasse', 'eye1')"/>
+                                <img id="eye1" src="../svg/oeil.svg" alt="voir le mot de passe" onClick="changer('motdepasse', 'eye1')"/>
                             </div>
                         </div>
                         <?php erreur("motdepasse");?>
@@ -99,7 +99,7 @@
                             <label for="confirmationMDP">Confirmation du mot de passe</label>
                             <div class="mdpeye">
                                 <input type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation mot de passe " required/>
-                                <img id="eye2" src="../svg/oeil.svg"  onClick="changer('confirmationMDP', 'eye2')"/>
+                                <img id="eye2" src="../svg/oeil.svg" alt="voir le mot de passe" onClick="changer('confirmationMDP', 'eye2')"/>
                             </div>
                         </div>
                         <?php erreur("confirmationMDP");?>

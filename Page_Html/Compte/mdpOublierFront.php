@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
             }
     ?>
     <header class="headconn">
-            <a href="connexionFront.php"><img src="../svg/flecheRetour.svg"/></a>
+            <a href="connexionFront.php"><img src="../svg/flecheRetour.svg" alt="fleche de retour"/></a>
             <h1>Récupération de compte</h1>
     </header>
     <main class="Maincompte">

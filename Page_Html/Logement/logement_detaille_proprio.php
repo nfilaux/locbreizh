@@ -502,7 +502,7 @@ numCalendrier = -1;
 </script>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -630,6 +630,11 @@ numCalendrier = -1;
                                     <ul class="jours"></ul>
                                 </div>
                             </div>
+                        </div>
+                        <h1>Légende</h1>
+                        <div class="legendeCalendrier">
+                            <p class="legendeDispo">Disponible</p>
+                            <p class="legendePasDispo">Indisponible</p>
                         </div>
                     </div>
 

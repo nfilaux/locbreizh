@@ -7,9 +7,13 @@
     <link rel="icon" href="../svg/logo.svg">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="./carte.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
 </head>
 
 <body> <!--  onload="init()" -->
@@ -25,7 +29,7 @@
                     <div class="fil">
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_min">min<img src="../svg/money.svg" width="12" height="12"></label>
+                                <label for="prix_min">Min<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
                             <input type="number" id="prix_min" name="prix_min" placeholder="<?php if (isset($_GET['prix_min'])) {
                                                                                                 echo $_GET['prix_min'];
@@ -35,7 +39,7 @@
                         </div>
                         <div class="input-group" style="width: 10%;">
                             <div class="input-group-prepend">
-                                <label for="prix_max">max<img src="../svg/money.svg" width="12" height="12"></label>
+                                <label for="prix_max">Max<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
                             <input type="number" id="prix_max" name="prix_max" placeholder="<?php if (isset($_GET['prix_max'])) {
                                                                                                 echo $_GET['prix_max'];
@@ -45,7 +49,7 @@
                         </div>
                         <div class="input-group input-group-ville">
                             <div class="input-group-prepend">
-                                <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25"></label>
+                                <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25" alt="ping de map"></label>
                             </div>
                             <input type="text" id="lieu" name="lieu" placeholder="<?php if (isset($_GET['lieu'])) {
                                                                                         echo $_GET['lieu'];
@@ -55,7 +59,7 @@
                         </div>
                         <div class="input-group input-group-pers">
                             <div class="input-group-prepend">
-                                <label for="personne"><img src="../svg/group.svg" width="25" height="25"></label>
+                                <label for="personne"><img src="../svg/group.svg" width="25" height="25" alt="nombre de personnes"></label>
                             </div>
                             <input type="number" id="personne" name="personne" placeholder="<?php if (isset($_GET['personne'])) {
                                                                                                 echo $_GET['personne'];
@@ -65,19 +69,19 @@
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14"></label>
+                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
                             </div>
                             <input type="date" id="date1" name="date1" value="<?php if (isset($_GET['date1'])) {echo $_GET['date1']; }else {echo date('Y-m-d');}?>" />
                         </div>
                         <div class="input-group" style="width: 15%;">
                             <div class="input-group-prepend">
-                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14"></label>
+                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
                             </div>
                             <input type="date" id="date2" name="date2" value="<?php if (isset($_GET['date2'])) {echo $_GET['date2']; } else {echo date('Y-m-d');}?>" />
                         </div>
                         <hr style="margin: 5px;">
                         <a class="btn-filtre">
-                            <img src="../svg/filtre.svg" width="20" height="20" id="carte">
+                            <img src="../svg/filtre.svg" width="20" height="20" alt="icon pour désactiver la carte" id="carte">
                         </a>
                         
                     </div>
@@ -419,45 +423,9 @@
                     <p style="font-size: 1.5em;">Aucun logement trouvé</p>
                     <?php   } foreach ($res as $card) {
                     if ($card['en_ligne'] == true) { ?>
-                        <script>
-                            <?php foreach ($res as $ville) { ?>
-                                var ville = "<?php echo $ville['ville']; ?>";
-                                var libelle_logement = "<?php echo $ville['libelle_logement']; ?>";
-                                geocodeAndAddMarkersForCity(ville, libelle_logement);
-                            <?php } ?>
-                            function geocodeAndAddMarkersForCity(ville, libelle_logement) {
-                                var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=90a3f846aa9e490d927a787facf78c7e";
-
-                                fetch(opencageUrl)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.results.length > 0) {
-                                            var latitude = data.results[0].geometry.lat;
-                                            var longitude = data.results[0].geometry.lng;
-
-                                            // Création du marqueur pour cette ville
-                                            var marker = L.marker([latitude, longitude], {icon: ownIcon}).addTo(map);
-                                            marker.bindPopup(libelle_logement);
-                                        } else {
-                                            console.log("Impossible de géocoder la ville:", ville);
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error("Erreur lors de la requête de géocodage:", error);
-                                    });
-                            }
-
-                            // Image du marqueur
-                            var ownIcon = L.icon({
-                                iconUrl: '../svg/map-pin-fill (2).svg',
-                                iconSize: [48, 48],
-                                iconAnchor: [22, 48],
-                                popupAnchor: [3, -24]
-                            });
-                        </script>
                         <article class="logementCard cardtel">
                             <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
-                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
+                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" alt="photo principale du logement">
                                 <div class="infoContainer">
                                     <div class="mainInfos">
                                         <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
@@ -465,11 +433,11 @@
                                     </div>
                                     <div class="otherInfos cardphone">
                                         <div>
-                                            <img src="../svg/money.svg" width="25" height="25">
+                                            <img src="../svg/money.svg" width="25" height="25" alt="euro">
                                             <span><?php echo $card['tarif_base_ht']; ?> € </span>
                                         </div>
                                         <div>
-                                            <img src="../svg/group.svg" width="25" height="25">
+                                            <img src="../svg/group.svg" width="25" height="25" alt="icone nombre de personnes">
                                             </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
                                         </div>
                                     </div>
@@ -481,20 +449,98 @@
                     ?>
                 </section>
             </div>
-
             <div id="containerMap">
                 <div id="map">
                 <script>
-                            // Création de la carte Leaflet
-                            var map = L.map('map').setView([48.2020, -2.9326], 8);
+                    // Image du marqueur
+                    var ownIcon = L.icon({
+                                    iconUrl: '../svg/map-pin-fill (2).svg',
+                                    iconSize: [48, 48],
+                                    iconAnchor: [22, 48],
+                                    popupAnchor: [3, -24]
+                    });
 
-                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                maxZoom: 19,
-                                attribution: '© OpenStreetMap contributors'
-                            }).addTo(map);
-                    </script>
-                </div>
-            </div>  
+                    var markersByCity = {};
+
+                    <?php if (count($res) <= 0) { ?>
+                        <?php   } foreach ($res as $ville) {
+                            if ($ville['en_ligne'] == true) { ?> 
+                                    var ville = "<?php echo $ville['ville']; ?>";
+                                    var libelle_logement = "<?php echo $ville['libelle_logement']; ?>";
+                                    geocodeAndAddMarkersForCity(ville, libelle_logement);
+                                    
+                        <?php   } ?>
+                    <?php   } ?>
+                    
+                
+                    function geocodeAndAddMarkersForCity(ville, libelle_logement) {
+                        var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=424b7bd39a4f476f85ef509d2ffd957d";
+
+                        fetch(opencageUrl)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.results.length > 0) {
+                                    var latitude = data.results[0].geometry.lat;
+                                    var longitude = data.results[0].geometry.lng;
+
+                                    // Création du marqueur pour cette ville
+                                    var marker = L.marker([latitude, longitude], {icon: ownIcon}).addTo(map);
+                                    // Vérifier si la clé pour cette ville existe déjà dans le tableau
+                                    if (markersByCity[ville] === undefined) {
+                                        // Si la clé n'existe pas, créer un nouveau tableau pour cette ville
+                                        markersByCity[ville] = [];
+                                    }
+
+                                    
+                                    markersByCity[ville].push(marker);
+
+                                    if (markersByCity[ville].length > 1) {
+                                        var cityMarkerCluster = L.markerClusterGroup();
+                                        markersByCity[ville].forEach(function (marker) {
+                                            cityMarkerCluster.addLayer(marker);
+                                        });
+                                        map.addLayer(cityMarkerCluster);
+                                    } else {
+                                        map.addLayer(marker);
+                                    }
+                                    marker.bindPopup(libelle_logement);
+                                } else {
+                                    console.log("Impossible de géocoder la ville:", ville);
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Erreur lors de la requête de géocodage:", error);
+                            });
+                    }
+                
+                        // Création de la carte Leaflet
+                        var map = L.map('map').setView([48.2020, -2.9326], 8);
+                        var markers = new L.MarkerClusterGroup();
+
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        for (var city in markersByCity) {
+                            if (markersByCity.hasOwnProperty(city)) {
+                                // Si la ville a plus d'un marqueur alors on fait un cluster
+                                if (markersByCity[city].length > 1) {
+                                    var cityMarkerCluster = L.markerClusterGroup();
+
+                                    // on ajoute marqueurs au cluster
+                                    markersByCity[city].forEach(function (marker) {
+                                        cityMarkerCluster.addLayer(marker);
+                                    });
+
+                                    // on ajoute  le cluster à la carte
+                                    map.addLayer(cityMarkerCluster);
+                                }
+                            }
+                        }
+                </script>
+            </div>
+        </div>  
 
         
             <div class="filtrage">
@@ -506,7 +552,7 @@
                                 <input class="radio-input" type="radio" name="typeH" value="maison"<?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'maison')!==false){echo 'checked';}?>>
                                     <span class="radio-tile">
                                         <span class="radio-icon">
-                                            <img src="../svg/house.svg" width="25" height="25">
+                                            <img src="../svg/house.svg" width="25" height="25" alt="icon de maison">
                                         </span>
                                         <span class="radio-label">Maison</span>
                                     </span>
@@ -515,7 +561,7 @@
                                 <input class="radio-input" type="radio" name="typeH" value="appartement" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'appartement')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/appartement.svg" width="25" height="25">
+                                        <img src="../svg/appartement.svg" width="25" height="25" alt="icone d'appartement">
                                     </span>
                                     <span class="radio-label">Appartement</span>
                                 </span>
@@ -524,7 +570,7 @@
                                 <input class="radio-input" type="radio" name="typeH" value="chateau" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'chateau')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/castle.svg" width="25" height="25">
+                                        <img src="../svg/castle.svg" width="25" height="25" alt="icone de chateau">
                                     </span>
                                     <span class="radio-label">Château</span>
                                 </span>
@@ -533,7 +579,7 @@
                                 <input class="radio-input" type="radio" name="typeH" value="manoir" <?php if((isset($_GET['typeH'])) && strpos($_GET['typeH'], 'manoir')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/manoir.svg" width="25" height="25">
+                                        <img src="../svg/manoir.svg" width="25" height="25" alt="icone de manoir">
                                     </span>
                                     <span class="radio-label">Manoir</span>
                                 </span>
@@ -640,7 +686,7 @@
                             <input class="radio-input" type="checkbox" name="typeH" value="menage" id="menage" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'menage')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/nettoyage.svg" width="25" height="25">
+                                        <img src="../svg/nettoyage.svg" width="25" height="25" alt="icone de nettoyage">
                                     </span>
                                     <span class="radio-label">Ménage</span>
                                 </span>
@@ -649,7 +695,7 @@
                             <input class="radio-input" type="checkbox" name="typeH" value="navette" id="navette" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'navette')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/taxi-fill.svg" width="25" height="25">
+                                        <img src="../svg/taxi-fill.svg" width="25" height="25" alt="icone de navette">
                                     </span>
                                     <span class="radio-label">Navette</span>
                                 </span>
@@ -658,7 +704,7 @@
                             <input class="radio-input" type="checkbox" name="typeH" value="linge" id="linge" <?php if((isset($_GET['filtre'])) && strpos($_GET['filtre'], 'linge')!==false){echo 'checked';}?>>
                                 <span class="radio-tile">
                                     <span class="radio-icon">
-                                        <img src="../svg/t-shirt-air-line.svg" width="25" height="25">
+                                        <img src="../svg/t-shirt-air-line.svg" width="25" height="25" alt="icone de linge">
                                     </span>
                                     <span class="radio-label">Linge</span>
                                 </span>

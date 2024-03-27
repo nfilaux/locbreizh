@@ -28,7 +28,7 @@ int main(int argc, char **argv){
     int verbose = 0;
     const char *conninfo;
     PGconn     *conn;
-    PGresult   *res,*resultat,*infos_clef;
+    PGresult   *res,*resultat,*infos_clef,*disponible,*indisponible;
 
     int sock, ret, size, cnx; // Initialisation des variables
     int port; // Initialisation du port
@@ -675,6 +675,8 @@ int main(int argc, char **argv){
                         if (nombres_lignes_req == 1 ){
                             strcpy(id_plage,PQgetvalue(res,0,0));
                         }
+
+                        printf("ligne requete : %d",nombres_lignes_req);
                         
                         //si la plage n'existe pas on la créer
                         if(nombres_lignes_req < 1){
@@ -850,35 +852,41 @@ int main(int argc, char **argv){
                         printf("Erreur lors de l'exécution de la requête : %s\n", PQerrorMessage(conn));
                     }
 
-                    snprintf(requete, sizeof(requete), "SELECT MAX(jour_plage_ponctuelle) FROM locbreizh._plage_ponctuelle where code_planning = %s ;",code_planning);
+                    snprintf(requete, sizeof(requete), "SELECT * from locbreizh._plage_ponctuelle where code_planning = %s order by jour_plage_ponctuelle;",code_planning);
                     printf("la requete : %s\n",requete);
                     res = PQexec(conn,requete);
 
-                    // Exécuter la requête SQL
-                    // Vérifier si la requête a réussi
-                    if (PQresultStatus(res) == PGRES_TUPLES_OK) {
-                        // Vérifier s'il y a au moins une ligne retournée
-                        if (PQntuples(res) > 0) {
-                        // Récupérer la valeur maximale de l'ID de plage
-                        char *max_id_str = PQgetvalue(res, 0, 0);
+                    int nombres_lignes_req_result = PQntuples(res);
+                    printf("nombres : %d\n",nombres_lignes_req_result);
 
-                        // Convertir la valeur en entier
-                        max_id = atoi(max_id_str);
-
-                        // Utiliser max_id comme valeur maximale de l'ID de plage
-                        printf("Valeur maximale date : %d\n", max_id);
-                        } else {
-                            printf("Aucun résultat retourné.\n");
-                        }
-                    } else {
-                        printf("Erreur lors de l'exécution de la requête : %s\n", PQerrorMessage(conn));
-                    }
-
-
-                    if (verbose == 1){
-                        printf("%02d:%02d:%d %02d:%02d:%02d début de la mise en disponibilité du logement %s du %s au %s: \n",day, mois, an,h, min, s,elements[1],elements[2],elements[3]);
-                    }
+                    for(int i = 0; i < nombres_lignes_req_result ;i++){
                     
+                        snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle_disponible WHERE id_plage_ponctuelle = %s",PQgetvalue(res,i,0));
+                        printf("la requete : %s\n",requete);
+                        disponible = PQexec(conn,requete);
+
+                        int plage_disponible = PQntuples(disponible);
+
+                        snprintf(requete, sizeof(requete), "SELECT * FROM locbreizh._plage_ponctuelle_disponible WHERE id_plage_ponctuelle = %s",PQgetvalue(res,i,0));
+                        printf("la requete : %s\n",requete);
+                        indisponible = PQexec(conn,requete);
+
+                        int plage_indisponible = PQntuples(indisponible);
+
+                        if (plage_disponible != 0){
+                                printf("la plage disponable : %s\n",PQgetvalue(res,i,1));
+                                strcpy(chaine, "");
+                                snprintf(chaine,sizeof(chaine),"\033[38;2;0;0;139m%s :\033[0m \033[32mdisponible\033[0m\n",PQgetvalue(res,i,1));
+                                write(cnx,chaine,sizeof(chaine));
+                                fflush(stdout);
+                        } else {
+                                strcpy(chaine, "");
+                                snprintf(chaine,sizeof(chaine),"\033[38;2;0;0;139m%s :\033[0m \033[31mindisponible\033[0m\n",PQgetvalue(res,i,1));
+                                write(cnx,chaine,sizeof(chaine));
+                                fflush(stdout);
+                        }
+                    }
+
                     // Boucle pour chaque jour entre les deux dates
                     for (time_t current_timestamp = start_timestamp; current_timestamp <= end_timestamp; current_timestamp += 86400) {
                         struct tm *current_tm = localtime(&current_timestamp);

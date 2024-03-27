@@ -14,7 +14,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,8 +94,8 @@
                     <div class="row-profil-mdp">
                         <label for="motdepasse">Mot de passe</label>
                         <div class="mdpeye">
-                            <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required/>
-                            <img id="eye1" src="../svg/oeil.svg"  onClick="changer('motdepasse', 'eye1')"/>
+                            <input type="password" id="motdepasse" name="motdepasse" placeholder="Mot de passe" title="Votre mot de passe doit contenir au moins : une majuscule,une minuscule, un chiffre et caractère spécial" required/>
+                            <img id="eye1" src="../svg/oeil.svg" alt="voir le mot de passe" onClick="changer('motdepasse', 'eye1')"/>
                         </div>
                     </div>
                     <?php erreur("motdepasse");?>
@@ -103,8 +103,8 @@
                     <div class="row-profil-mdp">
                         <label for="confirmationMDP">Confirmation du mot de passe</label>
                         <div class="mdpeye">
-                            <input type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation mot de passe " required/>
-                            <img id="eye2" src="../svg/oeil.svg"  onClick="changer('confirmationMDP', 'eye2')"/>
+                            <input type="password" id="confirmationMDP" name="confirmationMDP" placeholder="Confirmation mot de passe " title="Votre mot de passe doit contenir au moins : une majuscule,une minuscule, un chiffre et caractère spécial" required/>
+                            <img id="eye2" src="../svg/oeil.svg" alt="voir le mot de passe" onClick="changer('confirmationMDP', 'eye2')"/>
                         </div>
                     </div>
                     <?php erreur("confirmationMDP");?>
