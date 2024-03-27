@@ -30,8 +30,11 @@ $photo = $stmt->fetch();
     <title>Accueil</title>
     <link rel="icon" href="../svg/logo.svg">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="./carte.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
     <link rel="stylesheet" href="../style.css">
     <script src="../scriptPopup.js"></script>
 </head>
@@ -323,7 +326,7 @@ $photo = $stmt->fetch();
                                     $join = " JOIN locbreizh._service_compris s ON l.id_logement=s.logement "; $filtrage .= " AND s.nom_service='linge'"; break;
                             
                                 */
-                                }
+                            }
 
 
 
@@ -432,17 +435,17 @@ $photo = $stmt->fetch();
             ?>
 
         <div class="acc-with-map">
-        <!-- Champs de séléction des Tris -->
-        <select class="triage" id="tri" name="tri">
-            <option value="none" hidden> Trier par : choisir tri</option>
-            <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
-            <option value="prix_c">Prix (croissant)</option>
-            <option value="prix_d">Prix (décroissant)</option>
-        </select> 
-        <hr class="hr" style="width:100%;">
-            
-        <section class="card">
+            <!-- Champs de séléction des Tris -->
+            <select class="triage" id="tri" name="tri">
+                <option value="none" hidden> Trier par : choisir tri</option>
+                <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
+                <option value="prix_c">Prix (croissant)</option>
+                <option value="prix_d">Prix (décroissant)</option>
+            </select> 
+            <hr class="hr" style="width:100%;">
                 
+            <section class="card">
+                    
                 <?php
                 $res = $stmt->fetchAll();
 
@@ -450,83 +453,125 @@ $photo = $stmt->fetch();
                 if (count($res) <= 0) { ?>
                     <p style="font-size: 1.5em;">Aucun logement trouvé</p>
                     <?php   } foreach ($res as $card) {
-                    if ($card['en_ligne'] == true) { ?>
-                        <script>
-                            <?php foreach ($res as $ville) { ?>
-                                var ville = "<?php echo $ville['ville']; ?>";
-                                var libelle_logement = "<?php echo $ville['libelle_logement']; ?>";
-                                geocodeAndAddMarkersForCity(ville, libelle_logement);
-                            <?php } ?>
-                            function geocodeAndAddMarkersForCity(ville, libelle_logement) {
-                                var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=90a3f846aa9e490d927a787facf78c7e";
-
-                                fetch(opencageUrl)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.results.length > 0) {
-                                            var latitude = data.results[0].geometry.lat;
-                                            var longitude = data.results[0].geometry.lng;
-
-                                            // Création du marqueur pour cette ville
-                                            var marker = L.marker([latitude, longitude], {icon: ownIcon}).addTo(map);
-                                            marker.bindPopup(libelle_logement);
-                                        } else {
-                                            console.log("Impossible de géocoder la ville:", ville);
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error("Erreur lors de la requête de géocodage:", error);
-                                    });
-                            }
-
-                            // Image du marqueur
-                            var ownIcon = L.icon({
-                                iconUrl: '../svg/map-pin-fill (2).svg',
-                                iconSize: [48, 48],
-                                iconAnchor: [22, 48],
-                                popupAnchor: [3, -24]
-                            });
-                        </script>
-                        <article class="logementCard cardtel">
-                            <a href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>">
-                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
-                                <div class="infoContainer">
-                                    <div class="mainInfos">
-                                        <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
-                                        <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
-                                    </div>
-                                    <div class="otherInfos cardphone">
-                                        <div>
-                                            <img src="../svg/money.svg" width="25" height="25">
-                                            <span><?php echo $card['tarif_base_ht']; ?> € </span>
+                        if ($card['en_ligne'] == true) { ?>                        
+                            <article class="logementCard cardtel">
+                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>">
+                                    <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
+                                    <div class="infoContainer">
+                                        <div class="mainInfos">
+                                            <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
+                                            <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
                                         </div>
-                                        <div>
-                                            <img src="../svg/group.svg" width="25" height="25">
-                                            </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
+                                        <div class="otherInfos cardphone">
+                                            <div>
+                                                <img src="../svg/money.svg" width="25" height="25">
+                                                <span><?php echo $card['tarif_base_ht']; ?> € </span>
+                                            </div>
+                                            <div>
+                                                <img src="../svg/group.svg" width="25" height="25">
+                                                </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </article>
-                    <?php   }
+                                </a>
+                            </article>
+                <?php   }
+                                }
+                ?>
+            </section>
+        </div>
+        <div id="containerMap">
+            <div id="map">
+                <script>
+                    // Image du marqueur
+                    var ownIcon = L.icon({
+                                    iconUrl: '../svg/map-pin-fill (2).svg',
+                                    iconSize: [48, 48],
+                                    iconAnchor: [22, 48],
+                                    popupAnchor: [3, -24]
+                    });
+
+                    var markersByCity = {};
+
+                    <?php if (count($res) <= 0) { ?>
+                        <?php   } foreach ($res as $ville) {
+                            if ($ville['en_ligne'] == true) { ?> 
+                                    var ville = "<?php echo $ville['ville']; ?>";
+                                    var libelle_logement = "<?php echo $ville['libelle_logement']; ?>";
+                                    geocodeAndAddMarkersForCity(ville, libelle_logement);
+                                    
+                        <?php   } ?>
+                    <?php   } ?>
+                    
+                
+                    function geocodeAndAddMarkersForCity(ville, libelle_logement) {
+                        var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=424b7bd39a4f476f85ef509d2ffd957d";
+
+                        fetch(opencageUrl)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.results.length > 0) {
+                                    var latitude = data.results[0].geometry.lat;
+                                    var longitude = data.results[0].geometry.lng;
+
+                                    // Création du marqueur pour cette ville
+                                    var marker = L.marker([latitude, longitude], {icon: ownIcon}).addTo(map);
+                                    // Vérifier si la clé pour cette ville existe déjà dans le tableau
+                                    if (markersByCity[ville] === undefined) {
+                                        // Si la clé n'existe pas, créer un nouveau tableau pour cette ville
+                                        markersByCity[ville] = [];
                                     }
-                    ?>
-                </section>
+
+                                    
+                                    markersByCity[ville].push(marker);
+
+                                    if (markersByCity[ville].length > 1) {
+                                        var cityMarkerCluster = L.markerClusterGroup();
+                                        markersByCity[ville].forEach(function (marker) {
+                                            cityMarkerCluster.addLayer(marker);
+                                        });
+                                        map.addLayer(cityMarkerCluster);
+                                    } else {
+                                        map.addLayer(marker);
+                                    }
+                                    marker.bindPopup(libelle_logement);
+                                } else {
+                                    console.log("Impossible de géocoder la ville:", ville);
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Erreur lors de la requête de géocodage:", error);
+                            });
+                    }
+                
+                        // Création de la carte Leaflet
+                        var map = L.map('map').setView([48.2020, -2.9326], 8);
+                        var markers = new L.MarkerClusterGroup();
+
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        for (var city in markersByCity) {
+                            if (markersByCity.hasOwnProperty(city)) {
+                                // Si la ville a plus d'un marqueur alors on fait un cluster
+                                if (markersByCity[city].length > 1) {
+                                    var cityMarkerCluster = L.markerClusterGroup();
+
+                                    // on ajoute marqueurs au cluster
+                                    markersByCity[city].forEach(function (marker) {
+                                        cityMarkerCluster.addLayer(marker);
+                                    });
+
+                                    // on ajoute  le cluster à la carte
+                                    map.addLayer(cityMarkerCluster);
+                                }
+                            }
+                        }
+                </script>
             </div>
-            <div id="containerMap">
-                <div id="map">
-                    <script>
-                            // Création de la carte Leaflet
-                            var map = L.map('map').setView([48.2020, -2.9326], 8);
-
-                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                maxZoom: 19,
-                                attribution: '© OpenStreetMap contributors'
-                            }).addTo(map);
-                    </script>
-
-                </div>
-            </div>  
+        </div>  
 
                 <span class="fltitre">Filtres</span><hr class="hr">
                 <div>
