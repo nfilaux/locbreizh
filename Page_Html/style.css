@@ -2658,7 +2658,7 @@ iframe {
 }
 
 .inactif {
-    color: #797676;
+    color: #A9A9A9;
 }
 
 .actif,
@@ -2747,7 +2747,7 @@ iframe {
 }
 
 .legendePasDispo::before {
-    background-color: #797676;
+    background-color: #A9A9A9;
 }
 
 .ajoutSelection {
@@ -2768,7 +2768,7 @@ iframe {
 
 .formulaire_selection {
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: center;
 }
 
@@ -2776,11 +2776,6 @@ iframe {
     margin: 0px;
     padding: 20px;
     display: inline;
-}
-
-.formSupprPlage {
-    border-left: 1px solid #745086;
-    height: 100%;
 }
 
 .inputPrixCal {

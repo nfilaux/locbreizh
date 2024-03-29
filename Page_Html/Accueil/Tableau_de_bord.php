@@ -216,7 +216,7 @@ function changerJour(elem, id) {
         entreDeux = calendrier[id].getElementsByClassName("entreDeux");
         nbEntreDeux = entreDeux.length;
         for (i = 0; i < nbEntreDeux; i++) {
-            entreDeux[0].className = "normal";
+            entreDeux[0].className = "indisponible";
         }
         //remet les plages
         if (tabDispo[id][0]){
@@ -250,7 +250,7 @@ function changerJour(elem, id) {
                         }
                         else{
                             if (document.getElementById(premierID[id])){
-                                document.getElementById(premierID[id]).className = "normal";
+                                document.getElementById(premierID[id]).className = "indisponible";
                             }
                         }
                     }
@@ -267,7 +267,7 @@ function changerJour(elem, id) {
                         }
                         else{
                             if (document.getElementById(dernierID[id])){
-                                document.getElementById(dernierID[id]).className = "normal";
+                                document.getElementById(dernierID[id]).className = "indisponible";
                             }
                         }
                     }
@@ -323,7 +323,9 @@ function changerJour(elem, id) {
                         dernierID[id] = premierID[id];
                     }
                 }
-                openPopup('selection' + id, 'overlayCal' + id);
+                if (dernierID[id] != premierID[id]){
+                    openPopup('selection' + id, 'overlayCal' + id);
+                }
             }
         }
         //désactive le jour si on clique dessus
@@ -347,7 +349,7 @@ function changerJour(elem, id) {
                 element.className = classeIndispo[id];
             }
             else{
-                element.className = "normal";
+                element.className = "indisponible";
             }
             //remet les plages
             if (tabDispo[id][0]){
@@ -359,7 +361,8 @@ function changerJour(elem, id) {
         }
         changerDates(id);
     }
-    else if ( premierID[id] !== ""){
+    else if (premierID[id] !== ""){
+        console.log(premierID[id]);
         //active la zone de selection entre les deux dates
         datePremier = new Date(premierID[id].split(',')[1]).getTime();
         dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
@@ -512,6 +515,13 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
     
 }
 
+function deselectionner(popup, overlay, id){
+    selection(premierID[id], dernierID[id], id);
+    dernierID[id] = "";
+    premierID[id] = "";
+    closePopup(popup, overlay);
+}
+
 numCalendrier = -1;
 </script>
 
@@ -644,7 +654,7 @@ numCalendrier = -1;
                             
                             <div class="overlay_plages" id='<?php echo $overlayPlage; ?>' onclick="closePopup('<?php echo $nomPlage; ?>', '<?php echo $overlayPlage; ?>')"></div>
                             <div id="<?php echo $nomPlage; ?>" class='plages'>
-                                    <div class="overlay_plages" id='<?php echo $overlayCal; ?>' onclick="closePopup('<?php echo $nomSelection; ?>', '<?php echo $overlayCal; ?>')"></div>
+                                    <div class="overlay_plages" id='<?php echo $overlayCal; ?>' onclick="deselectionner('<?php echo $nomSelection; ?>', '<?php echo $overlayCal; ?>', '<?php echo $key; ?>')"></div>
                                     <div id="<?php echo $nomSelection; ?>" class='ajoutSelection'>
                                         <div class="formulaire_selection">
                                             <form action="../Planning/plageBack.php" method="post">
@@ -656,10 +666,6 @@ numCalendrier = -1;
                                                 <label for="prix_plage_ponctuelle"> Prix : </label>
                                                 <input type="text" id="prix_plage_ponctuelle" name="prix" placeholder="<?php echo $card['tarif_base_ht'] ?>" value="<?php echo $card['tarif_base_ht'] ?>" required/>
                                                 <br><?php erreur("prix") ?><br>
-
-                                                <label for="indisponible"> Indisponible : </label>
-                                                <input type="checkbox"  id="indisponible" name="indisponible" value="false"/>
-                                                <br><br>
 
                                                 <input type="hidden" name="id_logement" value="<?php echo $card['id_logement'] ?>"/>
 
@@ -738,7 +744,7 @@ numCalendrier = -1;
                                     <div class="legendeCalendrier">
                                         <p class="legendeLibre">Libre</p>
                                         <p class="legendeDemande">Demande de devis</p>
-                                        <p class="legendeRéserver">Réserver</p>
+                                        <p class="legendeRéserver">Réservé</p>
                                         <p class="legendeIndisponible">Indisponible</p>
                                     </div>
 
@@ -782,7 +788,7 @@ numCalendrier = -1;
 
                                     //Appel de la fonction pour créer les calendriers
                                     instancier(numCalendrier, 4);
-                                    afficherCalendrier("normal", numCalendrier);
+                                    afficherCalendrier("indisponible", numCalendrier);
 
                                     var tab = <?php echo json_encode($plageIndispo); ?>;
                                     var tabRes = [];
