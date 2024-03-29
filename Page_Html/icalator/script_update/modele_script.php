@@ -76,33 +76,32 @@
         $stmt->execute();
         $plage_dispo = $stmt->fetchAll();
 
-        $simple_dates = [];
-
-        // on met les jours dans un tableau plus simple à parcourir
-        foreach ($plage_dispo as $date) {
-            $simple_dates[] = $date['jour_plage_ponctuelle'];
-        }
-
-        
-        // Détecte les plages indisponibles consécutives
-        $plage_indispo = [];
-        $debut_plage = null;
-        foreach ($simple_dates as $date) {
-            if ($debut_plage === null) {
-                $debut_plage = $date;
-            } 
-            elseif ($date != $debut_plage) {
-                $plage_indispo[] = [$debut_plage, $date];
-                $debut_plage = $date;
+        foreach ($plage_dispo as $jour) {
+            $jour_disponible = strtotime($jour['jour_plage_ponctuelle']);
+    
+            // Si la période temporaire n'est pas vide et le jour actuel n'est pas le jour suivant
+            if (!empty($periode_temporaire) && strtotime("+1 day", end($periode_temporaire)) != $jour_disponible) {
+                // Ajoute la période temporaire à la liste des périodes indisponibles
+                $periodes_indispo[] = $periode_temporaire;
+                // Réinitialise la période temporaire
+                $periode_temporaire = array();
             }
+    
+            // Ajoute le jour actuel à la période temporaire
+            $periode_temporaire[] = $jour_disponible;
         }
-        // Ajouter la dernière plage si elle n'est pas terminée
-        if ($debut_plage !== null) {
-            $plage_indispo[] = [$debut_plage, $params['fin']];
+    
+        // Ajoute la dernière période temporaire à la liste des périodes indisponibles
+        if (!empty($periode_temporaire)) {
+            $periodes_indispo[] = $periode_temporaire;
         }
-
+    
+        // Formate correctement le tableau pour l'utiliser
+        foreach ($periodes_indispo as $periode) {
+            $periodes_indispo_formate[] = [date('Ymd',$periode[0]), date('Ymd', end($periode))];
+        }
     } else{
-        $plage_indispo = [];
+        $periodes_indispo_formate = [];
     }
 
 
@@ -137,6 +136,21 @@
         $ics .= "X-WR-TIMEZONE:Europe/Paris\n";
         $ics .= "DTSTART:".str_replace('-', '',$dema['date_arrivee'])."T170000\n";
         $ics .= "DTEND:".str_replace('-', '',$dema['date_depart'])."T120000\n";
+        $ics .= "SUMMARY:".$objet."\n";
+        $ics .= "LOCATION:".$lieu."\n";
+        $ics .= "DESCRIPTION:".$details."\n";
+        $ics .= "END:VEVENT\n";
+    }
+
+    foreach($periodes_indispo_formate as $indispo){
+        $objet = "Indisponibilité";
+        $lieu = "lieu";
+        $details = "Test boucle Indisponibilité";
+
+        $ics .= "BEGIN:VEVENT\n";
+        $ics .= "X-WR-TIMEZONE:Europe/Paris\n";
+        $ics .= "DTSTART:".$indispo[0]."T170000\n";
+        $ics .= "DTEND:".$indispo[1]."T120000\n";
         $ics .= "SUMMARY:".$objet."\n";
         $ics .= "LOCATION:".$lieu."\n";
         $ics .= "DESCRIPTION:".$details."\n";
