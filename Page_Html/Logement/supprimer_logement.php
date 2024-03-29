@@ -31,6 +31,37 @@ try {
         $id_logement = $_GET["idc"];
         $cs = 3;
 
+        //on supprime les avis du logement
+
+        $stmt = $dbh->prepare(
+            "DELETE from locbreizh._avis where logement=$id_logement;"
+        );
+        $stmt->execute();
+
+        //on supprime les devis du logement
+
+        $stmt = $dbh->prepare(
+            "DELETE from locbreizh._facture where num_devis in (
+            SELECT num_devis FROM locbreizh._devis where num_demande_devis in (
+            SELECT num_demande_devis FROM locbreizh._demande_devis where logement=$id_logement));"
+        );
+        $stmt->execute();
+
+        //on supprime les devis du logement
+
+        $stmt = $dbh->prepare(
+            "DELETE from locbreizh._devis where num_demande_devis in (
+            SELECT num_demande_devis FROM locbreizh._demande_devis where logement=$id_logement);"
+        );
+        $stmt->execute();
+
+        //on supprime les demandes de devis du logement
+
+        $stmt = $dbh->prepare(
+            "DELETE from locbreizh._demande_devis where logement=$id_logement;"
+        );
+        $stmt->execute();
+
         //on supprime les photos secondaires du logement, là photo principale se trouvant dans la classe logement
 
         $stmt = $dbh->prepare(

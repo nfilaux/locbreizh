@@ -544,6 +544,17 @@ numCalendrier = -1;
         else{
             $cas_popup = '';
         }
+
+        if(isset($_GET["idlog"])){
+            $logsuppr = $_GET["idlog"];
+            $stmt = $dbh->prepare("SELECT libelle_logement from locbreizh._logement where id_logement = $logsuppr;");
+            $stmt->execute();
+            $nomlogsuppr = $stmt->fetchColumn();
+        }
+        else{
+            $logsuppr = '';
+            $nomlogsuppr = '';
+        }
     ?>
 
     <main class="MainTablo">
@@ -633,11 +644,11 @@ numCalendrier = -1;
                                     
                                     <div class="overlay_plages" id="overlay_validation" onclick="closePopup('validation','overlay_validation')"></div>
                                     <div id="validation" class="plages"> 
-                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $id_log ?> ? 
+                                        <p> Etes vous bien sûr de vouloir supprimer votre logement : <?php echo $nomlogsuppr ?> ? 
                                         <p class="erreur">Cette action est irreversible !</p> 
                                         <div id='boutons'>
                                             <button onclick="closePopup('validation','overlay_validation')" class="btn-ajoutlog">Annuler</button> 
-                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $id_log ?>" ><button class="btn-suppr">Supprimer</button></a>
+                                            <a href="../Logement/supprimer_logement.php?idc=<?php echo $logsuppr ?>" ><button class="btn-suppr">Supprimer</button></a>
                                         </div>
                                     </div>
                                     
