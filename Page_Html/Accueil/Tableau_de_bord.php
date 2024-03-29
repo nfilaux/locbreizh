@@ -213,11 +213,10 @@ function changerJour(elem, id) {
         //recupération de l'élément et réinitialistaion du calendrier
         element = document.getElementById(elem);
         nbActif = calendrier[id].getElementsByClassName("actif").length;
-        console.log(nbActif);
         entreDeux = calendrier[id].getElementsByClassName("entreDeux");
         nbEntreDeux = entreDeux.length;
         for (i = 0; i < nbEntreDeux; i++) {
-            entreDeux[0].className = "normal";
+            entreDeux[0].className = "indisponible";
         }
         //remet les plages
         if (tabDispo[id][0]){
@@ -251,7 +250,7 @@ function changerJour(elem, id) {
                         }
                         else{
                             if (document.getElementById(premierID[id])){
-                                document.getElementById(premierID[id]).className = "normal";
+                                document.getElementById(premierID[id]).className = "indisponible";
                             }
                         }
                     }
@@ -268,7 +267,7 @@ function changerJour(elem, id) {
                         }
                         else{
                             if (document.getElementById(dernierID[id])){
-                                document.getElementById(dernierID[id]).className = "normal";
+                                document.getElementById(dernierID[id]).className = "indisponible";
                             }
                         }
                     }
@@ -324,7 +323,9 @@ function changerJour(elem, id) {
                         dernierID[id] = premierID[id];
                     }
                 }
-                openPopup('selection' + id, 'overlayCal' + id);
+                if (dernierID[id] != premierID[id]){
+                    openPopup('selection' + id, 'overlayCal' + id);
+                }
             }
         }
         //désactive le jour si on clique dessus
@@ -348,7 +349,7 @@ function changerJour(elem, id) {
                 element.className = classeIndispo[id];
             }
             else{
-                element.className = "normal";
+                element.className = "indisponible";
             }
             //remet les plages
             if (tabDispo[id][0]){
@@ -360,7 +361,8 @@ function changerJour(elem, id) {
         }
         changerDates(id);
     }
-    else if ( premierID[id] !== ""){
+    else if (premierID[id] !== ""){
+        console.log(premierID[id]);
         //active la zone de selection entre les deux dates
         datePremier = new Date(premierID[id].split(',')[1]).getTime();
         dateDernier = new Date(dernierID[id].split(',')[1]).getTime();
@@ -515,6 +517,8 @@ function afficherPlages(tabPlage, classe, tabMotif, type, id){
 
 function deselectionner(popup, overlay, id){
     selection(premierID[id], dernierID[id], id);
+    dernierID[id] = "";
+    premierID[id] = "";
     closePopup(popup, overlay);
 }
 

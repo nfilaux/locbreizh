@@ -6,14 +6,14 @@
     <title>Accueil</title>
     <link rel="icon" href="../svg/logo.svg">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
     <link rel="stylesheet" href="../style.css">
-    <script src="../scriptPopup.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <script src="../scriptPopup.js"></script>
 </head>
 
 <body> <!--  onload="init()" -->
@@ -27,7 +27,7 @@
             <div class="filters">
                 <div class="menu-filtre">
                     <div class="fil">
-                        <div class="input-group" style="width: 10%;">
+                        <div class="input-group input-top" style="width: 10%;">
                             <div class="input-group-prepend">
                                 <label for="prix_min">Min<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
@@ -36,8 +36,9 @@
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
+                            <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
-                        <div class="input-group" style="width: 10%;">
+                        <div class="input-group input-top" style="width: 10%;">
                             <div class="input-group-prepend">
                                 <label for="prix_max">Max<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
@@ -46,8 +47,9 @@
                                                                                             } else {
                                                                                                 echo 0;
                                                                                             } ?>" min="0" />
+                                <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
-                        <div class="input-group input-group-ville">
+                        <div class="input-group input-group-ville input-top">
                             <div class="input-group-prepend">
                                 <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25" alt="ping de map"></label>
                             </div>
@@ -57,7 +59,7 @@
                                                                                         echo 'Ville';
                                                                                     } ?>" />
                         </div>
-                        <div class="input-group input-group-pers">
+                        <div class="input-group input-group-pers input-bottom">
                             <div class="input-group-prepend">
                                 <label for="personne"><img src="../svg/group.svg" width="25" height="25" alt="nombre de personnes"></label>
                             </div>
@@ -67,21 +69,21 @@
                                                                                                 echo 0;
                                                                                             } ?>" />
                         </div>
-                        <div class="input-group" style="width: 15%;">
+                        <div class="input-group input-group-date input-bottom">
                             <div class="input-group-prepend">
-                                <label for="date1">Début <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
+                                <label for="date1">Début <!--<img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier">--></label>
                             </div>
                             <input type="date" id="date1" name="date1" value="<?php if (isset($_GET['date1'])) {echo $_GET['date1']; }else {echo date('Y-m-d');}?>" />
                         </div>
-                        <div class="input-group" style="width: 15%;">
+                        <div class="input-group input-group-date input-bottom">
                             <div class="input-group-prepend">
-                                <label for="date2">Fin <img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier"></label>
+                                <label for="date2">Fin<!--<img src="../svg/calendar.svg" width="14" height="14" alt="icon de calendrier">--></label>
                             </div>
                             <input type="date" id="date2" name="date2" value="<?php if (isset($_GET['date2'])) {echo $_GET['date2']; } else {echo date('Y-m-d');}?>" />
                         </div>
                         <hr style="margin: 5px;">
                         <a class="btn-filtre">
-                            <img src="../svg/filtre.svg" width="20" height="20" alt="icon pour les filtres" onclick="openPopup('filtre','ovFiltre')">
+                            <img src="../svg/filtre.svg" width="20" height="20" alt="icon pour désactiver la carte" id="carte">
                         </a>
                         
                     </div>
@@ -403,9 +405,6 @@
 
         <div class="acc-with-map">
             <!-- Champs de séléction des Tris -->
-            
-            <hr class="hr" style="margin-top:15em; width:100%;">
-            
             <select class="triage" id="tri" name="tri">
                 <option value="none" hidden> Trier par : choisir tri</option>
                 <option value="vide">Aucun tri</option> <!-- Retirer le tri actif -->
@@ -413,40 +412,42 @@
                 <option value="prix_d">Prix (décroissant)</option>
             </select> 
 
+            <hr class="hr" style="width:100%;">
+
             <section class="card">
                     
-                    <?php
-                    $res = $stmt->fetchAll();
+                <?php
+                $res = $stmt->fetchAll();
 
                 // affichage des données de logement
                 if (count($res) <= 0) { ?>
                     <p style="font-size: 1.5em;">Aucun logement trouvé</p>
                     <?php   } foreach ($res as $card) {
-                    if ($card['en_ligne'] == true) { ?>
-                        <article class="logementCard cardtel">
-                            <a href="../Logement/logement_detaille_visiteur.php?logement=<?php echo $card['id_logement'] ?>">
-                                <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>" alt="photo principale du logement">
-                                <div class="infoContainer">
-                                    <div class="mainInfos">
-                                        <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
-                                        <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
-                                    </div>
-                                    <div class="otherInfos cardphone">
-                                        <div>
-                                            <img src="../svg/money.svg" width="25" height="25" alt="euro">
-                                            <span><?php echo $card['tarif_base_ht']; ?> € </span>
+                        if ($card['en_ligne'] == true) { ?>                        
+                            <article class="logementCard cardtel">
+                                <a href="../Logement/logement_detaille_client.php?logement=<?php echo $card['id_logement'] ?>">
+                                    <img src="../Ressources/Images/<?php echo $card['photo_principale'] ?>">
+                                    <div class="infoContainer">
+                                        <div class="mainInfos">
+                                            <span class="logementTitre"> <?php echo $card['libelle_logement']; ?></span>
+                                            <span> <?php echo $card['ville'] . ", " . $card['code_postal']; ?></span>
                                         </div>
-                                        <div>
-                                            <img src="../svg/group.svg" width="25" height="25" alt="icone nombre de personnes">
-                                            </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
+                                        <div class="otherInfos cardphone">
+                                            <div>
+                                                <img src="../svg/money.svg" width="25" height="25">
+                                                <span><?php echo $card['tarif_base_ht']; ?> € </span>
+                                            </div>
+                                            <div>
+                                                <img src="../svg/group.svg" width="25" height="25">
+                                                </span><?php echo $card['nb_personnes_logement']; ?> personnes</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </article>
-                    <?php   }
-                                    }
-                    ?>
+                                </a>
+                            </article>
+                <?php   }
+                                }
+                ?>
             </section>
         </div>
         <div id="containerMap">
@@ -474,7 +475,7 @@
                     
                 
                     function geocodeAndAddMarkersForCity(ville, libelle_logement) {
-                        var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=424b7bd39a4f476f85ef509d2ffd957d";
+                        var opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(ville) + "&key=90a3f846aa9e490d927a787facf78c7e";
 
                         fetch(opencageUrl)
                             .then(response => response.json())
@@ -515,29 +516,12 @@
                 
                         // Création de la carte Leaflet
                         var map = L.map('map').setView([48.2020, -2.9326], 8);
-                        var markers = new L.MarkerClusterGroup();
+                        
 
                         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             maxZoom: 19,
                             attribution: '© OpenStreetMap contributors'
                         }).addTo(map);
-
-                        for (var city in markersByCity) {
-                            if (markersByCity.hasOwnProperty(city)) {
-                                // Si la ville a plus d'un marqueur alors on fait un cluster
-                                if (markersByCity[city].length > 1) {
-                                    var cityMarkerCluster = L.markerClusterGroup();
-
-                                    // on ajoute marqueurs au cluster
-                                    markersByCity[city].forEach(function (marker) {
-                                        cityMarkerCluster.addLayer(marker);
-                                    });
-
-                                    // on ajoute  le cluster à la carte
-                                    map.addLayer(cityMarkerCluster);
-                                }
-                            }
-                        }
                 </script>
             </div>
         </div>  
@@ -727,6 +711,6 @@
 
 </html>
 
-
+<script src="./cacherCarte.js" defer></script>
 <script src="./actualiserTri.js" defer></script>
 <script src="./actualiserFiltre.js" defer></script>

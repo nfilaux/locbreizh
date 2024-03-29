@@ -63,7 +63,7 @@
             <button onclick="openPopup('<?php echo $demande['num_demande_devis']; ?>', '<?php echo 'ov' . $demande['num_demande_devis']; ?>')">X</button>
 
                 <div>
-                    <img class="img_devis" src="<?php echo "../Ressources/Images/{$demande['photo_principale']}"; ?>" width="50" height="50">
+                    <img class="img_devis" src="<?php echo "../Ressources/Images/{$demande['photo_principale']}"; ?>" width="50" height="50" alt="">
                     <div>
                         <div>
                             <h3 class="titrecard"><?php echo $demande['libelle_logement']; ?></h3>
