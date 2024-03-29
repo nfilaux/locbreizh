@@ -27,7 +27,9 @@
             <div class="filters">
                 <div class="menu-filtre">
                     <div class="fil">
-                        <div class="input-group input-top" style="width: 10%;">
+                    <div class="fil-top">
+                    <div class="fil-resp">
+                        <div class="input-group input-top">
                             <div class="input-group-prepend">
                                 <label for="prix_min">Min<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
@@ -38,7 +40,7 @@
                                                                                             } ?>" min="0" />
                             <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
-                        <div class="input-group input-top" style="width: 10%;">
+                        <div class="input-group input-top">
                             <div class="input-group-prepend">
                                 <label for="prix_max">Max<!--<img src="../svg/money.svg" width="12" height="12" alt="euro">--></label>
                             </div>
@@ -49,7 +51,7 @@
                                                                                             } ?>" min="0" />
                                 <label><img id="money1" src="../svg/money.svg" width="20" height="20" alt="euro"></label>
                         </div>
-                        <div class="input-group input-group-ville input-top">
+                        <div class="input-group input-group-ville">
                             <div class="input-group-prepend">
                                 <label for="lieu"><img src="../svg/map-pin-line.svg" width="25" height="25" alt="ping de map"></label>
                             </div>
@@ -59,6 +61,8 @@
                                                                                         echo 'Ville';
                                                                                     } ?>" />
                         </div>
+                    </div>                                                                
+                    <div class="fil-resp">
                         <div class="input-group input-group-pers input-bottom">
                             <div class="input-group-prepend">
                                 <label for="personne"><img src="../svg/group.svg" width="25" height="25" alt="nombre de personnes"></label>
@@ -81,6 +85,8 @@
                             </div>
                             <input type="date" id="date2" name="date2" value="<?php if (isset($_GET['date2'])) {echo $_GET['date2']; } else {echo date('Y-m-d');}?>" />
                         </div>
+                    </div>
+                    </div>                                                                            
                         <hr style="margin: 5px;">
                         <a class="btn-filtre">
                             <img src="../svg/filtre.svg" width="20" height="20" alt="icon pour désactiver la carte" id="carte">

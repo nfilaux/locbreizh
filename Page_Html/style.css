@@ -3743,6 +3743,21 @@ iframe {
         width: 10%;
     }
 
+    .fil {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .fil-resp {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .fil-top{
+        display: flex;
+        flex-direction: row;
+    }
+
     #personne {
         padding-left: 15%;
     }
@@ -4026,16 +4041,28 @@ iframe {
     .input-group-ville,
     .input-group-pers,
     .input-group-proprio {
-        width: 20%;
+        width: 40%;
         margin: 0.5em auto;
     }
 
     .input-group-date {
-        width: 20%;
+        width: 30%;
+    }
+
+    #date1, #date2 {
+        padding-left:0;
     }
 
     .input-group-pers {
-        width: 5%;
+        width: 20%;
+    }
+
+    .input-top{
+        width: 20%;
+    }
+
+    #prix_min, #prix_max{
+        padding-left: 0;
     }
 
     .menu-filtre {
@@ -4045,7 +4072,12 @@ iframe {
 
     .fil {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+    }
+
+    .fil-resp {
+        display: flex;
+        flex-direction: row;
     }
 
     .input-top,
