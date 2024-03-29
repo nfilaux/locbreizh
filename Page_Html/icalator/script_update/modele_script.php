@@ -43,6 +43,8 @@
         $stmt->bindParam(':date_fin', $params['fin']);
         $stmt->execute();
         $reservations = $stmt->fetchAll();
+    } else{
+        $reservations = [];
     }
     if($params['demandes']){
         $stmt = $dbh->prepare("SELECT _devis.date_arrivee, _devis.date_depart from locbreizh._devis
@@ -58,6 +60,49 @@
         $stmt->bindParam(':date_fin', $params['fin']);
         $stmt->execute();
         $demandes = $stmt->fetchAll();
+    } else{
+        $demandes = [];
+    }
+    if($params['indisponibilites']){
+        $stmt = $dbh->prepare("SELECT _plage_ponctuelle.jour_plage_ponctuelle from locbreizh._logement
+        JOIN locbreizh._planning ON _planning.code_planning = _logement.code_planning
+        JOIN locbreizh._plage_ponctuelle ON _plage_ponctuelle.code_planning = _planning.code_planning
+        WHERE _logement.id_proprietaire = :proprio 
+        AND _plage_ponctuelle.jour_plage_ponctuelle >= :date_debut
+        AND _plage_ponctuelle.jour_plage_ponctuelle <= :date_fin");
+        $stmt->bindParam(':proprio', $proprio['proprio']);
+        $stmt->bindParam(':date_debut', $params['debut']);
+        $stmt->bindParam(':date_fin', $params['fin']);
+        $stmt->execute();
+        $plage_dispo = $stmt->fetchAll();
+
+        $simple_dates = [];
+
+        // on met les jours dans un tableau plus simple à parcourir
+        foreach ($plage_dispo as $date) {
+            $simple_dates[] = $date['jour_plage_ponctuelle'];
+        }
+
+        
+        // Détecte les plages indisponibles consécutives
+        $plage_indispo = [];
+        $debut_plage = null;
+        foreach ($simple_dates as $date) {
+            if ($debut_plage === null) {
+                $debut_plage = $date;
+            } 
+            elseif ($date != $debut_plage) {
+                $plage_indispo[] = [$debut_plage, $date];
+                $debut_plage = $date;
+            }
+        }
+        // Ajouter la dernière plage si elle n'est pas terminée
+        if ($debut_plage !== null) {
+            $plage_indispo[] = [$debut_plage, $params['fin']];
+        }
+
+    } else{
+        $plage_indispo = [];
     }
 
 
@@ -97,9 +142,6 @@
         $ics .= "DESCRIPTION:".$details."\n";
         $ics .= "END:VEVENT\n";
     }
-
-    //Demande devis
-    
 
     $ics .= "END:VCALENDAR\n";
     
