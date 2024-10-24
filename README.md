@@ -1,2 +1,3 @@
-# 7eme_sens
-Dépôt de la SAE.
+# Loc'breizh
+
+Projet scolaire d'un site web permettant la consulation, la reservation et la mise en ligne de logement.
